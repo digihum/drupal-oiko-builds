@@ -26,7 +26,7 @@ use Drupal\field\Entity\FieldConfig;
  *     },
  *   },
  *   config_prefix = "cidoc_entity_bundle",
- *   admin_permission = "administer site configuration",
+ *   admin_permission = "administer cidoc entities",
  *   bundle_of = "cidoc_entity",
  *   entity_keys = {
  *     "id" = "id",
