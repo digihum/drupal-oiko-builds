@@ -3,7 +3,7 @@ add cidoc entities:
 
 administer cidoc entities:
   title: 'Administer CIDOC entities'
-  description: 'Allow to access the administration form to configure CIDOC entities.'
+  description: 'Allow to access administration forms to configure CIDOC entities, references, classes and properties.'
   restrict access: true
 
 delete cidoc entities:
@@ -17,20 +17,3 @@ view published cidoc entities:
 
 view unpublished cidoc entities:
   title: 'View unpublished CIDOC entities'
-
-add cidoc references:
-  title: 'Create new CIDOC references'
-
-administer cidoc references:
-  title: 'Administer CIDOC references'
-  description: 'Allow to access the administration form to configure CIDOC references.'
-  restrict access: true
-
-delete cidoc references:
-  title: 'Delete CIDOC references'
-
-edit cidoc references:
-  title: 'Edit CIDOC references'
-
-view cidoc references:
-  title: 'View CIDOC references'

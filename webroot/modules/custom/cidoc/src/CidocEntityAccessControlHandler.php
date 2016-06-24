@@ -8,19 +8,21 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
 
 /**
- * Access controller for CIDOC entities.
+ * Access controller for CIDOC entities and CIDOC reference entities.
  *
  * @see \Drupal\cidoc\Entity\CidocEntity.
+ * @see \Drupal\cidoc\Entity\CidocReference.
  */
 class CidocEntityAccessControlHandler extends EntityAccessControlHandler {
   /**
    * {@inheritdoc}
    */
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
-    /** @var \Drupal\cidoc\CidocEntityInterface $entity */
     switch ($operation) {
+      case 'view label':
       case 'view':
-        if (!$entity->isPublished()) {
+        // CIDOC references have no published method or property.
+        if ($entity->getEntityTypeId() === 'cidoc_entity' && !$entity->isPublished()) {
           return AccessResult::allowedIfHasPermission($account, 'view unpublished cidoc entities');
         }
         return AccessResult::allowedIfHasPermission($account, 'view published cidoc entities');

@@ -53,7 +53,7 @@ class CidocReferenceHtmlRouteProvider extends AdminHtmlRouteProvider {
           '_entity_list' => $entity_type_id,
           '_title' => "{$entity_type->getLabel()} list",
         ])
-        ->setRequirement('_permission', 'view cidoc references')
+        ->setRequirement('_permission', 'administer cidoc entities')
         ->setOption('_admin_route', TRUE);
 
       return $route;

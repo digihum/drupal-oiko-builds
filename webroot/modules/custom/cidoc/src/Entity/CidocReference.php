@@ -33,13 +33,13 @@ use Drupal\user\UserInterface;
  *       "domain" = "Drupal\cidoc\Form\CidocReferenceForm",
  *       "range" = "Drupal\cidoc\Form\CidocReferenceForm"
  *     },
- *     "access" = "Drupal\cidoc\CidocReferenceAccessControlHandler",
+ *     "access" = "Drupal\cidoc\CidocEntityAccessControlHandler",
  *     "route_provider" = {
  *       "html" = "Drupal\cidoc\CidocReferenceHtmlRouteProvider",
  *     },
  *   },
  *   base_table = "cidoc_reference",
- *   admin_permission = "administer cidoc references",
+ *   admin_permission = "administer cidoc entities",
  *   entity_keys = {
  *     "id" = "id",
  *     "bundle" = "property",

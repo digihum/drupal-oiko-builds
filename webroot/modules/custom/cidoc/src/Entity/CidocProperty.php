@@ -28,7 +28,7 @@ use Drupal\field\Entity\FieldStorageConfig;
  *     },
  *   },
  *   config_prefix = "cidoc_property",
- *   admin_permission = "administer cidoc references",
+ *   admin_permission = "administer cidoc entities",
  *   bundle_of = "cidoc_reference",
  *   entity_keys = {
  *     "id" = "id",

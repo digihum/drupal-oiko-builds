@@ -3,5 +3,5 @@ cidoc_sync.sync_form:
   defaults:
     _form: '\Drupal\cidoc_sync\Form\CidocSyncForm'
   requirements:
-    # Todo: Beef this up, a lot!
-    _permission: 'access content'
+    # TODO: Is a different permission needed for this?
+    _permission: 'administer cidoc entities'
