@@ -1,0 +1,19 @@
+/**
+ * @file CIDOC properties form css
+ */
+
+.cidoc-property-form-items-columns .form-item,
+.form-composite.cidoc-property-form-composite-column {
+  display: inline-block;
+  padding-right: 10px;
+  width: 40%;
+}
+
+.cidoc-property-form-items-columns .form-item:last-child,
+.form-composite.cidoc-property-form-composite-column:last-child {
+  padding-right: 0;
+}
+
+.cidoc-references-widget-referencemode label {
+  display: inline;
+}

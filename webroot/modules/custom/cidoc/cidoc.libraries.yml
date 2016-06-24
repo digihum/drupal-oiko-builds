@@ -1,0 +1,7 @@
+drupal.cidoc_properties:
+  version: VERSION
+  css:
+    component:
+      cidoc_properties.css: {}
+  js:
+    cidoc_properties.js: {}

@@ -1,0 +1,30 @@
+# CIDOC entity menu items definition
+entity.cidoc_entity.collection:
+  title: 'CIDOC entity list'
+  route_name: entity.cidoc_entity.collection
+  description: 'List CIDOC entities'
+  parent: system.admin_content
+  weight: 10
+
+# CIDOC entity bundle menu items definition
+entity.cidoc_entity_bundle.collection:
+  title: 'CIDOC entity classes'
+  route_name: entity.cidoc_entity_bundle.collection
+  description: 'List types of CIDOC entities'
+  parent: system.admin_structure
+
+# CIDOC reference menu items definition
+entity.cidoc_reference.collection:
+  title: 'CIDOC entity property references'
+  route_name: entity.cidoc_reference.collection
+  description: 'List CIDOC entity property references'
+  parent: system.admin_content
+  weight: 100
+
+# CIDOC property menu items definition
+entity.cidoc_property.collection:
+  title: 'CIDOC entity properties'
+  route_name: entity.cidoc_property.collection
+  description: 'List CIDOC entity properties'
+  parent: system.admin_structure
+

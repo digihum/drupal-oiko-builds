@@ -1,0 +1,92 @@
+name: Oiko
+type: profile
+description: Install profile for the Oiko
+core: 8.x
+
+dependencies:
+# ============================================================================ #
+# Dependencies: Core modules #
+# ============================================================================ #
+  - node
+#  - history
+  - block
+#  - breakpoint
+  - ckeditor
+#  - color
+  - config
+#  - comment
+  - contextual
+#  - menu_link_content
+#  - datetime
+#  - block_content
+#  - quickedit
+  - editor
+  - help
+  - image
+#  - menu_ui
+  - options
+  - path
+#  - page_cache
+#  - dynamic_page_cache
+#  - taxonomy
+  - dblog
+#  - search
+  - shortcut
+  - toolbar
+  - field_ui
+  - file
+  - filter
+  - rdf
+  - views
+  - views_ui
+  - tour
+#  - automated_cron
+  - text
+  - user
+  - field
+
+# ============================================================================ #
+# Dependencies: Contrib modules # - alphabetical order please
+# ============================================================================ #
+#  - add_to_head
+  - admin_toolbar
+#  - config_devel
+#  - ctools
+#  - devel
+#  - features
+#  - features_ui
+#  - feeds
+  - field_group
+#  - file_browser
+#  - geofield
+#  - geofield_gmap
+#  - kint
+#  - leaflet
+#  - leaflet_views
+#  - metatag
+#  - pathauto
+#  - token
+
+# ============================================================================ #
+# Dependencies: Custom modules # - alphabetical order please
+# (Features that depend on other features please put into an install hook
+# in oiko_profile.install)
+# ============================================================================ #
+  - cidoc
+  - cidoc_sync
+
+themes:
+  - seven
+  - bartik
+
+config_devel:
+  - system.theme
+#  - block.block.seven_breadcrumbs.yml
+#  - block.block.seven_content.yml
+#  - block.block.seven_help.yml
+#  - block.block.seven_local_actions.yml
+#  - block.block.seven_login.yml
+#  - block.block.seven_messages.yml
+#  - block.block.seven_page_title.yml
+#  - block.block.seven_primary_local_tasks.yml
+#  - block.block.seven_secondary_local_tasks.yml

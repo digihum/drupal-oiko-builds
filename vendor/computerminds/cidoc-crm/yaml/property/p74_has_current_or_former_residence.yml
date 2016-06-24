@@ -1,0 +1,5 @@
+---
+label: P74 has current or former residence
+domain: e39_actor
+range: e53_place
+reverse label: is current or former residence of

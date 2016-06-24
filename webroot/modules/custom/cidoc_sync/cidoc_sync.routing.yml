@@ -1,0 +1,7 @@
+cidoc_sync.sync_form:
+  path: '/admin/structure/cidoc-entity-classes/sync'
+  defaults:
+    _form: '\Drupal\cidoc_sync\Form\CidocSyncForm'
+  requirements:
+    # Todo: Beef this up, a lot!
+    _permission: 'access content'

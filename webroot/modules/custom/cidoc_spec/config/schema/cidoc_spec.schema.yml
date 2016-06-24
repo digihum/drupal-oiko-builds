@@ -1,0 +1,18 @@
+# Schema for the configuration files of the aggregator module.
+
+cidoc_spec.settings:
+  type: config_object
+  label: 'CIDOC Spec settings'
+  mapping:
+    enabled_entities:
+      type: sequence
+      label: 'Enabled Entities'
+      sequence:
+        type: string
+        label: 'Entity'
+    enabled_properties:
+      type: sequence
+      label: 'Enabled Properties'
+      sequence:
+        type: string
+        label: 'Property'

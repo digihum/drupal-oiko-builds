@@ -1,0 +1,7 @@
+cidoc_spec.cidoc_settings_form:
+  title: 'CIDOC settings'
+  route_name: cidoc_spec.cidoc_settings_form
+  description: 'Settings for the CIDOC Spec'
+  parent: system.admin_config_system
+  weight: 99
+

@@ -1,0 +1,5 @@
+---
+label: P58 has section definition
+domain: e18_physical_thing
+range: e46_section_definition
+reverse label: defines section

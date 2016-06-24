@@ -1,0 +1,12 @@
+name: CIDOC
+type: module
+description: Implements CIDOC entities & properties in Drupal with bespoke entity types.
+core: 8.x
+package: CIDOC
+dependencies:
+  - cidoc_spec
+config_devel:
+  - core.entity_form_mode.cidoc_reference.domain
+  - core.entity_form_mode.cidoc_reference.range
+  - core.entity_view_mode.cidoc_reference.domain
+  - core.entity_view_mode.cidoc_reference.range

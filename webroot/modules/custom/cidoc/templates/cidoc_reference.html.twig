@@ -1,0 +1,22 @@
+{#
+/**
+ * @file cidoc_reference.html.twig
+ * Default theme implementation to present CIDOC reference data.
+ *
+ * This template is used when viewing CIDOC reference pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_cidoc_reference()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('cidoc_reference') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>

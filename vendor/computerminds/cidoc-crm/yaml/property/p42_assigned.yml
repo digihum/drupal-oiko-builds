@@ -1,0 +1,7 @@
+---
+label: P42 assigned
+domain: e17_type_assignment
+range: e55_type
+superproperties:
+  - p141_assigned
+reverse label: was assigned by

@@ -1,0 +1,99 @@
+<?php
+
+namespace Drupal\cidoc;
+
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityChangedInterface;
+use Drupal\user\EntityOwnerInterface;
+
+/**
+ * Provides an interface for defining CIDOC entities.
+ *
+ * @ingroup cidoc
+ */
+interface CidocEntityInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
+  /**
+   * Gets the CIDOC entity name.
+   *
+   * @return string
+   *   Name of the CIDOC entity.
+   */
+  public function getName();
+
+  /**
+   * Sets the CIDOC entity name.
+   *
+   * @param string $name
+   *   The CIDOC entity name.
+   *
+   * @return \Drupal\cidoc\CidocEntityInterface
+   *   The called CIDOC entity.
+   */
+  public function setName($name);
+
+  /**
+   * Gets the label of the CIDOC entity bundle (class).
+   *
+   * @return string
+   *   The CIDOC entity class label.
+   */
+  public function bundleLabel();
+
+  /**
+   * Gets the CIDOC entity creation timestamp.
+   *
+   * @return int
+   *   Creation timestamp of the CIDOC entity.
+   */
+  public function getCreatedTime();
+
+  /**
+   * Sets the CIDOC entity creation timestamp.
+   *
+   * @param int $timestamp
+   *   The CIDOC entity creation timestamp.
+   *
+   * @return \Drupal\cidoc\CidocEntityInterface
+   *   The called CIDOC entity.
+   */
+  public function setCreatedTime($timestamp);
+
+  /**
+   * Returns the CIDOC entity published status indicator.
+   *
+   * Unpublished CIDOC entity are only visible to restricted users.
+   *
+   * @return bool
+   *   TRUE if the CIDOC entity is published.
+   */
+  public function isPublished();
+
+  /**
+   * Sets the published status of a CIDOC entity.
+   *
+   * @param bool $published
+   *   TRUE to set this CIDOC entity to published, FALSE to set it to unpublished.
+   *
+   * @return \Drupal\cidoc\CidocEntityInterface
+   *   The called CIDOC entity.
+   */
+  public function setPublished($published);
+
+  /**
+   * Gets property references from/to the CIDOC entity, indexed by property.
+   *
+   * @param null|array|string $property_name
+   *   Specify property type(s) to get. Leave as NULL to get all properties.
+   * @param bool $reverse
+   *   Optionally, set to TRUE to get references to this CIDOC entity instead of
+   *   references from this entity.
+   * @param bool $load_entities
+   *   Optionally, set to FALSE to avoid loading entities.
+   * @return array
+   *   Returns an associative array of CIDOC property names, each mapped to
+   *   arrays, which are associative arrays of CIDOC reference entity ids,
+   *   mapped to their entity objects unless $load_entities was falsey.
+   */
+  public function getProperties($property_name = NULL, $reverse = FALSE, $load_entities = TRUE);
+
+}
