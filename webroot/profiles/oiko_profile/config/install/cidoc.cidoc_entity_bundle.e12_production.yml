@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+crm_entity: e12_production
+id: e12_production
+label: 'E12 Production'
+weight: -25
+group: auxiliary
+description: "<p>This class comprises activities that are designed to, and succeed in, creating one or more new\nitems.</p>\n\n<p>It specializes the notion of modification into production. The decision as to whether or not an\nobject is regarded as new is context sensitive. Normally, items are considered “new” if there is\nno obvious overall similarity between them and the consumed items and material used in their\nproduction. In other cases, an item is considered “new” because it becomes relevant to\ndocumentation by a modification. For example, the scribbling of a name on a potsherd may\nmake it a voting token. The original potsherd may not be worth documenting, in contrast to the\ninscribed one.</p>\n\n<p>This entity can be collective: the printing of a thousand books, for example, would normally be\nconsidered a single event.</p>\n\n<p>An event should also be documented using E81 Transformation if it results in the destruction\nof one or more objects and the simultaneous production of others using parts or material from\nthe originals. In this case, the new items have separate identities and matter is preserved, but\nidentity is not.</p>\n"
+examples: "<ul>\n<li>the construction of the SS Great Britain</li>\n<li>the first casting of the Little Mermaid from the harbour of Copenhagen</li>\n<li>Rembrandt’s creating of the seventh state of his etching “Woman sitting half dressed\nbeside a stove”, 1658, identified by Bartsch Number 197 (E12,E65,E81)</li>\n</ul>\n"

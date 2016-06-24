@@ -1,0 +1,14 @@
+{
+  "name": "drupal/cidoc",
+  "type": "drupal-module",
+  "description": "Implements CIDOC entities & properties in Drupal with bespoke entity types.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/cidoc",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "http://drupal.org/project/issues/cidoc",
+    "source": "http://cgit.drupalcode.org/cidoc"
+  },
+  "require": { }
+}

@@ -1,0 +1,38 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_entity_bundle.e22_man_made_object
+    - cidoc.cidoc_entity_bundle.e42_identifier
+    - cidoc.cidoc_entity_bundle.e49_time_appellation
+    - cidoc.cidoc_entity_bundle.e58_measurement_unit
+    - cidoc.cidoc_entity_bundle.e82_actor_appellation
+    - cidoc.cidoc_property.p16_used_specific_object
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.p16_used_specific_object.range
+field_name: range
+entity_type: cidoc_reference
+bundle: p16_used_specific_object
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e22_man_made_object: e22_man_made_object
+      e58_measurement_unit: e58_measurement_unit
+      e42_identifier: e42_identifier
+      e49_time_appellation: e49_time_appellation
+      e82_actor_appellation: e82_actor_appellation
+      e21_person: e21_person
+    auto_create_bundle: e22_man_made_object
+field_type: entity_reference

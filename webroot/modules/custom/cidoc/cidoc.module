@@ -1,0 +1,202 @@
+<?php
+
+/**
+ * @file
+ * Contains CIDOC module.
+ */
+
+use Drupal\cidoc\Entity\CidocEntityBundle;
+use Drupal\cidoc\Entity\CidocProperty;
+use Drupal\Core\Render\Element;
+use Drupal\field\Entity\FieldConfig;
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function cidoc_entity_extra_field_info() {
+  $extra = array();
+
+  $bundles = \Drupal::service('entity_type.bundle.info')
+    ->getBundleInfo('cidoc_entity');
+  $bundles = CidocEntityBundle::loadMultiple(array_keys($bundles));
+  foreach ($bundles as $bundle => $bundle_entity) {
+    $extra['cidoc_entity'][$bundle]['form']['class_description'] = array(
+      'label' => t('Class description'),
+      'weight' => -20,
+    );
+
+    foreach (array(CidocProperty::DOMAIN_ENDPOINT => FALSE, CidocProperty::RANGE_ENDPOINT => TRUE) as $source_field => $reverse) {
+      /** @var CidocEntityBundle $bundle_entity */
+      if ($applicable_properties = $bundle_entity->getAllEditableProperties($reverse)) {
+        foreach ($applicable_properties as $property_name => $property_entity) {
+          /** @var CidocProperty $property_entity */
+          if ($reverse) {
+            $label = t('Reverse CIDOC Property: %name', ['%name' => $property_entity->reverse_label]);
+          }
+          else {
+            $label = t('CIDOC Property: %name', ['%name' => $property_entity->label()]);
+          }
+          $extra['cidoc_entity'][$bundle]['form']['cidoc_properties:' . $source_field . ':' . $property_name] = array(
+            'label' => $label,
+            'weight' => 20 + intval($reverse),
+          );
+        }
+      }
+    }
+
+    $extra['cidoc_entity'][$bundle]['display']['cidoc_properties'] = array(
+      'label' => t('CIDOC Properties'),
+      'weight' => 0,
+    );
+  }
+
+  return $extra;
+}
+
+/**
+ * Implements hook_query_TAG_alter().
+ *
+ * CidocEntity::getProperties() uses the entity query to get properties
+ * references, but it needs the property names in the result in order to group
+ * them. Entity query results are produced with fetchAllKeyed() so all we need
+ * to do is change the second field to be the property column. Also sort by
+ * property name.
+ */
+function cidoc_query_cidoc_entity_get_properties_alter(\Drupal\Core\Database\Query\AlterableInterface $query) {
+  /** @var \Drupal\Core\Database\Query\Select $query */
+  $fields = &$query->getFields();
+  $existing_fields = array_keys($fields);
+  $fields[$existing_fields[1]]['field'] = 'property';
+
+  $query->orderBy($existing_fields[1]);
+}
+
+/**
+ * Implements hook_query_TAG_alter().
+ *
+ * \Drupal\cidoc\Controller\CidocEntityReferencesController::propertiesForPopulation()
+ * uses the entity query to get referenced properties from & to an entity, but
+ * it only really needs the opposite endpoint IDs and the property bundle,
+ * rather than the reference IDs. Since entity query results are produced with
+ * fetchAllKeyed() we need unique values in the first column. We replace the
+ * fields with two expressions that are concatenations of the needed fields.
+ * Also add a sort for more predicatable behaviour.
+ */
+function cidoc_query_cidoc_get_properties_for_population_alter(\Drupal\Core\Database\Query\AlterableInterface $query) {
+  /** @var \Drupal\Core\Database\Query\Select $query */
+  $fields = &$query->getFields();
+  $id_field = reset($fields);
+  $base_table = $id_field['table'];
+  $id_field = $id_field['field'];
+  $fields = array();
+
+  $all_conditions = $query->conditions();
+  /** @var \Drupal\Core\Database\Query\Condition $all_conditions_obj */
+  $all_conditions_obj = $all_conditions[0]['field'];
+  $orred_conditions = $all_conditions_obj->conditions();
+  /** @var \Drupal\Core\Database\Query\Condition $domain_condition_obj */
+  $domain_condition_obj = $orred_conditions[0]['field'];
+  $domain_condition = $domain_condition_obj->conditions();
+  /** @var \Drupal\Core\Database\Query\Condition $range_condition_obj */
+  $range_condition_obj = $orred_conditions[1]['field'];
+  $range_condition = $range_condition_obj->conditions();
+
+  $query->addExpression('CONCAT(' . $base_table . '.' . $id_field . ",':'," . $base_table . '.property)', 'id_property');
+  $domain_field = $domain_condition[0]['field'];
+  $range_field = $range_condition[0]['field'];
+  $query->addExpression('CONCAT(' . $domain_field . ",'>'," . $range_field . ')', 'opposite_endpoint');
+
+  $query->orderBy($base_table . '.' . $id_field);
+}
+
+/**
+ * Implements hook_entity_bundle_create().
+ *
+ * Loop through all CIDOC properties, to add $bundle to any domain or range
+ * endpoint field that should allow any bundles (*).
+ */
+function cidoc_entity_bundle_create($entity_type_id, $bundle) {
+  if ($entity_type_id === 'cidoc_entity') {
+    $property_ids = \Drupal::entityQuery('cidoc_property', 'OR')
+      ->condition('domain_bundles.*', '*')
+      ->condition('range_bundles.*', '*')
+      ->execute();
+    /** @var CidocProperty $property */
+    foreach (CidocProperty::loadMultiple($property_ids) as $property_id => $property) {
+      if (in_array('*', $property->domain_bundles, TRUE)) {
+        $field_instance = FieldConfig::loadByName('cidoc_reference', $property_id, 'domain');
+        $settings = $field_instance->getSetting('handler_settings');
+        $settings['target_bundles'][$bundle] = $bundle;
+        $field_instance->setSetting('handler_settings', $settings);
+        $field_instance->save();
+      }
+      if (in_array('*', $property->range_bundles, TRUE)) {
+        $field_instance = FieldConfig::loadByName('cidoc_reference', $property_id, 'range');
+        $settings = $field_instance->getSetting('handler_settings');
+        $settings['target_bundles'][$bundle] = $bundle;
+        $field_instance->setSetting('handler_settings', $settings);
+        $field_instance->save();
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function cidoc_theme() {
+  $theme = [];
+  $file = 'cidoc.theme.inc';
+  $theme['cidoc_entity'] = [
+    'render element' => 'elements',
+    'file' => $file,
+    'template' => 'cidoc_entity',
+  ];
+  $theme['cidoc_reference'] = [
+    'render element' => 'elements',
+    'file' => $file,
+    'template' => 'cidoc_reference',
+  ];
+  $theme['cidoc_reference_content_add_list'] = [
+    'render element' => 'content',
+    'variables' => ['content' => NULL],
+    'file' => $file,
+  ];
+  $theme['cidoc_properties_references_widget'] = [
+    'render element' => 'element',
+    'file' => $file,
+  ];
+  return $theme;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function cidoc_theme_suggestions_cidoc_entity(array $variables) {
+  $suggestions = array();
+  $entity = $variables['elements']['#cidoc_entity'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'cidoc_entity__' . $sanitized_view_mode;
+  $suggestions[] = 'cidoc_entity__' . $entity->bundle();
+  $suggestions[] = 'cidoc_entity__' . $entity->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'cidoc_entity__' . $entity->id();
+  $suggestions[] = 'cidoc_entity__' . $entity->id() . '__' . $sanitized_view_mode;
+  return $suggestions;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function cidoc_theme_suggestions_cidoc_reference(array $variables) {
+  $suggestions = array();
+  $entity = $variables['elements']['#cidoc_reference'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'cidoc_reference__' . $sanitized_view_mode;
+  $suggestions[] = 'cidoc_reference__' . $entity->bundle();
+  $suggestions[] = 'cidoc_reference__' . $entity->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'cidoc_reference__' . $entity->id();
+  $suggestions[] = 'cidoc_reference__' . $entity->id() . '__' . $sanitized_view_mode;
+  return $suggestions;
+}

@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p99_dissolved
+label: 'P99 dissolved'
+reverse_label: 'was dissolved by'
+domain_bundles:
+  - e68_dissolution
+range_bundles:
+  - e74_group
+editability:
+  domain: true
+  range: true

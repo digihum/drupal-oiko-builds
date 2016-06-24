@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p17_was_motivated_by
+label: 'P17 was motivated by'
+reverse_label: motivated
+domain_bundles:
+  0: e7_activity
+  5: e66_formation
+  10: e9_move
+  11: e12_production
+range_bundles:
+  2: e52_time_span
+  3: e53_place
+  4: e54_dimension
+  7: e4_period
+  10: e5_event
+  11: e21_person
+  12: e74_group
+  17: e7_activity
+  23: e12_production
+  25: e66_formation
+  26: e67_birth
+  28: e68_dissolution
+  29: e69_death
+  30: e6_destruction
+  38: e9_move
+  39: e22_man_made_object
+  58: e58_measurement_unit
+  63: e42_identifier
+  65: e49_time_appellation
+  68: e82_actor_appellation
+editability:
+  domain: true
+  range: true

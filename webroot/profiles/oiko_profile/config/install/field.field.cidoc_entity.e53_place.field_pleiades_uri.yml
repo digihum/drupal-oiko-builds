@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e53_place
+    - field.storage.cidoc_entity.field_pleiades_uri
+  module:
+    - link
+id: cidoc_entity.e53_place.field_pleiades_uri
+field_name: field_pleiades_uri
+entity_type: cidoc_entity
+bundle: e53_place
+label: 'Pleiades URI'
+description: "<p>If known, enter the <a href=\"http://pleiades.stoa.org/\">Pleiades</a> Canonical URI.</p>\r\n<p>For example: http://pleiades.stoa.org/places/93820013</p>"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 0
+field_type: link

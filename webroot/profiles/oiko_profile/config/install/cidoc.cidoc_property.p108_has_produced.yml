@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p108_has_produced
+label: 'P108 has produced'
+reverse_label: 'was produced by'
+domain_bundles:
+  - e12_production
+range_bundles:
+  1: e22_man_made_object
+editability:
+  domain: true
+  range: true

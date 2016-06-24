@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p7_took_place_at
+label: 'P7 took place at'
+reverse_label: witnessed
+domain_bundles:
+  0: e4_period
+  1: e5_event
+  4: e7_activity
+  5: e12_production
+  7: e66_formation
+  8: e67_birth
+  10: e68_dissolution
+  11: e69_death
+  12: e6_destruction
+  20: e9_move
+range_bundles:
+  - e53_place
+editability:
+  domain: true
+  range: true

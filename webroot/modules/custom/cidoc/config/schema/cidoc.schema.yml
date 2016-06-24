@@ -1,0 +1,67 @@
+# Schema for the configuration files of the CIDOC module.
+
+cidoc.cidoc_entity_bundle.*:
+  type: config_entity
+  label: 'CIDOC entity class config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    crm_entity:
+      type: string
+      label: 'CRM Entity'
+    group:
+      type: text
+      label: 'Group'
+    weight:
+      type: integer
+      label: 'Weight'
+    description:
+      type: text
+      label: 'Description'
+    examples:
+      type: text
+      label: 'Description'
+    uuid:
+      type: string
+
+cidoc.cidoc_property.*:
+  type: config_entity
+  label: 'CIDOC property config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    reverse_label:
+      type: label
+      label: 'Reverse label'
+    domain_bundles:
+      type: sequence
+      label: 'Allowed bundles of related entities'
+      sequence:
+        type: string
+        label: 'Domain bundle'
+    range_bundles:
+      type: sequence
+      label: 'Target bundles of related entities'
+      sequence:
+        type: string
+        label: 'Range bundle'
+    uuid:
+      type: string
+    editability:
+      type: mapping
+      label: 'Which endpoint entities the property will be editable on.'
+      mapping:
+        domain:
+          type: boolean
+          label: 'Editable on domain entities'
+        range:
+          type: boolean
+          label: 'Editable on range entities'

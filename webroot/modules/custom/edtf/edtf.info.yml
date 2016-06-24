@@ -1,0 +1,7 @@
+name: EDTF
+type: module
+description: Defines a field type for EDTF date strings
+core: 8.x
+package: Field types
+dependencies:
+  - field

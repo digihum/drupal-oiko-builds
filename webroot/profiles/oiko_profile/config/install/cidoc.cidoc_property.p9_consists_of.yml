@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p9_consists_of
+label: 'P9 consists of'
+reverse_label: 'forms part of'
+domain_bundles:
+  0: e4_period
+  1: e5_event
+  4: e7_activity
+  5: e12_production
+  7: e66_formation
+  8: e67_birth
+  10: e68_dissolution
+  11: e69_death
+  12: e6_destruction
+  20: e9_move
+range_bundles:
+  0: e4_period
+  1: e5_event
+  4: e7_activity
+  5: e12_production
+  7: e66_formation
+  8: e67_birth
+  10: e68_dissolution
+  11: e69_death
+  12: e6_destruction
+  20: e9_move
+editability:
+  domain: true
+  range: true

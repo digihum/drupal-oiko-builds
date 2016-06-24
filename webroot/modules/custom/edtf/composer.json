@@ -1,0 +1,12 @@
+{
+  "name": "drupal/edtf",
+  "type": "drupal-module",
+  "description": "Defines a field type for EDTF date strings",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/edtf",
+  "minimum-stability": "dev",
+  "require": {
+    "computerminds/php-edtf": "^0.2"
+  }
+}

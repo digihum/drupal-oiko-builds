@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p16_used_specific_object
+    - core.entity_form_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.p16_used_specific_object.domain
+    - field.field.cidoc_reference.p16_used_specific_object.range
+id: cidoc_reference.p16_used_specific_object.domain
+targetEntityType: cidoc_reference
+bundle: p16_used_specific_object
+mode: domain
+content:
+  range:
+    type: entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: 60
+      placeholder: 'Start typing to find a match or create new entity...'
+    weight: 0
+    third_party_settings: {  }
+hidden:
+  domain: true
+  langcode: true
+  user_id: true

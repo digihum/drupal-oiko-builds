@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p27_moved_from
+label: 'P27 moved from'
+reverse_label: 'was origin of'
+domain_bundles:
+  - e9_move
+range_bundles:
+  - e53_place
+editability:
+  domain: true
+  range: true

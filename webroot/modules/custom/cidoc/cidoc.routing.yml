@@ -1,0 +1,13 @@
+entity.cidoc_entity.populate_properties:
+  path: '/cidoc-entity/{cidoc_entity}/populate'
+  defaults:
+    _title: 'Properties needing population'
+    _title_callback: '\Drupal\cidoc\Controller\CidocEntityReferencesController::propertiesForPopulationTitle'
+    _controller: '\Drupal\cidoc\Controller\CidocEntityReferencesController::propertiesForPopulation'
+    entity_type: 'cidoc_entity'
+  requirements:
+    _permission: 'edit cidoc entities+administer cidoc entities'
+    _access_cidoc_entity_references_info: 'view'
+    cidoc_entity: \d+
+  options:
+    _admin_route: TRUE

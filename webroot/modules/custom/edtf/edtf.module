@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Contains edtf.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function edtf_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the edtf module.
+    case 'help.page.edtf':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Defines a field type for EDTF date strings') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+

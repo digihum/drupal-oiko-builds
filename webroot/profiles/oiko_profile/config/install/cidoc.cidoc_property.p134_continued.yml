@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p134_continued
+label: 'P134 continued'
+reverse_label: 'was continued by'
+domain_bundles:
+  0: e7_activity
+  5: e66_formation
+  10: e9_move
+  11: e12_production
+range_bundles:
+  0: e7_activity
+  5: e66_formation
+  10: e9_move
+  11: e12_production
+editability:
+  domain: true
+  range: true

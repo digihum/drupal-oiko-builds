@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p13_destroyed
+label: 'P13 destroyed'
+reverse_label: 'was destroyed by'
+domain_bundles:
+  - e6_destruction
+range_bundles:
+  5: e22_man_made_object
+  9: e21_person
+editability:
+  domain: true
+  range: true

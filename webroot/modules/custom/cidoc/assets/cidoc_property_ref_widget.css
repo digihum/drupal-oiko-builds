@@ -1,0 +1,7 @@
+/**
+ * @file CIDOC property references widget css
+ */
+
+.cidoc-references-widget-referencemode label {
+  display: inline;
+}

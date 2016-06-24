@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p1_is_identified_by
+    - field.field.cidoc_reference.p1_is_identified_by.domain
+    - field.field.cidoc_reference.p1_is_identified_by.range
+id: cidoc_reference.p1_is_identified_by.default
+targetEntityType: cidoc_reference
+bundle: p1_is_identified_by
+mode: default
+content:
+  domain:
+    type: entity_reference_autocomplete_tags
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  range:
+    type: entity_reference_autocomplete_tags
+    weight: 12
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  user_id: true

@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p98_brought_into_life
+    - field.field.cidoc_reference.p98_brought_into_life.domain
+    - field.field.cidoc_reference.p98_brought_into_life.range
+id: cidoc_reference.p98_brought_into_life.default
+targetEntityType: cidoc_reference
+bundle: p98_brought_into_life
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  user_id: true

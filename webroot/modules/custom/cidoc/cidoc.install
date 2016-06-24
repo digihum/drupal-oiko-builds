@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the CIDOC module.
+ */
+use Drupal\Core\Field\BaseFieldDefinition;
+
+/**
+ * Add 'populated' field to 'cidoc' entities.
+ */
+function cidoc_update_8001() {
+  // Install the definition that this field had in
+  // \Drupal\cidoc\Entity\CidocEntity::baseFieldDefinitions()
+  // at the time that this update function was written.
+  $storage_definition = BaseFieldDefinition::create('boolean')
+    ->setLabel(t('Content populated'))
+    ->setDescription(t('A boolean indicating whether the CIDOC entity has been populated.'))
+    ->setDefaultValue(FALSE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('populated', 'cidoc_entity', 'cidoc', $storage_definition);
+
+  $database = \Drupal::database();
+  $database->update('cidoc_entity')
+    ->fields(array('populated' => 0))
+    ->execute();
+}

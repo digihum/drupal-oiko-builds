@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+crm_entity: e9_move
+id: e9_move
+label: 'E9 Move'
+weight: -25
+group: main
+description: "<p>This class comprises changes of the physical location of the instances of E19 Physical Object.</p>\n\n<p>Note, that the class E9 Move inherits the property P7 took place at (witnessed): E53 Place.\nThis property should be used to describe the trajectory or a larger area within which a move\ntakes place, whereas the properties P26 moved to (was destination of), P27 moved from (was\norigin of) describe the start and end points only. Moves may also be documented to consist of\nother moves (via P9 consists of (forms part of)), in order to describe intermediate stages on a\ntrajectory. In that case, start and end points of the partial moves should match appropriately\nbetween each other and with the overall event.</p>\n"
+examples: "<ul>\n<li>the relocation of London Bridge from the UK to the USA</li>\n<li>the movement of the exhibition “Treasures of Tut-Ankh-Amun” 1976-1979</li>\n</ul>\n"

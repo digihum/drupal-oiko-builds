@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p131_is_identified_by
+label: 'P131 is identified by'
+reverse_label: identifies
+domain_bundles:
+  1: e21_person
+  2: e74_group
+range_bundles:
+  - e82_actor_appellation
+editability:
+  domain: true
+  range: true

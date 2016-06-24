@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p25_moved
+label: 'P25 moved'
+reverse_label: 'moved by'
+domain_bundles:
+  - e9_move
+range_bundles:
+  2: e22_man_made_object
+  3: e21_person
+editability:
+  domain: true
+  range: true

@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e52_time_span
+    - field.storage.cidoc_entity.field_date
+  module:
+    - edtf
+id: cidoc_entity.e52_time_span.field_date
+field_name: field_date
+entity_type: cidoc_entity
+bundle: e52_time_span
+label: Date
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: edtf

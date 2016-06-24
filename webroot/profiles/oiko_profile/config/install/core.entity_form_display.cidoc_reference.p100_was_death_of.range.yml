@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p100_was_death_of
+    - core.entity_form_mode.cidoc_reference.range
+    - field.field.cidoc_reference.p100_was_death_of.domain
+    - field.field.cidoc_reference.p100_was_death_of.range
+id: cidoc_reference.p100_was_death_of.range
+targetEntityType: cidoc_reference
+bundle: p100_was_death_of
+mode: range
+content:
+  domain:
+    type: entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: 60
+      placeholder: 'Start typing to find a match or create new entity...'
+    weight: 0
+    third_party_settings: {  }
+hidden:
+  langcode: true
+  range: true
+  user_id: true

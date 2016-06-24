@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p26_moved_to
+    - field.field.cidoc_reference.p26_moved_to.domain
+    - field.field.cidoc_reference.p26_moved_to.range
+id: cidoc_reference.p26_moved_to.default
+targetEntityType: cidoc_reference
+bundle: p26_moved_to
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  user_id: true

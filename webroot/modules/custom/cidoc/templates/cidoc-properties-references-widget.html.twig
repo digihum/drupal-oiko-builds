@@ -1,0 +1,50 @@
+{#
+/**
+ * @file cidoc_reference.html.twig
+ * Default theme implementation to present CIDOC property references widget.
+ *
+ * This template is used when viewing the CIDOC property references widget.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_cidoc_properties_references_widget()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if element.tab_prefix %}
+  {{- element.tab_prefix -}}
+{% endif %}
+<table>
+  {% if headers %}
+    <thead>
+      <tr>
+        {% for header_key, header_label in headers %}
+          <th>{{- header_label -}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+  {% endif %}
+  {% if rows %}
+    <tbody>
+      {% for row in rows %}
+        <tr>
+          {% for cell in row %}
+            <td>
+              {{- cell -}}
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  {% endif %}
+</table>
+{% if element.add_another %}
+  {{- element.add_another -}}
+{% endif %}
+{% if element.tab_suffix %}
+  {{- element.tab_suffix -}}
+{% endif %}

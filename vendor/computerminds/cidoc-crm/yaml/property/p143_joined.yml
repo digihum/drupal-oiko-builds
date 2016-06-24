@@ -1,0 +1,7 @@
+---
+label: P143 joined
+domain: e85_joining
+range: e39_actor
+superproperties:
+  - p11_had_participant
+reverse label: was joined by

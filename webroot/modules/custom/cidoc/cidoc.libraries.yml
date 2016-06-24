@@ -1,0 +1,24 @@
+drupal.cidoc_dont_leave_me:
+  version: VERSION
+  js:
+    assets/cidoc_dont_leave_me.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
+drupal.cidoc_property_form:
+  version: VERSION
+  css:
+    component:
+      assets/cidoc_property_form.css: {}
+
+drupal.cidoc_property_reference_widget:
+  version: VERSION
+  css:
+    component:
+      assets/cidoc_property_ref_widget.css: {}
+  js:
+    assets/cidoc_property_ref_widget.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal

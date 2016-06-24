@@ -1,0 +1,5 @@
+services:
+  access_check.cidoc.references:
+    class: Drupal\cidoc\Access\CidocEntityReferencesAccessCheck
+    tags:
+      - { name: access_check, applies_to: _access_cidoc_entity_references_info }

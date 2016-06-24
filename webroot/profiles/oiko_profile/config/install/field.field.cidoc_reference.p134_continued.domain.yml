@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e12_production
+    - cidoc.cidoc_entity_bundle.e66_formation
+    - cidoc.cidoc_entity_bundle.e7_activity
+    - cidoc.cidoc_entity_bundle.e9_move
+    - cidoc.cidoc_property.p134_continued
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.p134_continued.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: p134_continued
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e7_activity: e7_activity
+      e66_formation: e66_formation
+      e9_move: e9_move
+      e12_production: e12_production
+    auto_create_bundle: e7_activity
+field_type: entity_reference

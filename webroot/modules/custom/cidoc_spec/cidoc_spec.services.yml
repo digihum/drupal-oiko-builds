@@ -1,0 +1,16 @@
+services:
+  cidoc_spec.entity_factory:
+    class: ComputerMinds\CIDOC_CRM\EntityFactory
+    arguments: []
+  cidoc_spec.property_factory:
+    class: ComputerMinds\CIDOC_CRM\PropertyFactory
+    arguments: []
+  cidoc_spec.entity_traversal:
+    class: ComputerMinds\CIDOC_CRM\EntityTraversal
+    arguments: ['@cidoc_spec.entity_factory']
+  cidoc_spec.property_traversal:
+    class: ComputerMinds\CIDOC_CRM\PropertyTraversal
+    arguments: ['@cidoc_spec.property_factory']
+  cidoc_spec.drupal_manager:
+    class: Drupal\cidoc_spec\DrupalCidocManager
+    arguments: ['@cidoc_spec.entity_factory', '@cidoc_spec.property_factory', '@config.factory']

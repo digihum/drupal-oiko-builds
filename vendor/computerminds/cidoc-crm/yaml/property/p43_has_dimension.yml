@@ -1,0 +1,5 @@
+---
+label: P43 has dimension
+domain: e70_thing
+range: e54_dimension
+reverse label: is dimension of

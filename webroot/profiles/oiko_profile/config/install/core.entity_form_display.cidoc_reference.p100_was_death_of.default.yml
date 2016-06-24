@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p100_was_death_of
+    - field.field.cidoc_reference.p100_was_death_of.domain
+    - field.field.cidoc_reference.p100_was_death_of.range
+id: cidoc_reference.p100_was_death_of.default
+targetEntityType: cidoc_reference
+bundle: p100_was_death_of
+mode: default
+content:
+  domain:
+    type: entity_reference_autocomplete_tags
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  range:
+    type: entity_reference_autocomplete_tags
+    weight: 12
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  user_id: true

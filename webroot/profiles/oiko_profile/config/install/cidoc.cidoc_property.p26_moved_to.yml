@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p26_moved_to
+label: 'P26 moved to'
+reverse_label: 'was destination of'
+domain_bundles:
+  - e9_move
+range_bundles:
+  - e53_place
+editability:
+  domain: true
+  range: true

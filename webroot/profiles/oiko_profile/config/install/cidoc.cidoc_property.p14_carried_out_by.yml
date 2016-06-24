@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p14_carried_out_by
+label: 'P14 carried out by'
+reverse_label: performed
+domain_bundles:
+  0: e7_activity
+  5: e66_formation
+  10: e9_move
+  11: e12_production
+range_bundles:
+  1: e21_person
+  2: e74_group
+editability:
+  domain: true
+  range: true

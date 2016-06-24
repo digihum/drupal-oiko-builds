@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p131_is_identified_by
+    - core.entity_view_mode.cidoc_reference.range
+    - field.field.cidoc_reference.p131_is_identified_by.domain
+    - field.field.cidoc_reference.p131_is_identified_by.range
+id: cidoc_reference.p131_is_identified_by.range
+targetEntityType: cidoc_reference
+bundle: p131_is_identified_by
+mode: range
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+hidden:
+  property: true
+  range: true
+  user_id: true

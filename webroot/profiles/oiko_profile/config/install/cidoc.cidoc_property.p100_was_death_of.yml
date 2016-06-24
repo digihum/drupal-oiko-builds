@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p100_was_death_of
+label: 'P100 was death of'
+reverse_label: 'died in'
+domain_bundles:
+  - e69_death
+range_bundles:
+  - e21_person
+editability:
+  domain: true
+  range: true

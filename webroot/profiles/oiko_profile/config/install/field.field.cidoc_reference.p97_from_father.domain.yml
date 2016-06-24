@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e67_birth
+    - cidoc.cidoc_property.p97_from_father
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.p97_from_father.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: p97_from_father
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e67_birth: e67_birth
+    auto_create_bundle: e67_birth
+field_type: entity_reference

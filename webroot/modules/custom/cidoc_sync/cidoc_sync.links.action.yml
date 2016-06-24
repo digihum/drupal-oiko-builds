@@ -1,0 +1,6 @@
+cidoc_sync.sync_form:
+  route_name: 'cidoc_sync.sync_form'
+  title: 'Sync CIDOC-CRM'
+  appears_on:
+    - entity.cidoc_entity_bundle.collection
+    - entity.cidoc_property.collection

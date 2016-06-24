@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p96_by_mother
+    - core.entity_form_mode.cidoc_reference.range
+    - field.field.cidoc_reference.p96_by_mother.domain
+    - field.field.cidoc_reference.p96_by_mother.range
+id: cidoc_reference.p96_by_mother.range
+targetEntityType: cidoc_reference
+bundle: p96_by_mother
+mode: range
+content:
+  domain:
+    type: entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: 60
+      placeholder: 'Start typing to find a match or create new entity...'
+    weight: 0
+    third_party_settings: {  }
+hidden:
+  langcode: true
+  range: true
+  user_id: true

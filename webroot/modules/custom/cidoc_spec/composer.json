@@ -1,0 +1,12 @@
+{
+  "name": "drupal/cidoc_spec",
+  "type": "drupal-module",
+  "description": "Provides the CIDOC spec as Yaml and PHP.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/cidoc_spec",
+  "minimum-stability": "dev",
+  "require": {
+    "computerminds/cidoc-crm": "^0.5"
+  }
+}

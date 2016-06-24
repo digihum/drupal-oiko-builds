@@ -1,0 +1,8 @@
+name: CIDOC Sync
+type: module
+description: 'A way to sync CIDOC-CRM definitions with Drupal bundle'
+package: CIDOC
+core: 8.x
+dependencies:
+  - cidoc
+  - cidoc_spec

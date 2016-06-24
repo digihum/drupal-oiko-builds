@@ -1,0 +1,4 @@
+services:
+  edtf.edtf-info-factory:
+    class: ComputerMinds\EDTF\EDTFInfoLegacyFactory
+    arguments: []

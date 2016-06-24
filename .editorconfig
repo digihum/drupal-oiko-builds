@@ -1,0 +1,5 @@
+# This is the top-most .editorconfig file; do not search in parent directories.
+root = false
+
+[composer.json]
+indent_size = 4

@@ -1,0 +1,5 @@
+---
+label: P118 overlaps in time with
+domain: e2_temporal_entity
+range: e2_temporal_entity
+reverse label: is overlapped in time by

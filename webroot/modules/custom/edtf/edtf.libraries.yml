@@ -1,0 +1,21 @@
+edtfy:
+  remote: https://github.com/nicompte/edtfy
+  version: "v0.0.2"
+  license:
+    name: MIT
+    url: https://github.com/nicompte/edtfy/blob/v0.0.2/LICENSE.md
+    gpl-compatible: true
+  js:
+    js/edtfy.min.js: { minified: true }
+
+autofill:
+  version: VERSION
+  js:
+    js/autofill-edtf-date.js: {}
+  dependencies:
+    - edtf/edtfy
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - core/drupalSettings
+    - core/drupal.form

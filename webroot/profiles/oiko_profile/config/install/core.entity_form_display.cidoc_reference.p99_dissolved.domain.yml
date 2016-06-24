@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p99_dissolved
+    - core.entity_form_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.p99_dissolved.domain
+    - field.field.cidoc_reference.p99_dissolved.range
+id: cidoc_reference.p99_dissolved.domain
+targetEntityType: cidoc_reference
+bundle: p99_dissolved
+mode: domain
+content:
+  range:
+    type: entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: 60
+      placeholder: 'Start typing to find a match or create new entity...'
+    weight: 0
+    third_party_settings: {  }
+hidden:
+  domain: true
+  langcode: true
+  user_id: true

@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p17_was_motivated_by
+    - field.field.cidoc_reference.p17_was_motivated_by.domain
+    - field.field.cidoc_reference.p17_was_motivated_by.range
+id: cidoc_reference.p17_was_motivated_by.default
+targetEntityType: cidoc_reference
+bundle: p17_was_motivated_by
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  user_id: true

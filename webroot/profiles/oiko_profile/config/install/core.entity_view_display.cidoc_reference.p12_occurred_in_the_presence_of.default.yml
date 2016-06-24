@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p12_occurred_in_the_presence_of
+    - field.field.cidoc_reference.p12_occurred_in_the_presence_of.domain
+    - field.field.cidoc_reference.p12_occurred_in_the_presence_of.range
+id: cidoc_reference.p12_occurred_in_the_presence_of.default
+targetEntityType: cidoc_reference
+bundle: p12_occurred_in_the_presence_of
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  user_id: true

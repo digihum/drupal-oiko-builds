@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_reference.range
+field_name: range
+entity_type: cidoc_reference
+type: entity_reference
+settings:
+  target_type: cidoc_entity
+module: core
+locked: true
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

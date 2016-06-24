@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p4_has_time_span
+    - field.field.cidoc_reference.p4_has_time_span.domain
+    - field.field.cidoc_reference.p4_has_time_span.range
+id: cidoc_reference.p4_has_time_span.default
+targetEntityType: cidoc_reference
+bundle: p4_has_time_span
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  user_id: true

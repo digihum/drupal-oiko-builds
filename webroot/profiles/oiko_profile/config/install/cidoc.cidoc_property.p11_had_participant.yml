@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p11_had_participant
+label: 'P11 had participant'
+reverse_label: 'participated in'
+domain_bundles:
+  0: e5_event
+  3: e7_activity
+  4: e12_production
+  6: e66_formation
+  7: e67_birth
+  9: e68_dissolution
+  10: e69_death
+  11: e6_destruction
+  19: e9_move
+range_bundles:
+  1: e21_person
+  2: e74_group
+editability:
+  domain: true
+  range: true
