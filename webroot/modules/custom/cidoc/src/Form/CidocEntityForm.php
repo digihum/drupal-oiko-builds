@@ -266,7 +266,7 @@ class CidocEntityForm extends ContentEntityForm {
 
           $form[$element_key]['add_another'] = array(
             '#type' => 'submit',
-            '#name' => 'cidoc_properties_' . $source_field . '_add_more',
+            '#name' => 'cidoc_properties_' . $source_field . '_' . $property_name . '_add_more',
             '#value' => t('Add another'),
             '#attributes' => array('class' => array('field-add-more-submit')),
             '#limit_validation_errors' => array(array($element_key, 'references', $reference_id)),
