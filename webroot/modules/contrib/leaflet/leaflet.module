@@ -10,9 +10,6 @@ function leaflet_theme($existing, $type, $theme, $path) {
         'height' => '400px',
         'map' => array(),
       ),
-      // When theme('leaflet_map'...) is called, the system will look for
-      // /leaflet/templates/leaflet_map.html.twig.
-      'template' => 'leaflet_map',
     ),
   );
 }
@@ -108,7 +105,7 @@ function leaflet_leaflet_map_info() {
         ),
         'layers' => array(
           'earth' => array(
-            'urlTemplate' => 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            'urlTemplate' => '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             'options' => array(
               'attribution' => 'OSM Mapnik'
             )

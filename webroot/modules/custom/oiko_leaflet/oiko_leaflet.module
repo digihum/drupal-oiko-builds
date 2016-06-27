@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ * Intergration with leaflet for the Oiko project.
+ */
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function oiko_leaflet_library_info_alter(array &$libraries, $module) {
+  if ($module === 'leaflet' && isset($libraries['leaflet'])) {
+    // Override the leaflet library to a local version.
+    $libraries['leaflet'] = array(
+      'js' => array(
+        '/libraries/Leaflet/dist/leaflet.js' => array(),
+      ),
+      'css' => array(
+        'component' => array(
+          '/libraries/Leaflet/dist/leaflet.css' => array(),
+        ),
+      ),
+      'version' => '0.7.7',
+      'license' => $libraries['leaflet'],
+    );
+  }
+}
+
+/**
+ * Implements hook_leaflet_map_info() to return a default map.
+ *
+ * @return array
+ */
+function oiko_leaflet_leaflet_map_info() {
+  return array(
+    'Ancient Terrain' =>
+      array(
+        'label' => 'Ancient Terrain',
+        'description' => t('Ancient Terrain map.'),
+        'settings' => array(
+          'dragging' => TRUE,
+          'touchZoom' => TRUE,
+          'scrollWheelZoom' => TRUE,
+          'doubleClickZoom' => TRUE,
+          'zoomControl' => TRUE,
+          'attributionControl' => TRUE,
+          'trackResize' => TRUE,
+          'fadeAnimation' => TRUE,
+          'zoomAnimation' => TRUE,
+          'closePopupOnClick' => TRUE,
+          'minZoom' => 6,
+          'maxZoom' => 9,
+        ),
+        'layers' => array(
+          'earth' => array(
+            'urlTemplate' => '//api.tiles.mapbox.com/v4/isawnyu.map-knmctlkh/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZGFydGhzdGV2ZW4iLCJhIjoiY2lweTFzOWJxMDA4ZWh0bTJlb28xc3R6NyJ9.94HMG5U3tZiei13s7Rqaog',
+            'options' => array(
+              'attribution' => 'Powered by <a href="http://leafletjs.com/">Leaflet</a> and <a href="https://www.mapbox.com/">Mapbox</a>. Map base by <a title="Ancient World Mapping Center (UNC-CH)" href="http://awmc.unc.edu">AWMC</a>, 2014 (cc-by-nc).'
+            )
+          ),
+        ),
+      ),
+  );
+}

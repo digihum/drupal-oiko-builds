@@ -4,9 +4,22 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0bf850abe6f1b9d46054a42c5e4d9fb2",
-    "content-hash": "b4167b8bc9dba841ccc481472a40a9c4",
+    "hash": "265c312447921e10cb815f77ae66eed7",
+    "content-hash": "a1a9ab4ea6d172664194f36e6a7ad477",
     "packages": [
+        {
+            "name": "Leaflet/Leaflet",
+            "version": "0.7.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Leaflet/Leaflet.git",
+                "reference": "v0.7.7"
+            },
+            "require": {
+                "composer/installers": "^1.0.21"
+            },
+            "type": "drupal-library"
+        },
         {
             "name": "alchemy/zippy",
             "version": "0.3.5",
@@ -1410,7 +1423,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/devel",
-                "reference": "728a40681856fccc9d7b782d116352c3743ddeec"
+                "reference": "9a124021890f30e9ed361053cfc45af2bd7a79f6"
             },
             "require": {
                 "drupal/core": "8.*"
@@ -1445,7 +1458,7 @@
             ],
             "description": "Various blocks, pages, and functions for developers.",
             "homepage": "http://drupal.org/project/devel",
-            "time": "2016-06-24 11:57:42"
+            "time": "2016-06-26 19:47:53"
         },
         {
             "name": "drupal/features",
@@ -1564,17 +1577,11 @@
         },
         {
             "name": "drupal/leaflet",
-            "version": "8.1.0-alpha1",
+            "version": "dev-8.x-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/leaflet",
-                "reference": "75c18392d6a1475ae20abfd90339171ff9a6797a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/leaflet-8.x-1.0-alpha1.zip",
-                "reference": null,
-                "shasum": null
+                "reference": "a3274e487039c5066eea2f394185b04ea10d1c75"
             },
             "require": {
                 "drupal/core": "8.*"
@@ -1593,7 +1600,9 @@
                 },
                 "patches_applied": {
                     "New version of geofield uses composer for geophp dependency, geophp_load not needed": "https://www.drupal.org/files/issues/leaflet-remove_geophp_load_call-2731917-2.patch",
-                    "Fixes Incorrect parameter icon_url in Drupal.Leaflet.prototype.create_icon": "https://www.drupal.org/files/issues/leaflet-fix_incorrect_parameter_name_in_create_icon-2732267-2.patch"
+                    "Fixes Incorrect parameter icon_url in Drupal.Leaflet.prototype.create_icon": "https://www.drupal.org/files/issues/leaflet-fix_incorrect_parameter_name_in_create_icon-2732267-2.patch",
+                    "Fixes maps not working on HTTPS": "https://www.drupal.org/files/issues/leaflet-ssl_support-2753703-2_0.patch",
+                    "Fixes the API docs to include a missing hook": "https://www.drupal.org/files/issues/leaflet-add-hook_leaflet_map_info_alter-2746721-2.patch"
                 }
             },
             "notification-url": "https://packagist.drupal-composer.org/downloads/",
@@ -1602,7 +1611,7 @@
             ],
             "description": "Integration with the Leaflet map scripting library.",
             "homepage": "https://www.drupal.org/project/leaflet",
-            "time": "2016-02-22 10:07:46"
+            "time": "2016-04-04 21:22:53"
         },
         {
             "name": "drupal/leaflet_widget",
@@ -2229,16 +2238,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "31382fef2889136415751badebbd1cb022a4ed72"
+                "reference": "5c6447c9df362e8f8093bda8f5d8873fe5c7f65b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/31382fef2889136415751badebbd1cb022a4ed72",
-                "reference": "31382fef2889136415751badebbd1cb022a4ed72",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/5c6447c9df362e8f8093bda8f5d8873fe5c7f65b",
+                "reference": "5c6447c9df362e8f8093bda8f5d8873fe5c7f65b",
                 "shasum": ""
             },
             "require": {
@@ -2254,7 +2263,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -2283,7 +2292,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2016-04-13 19:56:01"
+            "time": "2016-06-24 23:00:38"
         },
         {
             "name": "henrikbjorn/lurker",
@@ -3589,7 +3598,7 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony CMF Community",
+                    "name": "Symfony CMF community",
                     "homepage": "https://github.com/symfony-cmf/Routing/contributors"
                 }
             ],
@@ -6880,6 +6889,7 @@
         "drupal/add_to_head": 20,
         "drupal/devel": 20,
         "drupal/features": 20,
+        "drupal/leaflet": 20,
         "drupal/leaflet_widget": 20,
         "drupal/migrate_tools": 20,
         "jcalderonzumba/gastonjs": 20

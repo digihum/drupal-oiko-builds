@@ -75,6 +75,7 @@ dependencies:
   - cidoc
   - cidoc_sync
   - edtf
+  - oiko_leaflet
 
 themes:
   - seven

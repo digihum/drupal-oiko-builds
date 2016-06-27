@@ -42,7 +42,7 @@ function hook_leaflet_map_info() {
       ),
       'layers' => array(
         'earth' => array(
-          'urlTemplate' => 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          'urlTemplate' => '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           'options' => array(
             'attribution' => 'OSM Mapnik'
           )
@@ -62,4 +62,19 @@ function hook_leaflet_map_info() {
       'plugins' => array(),
     ),
   );
+}
+
+
+/**
+ * Alters the map definitions for one or more maps that were defined by
+ * hook_leaflet_map_info().
+ *
+ * The settings array maps to the settings available
+ * to leaflet map object, http://leaflet.cloudmade.com/reference.html#map-properties
+ *
+ * @param array $map_info
+ */
+function hook_leaflet_map_info_alter(array &$map_info) {
+  // Set a custom iconUrl for the default map type.
+  $map_info['OSM Mapnik']['icon']['iconUrl'] = '/sites/default/files/icon.png';
 }
