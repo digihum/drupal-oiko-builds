@@ -109,7 +109,7 @@ content:
     weight: 2
     settings:
       map:
-        leaflet_map: 'OSM Mapnik'
+        leaflet_map: 'Ancient Terrain'
         height: '500'
         center:
           lat: '41.0866016'
