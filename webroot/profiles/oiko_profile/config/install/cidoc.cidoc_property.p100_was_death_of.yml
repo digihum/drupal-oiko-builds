@@ -6,6 +6,7 @@ label: 'P100 was death of'
 reverse_label: 'died in'
 domain_bundles:
   - e69_death
+  - o1_killing
 range_bundles:
   - e21_person
 editability:

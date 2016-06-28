@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e69_death
+    - cidoc.cidoc_entity_bundle.o1_killing
     - cidoc.cidoc_property.p100_was_death_of
     - field.storage.cidoc_reference.domain
 id: cidoc_reference.p100_was_death_of.domain
@@ -24,5 +25,6 @@ settings:
       direction: ASC
     target_bundles:
       e69_death: e69_death
+      o1_killing: o1_killing
     auto_create_bundle: e69_death
 field_type: entity_reference

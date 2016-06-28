@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e6_destruction
+    - cidoc.cidoc_entity_bundle.o3_active_destruction
     - cidoc.cidoc_property.p13_destroyed
     - field.storage.cidoc_reference.domain
 id: cidoc_reference.p13_destroyed.domain
@@ -24,5 +25,6 @@ settings:
       direction: ASC
     target_bundles:
       e6_destruction: e6_destruction
+      o3_active_destruction: o3_active_destruction
     auto_create_bundle: e6_destruction
 field_type: entity_reference

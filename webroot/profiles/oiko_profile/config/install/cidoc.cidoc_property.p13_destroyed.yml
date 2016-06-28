@@ -6,6 +6,7 @@ label: 'P13 destroyed'
 reverse_label: 'was destroyed by'
 domain_bundles:
   - e6_destruction
+  - o3_active_destruction
 range_bundles:
   5: e22_man_made_object
   9: e21_person

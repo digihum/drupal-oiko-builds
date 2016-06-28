@@ -8,7 +8,10 @@ domain_bundles:
   0: e7_activity
   5: e66_formation
   10: e9_move
-  11: e12_production
+  11: o1_killing
+  12: o2_active_dissolution
+  13: o3_active_destruction
+  14: e12_production
 range_bundles:
   1: e21_person
   2: e74_group

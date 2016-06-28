@@ -1,0 +1,11 @@
+---
+label: O2 Active Dissolution
+superclasses:
+  - e68_dissolution
+  - e7_activity
+description: |
+  This class comprises the events that result in the deliberate termination of an E74
+  Group of people.
+examples: |
+  * the fall of the Roman Empire
+  * the liquidation of Enron Corporation

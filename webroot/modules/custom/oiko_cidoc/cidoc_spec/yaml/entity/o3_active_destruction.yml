@@ -1,0 +1,23 @@
+---
+label: O3 Active Destruction
+superclasses:
+  - e6_destruction
+  - e7_activity
+description: |
+  This class comprises deliberate events that destroy one or more instances of E18 Physical
+  Thing such that they lose their identity as the subjects of documentation.
+
+  These destruction events are intentional, while others are independent of human activity.
+  Unintentional destruction may be documented by classifying the event as an E6 Destruction.
+
+  The decision to document an object as destroyed, transformed or modified is context sensitive:
+  1. If the matter remaining from the destruction is not documented, the event is modelled solely
+     as E6 Destruction.
+  2. An event should also be documented using E81 Transformation if it results in the
+     destruction of one or more objects and the simultaneous production of others using parts or
+     material from the original. In this case, the new items have separate identities. Matter is
+     preserved, but identity is not.
+  3. When the initial identity of the changed instance of E18 Physical Thing is preserved, the
+     event should be documented as E11 Modification.
+examples: |
+  * the destruction of Nineveh

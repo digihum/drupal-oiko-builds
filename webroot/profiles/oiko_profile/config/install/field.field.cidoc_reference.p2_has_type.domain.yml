@@ -22,6 +22,9 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e7_activity
     - cidoc.cidoc_entity_bundle.e82_actor_appellation
     - cidoc.cidoc_entity_bundle.e9_move
+    - cidoc.cidoc_entity_bundle.o1_killing
+    - cidoc.cidoc_entity_bundle.o2_active_dissolution
+    - cidoc.cidoc_entity_bundle.o3_active_destruction
     - cidoc.cidoc_property.p2_has_type
     - field.storage.cidoc_reference.domain
 id: cidoc_reference.p2_has_type.domain
@@ -57,6 +60,9 @@ settings:
       e69_death: e69_death
       e6_destruction: e6_destruction
       e9_move: e9_move
+      o1_killing: o1_killing
+      o2_active_dissolution: o2_active_dissolution
+      o3_active_destruction: o3_active_destruction
       e22_man_made_object: e22_man_made_object
       e58_measurement_unit: e58_measurement_unit
       e42_identifier: e42_identifier

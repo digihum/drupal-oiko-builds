@@ -1,0 +1,9 @@
+---
+label: O1 Killing
+superclasses:
+  - e69_death
+  - e7_activity
+description: |
+  This class comprises the deaths of human beings actively by other actors.
+examples: |
+  * the murder of Julius Caesar
