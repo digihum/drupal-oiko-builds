@@ -112,6 +112,9 @@ config_devel:
   - filter.format.restricted_html
   - system.cron
   - user.role.administrator
+  - cidoc.cidoc_entity_bundle.o1_killing
+  - cidoc.cidoc_entity_bundle.o2_active_dissolution
+  - cidoc.cidoc_entity_bundle.o3_active_destruction
   - cidoc.cidoc_entity_bundle.e12_production
   - cidoc.cidoc_entity_bundle.e21_person
   - cidoc.cidoc_entity_bundle.e22_man_made_object
