@@ -3,3 +3,5 @@ type: module
 description: Extensions for the CIDOC suite of modules for Oiko.
 core: 8.x
 package: Oiko
+dependencies:
+  - cidoc_spec
