@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies: {  }
+id: content_editor
+label: 'Content editor'
+weight: 3
+is_admin: null
+permissions:
+  - 'add cidoc entities'
+  - 'delete cidoc entities'
+  - 'edit cidoc entities'
+  - 'view published cidoc entities'
+  - 'view unpublished cidoc entities'
+  - 'use text format basic_html'
+  - 'access content overview'
+  - 'administer nodes'
+  - 'access administration pages'
+  - 'view the administration theme'
+  - 'access toolbar'
+  - 'access tour'

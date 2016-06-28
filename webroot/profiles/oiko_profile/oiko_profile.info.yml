@@ -113,6 +113,7 @@ config_devel:
   - filter.format.restricted_html
   - system.cron
   - user.role.administrator
+  - user.role.content_editor
   - cidoc.cidoc_entity_bundle.o1_killing
   - cidoc.cidoc_entity_bundle.o2_active_dissolution
   - cidoc.cidoc_entity_bundle.o3_active_destruction
