@@ -45,15 +45,13 @@ class EDTFInfo implements EDTFInfoInterface {
       $client = new GuzzleHttp\Client();
       try {
         $res = $client->request('GET', 'http://edtf.herokuapp.com/', array(
+          'timeout' => 15,
           'query' => array(
             'date' => $this->dateString,
           ),
         ));
       }
-      catch (GuzzleHttp\Exception\ServerException $guzzle_exception) {
-
-      }
-      catch (GuzzleHttp\Exception\ClientException $guzzle_exception) {
+      catch (GuzzleHttp\Exception\GuzzleException $guzzle_exception) {
 
       }
       if (isset($res) && $res->getStatusCode() == 200) {

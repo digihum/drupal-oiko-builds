@@ -5539,17 +5539,17 @@
     },
     {
         "name": "computerminds/php-edtf",
-        "version": "0.2.1",
-        "version_normalized": "0.2.1.0",
+        "version": "0.2.2",
+        "version_normalized": "0.2.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/computerminds/php-edtf.git",
-            "reference": "2eaeafb4c38f7c84e10e4e8f3225ece558b40858"
+            "reference": "855b689f7fc1183b0cd668b191aa46209a35d2c6"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/computerminds/php-edtf/zipball/2eaeafb4c38f7c84e10e4e8f3225ece558b40858",
-            "reference": "2eaeafb4c38f7c84e10e4e8f3225ece558b40858",
+            "url": "https://api.github.com/repos/computerminds/php-edtf/zipball/855b689f7fc1183b0cd668b191aa46209a35d2c6",
+            "reference": "855b689f7fc1183b0cd668b191aa46209a35d2c6",
             "shasum": ""
         },
         "require": {
@@ -5558,7 +5558,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0|~5.0"
         },
-        "time": "2016-06-23 20:58:09",
+        "time": "2016-06-28 13:52:29",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

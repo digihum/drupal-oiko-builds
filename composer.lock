@@ -354,16 +354,16 @@
         },
         {
             "name": "computerminds/php-edtf",
-            "version": "0.2.1",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/computerminds/php-edtf.git",
-                "reference": "2eaeafb4c38f7c84e10e4e8f3225ece558b40858"
+                "reference": "855b689f7fc1183b0cd668b191aa46209a35d2c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/computerminds/php-edtf/zipball/2eaeafb4c38f7c84e10e4e8f3225ece558b40858",
-                "reference": "2eaeafb4c38f7c84e10e4e8f3225ece558b40858",
+                "url": "https://api.github.com/repos/computerminds/php-edtf/zipball/855b689f7fc1183b0cd668b191aa46209a35d2c6",
+                "reference": "855b689f7fc1183b0cd668b191aa46209a35d2c6",
                 "shasum": ""
             },
             "require": {
@@ -390,7 +390,7 @@
                 }
             ],
             "description": "A library for getting information about EDTF formatted strings.",
-            "time": "2016-06-23 20:58:09"
+            "time": "2016-06-28 13:52:29"
         },
         {
             "name": "cweagans/composer-patches",
