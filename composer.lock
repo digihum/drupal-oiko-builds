@@ -1423,7 +1423,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/devel",
-                "reference": "9a124021890f30e9ed361053cfc45af2bd7a79f6"
+                "reference": "47be309dd2c13251ec1a4d84b059160802e9c4ff"
             },
             "require": {
                 "drupal/core": "8.*"
@@ -1458,7 +1458,7 @@
             ],
             "description": "Various blocks, pages, and functions for developers.",
             "homepage": "http://drupal.org/project/devel",
-            "time": "2016-06-26 19:47:53"
+            "time": "2016-06-28 19:49:57"
         },
         {
             "name": "drupal/features",

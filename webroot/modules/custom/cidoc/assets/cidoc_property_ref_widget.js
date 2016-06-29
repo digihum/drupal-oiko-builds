@@ -53,8 +53,13 @@
         $this_referencer.autocomplete({
           response: function (event, data) {
             var add_new_option = true;
+            var autoselect = false;
             if (data.content.length && data.content[0].hasOwnProperty('_cidoc_autocreate_option')) {
               add_new_option = false;
+              // If we only have 1 choice, then preselect.
+              if (data.content.length === 1) {
+                autoselect = true;
+              }
             }
             else {
               if (data.content.length && data.content[(data.content.length - 1)].hasOwnProperty('_cidoc_autocreate_trigger')) {
@@ -63,6 +68,13 @@
             }
             if (add_new_option) {
               data.content[data.content.length] = new_option;
+            }
+            if (autoselect) {
+              $this_referencer.autocomplete('close');
+              var newData = {
+                item: data.content[0]
+              };
+              $this_referencer.autocomplete('option', 'select')(event, newData);
             }
           },
           source: function (request, response) {
