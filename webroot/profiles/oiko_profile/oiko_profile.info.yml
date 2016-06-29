@@ -424,3 +424,5 @@ config_devel:
   - cidoc_entity.e53_place.field_geodata
   - cidoc_entity.e53_place.field_pleiades_uri
   - field.storage.cidoc_entity.field_pleiades_uri
+  - views.view.cidoc_entities
+  - system.menu.admin
