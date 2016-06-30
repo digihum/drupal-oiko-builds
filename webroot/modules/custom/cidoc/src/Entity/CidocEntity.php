@@ -257,6 +257,26 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
       ->setDefaultValue(FALSE);
 
     // @TODO: This should not really be part of the CIDOC module.
+    // Add a field for types of entity.
+    $fields['significance'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Primary historical significance'))
+      ->setTranslatable(FALSE)
+      ->setRequired(FALSE)
+      ->setSetting('target_type', 'taxonomy_term')
+      ->setSetting('handler', 'default:taxonomy_term')
+      ->setSetting('handler_settings', array(
+        'target_bundles' => array(
+          'event_types' => 'event_types',
+        ),
+      ))
+      ->setDisplayOptions('form', array(
+        'type' => 'options_select',
+        'weight' => -1,
+      ))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    // @TODO: This should not really be part of the CIDOC module.
     // Add the citations field.
     $fields['citation'] = BaseFieldDefinition::create('entity_reference_revisions')
       ->setLabel(t('General citations'))

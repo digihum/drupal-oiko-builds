@@ -442,6 +442,9 @@ config_devel:
   - paragraphs.paragraphs_type.uri
   - taxonomy.vocabulary.source_books
 
+  # Event type stuff.
+  - taxonomy.vocabulary.event_types
+
 
   # Admin views.
   - views.view.cidoc_entities
