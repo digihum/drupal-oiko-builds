@@ -38,6 +38,7 @@ use Drupal\field\Entity\FieldStorageConfig;
  *   config_export = {
  *     "id",
  *     "label",
+ *     "bidirectional",
  *     "reverse_label",
  *     "domain_bundles",
  *     "range_bundles",
@@ -79,6 +80,13 @@ class CidocProperty extends ConfigEntityBundleBase {
    * @var string
    */
   public $reverse_label;
+
+  /**
+   * Whether a property is considered symmetric or not.
+   *
+   * @var bool
+   */
+  public $bidirectional = FALSE;
 
   /**
    * List of entity bundles that can be used as property domains (sources).

@@ -42,20 +42,34 @@ class CidocPropertyForm extends EntityForm {
       '#disabled' => !$cidoc_property->isNew(),
     );
 
-    $form['labels']['reverse_label'] = array(
-      '#type' => 'textfield',
-      '#size' => 40,
-      '#title' => t('Reverse label'),
-      '#description'   => $this->t('Reverse label of the property. This is used when you need to display the reverse direction (ie. from the range entity to the domain entity) of a property reference. If this is not supplied, the normal label is used.'),
-      '#default_value' => $cidoc_property->reverse_label,
-    );
-
     // See if data already exists for this property. If so, prevent changes to
     // the endpoint settings.
     $has_data = (bool) \Drupal::entityQuery('cidoc_reference')
       ->condition('property', $cidoc_property->id())
       ->count()
       ->execute();
+
+    $form['bidirectional'] = array(
+      '#title' => $this->t('Bi-directional'),
+      '#type' => 'checkbox',
+      '#description' => $this->t('Properties that make sense to point in both directions can be synchronised so that they really do, with a reverse reference created automatically for each reference, making it appear bi-directional. Otherwise known as \'symmetric\'.'),
+      '#default_value' => $cidoc_property->bidirectional,
+      '#disabled' => $has_data,
+      '#access' => !$has_data || $cidoc_property->bidirectional,
+    );
+
+    $form['labels']['reverse_label'] = array(
+      '#type' => 'textfield',
+      '#size' => 40,
+      '#title' => t('Reverse label'),
+      '#description'   => $this->t('Reverse label of the property. This is used when you need to display the reverse direction (ie. from the range entity to the domain entity) of a property reference. If this is not supplied, the normal label is used. This is not applicable to bi-directional properties.'),
+      '#default_value' => $cidoc_property->reverse_label,
+      '#states' => array(
+        'visible' => array(
+          ':input[name="bidirectional"]' => array('checked' => FALSE),
+        ),
+      ),
+    );
 
     $options_bundles = [];
     foreach (\Drupal::service('entity_type.bundle.info')->getBundleInfo('cidoc_entity') as $bundle_id => $bundle) {
@@ -86,8 +100,15 @@ class CidocPropertyForm extends EntityForm {
       ),
     );
     if ($has_data) {
-      $form['endpoints']['domain_bundles']['#prefix'] = '<div class="messages messages--error">' . $this->t('There is data for this property in the database. The endpoint class restriction settings can no longer be changed.') . '</div>';
+      $existing_data_warning = '<div class="messages messages--warning">' . $this->t('There is data for this property in the database. The endpoint class restriction settings can no longer be changed.') . '</div>';
+      if ($cidoc_property->bidirectional) {
+        $form['bidirectional']['#prefix'] = $existing_data_warning;
+      }
+      else {
+        $form['endpoints']['domain_bundles']['#prefix'] = $existing_data_warning;
+      }
     }
+
     $range_bundles = $cidoc_property->range_bundles;
     if (in_array('*', $range_bundles, TRUE)) {
       $range_bundles = array();
@@ -100,6 +121,11 @@ class CidocPropertyForm extends EntityForm {
       '#disabled' => $has_data,
       '#attributes' => array(
         'class' => array('cidoc-property-form-composite-column'),
+      ),
+      '#states' => array(
+        'visible' => array(
+          ':input[name="bidirectional"]' => array('checked' => FALSE),
+        ),
       ),
     );
 
@@ -149,11 +175,14 @@ class CidocPropertyForm extends EntityForm {
 
     $entity->domain_bundles = $ranges;
 
-    $ranges = array_filter($form_state->getValue('range_bundles'));
-    if (empty($ranges)) {
-      $ranges = ['*'];
+    // Completely ignore the range_bundles form input if the property is set to
+    // be bidirectional.
+    if (!$form_state->getValue('bidirectional')) {
+      $ranges = array_filter($form_state->getValue('range_bundles'));
+      if (empty($ranges)) {
+        $ranges = ['*'];
+      }
     }
-
     $entity->range_bundles = $ranges;
 
     // Get to an array of allowed endpoint strings mapped to boolean values.

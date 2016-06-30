@@ -65,21 +65,21 @@ class CidocEntityForm extends ContentEntityForm {
 
       /** @var CidocProperty $property_entity */
       foreach ($applicable_properties as $property_name => $property_entity) {
-        $wrapper_id = Html::getUniqueId('cidoc-properties-' . $source_field . '-' . $property_name . '-add-more-wrapper');
-        $property_label = $property_entity->label();
-        if ($reverse) {
-          if ($property_entity->reverse_label == $property_label) {
-            $property_clarifier = t('reverse reference');
-          }
-          else {
-            $property_clarifier = t('reverse of @bundle', ['@bundle' => $property_label]);
-          }
-          $property_label = $property_entity->reverse_label . ' (' . $property_clarifier . ')';
-        }
         $element_key = 'cidoc_properties:' . $source_field . ':' . $property_name;
-        $references = $cidoc_entity->getProperties($property_name, $reverse);
 
         if ($form_state->get('form_display')->getComponent($element_key)) {
+          $wrapper_id = Html::getUniqueId('cidoc-properties-' . $source_field . '-' . $property_name . '-add-more-wrapper');
+          $property_label = $property_entity->label();
+          if ($reverse) {
+            if ($property_entity->reverse_label == $property_label) {
+              $property_clarifier = t('reverse reference');
+            }
+            else {
+              $property_clarifier = t('reverse of @bundle', ['@bundle' => $property_label]);
+            }
+            $property_label = $property_entity->reverse_label . ' (' . $property_clarifier . ')';
+          }
+
           $form[$element_key] = array(
             '#type' => 'fieldset',
             '#title' => $property_label,
@@ -118,6 +118,7 @@ class CidocEntityForm extends ContentEntityForm {
           }
 
           // Build list of reference IDs to show elements for.
+          $references = $cidoc_entity->getProperties($property_name, $reverse);
           if (isset($references[$property_name])) {
             $ids = array_keys($references[$property_name]);
           }
