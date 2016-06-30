@@ -708,17 +708,17 @@
     },
     {
         "name": "symfony/translation",
-        "version": "v2.8.7",
-        "version_normalized": "2.8.7.0",
+        "version": "v2.8.8",
+        "version_normalized": "2.8.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/translation.git",
-            "reference": "8a1648d2e165ba87c759ba57d7f4c13d95fdf4a1"
+            "reference": "00334ef0b9317e5d7c7641a2b56671a1df23b7a0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/translation/zipball/8a1648d2e165ba87c759ba57d7f4c13d95fdf4a1",
-            "reference": "8a1648d2e165ba87c759ba57d7f4c13d95fdf4a1",
+            "url": "https://api.github.com/repos/symfony/translation/zipball/00334ef0b9317e5d7c7641a2b56671a1df23b7a0",
+            "reference": "00334ef0b9317e5d7c7641a2b56671a1df23b7a0",
             "shasum": ""
         },
         "require": {
@@ -739,7 +739,7 @@
             "symfony/config": "",
             "symfony/yaml": ""
         },
-        "time": "2016-06-06 11:11:27",
+        "time": "2016-06-29 05:29:29",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -774,17 +774,17 @@
     },
     {
         "name": "symfony/validator",
-        "version": "v2.8.7",
-        "version_normalized": "2.8.7.0",
+        "version": "v2.8.8",
+        "version_normalized": "2.8.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/validator.git",
-            "reference": "4c8f9fd8e2150dbc4745ef13378e690588365df0"
+            "reference": "366674c28bf7a107a8bce280c668bac40aeb090e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/validator/zipball/4c8f9fd8e2150dbc4745ef13378e690588365df0",
-            "reference": "4c8f9fd8e2150dbc4745ef13378e690588365df0",
+            "url": "https://api.github.com/repos/symfony/validator/zipball/366674c28bf7a107a8bce280c668bac40aeb090e",
+            "reference": "366674c28bf7a107a8bce280c668bac40aeb090e",
             "shasum": ""
         },
         "require": {
@@ -814,7 +814,7 @@
             "symfony/property-access": "For using the 2.4 Validator API",
             "symfony/yaml": ""
         },
-        "time": "2016-04-14 08:48:44",
+        "time": "2016-06-29 05:29:29",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1481,17 +1481,17 @@
     },
     {
         "name": "symfony/debug",
-        "version": "v2.8.7",
-        "version_normalized": "2.8.7.0",
+        "version": "v2.8.8",
+        "version_normalized": "2.8.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/debug.git",
-            "reference": "c7d6d8a599e4609a1abc76351d6234a2997e16ed"
+            "reference": "2477199ad1dd1c43fe18a84d7907fffa025eff10"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/debug/zipball/c7d6d8a599e4609a1abc76351d6234a2997e16ed",
-            "reference": "c7d6d8a599e4609a1abc76351d6234a2997e16ed",
+            "url": "https://api.github.com/repos/symfony/debug/zipball/2477199ad1dd1c43fe18a84d7907fffa025eff10",
+            "reference": "2477199ad1dd1c43fe18a84d7907fffa025eff10",
             "shasum": ""
         },
         "require": {
@@ -1505,7 +1505,7 @@
             "symfony/class-loader": "~2.2|~3.0.0",
             "symfony/http-kernel": "~2.3.24|~2.5.9|~2.6,>=2.6.2|~3.0.0"
         },
-        "time": "2016-06-06 15:06:25",
+        "time": "2016-06-29 05:29:29",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1689,17 +1689,17 @@
     },
     {
         "name": "symfony/console",
-        "version": "v2.8.7",
-        "version_normalized": "2.8.7.0",
+        "version": "v2.8.8",
+        "version_normalized": "2.8.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/console.git",
-            "reference": "5ac8bc9aa77bb2edf06af3a1bb6bc1020d23acd3"
+            "reference": "c392a6ec72f2122748032c2ad6870420561ffcfa"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/console/zipball/5ac8bc9aa77bb2edf06af3a1bb6bc1020d23acd3",
-            "reference": "5ac8bc9aa77bb2edf06af3a1bb6bc1020d23acd3",
+            "url": "https://api.github.com/repos/symfony/console/zipball/c392a6ec72f2122748032c2ad6870420561ffcfa",
+            "reference": "c392a6ec72f2122748032c2ad6870420561ffcfa",
             "shasum": ""
         },
         "require": {
@@ -1716,7 +1716,7 @@
             "symfony/event-dispatcher": "",
             "symfony/process": ""
         },
-        "time": "2016-06-06 15:06:25",
+        "time": "2016-06-29 07:02:14",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1806,17 +1806,17 @@
     },
     {
         "name": "symfony/class-loader",
-        "version": "v2.8.7",
-        "version_normalized": "2.8.7.0",
+        "version": "v2.8.8",
+        "version_normalized": "2.8.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/class-loader.git",
-            "reference": "f1cf312c81c7b4f0f11431e6fd37b66890f5e27b"
+            "reference": "a99a6b0c7171b8251fef4a628033ef7f8fe875ee"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/class-loader/zipball/f1cf312c81c7b4f0f11431e6fd37b66890f5e27b",
-            "reference": "f1cf312c81c7b4f0f11431e6fd37b66890f5e27b",
+            "url": "https://api.github.com/repos/symfony/class-loader/zipball/a99a6b0c7171b8251fef4a628033ef7f8fe875ee",
+            "reference": "a99a6b0c7171b8251fef4a628033ef7f8fe875ee",
             "shasum": ""
         },
         "require": {
@@ -1826,7 +1826,7 @@
         "require-dev": {
             "symfony/finder": "~2.0,>=2.0.5|~3.0.0"
         },
-        "time": "2016-03-30 10:37:34",
+        "time": "2016-06-29 05:29:29",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3818,23 +3818,23 @@
     },
     {
         "name": "symfony/css-selector",
-        "version": "v2.7.14",
-        "version_normalized": "2.7.14.0",
+        "version": "v2.7.15",
+        "version_normalized": "2.7.15.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/css-selector.git",
-            "reference": "d255e420795234173c0b9c9dff3cde5a82b0a108"
+            "reference": "f2cc2c55a9982db7bc167385dbf549c640e8cc01"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/css-selector/zipball/d255e420795234173c0b9c9dff3cde5a82b0a108",
-            "reference": "d255e420795234173c0b9c9dff3cde5a82b0a108",
+            "url": "https://api.github.com/repos/symfony/css-selector/zipball/f2cc2c55a9982db7bc167385dbf549c640e8cc01",
+            "reference": "f2cc2c55a9982db7bc167385dbf549c640e8cc01",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.9"
         },
-        "time": "2016-06-06 11:03:51",
+        "time": "2016-06-28 06:24:06",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -4260,23 +4260,23 @@
     },
     {
         "name": "symfony/finder",
-        "version": "v2.8.7",
-        "version_normalized": "2.8.7.0",
+        "version": "v2.8.8",
+        "version_normalized": "2.8.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/finder.git",
-            "reference": "3ec095fab1800222732ca522a95dce8fa124007b"
+            "reference": "bf0506ef4e7778fd3f0f1f141ab5e8c1ef35dd7d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/finder/zipball/3ec095fab1800222732ca522a95dce8fa124007b",
-            "reference": "3ec095fab1800222732ca522a95dce8fa124007b",
+            "url": "https://api.github.com/repos/symfony/finder/zipball/bf0506ef4e7778fd3f0f1f141ab5e8c1ef35dd7d",
+            "reference": "bf0506ef4e7778fd3f0f1f141ab5e8c1ef35dd7d",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.9"
         },
-        "time": "2016-06-06 11:11:27",
+        "time": "2016-06-29 05:29:29",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -5497,17 +5497,17 @@
     },
     {
         "name": "computerminds/cidoc-crm",
-        "version": "0.5.3",
-        "version_normalized": "0.5.3.0",
+        "version": "0.5.4",
+        "version_normalized": "0.5.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/computerminds/cidoc-crm.git",
-            "reference": "119c398ae9b6da8c7535b22db937e76ff6f0b68f"
+            "reference": "d178089e89e434de9ebe0fcb7461966701208ec8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/computerminds/cidoc-crm/zipball/119c398ae9b6da8c7535b22db937e76ff6f0b68f",
-            "reference": "119c398ae9b6da8c7535b22db937e76ff6f0b68f",
+            "url": "https://api.github.com/repos/computerminds/cidoc-crm/zipball/d178089e89e434de9ebe0fcb7461966701208ec8",
+            "reference": "d178089e89e434de9ebe0fcb7461966701208ec8",
             "shasum": ""
         },
         "require": {
@@ -5516,7 +5516,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0|~5.0"
         },
-        "time": "2016-06-23 20:18:02",
+        "time": "2016-06-30 14:48:07",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
