@@ -171,7 +171,7 @@ class CidocEntityForm extends ContentEntityForm {
                 'actions' => array(
                   'remove_button' => array(
                     '#type' => 'submit',
-                    '#value' => t('Remove'),
+                    '#value' => t('Remove property'),
                     '#name' => 'cidoc_properties_' . $source_field . '_' . $reference_id . '_remove',
                     '#weight' => 500,
                     '#submit' => array('::properties_widget_remove_reference_submit'),

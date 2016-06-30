@@ -1,0 +1,98 @@
+<?php
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Render\Element;
+
+/**
+ * Implements hook_theme().
+ */
+function oiko_citation_theme() {
+  $return = array();
+
+  $return['oiko_citation_field_multiple_value_form'] = array(
+    'render element' => 'element',
+  );
+
+  return $return;
+}
+
+/**
+ * Prepares variables for individual form element templates.
+ *
+ * Default template: field-multiple-value-form.html.twig.
+ *
+ * Combines multiple values into a table with drag-n-drop reordering.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: A render element representing the form element.
+ */
+function template_preprocess_oiko_citation_field_multiple_value_form(&$variables) {
+  $element = $variables['element'];
+  $variables['multiple'] = $element['#cardinality_multiple'];
+
+  if ($variables['multiple']) {
+    $table_id = Html::getUniqueId($element['#field_name'] . '_values');
+    $header_attributes = new Attribute(array('class' => array('label')));
+    if (!empty($element['#required'])) {
+      $header_attributes['class'][] = 'js-form-required';
+      $header_attributes['class'][] = 'form-required';
+    }
+    $rows = array();
+
+    // Sort items according to '_weight' (needed when the form comes back after
+    // preview or failed validation).
+    $items = array();
+    $variables['button'] = array();
+    foreach (Element::children($element) as $key) {
+      if ($key === 'add_more') {
+        $variables['button'] = &$element[$key];
+      }
+      else {
+        $items[] = &$element[$key];
+      }
+    }
+    usort($items, '_field_multiple_value_form_sort_helper');
+
+    // Add the items as table rows.
+    foreach ($items as $item) {
+      $item['_weight']['#access'] = FALSE;
+      $action_element = $item['top']['links'];
+      unset($item['top']['links']);
+
+      $cells = array(
+        array('data' => $item),
+        array('data' => $action_element),
+      );
+      $rows[] = array(
+        'data' => $cells,
+      );
+    }
+
+    $variables['table'] = array(
+      '#type' => 'table',
+      '#rows' => $rows,
+      '#attributes' => array(
+        'id' => $table_id,
+        'class' => array('field-multiple-table'),
+      ),
+    );
+
+    if (!empty($element['#description'])) {
+      $description_id = $element['#attributes']['aria-describedby'];
+      $description_attributes['id'] = $description_id;
+      $variables['description']['attributes'] = new Attribute($description_attributes);
+      $variables['description']['content'] = $element['#description'];
+
+      // Add the description's id to the table aria attributes.
+      $variables['table']['#attributes']['aria-describedby'] = $element['#attributes']['aria-describedby'];
+    }
+  }
+  else {
+    $variables['elements'] = array();
+    foreach (Element::children($element) as $key) {
+      $variables['elements'][] = $element[$key];
+    }
+  }
+}

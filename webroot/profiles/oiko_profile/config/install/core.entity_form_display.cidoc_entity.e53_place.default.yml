@@ -9,6 +9,7 @@ dependencies:
     - field_group
     - leaflet_widget
     - link
+    - paragraphs
 third_party_settings:
   field_group:
     group_main:
@@ -28,6 +29,7 @@ third_party_settings:
       children:
         - name
         - internal_name
+        - citation
         - group_main_details
       parent_name: group_main
       weight: 4
@@ -56,7 +58,7 @@ third_party_settings:
         - group_appellations
         - group_geodata
       parent_name: group_main_deets
-      weight: 3
+      weight: 4
       label: 'Main details'
       format_type: tabs
       format_settings:
@@ -100,6 +102,16 @@ content:
   'cidoc_properties:domain:p87_is_identified_by':
     weight: 20
     settings: {  }
+    third_party_settings: {  }
+  citation:
+    type: entity_reference_paragraphs
+    weight: 3
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: button
+      form_display_mode: default
     third_party_settings: {  }
   class_description:
     weight: 0

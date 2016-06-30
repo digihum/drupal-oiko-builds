@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e22_man_made_object
   module:
     - field_group
+    - paragraphs
 third_party_settings:
   field_group:
     group_main:
@@ -24,6 +25,7 @@ third_party_settings:
       children:
         - name
         - internal_name
+        - citation
         - 'cidoc_properties:range:p108_has_produced'
       parent_name: group_main
       weight: 4
@@ -57,8 +59,18 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p108_has_produced':
-    weight: 3
+    weight: 4
     settings: {  }
+    third_party_settings: {  }
+  citation:
+    type: entity_reference_paragraphs
+    weight: 3
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: button
+      form_display_mode: default
     third_party_settings: {  }
   class_description:
     weight: 0

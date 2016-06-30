@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e7_activity
   module:
     - field_group
+    - paragraphs
     - text
 third_party_settings:
   field_group:
@@ -29,7 +30,7 @@ third_party_settings:
         - group_what
         - group_descriptive_text
       parent_name: group_main_deets
-      weight: 3
+      weight: 4
       label: 'Main details'
       format_type: tabs
       format_settings:
@@ -156,6 +157,7 @@ third_party_settings:
       children:
         - name
         - internal_name
+        - citation
         - group_tabset
       parent_name: group_data
       weight: 3
@@ -270,6 +272,16 @@ content:
   'cidoc_properties:range:p9_consists_of':
     weight: 7
     settings: {  }
+    third_party_settings: {  }
+  citation:
+    type: entity_reference_paragraphs
+    weight: 3
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: button
+      form_display_mode: default
     third_party_settings: {  }
   class_description:
     weight: 0
