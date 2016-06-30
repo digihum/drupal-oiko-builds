@@ -206,6 +206,7 @@ class CidocReference extends ContentEntityBase implements CidocReferenceInterfac
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the entity was last edited.'));
 
+    // @TODO: This should not really be part of the CIDOC module.
     // Add the citations field.
     $fields['citation'] = BaseFieldDefinition::create('entity_reference_revisions')
       ->setLabel(t('Citations'))
