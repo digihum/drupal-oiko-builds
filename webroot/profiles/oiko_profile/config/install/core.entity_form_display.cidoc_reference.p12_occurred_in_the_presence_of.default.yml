@@ -5,11 +5,23 @@ dependencies:
     - cidoc.cidoc_property.p12_occurred_in_the_presence_of
     - field.field.cidoc_reference.p12_occurred_in_the_presence_of.domain
     - field.field.cidoc_reference.p12_occurred_in_the_presence_of.range
+  module:
+    - oiko_citation
 id: cidoc_reference.p12_occurred_in_the_presence_of.default
 targetEntityType: cidoc_reference
 bundle: p12_occurred_in_the_presence_of
 mode: default
 content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
   domain:
     type: entity_reference_autocomplete_tags
     weight: 11

@@ -5,11 +5,23 @@ dependencies:
     - cidoc.cidoc_property.p97_from_father
     - field.field.cidoc_reference.p97_from_father.domain
     - field.field.cidoc_reference.p97_from_father.range
+  module:
+    - oiko_citation
 id: cidoc_reference.p97_from_father.default
 targetEntityType: cidoc_reference
 bundle: p97_from_father
 mode: default
 content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
   domain:
     type: entity_reference_autocomplete_tags
     weight: 11
