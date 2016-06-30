@@ -441,3 +441,7 @@ config_devel:
   - paragraphs.paragraphs_type.uri
   - taxonomy.vocabulary.source_books
 
+  # Admin views.
+  - views.view.cidoc_entities
+  - system.menu.admin
+
