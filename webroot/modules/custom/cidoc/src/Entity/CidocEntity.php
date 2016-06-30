@@ -259,9 +259,10 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
     // @TODO: This should not really be part of the CIDOC module.
     // Add the citations field.
     $fields['citation'] = BaseFieldDefinition::create('entity_reference_revisions')
-      ->setLabel(t('Citations'))
+      ->setLabel(t('General citations'))
       ->setTranslatable(FALSE)
       ->setRequired(FALSE)
+      ->setSetting('target_type', 'paragraph')
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setSetting('handler', 'default:paragraph')
       ->setSetting('handler_settings', array(
@@ -281,12 +282,13 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
         ),
       ))
       ->setDisplayOptions('form', array(
-        'type' => 'entity_reference_citations',
+        'type' => 'entity_reference_paragraphs',
         'weight' => -1,
         'settings' => array(
           'title' => 'Citation',
           'title_plural' => 'Citations',
           'edit_mode' => 'preview',
+          'add_mode' => 'button',
         ),
       ))
       ->setDisplayConfigurable('form', TRUE)

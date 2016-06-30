@@ -432,6 +432,7 @@ config_devel:
   - core.entity_view_display.paragraph.book.default
   - core.entity_view_display.paragraph.uri.default
   - core.entity_view_mode.paragraph.preview
+  - field.field.paragraph.book.field_book
   - field.field.paragraph.book.field_pages
   - field.field.paragraph.uri.field_uri
   - field.storage.paragraph.field_book
@@ -440,6 +441,7 @@ config_devel:
   - paragraphs.paragraphs_type.book
   - paragraphs.paragraphs_type.uri
   - taxonomy.vocabulary.source_books
+
 
   # Admin views.
   - views.view.cidoc_entities

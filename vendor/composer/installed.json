@@ -3818,23 +3818,23 @@
     },
     {
         "name": "symfony/css-selector",
-        "version": "v2.7.14",
-        "version_normalized": "2.7.14.0",
+        "version": "v2.7.15",
+        "version_normalized": "2.7.15.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/css-selector.git",
-            "reference": "d255e420795234173c0b9c9dff3cde5a82b0a108"
+            "reference": "f2cc2c55a9982db7bc167385dbf549c640e8cc01"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/css-selector/zipball/d255e420795234173c0b9c9dff3cde5a82b0a108",
-            "reference": "d255e420795234173c0b9c9dff3cde5a82b0a108",
+            "url": "https://api.github.com/repos/symfony/css-selector/zipball/f2cc2c55a9982db7bc167385dbf549c640e8cc01",
+            "reference": "f2cc2c55a9982db7bc167385dbf549c640e8cc01",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.9"
         },
-        "time": "2016-06-06 11:03:51",
+        "time": "2016-06-28 06:24:06",
         "type": "library",
         "extra": {
             "branch-alias": {

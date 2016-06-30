@@ -212,6 +212,7 @@ class CidocReference extends ContentEntityBase implements CidocReferenceInterfac
       ->setLabel(t('Citations'))
       ->setTranslatable(FALSE)
       ->setRequired(FALSE)
+      ->setSetting('target_type', 'paragraph')
       ->setDescription('')
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setSetting('handler', 'default:paragraph')
