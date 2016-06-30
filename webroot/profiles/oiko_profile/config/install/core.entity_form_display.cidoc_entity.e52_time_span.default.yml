@@ -141,6 +141,11 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  significance:
+    type: options_select
+    weight: -1
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true

@@ -6,5 +6,5 @@ id: o2_active_dissolution
 label: 'O2 Active Dissolution'
 weight: -15
 group: auxiliary
-description: "<p>This class comprises the events that result in the deliberate termination of an E74\r\nGroup of people.</p>\r\n"
-examples: "<ul>\r\n<li>the fall of the Roman Empire</li>\r\n<li>the liquidation of Enron Corporation</li>\r\n</ul>\r\n"
+description: "<p>This class comprises the events that result in the deliberate termination of an E74\nGroup of people.</p>\n"
+examples: "<ul>\n<li>the fall of the Roman Empire</li>\n<li>the liquidation of Enron Corporation</li>\n</ul>\n"

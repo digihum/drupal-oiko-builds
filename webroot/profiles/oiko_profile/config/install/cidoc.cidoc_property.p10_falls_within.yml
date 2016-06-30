@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p10_falls_within
 label: 'P10 falls within'
-reverse_label: contains
+bidirectional: false
+reverse_label: 'P10 contains'
 domain_bundles:
   0: e4_period
   1: e5_event

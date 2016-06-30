@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p15_was_influenced_by
 label: 'P15 was influenced by'
-reverse_label: influenced
+bidirectional: false
+reverse_label: 'P15 influenced'
 domain_bundles:
   0: e7_activity
   5: e66_formation

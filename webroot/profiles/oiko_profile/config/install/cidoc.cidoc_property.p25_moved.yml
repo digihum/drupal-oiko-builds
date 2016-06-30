@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p25_moved
 label: 'P25 moved'
-reverse_label: 'moved by'
+bidirectional: false
+reverse_label: 'P25 moved by'
 domain_bundles:
   - e9_move
 range_bundles:

@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p95_has_formed
 label: 'P95 has formed'
-reverse_label: 'was formed by'
+bidirectional: false
+reverse_label: 'P95 was formed by'
 domain_bundles:
   - e66_formation
 range_bundles:

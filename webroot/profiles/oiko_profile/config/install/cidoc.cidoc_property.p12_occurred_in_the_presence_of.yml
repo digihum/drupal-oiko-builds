@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p12_occurred_in_the_presence_of
 label: 'P12 occurred in the presence of'
-reverse_label: 'was present at'
+bidirectional: false
+reverse_label: 'P12 was present at'
 domain_bundles:
   0: e5_event
   3: e7_activity

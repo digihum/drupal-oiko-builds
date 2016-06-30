@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p97_from_father
 label: 'P97 by father'
-reverse_label: 'was father for'
+bidirectional: false
+reverse_label: 'P97 was father for'
 domain_bundles:
   - e67_birth
 range_bundles:

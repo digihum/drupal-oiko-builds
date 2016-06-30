@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p7_took_place_at
 label: 'P7 took place at'
-reverse_label: witnessed
+bidirectional: false
+reverse_label: 'P7 witnessed'
 domain_bundles:
   0: e4_period
   1: e5_event

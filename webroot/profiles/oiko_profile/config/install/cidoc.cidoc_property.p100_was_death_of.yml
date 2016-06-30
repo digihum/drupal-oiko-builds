@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p100_was_death_of
 label: 'P100 was death of'
-reverse_label: 'died in'
+bidirectional: false
+reverse_label: 'P100 died in'
 domain_bundles:
   - e69_death
   - o1_killing

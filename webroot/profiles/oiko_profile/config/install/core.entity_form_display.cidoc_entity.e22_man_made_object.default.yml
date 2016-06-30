@@ -26,6 +26,7 @@ third_party_settings:
         - name
         - internal_name
         - citation
+        - significance
         - 'cidoc_properties:range:p108_has_produced'
       parent_name: group_main
       weight: 4
@@ -59,7 +60,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p108_has_produced':
-    weight: 4
+    weight: 5
     settings: {  }
     third_party_settings: {  }
   citation:
@@ -89,6 +90,11 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  significance:
+    type: options_select
+    weight: 4
+    settings: {  }
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
