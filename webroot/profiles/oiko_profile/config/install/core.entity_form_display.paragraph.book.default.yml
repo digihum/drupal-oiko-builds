@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.book.field_book
+    #- field.field.paragraph.book.field_book
     - field.field.paragraph.book.field_pages
     - paragraphs.paragraphs_type.book
 id: paragraph.book.default
