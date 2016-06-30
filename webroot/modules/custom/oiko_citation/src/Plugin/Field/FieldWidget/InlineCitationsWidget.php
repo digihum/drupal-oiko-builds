@@ -52,9 +52,9 @@ class InlineCitationsWidget extends WidgetBase {
    */
   public static function defaultSettings() {
     return array(
-      'title' => t('Paragraph'),
-      'title_plural' => t('Paragraphs'),
-      'edit_mode' => 'open',
+      'title' => t('Citation'),
+      'title_plural' => t('Citations'),
+      'edit_mode' => 'preview',
       'add_mode' => 'dropdown',
       'form_display_mode' => 'default',
     );
