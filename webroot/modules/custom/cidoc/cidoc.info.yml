@@ -6,6 +6,7 @@ package: CIDOC
 dependencies:
   - cidoc_spec
   - paragraphs
+  - taxonomy
 config_devel:
   - core.entity_form_mode.cidoc_reference.domain
   - core.entity_form_mode.cidoc_reference.range
