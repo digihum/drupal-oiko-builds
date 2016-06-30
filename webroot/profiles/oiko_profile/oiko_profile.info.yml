@@ -425,3 +425,19 @@ config_devel:
   - cidoc_entity.e53_place.field_geodata
   - cidoc_entity.e53_place.field_pleiades_uri
   - field.storage.cidoc_entity.field_pleiades_uri
+
+  # Citation stuff.
+  - core.entity_form_display.paragraph.book.default
+  - core.entity_form_display.paragraph.uri.default
+  - core.entity_view_display.paragraph.book.default
+  - core.entity_view_display.paragraph.uri.default
+  - core.entity_view_mode.paragraph.preview
+  - field.field.paragraph.book.field_pages
+  - field.field.paragraph.uri.field_uri
+  - field.storage.paragraph.field_book
+  - field.storage.paragraph.field_pages
+  - field.storage.paragraph.field_uri
+  - paragraphs.paragraphs_type.book
+  - paragraphs.paragraphs_type.uri
+  - taxonomy.vocabulary.source_books
+
