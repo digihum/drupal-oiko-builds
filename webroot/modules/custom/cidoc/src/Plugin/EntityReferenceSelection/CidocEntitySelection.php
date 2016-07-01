@@ -56,7 +56,7 @@ class CidocEntitySelection extends DefaultSelection {
       // Show label with internal name if available.
       $internal_name = $translation->getName(FALSE);
       if ($internal_name) {
-        $label .= ' (' . $internal_name . ')';
+        $label .= ' (' . $internal_name . ') [id:' . $entity_id . ']';
       }
       $options[$bundle][$entity_id] = Html::escape($label);
     }

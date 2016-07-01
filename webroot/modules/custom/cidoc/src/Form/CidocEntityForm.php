@@ -247,6 +247,7 @@ class CidocEntityForm extends ContentEntityForm {
 
                   $target_field_element['widget']['target_id']['#attributes']['class'][] = 'js-cidoc-references-widget-referencer';
                   $target_field_element['widget']['target_id']['#element_validate'] = array('::set_autocreate_bundle');
+                  $target_field_element['widget']['target_id']['#value_callback'] = array('::autocompleteValueCallback');
                 }
               }
             }
@@ -282,7 +283,7 @@ class CidocEntityForm extends ContentEntityForm {
             '#cidoc_property_reference' => ('new_' . $i),
             '#states' => array(
               'visible' => array(
-                ':input[name="' . $element_key . '][references][' . $reference_id . '][subform][' . $target_field . '][target_id]"]' => array('empty' => FALSE),
+                ':input[name="' . $element_key . '[references][' . $reference_id . '][subform][' . $target_field . '][target_id]"]' => array('empty' => FALSE),
               ),
             ),
           );
@@ -337,9 +338,102 @@ class CidocEntityForm extends ContentEntityForm {
   }
 
   /**
+   * Replacemenet value callback for the entity autocomplete elements.
+   *
+   * This uses a [id:##] format for the entity ID rather than (##).
+   */
+  public static function autocompleteValueCallback(&$element, $input, FormStateInterface $form_state) {
+    // Process the #default_value property.
+    if ($input === FALSE && isset($element['#default_value']) && $element['#process_default_value']) {
+      if (is_array($element['#default_value']) && $element['#tags'] !== TRUE) {
+        throw new \InvalidArgumentException('The #default_value property is an array but the form element does not allow multiple values.');
+      }
+      elseif (!empty($element['#default_value']) && !is_array($element['#default_value'])) {
+        // Convert the default value into an array for easier processing in
+        // static::getEntityLabels().
+        $element['#default_value'] = array($element['#default_value']);
+      }
+
+      if ($element['#default_value']) {
+        if (!(reset($element['#default_value']) instanceof EntityInterface)) {
+          throw new \InvalidArgumentException('The #default_value property has to be an entity object or an array of entity objects.');
+        }
+
+        // Extract the labels from the passed-in entity objects, taking access
+        // checks into account.
+        return static::getEntityLabels($element['#default_value']);
+      }
+    }
+
+    // Potentially the #value is set directly, so it contains the 'target_id'
+    // array structure instead of a string.
+    if ($input !== FALSE && is_array($input)) {
+      $entity_ids = array_map(function(array $item) {
+        return $item['target_id'];
+      }, $input);
+
+      $entities = \Drupal::entityTypeManager()->getStorage($element['#target_type'])->loadMultiple($entity_ids);
+
+      return static::getEntityLabels($entities);
+    }
+  }
+
+  /**
+   * Converts an array of entity objects into a string of entity labels.
+   *
+   * This method is also responsible for checking the 'view label' access on the
+   * passed-in entities.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface[] $entities
+   *   An array of entity objects.
+   *
+   * @return string
+   *   A string of entity labels separated by commas.
+   */
+  public static function getEntityLabels(array $entities) {
+    $entity_labels = array();
+    foreach ($entities as $entity) {
+      // Use the special view label, since some entities allow the label to be
+      // viewed, even if the entity is not allowed to be viewed.
+      $label = ($entity->access('view label')) ? $entity->label() : t('- Restricted access -');
+
+      // Take into account "autocreated" entities.
+      if (!$entity->isNew()) {
+        $label .= ' [id:' . $entity->id() . ']';
+      }
+
+      // Labels containing commas or quotes must be wrapped in quotes.
+      $entity_labels[] = Tags::encode($label);
+    }
+
+    return implode(', ', $entity_labels);
+  }
+
+  /**
+   * Extracts the entity ID from the autocompletion result.
+   *
+   * @param string $input
+   *   The input coming from the autocompletion result.
+   *
+   * @return mixed|null
+   *   An entity ID or NULL if the input does not contain one.
+   */
+  public static function extractEntityIdFromAutocompleteInput($input) {
+    $match = NULL;
+
+    // Take "label [id:entity id]', match the ID from parenthesis when it's a
+    // number.
+    if (preg_match("/.+\s\[id\:(\d+)\]/", $input, $matches)) {
+      $match = $matches[1];
+    }
+
+    return $match;
+  }
+
+  /**
    * Set the autocreate bundle, if one has been set.
    *
-   * This is an element_validate function that must run before the standard
+   * This is an element_validate function that runs instead of the standard
    * element validation handler of entity_autocomplete elements in order to
    * override the fixed autocreate bundle property that would have come from the
    * field instance settings.
@@ -385,7 +479,7 @@ class CidocEntityForm extends ContentEntityForm {
           }
 
           if (!$autocreate_bundle) {
-            $match = EntityAutocomplete::extractEntityIdFromAutocompleteInput($input);
+            $match = static::extractEntityIdFromAutocompleteInput($input);
             if ($match === NULL) {
               // Try to get a match from the input string when the user didn't use
               // the autocomplete but filled in a value manually.
@@ -504,7 +598,7 @@ class CidocEntityForm extends ContentEntityForm {
     elseif (count($entities) > 5) {
       $params['@id'] = key($entities);
       // Error if there are more than 5 matching entities.
-      $form_state->setError($element, t('Many entities are called %value. Specify the one you want by appending the id in parentheses, like "@value (@id)".', $params));
+      $form_state->setError($element, t('Many entities are called %value. Specify the one you want by appending the id in brackets, like "@value [id:@id]".', $params));
     }
     elseif (count($entities) > 1) {
       // More helpful error if there are only a few matching entities.
@@ -513,7 +607,7 @@ class CidocEntityForm extends ContentEntityForm {
         $multiples[] = $name . ' (' . $id . ')';
       }
       $params['@id'] = $id;
-      $form_state->setError($element, t('Multiple entities match this reference; "%multiple". Specify the one you want by appending the id in parentheses, like "@value (@id)".', array('%multiple' => implode('", "', $multiples))));
+      $form_state->setError($element, t('Multiple entities match this reference; "%multiple". Specify the one you want by appending the id in brackets, like "@value [id:@id]".', array('%multiple' => implode('", "', $multiples))));
     }
     else {
       // Take the one and only matching entity.
