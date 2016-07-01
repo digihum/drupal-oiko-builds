@@ -214,10 +214,6 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
         'type' => 'string',
         'weight' => -3,
       ))
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -3,
-      ))
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
