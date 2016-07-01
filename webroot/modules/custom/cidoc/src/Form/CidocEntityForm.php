@@ -132,7 +132,7 @@ class CidocEntityForm extends ContentEntityForm {
             $ids[] = $reference_id;
             $i++;
           }
-          while (isset($widget_state['cidoc_properties_' . $source_field][$reference_id]['entity']));
+          while (isset($widget_state['cidoc_properties_' . $source_field][$reference_id]['entity']) && !$widget_state['cidoc_properties_' . $source_field][$reference_id]['entity']->{$target_field}->isEmpty());
 
           foreach ($ids as $reference_id) {
             $existing_reference = is_numeric($reference_id);
@@ -641,7 +641,7 @@ class CidocEntityForm extends ContentEntityForm {
 
               // Ensure any references without a range are considered removed.
               if ($reference_storage['entity']->{$opposites[$source_field]}->isEmpty()) {
-                $widget_state[$property_name]['cidoc_properties_' . $source_field][$reference_id]['mode'] = 'removed';
+//                $widget_state[$property_name]['cidoc_properties_' . $source_field][$reference_id]['mode'] = 'removed';
               }
             }
           }
