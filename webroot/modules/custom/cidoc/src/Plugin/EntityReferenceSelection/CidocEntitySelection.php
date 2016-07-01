@@ -68,6 +68,12 @@ class CidocEntitySelection extends DefaultSelection {
    * Allow matching name (label) or internal name.
    */
   protected function buildEntityQuery($match = NULL, $match_operator = 'CONTAINS') {
+    // If our search starts with a number (think time-spans) then this works
+    // better. Otherwise the result your after when searching for '2 CE'
+    // gets alphabetically sorted to way after '102/112/12/120/121/122' etc.
+    if (isset($match) && preg_match('/^[0-9]+/', $match)) {
+      $match_operator = 'STARTS_WITH';
+    }
     $target_type = $this->configuration['target_type'];
     $handler_settings = $this->configuration['handler_settings'];
     $entity_type = $this->entityManager->getDefinition($target_type);
