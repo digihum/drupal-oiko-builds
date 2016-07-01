@@ -3,8 +3,7 @@ status: true
 dependencies: {  }
 id: p11_had_participant
 label: 'P11 had participant'
-bidirectional: false
-reverse_label: 'P11 participated in'
+reverse_label: 'participated in'
 domain_bundles:
   0: e5_event
   3: e7_activity

@@ -1,7 +1,0 @@
-name: Oiko - Citation
-type: module
-description: Extensions to allow for citations
-core: 8.x
-package: Oiko
-dependencies:
-  - paragraphs

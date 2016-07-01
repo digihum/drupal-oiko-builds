@@ -2,7 +2,6 @@
 
 namespace Drupal\cidoc;
 
-use Drupal\cidoc\Entity\CidocProperty;
 use Drupal\Core\Entity\EntityViewBuilder;
 
 /**
@@ -37,11 +36,8 @@ class CidocEntityViewBuilder extends EntityViewBuilder {
 
         // Reverse properties.
         if ($grouped_references = $entity->getProperties(NULL, TRUE)) {
-          $properties = CidocProperty::loadMultiple(array_keys($grouped_references));
           foreach ($grouped_references as $property => $references) {
-            if (!$properties[$property]->bidirectional) {
-              $build[$id]['cidoc_properties']['domains'][$property] = $view_builder->viewMultiple($references, 'range');
-            }
+            $build[$id]['cidoc_properties']['domains'][$property] = $view_builder->viewMultiple($references, 'range');
           }
         }
 

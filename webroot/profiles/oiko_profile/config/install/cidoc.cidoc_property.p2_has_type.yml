@@ -3,8 +3,7 @@ status: true
 dependencies: {  }
 id: p2_has_type
 label: 'P2 has type'
-bidirectional: false
-reverse_label: 'P2 is type of'
+reverse_label: 'is type of'
 domain_bundles:
   2: e52_time_span
   3: e53_place

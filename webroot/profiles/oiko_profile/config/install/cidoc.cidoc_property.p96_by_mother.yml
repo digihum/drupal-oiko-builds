@@ -3,8 +3,7 @@ status: true
 dependencies: {  }
 id: p96_by_mother
 label: 'P96 by mother'
-bidirectional: false
-reverse_label: 'P96 gave birth'
+reverse_label: 'gave birth'
 domain_bundles:
   - e67_birth
 range_bundles:

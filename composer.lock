@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0da90bddbd97202e33119ede23e51e2b",
-    "content-hash": "74d842d20518cd750182b594da8a21ab",
+    "hash": "265c312447921e10cb815f77ae66eed7",
+    "content-hash": "a1a9ab4ea6d172664194f36e6a7ad477",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1461,37 +1461,6 @@
             "time": "2016-06-28 19:49:57"
         },
         {
-            "name": "drupal/entity_reference_revisions",
-            "version": "8.1.0-rc7",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupal.org/project/entity_reference_revisions.git",
-                "reference": "09b19416018f59e1b1f4acef6cfd34496ba991ba"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/entity_reference_revisions-8.x-1.0-rc7.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "drupal/core": "8.*"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "branch-alias": {
-                    "dev-8.x-1.x": "8.1.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.drupal-composer.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Adds a Entity Reference field type with revision support.",
-            "homepage": "https://www.drupal.org/project/entity_reference_revisions",
-            "time": "2016-05-26 00:06:06"
-        },
-        {
             "name": "drupal/features",
             "version": "dev-8.x-3.x",
             "source": {
@@ -1831,58 +1800,6 @@
             "description": "Drush support for direct upgrades from older Drupal versions.",
             "homepage": "https://www.drupal.org/project/migrate_upgrade",
             "time": "2016-04-14 20:50:52"
-        },
-        {
-            "name": "drupal/paragraphs",
-            "version": "8.1.0-rc5",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupal.org/project/paragraphs",
-                "reference": "bed1bddffdf03626ba057ab697635b049d8d98de"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/paragraphs-8.x-1.0-rc5.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "drupal/core": "8.*",
-                "drupal/entity_reference_revisions": "8.*"
-            },
-            "replace": {
-                "drupal/paragraphs_demo": "self.version",
-                "drupal/paragraphs_type_permissions": "self.version"
-            },
-            "suggest": {
-                "drupal/block": "Required by drupal/paragraphs_demo",
-                "drupal/content_translation": "Required by drupal/paragraphs_demo",
-                "drupal/core": "Required by drupal/paragraphs_demo, drupal/paragraphs_type_permissions",
-                "drupal/field": "Required by drupal/paragraphs_demo",
-                "drupal/field_ui": "Required by drupal/paragraphs_demo",
-                "drupal/image": "Required by drupal/paragraphs_demo",
-                "drupal/language": "Required by drupal/paragraphs_demo",
-                "drupal/node": "Required by drupal/paragraphs_demo",
-                "drupal/search_api": "Required by drupal/paragraphs_demo",
-                "drupal/search_api_db": "Required by drupal/paragraphs_demo",
-                "drupal/views": "Required by drupal/paragraphs_demo"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "branch-alias": {
-                    "dev-8.x-1.x": "8.1.x-dev"
-                },
-                "patches_applied": {
-                    "Allow using paragraphs on non-translatable entities": "https://www.drupal.org/files/issues/paragraphs-2755897-cannot-use-paragraphs-on-non-translatable-entity-rc5_0.patch"
-                }
-            },
-            "notification-url": "https://packagist.drupal-composer.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Enables the creation of paragraphs entities. To safely uninstall, go first to Structure > Paragraphs types > Settings.",
-            "homepage": "https://www.drupal.org/project/paragraphs",
-            "time": "2016-05-31 19:59:20"
         },
         {
             "name": "drupal/pathauto",
@@ -6975,7 +6892,6 @@
         "drupal/leaflet": 20,
         "drupal/leaflet_widget": 20,
         "drupal/migrate_tools": 20,
-        "drupal/paragraphs": 5,
         "jcalderonzumba/gastonjs": 20
     },
     "prefer-stable": true,

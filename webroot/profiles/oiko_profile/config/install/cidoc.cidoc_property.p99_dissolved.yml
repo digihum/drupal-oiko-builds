@@ -3,8 +3,7 @@ status: true
 dependencies: {  }
 id: p99_dissolved
 label: 'P99 dissolved'
-bidirectional: false
-reverse_label: 'P99 was dissolved by'
+reverse_label: 'was dissolved by'
 domain_bundles:
   - e68_dissolution
   - o2_active_dissolution

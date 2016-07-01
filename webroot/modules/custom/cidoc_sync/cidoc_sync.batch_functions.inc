@@ -108,8 +108,6 @@ function cidoc_sync_sync_entity_bundle_callback($crm_entity_name, &$context) {
       // Update the label in case of upstream changes.
       $drupal_property->set('label', $crm_property->getLabel());
       $drupal_property->set('reverse_label', $crm_property->getReverseLabel());
-      $drupal_property->set('bidirectional', FALSE);
-      
       // Ensure the domain and range are correct.
       $drupal_property->set('domain_bundles', $drupal_manager->convertCRMNamesToDrupalIdentifiers($crm_property_domain_full_enabled));
       $drupal_property->set('range_bundles', $drupal_manager->convertCRMNamesToDrupalIdentifiers($crm_property_range_full_enabled));

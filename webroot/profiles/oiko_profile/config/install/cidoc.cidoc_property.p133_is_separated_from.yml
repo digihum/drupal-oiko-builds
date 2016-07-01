@@ -3,7 +3,6 @@ status: true
 dependencies: {  }
 id: p133_is_separated_from
 label: 'P133 is separated from'
-bidirectional: false
 reverse_label: 'P133 is separated from'
 domain_bundles:
   0: e4_period

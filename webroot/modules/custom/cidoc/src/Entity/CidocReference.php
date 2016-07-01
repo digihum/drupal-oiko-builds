@@ -8,7 +8,6 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\cidoc\CidocReferenceInterface;
-use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\user\UserInterface;
 
@@ -66,13 +65,6 @@ class CidocReference extends ContentEntityBase implements CidocReferenceInterfac
   use StringTranslationTrait;
 
   /**
-   * Whether the reference is considered reverseable or not.
-   *
-   * @var bool
-   */
-  public $reverseable = NULL;
-
-  /**
    * {@inheritdoc}
    */
   public function label($langcode = NULL) {
@@ -90,106 +82,6 @@ class CidocReference extends ContentEntityBase implements CidocReferenceInterfac
     $values += array(
       'user_id' => \Drupal::currentUser()->id(),
     );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
-    parent::postSave($storage, $update);
-
-    // Maintain reverse references.
-    if ($this->getReverseable()) {
-      $fields = $update ? $this->original->getFields(FALSE) : $this->getFields(FALSE);
-
-      // Remove fields that need to be different, or are just correct to be
-      // different, between the forward & reverse references.
-      $skip = array_flip(array(
-        'id',
-        'uuid',
-        'changed',
-        'created',
-        'property',
-        'user_id',
-      ));
-      $fields = array_diff_key($fields, $skip);
-
-      foreach ($fields as $field_name => $field) {
-        /** @var \Drupal\Core\Field\FieldItemListInterface $field */
-        $fields[$field_name] = $field->getValue();
-      }
-      // Bundle value needs to be the direct scalar, not a nested field value.
-      $fields['property'] = $this->bundle();
-
-      // Swap domain and range.
-      $domain = $fields['domain'];
-      $fields['domain'] = $fields['range'];
-      $fields['range'] = $domain;
-
-      $reverse_entity = NULL;
-      if ($update) {
-        // Load the original reverse reference and update it.
-        $query = \Drupal::entityQuery($this->getEntityTypeId());
-        // Don't query on some fields that are okay to be different.
-        // Querying for the original unchanged entity's field values.
-        foreach ($fields as $field_name => $values) {
-          if (is_array($values)) {
-            foreach ($values as $delta => $value) {
-              if (is_array($value)) {
-                foreach ($value as $column => $col_value) {
-                  $query->condition($field_name . '.' . $delta . '.' . $column, $col_value);
-                }
-              }
-              else {
-                $query->condition($field_name . '.' . $delta, $value);
-              }
-            }
-          }
-          else {
-            $query->condition($field_name, $values);
-          }
-        }
-
-        // Skip fields that are correct to be different between the references.
-        // We do not want to change any entity's language, so skip that too.
-        $updated_fields = array_diff_key($this->getFields(FALSE), $skip, array('langcode' => 'langcode'));
-
-        foreach ($query->execute() as $match) {
-          if ($reverse_entity = static::load($match)) {
-            // Update reverse entity field values.
-            foreach ($updated_fields as $field_name => $field) {
-              $reverse_entity->set($field_name, $field->getValue());
-            }
-
-            // Swap domain and range.
-            $domain = $reverse_entity->get('domain')->getValue();
-            $reverse_entity->set('domain', $reverse_entity->get('range')->getValue());
-            $reverse_entity->set('range', $domain);
-            break;
-          }
-        }
-      }
-
-      if (!$reverse_entity) {
-        // Create a reverse reference.
-        $reverse_entity = static::create($fields);
-      }
-
-      $reverse_entity->setReverseable(FALSE);
-      $reverse_entity->save();
-    }
-  }
-
-  public function getReverseable() {
-    if (!isset($this->reverseable)) {
-      $this->reverseable = $this->property->entity->bidirectional;
-    }
-
-    return $this->reverseable;
-  }
-
-  public function setReverseable($reverseable) {
-    $this->reverseable = $reverseable;
   }
 
   /**
@@ -312,44 +204,6 @@ class CidocReference extends ContentEntityBase implements CidocReferenceInterfac
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the entity was last edited.'));
-
-    // @TODO: This should not really be part of the CIDOC module.
-    // Add the citations field.
-    $fields['citation'] = BaseFieldDefinition::create('entity_reference_revisions')
-      ->setLabel(t('Citations'))
-      ->setTranslatable(FALSE)
-      ->setRequired(FALSE)
-      ->setSetting('target_type', 'paragraph')
-      ->setDescription('')
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
-      ->setSetting('handler', 'default:paragraph')
-      ->setSetting('handler_settings', array(
-        'target_bundles' => array(
-          'book' => 'book',
-          'uri' => 'uri',
-        ),
-        'target_bundles_drag_drop' => array(
-          'book' => array(
-            'enabled' => TRUE,
-            'weight' => -5,
-          ),
-          'uri' => array(
-            'enabled' => TRUE,
-            'weight' => -4,
-          ),
-        ),
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'entity_reference_citations',
-        'weight' => 1,
-        'settings' => array(
-          'title' => 'Citation',
-          'title_plural' => 'Citations',
-          'edit_mode' => 'preview',
-        ),
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }

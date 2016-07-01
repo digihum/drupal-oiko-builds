@@ -3,8 +3,7 @@ status: true
 dependencies: {  }
 id: p134_continued
 label: 'P134 continued'
-bidirectional: false
-reverse_label: 'P134 was continued by'
+reverse_label: 'was continued by'
 domain_bundles:
   0: e7_activity
   5: e66_formation

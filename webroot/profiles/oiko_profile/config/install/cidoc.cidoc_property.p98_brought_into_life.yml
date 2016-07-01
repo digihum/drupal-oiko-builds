@@ -3,8 +3,7 @@ status: true
 dependencies: {  }
 id: p98_brought_into_life
 label: 'P98 brought into life'
-bidirectional: false
-reverse_label: 'P98 was born'
+reverse_label: 'was born'
 domain_bundles:
   - e67_birth
 range_bundles:

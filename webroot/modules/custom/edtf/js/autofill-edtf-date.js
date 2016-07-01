@@ -43,25 +43,12 @@
       var $context = $(context);
       var timeout = null;
 
-      function toggleCheckboxHandler(e) {
-        var $checkbox = $(this);
+      function clickEditHandler(e) {
         var data = e.data;
-        if ($checkbox.is(':checked')) {
-          data.$wrapper.addClass('visually-hidden');
-          data.$source.trigger('focus');
-          data.$suffix.show();
-          data.$target.val('');
-          data.$source.on('formUpdated.edtfDate', data, edtfDateHandler)
-          // Initialize EDTF date preview.
-            .trigger('formUpdated.edtfDate');
-
-        }
-        else {
-          data.$wrapper.removeClass('visually-hidden');
-          data.$target.trigger('focus');
-          data.$suffix.hide();
-          data.$source.off('.edtfDate');
-        }
+        data.$wrapper.removeClass('visually-hidden');
+        data.$target.trigger('focus');
+        data.$suffix.hide();
+        data.$source.off('.edtfDate');
       }
 
       function edtfDateHandler(e) {
@@ -132,18 +119,14 @@
           $preview: $preview,
           options: options
         };
-        // Add a checkbox to the human readable string element for editing.
-        var checkboxID = 'date-toggle-element' + Math.round(Math.random() * 1000000);
-        var $checkbox_label = $('<label class="edtf-date-inline" for="' + checkboxID +'">Compute EDTF automatically</label>');
-        $source.after($checkbox_label);
-        var $auto_checkbox = $('<input class="edtf-date-inline" type="checkbox" id="' + checkboxID +'">').on('change', eventData, toggleCheckboxHandler);
-        $checkbox_label.after($auto_checkbox);
+        // If it is editable, append an edit link.
+        var $link = $('<span class="admin-link"><button type="button" class="link">&nbsp;' + Drupal.t('Edit') + '</button></span>').on('click', eventData, clickEditHandler);
+        $suffix.append($link);
 
         // Preview the EDTF date in realtime when the human-readable name
         // changes, but only if there is no EDTF date yet; i.e., only upon
         // initial creation, not when editing.
-        if ($target.val() === '' || self.transliterate($source.val(), options) === $target.val()) {
-          $auto_checkbox.attr('checked', 'checked');
+        if ($target.val() === '') {
           $source.on('formUpdated.edtfDate', eventData, edtfDateHandler)
             // Initialize EDTF date preview.
             .trigger('formUpdated.edtfDate');
@@ -151,8 +134,7 @@
 
         // Add a listener for an invalid event on the EDTF date input
         // to show its container and focus it.
-        $target.on('invalid', eventData, toggleCheckboxHandler);
-        $auto_checkbox.trigger('change');
+        $target.on('invalid', eventData, clickEditHandler);
       });
     },
 

@@ -45,8 +45,8 @@ class CidocEntityForm extends ContentEntityForm {
       '#access' => !empty($description),
     );
 
-    $this->addCidocPropertiesWidget($form, $form_state);
-    $this->addCidocPropertiesWidget($form, $form_state, TRUE);
+    $this->add_cidoc_properties_widget($form, $form_state);
+    $this->add_cidoc_properties_widget($form, $form_state, TRUE);
 
     return $form;
   }
@@ -54,7 +54,7 @@ class CidocEntityForm extends ContentEntityForm {
   /**
    * Add CIDOC properties widget to the form.
    */
-  protected function addCidocPropertiesWidget(array &$form, FormStateInterface $form_state, $reverse = FALSE) {
+  protected function add_cidoc_properties_widget(array &$form, FormStateInterface $form_state, $reverse = FALSE) {
     $source_field = $reverse ? CidocProperty::RANGE_ENDPOINT : CidocProperty::DOMAIN_ENDPOINT;
     $target_field = $reverse ? CidocProperty::DOMAIN_ENDPOINT : CidocProperty::RANGE_ENDPOINT;
 
@@ -65,21 +65,21 @@ class CidocEntityForm extends ContentEntityForm {
 
       /** @var CidocProperty $property_entity */
       foreach ($applicable_properties as $property_name => $property_entity) {
+        $wrapper_id = Html::getUniqueId('cidoc-properties-' . $source_field . '-' . $property_name . '-add-more-wrapper');
+        $property_label = $property_entity->label();
+        if ($reverse) {
+          if ($property_entity->reverse_label == $property_label) {
+            $property_clarifier = t('reverse reference');
+          }
+          else {
+            $property_clarifier = t('reverse of @bundle', ['@bundle' => $property_label]);
+          }
+          $property_label = $property_entity->reverse_label . ' (' . $property_clarifier . ')';
+        }
         $element_key = 'cidoc_properties:' . $source_field . ':' . $property_name;
+        $references = $cidoc_entity->getProperties($property_name, $reverse);
 
         if ($form_state->get('form_display')->getComponent($element_key)) {
-          $wrapper_id = Html::getUniqueId('cidoc-properties-' . $source_field . '-' . $property_name . '-add-more-wrapper');
-          $property_label = $property_entity->label();
-          if ($reverse) {
-            if ($property_entity->reverse_label == $property_label) {
-              $property_clarifier = t('reverse reference');
-            }
-            else {
-              $property_clarifier = t('reverse of @bundle', ['@bundle' => $property_label]);
-            }
-            $property_label = $property_entity->reverse_label . ' (' . $property_clarifier . ')';
-          }
-
           $form[$element_key] = array(
             '#type' => 'fieldset',
             '#title' => $property_label,
@@ -118,7 +118,6 @@ class CidocEntityForm extends ContentEntityForm {
           }
 
           // Build list of reference IDs to show elements for.
-          $references = $cidoc_entity->getProperties($property_name, $reverse);
           if (isset($references[$property_name])) {
             $ids = array_keys($references[$property_name]);
           }
@@ -132,7 +131,7 @@ class CidocEntityForm extends ContentEntityForm {
             $ids[] = $reference_id;
             $i++;
           }
-          while (isset($widget_state['cidoc_properties_' . $source_field][$reference_id]['entity']) && !$widget_state['cidoc_properties_' . $source_field][$reference_id]['entity']->{$target_field}->isEmpty());
+          while (isset($widget_state['cidoc_properties_' . $source_field][$reference_id]['entity']));
 
           foreach ($ids as $reference_id) {
             $existing_reference = is_numeric($reference_id);
@@ -172,13 +171,13 @@ class CidocEntityForm extends ContentEntityForm {
                 'actions' => array(
                   'remove_button' => array(
                     '#type' => 'submit',
-                    '#value' => t('Remove property'),
+                    '#value' => t('Remove'),
                     '#name' => 'cidoc_properties_' . $source_field . '_' . $reference_id . '_remove',
                     '#weight' => 500,
-                    '#submit' => array('::propertiesWidgetRemoveReferenceSubmit'),
+                    '#submit' => array('::properties_widget_remove_reference_submit'),
                     '#limit_validation_errors' => array(),
                     '#ajax' => array(
-                      'callback' => '::propertiesWidgetAjaxCallback',
+                      'callback' => '::properties_widget_ajax_callback',
                       'wrapper' => $wrapper_id,
                       'effect' => 'fade',
                     ),
@@ -194,7 +193,7 @@ class CidocEntityForm extends ContentEntityForm {
               foreach (Element::children($form[$element_key]['references'][$reference_id]['subform']) as $key) {
                 // Recursively hide the title properties in the fields on this
                 // element, use them as table headers instead.
-                $title = $this->recursivelyFindAndHideElementTitle($form[$element_key]['references'][$reference_id]['subform'][$key]);
+                $title = $this->recursively_find_and_hide_element_title($form[$element_key]['references'][$reference_id]['subform'][$key]);
 
                 // Take the field headers from the first row that has them.
                 if (!isset($headers[$key])) {
@@ -246,8 +245,7 @@ class CidocEntityForm extends ContentEntityForm {
                   }
 
                   $target_field_element['widget']['target_id']['#attributes']['class'][] = 'js-cidoc-references-widget-referencer';
-                  $target_field_element['widget']['target_id']['#element_validate'] = array('::setAutocreateBundle');
-                  $target_field_element['widget']['target_id']['#value_callback'] = array('::autocompleteValueCallback');
+                  $target_field_element['widget']['target_id']['#element_validate'] = array('::set_autocreate_bundle');
                 }
               }
             }
@@ -272,9 +270,9 @@ class CidocEntityForm extends ContentEntityForm {
             '#value' => t('Add another'),
             '#attributes' => array('class' => array('field-add-more-submit')),
             '#limit_validation_errors' => array(array($element_key, 'references', $reference_id)),
-            '#submit' => array('::propertiesWidgetAddAnotherSubmit'),
+            '#submit' => array('::properties_widget_add_another_submit'),
             '#ajax' => array(
-              'callback' => '::propertiesWidgetAjaxCallback',
+              'callback' => '::properties_widget_ajax_callback',
               'wrapper' => $wrapper_id,
               'effect' => 'fade',
             ),
@@ -283,7 +281,7 @@ class CidocEntityForm extends ContentEntityForm {
             '#cidoc_property_reference' => ('new_' . $i),
             '#states' => array(
               'visible' => array(
-                ':input[name="' . $element_key . '[references][' . $reference_id . '][subform][' . $target_field . '][target_id]"]' => array('empty' => FALSE),
+                ':input[name="' . $element_key . '][references][' . $reference_id . '][subform][' . $target_field . '][target_id]"]' => array('empty' => FALSE),
               ),
             ),
           );
@@ -296,10 +294,10 @@ class CidocEntityForm extends ContentEntityForm {
   /**
    * Find a title somewhere inside the supplied element, hide and return it.
    */
-  protected function recursivelyFindAndHideElementTitle(&$element) {
+  protected function recursively_find_and_hide_element_title(&$element) {
     if (empty($element['#title'])) {
       foreach (Element::children($element) as $key) {
-        if ($title = $this->recursivelyFindAndHideElementTitle($element[$key])) {
+        if ($title = $this->recursively_find_and_hide_element_title($element[$key])) {
           return $title;
         }
       }
@@ -338,109 +336,16 @@ class CidocEntityForm extends ContentEntityForm {
   }
 
   /**
-   * Replacemenet value callback for the entity autocomplete elements.
-   *
-   * This uses a [id:##] format for the entity ID rather than (##).
-   */
-  public static function autocompleteValueCallback(&$element, $input, FormStateInterface $form_state) {
-    // Process the #default_value property.
-    if ($input === FALSE && isset($element['#default_value']) && $element['#process_default_value']) {
-      if (is_array($element['#default_value']) && $element['#tags'] !== TRUE) {
-        throw new \InvalidArgumentException('The #default_value property is an array but the form element does not allow multiple values.');
-      }
-      elseif (!empty($element['#default_value']) && !is_array($element['#default_value'])) {
-        // Convert the default value into an array for easier processing in
-        // static::getEntityLabels().
-        $element['#default_value'] = array($element['#default_value']);
-      }
-
-      if ($element['#default_value']) {
-        if (!(reset($element['#default_value']) instanceof EntityInterface)) {
-          throw new \InvalidArgumentException('The #default_value property has to be an entity object or an array of entity objects.');
-        }
-
-        // Extract the labels from the passed-in entity objects, taking access
-        // checks into account.
-        return static::getEntityLabels($element['#default_value']);
-      }
-    }
-
-    // Potentially the #value is set directly, so it contains the 'target_id'
-    // array structure instead of a string.
-    if ($input !== FALSE && is_array($input)) {
-      $entity_ids = array_map(function(array $item) {
-        return $item['target_id'];
-      }, $input);
-
-      $entities = \Drupal::entityTypeManager()->getStorage($element['#target_type'])->loadMultiple($entity_ids);
-
-      return static::getEntityLabels($entities);
-    }
-  }
-
-  /**
-   * Converts an array of entity objects into a string of entity labels.
-   *
-   * This method is also responsible for checking the 'view label' access on the
-   * passed-in entities.
-   *
-   * @param \Drupal\Core\Entity\EntityInterface[] $entities
-   *   An array of entity objects.
-   *
-   * @return string
-   *   A string of entity labels separated by commas.
-   */
-  public static function getEntityLabels(array $entities) {
-    $entity_labels = array();
-    foreach ($entities as $entity) {
-      // Use the special view label, since some entities allow the label to be
-      // viewed, even if the entity is not allowed to be viewed.
-      $label = ($entity->access('view label')) ? $entity->label() : t('- Restricted access -');
-
-      // Take into account "autocreated" entities.
-      if (!$entity->isNew()) {
-        $label .= ' [id:' . $entity->id() . ']';
-      }
-
-      // Labels containing commas or quotes must be wrapped in quotes.
-      $entity_labels[] = Tags::encode($label);
-    }
-
-    return implode(', ', $entity_labels);
-  }
-
-  /**
-   * Extracts the entity ID from the autocompletion result.
-   *
-   * @param string $input
-   *   The input coming from the autocompletion result.
-   *
-   * @return mixed|null
-   *   An entity ID or NULL if the input does not contain one.
-   */
-  public static function extractEntityIdFromAutocompleteInput($input) {
-    $match = NULL;
-
-    // Take "label [id:entity id]', match the ID from parenthesis when it's a
-    // number.
-    if (preg_match("/.+\s\[id\:(\d+)\]/", $input, $matches)) {
-      $match = $matches[1];
-    }
-
-    return $match;
-  }
-
-  /**
    * Set the autocreate bundle, if one has been set.
    *
-   * This is an element_validate function that runs instead of the standard
+   * This is an element_validate function that must run before the standard
    * element validation handler of entity_autocomplete elements in order to
    * override the fixed autocreate bundle property that would have come from the
    * field instance settings.
    *
    * @see \Drupal\Core\Entity\Element\EntityAutocomplete::validateEntityAutocomplete()
    */
-  public function setAutocreateBundle(array &$element, FormStateInterface $form_state, array &$complete_form) {
+  public function set_autocreate_bundle(array &$element, FormStateInterface $form_state, array &$complete_form) {
     $value = NULL;
 
     if (!empty($element['#value'])) {
@@ -479,7 +384,7 @@ class CidocEntityForm extends ContentEntityForm {
           }
 
           if (!$autocreate_bundle) {
-            $match = static::extractEntityIdFromAutocompleteInput($input);
+            $match = EntityAutocomplete::extractEntityIdFromAutocompleteInput($input);
             if ($match === NULL) {
               // Try to get a match from the input string when the user didn't use
               // the autocomplete but filled in a value manually.
@@ -598,7 +503,7 @@ class CidocEntityForm extends ContentEntityForm {
     elseif (count($entities) > 5) {
       $params['@id'] = key($entities);
       // Error if there are more than 5 matching entities.
-      $form_state->setError($element, t('Many entities are called %value. Specify the one you want by appending the id in brackets, like "@value [id:@id]".', $params));
+      $form_state->setError($element, t('Many entities are called %value. Specify the one you want by appending the id in parentheses, like "@value (@id)".', $params));
     }
     elseif (count($entities) > 1) {
       // More helpful error if there are only a few matching entities.
@@ -607,7 +512,7 @@ class CidocEntityForm extends ContentEntityForm {
         $multiples[] = $name . ' (' . $id . ')';
       }
       $params['@id'] = $id;
-      $form_state->setError($element, t('Multiple entities match this reference; "%multiple". Specify the one you want by appending the id in brackets, like "@value [id:@id]".', array('%multiple' => implode('", "', $multiples))));
+      $form_state->setError($element, t('Multiple entities match this reference; "%multiple". Specify the one you want by appending the id in parentheses, like "@value (@id)".', array('%multiple' => implode('", "', $multiples))));
     }
     else {
       // Take the one and only matching entity.
@@ -618,7 +523,7 @@ class CidocEntityForm extends ContentEntityForm {
   /**
    * Submit callback for reference widget's remove buttons.
    */
-  public function propertiesWidgetRemoveReferenceSubmit($form, FormStateInterface $form_state) {
+  public function properties_widget_remove_reference_submit($form, FormStateInterface $form_state) {
     $button = $form_state->getTriggeringElement();
     $property_name = $button['#cidoc_property'];
     $reference_id = $button['#cidoc_property_reference'];
@@ -634,7 +539,7 @@ class CidocEntityForm extends ContentEntityForm {
   /**
    * Submit callback for reference widget's buttons to add another item.
    */
-  public function propertiesWidgetAddAnotherSubmit($form, FormStateInterface $form_state) {
+  public function properties_widget_add_another_submit($form, FormStateInterface $form_state) {
     // Forcing a rebuild is enough to ensure another input box will be added.
     $form_state->setRebuild();
   }
@@ -642,7 +547,7 @@ class CidocEntityForm extends ContentEntityForm {
   /**
    * Ajax callback for properties widget.
    */
-  public function propertiesWidgetAjaxCallback(array $form, FormStateInterface $form_state) {
+  public function properties_widget_ajax_callback(array $form, FormStateInterface $form_state) {
     $button = $form_state->getTriggeringElement();
     $property_name = $button['#cidoc_property'];
     $source_field = $button['#cidoc_property_source'];
@@ -735,7 +640,7 @@ class CidocEntityForm extends ContentEntityForm {
 
               // Ensure any references without a range are considered removed.
               if ($reference_storage['entity']->{$opposites[$source_field]}->isEmpty()) {
-//                $widget_state[$property_name]['cidoc_properties_' . $source_field][$reference_id]['mode'] = 'removed';
+                $widget_state[$property_name]['cidoc_properties_' . $source_field][$reference_id]['mode'] = 'removed';
               }
             }
           }

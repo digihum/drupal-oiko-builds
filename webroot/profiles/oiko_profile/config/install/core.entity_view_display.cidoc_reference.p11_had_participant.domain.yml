@@ -19,7 +19,6 @@ content:
       link: true
     third_party_settings: {  }
 hidden:
-  citation: true
   domain: true
   property: true
   user_id: true

@@ -3,8 +3,7 @@ status: true
 dependencies: {  }
 id: p17_was_motivated_by
 label: 'P17 was motivated by'
-bidirectional: false
-reverse_label: 'P17 motivated'
+reverse_label: motivated
 domain_bundles:
   0: e7_activity
   5: e66_formation

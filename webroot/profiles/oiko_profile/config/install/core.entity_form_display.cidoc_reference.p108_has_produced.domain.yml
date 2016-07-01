@@ -6,23 +6,11 @@ dependencies:
     - core.entity_form_mode.cidoc_reference.domain
     - field.field.cidoc_reference.p108_has_produced.domain
     - field.field.cidoc_reference.p108_has_produced.range
-  module:
-    - oiko_citation
 id: cidoc_reference.p108_has_produced.domain
 targetEntityType: cidoc_reference
 bundle: p108_has_produced
 mode: domain
 content:
-  citation:
-    type: entity_reference_citations
-    weight: 1
-    settings:
-      title: Citation
-      title_plural: Citations
-      edit_mode: preview
-      add_mode: dropdown
-      form_display_mode: default
-    third_party_settings: {  }
   range:
     type: entity_reference_autocomplete_tags
     settings:

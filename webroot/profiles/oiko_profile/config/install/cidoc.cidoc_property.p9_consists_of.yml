@@ -3,8 +3,7 @@ status: true
 dependencies: {  }
 id: p9_consists_of
 label: 'P9 consists of'
-bidirectional: false
-reverse_label: 'P9 forms part of'
+reverse_label: 'forms part of'
 domain_bundles:
   0: e4_period
   1: e5_event

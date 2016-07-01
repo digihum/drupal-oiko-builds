@@ -3,8 +3,7 @@ status: true
 dependencies: {  }
 id: p27_moved_from
 label: 'P27 moved from'
-bidirectional: false
-reverse_label: 'P27 was origin of'
+reverse_label: 'was origin of'
 domain_bundles:
   - e9_move
 range_bundles:

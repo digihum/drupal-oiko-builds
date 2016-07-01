@@ -6,23 +6,11 @@ dependencies:
     - core.entity_form_mode.cidoc_reference.range
     - field.field.cidoc_reference.p132_overlaps_with.domain
     - field.field.cidoc_reference.p132_overlaps_with.range
-  module:
-    - oiko_citation
 id: cidoc_reference.p132_overlaps_with.range
 targetEntityType: cidoc_reference
 bundle: p132_overlaps_with
 mode: range
 content:
-  citation:
-    type: entity_reference_citations
-    weight: 1
-    settings:
-      title: Citation
-      title_plural: Citations
-      edit_mode: preview
-      add_mode: dropdown
-      form_display_mode: default
-    third_party_settings: {  }
   domain:
     type: entity_reference_autocomplete_tags
     settings:

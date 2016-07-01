@@ -3,7 +3,6 @@ status: true
 dependencies: {  }
 id: p132_overlaps_with
 label: 'P132 overlaps with'
-bidirectional: false
 reverse_label: 'P132 overlaps with'
 domain_bundles:
   0: e4_period

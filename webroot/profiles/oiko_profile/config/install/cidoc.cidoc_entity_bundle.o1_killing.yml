@@ -6,5 +6,5 @@ id: o1_killing
 label: 'O1 Killing'
 weight: -20
 group: auxiliary
-description: "<p>This class comprises the deaths of human beings actively by other actors.</p>\n"
-examples: "<ul>\n<li>the murder of Julius Caesar</li>\n</ul>\n"
+description: "<p>This class comprises the deaths of human beings actively by other actors.</p>\r\n"
+examples: "<ul>\r\n<li>the murder of Julius Caesar</li>\r\n</ul>\r\n"

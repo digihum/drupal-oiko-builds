@@ -207,36 +207,4 @@ class CidocEntityBundle extends ConfigEntityBundleBase {
     }
   }
 
-  /**
-   * Add bundle as an allowed endpoint class to any properties' endpoint fields
-   * that should allow any bundles.
-   */
-  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
-    if (!$update) {
-      $bundle_id = $this->id();
-      $property_ids = \Drupal::entityQuery('cidoc_property', 'OR')
-        ->condition('domain_bundles.*', '*')
-        ->condition('range_bundles.*', '*')
-        ->execute();
-      /** @var CidocProperty $property */
-      foreach (CidocProperty::loadMultiple($property_ids) as $property_id => $property) {
-        if (in_array('*', $property->domain_bundles, TRUE)) {
-          $field_instance = FieldConfig::loadByName('cidoc_reference', $property_id, 'domain');
-          $settings = $field_instance->getSetting('handler_settings');
-          $settings['target_bundles'][$bundle_id] = $bundle_id;
-          $field_instance->setSetting('handler_settings', $settings);
-          $field_instance->save();
-        }
-        if (in_array('*', $property->range_bundles, TRUE)) {
-          $field_instance = FieldConfig::loadByName('cidoc_reference', $property_id, 'range');
-          $settings = $field_instance->getSetting('handler_settings');
-          $settings['target_bundles'][$bundle_id] = $bundle_id;
-          $field_instance->setSetting('handler_settings', $settings);
-          $field_instance->save();
-        }
-      }
-    }
-
-    parent::postSave($storage, $update);
-  }
 }

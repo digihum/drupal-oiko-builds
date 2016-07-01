@@ -1,0 +1,11 @@
+
+cidoc_graphing.cidoc_graph_all:
+  path: '/graphing/graph/{graph}'
+  defaults:
+    _title: 'All CIDOC data'
+    _controller: '\Drupal\cidoc_graphing\Controller\CidocGraphingController::graph'
+    graph: 'all'
+  requirements:
+    _permission: 'access content'
+  options:
+    _admin_route: FALSE

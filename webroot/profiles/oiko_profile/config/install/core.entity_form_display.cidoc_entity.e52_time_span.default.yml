@@ -7,7 +7,6 @@ dependencies:
   module:
     - edtf
     - field_group
-    - paragraphs
 third_party_settings:
   field_group:
     group_main:
@@ -106,16 +105,6 @@ content:
     weight: 7
     settings: {  }
     third_party_settings: {  }
-  citation:
-    type: entity_reference_paragraphs
-    weight: -1
-    settings:
-      title: Citation
-      title_plural: Citations
-      edit_mode: preview
-      add_mode: button
-      form_display_mode: default
-    third_party_settings: {  }
   class_description:
     weight: 0
     settings: {  }
@@ -140,11 +129,6 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  significance:
-    type: options_select
-    weight: -1
-    settings: {  }
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true

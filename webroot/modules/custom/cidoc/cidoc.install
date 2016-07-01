@@ -4,7 +4,6 @@
  * @file
  * Install, update and uninstall functions for the CIDOC module.
  */
-use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Field\BaseFieldDefinition;
 
 /**
@@ -26,31 +25,4 @@ function cidoc_update_8001() {
   $database->update('cidoc_entity')
     ->fields(array('populated' => 0))
     ->execute();
-}
-
-/**
- * Hide internal_name field on cidoc entity forms.
- */
-function cidoc_update_8002() {
-  // Query by filtering on the ID as this is more efficient than filtering
-  // on the entity_type property directly.
-  $displays = \Drupal::entityQuery('entity_form_display')
-    ->condition('id', 'cidoc_entity.', 'STARTS_WITH')
-    ->condition('id', '.default', 'ENDS_WITH')
-    ->execute();
-  if ($displays = EntityFormDisplay::loadMultiple($displays)) {
-    /** @var EntityFormDisplay $display */
-    foreach ($displays as $display) {
-      $display->removeComponent('internal_name');
-      $display->save();
-    }
-  }
-
-  $update_manager = \Drupal::entityDefinitionUpdateManager();
-
-  /** @var BaseFieldDefinition $storage_definition */
-  $storage_definition = $update_manager->getFieldStorageDefinition('internal_name', 'cidoc_entity');
-  $storage_definition->setDisplayOptions('form', array('type' => 'hidden'));
-
-  $update_manager->updateFieldStorageDefinition($storage_definition);
 }
