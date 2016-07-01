@@ -110,38 +110,6 @@ function cidoc_query_cidoc_get_properties_for_population_alter(\Drupal\Core\Data
 }
 
 /**
- * Implements hook_entity_bundle_create().
- *
- * Loop through all CIDOC properties, to add $bundle to any domain or range
- * endpoint field that should allow any bundles (*).
- */
-function cidoc_entity_bundle_create($entity_type_id, $bundle) {
-  if ($entity_type_id === 'cidoc_entity') {
-    $property_ids = \Drupal::entityQuery('cidoc_property', 'OR')
-      ->condition('domain_bundles.*', '*')
-      ->condition('range_bundles.*', '*')
-      ->execute();
-    /** @var CidocProperty $property */
-    foreach (CidocProperty::loadMultiple($property_ids) as $property_id => $property) {
-      if (in_array('*', $property->domain_bundles, TRUE)) {
-        $field_instance = FieldConfig::loadByName('cidoc_reference', $property_id, 'domain');
-        $settings = $field_instance->getSetting('handler_settings');
-        $settings['target_bundles'][$bundle] = $bundle;
-        $field_instance->setSetting('handler_settings', $settings);
-        $field_instance->save();
-      }
-      if (in_array('*', $property->range_bundles, TRUE)) {
-        $field_instance = FieldConfig::loadByName('cidoc_reference', $property_id, 'range');
-        $settings = $field_instance->getSetting('handler_settings');
-        $settings['target_bundles'][$bundle] = $bundle;
-        $field_instance->setSetting('handler_settings', $settings);
-        $field_instance->save();
-      }
-    }
-  }
-}
-
-/**
  * Implements hook_theme().
  */
 function cidoc_theme() {

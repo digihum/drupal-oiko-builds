@@ -45,8 +45,8 @@ class CidocEntityForm extends ContentEntityForm {
       '#access' => !empty($description),
     );
 
-    $this->add_cidoc_properties_widget($form, $form_state);
-    $this->add_cidoc_properties_widget($form, $form_state, TRUE);
+    $this->addCidocPropertiesWidget($form, $form_state);
+    $this->addCidocPropertiesWidget($form, $form_state, TRUE);
 
     return $form;
   }
@@ -54,7 +54,7 @@ class CidocEntityForm extends ContentEntityForm {
   /**
    * Add CIDOC properties widget to the form.
    */
-  protected function add_cidoc_properties_widget(array &$form, FormStateInterface $form_state, $reverse = FALSE) {
+  protected function addCidocPropertiesWidget(array &$form, FormStateInterface $form_state, $reverse = FALSE) {
     $source_field = $reverse ? CidocProperty::RANGE_ENDPOINT : CidocProperty::DOMAIN_ENDPOINT;
     $target_field = $reverse ? CidocProperty::DOMAIN_ENDPOINT : CidocProperty::RANGE_ENDPOINT;
 
@@ -175,10 +175,10 @@ class CidocEntityForm extends ContentEntityForm {
                     '#value' => t('Remove property'),
                     '#name' => 'cidoc_properties_' . $source_field . '_' . $reference_id . '_remove',
                     '#weight' => 500,
-                    '#submit' => array('::properties_widget_remove_reference_submit'),
+                    '#submit' => array('::propertiesWidgetRemoveReferenceSubmit'),
                     '#limit_validation_errors' => array(),
                     '#ajax' => array(
-                      'callback' => '::properties_widget_ajax_callback',
+                      'callback' => '::propertiesWidgetAjaxCallback',
                       'wrapper' => $wrapper_id,
                       'effect' => 'fade',
                     ),
@@ -194,7 +194,7 @@ class CidocEntityForm extends ContentEntityForm {
               foreach (Element::children($form[$element_key]['references'][$reference_id]['subform']) as $key) {
                 // Recursively hide the title properties in the fields on this
                 // element, use them as table headers instead.
-                $title = $this->recursively_find_and_hide_element_title($form[$element_key]['references'][$reference_id]['subform'][$key]);
+                $title = $this->recursivelyFindAndHideElementTitle($form[$element_key]['references'][$reference_id]['subform'][$key]);
 
                 // Take the field headers from the first row that has them.
                 if (!isset($headers[$key])) {
@@ -246,7 +246,7 @@ class CidocEntityForm extends ContentEntityForm {
                   }
 
                   $target_field_element['widget']['target_id']['#attributes']['class'][] = 'js-cidoc-references-widget-referencer';
-                  $target_field_element['widget']['target_id']['#element_validate'] = array('::set_autocreate_bundle');
+                  $target_field_element['widget']['target_id']['#element_validate'] = array('::setAutocreateBundle');
                   $target_field_element['widget']['target_id']['#value_callback'] = array('::autocompleteValueCallback');
                 }
               }
@@ -272,9 +272,9 @@ class CidocEntityForm extends ContentEntityForm {
             '#value' => t('Add another'),
             '#attributes' => array('class' => array('field-add-more-submit')),
             '#limit_validation_errors' => array(array($element_key, 'references', $reference_id)),
-            '#submit' => array('::properties_widget_add_another_submit'),
+            '#submit' => array('::propertiesWidgetAddAnotherSubmit'),
             '#ajax' => array(
-              'callback' => '::properties_widget_ajax_callback',
+              'callback' => '::propertiesWidgetAjaxCallback',
               'wrapper' => $wrapper_id,
               'effect' => 'fade',
             ),
@@ -296,10 +296,10 @@ class CidocEntityForm extends ContentEntityForm {
   /**
    * Find a title somewhere inside the supplied element, hide and return it.
    */
-  protected function recursively_find_and_hide_element_title(&$element) {
+  protected function recursivelyFindAndHideElementTitle(&$element) {
     if (empty($element['#title'])) {
       foreach (Element::children($element) as $key) {
-        if ($title = $this->recursively_find_and_hide_element_title($element[$key])) {
+        if ($title = $this->recursivelyFindAndHideElementTitle($element[$key])) {
           return $title;
         }
       }
@@ -440,7 +440,7 @@ class CidocEntityForm extends ContentEntityForm {
    *
    * @see \Drupal\Core\Entity\Element\EntityAutocomplete::validateEntityAutocomplete()
    */
-  public function set_autocreate_bundle(array &$element, FormStateInterface $form_state, array &$complete_form) {
+  public function setAutocreateBundle(array &$element, FormStateInterface $form_state, array &$complete_form) {
     $value = NULL;
 
     if (!empty($element['#value'])) {
@@ -618,7 +618,7 @@ class CidocEntityForm extends ContentEntityForm {
   /**
    * Submit callback for reference widget's remove buttons.
    */
-  public function properties_widget_remove_reference_submit($form, FormStateInterface $form_state) {
+  public function propertiesWidgetRemoveReferenceSubmit($form, FormStateInterface $form_state) {
     $button = $form_state->getTriggeringElement();
     $property_name = $button['#cidoc_property'];
     $reference_id = $button['#cidoc_property_reference'];
@@ -634,7 +634,7 @@ class CidocEntityForm extends ContentEntityForm {
   /**
    * Submit callback for reference widget's buttons to add another item.
    */
-  public function properties_widget_add_another_submit($form, FormStateInterface $form_state) {
+  public function propertiesWidgetAddAnotherSubmit($form, FormStateInterface $form_state) {
     // Forcing a rebuild is enough to ensure another input box will be added.
     $form_state->setRebuild();
   }
@@ -642,7 +642,7 @@ class CidocEntityForm extends ContentEntityForm {
   /**
    * Ajax callback for properties widget.
    */
-  public function properties_widget_ajax_callback(array $form, FormStateInterface $form_state) {
+  public function propertiesWidgetAjaxCallback(array $form, FormStateInterface $form_state) {
     $button = $form_state->getTriggeringElement();
     $property_name = $button['#cidoc_property'];
     $source_field = $button['#cidoc_property_source'];

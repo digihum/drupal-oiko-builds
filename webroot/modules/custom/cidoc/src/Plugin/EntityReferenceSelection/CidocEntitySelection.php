@@ -69,8 +69,8 @@ class CidocEntitySelection extends DefaultSelection {
    */
   protected function buildEntityQuery($match = NULL, $match_operator = 'CONTAINS') {
     // If our search starts with a number (think time-spans) then this works
-    // better. Otherwise the result your after when searching for '2 CE'
-    // gets alphabetically sorted to way after '102/112/12/120/121/122' etc.
+    // better. Otherwise the result when searching for '2 CE' gets
+    // alphabetically sorted to well after '102 CE, 112 CE, 12 CE, 122 CE' etc.
     if (isset($match) && preg_match('/^[0-9]+/', $match)) {
       $match_operator = 'STARTS_WITH';
     }
