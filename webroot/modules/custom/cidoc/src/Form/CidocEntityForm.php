@@ -757,11 +757,13 @@ class CidocEntityForm extends ContentEntityForm {
     /** @var \Drupal\cidoc\Entity\CidocEntity $cidoc_entity */
     $cidoc_entity = $this->entity;
 
-    foreach (array('domain', 'range') as $source_field) {
+    $endpoints = array('domain', 'range');
+    $opposites = array_combine(array_reverse($endpoints), $endpoints);
+    foreach ($endpoints as $source_field) {
       if ($widget_state = $this->getWidgetState($form_state, $source_field)) {
         foreach ($widget_state as $property_name => $property_storage) {
           foreach ($property_storage['cidoc_properties_' . $source_field] as $reference_id => $reference_storage) {
-            if ($reference_storage['mode'] !== 'removed') {
+            if (!$reference_storage['entity']->{$opposites[$source_field]}->isEmpty() && $reference_storage['mode'] !== 'removed') {
               // Update the source field to match the updated entity.
               $reference_storage['entity']->{$source_field} = array(array('target_id' => $cidoc_entity->id()));
 

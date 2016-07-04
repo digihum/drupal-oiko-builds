@@ -1423,7 +1423,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/devel",
-                "reference": "47be309dd2c13251ec1a4d84b059160802e9c4ff"
+                "reference": "b8bcdc6f61f976c9bd50099b42bd2809266e9670"
             },
             "require": {
                 "drupal/core": "8.*"
@@ -1458,7 +1458,7 @@
             ],
             "description": "Various blocks, pages, and functions for developers.",
             "homepage": "http://drupal.org/project/devel",
-            "time": "2016-06-28 19:49:57"
+            "time": "2016-07-01 18:41:23"
         },
         {
             "name": "drupal/entity_reference_revisions",
@@ -1775,7 +1775,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/migrate_tools.git",
-                "reference": "e23d12cefc71fb35800878078fdb247d1b05307d"
+                "reference": "65ddf838807daf5ccd8fa8a2e61fb3635bcacd6e"
             },
             "require": {
                 "drupal/core": "8.*",
@@ -1794,7 +1794,7 @@
             ],
             "description": "Tools to assist in developing and running migrations.",
             "homepage": "https://www.drupal.org/project/migrate_tools",
-            "time": "2016-05-05 23:01:53"
+            "time": "2016-07-01 17:41:26"
         },
         {
             "name": "drupal/migrate_upgrade",

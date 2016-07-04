@@ -3227,7 +3227,7 @@
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/devel",
-            "reference": "47be309dd2c13251ec1a4d84b059160802e9c4ff"
+            "reference": "b8bcdc6f61f976c9bd50099b42bd2809266e9670"
         },
         "require": {
             "drupal/core": "8.*"
@@ -3242,7 +3242,7 @@
             "drupal/core": "Required by drupal/devel_generate, drupal/devel_node_access, drupal/kint, drupal/webprofiler",
             "drupal/menu_ui": "Required by drupal/devel_node_access"
         },
-        "time": "2016-06-28 19:49:57",
+        "time": "2016-07-01 18:41:23",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
@@ -3675,14 +3675,14 @@
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/migrate_tools.git",
-            "reference": "e23d12cefc71fb35800878078fdb247d1b05307d"
+            "reference": "65ddf838807daf5ccd8fa8a2e61fb3635bcacd6e"
         },
         "require": {
             "drupal/core": "8.*",
             "drupal/migrate_plus": "8.*",
             "drupal/system": ">=8.1.0"
         },
-        "time": "2016-05-05 23:01:53",
+        "time": "2016-07-01 17:41:26",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {

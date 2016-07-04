@@ -14,6 +14,7 @@ use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_tools\MigrateExecutable;
 use Drupal\migrate_tools\DrushLogMigrateMessage;
 use Drupal\Core\Datetime\DateFormatter;
+use Drupal\migrate_plus\Entity\MigrationGroup;
 
 /**
  * Implements hook_drush_command().
@@ -142,14 +143,16 @@ function drush_migrate_tools_migrate_status($migration_names = '') {
   $table = [];
   // Take it one group at a time, listing the migrations within each group.
   foreach ($migrations as $group_id => $migration_list) {
+    $group = MigrationGroup::load($group_id);
+    $group_name = !empty($group) ? "{$group->label()} ({$group->id()})" : $group_id;
     if ($names_only) {
       $table[] = [
-        dt('Group: @name', array('@name' => $group_id))
+        dt('Group: @name', array('@name' => $group_name))
       ];
     }
     else {
       $table[] = [
-        dt('Group: @name', array('@name' => $group_id)),
+        dt('Group: @name', array('@name' => $group_name)),
         dt('Status'),
         dt('Total'),
         dt('Imported'),
