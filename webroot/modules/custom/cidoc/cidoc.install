@@ -4,6 +4,7 @@
  * @file
  * Install, update and uninstall functions for the CIDOC module.
  */
+use Drupal\cidoc\Entity\CidocReference;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Field\BaseFieldDefinition;
 
@@ -53,4 +54,23 @@ function cidoc_update_8002() {
   $storage_definition->setDisplayOptions('form', array('type' => 'hidden'));
 
   $update_manager->updateFieldStorageDefinition($storage_definition);
+}
+
+
+/**
+ * Fix broken CIDOC references.
+ */
+function cidoc_update_8101() {
+  // Query by filtering on the ID as this is more efficient than filtering
+  // on the entity_type property directly.
+  $references = \Drupal::entityQuery('cidoc_reference')
+    ->execute();
+  if ($references = CidocReference::loadMultiple($references)) {
+    /** @var CidocReference $reference */
+    foreach ($references as $reference) {
+      if ($reference->domain->isEmpty() || $reference->range->isEmpty()) {
+        $reference->delete();
+      }
+    }
+  }
 }
