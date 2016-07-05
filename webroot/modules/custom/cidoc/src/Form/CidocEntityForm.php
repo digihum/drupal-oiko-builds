@@ -247,7 +247,6 @@ class CidocEntityForm extends ContentEntityForm {
 
                   $target_field_element['widget']['target_id']['#attributes']['class'][] = 'js-cidoc-references-widget-referencer';
                   $target_field_element['widget']['target_id']['#element_validate'] = array('::setAutocreateBundle');
-                  $target_field_element['widget']['target_id']['#value_callback'] = array('::autocompleteValueCallback');
                 }
               }
             }
@@ -335,78 +334,6 @@ class CidocEntityForm extends ContentEntityForm {
       $parents[] = $property_name;
     }
     NestedArray::setValue($form_state->getStorage(), $parents, $set);
-  }
-
-  /**
-   * Replacemenet value callback for the entity autocomplete elements.
-   *
-   * This uses a [id:##] format for the entity ID rather than (##).
-   */
-  public static function autocompleteValueCallback(&$element, $input, FormStateInterface $form_state) {
-    // Process the #default_value property.
-    if ($input === FALSE && isset($element['#default_value']) && $element['#process_default_value']) {
-      if (is_array($element['#default_value']) && $element['#tags'] !== TRUE) {
-        throw new \InvalidArgumentException('The #default_value property is an array but the form element does not allow multiple values.');
-      }
-      elseif (!empty($element['#default_value']) && !is_array($element['#default_value'])) {
-        // Convert the default value into an array for easier processing in
-        // static::getEntityLabels().
-        $element['#default_value'] = array($element['#default_value']);
-      }
-
-      if ($element['#default_value']) {
-        if (!(reset($element['#default_value']) instanceof EntityInterface)) {
-          throw new \InvalidArgumentException('The #default_value property has to be an entity object or an array of entity objects.');
-        }
-
-        // Extract the labels from the passed-in entity objects, taking access
-        // checks into account.
-        return static::getEntityLabels($element['#default_value']);
-      }
-    }
-
-    // Potentially the #value is set directly, so it contains the 'target_id'
-    // array structure instead of a string.
-    if ($input !== FALSE && is_array($input)) {
-      $entity_ids = array_map(function(array $item) {
-        return $item['target_id'];
-      }, $input);
-
-      $entities = \Drupal::entityTypeManager()->getStorage($element['#target_type'])->loadMultiple($entity_ids);
-
-      return static::getEntityLabels($entities);
-    }
-  }
-
-  /**
-   * Converts an array of entity objects into a string of entity labels.
-   *
-   * This method is also responsible for checking the 'view label' access on the
-   * passed-in entities.
-   *
-   * @param \Drupal\Core\Entity\EntityInterface[] $entities
-   *   An array of entity objects.
-   *
-   * @return string
-   *   A string of entity labels separated by commas.
-   */
-  public static function getEntityLabels(array $entities) {
-    $entity_labels = array();
-    foreach ($entities as $entity) {
-      // Use the special view label, since some entities allow the label to be
-      // viewed, even if the entity is not allowed to be viewed.
-      $label = ($entity->access('view label')) ? $entity->label() : t('- Restricted access -');
-
-      // Take into account "autocreated" entities.
-      if (!$entity->isNew()) {
-        $label .= ' [id:' . $entity->id() . ']';
-      }
-
-      // Labels containing commas or quotes must be wrapped in quotes.
-      $entity_labels[] = Tags::encode($label);
-    }
-
-    return implode(', ', $entity_labels);
   }
 
   /**

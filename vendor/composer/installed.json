@@ -3675,14 +3675,14 @@
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/migrate_tools.git",
-            "reference": "65ddf838807daf5ccd8fa8a2e61fb3635bcacd6e"
+            "reference": "aefe7ad7d548ed9631344a85671dc03d0ec5ad15"
         },
         "require": {
             "drupal/core": "8.*",
             "drupal/migrate_plus": "8.*",
             "drupal/system": ">=8.1.0"
         },
-        "time": "2016-07-01 17:41:26",
+        "time": "2016-07-04 20:27:16",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
@@ -3734,6 +3734,21 @@
         ],
         "description": "Drush support for direct upgrades from older Drupal versions.",
         "homepage": "https://www.drupal.org/project/migrate_upgrade"
+    },
+    {
+        "name": "drupal/squid_autocomplete",
+        "version": "dev-8.x-1.x",
+        "version_normalized": "dev-8.x-1.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/squid_autocomplete.git",
+            "reference": "origin/8.x-1.x"
+        },
+        "require": {
+            "composer/installers": "^1.0.21"
+        },
+        "type": "drupal-module",
+        "installation-source": "source"
     },
     {
         "name": "drupal/ctools",

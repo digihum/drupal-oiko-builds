@@ -211,7 +211,7 @@ class CidocProperty extends ConfigEntityBundleBase {
           $field_instance->save();
 
           $entity_form_display->setComponent($endpoint_field, array(
-            'type' => 'entity_reference_autocomplete_tags',
+            'type' => 'squid_entity_reference_autocomplete_tags',
           ))->save();
 
           $default_display->setComponent($endpoint_field, array(
@@ -251,7 +251,7 @@ class CidocProperty extends ConfigEntityBundleBase {
             $other_form_mode->removeComponent('langcode');
           }
           $other_form_mode->setComponent($endpoint_field, array(
-            'type' => 'entity_reference_autocomplete_tags',
+            'type' => 'squid_entity_reference_autocomplete_tags',
             'settings' => array(
               'match_operator' => 'STARTS_WITH',
               'size' => '60',
