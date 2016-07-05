@@ -6,3 +6,6 @@ package: CIDOC
 config_devel:
   - views.view.graphing_all_entities
   - views.view.graphing_all_references
+dependencies:
+  - serialization
+  - rest
