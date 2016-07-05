@@ -17,7 +17,7 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: squid_entity_reference_autocomplete
   field_pages:
     weight: 1
     settings:
