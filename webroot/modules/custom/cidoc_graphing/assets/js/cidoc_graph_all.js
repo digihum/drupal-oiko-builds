@@ -1,8 +1,4 @@
 /**
- * Created by nathan on 01/07/2016.
- */
-
-/**
  * We need to collect our datasets from the server.
  */
 var links = [];

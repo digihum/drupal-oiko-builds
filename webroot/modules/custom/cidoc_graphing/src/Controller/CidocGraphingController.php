@@ -11,11 +11,11 @@ use Drupal\Core\Controller\ControllerBase;
 
 class CidocGraphingController extends ControllerBase {
   public function graph($graph) {
-   
     $display = array();
-    $display['#attached']['library'][] = 'cidoc_graphing/d3';
     
-    // @todo do we need to do a check_plain() (or equivalent) on $graph ?
+    // Just one graph 'all' at the moment.
+    // Easy to add more later, though, and load the relevant library.
+    $graph = 'all';
     $display['#attached']['library'][] = 'cidoc_graphing/graph-' . $graph;
     
     return $display;

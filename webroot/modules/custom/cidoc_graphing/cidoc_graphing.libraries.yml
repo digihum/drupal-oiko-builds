@@ -1,30 +1,9 @@
-d3:
-  version: 3
-  js:
-   'http://d3js.org/d3.v3.min.js': {external: true}
-   'http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js': {external: true}
-
 graph-all:
   version: 1
   js:
+    'https://d3js.org/d3.v3.min.js': {external: true}
+    assets/js/d3.tip.v0.6.3.js': {}
     assets/js/cidoc_graph_all.js: {}
   css:
     theme:
       assets/css/cidoc_graph.css: {}
-
-alchemy:
-  version: 1
-  js:
-    'https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.js': {external: true}
-    'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js': {external: true}
-    assets/alchemy/alchemy.js: {}
-    assets/js/cidoc_graph_alchemy.js: {}
-  css:
-    theme:
-      assets/alchemy/alchemy.css: {}
-  dependencies:
-    - core/drupal
-    - core/drupalSettings
-    - core/jquery
-    - core/jquery.once
-    

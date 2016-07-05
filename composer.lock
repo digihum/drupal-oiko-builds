@@ -2714,17 +2714,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/oomphinc/composer-installers-extender.git",
-                "reference": "e3277b5931f129c757368f9e28ff002000b5093b"
+                "reference": "e29c900d3d6a851ee8261859fb39edbb1f34722e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oomphinc/composer-installers-extender/zipball/e3277b5931f129c757368f9e28ff002000b5093b",
-                "reference": "e3277b5931f129c757368f9e28ff002000b5093b",
+                "url": "https://api.github.com/repos/oomphinc/composer-installers-extender/zipball/e29c900d3d6a851ee8261859fb39edbb1f34722e",
+                "reference": "e29c900d3d6a851ee8261859fb39edbb1f34722e",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0",
-                "composer/installers": "^1.1"
+                "composer/installers": "^1.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -2748,7 +2748,7 @@
             ],
             "description": "Extend the composer/installers plugin to accept any arbitrary package type.",
             "homepage": "http://www.oomphinc.com/",
-            "time": "2016-07-05 13:28:19"
+            "time": "2016-07-05 15:00:34"
         },
         {
             "name": "padraic/humbug_get_contents",
