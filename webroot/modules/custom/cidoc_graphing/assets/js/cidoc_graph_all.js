@@ -2,12 +2,14 @@
  * Created by nathan on 01/07/2016.
  */
 
-// We need to collect our datasets from the server.
+/**
+ * We need to collect our datasets from the server.
+ */
 var links = [];
 var nodes = [];
-d3.xhr("/graphing/data/cidoc-entities", function(error, data) {
+d3.xhr("/graphing/data/cidoc-entities", function (error, data) {
   nodes = JSON.parse(data.response);
-  nodes.forEach(function(item, index) {
+  nodes.forEach(function (item, index) {
     item.weight = 1;
   });
   setup();
@@ -25,26 +27,72 @@ d3.xhr("/graphing/data/cidoc-references", function (error, data) {
 });
 
 /**
+ * Makes a path curvy.
+ *
+ * This makes things clear when you have two directional paths between your two
+ * nodes, pointing in opposite directions, since they would otherwise completely
+ * overlap.
+ *
+ * @param d
+ * @returns {string}
+ */
+function linkArc(d) {
+  var dx = d.target.x - d.source.x,
+    dy = d.target.y - d.source.y,
+    dr = Math.sqrt(dx * dx + dy * dy);
+  return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+}
+
+function transform(d) {
+  return "translate(" + d.x + "," + d.y + ")";
+}
+
+/**
+ * Some helpful zoom & drag functions, to aid canvas interaction.
+ */
+
+function zoomed() {
+  container.selectAll('g').attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
+
+function dragstarted(d) {
+  d3.event.sourceEvent.stopPropagation();
+  d3.select(this).classed("dragging", true);
+}
+
+function dragged(d) {
+  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+}
+
+function dragended(d) {
+  d3.select(this).classed("dragging", false);
+}
+
+
+/**
  * Do the magic!
  */
 function setup() {
-  // Don't actually set up until we have our datasets.
+  // Don't actually set up until we have our datasets!
   if (links.length == 0 || nodes.length == 0) {
     return;
   }
-  
-  // Links reference the indices of the nodes in the nodes array.
+
+  /**
+   * Re-jig our links so that they reference the node array indices.
+   */
   textLinks = links;
   links = [];
-  textLinks.forEach(function(textLink, linkIndex) {
+  textLinks.forEach(function (textLink, linkIndex) {
     indexLink = {
       source: -1,
       target: -1,
+      property: textLink.property,
     };
-    jQuery.each(nodes, function(nodeIndex, node) {
+    jQuery.each(nodes, function (nodeIndex, node) {
       if (node.name == textLink.source) {
         indexLink.source = nodeIndex;
-        
+
         // Long-winded way to break if we have all we need.
         if (indexLink.source != -1 && indexLink.target != -1) {
           return false;
@@ -52,7 +100,7 @@ function setup() {
       }
       if (node.name == textLink.target) {
         indexLink.target = nodeIndex;
-        
+
         // Long-winded way to break if we have all we need.
         if (indexLink.source != -1 && indexLink.target != -1) {
           return false;
@@ -61,17 +109,19 @@ function setup() {
     });
     links.push(indexLink);
   });
-  
-  
-  var width = 700, height = 1000;
 
+
+  /**
+   * Key things to set up our visualisation.
+   * @type {number}
+   */
+  var width = 1500, height = 800;
   window.force = d3.layout.force()
-    // .nodes(d3.values(nodes))
     .nodes(nodes)
     .links(links)
     .size([width, height])
     // .linkDistance(100)
-    .charge(-1000)
+    .charge(-250)
     .on("tick", tick)
     .start();
 
@@ -79,9 +129,28 @@ function setup() {
     .attr("width", width)
     .attr("height", height);
 
-// Per-type markers, as they don't inherit styles.
+
+  /**
+   * Set up zoom and drag, to make the canvas easy to interact with.
+   */
+  window.container = svg.append('g');
+  window.zoom = d3.behavior.zoom()
+    .scaleExtent([1, 10])
+    .on("zoom", zoomed);
+  window.drag = d3.behavior.drag()
+    .origin(function (d) {
+      return d;
+    })
+    .on("dragstart", dragstarted)
+    .on("drag", dragged)
+    .on("dragend", dragended);
+
+  /**
+   * Add markers to our paths.
+   * We can even specify different types of marker, in our data parameter.
+   */
   svg.append("defs").selectAll("marker")
-    .data(["event-group", "group-package", "event-package"])
+    .data(["end"])
     .enter().append("marker")
     .attr("id", function (d) {
       return d;
@@ -89,49 +158,78 @@ function setup() {
     .attr("viewBox", "0 -5 10 10")
     .attr("refX", 15)
     .attr("refY", -1.5)
-    .attr("markerWidth", 6)
-    .attr("markerHeight", 6)
+    .attr("markerWidth", 4)
+    .attr("markerHeight", 4)
     .attr("orient", "auto")
     .append("path")
-    .attr("d", "M0,-5L10,0L0,5");
+    .attr("d", "M0,-5L10,0L0,5")
+    .call(drag);
 
   window.tip = d3.tip()
     .attr('class', 'd3-tip')
-    .offset([-10, 0])
+    .offset(function (d) {
+      // We need to position slightly differently for paths / circles.
+      if (typeof (d.property) !== 'undefined') {
+        return [-10, 0];
+      }
+      else {
+        return [-5, 0];
+      }
+    })
     .html(function (d) {
-      return "<strong></strong> <span style='color:white'>" + d.name + " - " + d.bundle + "</span>";
+      message = '';
+      if (typeof (d.property) !== 'undefined') {
+        message = d.property;
+      }
+      if (typeof (d.bundle) !== 'undefined') {
+        message = d.name + ' - ' + d.bundle;
+      }
+      return "<strong></strong> <span style='color:white'>" + message + "</span>";
     });
 
   svg.call(tip);
+  svg.call(zoom);
 
-  window.path = svg.append("g").selectAll("path")
+  /**
+   * Add our paths, circles, text to the canvas.
+   */
+  window.path = container.append("g").selectAll("path")
     .data(force.links())
     .enter().append("path")
-    .attr("class", function(d) {
-      return 'link';
-    });
+    .attr("class", function (d) {
+      property = d.property.replace(/ /g, '-');
+      return 'link ' + property;
+    })
+    .attr('marker-end', function (d) {
+      return "url(#end)";
+    })
+    .on('mouseover', tip.show)
+    .on('mouseout', tip.hide)
+    .call(drag);
 
-  window.circle = svg.append("g").selectAll("circle")
+  window.circle = container.append("g").selectAll("circle")
     .data(force.nodes())
     .enter().append("circle")
-    .attr("r", 6)
-    .attr('class', function(d) {
+    .attr("r", 4)
+    .attr('class', function (d) {
       bundle = d.bundle;
       bundle = bundle.replace(/ /g, '-');
       return bundle;
     })
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide)
+    .on('click', fade(0.1))
+    .on('dblclick', fade(1))
     .call(force.drag);
 
-  window.text = svg.append("g").selectAll("text")
+  window.text = container.append("g").selectAll("text")
     .data(force.nodes())
     .enter().append("text")
     .attr("x", 8)
     .attr("y", ".31em")
     .attr("font-family", "sans-serif")
     .attr("font-size", function (d) {
-      return "14px";
+      return "8px";
     })
     .text(function (d) {
       return d.name;
@@ -139,25 +237,82 @@ function setup() {
     .attr("fulltext", function (d) {
       return d.name;
     })
-    .attr("shorttext", "hover to see name");
+    .attr("shorttext", "hover to see name")
+    .call(drag);
+
+
+  // Figure out which nodes are linked, and store it in a convenient way.
+  window.linkedByIndex = {};
+  links.forEach(function (link) {
+    linkedByIndex[link.source.index + "," + link.target.index] = 1;
+    links.forEach(function (sublink) {
+      if (link.target.index == sublink.source.index) {
+        linkedByIndex[link.source.index + "," + sublink.target.index] = 1;
+      }
+    });
+  });
 }
 
-
-
-// Use elliptical arc path segments to doubly-encode directionality.
+// This runs every time d3 does some rendering.
 function tick() {
+  // Make our paths curvy, so they show directionality.
   path.attr("d", linkArc);
+
   circle.attr("transform", transform);
   text.attr("transform", transform);
 }
 
-function linkArc(d) {
-  var dx = d.target.x - d.source.x,
-    dy = d.target.y - d.source.y,
-    dr = 0;
-  return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
-}
 
-function transform(d) {
-  return "translate(" + d.x + "," + d.y + ")";
+/**
+ * The functions in this section handle highlighting/fading.
+ *
+ */
+function connectedTo(index) {
+  var connections = [];
+  links.forEach(function (link) {
+    if (link.source.index == index || link.target.index == index) {
+      connections.push(link.target.index);
+    }
+  });
+  return connections;
+}
+function neighboring(a, b) {
+  return linkedByIndex[a.index + "," + b.index];
+}
+function isConnected(a, b) {
+  return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
+}
+function fade(opacity) {
+  return function (d) {
+    circle.style("stroke-opacity", function (o) {
+      thisOpacity = isConnected(d, o) ? 1 : opacity;
+      this.setAttribute('fill-opacity', thisOpacity);
+      return thisOpacity;
+    });
+
+    path.style("opacity", function (o) {
+      thisOpacity = isConnected(d, o) || o.source === d || o.target === d ? 1 : opacity;
+      if (thisOpacity < 1) {
+        connections = connectedTo(d.index);
+        var index = 0;
+        while (index < connections.length) {
+          if (o.source.index == connections[index]) {
+            thisOpacity = 1;
+          }
+          else {
+            // console.log('index: ' + o.source.index + ' does not match index: ' + connections[index]);
+          }
+          index++;
+        }
+      }
+      return thisOpacity;
+    });
+
+    text.style("fill-opacity", function (o) {
+      thisOpacity = isConnected(d, o) ? 1 : opacity;
+      // this.setAttribute('fill-opacity', thisOpacity);
+      return thisOpacity;
+    });
+
+  }
 }

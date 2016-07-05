@@ -2,7 +2,7 @@
 .link {
   fill: none;
   stroke: #666;
-  stroke-width: 1px;
+  stroke-width: 2px;
 }
 
 circle {
@@ -49,7 +49,7 @@ circle.E7-Activity {
   fill: blue;
 }
 circle.E21-Person {
-  fill: rgba(255, 0, 10, 0.55);
+  fill: rgb(255, 0, 10);
 }
 circle.E22-Man-Made-Object {
   fill: gray;
@@ -65,4 +65,15 @@ circle.E9-Move {
 }
 circle.E52-Time-Span {
   fill: yellow;
+}
+
+
+.link.P25-moved {
+  stroke: red;
+}
+.link.P14-carried-out-by {
+  stroke: blue;
+}
+.link.P12-occurred-in-the-presence-of {
+  stroke: yellow;
 }

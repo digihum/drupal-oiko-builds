@@ -152,16 +152,16 @@
         },
         {
             "name": "composer/installers",
-            "version": "v1.0.25",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "36e5b5843203d7f1cf6ffb0305a97e014387bd8e"
+                "reference": "a3595c5272a6f247228abb20076ed27321e4aae9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/36e5b5843203d7f1cf6ffb0305a97e014387bd8e",
-                "reference": "36e5b5843203d7f1cf6ffb0305a97e014387bd8e",
+                "url": "https://api.github.com/repos/composer/installers/zipball/a3595c5272a6f247228abb20076ed27321e4aae9",
+                "reference": "a3595c5272a6f247228abb20076ed27321e4aae9",
                 "shasum": ""
             },
             "require": {
@@ -208,6 +208,7 @@
                 "MODX Evo",
                 "Mautic",
                 "OXID",
+                "RadPHP",
                 "SMF",
                 "Thelia",
                 "WolfCMS",
@@ -223,6 +224,7 @@
                 "dokuwiki",
                 "drupal",
                 "elgg",
+                "expressionengine",
                 "fuelphp",
                 "grav",
                 "installer",
@@ -248,7 +250,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2016-04-13 19:46:30"
+            "time": "2016-07-05 06:18:20"
         },
         {
             "name": "composer/semver",
@@ -1423,7 +1425,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/devel",
-                "reference": "47be309dd2c13251ec1a4d84b059160802e9c4ff"
+                "reference": "b8bcdc6f61f976c9bd50099b42bd2809266e9670"
             },
             "require": {
                 "drupal/core": "8.*"
@@ -1458,7 +1460,7 @@
             ],
             "description": "Various blocks, pages, and functions for developers.",
             "homepage": "http://drupal.org/project/devel",
-            "time": "2016-06-28 19:49:57"
+            "time": "2016-07-01 18:41:23"
         },
         {
             "name": "drupal/features",
@@ -1744,7 +1746,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/migrate_tools.git",
-                "reference": "e23d12cefc71fb35800878078fdb247d1b05307d"
+                "reference": "aefe7ad7d548ed9631344a85671dc03d0ec5ad15"
             },
             "require": {
                 "drupal/core": "8.*",
@@ -1763,7 +1765,7 @@
             ],
             "description": "Tools to assist in developing and running migrations.",
             "homepage": "https://www.drupal.org/project/migrate_tools",
-            "time": "2016-05-05 23:01:53"
+            "time": "2016-07-04 20:27:16"
         },
         {
             "name": "drupal/migrate_upgrade",
@@ -2712,17 +2714,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/oomphinc/composer-installers-extender.git",
-                "reference": "753f6eb88d73d36461a79b1125d3fb24390326f6"
+                "reference": "e3277b5931f129c757368f9e28ff002000b5093b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oomphinc/composer-installers-extender/zipball/753f6eb88d73d36461a79b1125d3fb24390326f6",
-                "reference": "753f6eb88d73d36461a79b1125d3fb24390326f6",
+                "url": "https://api.github.com/repos/oomphinc/composer-installers-extender/zipball/e3277b5931f129c757368f9e28ff002000b5093b",
+                "reference": "e3277b5931f129c757368f9e28ff002000b5093b",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0",
-                "composer/installers": "~1.0.22"
+                "composer/installers": "^1.1"
             },
             "type": "composer-plugin",
             "extra": {
@@ -2746,7 +2748,7 @@
             ],
             "description": "Extend the composer/installers plugin to accept any arbitrary package type.",
             "homepage": "http://www.oomphinc.com/",
-            "time": "2016-03-02 23:35:37"
+            "time": "2016-07-05 13:28:19"
         },
         {
             "name": "padraic/humbug_get_contents",
