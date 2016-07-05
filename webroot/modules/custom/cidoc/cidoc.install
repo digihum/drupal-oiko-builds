@@ -139,4 +139,16 @@ function cidoc_update_8103() {
   $role = \Drupal\user\Entity\Role::load('content_editor');
   $role->grantPermission('access cidoc entity overview');
   $role->save();
+
+  $view = \Drupal\views\Views::getView('cidoc_entities');
+  $view->setDisplay('default');
+  $view->display_handler->setOption('access', array(
+    'type' => 'perm',
+    'options' => array(
+      'perm' => 'access cidoc entity overview',
+    ),
+  ));
+  $view->setDisplay('page_1');
+  $view->display_handler->setOption('path', 'admin/cidoc/cidoc-entities');
+  $view->save();
 }
