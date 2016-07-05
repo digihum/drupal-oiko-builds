@@ -9,3 +9,4 @@ config_devel:
 dependencies:
   - serialization
   - rest
+  - views
