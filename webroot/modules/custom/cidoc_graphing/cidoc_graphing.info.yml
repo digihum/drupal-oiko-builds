@@ -10,3 +10,4 @@ dependencies:
   - serialization
   - rest
   - views
+  - cidoc
