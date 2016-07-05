@@ -6,6 +6,6 @@ cidoc_graphing.cidoc_graph_all:
     _controller: '\Drupal\cidoc_graphing\Controller\CidocGraphingController::graph'
     graph: 'all'
   requirements:
-    _permission: 'access content'
+    _permission: 'access cidoc entity overview'
   options:
     _admin_route: FALSE
