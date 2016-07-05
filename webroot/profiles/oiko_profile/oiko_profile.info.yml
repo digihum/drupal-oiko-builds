@@ -66,7 +66,6 @@ dependencies:
 #  - metatag
 #  - pathauto
 #  - token
-  - squid_autocomplete
 
 # ============================================================================ #
 # Dependencies: Custom modules # - alphabetical order please
