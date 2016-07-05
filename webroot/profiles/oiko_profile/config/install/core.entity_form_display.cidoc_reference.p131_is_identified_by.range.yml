@@ -24,7 +24,7 @@ content:
       form_display_mode: default
     third_party_settings: {  }
   domain:
-    type: entity_reference_autocomplete_tags
+    type: squid_entity_reference_autocomplete_tags
     settings:
       match_operator: STARTS_WITH
       size: 60
