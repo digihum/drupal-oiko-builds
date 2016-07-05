@@ -231,6 +231,50 @@
         "installation-source": "source"
     },
     {
+        "name": "oomphinc/composer-installers-extender",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/oomphinc/composer-installers-extender.git",
+            "reference": "e29c900d3d6a851ee8261859fb39edbb1f34722e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/oomphinc/composer-installers-extender/zipball/e29c900d3d6a851ee8261859fb39edbb1f34722e",
+            "reference": "e29c900d3d6a851ee8261859fb39edbb1f34722e",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0",
+            "composer/installers": "^1.0"
+        },
+        "time": "2016-07-05 15:00:34",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "OomphInc\\ComposerInstallersExtender\\Plugin"
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "OomphInc\\ComposerInstallersExtender\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Stephen Beemsterboer",
+                "email": "stephen@oomphinc.com",
+                "homepage": "https://github.com/balbuf"
+            }
+        ],
+        "description": "Extend the composer/installers plugin to accept any arbitrary package type.",
+        "homepage": "http://www.oomphinc.com/"
+    },
+    {
         "name": "zendframework/zend-stdlib",
         "version": "3.0.1",
         "version_normalized": "3.0.1.0",
@@ -5638,49 +5682,5 @@
             }
         ],
         "description": "A library for getting information about EDTF formatted strings."
-    },
-    {
-        "name": "oomphinc/composer-installers-extender",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/oomphinc/composer-installers-extender.git",
-            "reference": "e29c900d3d6a851ee8261859fb39edbb1f34722e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/oomphinc/composer-installers-extender/zipball/e29c900d3d6a851ee8261859fb39edbb1f34722e",
-            "reference": "e29c900d3d6a851ee8261859fb39edbb1f34722e",
-            "shasum": ""
-        },
-        "require": {
-            "composer-plugin-api": "^1.0",
-            "composer/installers": "^1.0"
-        },
-        "time": "2016-07-05 15:00:34",
-        "type": "composer-plugin",
-        "extra": {
-            "class": "OomphInc\\ComposerInstallersExtender\\Plugin"
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "OomphInc\\ComposerInstallersExtender\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Stephen Beemsterboer",
-                "email": "stephen@oomphinc.com",
-                "homepage": "https://github.com/balbuf"
-            }
-        ],
-        "description": "Extend the composer/installers plugin to accept any arbitrary package type.",
-        "homepage": "http://www.oomphinc.com/"
     }
 ]
