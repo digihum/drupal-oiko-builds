@@ -131,3 +131,12 @@ function cidoc_update_8102() {
     }
   }
 }
+
+/**
+ * Give content editors permission to view the cidoc entity overview page.
+ */
+function cidoc_update_8103() {
+  $role = \Drupal\user\Entity\Role::load('content_editor');
+  $role->grantPermission('access cidoc entity overview');
+  $role->save();
+}

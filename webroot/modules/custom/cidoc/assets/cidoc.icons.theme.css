@@ -1,0 +1,7 @@
+.toolbar-icon-entity-cidoc-entity-collection:before {
+  background-image: url(icons/787878/pencil.svg);
+}
+.toolbar-icon-entity-cidoc-entity-collection:active:before,
+.toolbar-icon-entity-cidoc-entity-collection.is-active:before {
+  background-image: url(icons/000000/pencil.svg);
+}

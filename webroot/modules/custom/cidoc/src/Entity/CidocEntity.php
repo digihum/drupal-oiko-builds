@@ -53,7 +53,7 @@ use Drupal\user\UserInterface;
  *     "add-form" = "/cidoc-entity/add/{cidoc_entity_bundle}",
  *     "edit-form" = "/cidoc-entity/{cidoc_entity}/edit",
  *     "delete-form" = "/cidoc-entity/{cidoc_entity}/delete",
- *     "collection" = "/admin/content/cidoc-entities",
+ *     "collection" = "/admin/cidoc/cidoc-entities",
  *   },
  *   bundle_entity_type = "cidoc_entity_bundle",
  *   field_ui_base_route = "entity.cidoc_entity_bundle.edit_form"

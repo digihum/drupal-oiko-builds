@@ -168,3 +168,13 @@ function cidoc_theme_suggestions_cidoc_reference(array $variables) {
   $suggestions[] = 'cidoc_reference__' . $entity->id() . '__' . $sanitized_view_mode;
   return $suggestions;
 }
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function cidoc_library_info_alter(array &$libraries, $module) {
+  if ($module === 'toolbar' && isset($libraries['toolbar'])) {
+    // Override the leaflet library to a local version.
+    $libraries['toolbar']['dependencies'][] = 'cidoc/cidoc.toolbar';
+  }
+}

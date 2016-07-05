@@ -22,3 +22,9 @@ drupal.cidoc_property_reference_widget:
   dependencies:
     - core/jquery
     - core/drupal
+
+cidoc.toolbar:
+  version: VERSION
+  css:
+    theme:
+      assets/cidoc.icons.theme.css: {}

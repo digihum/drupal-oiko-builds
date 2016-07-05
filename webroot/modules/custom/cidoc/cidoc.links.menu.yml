@@ -1,30 +1,22 @@
 # CIDOC entity menu items definition
 entity.cidoc_entity.collection:
-  title: 'CIDOC entity list'
+  title: 'CIDOC CRM'
   route_name: entity.cidoc_entity.collection
-  description: 'List CIDOC entities'
-  parent: system.admin_content
-  weight: 10
+  description: 'Find and manage CIDOC CRM data'
+  parent: system.admin
+  weight: -9
 
 # CIDOC entity bundle menu items definition
 entity.cidoc_entity_bundle.collection:
-  title: 'CIDOC entity classes'
+  title: 'CIDOC CRM entity classes'
   route_name: entity.cidoc_entity_bundle.collection
   description: 'List types of CIDOC entities'
   parent: system.admin_structure
 
-# CIDOC reference menu items definition
-entity.cidoc_reference.collection:
-  title: 'CIDOC entity property references'
-  route_name: entity.cidoc_reference.collection
-  description: 'List CIDOC entity property references'
-  parent: system.admin_content
-  weight: 100
-
 # CIDOC property menu items definition
 entity.cidoc_property.collection:
-  title: 'CIDOC entity properties'
+  title: 'CIDOC CRM entity properties'
   route_name: entity.cidoc_property.collection
-  description: 'List CIDOC entity properties'
+  description: 'List CIDOC CRM entity properties'
   parent: system.admin_structure
 

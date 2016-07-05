@@ -54,7 +54,7 @@ use Drupal\user\UserInterface;
  *     "add-form" = "/cidoc-reference/add/{cidoc_property}",
  *     "edit-form" = "/cidoc-reference/{cidoc_reference}/edit",
  *     "delete-form" = "/cidoc-reference/{cidoc_reference}/delete",
- *     "collection" = "/admin/content/cidoc-references",
+ *     "collection" = "/admin/cidoc/cidoc-references",
  *   },
  *   bundle_entity_type = "cidoc_property",
  *   field_ui_base_route = "entity.cidoc_property.edit_form"
