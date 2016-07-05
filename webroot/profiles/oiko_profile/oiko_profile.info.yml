@@ -73,6 +73,7 @@ dependencies:
 # in oiko_profile.install)
 # ============================================================================ #
   - cidoc
+  - cidoc_graphing
   - cidoc_sync
   - edtf
   - oiko_leaflet
