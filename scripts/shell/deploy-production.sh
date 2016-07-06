@@ -35,4 +35,4 @@ service php5-fpm restart || true
 varnishadm "ban.url ." || true
 
 # Delete old build
-#rm -rf "$OLDBUILD"
+rm -rf "$OLDBUILD"
