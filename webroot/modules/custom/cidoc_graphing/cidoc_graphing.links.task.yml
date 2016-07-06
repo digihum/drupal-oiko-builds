@@ -1,0 +1,5 @@
+cidoc_graphing.cidoc_graph_all:
+  route_name: cidoc_graphing.cidoc_graph_all
+  base_route: entity.cidoc_entity.collection
+  title: 'CIDOC Entity Graph'
+  weight: 3000

@@ -1,0 +1,21 @@
+
+cidoc_graphing.cidoc_graph:
+  path: '/graphing/graph/{graph}'
+  defaults:
+    _title: 'All CIDOC data'
+    _controller: '\Drupal\cidoc_graphing\Controller\CidocGraphingController::graph'
+  requirements:
+    _permission: 'access cidoc entity overview'
+  options:
+    _admin_route: TRUE
+
+cidoc_graphing.cidoc_graph_all:
+  path: '/graphing/graph/all'
+  defaults:
+    _title: 'All CIDOC data'
+    _controller: '\Drupal\cidoc_graphing\Controller\CidocGraphingController::graph'
+    graph: 'all'
+  requirements:
+    _permission: 'access cidoc entity overview'
+  options:
+    _admin_route: TRUE
