@@ -1,0 +1,14 @@
+--- lib/Drupal/Core/Entity/Sql/TableMappingInterface.php
++++ lib/Drupal/Core/Entity/Sql/TableMappingInterface.php
+@@ -20,6 +20,11 @@
+ interface TableMappingInterface {
+ 
+   /**
++   * A property that represents delta used in entity query conditions.
++   */
++  const DELTA = '%delta';
++
++  /**
+    * Gets a list of table names for this mapping.
+    *
+    * @return string[]

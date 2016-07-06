@@ -21,6 +21,7 @@ use Drupal\field\Entity\FieldConfig;
  *       "edit" = "Drupal\cidoc\Form\CidocEntityBundleForm",
  *       "delete" = "Drupal\cidoc\Form\CidocEntityBundleDeleteForm"
  *     },
+ *     "access" = "Drupal\cidoc\CidocEntityAccessControlHandler",
  *     "route_provider" = {
  *       "html" = "Drupal\cidoc\CidocEntityBundleHtmlRouteProvider",
  *     },
