@@ -20,6 +20,10 @@ class CidocEntityAccessControlHandler extends EntityAccessControlHandler {
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
     switch ($operation) {
       case 'view label':
+        if ($entity->getEntityTypeId() === 'cidoc_property') {
+          return AccessResult::allowed();
+        }
+        // Intentially fall through.
       case 'view':
         // CIDOC references have no published method or property.
         if ($entity->getEntityTypeId() === 'cidoc_entity' && !$entity->isPublished()) {

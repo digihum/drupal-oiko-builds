@@ -23,6 +23,7 @@ use Drupal\field\Entity\FieldStorageConfig;
  *       "edit" = "Drupal\cidoc\Form\CidocPropertyForm",
  *       "delete" = "Drupal\cidoc\Form\CidocPropertyDeleteForm"
  *     },
+ *     "access" = "Drupal\cidoc\CidocEntityAccessControlHandler",
  *     "route_provider" = {
  *       "html" = "Drupal\cidoc\CidocPropertyHtmlRouteProvider",
  *     },
