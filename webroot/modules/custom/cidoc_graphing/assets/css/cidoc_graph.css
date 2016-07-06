@@ -1,0 +1,79 @@
+
+.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 2px;
+}
+
+circle {
+  stroke: #333;
+  stroke-width: 1px;
+}
+
+text {
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+  font-family: sans-serif;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+
+circle.E7-Activity {
+  fill: blue;
+}
+circle.E21-Person {
+  fill: rgb(255, 0, 10);
+}
+circle.E22-Man-Made-Object {
+  fill: gray;
+}
+circle.E53-Place {
+  fill: orange;
+}
+circle.E74-Group {
+  fill: #cd0000;
+}
+circle.E9-Move {
+  fill: lightgray;
+}
+circle.E52-Time-Span {
+  fill: yellow;
+}
+
+
+.link.P25-moved {
+  stroke: red;
+}
+.link.P14-carried-out-by {
+  stroke: blue;
+}
+.link.P12-occurred-in-the-presence-of {
+  stroke: yellow;
+}

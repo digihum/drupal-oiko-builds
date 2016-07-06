@@ -1,0 +1,13 @@
+name: CIDOC Graphing
+type: module
+description: Provides graphic visualisations of the CIDOC data held on the site.
+core: 8.x
+package: CIDOC
+config_devel:
+  - views.view.graphing_all_entities
+  - views.view.graphing_all_references
+dependencies:
+  - serialization
+  - rest
+  - views
+  - cidoc
