@@ -7,6 +7,8 @@ d3.xhr("/graphing/data/cidoc-entities", function (error, data) {
   nodes = JSON.parse(data.response);
   nodes.forEach(function (item, index) {
     item.weight = 1;
+    item.text = item.name;
+    item.name = item.id;
   });
   setup();
 });
@@ -88,7 +90,7 @@ function setup() {
       linkedNodes.push(node);
     }
   });
-  nodes = linkedNodes;  
+  nodes = linkedNodes;
 
   /**
    * Re-jig our links so that they reference the node array indices.
@@ -194,7 +196,7 @@ function setup() {
         message = d.property;
       }
       if (typeof (d.bundle) !== 'undefined') {
-        message = d.name + ' - ' + d.bundle;
+        message = d.text + ' - ' + d.bundle;
       }
       return "<strong></strong> <span style='color:white'>" + message + "</span>";
     });
@@ -244,10 +246,10 @@ function setup() {
       return "8px";
     })
     .text(function (d) {
-      return d.name;
+      return d.text;
     })
     .attr("fulltext", function (d) {
-      return d.name;
+      return d.text;
     })
     .attr("shorttext", "hover to see name")
     .call(drag);
