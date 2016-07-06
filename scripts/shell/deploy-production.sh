@@ -13,7 +13,7 @@ chmod 755 "$BUILD_DIR"
 cd "$BUILD_DIR"
 
 # Pull fully built drupal in.
-git clone --depth=1 git@github.com:computerminds/oiko-builds.git .
+git clone --depth=1 --branch=production git@github.com:computerminds/oiko-builds.git .
 
 # Remove the deployed sites dir
 rm -rf "webroot/sites/$SITES_DIR"
