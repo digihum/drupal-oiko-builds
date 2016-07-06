@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p4_has_time_span
 label: 'P4 has time-span'
-reverse_label: 'is time-span of'
+bidirectional: false
+reverse_label: 'P4 is time-span of'
 domain_bundles:
   2: e4_period
   3: e5_event

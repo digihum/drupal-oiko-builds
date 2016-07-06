@@ -53,7 +53,7 @@ use Drupal\user\UserInterface;
  *     "add-form" = "/cidoc-entity/add/{cidoc_entity_bundle}",
  *     "edit-form" = "/cidoc-entity/{cidoc_entity}/edit",
  *     "delete-form" = "/cidoc-entity/{cidoc_entity}/delete",
- *     "collection" = "/admin/content/cidoc-entities",
+ *     "collection" = "/admin/cidoc/cidoc-entities",
  *   },
  *   bundle_entity_type = "cidoc_entity_bundle",
  *   field_ui_base_route = "entity.cidoc_entity_bundle.edit_form"
@@ -214,10 +214,6 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
         'type' => 'string',
         'weight' => -3,
       ))
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -3,
-      ))
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
@@ -255,6 +251,64 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
       ->setLabel(t('Content populated'))
       ->setDescription(t('A boolean indicating whether the CIDOC entity has been populated.'))
       ->setDefaultValue(FALSE);
+
+    // @TODO: This should not really be part of the CIDOC module.
+    // Add a field for types of entity.
+    $fields['significance'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Primary historical significance'))
+      ->setTranslatable(FALSE)
+      ->setRequired(FALSE)
+      ->setSetting('target_type', 'taxonomy_term')
+      ->setSetting('handler', 'default:taxonomy_term')
+      ->setSetting('handler_settings', array(
+        'target_bundles' => array(
+          'event_types' => 'event_types',
+        ),
+      ))
+      ->setDisplayOptions('form', array(
+        'type' => 'options_select',
+        'weight' => -1,
+      ))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    // @TODO: This should not really be part of the CIDOC module.
+    // Add the citations field.
+    $fields['citation'] = BaseFieldDefinition::create('entity_reference_revisions')
+      ->setLabel(t('General citations'))
+      ->setTranslatable(FALSE)
+      ->setRequired(FALSE)
+      ->setSetting('target_type', 'paragraph')
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setSetting('handler', 'default:paragraph')
+      ->setSetting('handler_settings', array(
+        'target_bundles' => array(
+          'book' => 'book',
+          'uri' => 'uri',
+        ),
+        'target_bundles_drag_drop' => array(
+          'book' => array(
+            'enabled' => TRUE,
+            'weight' => -5,
+          ),
+          'uri' => array(
+            'enabled' => TRUE,
+            'weight' => -4,
+          ),
+        ),
+      ))
+      ->setDisplayOptions('form', array(
+        'type' => 'entity_reference_paragraphs',
+        'weight' => -1,
+        'settings' => array(
+          'title' => 'Citation',
+          'title_plural' => 'Citations',
+          'edit_mode' => 'preview',
+          'add_mode' => 'button',
+        ),
+      ))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }

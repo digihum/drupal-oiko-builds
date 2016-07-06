@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p131_is_identified_by
 label: 'P131 is identified by'
-reverse_label: identifies
+bidirectional: false
+reverse_label: 'P131 identifies'
 domain_bundles:
   1: e21_person
   2: e74_group

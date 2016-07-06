@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p14_carried_out_by
 label: 'P14 carried out by'
-reverse_label: performed
+bidirectional: false
+reverse_label: 'P14 performed'
 domain_bundles:
   0: e7_activity
   5: e66_formation

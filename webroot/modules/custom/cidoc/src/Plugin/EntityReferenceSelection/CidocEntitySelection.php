@@ -56,7 +56,7 @@ class CidocEntitySelection extends DefaultSelection {
       // Show label with internal name if available.
       $internal_name = $translation->getName(FALSE);
       if ($internal_name) {
-        $label .= ' (' . $internal_name . ')';
+        $label .= ' (' . $internal_name . ') [id:' . $entity_id . ']';
       }
       $options[$bundle][$entity_id] = Html::escape($label);
     }
@@ -68,6 +68,12 @@ class CidocEntitySelection extends DefaultSelection {
    * Allow matching name (label) or internal name.
    */
   protected function buildEntityQuery($match = NULL, $match_operator = 'CONTAINS') {
+    // If our search starts with a number (think time-spans) then this works
+    // better. Otherwise the result when searching for '2 CE' gets
+    // alphabetically sorted to well after '102 CE, 112 CE, 12 CE, 122 CE' etc.
+    if (isset($match) && preg_match('/^[0-9]+/', $match)) {
+      $match_operator = 'STARTS_WITH';
+    }
     $target_type = $this->configuration['target_type'];
     $handler_settings = $this->configuration['handler_settings'];
     $entity_type = $this->entityManager->getDefinition($target_type);

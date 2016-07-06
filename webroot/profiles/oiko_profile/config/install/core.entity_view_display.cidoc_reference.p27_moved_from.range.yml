@@ -19,6 +19,7 @@ content:
       link: true
     third_party_settings: {  }
 hidden:
+  citation: true
   property: true
   range: true
   user_id: true

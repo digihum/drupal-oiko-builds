@@ -1,21 +1,21 @@
 entity.cidoc_entity.add_form:
   route_name: 'cidoc_entity.add_page'
-  title: 'Add CIDOC entity'
+  title: 'Add CIDOC CRM entity'
   appears_on:
     - entity.cidoc_entity.collection
 entity.cidoc_entity_bundle.add_form:
   route_name: 'entity.cidoc_entity_bundle.add_form'
-  title: 'Add CIDOC entity class'
+  title: 'Add CIDOC CRM entity class'
   appears_on:
     - entity.cidoc_entity_bundle.collection
 entity.cidoc_reference.add_form:
   route_name: 'cidoc_reference.add_page'
-  title: 'Add CIDOC reference'
+  title: 'Add CIDOC CRM reference'
   appears_on:
     - entity.cidoc_reference.collection
 entity.cidoc_property.add_form:
   route_name: 'entity.cidoc_property.add_form'
-  title: 'Add CIDOC property'
+  title: 'Add CIDOC CRM property'
   appears_on:
     - entity.cidoc_property.collection
 

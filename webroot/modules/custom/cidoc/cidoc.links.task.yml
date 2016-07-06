@@ -23,9 +23,14 @@ entity.cidoc_entity.populate_properties:
 
 entity.cidoc_entity.collection:
   route_name:  entity.cidoc_entity.collection
-  base_route:  system.admin_content
-  title: 'CIDOC entities'
+  base_route:  entity.cidoc_entity.collection
+  title: 'CIDOC CRM entities'
   weight: 10
+entity.cidoc_reference.collection:
+  route_name:  entity.cidoc_reference.collection
+  base_route:  entity.cidoc_entity.collection
+  title: 'CIDOC CRM entity property references'
+  weight: 11
 
 # CIDOC reference routing definitions.
 entity.cidoc_reference.canonical:
@@ -44,9 +49,4 @@ entity.cidoc_reference.delete_form:
   title: Delete
   weight: 10
 
-entity.cidoc_reference.collection:
-  route_name:  entity.cidoc_reference.collection
-  base_route:  system.admin_content
-  title: 'CIDOC entity property references'
-  weight: 10
 

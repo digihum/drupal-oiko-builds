@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p13_destroyed
 label: 'P13 destroyed'
-reverse_label: 'was destroyed by'
+bidirectional: false
+reverse_label: 'P13 was destroyed by'
 domain_bundles:
   - e6_destruction
   - o3_active_destruction

@@ -313,9 +313,30 @@ display:
       header: {  }
       footer: {  }
       empty: {  }
-      relationships: {  }
+      relationships:
+        domain:
+          id: domain
+          table: cidoc_reference__domain
+          field: domain
+          relationship: none
+          group_type: group
+          admin_label: 'domain: CIDOC entity'
+          required: true
+          plugin_id: standard
+        range:
+          id: range
+          table: cidoc_reference__range
+          field: range
+          relationship: none
+          group_type: group
+          admin_label: 'range: CIDOC entity'
+          required: true
+          plugin_id: standard
       arguments: {  }
       display_extenders: {  }
+      filter_groups:
+        operator: AND
+        groups: {  }
     cache_metadata:
       max-age: -1
       contexts:

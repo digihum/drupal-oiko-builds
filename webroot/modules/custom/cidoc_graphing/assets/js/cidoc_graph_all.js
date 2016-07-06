@@ -75,6 +75,22 @@ function setup() {
   }
 
   /**
+   * Clear out nodes that aren't linked to anything.
+   */
+  keep = [];
+  jQuery.each(links, function(index, link) {
+    keep.push(link.source);
+    keep.push(link.target);
+  });
+  linkedNodes = [];
+  jQuery.each(nodes, function(index, node) {
+    if (keep.indexOf(node.name) != -1) {
+      linkedNodes.push(node);
+    }
+  });
+  nodes = linkedNodes;  
+
+  /**
    * Re-jig our links so that they reference the node array indices.
    */
   textLinks = links;
@@ -103,9 +119,9 @@ function setup() {
         }
       }
     });
+    
     links.push(indexLink);
   });
-
 
   /**
    * Key things to set up our visualisation.

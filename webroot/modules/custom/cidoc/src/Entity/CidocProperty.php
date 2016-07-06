@@ -38,6 +38,7 @@ use Drupal\field\Entity\FieldStorageConfig;
  *   config_export = {
  *     "id",
  *     "label",
+ *     "bidirectional",
  *     "reverse_label",
  *     "domain_bundles",
  *     "range_bundles",
@@ -79,6 +80,13 @@ class CidocProperty extends ConfigEntityBundleBase {
    * @var string
    */
   public $reverse_label;
+
+  /**
+   * Whether a property is considered symmetric or not.
+   *
+   * @var bool
+   */
+  public $bidirectional = FALSE;
 
   /**
    * List of entity bundles that can be used as property domains (sources).
@@ -203,7 +211,7 @@ class CidocProperty extends ConfigEntityBundleBase {
           $field_instance->save();
 
           $entity_form_display->setComponent($endpoint_field, array(
-            'type' => 'entity_reference_autocomplete_tags',
+            'type' => 'squid_entity_reference_autocomplete_tags',
           ))->save();
 
           $default_display->setComponent($endpoint_field, array(
@@ -243,7 +251,7 @@ class CidocProperty extends ConfigEntityBundleBase {
             $other_form_mode->removeComponent('langcode');
           }
           $other_form_mode->setComponent($endpoint_field, array(
-            'type' => 'entity_reference_autocomplete_tags',
+            'type' => 'squid_entity_reference_autocomplete_tags',
             'settings' => array(
               'match_operator' => 'STARTS_WITH',
               'size' => '60',

@@ -4,6 +4,8 @@
  * @file
  * Install, update and uninstall functions for the CIDOC module.
  */
+use Drupal\cidoc\Entity\CidocReference;
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Field\BaseFieldDefinition;
 
 /**
@@ -25,4 +27,116 @@ function cidoc_update_8001() {
   $database->update('cidoc_entity')
     ->fields(array('populated' => 0))
     ->execute();
+}
+
+/**
+ * Hide internal_name field on cidoc entity forms.
+ */
+function cidoc_update_8002() {
+  // Query by filtering on the ID as this is more efficient than filtering
+  // on the entity_type property directly.
+  $displays = \Drupal::entityQuery('entity_form_display')
+    ->condition('id', 'cidoc_entity.', 'STARTS_WITH')
+    ->condition('id', '.default', 'ENDS_WITH')
+    ->execute();
+  if ($displays = EntityFormDisplay::loadMultiple($displays)) {
+    /** @var EntityFormDisplay $display */
+    foreach ($displays as $display) {
+      $display->removeComponent('internal_name');
+      $display->save();
+    }
+  }
+
+  $update_manager = \Drupal::entityDefinitionUpdateManager();
+
+  /** @var BaseFieldDefinition $storage_definition */
+  $storage_definition = $update_manager->getFieldStorageDefinition('internal_name', 'cidoc_entity');
+  $storage_definition->setDisplayOptions('form', array('type' => 'hidden'));
+
+  $update_manager->updateFieldStorageDefinition($storage_definition);
+}
+
+
+/**
+ * Fix broken CIDOC references.
+ */
+function cidoc_update_8101() {
+  $references = \Drupal::entityQuery('cidoc_reference')
+    ->execute();
+  if ($references = CidocReference::loadMultiple($references)) {
+    /** @var CidocReference $reference */
+    foreach ($references as $reference) {
+      if ($reference->domain->isEmpty() || $reference->range->isEmpty()) {
+        $reference->delete();
+      }
+    }
+  }
+}
+
+/**
+ * Change field widgets to our squid widgets.
+ */
+function cidoc_update_8102() {
+  \Drupal::service('module_installer')->install(['squid_autocomplete']);
+  $fields = \Drupal::entityQuery('entity_form_display')
+    ->condition('id', 'cidoc_reference.', 'STARTS_WITH')
+    ->condition('id', '.domain', 'ENDS_WITH')
+    ->execute();
+  if ($fields = EntityFormDisplay::loadMultiple($fields)) {
+    /** @var EntityFormDisplay $field */
+    foreach ($fields as $field) {
+      $settings = $field->getComponent('range');
+      if ($settings['type'] === 'entity_reference_autocomplete_tags') {
+        $settings['type'] = 'squid_entity_reference_autocomplete_tags';
+      }
+      $field->setComponent('range', $settings);
+      $field->save();
+    }
+  }
+
+  $fields = \Drupal::entityQuery('entity_form_display')
+    ->condition('id', 'cidoc_reference.', 'STARTS_WITH')
+    ->condition('id', '.range', 'ENDS_WITH')
+    ->execute();
+  if ($fields = EntityFormDisplay::loadMultiple($fields)) {
+    /** @var EntityFormDisplay $field */
+    foreach ($fields as $field) {
+      $settings = $field->getComponent('domain');
+      if ($settings['type'] === 'entity_reference_autocomplete_tags') {
+        $settings['type'] = 'squid_entity_reference_autocomplete_tags';
+      }
+      $field->setComponent('domain', $settings);
+      $field->save();
+    }
+  }
+
+  $fields = \Drupal::entityQuery('entity_form_display')
+    ->condition('id', 'cidoc_reference.', 'STARTS_WITH')
+    ->condition('id', '.default', 'ENDS_WITH')
+    ->execute();
+  if ($fields = EntityFormDisplay::loadMultiple($fields)) {
+    /** @var EntityFormDisplay $field */
+    foreach ($fields as $field) {
+      $settings = $field->getComponent('domain');
+      if ($settings['type'] === 'entity_reference_autocomplete_tags') {
+        $settings['type'] = 'squid_entity_reference_autocomplete_tags';
+      }
+      $field->setComponent('domain', $settings);
+      $settings = $field->getComponent('range');
+      if ($settings['type'] === 'entity_reference_autocomplete_tags') {
+        $settings['type'] = 'squid_entity_reference_autocomplete_tags';
+      }
+      $field->setComponent('range', $settings);
+      $field->save();
+    }
+  }
+}
+
+/**
+ * Give content editors permission to view the cidoc entity overview page.
+ */
+function cidoc_update_8103() {
+  $role = \Drupal\user\Entity\Role::load('content_editor');
+  $role->grantPermission('access cidoc entity overview');
+  $role->save();
 }

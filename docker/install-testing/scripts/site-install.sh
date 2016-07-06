@@ -14,6 +14,8 @@ dockerize -wait tcp://database:3306 -timeout 1m
 
 cd webroot
 
+drush --version
+
 # Run the site install command.
 drush site-install --yes --debug oiko_profile --db-url='mysql://root:root@database:3306/oiko'
 

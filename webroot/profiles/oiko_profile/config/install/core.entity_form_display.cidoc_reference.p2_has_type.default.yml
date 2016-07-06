@@ -5,13 +5,25 @@ dependencies:
     - cidoc.cidoc_property.p2_has_type
     - field.field.cidoc_reference.p2_has_type.domain
     - field.field.cidoc_reference.p2_has_type.range
+  module:
+    - oiko_citation
 id: cidoc_reference.p2_has_type.default
 targetEntityType: cidoc_reference
 bundle: p2_has_type
 mode: default
 content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
   domain:
-    type: entity_reference_autocomplete_tags
+    type: squid_entity_reference_autocomplete_tags
     weight: 11
     settings: {  }
     third_party_settings: {  }
@@ -21,7 +33,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   range:
-    type: entity_reference_autocomplete_tags
+    type: squid_entity_reference_autocomplete_tags
     weight: 12
     settings: {  }
     third_party_settings: {  }

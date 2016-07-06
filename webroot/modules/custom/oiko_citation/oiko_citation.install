@@ -1,0 +1,22 @@
+<?php
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+
+/**
+ * Change field widgets to our squid widgets.
+ */
+function oiko_citation_update_8101() {
+  \Drupal::service('module_installer')->install(['squid_autocomplete']);
+  $fields = \Drupal::entityQuery('entity_form_display')
+    ->condition('id', 'paragraph.book', 'STARTS_WITH')
+    ->condition('id', '.default', 'ENDS_WITH')
+    ->execute();
+  if ($fields = EntityFormDisplay::loadMultiple($fields)) {
+    /** @var EntityFormDisplay $field */
+    foreach ($fields as $field) {
+      $settings = $field->getComponent('field_book');
+      $settings['type'] = 'squid_entity_reference_autocomplete';
+      $field->setComponent('field_book', $settings);
+      $field->save();
+    }
+  }
+}

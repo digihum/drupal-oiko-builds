@@ -65,3 +65,6 @@ cidoc.cidoc_property.*:
         range:
           type: boolean
           label: 'Editable on range entities'
+    bidirectional:
+      type: boolean
+      label: 'Whether this property is symmetric.'

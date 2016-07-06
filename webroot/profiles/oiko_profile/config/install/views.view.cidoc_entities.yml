@@ -21,8 +21,9 @@ display:
     position: 0
     display_options:
       access:
-        type: none
-        options: {  }
+        type: perm
+        options:
+          perm: 'access cidoc entity overview'
       cache:
         type: tag
         options: {  }
@@ -436,7 +437,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: admin/content/cidoc-entities
+      path: admin/cidoc/cidoc-entities
       menu:
         type: normal
         title: 'CIDOC Entities'

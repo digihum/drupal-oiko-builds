@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p1_is_identified_by
 label: 'P1 is identfied by'
-reverse_label: identifies
+bidirectional: false
+reverse_label: 'P1 identifies'
 domain_bundles:
   2: e52_time_span
   3: e53_place

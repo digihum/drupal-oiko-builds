@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e21_person
   module:
     - field_group
+    - paragraphs
 third_party_settings:
   field_group:
     group_main:
@@ -24,6 +25,8 @@ third_party_settings:
       children:
         - name
         - internal_name
+        - citation
+        - significance
         - group_main_details
       parent_name: group_main
       weight: 4
@@ -51,7 +54,7 @@ third_party_settings:
       children:
         - group_appellations
       parent_name: group_main_deets
-      weight: 3
+      weight: 5
       label: 'Main details'
       format_type: tabs
       format_settings:
@@ -80,6 +83,16 @@ content:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+  citation:
+    type: entity_reference_paragraphs
+    weight: 3
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: button
+      form_display_mode: default
+    third_party_settings: {  }
   class_description:
     weight: 0
     settings: {  }
@@ -97,6 +110,11 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  significance:
+    type: options_select
+    weight: 4
+    settings: {  }
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true

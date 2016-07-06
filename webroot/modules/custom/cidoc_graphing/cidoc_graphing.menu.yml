@@ -1,0 +1,6 @@
+# CIDOC Graphing menu items definition
+cidoc_graphing.cidoc_graph_all:
+  title: 'CIDOC Entity Graph'
+  route_name: cidoc_graphing.cidoc_graph_all
+  description: 'Show all CIDOC entities in a graph.'
+  parent: entity.cidoc_entity.collection

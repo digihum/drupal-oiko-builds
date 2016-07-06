@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p78_is_identified_by
 label: 'P78 is identified by'
-reverse_label: identifies
+bidirectional: false
+reverse_label: 'P78 identifies'
 domain_bundles:
   - e52_time_span
 range_bundles:

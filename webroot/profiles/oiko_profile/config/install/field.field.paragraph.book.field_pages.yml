@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_pages
+    - paragraphs.paragraphs_type.book
+id: paragraph.book.field_pages
+field_name: field_pages
+entity_type: paragraph
+bundle: book
+label: Page(s)
+description: 'Describe the pages used as the source of information'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

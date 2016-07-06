@@ -12,6 +12,9 @@ autofill:
   version: VERSION
   js:
     js/autofill-edtf-date.js: {}
+  css:
+    theme:
+      css/autofill-edtf-date.css: {}
   dependencies:
     - edtf/edtfy
     - core/jquery

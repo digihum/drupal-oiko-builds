@@ -5,13 +5,25 @@ dependencies:
     - cidoc.cidoc_property.p98_brought_into_life
     - field.field.cidoc_reference.p98_brought_into_life.domain
     - field.field.cidoc_reference.p98_brought_into_life.range
+  module:
+    - oiko_citation
 id: cidoc_reference.p98_brought_into_life.default
 targetEntityType: cidoc_reference
 bundle: p98_brought_into_life
 mode: default
 content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
   domain:
-    type: entity_reference_autocomplete_tags
+    type: squid_entity_reference_autocomplete_tags
     weight: 11
     settings: {  }
     third_party_settings: {  }
@@ -21,7 +33,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   range:
-    type: entity_reference_autocomplete_tags
+    type: squid_entity_reference_autocomplete_tags
     weight: 12
     settings: {  }
     third_party_settings: {  }

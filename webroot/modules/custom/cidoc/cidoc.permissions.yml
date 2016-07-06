@@ -17,3 +17,11 @@ view published cidoc entities:
 
 view unpublished cidoc entities:
   title: 'View unpublished CIDOC entities'
+
+access cidoc entity overview:
+  title: 'Access the CIDOC CRM entity overview page'
+  description: 'Get an overview of all CIDOC CRM entities.'
+
+access cidoc reference overview:
+  title: 'Access the CIDOC CRM property reference overview page'
+  description: 'Get an overview of all CIDOC CRM property references.'

@@ -3,7 +3,8 @@ status: true
 dependencies: {  }
 id: p16_used_specific_object
 label: 'P16 used specific object'
-reverse_label: 'was used for'
+bidirectional: false
+reverse_label: 'P16 was used for'
 domain_bundles:
   0: e7_activity
   5: e66_formation
