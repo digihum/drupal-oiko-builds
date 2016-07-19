@@ -13,7 +13,9 @@ function oiko_leaflet_library_info_alter(array &$libraries, $module) {
     // Override the leaflet library to a local version.
     $libraries['leaflet'] = array(
       'js' => array(
-        '/libraries/Leaflet/dist/leaflet.js' => array(),
+        '/libraries/Leaflet/dist/leaflet.js' => array(
+          'preprocess' => false,
+        ),
       ),
       'css' => array(
         'component' => array(
