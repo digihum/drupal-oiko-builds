@@ -59,6 +59,8 @@ return array(
     'Drupal\\Component\\' => array($baseDir . '/webroot/core/lib/Drupal/Component'),
     'DrupalComposer\\DrupalScaffold\\' => array($vendorDir . '/drupal-composer/drupal-scaffold/src'),
     'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib/Doctrine/Common/Cache'),
+    'Consolidation\\OutputFormatters\\' => array($vendorDir . '/consolidation/output-formatters/src'),
+    'Consolidation\\AnnotatedCommand\\' => array($vendorDir . '/consolidation/annotated-command/src'),
     'ComputerMinds\\EDTF\\' => array($vendorDir . '/computerminds/php-edtf/src'),
     'ComputerMinds\\CIDOC_CRM\\' => array($vendorDir . '/computerminds/cidoc-crm/src'),
     'Composer\\Semver\\' => array($vendorDir . '/composer/semver/src'),
