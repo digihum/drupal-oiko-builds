@@ -1,0 +1,8 @@
+url-lookup:
+  version: 1.x
+  js:
+    js/url-lookup.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings
+    - core/jquery.once
