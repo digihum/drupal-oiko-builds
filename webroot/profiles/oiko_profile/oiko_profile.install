@@ -3,3 +3,17 @@
  * @file
  * Install tasks for oiko_profile
  */
+
+/**
+ * Compute all E52 timespam timestamps.
+ */
+function oiko_profile_update_8100() {
+  // We need to load and save all E52 time spans.
+  $query = \Drupal::entityQuery('cidoc_entity')
+    ->condition('bundle', 'e52_time_span');
+  $ids = $query->execute();
+  $storage = \Drupal::entityTypeManager()->getStorage('cidoc_entity');
+  foreach ($storage->loadMultiple($ids) as $entity) {
+    $entity->save();
+  }
+}
