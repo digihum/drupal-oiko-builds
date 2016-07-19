@@ -48,7 +48,7 @@ function oiko_leaflet_leaflet_map_info() {
           'fadeAnimation' => TRUE,
           'zoomAnimation' => TRUE,
           'closePopupOnClick' => TRUE,
-          'minZoom' => 6,
+          'minZoom' => 1,
           'maxZoom' => 12,
         ),
         'layers' => array(

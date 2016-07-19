@@ -183,8 +183,6 @@ class edtfDate extends Textfield {
 
   /**
    * Form element validation handler for edtf_date elements.
-   *
-   * @TODO: validate.
    */
   public static function validateEdtfDate(&$element, FormStateInterface $form_state, &$complete_form) {
     /**

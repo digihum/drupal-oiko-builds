@@ -2,6 +2,7 @@
 
 namespace Drupal\edtf\Plugin\Field\FieldType;
 
+use ComputerMinds\EDTF\EDTFInfo;
 use Drupal\Component\Utility\Random;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemBase;
@@ -153,5 +154,27 @@ class EdtfItem extends FieldItemBase {
     $value = $this->get('value')->getValue();
     return $value === NULL || $value === '';
   }
+
+  public function preSave() {
+    if (!$this->isEmpty()) {
+      $value = $this->get('value')->getValue();
+      /** @var EDTFInfo $date */
+      $date = \Drupal::service('edtf.edtf-info-factory')->create($value);
+      if ($date->isValid()) {
+        $this->set('minmin', $date->getMin()->format('U'));
+        $this->set('maxmax', $date->getMax()->format('U'));
+      }
+      else {
+        $this->set('minmin', NULL);
+        $this->set('maxmax', NULL);
+      }
+    }
+    else {
+      $this->set('minmin', NULL);
+      $this->set('maxmax', NULL);
+    }
+    parent::preSave();
+  }
+
 
 }

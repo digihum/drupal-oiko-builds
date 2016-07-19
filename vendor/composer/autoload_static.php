@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitbbc5b9a09aeb0620c5d88f2fe1029dc7
+class ComposerStaticInite52252fb80c1a7f26c9cf40bf6d43e18
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -121,6 +121,8 @@ class ComposerStaticInitbbc5b9a09aeb0620c5d88f2fe1029dc7
         ),
         'C' => 
         array (
+            'Consolidation\\OutputFormatters\\' => 31,
+            'Consolidation\\AnnotatedCommand\\' => 31,
             'ComputerMinds\\EDTF\\' => 19,
             'ComputerMinds\\CIDOC_CRM\\' => 24,
             'Composer\\Semver\\' => 16,
@@ -345,6 +347,14 @@ class ComposerStaticInitbbc5b9a09aeb0620c5d88f2fe1029dc7
         array (
             0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
         ),
+        'Consolidation\\OutputFormatters\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/consolidation/output-formatters/src',
+        ),
+        'Consolidation\\AnnotatedCommand\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/consolidation/annotated-command/src',
+        ),
         'ComputerMinds\\EDTF\\' => 
         array (
             0 => __DIR__ . '/..' . '/computerminds/php-edtf/src',
@@ -368,6 +378,13 @@ class ComposerStaticInitbbc5b9a09aeb0620c5d88f2fe1029dc7
     );
 
     public static $prefixesPsr0 = array (
+        'p' => 
+        array (
+            'phpDocumentor' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            ),
+        ),
         'T' => 
         array (
             'Twig_' => 
@@ -458,6 +475,10 @@ class ComposerStaticInitbbc5b9a09aeb0620c5d88f2fe1029dc7
         ),
         'C' => 
         array (
+            'Consolidation' => 
+            array (
+                0 => __DIR__ . '/..' . '/drush/drush/lib',
+            ),
             'Console' => 
             array (
                 0 => __DIR__ . '/..' . '/pear/console_getopt',
@@ -495,11 +516,11 @@ class ComposerStaticInitbbc5b9a09aeb0620c5d88f2fe1029dc7
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitbbc5b9a09aeb0620c5d88f2fe1029dc7::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitbbc5b9a09aeb0620c5d88f2fe1029dc7::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitbbc5b9a09aeb0620c5d88f2fe1029dc7::$prefixesPsr0;
-            $loader->fallbackDirsPsr0 = ComposerStaticInitbbc5b9a09aeb0620c5d88f2fe1029dc7::$fallbackDirsPsr0;
-            $loader->classMap = ComposerStaticInitbbc5b9a09aeb0620c5d88f2fe1029dc7::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite52252fb80c1a7f26c9cf40bf6d43e18::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite52252fb80c1a7f26c9cf40bf6d43e18::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInite52252fb80c1a7f26c9cf40bf6d43e18::$prefixesPsr0;
+            $loader->fallbackDirsPsr0 = ComposerStaticInite52252fb80c1a7f26c9cf40bf6d43e18::$fallbackDirsPsr0;
+            $loader->classMap = ComposerStaticInite52252fb80c1a7f26c9cf40bf6d43e18::$classMap;
 
         }, null, ClassLoader::class);
     }
