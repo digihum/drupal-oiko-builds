@@ -1,0 +1,7 @@
+oiko_pleiades.pleiades_lookup_controller_pleiadesLookup:
+  path: '/oiko_pleiades/lookup'
+  defaults:
+    _controller: '\Drupal\oiko_pleiades\Controller\PleiadesLookupController::pleiadesLookup'
+    _title: 'Pleiades Ajax Lookup'
+  requirements:
+    _permission: 'access pleiades lookup'
