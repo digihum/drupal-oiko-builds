@@ -36,6 +36,7 @@ function oiko_profile_update_8102() {
     'features',
     'oiko_graphing',
     'oiko_site',
+    'oiko_prototype',
   );
   \Drupal::service('module_installer')->install($modules);
 }

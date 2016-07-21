@@ -1,0 +1,7 @@
+name: 'Oiko Prototype'
+type: module
+core: 8.x
+dependencies:
+  - oiko_cidoc
+  - views
+package: Oiko
