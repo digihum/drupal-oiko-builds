@@ -1,0 +1,28 @@
+uuid: bf9868be-e40d-4b21-9065-7bdbd05c6cef
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p97_from_father
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.p97_from_father.domain
+    - field.field.cidoc_reference.p97_from_father.range
+_core:
+  default_config_hash: 4Fay4HJe2rqrqvFeJZaCXWibG1gLWtPXoz6-05eB7eM
+id: cidoc_reference.p97_from_father.domain
+targetEntityType: cidoc_reference
+bundle: p97_from_father
+mode: domain
+content:
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+hidden:
+  citation: true
+  domain: true
+  property: true
+  user_id: true

@@ -1,0 +1,13 @@
+uuid: d8b74aa6-d2f7-406f-937b-3e3a9f805159
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: zYMUpJ9Hk_c8Tfnvtj623JPJ-lbzTG175nu2NevjIiI
+crm_entity: e69_death
+id: e69_death
+label: 'E69 Death'
+weight: -19
+group: auxiliary
+description: "<p>This class comprises the deaths of human beings.</p>\r\n\r\n<p>If a person is killed, their death should be as an O1 Killing instead. The\r\ndeath or perishing of other living beings should be documented using E64 End of Existence.</p>\r\n"
+examples: "<ul>\r\n<li>the murder of Julius Caesar (O1)</li>\r\n<li>the death of Senator Paul Wellstone</li>\r\n</ul>\r\n"

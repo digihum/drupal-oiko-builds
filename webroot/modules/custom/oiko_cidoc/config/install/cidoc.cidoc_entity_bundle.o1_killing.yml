@@ -1,0 +1,13 @@
+uuid: 32c70c2b-a126-463c-a34c-c55e35345d8b
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: RAhYrzBxE2Uyk8FzQ1fzlGzHZ-GxQrCv-_wTVWq7cAk
+crm_entity: o1_killing
+id: o1_killing
+label: 'O1 Killing'
+weight: -20
+group: auxiliary
+description: "<p>This class comprises the deaths of human beings actively by other actors.</p>\n"
+examples: "<ul>\n<li>the murder of Julius Caesar</li>\n</ul>\n"

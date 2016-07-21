@@ -1,0 +1,28 @@
+uuid: b6286492-9663-4a55-8d27-942af0756bb4
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p132_overlaps_with
+    - core.entity_view_mode.cidoc_reference.range
+    - field.field.cidoc_reference.p132_overlaps_with.domain
+    - field.field.cidoc_reference.p132_overlaps_with.range
+_core:
+  default_config_hash: 4MMJfPckvmZt-Jyk8pyVgncz3RZeMVTYO0_CyfEuLIs
+id: cidoc_reference.p132_overlaps_with.range
+targetEntityType: cidoc_reference
+bundle: p132_overlaps_with
+mode: range
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+hidden:
+  citation: true
+  property: true
+  range: true
+  user_id: true

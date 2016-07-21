@@ -1,0 +1,37 @@
+uuid: 8d000dd7-4db7-4a53-97ef-15396260daf8
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p7_took_place_at
+    - field.field.cidoc_reference.p7_took_place_at.domain
+    - field.field.cidoc_reference.p7_took_place_at.range
+_core:
+  default_config_hash: 5-WS3CLF0d3U2-B3Lpc0XZRCiJvM9GUgL92mRzQP6AY
+id: cidoc_reference.p7_took_place_at.default
+targetEntityType: cidoc_reference
+bundle: p7_took_place_at
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  citation: true
+  user_id: true

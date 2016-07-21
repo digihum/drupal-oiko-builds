@@ -1,0 +1,32 @@
+uuid: 2c0da91f-149d-4907-ad5a-0c05e2900478
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.book.field_book
+    - field.field.paragraph.book.field_pages
+    - paragraphs.paragraphs_type.book
+_core:
+  default_config_hash: nK3ZRswVq9Zh9phYomt9rWqHoFxI7ud7kmZLnL9ztq4
+id: paragraph.book.default
+targetEntityType: paragraph
+bundle: book
+mode: default
+content:
+  field_book:
+    weight: 0
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_pages:
+    weight: 1
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+hidden:
+  created: true
+  uid: true

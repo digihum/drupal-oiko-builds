@@ -1,0 +1,31 @@
+uuid: ef33b59e-8fa4-400c-942a-112a7162c4c9
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_property.p98_brought_into_life
+    - field.storage.cidoc_reference.range
+_core:
+  default_config_hash: nuzZv7e1gZ6cJVaZNTavVFpKXw2qH_f96TBm5SfoR_o
+id: cidoc_reference.p98_brought_into_life.range
+field_name: range
+entity_type: cidoc_reference
+bundle: p98_brought_into_life
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e21_person: e21_person
+    auto_create_bundle: e21_person
+field_type: entity_reference

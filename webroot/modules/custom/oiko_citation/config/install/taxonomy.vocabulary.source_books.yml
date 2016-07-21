@@ -1,0 +1,11 @@
+uuid: 122d4cfb-a75d-4d13-adbe-84bb9acf75a7
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: F2l9g7LQvSyGTWHYDWUuebZ_MU3vEChYWMKYI0JXEdc
+name: 'Source books'
+vid: source_books
+description: ''
+hierarchy: 0
+weight: 0

@@ -1,0 +1,13 @@
+uuid: 44abd288-6f80-45ae-a2a9-82b35dd162d9
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: F05bEofLtc9gn8UtsAWrgfdFEGWm9lytRS1hGKSZrOk
+crm_entity: e52_time_span
+id: e52_time_span
+label: 'E52 Time-Span'
+weight: -3
+group: auxiliary
+description: "<p>This class comprises abstract temporal extents, in the sense of Galilean physics, having a\nbeginning, an end and a duration.</p>\n\n<p>Time Span has no other semantic connotations. Time-Spans are used to define the temporal\nextent of instances of E4 Period, E5 Event and any other phenomena valid for a certain time.\nAn E52 Time-Span may be identified by one or more instances of E49 Time Appellation.</p>\n\n<p>Since our knowledge of history is imperfect, instances of E52 Time-Span can best be\nconsidered as approximations of the actual Time-Spans of temporal entities. The properties of\nE52 Time-Span are intended to allow these approximations to be expressed precisely. An\nextreme case of approximation, might, for example, define an E52 Time-Span having\nunknown beginning, end and duration. Used as a common E52 Time-Span for two events, it\nwould nevertheless define them as being simultaneous, even if nothing else was known.</p>\n\n<p>Automatic processing and querying of instances of E52 Time-Span is facilitated if data can be\nparsed into an E61 Time Primitive.</p>\n"
+examples: "<ul>\n<li>1961</li>\n<li>From 12-17-1993 to 12-8-1996</li>\n<li>14h30 – 16h22 4th July 1945</li>\n<li>9.30 am 1.1.1999 to 2.00 pm 1.1.1999</li>\n<li>duration of the Ming Dynasty</li>\n</ul>\n"

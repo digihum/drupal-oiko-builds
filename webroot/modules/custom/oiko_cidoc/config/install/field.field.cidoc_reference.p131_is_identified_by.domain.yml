@@ -1,0 +1,33 @@
+uuid: 3d456e5e-a121-4540-a602-c8de33ef2abc
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_entity_bundle.e74_group
+    - cidoc.cidoc_property.p131_is_identified_by
+    - field.storage.cidoc_reference.domain
+_core:
+  default_config_hash: 3YEeVkh3q7-Y_wJU5SDxENuSOkUIhZ9Zjkq4tyK3Qx8
+id: cidoc_reference.p131_is_identified_by.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: p131_is_identified_by
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e21_person: e21_person
+      e74_group: e74_group
+    auto_create_bundle: e21_person
+field_type: entity_reference

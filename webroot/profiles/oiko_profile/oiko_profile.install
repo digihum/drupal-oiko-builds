@@ -27,3 +27,15 @@ function oiko_profile_update_8101() {
   );
   \Drupal::service('module_installer')->install($modules);
 }
+
+/**
+ * Implements hook_update_N().
+ */
+function oiko_profile_update_8102() {
+  $modules = array(
+    'features',
+    'oiko_graphing',
+    'oiko_site',
+  );
+  \Drupal::service('module_installer')->install($modules);
+}

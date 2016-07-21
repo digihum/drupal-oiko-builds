@@ -1,0 +1,13 @@
+uuid: 0a3a4a56-e9f1-48ed-a4a5-964e1e60df70
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 1VNihrQfyd1YGsek0h1nq_BeCwhGXGqmfp2smVepULU
+crm_entity: e22_man_made_object
+id: e22_man_made_object
+label: 'E22 Man-Made Object'
+weight: -5
+group: main
+description: "<p>This class comprises physical objects purposely created by human activity.</p>\n\n<p>No assumptions are made as to the extent of modification required to justify regarding an\nobject as man-made. For example, an inscribed piece of rock or a preserved butterfly are both\nregarded as instances of E22 Man-Made Object.</p>\n"
+examples: "<ul>\n<li>Mallard (the World’s fastest steam engine)</li>\n<li>the Portland Vase</li>\n<li>the Coliseum</li>\n</ul>\n"

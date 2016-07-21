@@ -1,0 +1,28 @@
+uuid: f0620df5-c8ba-40a7-844f-c2e506a07910
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p95_has_formed
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.p95_has_formed.domain
+    - field.field.cidoc_reference.p95_has_formed.range
+_core:
+  default_config_hash: hz8GWhYzu06aUjGE3vYWhBte5akCGgiEjaCyBlYbzZo
+id: cidoc_reference.p95_has_formed.domain
+targetEntityType: cidoc_reference
+bundle: p95_has_formed
+mode: domain
+content:
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+hidden:
+  citation: true
+  domain: true
+  property: true
+  user_id: true

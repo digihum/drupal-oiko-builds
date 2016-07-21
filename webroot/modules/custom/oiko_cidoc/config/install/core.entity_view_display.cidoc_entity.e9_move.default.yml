@@ -1,0 +1,54 @@
+uuid: ee8f765e-9e4a-410b-97b3-d788545d6d83
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e9_move
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_fact_sheet:
+      children: {  }
+      parent_name: ''
+      weight: 3
+      label: 'Fact sheet'
+      format_type: html_element
+      format_settings:
+        label: 'Fact sheet'
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+id: cidoc_entity.e9_move.default
+targetEntityType: cidoc_entity
+bundle: e9_move
+mode: default
+content:
+  cidoc_properties:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+  internal_name:
+    label: inline
+    type: string
+    weight: 2
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  citation: true
+  content: true
+  significance: true
+  user_id: true
