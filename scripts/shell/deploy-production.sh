@@ -29,7 +29,7 @@ OLDBUILD=`readlink "$LIVE_DIR"`
 rm "$LIVE_DIR" && ln -s "$BUILD_DIR" "$LIVE_DIR"
 
 
-drush "@$DOMAIN" updb -y
+drush "@$DOMAIN" updb -y --entity-updates
 
 service php5-fpm restart || true
 varnishadm "ban.url ." || true

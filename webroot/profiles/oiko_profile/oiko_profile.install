@@ -17,3 +17,13 @@ function oiko_profile_update_8100() {
     $entity->save();
   }
 }
+
+/**
+ * Implements hook_update_N().
+ */
+function oiko_profile_update_8101() {
+  $modules = array(
+    'oiko_pleiades',
+  );
+  \Drupal::service('module_installer')->install($modules);
+}

@@ -79,6 +79,7 @@ dependencies:
   - oiko_leaflet
   - oiko_cidoc
   - oiko_citation
+  - oiko_pleiades
 
 themes:
   - seven
