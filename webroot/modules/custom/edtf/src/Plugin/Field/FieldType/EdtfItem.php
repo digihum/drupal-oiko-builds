@@ -19,7 +19,7 @@ use Drupal\Core\TypedData\DataDefinition;
  *   label = @Translation("EDTF date"),
  *   description = @Translation("This field stores a EDTF date string, human readable string, and denormalised timestamps to the database"),
  *   default_widget = "edtf_default",
- *   default_formatter = "basic_string"
+ *   default_formatter = "edtf_human_readable_formatter"
  * )
  */
 class EdtfItem extends FieldItemBase {

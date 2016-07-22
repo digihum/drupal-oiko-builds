@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e52_time_span
     - field.field.cidoc_entity.e52_time_span.field_date
   module:
+    - edtf
     - field_group
 third_party_settings:
   field_group:
@@ -58,7 +59,13 @@ bundle: e52_time_span
 mode: default
 content:
   cidoc_properties:
-    weight: 7
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  field_date:
+    type: edtf_human_readable_formatter
+    weight: 0
+    label: inline
     settings: {  }
     third_party_settings: {  }
   internal_name:
@@ -94,6 +101,5 @@ content:
 hidden:
   citation: true
   content: true
-  field_date: true
   significance: true
   user_id: true
