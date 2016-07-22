@@ -2,8 +2,11 @@ name: 'Oiko Prototype'
 type: module
 core: 8.x
 dependencies:
-  - oiko_cidoc
-  - views
+  - cidoc
   - eva
+  - geofield
   - leaflet_views
+  - oiko_cidoc
+  - user
+  - views
 package: Oiko

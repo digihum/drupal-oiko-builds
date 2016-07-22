@@ -5,5 +5,6 @@ core: 8.x
 dependencies:
   - ckeditor
   - editor
+  - features
   - filter
 package: Oiko
