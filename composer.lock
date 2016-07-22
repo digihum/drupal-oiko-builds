@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "62ce695b9aa7bd886e05df4cce25fdf6",
-    "content-hash": "655cc9c79176eace9bf1d791feb73ee7",
+    "hash": "91014abfa5a466861ed23a2f6fd52d3b",
+    "content-hash": "e31f1b17a9ba86858c84da9fb8bae293",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1418,9 +1418,6 @@
                 "symfony/css-selector": "~2.8"
             },
             "type": "drupal-core",
-            "extra": {
-                "patches_applied": []
-            },
             "autoload": {
                 "psr-4": {
                     "Drupal\\Core\\": "lib/Drupal/Core",
@@ -1596,28 +1593,18 @@
             "version": "dev-8.x-1.x",
             "source": {
                 "type": "git",
-                "url": "https://git.drupal.org/project/eva",
-                "reference": "540c940b1f699f0ff438ce25db5ed97df174dc18"
+                "url": "https://git.drupal.org/project/eva.git",
+                "reference": "origin/8.x-1.x"
             },
             "require": {
-                "drupal/core": "8.*",
-                "drupal/views": "8.*"
+                "composer/installers": "^1.0.21"
             },
-            "type": "library",
+            "type": "drupal-module",
             "extra": {
-                "branch-alias": {
-                    "dev-8.x-1.x": "8.1.x-dev"
-                },
                 "patches_applied": {
                     "EVA Patch for D8": "https://www.drupal.org/files/issues/eva-working-d8-1937618-21.patch"
                 }
             },
-            "notification-url": "https://packagist.drupal-composer.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Provides a Views display type that can be attached to entities.",
-            "homepage": "https://www.drupal.org/project/eva",
             "time": "2013-03-09 23:09:04"
         },
         {
