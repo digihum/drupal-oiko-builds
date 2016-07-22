@@ -2,7 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_entity_bundle.e5_event
+    - cidoc.cidoc_entity_bundle.e52_time_span
+    - field.field.cidoc_entity.e52_time_span.field_date
   module:
     - field_group
 third_party_settings:
@@ -11,48 +12,59 @@ third_party_settings:
       children:
         - people_entity_view_1
       parent_name: ''
-      weight: 4
+      weight: 3
       label: 'Related people'
       format_type: fieldset
       format_settings:
         description: ''
         classes: ''
         id: ''
-    group_period:
+    group_at_this_time:
+      children:
+        - time_span_directly_linked_events_entity_view_1
+      parent_name: ''
+      weight: 4
+      label: 'At this time'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_in_this_period:
       children:
         - p10_falls_within_entity_view_1
       parent_name: ''
       weight: 2
+      label: 'In this period'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_in_period:
+      children:
+        - time_span_within_period_entity_view_1
+      parent_name: ''
+      weight: 5
       label: Period
       format_type: fieldset
       format_settings:
         description: ''
         classes: ''
         id: ''
-    group_occurred_on:
-      children:
-        - p4_has_time_span_entity_view_1
-      parent_name: ''
-      weight: 3
-      label: 'Occurred on'
-      format_type: fieldset
-      format_settings:
-        description: ''
-        classes: ''
-        id: ''
-id: cidoc_entity.e5_event.default
+id: cidoc_entity.e52_time_span.default
 targetEntityType: cidoc_entity
-bundle: e5_event
+bundle: e52_time_span
 mode: default
 content:
   cidoc_properties:
-    weight: 6
+    weight: 7
     settings: {  }
     third_party_settings: {  }
   internal_name:
     label: inline
     type: string
-    weight: 5
+    weight: 1
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -64,23 +76,24 @@ content:
       link_to_entity: false
     third_party_settings: {  }
   p10_falls_within_entity_view_1:
-    weight: 4
-    settings: {  }
-    third_party_settings: {  }
-  p4_has_time_span_entity_view_1:
-    weight: 5
-    settings: {  }
-    third_party_settings: {  }
-  p7_took_place_at_map_entity_view_1:
-    weight: 1
+    weight: 2
     settings: {  }
     third_party_settings: {  }
   people_entity_view_1:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  time_span_directly_linked_events_entity_view_1:
     weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  time_span_within_period_entity_view_1:
+    weight: 6
     settings: {  }
     third_party_settings: {  }
 hidden:
   citation: true
   content: true
+  field_date: true
   significance: true
   user_id: true
