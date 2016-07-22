@@ -1,4 +1,3 @@
-uuid: 3ec4bb97-a0a5-4baf-8eba-41b17d5f7690
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
   module:
     - cidoc
     - user
-_core:
-  default_config_hash: jnb4SVBTv_1IMaTiWQfu546DBtbCbMUlw9Mkk9vD7Rw
 id: cidoc_entities
 label: 'CIDOC Entities'
 module: views
@@ -430,47 +427,6 @@ display:
           entity_type: cidoc_entity
           entity_field: bundle
           plugin_id: bundle
-        populated:
-          id: populated
-          table: cidoc_entity
-          field: populated
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: '='
-          value: true
-          group: 1
-          exposed: true
-          expose:
-            operator_id: ''
-            label: 'Content populated'
-            description: ''
-            use_operator: false
-            operator: populated_op
-            identifier: populated
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              content_editor: '0'
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: populated
-          plugin_id: boolean
         uid:
           id: uid
           table: users_field_data
