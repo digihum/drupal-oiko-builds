@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_property.p14_carried_out_by
+    - cidoc.cidoc_property.p9_consists_of
   module:
     - cidoc
     - eva
-id: key_achievements
-label: 'Key achievements'
+id: p9_
+label: 'P9 Consists of'
 module: views
 description: ''
 tag: ''
@@ -82,7 +82,7 @@ display:
           id: name
           table: cidoc_entity
           field: name
-          relationship: domain
+          relationship: range
           group_type: group
           admin_label: ''
           label: ''
@@ -148,12 +148,12 @@ display:
           id: property
           table: cidoc_reference
           field: property
-          relationship: reverse__cidoc_reference__range
+          relationship: reverse__cidoc_reference__domain
           group_type: group
           admin_label: ''
           operator: in
           value:
-            p14_carried_out_by: p14_carried_out_by
+            p9_consists_of: p9_consists_of
           group: 1
           exposed: false
           expose:
@@ -189,23 +189,23 @@ display:
       footer: {  }
       empty: {  }
       relationships:
-        reverse__cidoc_reference__range:
-          id: reverse__cidoc_reference__range
+        reverse__cidoc_reference__domain:
+          id: reverse__cidoc_reference__domain
           table: cidoc_entity
-          field: reverse__cidoc_reference__range
+          field: reverse__cidoc_reference__domain
           relationship: none
           group_type: group
-          admin_label: range
+          admin_label: domain
           required: true
           entity_type: cidoc_entity
           plugin_id: entity_reverse
-        domain:
-          id: domain
-          table: cidoc_reference__domain
-          field: domain
-          relationship: reverse__cidoc_reference__range
+        range:
+          id: range
+          table: cidoc_reference__range
+          field: range
+          relationship: reverse__cidoc_reference__domain
           group_type: group
-          admin_label: 'domain: CIDOC entity'
+          admin_label: 'range: CIDOC entity'
           required: true
           plugin_id: standard
       arguments:
@@ -246,7 +246,6 @@ display:
           entity_field: id
           plugin_id: numeric
       display_extenders: {  }
-      title: 'Key achievements (P14 performed)'
     cache_metadata:
       max-age: -1
       contexts:
@@ -264,10 +263,20 @@ display:
       display_extenders: {  }
       entity_type: cidoc_entity
       bundles:
-        - e21_person
-        - e74_group
-      show_title: 0
-      title: 'Key achievements (P14 performed)'
+        - e12_production
+        - e4_period
+        - e52_time_span
+        - e5_event
+        - e66_formation
+        - e67_birth
+        - e68_dissolution
+        - e69_death
+        - e6_destruction
+        - e7_activity
+        - e9_move
+        - o1_killing
+        - o2_active_dissolution
+        - o3_active_destruction
     cache_metadata:
       max-age: -1
       contexts:

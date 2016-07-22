@@ -12,7 +12,7 @@ third_party_settings:
         - lifespan_entity_view_1
         - person_death_entity_view_1
       parent_name: ''
-      weight: 3
+      weight: 2
       label: Lifespan
       format_type: fieldset
       format_settings:
@@ -34,7 +34,7 @@ third_party_settings:
       children:
         - people_entity_view_1
       parent_name: ''
-      weight: 8
+      weight: 7
       label: 'Other people of interest'
       format_type: fieldset
       format_settings:
@@ -45,8 +45,74 @@ third_party_settings:
       children:
         - appelations_entity_view_1
       parent_name: ''
-      weight: 2
+      weight: 1
       label: 'Also known as'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_activities_and_places:
+      children:
+        - places_people_went_entity_view_1
+      parent_name: ''
+      weight: 5
+      label: 'Key activities and places'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_continues:
+      children:
+        - duplicate_of_p15_was_influenced_by_entity_view_1
+      parent_name: ''
+      weight: 10
+      label: Continues
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_influenced_by:
+      children:
+        - p15_was_influenced_by_entity_view_1
+      parent_name: ''
+      weight: 9
+      label: 'Influenced by'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_period:
+      children:
+        - p4_has_time_span_entity_view_1
+      parent_name: ''
+      weight: 11
+      label: Period
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_activities:
+      children:
+        - key_achievements_entity_view_1
+      parent_name: ''
+      weight: 4
+      label: 'Key activities'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_participated_in:
+      children:
+        - p11_participae_entity_view_1
+      parent_name: ''
+      weight: 8
+      label: 'Participated in'
       format_type: fieldset
       format_settings:
         description: ''
@@ -62,18 +128,22 @@ content:
     settings: {  }
     third_party_settings: {  }
   cidoc_properties:
+    weight: 13
+    settings: {  }
+    third_party_settings: {  }
+  duplicate_of_p15_was_influenced_by_entity_view_1:
     weight: 9
     settings: {  }
     third_party_settings: {  }
   internal_name:
     label: inline
     type: string
-    weight: 1
+    weight: 12
     settings:
       link_to_entity: false
     third_party_settings: {  }
   key_achievements_entity_view_1:
-    weight: 7
+    weight: 6
     settings: {  }
     third_party_settings: {  }
   lifespan_entity_view_1:
@@ -81,7 +151,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   map_of_places_people_went_entity_view_1:
-    weight: 4
+    weight: 3
     settings: {  }
     third_party_settings: {  }
   name:
@@ -90,6 +160,18 @@ content:
     weight: 0
     settings:
       link_to_entity: false
+    third_party_settings: {  }
+  p11_participae_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p15_was_influenced_by_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p4_has_time_span_entity_view_1:
+    weight: 11
+    settings: {  }
     third_party_settings: {  }
   people_entity_view_1:
     weight: 0

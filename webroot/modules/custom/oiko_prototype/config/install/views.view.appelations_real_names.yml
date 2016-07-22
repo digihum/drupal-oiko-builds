@@ -1,13 +1,11 @@
 langcode: en
 status: true
 dependencies:
-  config:
-    - cidoc.cidoc_property.p14_carried_out_by
   module:
     - cidoc
     - eva
-id: key_achievements
-label: 'Key achievements'
+id: appelations_real_names
+label: 'Appelations - Real Names'
 module: views
 description: ''
 tag: ''
@@ -85,7 +83,7 @@ display:
           relationship: domain
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'References this person'
           exclude: false
           alter:
             alter_text: false
@@ -118,7 +116,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -143,47 +141,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
-      filters:
-        property:
-          id: property
-          table: cidoc_reference
-          field: property
-          relationship: reverse__cidoc_reference__range
-          group_type: group
-          admin_label: ''
-          operator: in
-          value:
-            p14_carried_out_by: p14_carried_out_by
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          entity_type: cidoc_reference
-          entity_field: property
-          plugin_id: bundle
+      filters: {  }
       sorts: {  }
       header: {  }
       footer: {  }
@@ -246,7 +204,6 @@ display:
           entity_field: id
           plugin_id: numeric
       display_extenders: {  }
-      title: 'Key achievements (P14 performed)'
     cache_metadata:
       max-age: -1
       contexts:
@@ -264,10 +221,7 @@ display:
       display_extenders: {  }
       entity_type: cidoc_entity
       bundles:
-        - e21_person
-        - e74_group
-      show_title: 0
-      title: 'Key achievements (P14 performed)'
+        - e82_actor_appellation
     cache_metadata:
       max-age: -1
       contexts:

@@ -430,7 +430,7 @@ display:
       bundles:
         - e21_person
         - e74_group
-      show_title: 1
+      show_title: 0
       title: 'Places of note'
     cache_metadata:
       max-age: -1

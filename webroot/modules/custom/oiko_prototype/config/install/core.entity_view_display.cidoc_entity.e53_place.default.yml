@@ -6,21 +6,48 @@ dependencies:
     - field.field.cidoc_entity.e53_place.field_geodata
     - field.field.cidoc_entity.e53_place.field_pleiades_uri
   module:
+    - field_group
     - leaflet
+third_party_settings:
+  field_group:
+    group_at_this_location:
+      children:
+        - events_at_this_location_entity_view_1
+      parent_name: ''
+      weight: 2
+      label: 'At this location'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_people:
+      children:
+        - people_entity_view_1
+      parent_name: ''
+      weight: 3
+      label: 'Related people'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
 id: cidoc_entity.e53_place.default
 targetEntityType: cidoc_entity
 bundle: e53_place
 mode: default
 content:
   cidoc_properties:
-    weight: 2
+    weight: 5
     settings: {  }
     third_party_settings: {  }
   events_at_this_location_entity_view_1:
-    weight: 10
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
   field_geodata:
     type: leaflet_formatter_default
-    weight: 3
+    weight: 1
     label: hidden
     settings:
       leaflet_map: 'Ancient Terrain'
@@ -47,13 +74,6 @@ content:
       minPossibleZoom: 0
       maxPossibleZoom: 18
     third_party_settings: {  }
-  internal_name:
-    label: inline
-    type: string
-    weight: 1
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
   name:
     label: hidden
     type: string
@@ -62,10 +82,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
   people_entity_view_1:
-    weight: 10
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   citation: true
   content: true
   field_pleiades_uri: true
+  internal_name: true
   significance: true
   user_id: true

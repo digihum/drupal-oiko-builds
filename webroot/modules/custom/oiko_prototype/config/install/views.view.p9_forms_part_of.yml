@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_property.p14_carried_out_by
+    - cidoc.cidoc_property.p9_consists_of
   module:
     - cidoc
     - eva
-id: key_achievements
-label: 'Key achievements'
+id: p9_forms_part_of
+label: 'P9 Forms part of'
 module: views
 description: ''
 tag: ''
@@ -153,7 +153,7 @@ display:
           admin_label: ''
           operator: in
           value:
-            p14_carried_out_by: p14_carried_out_by
+            p9_consists_of: p9_consists_of
           group: 1
           exposed: false
           expose:
@@ -246,7 +246,6 @@ display:
           entity_field: id
           plugin_id: numeric
       display_extenders: {  }
-      title: 'Key achievements (P14 performed)'
     cache_metadata:
       max-age: -1
       contexts:
@@ -264,10 +263,19 @@ display:
       display_extenders: {  }
       entity_type: cidoc_entity
       bundles:
-        - e21_person
-        - e74_group
-      show_title: 0
-      title: 'Key achievements (P14 performed)'
+        - e12_production
+        - e4_period
+        - e5_event
+        - e66_formation
+        - e67_birth
+        - e68_dissolution
+        - e69_death
+        - e6_destruction
+        - e7_activity
+        - e9_move
+        - o1_killing
+        - o2_active_dissolution
+        - o3_active_destruction
     cache_metadata:
       max-age: -1
       contexts:

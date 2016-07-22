@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_property.p14_carried_out_by
+    - cidoc.cidoc_property.p11_had_participant
   module:
     - cidoc
     - eva
-id: key_achievements
-label: 'Key achievements'
+id: p11_participae
+label: 'P11 Participated in'
 module: views
 description: ''
 tag: ''
@@ -153,7 +153,7 @@ display:
           admin_label: ''
           operator: in
           value:
-            p14_carried_out_by: p14_carried_out_by
+            p11_had_participant: p11_had_participant
           group: 1
           exposed: false
           expose:
@@ -246,7 +246,6 @@ display:
           entity_field: id
           plugin_id: numeric
       display_extenders: {  }
-      title: 'Key achievements (P14 performed)'
     cache_metadata:
       max-age: -1
       contexts:
@@ -265,9 +264,6 @@ display:
       entity_type: cidoc_entity
       bundles:
         - e21_person
-        - e74_group
-      show_title: 0
-      title: 'Key achievements (P14 performed)'
     cache_metadata:
       max-age: -1
       contexts:
