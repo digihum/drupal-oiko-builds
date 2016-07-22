@@ -1,9 +1,6 @@
-uuid: 127530ac-8c5a-4782-9c9a-671899d82772
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: S6BE55dDz6Jrym_UAgKoq6xhU604bJv0plm7txganSA
 id: p13_destroyed
 label: 'P13 destroyed'
 bidirectional: false

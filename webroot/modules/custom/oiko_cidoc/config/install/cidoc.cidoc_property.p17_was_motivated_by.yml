@@ -1,9 +1,6 @@
-uuid: eda57946-0dd5-496d-9a26-6203dbcf433a
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: d8HCLNTLtknFA3_lgNR4uq2JQpHZvXQD7TCXHHdmHAA
 id: p17_was_motivated_by
 label: 'P17 was motivated by'
 bidirectional: false

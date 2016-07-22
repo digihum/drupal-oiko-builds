@@ -1,4 +1,3 @@
-uuid: ad0630eb-05ff-43cc-8d0d-c5f72f1c19e8
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p2_has_type.domain
     - field.field.cidoc_reference.p2_has_type.range
-_core:
-  default_config_hash: 5rWAcLkIxhha4Ru0spqopN4QAp-jXb07hGEKMQr8fTE
 id: cidoc_reference.p2_has_type.range
 targetEntityType: cidoc_reference
 bundle: p2_has_type

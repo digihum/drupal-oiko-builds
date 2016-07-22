@@ -1,4 +1,3 @@
-uuid: 02c672aa-dc4b-427b-a528-4b713f267ada
 langcode: en
 status: true
 dependencies:
@@ -10,8 +9,6 @@ dependencies:
   module:
     - oiko_citation
     - squid_autocomplete
-_core:
-  default_config_hash: Dbpm-tB22afLOlg_XNW87lV-MQJ0o2Sd2lp9znVtZ5o
 id: cidoc_reference.p13_destroyed.domain
 targetEntityType: cidoc_reference
 bundle: p13_destroyed

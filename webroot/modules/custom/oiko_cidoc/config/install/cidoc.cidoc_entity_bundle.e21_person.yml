@@ -1,9 +1,6 @@
-uuid: ec5c3463-4ab4-4d3a-8cd7-23d4418fa9df
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: sB_ufhm2xMXLjmH78rL5wn4-5IcZKN06VcD5PchQMbY
 crm_entity: e21_person
 id: e21_person
 label: 'E21 Person'

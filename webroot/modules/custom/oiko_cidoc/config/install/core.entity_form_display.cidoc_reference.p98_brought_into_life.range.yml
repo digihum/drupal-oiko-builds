@@ -1,4 +1,3 @@
-uuid: c7def230-db7c-4a46-8939-6c2ad2e0b672
 langcode: en
 status: true
 dependencies:
@@ -10,8 +9,6 @@ dependencies:
   module:
     - oiko_citation
     - squid_autocomplete
-_core:
-  default_config_hash: qlYszzM1cKvERsJ7FaEOqGnZqi2V1dLl4anBZiXvTW4
 id: cidoc_reference.p98_brought_into_life.range
 targetEntityType: cidoc_reference
 bundle: p98_brought_into_life

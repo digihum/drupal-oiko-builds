@@ -1,4 +1,3 @@
-uuid: 398461a0-f9c9-4007-b5c6-1962126a1019
 langcode: en
 status: true
 dependencies:
@@ -6,8 +5,6 @@ dependencies:
     - cidoc.cidoc_property.p133_is_separated_from
     - field.field.cidoc_reference.p133_is_separated_from.domain
     - field.field.cidoc_reference.p133_is_separated_from.range
-_core:
-  default_config_hash: Aw5OBuXNhIsCbbaWDT6_nwNGFMAcUQ2MNuU_Ho7FbhA
 id: cidoc_reference.p133_is_separated_from.default
 targetEntityType: cidoc_reference
 bundle: p133_is_separated_from

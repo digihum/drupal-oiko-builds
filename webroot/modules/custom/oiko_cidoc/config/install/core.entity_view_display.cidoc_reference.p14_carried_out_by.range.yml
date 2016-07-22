@@ -1,4 +1,3 @@
-uuid: 32feea69-c96f-4a90-8e6e-670280081d64
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p14_carried_out_by.domain
     - field.field.cidoc_reference.p14_carried_out_by.range
-_core:
-  default_config_hash: usl8WN5mb520JuboAOyA6SWEnvL-QDgawS0DyyvcUhg
 id: cidoc_reference.p14_carried_out_by.range
 targetEntityType: cidoc_reference
 bundle: p14_carried_out_by

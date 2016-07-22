@@ -1,4 +1,3 @@
-uuid: b67a73bd-6f7e-4e39-9882-377d6518abd5
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p26_moved_to.domain
     - field.field.cidoc_reference.p26_moved_to.range
-_core:
-  default_config_hash: na7MLZvHdysQen1LayCX49zeBhB8ZUvbB2tsKzkmfdE
 id: cidoc_reference.p26_moved_to.range
 targetEntityType: cidoc_reference
 bundle: p26_moved_to

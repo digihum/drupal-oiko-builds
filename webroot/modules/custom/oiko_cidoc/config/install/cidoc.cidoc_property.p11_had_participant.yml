@@ -1,9 +1,6 @@
-uuid: 59bc3770-a568-4828-aeac-18ceb4409b68
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: DfGdXWpOJGY-HF3HJRasOuU02oiRxiYg36uB-Gq9Y4A
 id: p11_had_participant
 label: 'P11 had participant'
 bidirectional: false

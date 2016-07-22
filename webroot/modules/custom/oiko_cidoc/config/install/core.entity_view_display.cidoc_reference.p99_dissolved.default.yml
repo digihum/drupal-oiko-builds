@@ -1,4 +1,3 @@
-uuid: a1ec8730-c03a-4cac-afc1-dd1cfb5ad320
 langcode: en
 status: true
 dependencies:
@@ -6,8 +5,6 @@ dependencies:
     - cidoc.cidoc_property.p99_dissolved
     - field.field.cidoc_reference.p99_dissolved.domain
     - field.field.cidoc_reference.p99_dissolved.range
-_core:
-  default_config_hash: Sam0_cvAx9Pl_fw4G5zCwFnenlcHVshXNheoH4mc918
 id: cidoc_reference.p99_dissolved.default
 targetEntityType: cidoc_reference
 bundle: p99_dissolved

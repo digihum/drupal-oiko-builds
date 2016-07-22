@@ -1,7 +1,21 @@
-name: Oiko - CIDOC
+name: 'Oiko - CIDOC'
+description: 'Extensions for the CIDOC suite of modules for Oiko.'
 type: module
-description: Extensions for the CIDOC suite of modules for Oiko.
 core: 8.x
-package: Oiko
 dependencies:
-  - cidoc_spec
+  - cidoc
+  - edtf
+  - field
+  - field_group
+  - geofield
+  - leaflet
+  - leaflet_widget
+  - link
+  - oiko_citation
+  - paragraphs
+  - squid_autocomplete
+  - taxonomy
+  - text
+  - user
+  - views
+package: Oiko

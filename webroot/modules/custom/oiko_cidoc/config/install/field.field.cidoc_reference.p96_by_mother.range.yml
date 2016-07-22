@@ -1,4 +1,3 @@
-uuid: ee7a965b-43f2-445a-b9df-53c555e72b16
 langcode: en
 status: true
 dependencies:
@@ -6,8 +5,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e21_person
     - cidoc.cidoc_property.p96_by_mother
     - field.storage.cidoc_reference.range
-_core:
-  default_config_hash: yM15IrwTzQRjbDHEwW4gY6kYzDJ45DBfaevM4McR-s4
 id: cidoc_reference.p96_by_mother.range
 field_name: range
 entity_type: cidoc_reference

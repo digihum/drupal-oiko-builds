@@ -1,9 +1,6 @@
-uuid: 8f6c518a-f371-4630-a80a-354e06b89bf0
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: u4IXMEjGcBmKE5ixr2alH1zx8Xz2fgW57uWApZb_2Ss
 id: p132_overlaps_with
 label: 'P132 overlaps with'
 bidirectional: false

@@ -1,9 +1,6 @@
-uuid: 44abd288-6f80-45ae-a2a9-82b35dd162d9
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: F05bEofLtc9gn8UtsAWrgfdFEGWm9lytRS1hGKSZrOk
 crm_entity: e52_time_span
 id: e52_time_span
 label: 'E52 Time-Span'

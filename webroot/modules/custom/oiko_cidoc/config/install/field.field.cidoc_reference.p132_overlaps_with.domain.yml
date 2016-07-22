@@ -1,4 +1,3 @@
-uuid: 4a98f0ab-ad4d-4c7a-a50c-d60634333f2c
 langcode: en
 status: true
 dependencies:
@@ -18,8 +17,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.o3_active_destruction
     - cidoc.cidoc_property.p132_overlaps_with
     - field.storage.cidoc_reference.domain
-_core:
-  default_config_hash: vJ5FJNYuAlUszysFPmt6k40Uq8ltyC3YkggeNxoVafw
 id: cidoc_reference.p132_overlaps_with.domain
 field_name: domain
 entity_type: cidoc_reference

@@ -5,4 +5,5 @@ dependencies:
   - oiko_cidoc
   - views
   - eva
+  - leaflet_views
 package: Oiko

@@ -1,4 +1,3 @@
-uuid: 64e6a5f9-cbc3-4c32-bfaa-57b92c8a79bb
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p99_dissolved.domain
     - field.field.cidoc_reference.p99_dissolved.range
-_core:
-  default_config_hash: _YFUSm8tqh_BcdqD_uj6_IF8TJkVEvoa2xG12krQ834
 id: cidoc_reference.p99_dissolved.range
 targetEntityType: cidoc_reference
 bundle: p99_dissolved

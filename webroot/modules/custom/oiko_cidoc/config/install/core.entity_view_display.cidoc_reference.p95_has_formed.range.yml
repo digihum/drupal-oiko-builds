@@ -1,4 +1,3 @@
-uuid: ded83d49-fac4-43a4-a436-f7de4635ecf0
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p95_has_formed.domain
     - field.field.cidoc_reference.p95_has_formed.range
-_core:
-  default_config_hash: uqq2ERewxdtDk-bNXbncglhZozL2p-6-6sBc4ywKQLM
 id: cidoc_reference.p95_has_formed.range
 targetEntityType: cidoc_reference
 bundle: p95_has_formed

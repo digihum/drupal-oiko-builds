@@ -1,9 +1,6 @@
-uuid: 04656d3a-91f5-4e5a-915d-bee8700bef66
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: HM7i8_M48Kjq7Qn8n6kVxLyJnkIFdHbQcaPdUmX9W0M
 id: p9_consists_of
 label: 'P9 consists of'
 bidirectional: false

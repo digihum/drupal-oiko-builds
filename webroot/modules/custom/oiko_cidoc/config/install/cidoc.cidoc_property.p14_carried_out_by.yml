@@ -1,9 +1,6 @@
-uuid: 3a297af4-dcb5-4e0a-9bcd-f5d42e028aa3
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: AGj3x9yRFGNTUnUw6hm_8EV3CTemtPJ8smkw5B6gnsw
 id: p14_carried_out_by
 label: 'P14 carried out by'
 bidirectional: false

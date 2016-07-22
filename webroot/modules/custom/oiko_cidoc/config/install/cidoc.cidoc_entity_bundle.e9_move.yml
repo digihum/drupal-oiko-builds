@@ -1,9 +1,6 @@
-uuid: 5106906f-0020-4b40-bbf9-19f125cc22e4
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: 8TV53Wp1El6pkDIhImLilko_cFSW16OBVUnbhq_NbM0
 crm_entity: e9_move
 id: e9_move
 label: 'E9 Move'

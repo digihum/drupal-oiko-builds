@@ -1,4 +1,3 @@
-uuid: 0c3d0bfe-66de-45f5-a69d-310884895b1b
 langcode: en
 status: true
 dependencies:
@@ -17,8 +16,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.o3_active_destruction
     - cidoc.cidoc_property.p11_had_participant
     - field.storage.cidoc_reference.domain
-_core:
-  default_config_hash: EfQUT3M8y9efhM_fDf2Quqbv0UriSHW1zbMQ1gYzx2g
 id: cidoc_reference.p11_had_participant.domain
 field_name: domain
 entity_type: cidoc_reference

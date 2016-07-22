@@ -1,9 +1,6 @@
-uuid: d8b74aa6-d2f7-406f-937b-3e3a9f805159
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: zYMUpJ9Hk_c8Tfnvtj623JPJ-lbzTG175nu2NevjIiI
 crm_entity: e69_death
 id: e69_death
 label: 'E69 Death'

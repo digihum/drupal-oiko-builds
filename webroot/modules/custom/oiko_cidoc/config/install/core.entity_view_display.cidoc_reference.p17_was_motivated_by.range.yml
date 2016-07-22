@@ -1,4 +1,3 @@
-uuid: 8f848d24-fcaa-4a0e-8404-bf1d344009fe
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p17_was_motivated_by.domain
     - field.field.cidoc_reference.p17_was_motivated_by.range
-_core:
-  default_config_hash: iBOkn8smRwwvepR5Yi5guQYcR2PChNgmaJe3lQ5Sy58
 id: cidoc_reference.p17_was_motivated_by.range
 targetEntityType: cidoc_reference
 bundle: p17_was_motivated_by

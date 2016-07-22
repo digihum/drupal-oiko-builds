@@ -1,4 +1,3 @@
-uuid: 0373555b-4d9f-4033-88b6-74b0b66f9f57
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - field.storage.cidoc_entity.field_pleiades_uri
   module:
     - link
-_core:
-  default_config_hash: 1g7yWHOJT5jIw6ohmKp4d0D7-6iS8xLssg8P-Y_Psaw
 id: cidoc_entity.e53_place.field_pleiades_uri
 field_name: field_pleiades_uri
 entity_type: cidoc_entity

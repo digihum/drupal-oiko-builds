@@ -1,4 +1,3 @@
-uuid: bada2dc4-7571-4fed-934e-f31b6306837c
 langcode: en
 status: true
 dependencies:
@@ -6,8 +5,6 @@ dependencies:
     - cidoc.cidoc_property.p10_falls_within
     - field.field.cidoc_reference.p10_falls_within.domain
     - field.field.cidoc_reference.p10_falls_within.range
-_core:
-  default_config_hash: '-416SRKN3BlEeMqun3BAb7taSCilXH0DrttMnzh3APs'
 id: cidoc_reference.p10_falls_within.default
 targetEntityType: cidoc_reference
 bundle: p10_falls_within

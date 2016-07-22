@@ -1,9 +1,6 @@
-uuid: 8a5b7156-a886-433c-b1de-cb77749327b1
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: XKGESprT6_DOgiUJX9nuglbihwzzazFJ1O4ofHul8hs
 id: p97_from_father
 label: 'P97 by father'
 bidirectional: false

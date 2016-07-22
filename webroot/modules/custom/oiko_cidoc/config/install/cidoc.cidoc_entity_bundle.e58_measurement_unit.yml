@@ -1,9 +1,6 @@
-uuid: d66c3028-d199-49b7-889e-8eb9edfccfe9
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: IY7Dsebet9jKENXHhLVBNNF0XrPWtH7G2Ox0Z5eIgLw
 crm_entity: e58_measurement_unit
 id: e58_measurement_unit
 label: 'E58 Measurement Unit'

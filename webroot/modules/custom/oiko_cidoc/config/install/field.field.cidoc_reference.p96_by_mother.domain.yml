@@ -1,4 +1,3 @@
-uuid: cb936782-15cb-45e4-b8a7-6499a641f15a
 langcode: en
 status: true
 dependencies:
@@ -6,8 +5,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e67_birth
     - cidoc.cidoc_property.p96_by_mother
     - field.storage.cidoc_reference.domain
-_core:
-  default_config_hash: A5AbwbaY4_yizukREQZ1upmV6OFcCS1DgFY1Ga8RlwA
 id: cidoc_reference.p96_by_mother.domain
 field_name: domain
 entity_type: cidoc_reference

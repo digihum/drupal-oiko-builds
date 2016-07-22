@@ -1,4 +1,3 @@
-uuid: a0b52806-e5b2-4fd4-b841-69fefc2b9b8b
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p78_is_identified_by.domain
     - field.field.cidoc_reference.p78_is_identified_by.range
-_core:
-  default_config_hash: MXKVMyn55aGNT8Uu7oCT4L_dLkyxzL5Tn15IiKJiSBw
 id: cidoc_reference.p78_is_identified_by.range
 targetEntityType: cidoc_reference
 bundle: p78_is_identified_by

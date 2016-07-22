@@ -1,4 +1,3 @@
-uuid: 7e50a114-b791-464c-9e41-7deea9f66464
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p96_by_mother.domain
     - field.field.cidoc_reference.p96_by_mother.range
-_core:
-  default_config_hash: plPBZjSTVjwTnKY2BSEEuCi4lQyhxd2uxxlkp2boB48
 id: cidoc_reference.p96_by_mother.range
 targetEntityType: cidoc_reference
 bundle: p96_by_mother

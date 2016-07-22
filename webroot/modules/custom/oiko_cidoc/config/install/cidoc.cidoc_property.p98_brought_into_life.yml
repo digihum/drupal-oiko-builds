@@ -1,9 +1,6 @@
-uuid: 6dcbe772-aab9-41dd-b7a3-0ae14d5207b9
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: bB-F7590As3nCqXUHX11_kMUK9bXnwYTYaRl12kvhf0
 id: p98_brought_into_life
 label: 'P98 brought into life'
 bidirectional: false

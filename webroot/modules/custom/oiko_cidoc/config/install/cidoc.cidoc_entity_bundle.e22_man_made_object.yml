@@ -1,9 +1,6 @@
-uuid: 0a3a4a56-e9f1-48ed-a4a5-964e1e60df70
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: 1VNihrQfyd1YGsek0h1nq_BeCwhGXGqmfp2smVepULU
 crm_entity: e22_man_made_object
 id: e22_man_made_object
 label: 'E22 Man-Made Object'

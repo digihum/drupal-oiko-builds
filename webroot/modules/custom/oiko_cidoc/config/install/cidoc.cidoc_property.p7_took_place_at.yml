@@ -1,9 +1,6 @@
-uuid: c667d871-aad3-4ffc-ad87-7b988d2283f9
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: OcT714zVohOZRkOPSJGacLlwZaAB4zZqD0Jb7bPlSLQ
 id: p7_took_place_at
 label: 'P7 took place at'
 bidirectional: false

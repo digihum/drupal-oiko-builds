@@ -1,9 +1,6 @@
-uuid: e2253e75-9540-429b-b2a9-e80a865b334d
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: zyNyoB6Lbo6zCdmQqyFAn0f7rErKjybitujTDYAr6pM
 id: p4_has_time_span
 label: 'P4 has time-span'
 bidirectional: false

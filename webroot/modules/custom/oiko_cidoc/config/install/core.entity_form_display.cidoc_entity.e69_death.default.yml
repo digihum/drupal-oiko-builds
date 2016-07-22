@@ -1,4 +1,3 @@
-uuid: 6cdc38be-614c-4e75-853f-8c347148de08
 langcode: en
 status: true
 dependencies:
@@ -180,8 +179,6 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
-_core:
-  default_config_hash: ilxxf1HlXfDSYXRWUNJEpKwhM6Rhk8EyjsA3ypAioV4
 id: cidoc_entity.e69_death.default
 targetEntityType: cidoc_entity
 bundle: e69_death

@@ -1,9 +1,6 @@
-uuid: ae7c885e-3d6b-4ee2-a556-25d5fc240329
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: 1IOPSp58DcrX9oUBh88BVARFiEz5hH0F3VGNFz3LXbA
 crm_entity: e4_period
 id: e4_period
 label: 'E4 Period'

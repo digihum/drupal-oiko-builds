@@ -1,4 +1,3 @@
-uuid: 1e903c97-1407-4de7-8192-53f6493b7620
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - core.entity_view_mode.cidoc_reference.domain
     - field.field.cidoc_reference.p15_was_influenced_by.domain
     - field.field.cidoc_reference.p15_was_influenced_by.range
-_core:
-  default_config_hash: rr8uWrOGoIjbduJf7DvJ02QlW5pgoaDr5CHWe5zcWbQ
 id: cidoc_reference.p15_was_influenced_by.domain
 targetEntityType: cidoc_reference
 bundle: p15_was_influenced_by

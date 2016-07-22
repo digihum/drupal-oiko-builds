@@ -1,4 +1,3 @@
-uuid: 1e78ca00-6019-45e7-ac51-e79b65334299
 langcode: en
 status: true
 dependencies:
@@ -10,8 +9,6 @@ dependencies:
   module:
     - oiko_citation
     - squid_autocomplete
-_core:
-  default_config_hash: UB1puzUdkZLbskgKJHoHRjbVYrGkDGJhgZGMXFhcQbo
 id: cidoc_reference.p4_has_time_span.domain
 targetEntityType: cidoc_reference
 bundle: p4_has_time_span

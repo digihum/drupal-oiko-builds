@@ -1,4 +1,3 @@
-uuid: 11a1e2be-279d-40b3-abaa-21055cfb0264
 langcode: en
 status: true
 dependencies:
@@ -12,8 +11,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e82_actor_appellation
     - cidoc.cidoc_property.p12_occurred_in_the_presence_of
     - field.storage.cidoc_reference.range
-_core:
-  default_config_hash: atGahmdsfTutlspnrlbx8PLp_rzEkXLnwPsFmOFEgfo
 id: cidoc_reference.p12_occurred_in_the_presence_of.range
 field_name: range
 entity_type: cidoc_reference

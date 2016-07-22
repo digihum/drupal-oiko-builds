@@ -1,4 +1,3 @@
-uuid: 315cfe3f-634a-489c-a8de-a7c61a8dafd2
 langcode: en
 status: true
 dependencies:
@@ -10,8 +9,6 @@ dependencies:
   module:
     - oiko_citation
     - squid_autocomplete
-_core:
-  default_config_hash: d_YSNswvtoXfEfSXuEuG2j73H8zp4ecoUBAmi5zikSM
 id: cidoc_reference.p133_is_separated_from.range
 targetEntityType: cidoc_reference
 bundle: p133_is_separated_from

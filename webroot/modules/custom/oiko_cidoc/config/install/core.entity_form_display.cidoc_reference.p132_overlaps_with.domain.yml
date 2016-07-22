@@ -1,4 +1,3 @@
-uuid: b948e66f-0ea0-4178-bd76-95f916ee22e2
 langcode: en
 status: true
 dependencies:
@@ -10,8 +9,6 @@ dependencies:
   module:
     - oiko_citation
     - squid_autocomplete
-_core:
-  default_config_hash: zo_IMvAP804jlrueuoVenqn1giATa9lLMjtFRDe119M
 id: cidoc_reference.p132_overlaps_with.domain
 targetEntityType: cidoc_reference
 bundle: p132_overlaps_with

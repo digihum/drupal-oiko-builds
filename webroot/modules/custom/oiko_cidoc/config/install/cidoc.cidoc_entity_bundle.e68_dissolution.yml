@@ -1,9 +1,6 @@
-uuid: cc4ff3d4-4e1d-4a7c-b2be-aebd8f223212
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: _YzOIhXTrlqnN5a5n74E-Jzm5VdQawUQF6tbwGM72Lg
 crm_entity: e68_dissolution
 id: e68_dissolution
 label: 'E68 Dissolution'

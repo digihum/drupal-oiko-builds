@@ -1,4 +1,3 @@
-uuid: 22b7eded-c116-4388-b358-b2ec20e404fc
 langcode: en
 status: true
 dependencies:
@@ -6,8 +5,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e58_measurement_unit
     - cidoc.cidoc_property.p2_has_type
     - field.storage.cidoc_reference.range
-_core:
-  default_config_hash: lLNRLxeVjWBch0x2bGxs5sULbezpm-_JMifxJ136OAM
 id: cidoc_reference.p2_has_type.range
 field_name: range
 entity_type: cidoc_reference

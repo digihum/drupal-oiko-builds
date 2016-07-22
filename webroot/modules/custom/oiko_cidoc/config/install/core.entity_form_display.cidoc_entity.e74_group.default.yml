@@ -1,4 +1,3 @@
-uuid: a8ab2469-aacb-4d6a-8626-ef36c9bd1fea
 langcode: en
 status: true
 dependencies:
@@ -90,8 +89,6 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
-_core:
-  default_config_hash: HCRPe3rJQbJza05JUc-u_Y3QqAlaQFJcLRKT4OZ-4eQ
 id: cidoc_entity.e74_group.default
 targetEntityType: cidoc_entity
 bundle: e74_group

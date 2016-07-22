@@ -1,9 +1,6 @@
-uuid: 2271b81a-46d7-4026-8d3d-80b50889ef4b
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: iBOsoOZ9H6Jza7iwd52KyXffVXy9zcGr3VesnaTvVns
 crm_entity: e6_destruction
 id: e6_destruction
 label: 'E6 Destruction'

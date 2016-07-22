@@ -1,4 +1,3 @@
-uuid: acce394f-015c-4652-8892-8771af559ce2
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - core.entity_view_mode.cidoc_reference.domain
     - field.field.cidoc_reference.p7_took_place_at.domain
     - field.field.cidoc_reference.p7_took_place_at.range
-_core:
-  default_config_hash: v7q-8Hw8Q8K8ftCStoecrC_Q2oC9zLe265d5A8JlScA
 id: cidoc_reference.p7_took_place_at.domain
 targetEntityType: cidoc_reference
 bundle: p7_took_place_at

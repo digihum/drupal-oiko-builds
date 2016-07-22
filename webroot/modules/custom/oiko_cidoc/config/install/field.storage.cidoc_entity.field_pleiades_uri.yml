@@ -1,12 +1,9 @@
-uuid: f8fd20f5-f79e-4709-9d0f-28cde8ae061f
 langcode: en
 status: true
 dependencies:
   module:
     - cidoc
     - link
-_core:
-  default_config_hash: fRyRIOkaFim1VJt2AxmkLD0K-Dky6MGJmsLgAY2rbTE
 id: cidoc_entity.field_pleiades_uri
 field_name: field_pleiades_uri
 entity_type: cidoc_entity

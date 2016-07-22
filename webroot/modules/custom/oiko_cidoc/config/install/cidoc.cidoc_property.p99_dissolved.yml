@@ -1,9 +1,6 @@
-uuid: e2bf91ed-14a6-4abc-a75f-493529aea96c
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: 11a-98-PR68df_lU222wAsS3zotVl80cttRhzvTz5Y4
 id: p99_dissolved
 label: 'P99 dissolved'
 bidirectional: false

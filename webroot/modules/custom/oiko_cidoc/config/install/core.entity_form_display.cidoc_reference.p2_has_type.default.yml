@@ -1,4 +1,3 @@
-uuid: 49ef9df9-3560-49f2-b040-be9b5cb49cd4
 langcode: en
 status: true
 dependencies:
@@ -9,8 +8,6 @@ dependencies:
   module:
     - oiko_citation
     - squid_autocomplete
-_core:
-  default_config_hash: 4Tw3Cm-9936PaNhCQ7yt5qVHXEED8W5oUauk2vnE6j0
 id: cidoc_reference.p2_has_type.default
 targetEntityType: cidoc_reference
 bundle: p2_has_type

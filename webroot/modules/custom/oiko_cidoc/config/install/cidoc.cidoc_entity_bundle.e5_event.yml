@@ -1,9 +1,6 @@
-uuid: 513ab92a-82ed-45b8-904c-e1abe3406168
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: KTl5rL8t6eVkL-S7173frU5ysqUSiMr9KQqSUCSKXcc
 crm_entity: e5_event
 id: e5_event
 label: 'E5 Event'

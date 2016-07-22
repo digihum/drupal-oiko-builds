@@ -1,9 +1,6 @@
-uuid: 2dc68f61-c081-4a8c-afba-c4d63e3e830e
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: 9qfD9NCHMyXU6IwyZk8mnHLpTPaQVGhjiY6hAU9ZV2U
 id: p96_by_mother
 label: 'P96 by mother'
 bidirectional: false

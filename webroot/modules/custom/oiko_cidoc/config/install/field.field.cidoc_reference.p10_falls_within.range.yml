@@ -1,4 +1,3 @@
-uuid: 118c0efb-add7-467a-9020-36d4730e0c94
 langcode: en
 status: true
 dependencies:
@@ -18,8 +17,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.o3_active_destruction
     - cidoc.cidoc_property.p10_falls_within
     - field.storage.cidoc_reference.range
-_core:
-  default_config_hash: Exnmj9d1dYoQDQnY6y3cg3_RCFi26-aBNRRlNoz-Lqs
 id: cidoc_reference.p10_falls_within.range
 field_name: range
 entity_type: cidoc_reference
