@@ -1,0 +1,114 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_lifespan:
+      children:
+        - lifespan_entity_view_1
+        - person_death_entity_view_1
+      parent_name: ''
+      weight: 3
+      label: Lifespan
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_family:
+      children:
+        - person_parents_entity_view_1
+      parent_name: ''
+      weight: 6
+      label: Family
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_other_people:
+      children:
+        - people_entity_view_1
+      parent_name: ''
+      weight: 8
+      label: 'Other people of interest'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_aka:
+      children:
+        - appelations_entity_view_1
+      parent_name: ''
+      weight: 2
+      label: 'Also known as'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+id: cidoc_entity.e21_person.default
+targetEntityType: cidoc_entity
+bundle: e21_person
+mode: default
+content:
+  appelations_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  cidoc_properties:
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+  internal_name:
+    label: inline
+    type: string
+    weight: 1
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  key_achievements_entity_view_1:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+  lifespan_entity_view_1:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  map_of_places_people_went_entity_view_1:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  people_entity_view_1:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  person_death_entity_view_1:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  person_parents_entity_view_1:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+  places_people_went_entity_view_1:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  citation: true
+  content: true
+  significance: true
+  user_id: true

@@ -4,7 +4,9 @@ core: 8.x
 dependencies:
   - cidoc
   - eva
+  - field_group
   - geofield
+  - leaflet
   - leaflet_views
   - oiko_cidoc
   - user

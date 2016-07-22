@@ -1,0 +1,56 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e5_event
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_people:
+      children:
+        - people_entity_view_1
+      parent_name: ''
+      weight: 3
+      label: 'Related people'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+id: cidoc_entity.e5_event.default
+targetEntityType: cidoc_entity
+bundle: e5_event
+mode: default
+content:
+  cidoc_properties:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  internal_name:
+    label: inline
+    type: string
+    weight: 1
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  p7_took_place_at_map_entity_view_1:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+  people_entity_view_1:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  citation: true
+  content: true
+  significance: true
+  user_id: true
