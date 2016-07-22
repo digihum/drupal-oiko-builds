@@ -1,4 +1,3 @@
-uuid: 2019a947-6816-4427-894a-f395e476ba8a
 langcode: en
 status: true
 dependencies:
@@ -10,8 +9,6 @@ dependencies:
   module:
     - oiko_citation
     - squid_autocomplete
-_core:
-  default_config_hash: ANJMVRHHRABVZ7TQUWeoJ4gv7PV-7ezNLjIN8bov5VQ
 id: cidoc_reference.p99_dissolved.range
 targetEntityType: cidoc_reference
 bundle: p99_dissolved

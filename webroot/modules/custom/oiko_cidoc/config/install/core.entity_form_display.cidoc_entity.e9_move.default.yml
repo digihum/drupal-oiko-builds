@@ -1,4 +1,3 @@
-uuid: e346c480-287e-4877-87b9-455aea6d4cba
 langcode: en
 status: true
 dependencies:
@@ -201,8 +200,6 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
-_core:
-  default_config_hash: wy6wGXCXt2AqnVdVxorIQVb3dn0lnsNhSljZtN-XFv0
 id: cidoc_entity.e9_move.default
 targetEntityType: cidoc_entity
 bundle: e9_move

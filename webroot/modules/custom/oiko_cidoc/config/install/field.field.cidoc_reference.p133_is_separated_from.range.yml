@@ -1,4 +1,3 @@
-uuid: 4a290c21-01b5-4ac8-9dae-42c5a298d759
 langcode: en
 status: true
 dependencies:
@@ -18,8 +17,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.o3_active_destruction
     - cidoc.cidoc_property.p133_is_separated_from
     - field.storage.cidoc_reference.range
-_core:
-  default_config_hash: 2hoK4EtEPBGA-R9hoNdN-0EjxLwj1YVkUAqXpHnkBZ0
 id: cidoc_reference.p133_is_separated_from.range
 field_name: range
 entity_type: cidoc_reference

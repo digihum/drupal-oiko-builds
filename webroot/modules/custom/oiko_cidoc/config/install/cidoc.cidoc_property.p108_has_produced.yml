@@ -1,9 +1,6 @@
-uuid: 45104d13-b63e-45a5-b594-f5bcf51d9e9d
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: osRpWQYA-2Dp3Fq4NE_tlgHbVU_VVE1WroANi1DLzLw
 id: p108_has_produced
 label: 'P108 has produced'
 bidirectional: false

@@ -1,9 +1,6 @@
-uuid: cb99eaec-38e8-423a-b11e-534bf8fc32b5
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: bFGl6v2psgR42eVtPLc36SGcIvkZRNQJxnLfSST41p8
 id: p15_was_influenced_by
 label: 'P15 was influenced by'
 bidirectional: false

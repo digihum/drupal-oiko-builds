@@ -1,9 +1,6 @@
-uuid: 0ba74ccc-1f49-4c30-a883-1a72c2edd7b6
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: rKiT8-zYwr3NfqTykh1NWpxwkCO0ICIM7w8ysgXqozU
 id: p10_falls_within
 label: 'P10 falls within'
 bidirectional: false

@@ -1,9 +1,6 @@
-uuid: 73813b57-b57d-4dc9-b29d-4e88d78c3bd7
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: avbBUzL_ZqKY2Ubcp7zs86cbPDCVUu_8NmOSOH4Wv_4
 id: p134_continued
 label: 'P134 continued'
 bidirectional: false

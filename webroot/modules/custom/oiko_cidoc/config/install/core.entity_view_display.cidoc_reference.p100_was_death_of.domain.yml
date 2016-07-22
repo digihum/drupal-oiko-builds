@@ -1,4 +1,3 @@
-uuid: b41f377a-b9da-4ce1-a936-39bd6803e63f
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - core.entity_view_mode.cidoc_reference.domain
     - field.field.cidoc_reference.p100_was_death_of.domain
     - field.field.cidoc_reference.p100_was_death_of.range
-_core:
-  default_config_hash: hVsER01n4G8w6j_Nj9yRCOAAbq0pTXuNuX0clxXqhho
 id: cidoc_reference.p100_was_death_of.domain
 targetEntityType: cidoc_reference
 bundle: p100_was_death_of

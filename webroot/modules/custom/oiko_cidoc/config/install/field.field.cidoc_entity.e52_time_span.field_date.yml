@@ -1,4 +1,3 @@
-uuid: ab4c5379-6396-417a-a438-61494683d7d4
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - field.storage.cidoc_entity.field_date
   module:
     - edtf
-_core:
-  default_config_hash: UvDMMBFxFDuXO9-4yonMMh1hwyBODY7I3dkcS3kAr1w
 id: cidoc_entity.e52_time_span.field_date
 field_name: field_date
 entity_type: cidoc_entity

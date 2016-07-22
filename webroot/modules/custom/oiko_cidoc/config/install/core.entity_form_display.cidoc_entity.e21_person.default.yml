@@ -1,4 +1,3 @@
-uuid: c024f4f9-05f9-4d24-8b8b-bb78dff842ec
 langcode: en
 status: true
 dependencies:
@@ -90,8 +89,6 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
-_core:
-  default_config_hash: Aj22CJLv9ahqROhzHE69hCdT6k8DeOQz5tCzmv1GFiE
 id: cidoc_entity.e21_person.default
 targetEntityType: cidoc_entity
 bundle: e21_person

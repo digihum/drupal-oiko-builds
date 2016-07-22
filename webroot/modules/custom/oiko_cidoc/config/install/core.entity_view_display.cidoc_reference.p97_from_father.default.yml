@@ -1,4 +1,3 @@
-uuid: a0cf675c-13f9-4446-9917-467f8f500396
 langcode: en
 status: true
 dependencies:
@@ -6,8 +5,6 @@ dependencies:
     - cidoc.cidoc_property.p97_from_father
     - field.field.cidoc_reference.p97_from_father.domain
     - field.field.cidoc_reference.p97_from_father.range
-_core:
-  default_config_hash: Cb7u2f6DjIW96WuyfaNIq9mKEmJ-9m63qoiG8FBU0Nc
 id: cidoc_reference.p97_from_father.default
 targetEntityType: cidoc_reference
 bundle: p97_from_father

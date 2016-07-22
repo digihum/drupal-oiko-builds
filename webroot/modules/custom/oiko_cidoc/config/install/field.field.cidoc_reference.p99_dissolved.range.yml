@@ -1,4 +1,3 @@
-uuid: 7ac39dbd-5db4-452e-af78-7fe18957ca14
 langcode: en
 status: true
 dependencies:
@@ -6,8 +5,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e74_group
     - cidoc.cidoc_property.p99_dissolved
     - field.storage.cidoc_reference.range
-_core:
-  default_config_hash: dVK_i2fDGflqSUPJ-yYiv-T3FHwxFe0vw9GDAnrtC1c
 id: cidoc_reference.p99_dissolved.range
 field_name: range
 entity_type: cidoc_reference

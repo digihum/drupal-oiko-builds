@@ -1,4 +1,3 @@
-uuid: 53182b41-975c-4411-a433-37b0b4e0e921
 langcode: en
 status: true
 dependencies:
@@ -6,8 +5,6 @@ dependencies:
     - cidoc.cidoc_property.p132_overlaps_with
     - field.field.cidoc_reference.p132_overlaps_with.domain
     - field.field.cidoc_reference.p132_overlaps_with.range
-_core:
-  default_config_hash: 4ef8lvWb9U1u4DdBU8K9rM6qgpjE4R-TS8ulLbKlM1o
 id: cidoc_reference.p132_overlaps_with.default
 targetEntityType: cidoc_reference
 bundle: p132_overlaps_with

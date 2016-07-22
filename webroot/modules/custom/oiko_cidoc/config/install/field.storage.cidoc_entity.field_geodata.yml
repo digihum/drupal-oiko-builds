@@ -1,12 +1,9 @@
-uuid: 45ac4e20-d8e4-4b3b-ba97-a2d0849e1aab
 langcode: en
 status: true
 dependencies:
   module:
     - cidoc
     - geofield
-_core:
-  default_config_hash: wzvpKmNAoMrDJVSnnLAY6l0EQbnRV6AGqu7chOJajMg
 id: cidoc_entity.field_geodata
 field_name: field_geodata
 entity_type: cidoc_entity

@@ -1,9 +1,6 @@
-uuid: f4bc9189-1b24-4dee-99c4-fd2e0f28a213
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: z72-9XSH2Bsc7-UxBS2PhmW-p0kfhhGbmzayZut_ETw
 crm_entity: e42_identifier
 id: e42_identifier
 label: 'E42 Identifier'

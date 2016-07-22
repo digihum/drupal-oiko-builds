@@ -1,9 +1,6 @@
-uuid: 63ec2f0e-45a8-447b-b92c-6f0076100c4b
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: BT4o3aOH88lnEbovpQym7ctDb-MwBlPCEeVd18plv7A
 id: p133_is_separated_from
 label: 'P133 is separated from'
 bidirectional: false

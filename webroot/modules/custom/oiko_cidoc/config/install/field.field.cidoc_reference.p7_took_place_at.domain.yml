@@ -1,4 +1,3 @@
-uuid: 62da52ef-a96e-4322-a1ee-648fa5c6b8aa
 langcode: en
 status: true
 dependencies:
@@ -18,8 +17,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.o3_active_destruction
     - cidoc.cidoc_property.p7_took_place_at
     - field.storage.cidoc_reference.domain
-_core:
-  default_config_hash: _3F75vo0ZFsGN8ucELde-VLALJIhnl8f4b1u9TBMp-o
 id: cidoc_reference.p7_took_place_at.domain
 field_name: domain
 entity_type: cidoc_reference

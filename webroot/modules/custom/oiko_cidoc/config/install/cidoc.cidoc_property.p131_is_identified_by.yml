@@ -1,9 +1,6 @@
-uuid: 60cb1c4b-b886-4c24-bfdb-a75ba79eff74
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: 9zlzK3GK7btAMuQjQDeLQLZz9PEvroqAA75AoNErC4E
 id: p131_is_identified_by
 label: 'P131 is identified by'
 bidirectional: false

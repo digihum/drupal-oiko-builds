@@ -1,9 +1,6 @@
-uuid: deaeea65-4a55-4712-803b-fc499b6bb6fc
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: ZVWtMfUD1bVuAwzQdPDX7c3-lp4j4vH3zF42upChAXg
 id: p95_has_formed
 label: 'P95 has formed'
 bidirectional: false

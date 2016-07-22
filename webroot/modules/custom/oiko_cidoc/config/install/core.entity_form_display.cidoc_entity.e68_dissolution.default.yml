@@ -1,4 +1,3 @@
-uuid: 69814015-5c09-4a5e-a710-cb8d5cc86128
 langcode: en
 status: true
 dependencies:
@@ -180,8 +179,6 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
-_core:
-  default_config_hash: ilxxf1HlXfDSYXRWUNJEpKwhM6Rhk8EyjsA3ypAioV4
 id: cidoc_entity.e68_dissolution.default
 targetEntityType: cidoc_entity
 bundle: e68_dissolution

@@ -1,9 +1,6 @@
-uuid: 5d1ff44a-dd89-4ce0-98fb-93b09ad0ce2a
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: vLNl4bYnipQgVe9b0hnKQPWCxSs5Vr9tmeLiGVNfjnY
 crm_entity: e74_group
 id: e74_group
 label: 'E74 Group'

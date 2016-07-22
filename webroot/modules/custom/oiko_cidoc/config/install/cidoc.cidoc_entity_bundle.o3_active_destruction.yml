@@ -1,9 +1,6 @@
-uuid: 701126cf-0672-4544-a880-501bd521ccc2
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: DkRuRdwroGqCJ4QWBb5-9w43T7mSm-wQEB8pH3LoQXg
 crm_entity: o3_active_destruction
 id: o3_active_destruction
 label: 'O3 Active Destruction'

@@ -1,4 +1,3 @@
-uuid: e2c73124-88fe-4187-ab8d-f77637c771cd
 langcode: en
 status: true
 dependencies:
@@ -9,8 +8,6 @@ dependencies:
   module:
     - oiko_citation
     - squid_autocomplete
-_core:
-  default_config_hash: DDPY353t6oQfCor7Hy-Wr17RcIKzjcAXy9tqBqthP-M
 id: cidoc_reference.p100_was_death_of.default
 targetEntityType: cidoc_reference
 bundle: p100_was_death_of

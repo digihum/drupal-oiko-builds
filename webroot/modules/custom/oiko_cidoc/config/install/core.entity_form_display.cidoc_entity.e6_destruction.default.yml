@@ -1,4 +1,3 @@
-uuid: 3343c62a-cb4c-4949-a6c0-7c693ed364df
 langcode: en
 status: true
 dependencies:
@@ -193,8 +192,6 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
-_core:
-  default_config_hash: MCecFoOh1b0B-sp83OJ4_942EIMUo6UJjL0R5-XB0xk
 id: cidoc_entity.e6_destruction.default
 targetEntityType: cidoc_entity
 bundle: e6_destruction

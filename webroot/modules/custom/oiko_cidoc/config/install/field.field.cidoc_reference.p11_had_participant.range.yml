@@ -1,4 +1,3 @@
-uuid: a803fff5-54ca-43b1-8a21-886c2a2525e4
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e74_group
     - cidoc.cidoc_property.p11_had_participant
     - field.storage.cidoc_reference.range
-_core:
-  default_config_hash: 78pJhs-eEH5rkTZN8HDssH-4ioFc1iF2qMtUVoeUSxo
 id: cidoc_reference.p11_had_participant.range
 field_name: range
 entity_type: cidoc_reference

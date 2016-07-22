@@ -1,4 +1,3 @@
-uuid: f6c00bea-a6a2-4e6f-af9a-ee90e1d79be4
 langcode: en
 status: true
 dependencies:
@@ -10,8 +9,6 @@ dependencies:
   module:
     - oiko_citation
     - squid_autocomplete
-_core:
-  default_config_hash: lm2BoPP_Fuo87n3kJll7CXoe84gZYBFIyvaPk2s5378
 id: cidoc_reference.p99_dissolved.domain
 targetEntityType: cidoc_reference
 bundle: p99_dissolved

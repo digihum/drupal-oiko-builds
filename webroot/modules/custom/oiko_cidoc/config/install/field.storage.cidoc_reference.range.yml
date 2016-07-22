@@ -1,11 +1,8 @@
-uuid: 6c8a4d83-8a5d-4e78-b64d-333687ab7b30
 langcode: en
 status: true
 dependencies:
   module:
     - cidoc
-_core:
-  default_config_hash: yd319woJ3lSJCPs_8ZXY-SeC7T3fBAcr9yUdrBPuzos
 id: cidoc_reference.range
 field_name: range
 entity_type: cidoc_reference

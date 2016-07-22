@@ -1,9 +1,6 @@
-uuid: dd4c8f27-3c84-4fed-900d-91c15224f0d0
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: PIQrkhYCNlRSmaE6hBKsIKhDzjnnrv_3DsA28ctaKRI
 crm_entity: e53_place
 id: e53_place
 label: 'E53 Place'

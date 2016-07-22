@@ -1,4 +1,3 @@
-uuid: 22830143-f829-447a-a9d9-cb003200e2c9
 langcode: en
 status: true
 dependencies:
@@ -10,8 +9,6 @@ dependencies:
   module:
     - oiko_citation
     - squid_autocomplete
-_core:
-  default_config_hash: SNXsNXfCGknlypwQ6x3ppk-TXcjGaqye9ol3trZIju0
 id: cidoc_reference.p100_was_death_of.domain
 targetEntityType: cidoc_reference
 bundle: p100_was_death_of

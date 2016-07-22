@@ -1,9 +1,6 @@
-uuid: b50e555a-bbb2-440f-95bb-c034e0f938f2
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: IhGUSRKYYXWlb-7L5UBXtLJELaiovccEvy63q688g40
 crm_entity: o2_active_dissolution
 id: o2_active_dissolution
 label: 'O2 Active Dissolution'

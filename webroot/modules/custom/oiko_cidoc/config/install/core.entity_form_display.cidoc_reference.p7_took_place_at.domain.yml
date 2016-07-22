@@ -1,4 +1,3 @@
-uuid: fa3a94c8-765b-4955-9643-f9f2ff925e75
 langcode: en
 status: true
 dependencies:
@@ -10,8 +9,6 @@ dependencies:
   module:
     - oiko_citation
     - squid_autocomplete
-_core:
-  default_config_hash: BTA0tlEWDWZLk85wyYe_MR5PKzWOsMI6bC_TPqrHxdA
 id: cidoc_reference.p7_took_place_at.domain
 targetEntityType: cidoc_reference
 bundle: p7_took_place_at

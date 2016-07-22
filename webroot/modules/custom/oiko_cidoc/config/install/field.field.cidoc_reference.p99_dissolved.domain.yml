@@ -1,4 +1,3 @@
-uuid: 4d9b0939-8ac9-4561-934c-5ff99432093c
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.o2_active_dissolution
     - cidoc.cidoc_property.p99_dissolved
     - field.storage.cidoc_reference.domain
-_core:
-  default_config_hash: SKt-QTsAeWH_a1mzyB-emVFEU1M89srYKZDgRu55ABU
 id: cidoc_reference.p99_dissolved.domain
 field_name: domain
 entity_type: cidoc_reference

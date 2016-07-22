@@ -1,9 +1,6 @@
-uuid: d0834ad5-add7-4099-894b-e1b80f5043bc
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: zv3Zg8kskkA3WfZgGaseyAuN3PW6SoFa-0yH-1w0XEU
 id: p2_has_type
 label: 'P2 has type'
 bidirectional: false

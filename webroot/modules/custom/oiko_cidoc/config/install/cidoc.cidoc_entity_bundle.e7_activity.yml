@@ -1,9 +1,6 @@
-uuid: caf96141-1577-40c9-9d81-1ca52af98888
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: _o9oFLUO9SatBkdzt05Z0dutLa90Xp5N3HuDqYDNYcw
 crm_entity: e7_activity
 id: e7_activity
 label: 'E7 Activity'

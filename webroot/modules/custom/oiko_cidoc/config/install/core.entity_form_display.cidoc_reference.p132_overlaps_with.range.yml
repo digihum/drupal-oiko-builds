@@ -1,4 +1,3 @@
-uuid: 1edac2c7-b13e-4dc8-82c7-c170a072237b
 langcode: en
 status: true
 dependencies:
@@ -10,8 +9,6 @@ dependencies:
   module:
     - oiko_citation
     - squid_autocomplete
-_core:
-  default_config_hash: dCC2FwOWZHCOr3kuFp_dCGiCsa7erMdA2OjnYaUxuZ0
 id: cidoc_reference.p132_overlaps_with.range
 targetEntityType: cidoc_reference
 bundle: p132_overlaps_with

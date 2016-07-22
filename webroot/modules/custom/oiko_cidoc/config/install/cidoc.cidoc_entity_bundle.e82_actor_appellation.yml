@@ -1,9 +1,6 @@
-uuid: 6b0e77a4-d440-42f2-a650-12081208efe6
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: r7hnPM-o_HJJgc2ZWhDHwkx7usdrvFWxxvdmte9P_Lc
 crm_entity: e82_actor_appellation
 id: e82_actor_appellation
 label: 'E82 Actor Appellation'

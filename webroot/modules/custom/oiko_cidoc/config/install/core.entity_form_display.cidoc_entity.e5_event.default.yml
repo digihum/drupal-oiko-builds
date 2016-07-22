@@ -1,4 +1,3 @@
-uuid: 7b5a2198-8c70-44ef-836a-56a3fa6c879d
 langcode: en
 status: true
 dependencies:
@@ -179,8 +178,6 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
-_core:
-  default_config_hash: ilxxf1HlXfDSYXRWUNJEpKwhM6Rhk8EyjsA3ypAioV4
 id: cidoc_entity.e5_event.default
 targetEntityType: cidoc_entity
 bundle: e5_event

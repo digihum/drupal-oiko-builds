@@ -1,4 +1,3 @@
-uuid: 379b3b8d-4cf7-4c7b-841e-d363961898e7
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p4_has_time_span.domain
     - field.field.cidoc_reference.p4_has_time_span.range
-_core:
-  default_config_hash: gBHnk2dKnbwBnR0zU0BAIAU49-QVyPywpv3VJIccMg4
 id: cidoc_reference.p4_has_time_span.range
 targetEntityType: cidoc_reference
 bundle: p4_has_time_span

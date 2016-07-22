@@ -1,9 +1,6 @@
-uuid: fa94248b-1d12-4228-8f8b-0068b484729e
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: db9SS1hPeweeTPjVSq2ta7obYhWHOVhC3pI4lwcctwU
 crm_entity: e12_production
 id: e12_production
 label: 'E12 Production'

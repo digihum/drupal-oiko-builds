@@ -1,4 +1,3 @@
-uuid: 76944b91-5d9b-4384-8ff4-6c6f3a9e5c95
 langcode: en
 status: true
 dependencies:
@@ -12,8 +11,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.o3_active_destruction
     - cidoc.cidoc_property.p15_was_influenced_by
     - field.storage.cidoc_reference.domain
-_core:
-  default_config_hash: BeiBV5h0nrcNxYSG4CRx5zRI5uwI5wuyiSlPG1-BcOY
 id: cidoc_reference.p15_was_influenced_by.domain
 field_name: domain
 entity_type: cidoc_reference

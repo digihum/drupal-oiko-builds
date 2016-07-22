@@ -1,9 +1,6 @@
-uuid: c9640233-e36f-4ed6-92da-b73775c1b18e
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: gOsn2dIPgOqPyS_dOR-jMiO1oqFuoTm0SvGzzOOEITA
 crm_entity: e54_dimension
 id: e54_dimension
 label: 'E54 Dimension'

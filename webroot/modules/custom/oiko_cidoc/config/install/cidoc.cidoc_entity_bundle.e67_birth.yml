@@ -1,9 +1,6 @@
-uuid: 6b5d633e-2ce1-4892-8f9c-ddb16026b66a
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: dTWlEu1U_fHOz52UrwcN2PzffpPvLpLQ0HgkrpMTHBU
 crm_entity: e67_birth
 id: e67_birth
 label: 'E67 Birth'

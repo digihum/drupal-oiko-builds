@@ -1,4 +1,3 @@
-uuid: bb2feed9-732d-458d-9531-eefa689c9258
 langcode: en
 status: true
 dependencies:
@@ -6,8 +5,6 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e9_move
     - cidoc.cidoc_property.p27_moved_from
     - field.storage.cidoc_reference.domain
-_core:
-  default_config_hash: axyvF5v2D3Nu5c7NmdJnfu61NoZf0JWPFTsKZPE5ww4
 id: cidoc_reference.p27_moved_from.domain
 field_name: domain
 entity_type: cidoc_reference
