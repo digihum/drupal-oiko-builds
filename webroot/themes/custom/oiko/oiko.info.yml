@@ -1,0 +1,7 @@
+name: Oiko
+type: theme
+description: A theme for the Oikoumene website.
+core: 8.x
+base theme: stable
+libraries:
+  - oiko/global-styling
