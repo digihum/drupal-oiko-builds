@@ -136,7 +136,7 @@ function setup() {
     .size([width, height])
     // .linkDistance(100)
     .charge(-250)
-    .on("tick", tick)
+    .on("end", end)
     .start();
 
   window.svg = d3.select(".region-content").append("svg")
@@ -268,7 +268,7 @@ function setup() {
 }
 
 // This runs every time d3 does some rendering.
-function tick() {
+function end() {
   // Make our paths curvy, so they show directionality.
   path.attr("d", linkArc);
 
