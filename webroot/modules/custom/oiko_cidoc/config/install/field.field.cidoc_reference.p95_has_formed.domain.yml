@@ -1,0 +1,31 @@
+uuid: f94ab647-9e1f-4bf3-9d3f-31848a456385
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e66_formation
+    - cidoc.cidoc_property.p95_has_formed
+    - field.storage.cidoc_reference.domain
+_core:
+  default_config_hash: 7SpJSTfa_0WyeR_1lkZ1BkrmbLF-uEvRoj6BlZL8UcQ
+id: cidoc_reference.p95_has_formed.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: p95_has_formed
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e66_formation: e66_formation
+    auto_create_bundle: e66_formation
+field_type: entity_reference

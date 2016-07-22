@@ -144,6 +144,40 @@
             $(this).next('.description').remove();
           }
         });
+        
+        // Disable the citation controls if the referencer is empty.
+        if ($(this).val().length == 0) {
+          $(this).once('cidoc-citation-disabler').each(function() {
+            if ($(this).val().length == 0) {
+              $(this).parents('tr').find('input[type="submit"]').attr('disabled', 'true');
+            }
+          });
+        }
+        // When the value changes, dis/enable as appropriate.
+        $this_referencer.on('keypress', function() {
+          if ($(this).val().length == 0) {
+            $(this).parents('tr').find('input[type="submit"]').attr('disabled', 'true');
+          }
+          else {
+            $(this).parents('tr').find('input[type="submit"]').removeAttr('disabled');
+          }
+        });
+        $this_referencer.on('blur', function() {
+          if ($(this).val().length == 0) {
+            $(this).parents('tr').find('input[type="submit"]').attr('disabled', 'true');
+          }
+          else {
+            $(this).parents('tr').find('input[type="submit"]').removeAttr('disabled');
+          }
+        });
+        $this_referencer.on('change', function() {
+          if ($(this).val().length == 0) {
+            $(this).parents('tr').find('input[type="submit"]').attr('disabled', 'true');
+          }
+          else {
+            $(this).parents('tr').find('input[type="submit"]').removeAttr('disabled');
+          }
+        });
       });
     }
   };

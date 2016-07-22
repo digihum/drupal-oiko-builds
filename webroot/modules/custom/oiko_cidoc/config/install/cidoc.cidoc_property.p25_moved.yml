@@ -1,0 +1,18 @@
+uuid: c25ee77e-f860-47f7-a5df-2dc859ed092b
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: Qf3NTj5J5ulF_LdHrvvPulNayRpIZC-wur8tScN_5sI
+id: p25_moved
+label: 'P25 moved'
+bidirectional: false
+reverse_label: 'P25 moved by'
+domain_bundles:
+  - e9_move
+range_bundles:
+  2: e22_man_made_object
+  3: e21_person
+editability:
+  domain: true
+  range: true

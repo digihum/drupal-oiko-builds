@@ -11,8 +11,20 @@
     ],
     "repositories": [
         {
-            "type": "composer",
-            "url": "https://packagist.drupal-composer.org"
+            "type": "package",
+            "package": {
+                "name": "drupal/eva",
+                "version": "dev-8.x-1.x",
+                "type": "drupal-module",
+                "require": {
+                    "composer/installers": "^1.0.21"
+                },
+                "source": {
+                    "type": "git",
+                    "url": "https://git.drupal.org/project/eva.git",
+                    "reference": "origin/8.x-1.x"
+                }
+            }
         },
         {
             "type": "package",
@@ -26,22 +38,6 @@
                 "source": {
                     "type": "git",
                     "url": "https://github.com/bforchhammer/leaflet_widget.git",
-                    "reference": "origin/8.x-1.x"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "drupal/squid_autocomplete",
-                "version": "dev-8.x-1.x",
-                "type": "drupal-module",
-                "require": {
-                    "composer/installers": "^1.0.21"
-                },
-                "source": {
-                    "type": "git",
-                    "url": "https://git.drupal.org/project/squid_autocomplete.git",
                     "reference": "origin/8.x-1.x"
                 }
             }
@@ -77,6 +73,10 @@
                     "reference": "v0.7.7"
                 }
             }
+        },
+        {
+            "type": "composer",
+            "url": "https://packagist.drupal-composer.org"
         }
     ],
     "require": {
@@ -95,6 +95,7 @@
         "drupal/config_devel": "8.1.0-rc1",
         "drupal/csv_serialization": "8.1.0-alpha1",
         "drupal/devel": "8.1.x-dev",
+        "drupal/eva": "dev-8.x-1.x",
         "drupal/features": "8.3.x-dev",
         "drupal/field_group": "8.1.0-rc4",
         "drupal/geofield": "8.1.0-alpha2",
@@ -172,9 +173,6 @@
             ]
         },
         "patches": {
-            "drupal/core": {
-                "Support delta queries in EFQ": "https://www.drupal.org/files/issues/2384459_89_0.patch"
-            },
             "drupal/add_to_head": {
                 "Add applies method patch": "https://www.drupal.org/files/issues/checkfordefinitiontype-2709377.patch"
             },
@@ -189,6 +187,9 @@
                 "Fixes Incorrect parameter icon_url in Drupal.Leaflet.prototype.create_icon" : "https://www.drupal.org/files/issues/leaflet-fix_incorrect_parameter_name_in_create_icon-2732267-2.patch",
                 "Fixes maps not working on HTTPS": "https://www.drupal.org/files/issues/leaflet-ssl_support-2753703-2_0.patch",
                 "Fixes the API docs to include a missing hook": "https://www.drupal.org/files/issues/leaflet-add-hook_leaflet_map_info_alter-2746721-2.patch"
+            },
+            "drupal/eva": {
+                "EVA Patch for D8" : "https://www.drupal.org/files/issues/eva-working-d8-1937618-21.patch"
             }
         }
     }

@@ -1,0 +1,18 @@
+uuid: 7a65e1e7-9b92-4834-8dbb-4e1a60d4f7ef
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 03azs6l1Hwm8iYfVvflfsLPKcPtwD3bG30W4HwelK78
+id: p100_was_death_of
+label: 'P100 was death of'
+bidirectional: false
+reverse_label: 'P100 died in'
+domain_bundles:
+  - e69_death
+  - o1_killing
+range_bundles:
+  - e21_person
+editability:
+  domain: true
+  range: true

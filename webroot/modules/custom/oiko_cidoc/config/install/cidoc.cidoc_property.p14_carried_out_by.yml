@@ -1,0 +1,24 @@
+uuid: 3a297af4-dcb5-4e0a-9bcd-f5d42e028aa3
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: AGj3x9yRFGNTUnUw6hm_8EV3CTemtPJ8smkw5B6gnsw
+id: p14_carried_out_by
+label: 'P14 carried out by'
+bidirectional: false
+reverse_label: 'P14 performed'
+domain_bundles:
+  0: e7_activity
+  5: e66_formation
+  10: e9_move
+  11: o1_killing
+  12: o2_active_dissolution
+  13: o3_active_destruction
+  14: e12_production
+range_bundles:
+  1: e21_person
+  2: e74_group
+editability:
+  domain: true
+  range: true

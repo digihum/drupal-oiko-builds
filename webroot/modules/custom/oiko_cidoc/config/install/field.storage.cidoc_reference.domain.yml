@@ -1,0 +1,21 @@
+uuid: 8fe3cf8d-9cc8-41d5-b469-0e4d28c4f76c
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+_core:
+  default_config_hash: 5KT_ISwOOO3gEIYcCsEEJRRAjPL3O8Rtvj1Ldq8rgB4
+id: cidoc_reference.domain
+field_name: domain
+entity_type: cidoc_reference
+type: entity_reference
+settings:
+  target_type: cidoc_entity
+module: core
+locked: true
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
