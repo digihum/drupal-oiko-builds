@@ -429,6 +429,7 @@ display:
       entity_type: cidoc_entity
       bundles:
         - e21_person
+        - e74_group
       show_title: 1
       title: 'Places of note'
     cache_metadata:

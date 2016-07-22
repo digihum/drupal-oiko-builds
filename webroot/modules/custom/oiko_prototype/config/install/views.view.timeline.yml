@@ -239,6 +239,85 @@ display:
           entity_type: cidoc_entity
           entity_field: bundle
           plugin_id: bundle
+        significance:
+          id: significance
+          table: cidoc_entity
+          field: significance
+          relationship: domain
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: significance_op
+            label: 'Primary historical significance'
+            description: ''
+            use_operator: false
+            operator: significance_op
+            identifier: significance
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              content_editor: '0'
+          is_grouped: true
+          group_info:
+            label: 'Primary historical significance'
+            description: ''
+            identifier: significance
+            optional: true
+            widget: radios
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: Cultural
+                operator: '='
+                value:
+                  value: '3'
+                  min: ''
+                  max: ''
+              2:
+                title: Economic
+                operator: '='
+                value:
+                  value: '5'
+                  min: ''
+                  max: ''
+              3:
+                title: Military
+                operator: '='
+                value:
+                  value: '4'
+                  min: ''
+                  max: ''
+              4:
+                title: Political
+                operator: '='
+                value:
+                  value: '6'
+                  min: ''
+                  max: ''
+              5:
+                title: Religious
+                operator: '='
+                value:
+                  value: '1'
+                  min: ''
+                  max: ''
+          entity_type: cidoc_entity
+          entity_field: significance
+          plugin_id: numeric
       sorts:
         field_date_minmin:
           id: field_date_minmin
@@ -282,6 +361,7 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url
       tags:
         - 'config:field.storage.cidoc_entity.field_date'
   page_1:
@@ -297,5 +377,6 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url
       tags:
         - 'config:field.storage.cidoc_entity.field_date'
