@@ -5427,6 +5427,37 @@
         ]
     },
     {
+        "name": "drupal/eva",
+        "version": "dev-8.x-1.x",
+        "version_normalized": "dev-8.x-1.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/eva",
+            "reference": "540c940b1f699f0ff438ce25db5ed97df174dc18"
+        },
+        "require": {
+            "drupal/core": "8.*",
+            "drupal/views": "8.*"
+        },
+        "time": "2013-03-09 23:09:04",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-8.x-1.x": "8.1.x-dev"
+            },
+            "patches_applied": {
+                "EVA Patch for D8": "https://www.drupal.org/files/issues/eva-working-d8-1937618-21.patch"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides a Views display type that can be attached to entities.",
+        "homepage": "https://www.drupal.org/project/eva"
+    },
+    {
         "name": "drupal/squid_autocomplete",
         "version": "dev-8.x-1.x",
         "version_normalized": "dev-8.x-1.x",
