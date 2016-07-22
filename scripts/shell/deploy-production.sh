@@ -31,6 +31,11 @@ rm "$LIVE_DIR" && ln -s "$BUILD_DIR" "$LIVE_DIR"
 
 drush "@$DOMAIN" updb -y --entity-updates
 
+# Revert features.
+drush "@$DOMAIN" fra --bundle=oiko -y
+
+drush "@$DOMAIN" updb -y --entity-updates
+
 service php5-fpm restart || true
 varnishadm "ban.url ." || true
 
