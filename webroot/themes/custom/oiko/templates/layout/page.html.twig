@@ -48,7 +48,6 @@
         <div class="navigation-bar__left">
 
         </div>
-        <?php print $user_bar; ?>
         <div class="navigation-bar__center site-slogan"></div>
     </header>
     <header role="banner" class="clearfix navigation-bar hide-in-small-layout main-header">
@@ -61,7 +60,6 @@
         </nav>
     </header>
     <header role="banner" class="clearfix mobile-header hide-in-large-layout">
-        <a data-toggle="basket" class="main-menu__item">Basket</a>
         <a class="hamburger" data-toggle="hamburger_content">MENU</a>
         <aside id='hamburger_content' class="hamburger-content" data-toggler=".is-open">
             <button class="close-button" data-toggle="hamburger_content">&times;</button>
@@ -92,24 +90,23 @@
             {{ page.content }}
         </div>{# /.layout-content #}
 
-        {% if page.sidebar_first %}
-            <aside class="layout-sidebar-first" role="complementary">
-                {{ page.sidebar_first }}
-            </aside>
-        {% endif %}
-
-        {% if page.sidebar_second %}
-            <aside class="layout-sidebar-second" role="complementary">
-                {{ page.sidebar_second }}
-            </aside>
-        {% endif %}
-
     </div><!-- #main -->
 
-    {% if page.footer %}
-        <footer role="contentinfo">
+        <footer id="footer" role="contentinfo" >
             {{ page.footer }}
+            <div class="footer clearfix footer--upper">
+                <div class="footer__inner l-content-grid-container">
+
+                </div>
+            </div>
+            <div class="clearfix footer footer--lower">
+                <div class="footer__inner l-content-grid-container">
+                    <div class="footer--lower__copyright">
+
+                    </div>
+                    <div class="footer--lower__menu"></div>
+                </div>
+            </div>
         </footer>
-    {% endif %}
 
 </div>{# /.l-page #}
