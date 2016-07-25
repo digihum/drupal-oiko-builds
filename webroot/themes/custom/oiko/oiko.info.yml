@@ -5,3 +5,12 @@ core: 8.x
 base theme: stable
 libraries:
   - oiko/global-styling
+  - oiko/fonts
+regions:
+  header: 'Header'
+  pre_content: 'Pre-content'
+  breadcrumb: Breadcrumb
+  highlighted: Highlighted
+  help: Help
+  content: Content
+  footer_lower: Footer lower

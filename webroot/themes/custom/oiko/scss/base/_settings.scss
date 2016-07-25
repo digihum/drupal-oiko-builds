@@ -15,12 +15,14 @@ $palettes: (
                 base: #FFF,
         ),
         grey: (
-                dark: #2C2B2B,
-                mid-dark2: #8E8C8D,
-                mid-dark: #AEAEAB,
-                base: #CACACA,
-                mid-light: #E6E6E6,
-                light: #F4F4F4,
+                base: #3D3D3D,
+                light: #CBCBCB,
+        ),
+        tan : (
+                base: #FE734A,
+        ),
+        rust: (
+                base: #A933OE,
         ),
         aqua: (
                 mid-dark: #ADD2D9,
@@ -42,8 +44,7 @@ $palettes: (
 // Global foundation settings
 // ---------
 
-// Set visually against PS mockups
-$global-font-size: 14px;
+$global-font-size: 16px;
 $max-width: 1220px;
 $global-width: rem-calc($max-width);
 $global-lineheight: 1.5;
@@ -61,7 +62,7 @@ $black: palette(black);
 $white: palette(white);
 $body-background: palette(white);
 $body-font-color: palette(black, dark);
-$body-font-family: 'Din', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+$body-font-family: 'Alegreya Sans', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
 $body-antialiased: true;
 $global-margin: rem-calc(25);
 $global-padding: rem-calc(25);
@@ -214,7 +215,13 @@ $keystroke-background: $light-gray;
 $keystroke-padding: rem-calc(2 4 0);
 $keystroke-radius: $global-radius;
 $abbr-underline: 1px dotted $black;
-
+$breadcrumbs-margin: $global-margin 0;
+$breadcrumbs-item-font-size: rem-calc(14);
+$breadcrumbs-item-color: palette(rust);
+$breadcrumbs-item-color-current: palette(tan);
+$breadcrumbs-item-slash: false;
+$tab-item-font-size: rem-calc(14);
+$tab-item-background-hover: $light-gray;
 
 // Forms
 // ---------
