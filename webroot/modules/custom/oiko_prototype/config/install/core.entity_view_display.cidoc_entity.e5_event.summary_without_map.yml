@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e5_event
+    - core.entity_view_mode.cidoc_entity.summary_without_map
   module:
     - field_group
 third_party_settings:
@@ -11,7 +12,7 @@ third_party_settings:
       children:
         - people_entity_view_1
       parent_name: ''
-      weight: 17
+      weight: 7
       label: 'Related people'
       format_type: fieldset
       format_settings:
@@ -44,7 +45,7 @@ third_party_settings:
       children:
         - duplicate_of_p15_was_influenced_by_entity_view_1
       parent_name: ''
-      weight: 7
+      weight: 8
       label: Continues
       format_type: fieldset
       format_settings:
@@ -52,10 +53,9 @@ third_party_settings:
         classes: ''
         id: ''
     group_sub_events:
-      children:
-        - p9__entity_view_1
+      children: {  }
       parent_name: ''
-      weight: 13
+      weight: 12
       label: 'Constituent events'
       format_type: fieldset
       format_settings:
@@ -66,7 +66,7 @@ third_party_settings:
       children:
         - p9_forms_part_of_entity_view_1
       parent_name: ''
-      weight: 14
+      weight: 13
       label: 'Forms part of'
       format_type: fieldset
       format_settings:
@@ -77,7 +77,7 @@ third_party_settings:
       children:
         - p15_was_influenced_by_entity_view_1
       parent_name: ''
-      weight: 15
+      weight: 14
       label: Influences
       format_type: fieldset
       format_settings:
@@ -85,8 +85,7 @@ third_party_settings:
         classes: ''
         id: ''
     group_continued_by:
-      children:
-        - duplicate_of_p15_influenced_entity_view_1
+      children: {  }
       parent_name: ''
       weight: 11
       label: 'Continued by'
@@ -99,7 +98,7 @@ third_party_settings:
       children:
         - p15_influenced_entity_view_1
       parent_name: ''
-      weight: 16
+      weight: 15
       label: Influenced
       format_type: fieldset
       format_settings:
@@ -110,7 +109,7 @@ third_party_settings:
       children:
         - p10_includes_entity_view_1
       parent_name: ''
-      weight: 12
+      weight: 16
       label: Includes
       format_type: fieldset
       format_settings:
@@ -150,17 +149,13 @@ third_party_settings:
         description: ''
         classes: ''
         id: ''
-id: cidoc_entity.e5_event.default
+id: cidoc_entity.e5_event.summary_without_map
 targetEntityType: cidoc_entity
 bundle: e5_event
-mode: default
+mode: summary_without_map
 content:
   duplicate_of_p134_continues_entity_view_1:
     weight: 10
-    settings: {  }
-    third_party_settings: {  }
-  duplicate_of_p15_influenced_entity_view_1:
-    weight: 7
     settings: {  }
     third_party_settings: {  }
   duplicate_of_p15_was_influenced_by_entity_view_1:
@@ -172,22 +167,14 @@ content:
     type: string
     weight: 0
     settings:
-      link_to_entity: true
+      link_to_entity: false
     third_party_settings: {  }
   p108_has_produced_entity_view_1:
     weight: 9
     settings: {  }
     third_party_settings: {  }
-  p108_produced_by_entity_view_1:
-    weight: 8
-    settings: {  }
-    third_party_settings: {  }
   p10_falls_within_entity_view_1:
     weight: 4
-    settings: {  }
-    third_party_settings: {  }
-  p10_includes_entity_view_1:
-    weight: 9
     settings: {  }
     third_party_settings: {  }
   p11_has_participant_entity_view_1:
@@ -218,20 +205,23 @@ content:
     weight: 1
     settings: {  }
     third_party_settings: {  }
-  p9__entity_view_1:
-    weight: 16
-    settings: {  }
-    third_party_settings: {  }
   p9_forms_part_of_entity_view_1:
     weight: 17
+    settings: {  }
+    third_party_settings: {  }
+  people_entity_view_1:
+    weight: 5
     settings: {  }
     third_party_settings: {  }
 hidden:
   cidoc_properties: true
   citation: true
   content: true
+  duplicate_of_p15_influenced_entity_view_1: true
   internal_name: true
+  p108_produced_by_entity_view_1: true
+  p10_includes_entity_view_1: true
   p7_took_place_at_map_entity_view_1: true
-  people_entity_view_1: true
+  p9__entity_view_1: true
   significance: true
   user_id: true

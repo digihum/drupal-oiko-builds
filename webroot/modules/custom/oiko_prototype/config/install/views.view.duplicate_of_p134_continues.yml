@@ -263,20 +263,8 @@ display:
       display_extenders: {  }
       entity_type: cidoc_entity
       bundles:
-        - e12_production
         - e21_person
-        - e5_event
-        - e66_formation
-        - e67_birth
-        - e68_dissolution
-        - e69_death
-        - e6_destruction
         - e74_group
-        - e7_activity
-        - e9_move
-        - o1_killing
-        - o2_active_dissolution
-        - o3_active_destruction
       show_title: 1
       title: 'Carried out'
     cache_metadata:

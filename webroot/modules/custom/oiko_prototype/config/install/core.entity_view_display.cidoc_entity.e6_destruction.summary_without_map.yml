@@ -2,30 +2,38 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_entity_bundle.e68_dissolution
-    - core.entity_view_mode.cidoc_entity.summary
-id: cidoc_entity.e68_dissolution.summary
+    - cidoc.cidoc_entity_bundle.e6_destruction
+    - core.entity_view_mode.cidoc_entity.summary_without_map
+id: cidoc_entity.e6_destruction.summary_without_map
 targetEntityType: cidoc_entity
-bundle: e68_dissolution
-mode: summary
+bundle: e6_destruction
+mode: summary_without_map
 content:
   name:
     label: hidden
     type: string
     weight: 0
     settings:
-      link_to_entity: true
+      link_to_entity: false
     third_party_settings: {  }
-  p108_has_produced_entity_view_1:
-    weight: 10
-  p108_produced_by_entity_view_1:
-    weight: 10
+  p14_carried_out_by_entity_view_1:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+  p15_was_influenced_by_entity_view_1:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+  p16_used_specific_object_entity_view_1:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
   p4_has_time_span_entity_view_1:
-    weight: 1
+    weight: 2
     settings: {  }
     third_party_settings: {  }
   p7_took_place_at_map_entity_view_2:
-    weight: 2
+    weight: 1
     settings: {  }
     third_party_settings: {  }
 hidden:
@@ -36,16 +44,13 @@ hidden:
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
+  p108_has_produced_entity_view_1: true
+  p108_produced_by_entity_view_1: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p11_has_participant_entity_view_1: true
-  p14_carried_out_by_entity_view_1: true
   p15_influenced_entity_view_1: true
-  p15_was_influenced_by_entity_view_1: true
-  p16_used_specific_object_entity_view_1: true
   p7_took_place_at_map_entity_view_1: true
-  p95_formed_group_entity_view_1: true
-  p99_dissov_group_entity_view_1: true
   p9__entity_view_1: true
   p9_forms_part_of_entity_view_1: true
   people_entity_view_1: true
