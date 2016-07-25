@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_property.p11_had_participant
+    - cidoc.cidoc_property.p14_carried_out_by
   module:
     - cidoc
     - eva
-id: p11_participae
-label: 'P11 Participated in'
+id: duplicate_of_p134_continues
+label: 'P14 Carried out'
 module: views
 description: ''
 tag: ''
@@ -153,7 +153,7 @@ display:
           admin_label: ''
           operator: in
           value:
-            p11_had_participant: p11_had_participant
+            p14_carried_out_by: p14_carried_out_by
           group: 1
           exposed: false
           expose:
@@ -263,8 +263,22 @@ display:
       display_extenders: {  }
       entity_type: cidoc_entity
       bundles:
+        - e12_production
         - e21_person
+        - e5_event
+        - e66_formation
+        - e67_birth
+        - e68_dissolution
+        - e69_death
+        - e6_destruction
         - e74_group
+        - e7_activity
+        - e9_move
+        - o1_killing
+        - o2_active_dissolution
+        - o3_active_destruction
+      show_title: 1
+      title: 'Carried out'
     cache_metadata:
       max-age: -1
       contexts:

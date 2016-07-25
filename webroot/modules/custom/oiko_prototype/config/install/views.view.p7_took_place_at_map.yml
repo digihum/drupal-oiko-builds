@@ -357,7 +357,7 @@ display:
   entity_view_1:
     display_plugin: entity_view
     id: entity_view_1
-    display_title: EVA
+    display_title: 'EVA Map'
     position: 2
     display_options:
       display_extenders: {  }
@@ -374,6 +374,7 @@ display:
         - o1_killing
         - o2_active_dissolution
         - o3_active_destruction
+      display_description: ''
     cache_metadata:
       max-age: -1
       contexts:
@@ -386,7 +387,7 @@ display:
   entity_view_2:
     display_plugin: entity_view
     id: entity_view_2
-    display_title: 'EVA 2'
+    display_title: 'EVA Place name'
     position: 3
     display_options:
       display_extenders: {  }
@@ -566,6 +567,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
+      display_description: ''
     cache_metadata:
       max-age: -1
       contexts:

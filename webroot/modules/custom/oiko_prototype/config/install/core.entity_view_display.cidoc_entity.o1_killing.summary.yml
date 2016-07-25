@@ -2,7 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_entity_bundle.e67_birth
+    - cidoc.cidoc_entity_bundle.o1_killing
+    - core.entity_view_mode.cidoc_entity.summary
   module:
     - field_group
 third_party_settings:
@@ -11,51 +12,35 @@ third_party_settings:
       children:
         - people_entity_view_1
       parent_name: ''
-      weight: 7
+      weight: 6
       label: 'Related people'
       format_type: fieldset
       format_settings:
         description: ''
         classes: ''
         id: ''
-id: cidoc_entity.e67_birth.default
+id: cidoc_entity.o1_killing.summary
 targetEntityType: cidoc_entity
-bundle: e67_birth
-mode: default
+bundle: o1_killing
+mode: summary
 content:
-  e67_birth_child_entity_view_1:
-    weight: 3
-    settings: {  }
-    third_party_settings: {  }
-  e67_birth_parents_entity_view_1:
-    weight: 4
-    settings: {  }
-    third_party_settings: {  }
   name:
     label: hidden
     type: string
     weight: 0
     settings:
-      link_to_entity: false
-    third_party_settings: {  }
-  p10_falls_within_entity_view_1:
-    weight: 6
-    settings: {  }
+      link_to_entity: true
     third_party_settings: {  }
   p11_has_participant_entity_view_1:
-    weight: 8
+    weight: 5
     settings: {  }
     third_party_settings: {  }
   p14_carried_out_by_entity_view_1:
-    weight: 11
-    settings: {  }
-    third_party_settings: {  }
-  p16_used_specific_object_entity_view_1:
-    weight: 9
+    weight: 4
     settings: {  }
     third_party_settings: {  }
   p4_has_time_span_entity_view_1:
-    weight: 5
+    weight: 3
     settings: {  }
     third_party_settings: {  }
   p7_took_place_at_map_entity_view_1:
@@ -66,14 +51,6 @@ content:
     weight: 2
     settings: {  }
     third_party_settings: {  }
-  p9_forms_part_of_entity_view_1:
-    weight: 10
-    settings: {  }
-    third_party_settings: {  }
-  people_entity_view_1:
-    weight: 5
-    settings: {  }
-    third_party_settings: {  }
 hidden:
   cidoc_properties: true
   citation: true
@@ -81,9 +58,13 @@ hidden:
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
+  p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p15_influenced_entity_view_1: true
   p15_was_influenced_by_entity_view_1: true
+  p16_used_specific_object_entity_view_1: true
   p9__entity_view_1: true
+  p9_forms_part_of_entity_view_1: true
+  people_entity_view_1: true
   significance: true
   user_id: true
