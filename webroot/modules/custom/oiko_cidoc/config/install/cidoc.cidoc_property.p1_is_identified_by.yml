@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies: {  }
 id: p1_is_identified_by
-label: 'P1 is identfied by'
+label: 'P1 is identified by'
 bidirectional: false
 reverse_label: 'P1 identifies'
 domain_bundles:

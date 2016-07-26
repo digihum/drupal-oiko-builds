@@ -38,6 +38,7 @@
         var $select_element = $select_wrappers.slice(i, (i + 1)).find('select');
 
         var options = [];
+        var mainBundles = [];
         $select_element.find('option').each(function () {
           var val = $(this).attr('value');
           if (val && val !== '_none') {
@@ -47,6 +48,7 @@
               value: val,
               _cidoc_autocreate_option: bundle_label
             };
+            mainBundles[mainBundles.length] = val;
           }
         });
 
@@ -111,6 +113,13 @@
                 // Return false to tell jQuery UI that we've done all that is
                 // necessary already.
                 return false;
+              }
+              // If we are referencing an existing entity check the bundle.
+              else if (data.item.hasOwnProperty('bundle') && mainBundles.indexOf(data.item.bundle) === -1) {
+                // We need to select the bundle of the entity to create.
+                setTimeout(function () {
+                  $this_referencer.autocomplete('search', '_cidoc_autocreate');
+                }, 1);
               }
               else {
                 return fallback_select(event, data);

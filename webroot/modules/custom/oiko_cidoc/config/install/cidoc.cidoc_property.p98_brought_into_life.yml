@@ -12,3 +12,6 @@ range_bundles:
 editability:
   domain: true
   range: true
+timesubwidget:
+  range: true
+  domain: false

@@ -10,7 +10,7 @@ third_party_settings:
     group_fact_sheet:
       children: {  }
       parent_name: ''
-      weight: 3
+      weight: 1
       label: 'Fact sheet'
       format_type: html_element
       format_settings:
@@ -23,19 +23,133 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+    group_movement_details:
+      children:
+        - e9_move_map_entity_view_2
+        - e9_move_map_entity_view_3
+        - e9_move_map_entity_view_4
+      parent_name: ''
+      weight: 5
+      label: 'Movement details'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_period:
+      children:
+        - p10_falls_within_entity_view_1
+      parent_name: ''
+      weight: 7
+      label: Period
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_people:
+      children:
+        - people_entity_view_1
+      parent_name: ''
+      weight: 8
+      label: 'Related people'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_occurred_on:
+      children:
+        - p4_has_time_span_entity_view_1
+      parent_name: ''
+      weight: 6
+      label: 'Occurred on'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_moved_object:
+      children:
+        - e9_move_map_entity_view_6
+      parent_name: ''
+      weight: 3
+      label: 'Affected object'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_moved_by:
+      children:
+        - e9_move_map_entity_view_5
+        - e9_move_map_entity_view_7
+        - e9_move_map_entity_view_8
+      parent_name: ''
+      weight: 4
+      label: 'Moved by'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
 id: cidoc_entity.e9_move.default
 targetEntityType: cidoc_entity
 bundle: e9_move
 mode: default
 content:
   cidoc_properties:
-    weight: 1
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  duplicate_of_p134_continues_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  duplicate_of_p15_influenced_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  duplicate_of_p15_was_influenced_by_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_1:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_2:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_3:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_4:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_5:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_6:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_7:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_8:
+    weight: 9
     settings: {  }
     third_party_settings: {  }
   internal_name:
     label: inline
     type: string
-    weight: 2
+    weight: 9
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -46,8 +160,50 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-  people_entity_view_1:
+  p108_produced_by_entity_view_1:
     weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p10_falls_within_entity_view_1:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  p10_includes_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p15_influenced_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p15_was_influenced_by_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p16_used_specific_object_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p4_has_time_span_entity_view_1:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  p7_took_place_at_map_entity_view_2:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p9__entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p9_forms_part_of_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  people_entity_view_1:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   citation: true
   content: true

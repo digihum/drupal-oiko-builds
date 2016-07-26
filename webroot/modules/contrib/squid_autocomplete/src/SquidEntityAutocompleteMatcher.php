@@ -65,7 +65,7 @@ class SquidEntityAutocompleteMatcher {
       $entity_labels = $handler->getReferenceableEntities($string, $match_operator, 10);
 
       // Loop through the entities and convert them into autocomplete output.
-      foreach ($entity_labels as $values) {
+      foreach ($entity_labels as $bundle => $values) {
         foreach ($values as $entity_id => $label) {
           $key = "$label [id:$entity_id]";
           // Strip things like starting/trailing white spaces, line breaks and
@@ -73,7 +73,7 @@ class SquidEntityAutocompleteMatcher {
           $key = preg_replace('/\s\s+/', ' ', str_replace("\n", '', trim(Html::decodeEntities(strip_tags($key)))));
           // Names containing commas or quotes must be wrapped in quotes.
           $key = Tags::encode($key);
-          $matches[] = array('value' => $key, 'label' => $label);
+          $matches[] = array('value' => $key, 'label' => $label, 'bundle' => $bundle);
         }
       }
     }
