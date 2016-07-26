@@ -370,5 +370,56 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
     return $query->execute();
   }
 
+  protected $stubReferences = [];
+
+  /**
+   * Add a stub reference that will get created on save.
+   *
+   * @param $property
+   *
+   * @param $referenced_entity
+   *   The other entity at the end of the reference.
+   * @param bool $i_am_domain
+   *   Is this entity the domain of the reference, or the range.
+   */
+  public function addStubReference(CidocProperty $property, CidocEntityInterface $referenced_entity, $i_am_domain = TRUE) {
+    $this->stubReferences[] = array(
+      'property' => $property,
+      'referenced_entity' => $referenced_entity,
+      'i_am_domain' => $i_am_domain,
+    );
+  }
+
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    if (!empty($this->stubReferences)) {
+      // We need to create reference entities for these stubs.
+      foreach ($this->stubReferences as $k => $reference) {
+        $property = $reference['property'];
+        $referenced_entity = $reference['referenced_entity'];
+        $i_am_domain = $reference['i_am_domain'];
+        $values = array(
+          'property' => $property->get('id'),
+          'user_id' => $this->getOwnerId(),
+          'langcode' => $this->get('langcode'),
+        );
+        $reference_entity = \Drupal::entityTypeManager()->getStorage('cidoc_reference')->create($values);
+        if ($i_am_domain) {
+          $reference_entity->set('domain', $this);
+          $reference_entity->set('range', $referenced_entity);
+        }
+        else {
+          $reference_entity->set('domain', $referenced_entity);
+          $reference_entity->set('range', $this);
+        }
+        // Unset now, so we won't end up in a loop in the save.
+        unset($this->stubReferences[$k]);
+        $reference_entity->save();
+
+
+      }
+    }
+    parent::postSave($storage, $update);
+  }
+
 
 }

@@ -247,6 +247,14 @@ class CidocEntityForm extends ContentEntityForm {
 
                   $target_field_element['widget']['target_id']['#attributes']['class'][] = 'js-cidoc-references-widget-referencer';
                   $target_field_element['widget']['target_id']['#element_validate'] = array('::setAutocreateBundle');
+
+                  // If this is a magical widget, then add the timespan as a target entity.
+                  if ($property_entity->isTimeSubwidget($source_field)) {
+                    $target_field_element['widget']['target_id']['#selection_settings']['target_bundles']['e52_time_span'] = 'e52_time_span';
+                    $target_field_element['widget']['target_id']['#timesubwidget'] = TRUE;
+                    $target_field_element['widget']['target_id']['#timesubwidget_property'] = 'p4_has_time_span';
+                    $target_field_element['widget']['target_id']['#timesubwidget_title_template'] = '@bundle_name of @target_name';
+                  }
                 }
               }
             }
@@ -397,11 +405,36 @@ class CidocEntityForm extends ContentEntityForm {
               $element['#autocreate']['bundle'] = $autocreate_bundle;
 
               /** @var \Drupal\Core\Entity\EntityReferenceSelection\SelectionWithAutocreateInterface $handler */
+              // If this is a magic timespan subwidget, then we might actually have a matching time span to link to.
+              if (!empty($element['#timesubwidget'])) {
+                // See if we can get a match.
+                $matched = static::extractEntityIdFromAutocompleteInput($input);
+                if ($matched === NULL) {
+                  // This is a new timespan.
+                  $matched_entity = $handler->createNewEntity($element['#target_type'], 'e52_time_span', $input, $element['#autocreate']['uid']);
+                }
+                else {
+                  $matched_entity = $this->entityManager->getStorage($element['#target_type'])
+                    ->load($matched);
+                }
+                $reference_bundle = $this->entityManager->getStorage('cidoc_entity_bundle')->load($autocreate_bundle);
+                $title = (string) format_string($element['#timesubwidget_title_template'], array(
+                  '@target_name' => $form_state->getValue('name')[0]['value'],
+                  '@bundle_name' => $reference_bundle->label(),
+                ));
+                $new_entity = $handler->createNewEntity($element['#target_type'], $element['#autocreate']['bundle'], $title, $element['#autocreate']['uid']);
+                $property_bundle = $this->entityManager->getStorage('cidoc_property')->load($element['#timesubwidget_property']);
+                $new_entity->addStubReference($property_bundle, $matched_entity);
+              }
+              else {
+                $new_entity = $handler->createNewEntity($element['#target_type'], $element['#autocreate']['bundle'], $input, $element['#autocreate']['uid']);
+              }
               // Auto-create item. See an example of how this is handled in
               // \Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem::presave().
               $value[] = array(
-                'entity' => $handler->createNewEntity($element['#target_type'], $element['#autocreate']['bundle'], $input, $element['#autocreate']['uid']),
+                'entity' => $new_entity,
               );
+
             }
           }
 

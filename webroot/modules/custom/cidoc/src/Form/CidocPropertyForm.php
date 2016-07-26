@@ -148,6 +148,25 @@ class CidocPropertyForm extends EntityForm {
       }
     }
 
+    $form['endpoints']['timesubwidget'] = array(
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Use a time subwidget for the endpoints'),
+      '#options' => array(
+        'domain' => $this->t('Domain'),
+        'range' => $this->t('Range'),
+      ),
+      '#description' => $this->t('You may allow editors to reference a time span rather than having to create the intermediate entity.'),
+      '#default_value' => array(),
+      '#attributes' => array(
+        'class' => array('cidoc-property-form-items-columns'),
+      ),
+    );
+    foreach ($form['endpoints']['timesubwidget']['#options'] as $endpoint => $endpoint_label) {
+      if ($cidoc_property->isTimeSubwidget($endpoint)) {
+        $form['endpoints']['timesubwidget']['#default_value'][] = $endpoint;
+      }
+    }
+
     $form['#entity_builders']['update_status'] = [$this, 'cleanEndpoints'];
 
     return $form;
@@ -187,6 +206,8 @@ class CidocPropertyForm extends EntityForm {
 
     // Get to an array of allowed endpoint strings mapped to boolean values.
     $entity->editability = array_map('boolval', $form_state->getValue('editability'));
+    // Get to an array of allowed endpoint strings mapped to boolean values.
+    $entity->timesubwidget = array_map('boolval', $form_state->getValue('timesubwidget'));
   }
 
   /**
