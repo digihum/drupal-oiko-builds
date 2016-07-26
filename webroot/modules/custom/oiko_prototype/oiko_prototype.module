@@ -1,0 +1,21 @@
+<?php
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Template\Attribute;
+
+/**
+* Implements hook_field_group_pre_render().
+*
+* @param Array $element
+*   Group being rendered.
+* @param Object $group
+*   The Field group info.
+* @param $rendering_object
+*   The entity / form being rendered
+*/
+function oiko_prototype_field_group_pre_render(&$element, &$group, &$rendering_object) {
+  if ($rendering_object['#entity_type'] == 'cidoc_entity') {
+    $existing_attrs = $element['#attributes'];
+    $existing_attrs->addClass('cidoc-field-group');
+  }
+}
