@@ -670,7 +670,11 @@ class CidocEntityForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    $cidoc_entity = parent::validateForm($form, $form_state);
+    parent::validateForm($form, $form_state);
+
+    /** @var \Drupal\cidoc\Entity\CidocEntity $cidoc_entity */
+    $cidoc_entity = $form_state->getFormObject()->getEntity();
+    $cidoc_entity->set('populated', TRUE);
 
     $endpoints = array('domain', 'range');
     $opposites = array_combine(array_reverse($endpoints), $endpoints);
@@ -685,26 +689,17 @@ class CidocEntityForm extends ContentEntityForm {
               // Extract the form values on submit.
               $display->extractFormValues($reference_storage['entity'], $form['cidoc_properties:' . $source_field . ':' . $property_name]['references'][$reference_id]['subform'], $form_state);
 
-              /** @var \Drupal\cidoc\Entity\CidocEntity $cidoc_entity */
-              $cidoc_entity = $form_state->getFormObject()->getEntity();
               if ($cidoc_entity->isNew() || $reference_storage['entity']->{$source_field}->isEmpty()) {
                 $reference_storage['entity']->{$source_field} = array(array('entity' => $cidoc_entity));
               }
 
               $display->validateFormValues($reference_storage['entity'], $form['cidoc_properties:' . $source_field . ':' . $property_name]['references'][$reference_id]['subform'], $form_state);
-
-              // Ensure any references without a range are considered removed.
-              if ($reference_storage['entity']->{$opposites[$source_field]}->isEmpty()) {
-//                $widget_state[$property_name]['cidoc_properties_' . $source_field][$reference_id]['mode'] = 'removed';
-              }
             }
           }
         }
         $this->setWidgetState($form_state, $source_field, NULL, $widget_state);
       }
     }
-
-    $cidoc_entity->set('populated', TRUE);
 
     return $cidoc_entity;
   }
