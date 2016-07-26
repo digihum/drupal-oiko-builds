@@ -83,6 +83,7 @@ class CidocEntityForm extends ContentEntityForm {
           $form[$element_key] = array(
             '#type' => 'fieldset',
             '#title' => $property_label,
+            '#description' => $property_entity->getWidgetDescription($source_field),
             '#open' => TRUE,
             '#theme' => 'cidoc_properties_references_widget',
             '#tree' => TRUE,
@@ -247,6 +248,10 @@ class CidocEntityForm extends ContentEntityForm {
 
                   $target_field_element['widget']['target_id']['#attributes']['class'][] = 'js-cidoc-references-widget-referencer';
                   $target_field_element['widget']['target_id']['#element_validate'] = array('::setAutocreateBundle');
+
+                  if ($auto_description = $property_entity->getAutocompleteWidgetDescription($source_field)) {
+                    $target_field_element['widget']['target_id']['#description'] = $auto_description;
+                  }
 
                   // If this is a magical widget, then add the timespan as a target entity.
                   if ($property_entity->isTimeSubwidget($source_field)) {

@@ -15,3 +15,9 @@ editability:
 timesubwidget:
   range: true
   domain: false
+widget_description:
+  domain: ''
+  range: '<strong>Note that when adding new items here enter the date of the birth.</strong>'
+autocomplete_description:
+  domain: ''
+  range: ''

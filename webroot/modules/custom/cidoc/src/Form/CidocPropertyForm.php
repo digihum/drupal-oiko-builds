@@ -4,6 +4,7 @@ namespace Drupal\cidoc\Form;
 
 use Drupal\cidoc\Entity\CidocProperty;
 use Drupal\Core\Entity\EntityForm;
+use Drupal\Core\Field\FieldFilteredMarkup;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -165,7 +166,78 @@ class CidocPropertyForm extends EntityForm {
       if ($cidoc_property->isTimeSubwidget($endpoint)) {
         $form['endpoints']['timesubwidget']['#default_value'][] = $endpoint;
       }
+      $form['endpoints']['timesubwidget'][$endpoint]['#states'] = array(
+        'visible' => array(
+          ':input[name="editability[' . $endpoint .  ']"]' => array('checked' => TRUE),
+        ),
+      );
     }
+    $form['endpoints']['widget_description'] = array(
+      '#type' => 'fieldset',
+      '#title' => $this->t('Widget descriptions'),
+      '#attributes' => array(
+        'class' => array('cidoc-property-form-items-columns'),
+      ),
+      '#tree' => TRUE,
+    );
+    $form['endpoints']['widget_description']['domain'] = array(
+      '#title' => $this->t('Domain'),
+      '#type' => 'textarea',
+      '#default_value' => $cidoc_property->getWidgetDescription('domain'),
+      '#rows' => 3,
+      '#description' => $this->t('Instructions to present to the user below this field on the editing form.<br />Allowed HTML tags: @tags', array('@tags' => FieldFilteredMarkup::displayAllowedTags())) . '<br />' . $this->t('This field supports tokens.'),
+      '#states' => array(
+        'visible' => array(
+          ':input[name="editability[domain]"]' => array('checked' => TRUE),
+        ),
+      ),
+    );
+
+    $form['endpoints']['widget_description']['range'] = array(
+      '#title' => $this->t('Range'),
+      '#type' => 'textarea',
+      '#default_value' => $cidoc_property->getWidgetDescription('range'),
+      '#rows' => 3,
+      '#description' => $this->t('Instructions to present to the user below this field on the editing form.<br />Allowed HTML tags: @tags', array('@tags' => FieldFilteredMarkup::displayAllowedTags())) . '<br />' . $this->t('This field supports tokens.'),
+      '#states' => array(
+        'visible' => array(
+          ':input[name="editability[range]"]' => array('checked' => TRUE),
+        ),
+      ),
+    );
+
+    $form['endpoints']['autocomplete_description'] = array(
+      '#type' => 'fieldset',
+      '#title' => $this->t('Autocomplete widget descriptions'),
+      '#attributes' => array(
+        'class' => array('cidoc-property-form-items-columns'),
+      ),
+      '#tree' => TRUE,
+    );
+    $form['endpoints']['autocomplete_description']['domain'] = array(
+      '#title' => $this->t('Domain'),
+      '#type' => 'textfield',
+      '#default_value' => $cidoc_property->getAutocompleteWidgetDescription('domain'),
+      '#description' => $this->t('Instructions to present to the user below this field on the editing form.<br />Allowed HTML tags: @tags', array('@tags' => FieldFilteredMarkup::displayAllowedTags())) . '<br />' . $this->t('This field supports tokens.'),
+      '#states' => array(
+        'visible' => array(
+          ':input[name="editability[domain]"]' => array('checked' => TRUE),
+        ),
+      ),
+    );
+
+    $form['endpoints']['autocomplete_description']['range'] = array(
+      '#title' => $this->t('Range'),
+      '#type' => 'textfield',
+      '#default_value' => $cidoc_property->getAutocompleteWidgetDescription('range'),
+      '#description' => $this->t('Instructions to present to the user below this field on the editing form.<br />Allowed HTML tags: @tags', array('@tags' => FieldFilteredMarkup::displayAllowedTags())) . '<br />' . $this->t('This field supports tokens.'),
+      '#states' => array(
+        'visible' => array(
+          ':input[name="editability[range]"]' => array('checked' => TRUE),
+        ),
+      ),
+    );
+
 
     $form['#entity_builders']['update_status'] = [$this, 'cleanEndpoints'];
 
@@ -208,6 +280,9 @@ class CidocPropertyForm extends EntityForm {
     $entity->editability = array_map('boolval', $form_state->getValue('editability'));
     // Get to an array of allowed endpoint strings mapped to boolean values.
     $entity->timesubwidget = array_map('boolval', $form_state->getValue('timesubwidget'));
+    // Just copy the descriptions in directly.
+    $entity->widget_description = $form_state->getValue('widget_description');
+    $entity->autocomplete_description = $form_state->getValue('autocomplete_description');
   }
 
   /**
