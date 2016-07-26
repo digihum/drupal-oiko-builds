@@ -45,7 +45,8 @@ function oiko_profile_update_8102() {
  * Implements hook_update_N().
  */
 function oiko_profile_update_8103() {
-  $this->config('system.site')
+  $config_factory = Drupal::configFactory();
+  $config_factory->getEditable('system.site')
     ->set('page.front', '/prototype/map-of-events')
     ->save();
 }

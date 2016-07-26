@@ -15,15 +15,15 @@ third_party_settings:
       label: Participants
       format_type: html_element
       format_settings:
-        description: ''
-        classes: ''
-        id: ''
+        label: Participants
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
+        id: ''
+        classes: fg-participants
     group_occurred:
       children:
         - p4_has_time_span_entity_view_1
@@ -32,15 +32,15 @@ third_party_settings:
       label: 'Occurred on'
       format_type: html_element
       format_settings:
-        description: ''
-        classes: ''
-        id: ''
+        label: 'Occurred on'
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
+        id: ''
+        classes: fg-occurred-on
     group_people:
       children:
         - people_entity_view_1
@@ -49,15 +49,15 @@ third_party_settings:
       label: 'Related people'
       format_type: html_element
       format_settings:
-        description: ''
-        classes: ''
-        id: ''
+        label: 'Related people'
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
+        id: ''
+        classes: fg-related-people
     group_carried_out_by:
       children:
         - p14_carried_out_by_entity_view_1
@@ -66,15 +66,15 @@ third_party_settings:
       label: 'Carried out by'
       format_type: html_element
       format_settings:
-        description: ''
-        classes: ''
-        id: ''
+        label: 'Carried out by'
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
+        id: ''
+        classes: fg-carried-out-by
     group_period:
       children:
         - p10_falls_within_entity_view_1
@@ -83,15 +83,15 @@ third_party_settings:
       label: Period
       format_type: html_element
       format_settings:
-        description: ''
-        classes: ''
-        id: ''
+        label: Period
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
+        id: ''
+        classes: fg-period
     group_includes:
       children:
         - p10_includes_entity_view_1
@@ -100,15 +100,15 @@ third_party_settings:
       label: 'Includes these events and time periods'
       format_type: html_element
       format_settings:
-        description: ''
-        classes: ''
-        id: ''
+        label: 'Includes these events and time periods'
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
+        id: ''
+        classes: fg-includes
     group_influences:
       children:
         - p15_was_influenced_by_entity_view_1
@@ -117,15 +117,15 @@ third_party_settings:
       label: Influences
       format_type: html_element
       format_settings:
-        description: ''
-        classes: ''
-        id: ''
+        label: Influences
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
+        id: ''
+        classes: fg-influences
     group_objects:
       children:
         - p16_used_specific_object_entity_view_1
@@ -134,14 +134,15 @@ third_party_settings:
       label: 'Objects used'
       format_type: html_element
       format_settings:
+        label: 'Objects used'
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
-        classes: ''
         id: ''
+        classes: fg-objects-used
     group_influenced:
       children:
         - p15_influenced_entity_view_1
@@ -150,15 +151,15 @@ third_party_settings:
       label: Influenced
       format_type: html_element
       format_settings:
-        description: ''
-        classes: ''
-        id: ''
+        label: Influenced
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
+        id: ''
+        classes: fg-influenced
     group_continues:
       children:
         - duplicate_of_p15_was_influenced_by_entity_view_1
@@ -167,15 +168,15 @@ third_party_settings:
       label: Continues
       format_type: html_element
       format_settings:
-        description: ''
-        classes: ''
-        id: ''
+        label: Continues
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
+        id: ''
+        classes: fg-continues
     group_continued_by:
       children:
         - duplicate_of_p15_influenced_entity_view_1
@@ -184,15 +185,15 @@ third_party_settings:
       label: 'Continued by'
       format_type: html_element
       format_settings:
-        description: ''
-        classes: ''
-        id: ''
+        label: 'Continued by'
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
+        id: ''
+        classes: fg-continued-by
     group_forms:
       children:
         - p9_forms_part_of_entity_view_1
@@ -201,15 +202,15 @@ third_party_settings:
       label: 'Forms part of'
       format_type: html_element
       format_settings:
-        description: ''
-        classes: ''
-        id: ''
+        label: 'Forms part of'
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
+        id: ''
+        classes: fg-forms-part-of
     group_sub_events:
       children:
         - p9__entity_view_1
@@ -218,15 +219,15 @@ third_party_settings:
       label: 'Constituent events'
       format_type: html_element
       format_settings:
-        description: ''
-        classes: ''
-        id: ''
+        label: 'Constituent events'
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
+        id: ''
+        classes: fg-constituent-events
 id: cidoc_entity.e7_activity.default
 targetEntityType: cidoc_entity
 bundle: e7_activity

@@ -31,9 +31,14 @@ third_party_settings:
       parent_name: ''
       weight: 4
       label: Formation
-      format_type: fieldset
+      format_type: html_element
       format_settings:
-        description: ''
+        element: div
+        show_label: false
+        label_element: h3
+        effect: none
+        speed: fast
+        attributes: ''
         classes: ''
         id: ''
 id: cidoc_entity.e68_dissolution.summary_without_map

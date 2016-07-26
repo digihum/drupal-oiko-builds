@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3bb1997a71af702985fdb097a9a59997",
-    "content-hash": "ec6dc9b89ee0a3511e44db670d1cd1ac",
+    "hash": "95418a045887e6a29a2cf61d9035d2b8",
+    "content-hash": "58df2430abebca2d49e841341973ae29",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1642,17 +1642,11 @@
         },
         {
             "name": "drupal/field_group",
-            "version": "8.1.0-rc4",
+            "version": "dev-8.x-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/field_group",
-                "reference": "54354bfa0c7736ee2c9f6a289dba8aa03c059aaf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/field_group-8.x-1.0-rc4.zip",
-                "reference": null,
-                "shasum": null
+                "reference": "77c5dfa28f7a4d7880bedc1cd2accf2d5986697c"
             },
             "require": {
                 "drupal/core": "8.*",
@@ -1676,7 +1670,7 @@
             ],
             "description": "Provides the ability to group your fields on both form and display.",
             "homepage": "https://www.drupal.org/project/field_group",
-            "time": "2015-12-10 12:36:16"
+            "time": "2016-06-25 12:10:54"
         },
         {
             "name": "drupal/geofield",
@@ -6978,6 +6972,7 @@
         "drupal/devel": 20,
         "drupal/eva": 20,
         "drupal/features": 20,
+        "drupal/field_group": 20,
         "drupal/leaflet": 20,
         "drupal/leaflet_widget": 20,
         "drupal/migrate_tools": 20,

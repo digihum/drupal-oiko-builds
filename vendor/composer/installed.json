@@ -3342,18 +3342,12 @@
     },
     {
         "name": "drupal/field_group",
-        "version": "8.1.0-rc4",
-        "version_normalized": "8.1.0.0-RC4",
+        "version": "dev-8.x-1.x",
+        "version_normalized": "dev-8.x-1.x",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/field_group",
-            "reference": "54354bfa0c7736ee2c9f6a289dba8aa03c059aaf"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/field_group-8.x-1.0-rc4.zip",
-            "reference": null,
-            "shasum": null
+            "reference": "77c5dfa28f7a4d7880bedc1cd2accf2d5986697c"
         },
         "require": {
             "drupal/core": "8.*",
@@ -3365,14 +3359,14 @@
         "suggest": {
             "drupal/core": "Required by drupal/field_group_migrate"
         },
-        "time": "2015-12-10 12:36:16",
+        "time": "2016-06-25 12:10:54",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
                 "dev-8.x-1.x": "8.1.x-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "notification-url": "https://packagist.drupal-composer.org/downloads/",
         "license": [
             "GPL-2.0+"

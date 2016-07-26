@@ -274,6 +274,8 @@ display:
         - o1_killing
         - o2_active_dissolution
         - o3_active_destruction
+      title: 'Has participants'
+      show_title: 1
     cache_metadata:
       max-age: -1
       contexts:

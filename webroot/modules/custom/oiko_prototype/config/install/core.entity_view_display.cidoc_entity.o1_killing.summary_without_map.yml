@@ -28,7 +28,7 @@ content:
     type: string
     weight: 0
     settings:
-      link_to_entity: false
+      link_to_entity: true
     third_party_settings: {  }
   p14_carried_out_by_entity_view_1:
     weight: 3

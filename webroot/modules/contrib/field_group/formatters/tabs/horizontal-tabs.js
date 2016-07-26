@@ -6,27 +6,6 @@
   Drupal.FieldGroup.Effects = Drupal.FieldGroup.Effects || {};
 
   /**
-   * Implements Drupal.FieldGroup.processHook().
-   */
-  Drupal.FieldGroup.Effects.processHtabs = {
-    execute: function (context, settings, type) {
-      if (type === 'form') {
-        // Add required fields mark to any element containing required fields
-        $('fieldset.horizontal-tabs-pane', context).once('fieldgroup-effects', function (i) {
-          if ($(this).is('.required-fields') && $(this).find('.form-required').length > 0) {
-            $(this).data('horizontalTab').link.find('strong:first').after($('.form-required').eq(0).clone()).after(' ');
-          }
-          if ($('.error', $(this)).length) {
-            $(this).data('horizontalTab').link.parent().addClass('error');
-            Drupal.FieldGroup.setGroupWithfocus($(this));
-            $(this).data('horizontalTab').focus();
-          }
-        });
-      }
-    }
-  };
-
-  /**
    * This script transforms a set of fieldsets into a stack of horizontal
    * tabs. Another tab pane can be selected by clicking on the respective
    * tab.
@@ -65,8 +44,19 @@
         // Transform each details into a tab.
         $details.each(function (i) {
           var $this = $(this);
+
+          // If details is not supported, summary is a link.
+          // Take the text of the first element inside the summary.
+          if (Modernizr.details) {
+            var summary = $(this).find('> summary').clone().children().remove().end().text();
+          }
+          else {
+            var summary = $(this).find('> summary .details-title').clone().children().remove().end().text();
+          }
+
+
           var horizontal_tab = new Drupal.horizontalTab({
-            title: $this.find('> summary').text(),
+            title: $.trim(summary),
             details: $this
           });
           horizontal_tab.item.addClass('horizontal-tab-button-' + i);
@@ -154,14 +144,14 @@
       this.details
         .removeClass('horizontal-tab-hidden')
         .siblings('.horizontal-tabs-pane')
-          .each(function () {
-            var tab = $(this).data('horizontalTab');
-            tab.details.addClass('horizontal-tab-hidden');
-            tab.item.removeClass('selected');
-          })
-          .end()
+        .each(function () {
+          var tab = $(this).data('horizontalTab');
+          tab.details.addClass('horizontal-tab-hidden');
+          tab.item.removeClass('selected');
+        })
+        .end()
         .siblings(':hidden.horizontal-tabs-active-tab')
-          .val(this.details.attr('id'));
+        .val(this.details.attr('id'));
       this.item.addClass('selected');
       // Mark the active tab for screen readers.
       $('#active-horizontal-tab').remove();
@@ -242,7 +232,7 @@
 
     tab.item = $('<li class="horizontal-tab-button" tabindex="-1"></li>')
       .append(tab.link = $('<a href="#' + idAttr + '"></a>')
-      .append(tab.title = $('<strong></strong>').text(settings.title))
+        .append(tab.title = $('<strong></strong>').text(settings.title))
       );
 
     // No need to add summary on frontend.
@@ -253,4 +243,4 @@
     return tab;
   };
 
-})(jQuery);
+})(jQuery, Modernizr);
