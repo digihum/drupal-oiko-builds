@@ -1520,7 +1520,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/devel",
-                "reference": "b8bcdc6f61f976c9bd50099b42bd2809266e9670"
+                "reference": "95479b314b7aa219f1aff3b0d284447450f6927c"
             },
             "require": {
                 "drupal/core": "8.*"
@@ -1555,7 +1555,7 @@
             ],
             "description": "Various blocks, pages, and functions for developers.",
             "homepage": "http://drupal.org/project/devel",
-            "time": "2016-07-01 18:41:23"
+            "time": "2016-07-23 09:36:35"
         },
         {
             "name": "drupal/entity_reference_revisions",
@@ -2043,11 +2043,11 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/squid_autocomplete.git",
-                "reference": "540e777177622cc1e43694aed8d0409c5bb6627b"
+                "reference": "2804ebb83d62cbd01d7747f24fbe8b40c25ad477"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/squid_autocomplete-8.x-1.0-alpha4.zip",
+                "url": "https://ftp.drupal.org/files/projects/squid_autocomplete-8.x-1.0-alpha5.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -2066,7 +2066,7 @@
             ],
             "description": "Provides autocompletion widgets with square brackets instead of parenthesis.",
             "homepage": "https://www.drupal.org/project/squid_autocomplete",
-            "time": "2016-07-05 09:14:38"
+            "time": "2016-07-26 09:31:31"
         },
         {
             "name": "drupal/token",
