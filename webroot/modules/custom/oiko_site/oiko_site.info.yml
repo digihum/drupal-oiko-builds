@@ -3,8 +3,11 @@ description: 'Provides site components.'
 type: module
 core: 8.x
 dependencies:
+  - block
   - ckeditor
   - editor
   - features
   - filter
+  - help
+  - system
 package: Oiko
