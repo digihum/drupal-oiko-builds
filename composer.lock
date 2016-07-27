@@ -1785,7 +1785,7 @@
                 "composer/installers": "^1.0.21"
             },
             "type": "drupal-module",
-            "time": "2016-07-27 12:06:31"
+            "time": "2016-07-27 14:39:54"
         },
         {
             "name": "drupal/metatag",
