@@ -24,10 +24,10 @@ third_party_settings:
     group_main_deets:
       children:
         - name
+        - internal_name
         - citation
         - significance
         - group_main_details
-        - internal_name
       parent_name: group_main
       weight: 4
       label: 'Main details'
@@ -143,6 +143,13 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+  internal_name:
+    type: string_textfield
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   name:
     type: string_textfield
     weight: 1
@@ -171,5 +178,4 @@ hidden:
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true
   content: true
-  internal_name: true
   user_id: true

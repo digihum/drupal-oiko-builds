@@ -295,6 +295,13 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
+  internal_name:
+    type: string_textfield
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   name:
     type: string_textfield
     weight: 1
@@ -312,5 +319,4 @@ hidden:
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
-  internal_name: true
   user_id: true
