@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "91014abfa5a466861ed23a2f6fd52d3b",
-    "content-hash": "e31f1b17a9ba86858c84da9fb8bae293",
+    "hash": "3bb1997a71af702985fdb097a9a59997",
+    "content-hash": "ec6dc9b89ee0a3511e44db670d1cd1ac",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -2039,7 +2039,7 @@
         },
         {
             "name": "drupal/squid_autocomplete",
-            "version": "dev-8.x-1.x",
+            "version": "8.1.0-alpha5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/squid_autocomplete.git",
@@ -6981,7 +6981,6 @@
         "drupal/leaflet": 20,
         "drupal/leaflet_widget": 20,
         "drupal/migrate_tools": 20,
-        "drupal/squid_autocomplete": 20,
         "drupal/paragraphs": 5,
         "jcalderonzumba/gastonjs": 20
     },

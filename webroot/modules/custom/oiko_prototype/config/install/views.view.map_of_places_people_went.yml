@@ -429,7 +429,8 @@ display:
       entity_type: cidoc_entity
       bundles:
         - e21_person
-      show_title: 1
+        - e74_group
+      show_title: 0
       title: 'Places of note'
     cache_metadata:
       max-age: -1

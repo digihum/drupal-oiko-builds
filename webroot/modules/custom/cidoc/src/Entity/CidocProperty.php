@@ -44,6 +44,9 @@ use Drupal\field\Entity\FieldStorageConfig;
  *     "domain_bundles",
  *     "range_bundles",
  *     "editability",
+ *     "timesubwidget",
+ *     "widget_description",
+ *     "autocomplete_description",
  *   },
  *   links = {
  *     "canonical" = "/admin/structure/cidoc-properties/{cidoc_property}",
@@ -114,6 +117,27 @@ class CidocProperty extends ConfigEntityBundleBase {
    * @var array
    */
   public $editability = array();
+
+  /**
+   * Which endpoints the use a time subwidget.
+   *
+   * @var array
+   */
+  public $timesubwidget = array();
+
+  /**
+   * Descriptions for the widgets.
+   *
+   * @var array
+   */
+  public $widget_description = array();
+
+  /**
+   * Descriptions for the autocomplete widgets.
+   *
+   * @var array
+   */
+  public $autocomplete_description = array();
 
   /**
    * {@inheritdoc}
@@ -297,6 +321,8 @@ class CidocProperty extends ConfigEntityBundleBase {
   public static function preCreate(EntityStorageInterface $storage, array &$values) {
     $values['editability']['domain'] = TRUE;
     $values['editability']['range'] = TRUE;
+    $values['timesubwidget']['domain'] = FALSE;
+    $values['timesubwidget']['range'] = FALSE;
   }
 
   /**
@@ -327,6 +353,34 @@ class CidocProperty extends ConfigEntityBundleBase {
         break;
     }
     return $editability;
+  }
+
+  /**
+   * Get whether the property should use a time subwidget.
+   */
+  public function isTimeSubwidget($endpoint) {
+    $usage = FALSE;
+    switch ($endpoint) {
+      case 'domain':
+      case 'range':
+        $usage = !empty($this->timesubwidget[$endpoint]);
+        break;
+    }
+    return $usage;
+  }
+
+  /**
+   * Get a widget description.
+   */
+  public function getWidgetDescription($endpoint) {
+    return isset($this->widget_description[$endpoint]) ? $this->widget_description[$endpoint] : '';
+  }
+
+  /**
+   * Get an autocomplete widget description
+   */
+  public function getAutocompleteWidgetDescription($endpoint) {
+    return isset($this->autocomplete_description[$endpoint]) ? $this->autocomplete_description[$endpoint] : '';
   }
 
 }

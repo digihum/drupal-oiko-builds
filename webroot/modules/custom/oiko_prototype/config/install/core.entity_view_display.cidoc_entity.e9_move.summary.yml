@@ -1,0 +1,176 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e9_move
+    - core.entity_view_mode.cidoc_entity.summary
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_fact_sheet:
+      children: {  }
+      parent_name: ''
+      weight: 1
+      label: 'Fact sheet'
+      format_type: html_element
+      format_settings:
+        label: 'Fact sheet'
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+    group_movement_details:
+      children:
+        - e9_move_map_entity_view_2
+        - e9_move_map_entity_view_3
+        - e9_move_map_entity_view_4
+        - p7_took_place_at_map_entity_view_2
+      parent_name: ''
+      weight: 5
+      label: 'Movement details'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_period:
+      children:
+        - p10_falls_within_entity_view_1
+      parent_name: ''
+      weight: 10
+      label: Period
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_people:
+      children:
+        - people_entity_view_1
+      parent_name: ''
+      weight: 11
+      label: 'Related people'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_occurred_on:
+      children:
+        - p4_has_time_span_entity_view_1
+      parent_name: ''
+      weight: 6
+      label: 'Occurred on'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_moved_object:
+      children:
+        - e9_move_map_entity_view_6
+      parent_name: ''
+      weight: 3
+      label: 'Affected object'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_moved_by:
+      children:
+        - e9_move_map_entity_view_5
+        - duplicate_of_p134_continues_entity_view_1
+        - e9_move_map_entity_view_7
+        - e9_move_map_entity_view_8
+        - p16_used_specific_object_entity_view_1
+      parent_name: ''
+      weight: 4
+      label: 'Moved by'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+id: cidoc_entity.e9_move.summary
+targetEntityType: cidoc_entity
+bundle: e9_move
+mode: summary
+content:
+  duplicate_of_p134_continues_entity_view_1:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_1:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_2:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_3:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_4:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_5:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_6:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_7:
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+  e9_move_map_entity_view_8:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  p16_used_specific_object_entity_view_1:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+  p4_has_time_span_entity_view_1:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  p7_took_place_at_map_entity_view_2:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  cidoc_properties: true
+  citation: true
+  content: true
+  duplicate_of_p15_influenced_entity_view_1: true
+  duplicate_of_p15_was_influenced_by_entity_view_1: true
+  internal_name: true
+  p108_produced_by_entity_view_1: true
+  p10_falls_within_entity_view_1: true
+  p10_includes_entity_view_1: true
+  p15_influenced_entity_view_1: true
+  p15_was_influenced_by_entity_view_1: true
+  p9__entity_view_1: true
+  p9_forms_part_of_entity_view_1: true
+  people_entity_view_1: true
+  significance: true
+  user_id: true
