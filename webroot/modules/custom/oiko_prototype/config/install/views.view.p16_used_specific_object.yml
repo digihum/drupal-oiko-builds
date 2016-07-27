@@ -71,7 +71,7 @@ display:
           relationship: range
           group_type: group
           admin_label: ''
-          label: 'Used object'
+          label: ''
           exclude: false
           alter:
             alter_text: false
@@ -104,7 +104,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -254,7 +254,7 @@ display:
         - e6_destruction
         - e7_activity
         - e9_move
-      title: 'Used object'
+      title: 'Used object(s)'
       show_title: 1
     cache_metadata:
       max-age: -1

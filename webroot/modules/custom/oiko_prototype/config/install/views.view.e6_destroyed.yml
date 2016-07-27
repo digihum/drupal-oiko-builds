@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_property.p108_has_produced
+    - cidoc.cidoc_property.p13_destroyed
   module:
     - cidoc
     - eva
-id: p108_produced_object
-label: 'P108 Produced object'
+id: e6_destroyed
+label: 'E6 Destroyed'
 module: views
 description: ''
 tag: ''
@@ -139,7 +139,7 @@ display:
           admin_label: ''
           operator: in
           value:
-            p108_has_produced: p108_has_produced
+            p13_destroyed: p13_destroyed
           group: 1
           exposed: false
           expose:
@@ -248,10 +248,10 @@ display:
       display_extenders: {  }
       entity_type: cidoc_entity
       bundles:
-        - e12_production
         - e21_person
+        - e6_destruction
         - e74_group
-      title: 'Produced objects and artefacts'
+      title: 'Destroyed objects and artefacts'
       show_title: 1
     cache_metadata:
       max-age: -1

@@ -9,7 +9,7 @@ bundle: e22_man_made_object
 mode: default
 content:
   cidoc_properties:
-    weight: 6
+    weight: 7
     settings: {  }
     third_party_settings: {  }
   name:
@@ -20,10 +20,14 @@ content:
       link_to_entity: false
     third_party_settings: {  }
   p108_was_produced_by_entity_view_1:
-    weight: 4
+    weight: 3
     settings: {  }
     third_party_settings: {  }
   p12_present_at_entity_view_1:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  p16_object_used_for_entity_view_1:
     weight: 5
     settings: {  }
     third_party_settings: {  }
@@ -32,7 +36,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   people_entity_view_1:
-    weight: 3
+    weight: 6
     settings: {  }
     third_party_settings: {  }
   significance:

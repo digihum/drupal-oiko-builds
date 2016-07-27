@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_property.p108_has_produced
+    - cidoc.cidoc_property.p16_used_specific_object
   module:
     - cidoc
     - eva
-id: p108_produced_object
-label: 'P108 Produced object'
+id: p16_object_used_for
+label: 'P16 Object used for'
 module: views
 description: ''
 tag: ''
@@ -68,7 +68,7 @@ display:
           id: name
           table: cidoc_entity
           field: name
-          relationship: range
+          relationship: domain
           group_type: group
           admin_label: ''
           label: ''
@@ -134,12 +134,12 @@ display:
           id: property
           table: cidoc_reference
           field: property
-          relationship: reverse__cidoc_reference__domain
+          relationship: reverse__cidoc_reference__range
           group_type: group
           admin_label: ''
           operator: in
           value:
-            p108_has_produced: p108_has_produced
+            p16_used_specific_object: p16_used_specific_object
           group: 1
           exposed: false
           expose:
@@ -175,23 +175,23 @@ display:
       footer: {  }
       empty: {  }
       relationships:
-        reverse__cidoc_reference__domain:
-          id: reverse__cidoc_reference__domain
+        reverse__cidoc_reference__range:
+          id: reverse__cidoc_reference__range
           table: cidoc_entity
-          field: reverse__cidoc_reference__domain
+          field: reverse__cidoc_reference__range
           relationship: none
           group_type: group
-          admin_label: domain
+          admin_label: range
           required: true
           entity_type: cidoc_entity
           plugin_id: entity_reverse
-        range:
-          id: range
-          table: cidoc_reference__range
-          field: range
-          relationship: reverse__cidoc_reference__domain
+        domain:
+          id: domain
+          table: cidoc_reference__domain
+          field: domain
+          relationship: reverse__cidoc_reference__range
           group_type: group
-          admin_label: 'range: CIDOC entity'
+          admin_label: 'domain: CIDOC entity'
           required: true
           plugin_id: standard
       arguments:
@@ -248,10 +248,8 @@ display:
       display_extenders: {  }
       entity_type: cidoc_entity
       bundles:
-        - e12_production
-        - e21_person
-        - e74_group
-      title: 'Produced objects and artefacts'
+        - e22_man_made_object
+      title: 'Used for / in / by'
       show_title: 1
     cache_metadata:
       max-age: -1
