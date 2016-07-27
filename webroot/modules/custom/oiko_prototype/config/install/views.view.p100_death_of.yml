@@ -2,24 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_entity_bundle.e12_production
-    - cidoc.cidoc_entity_bundle.e5_event
-    - cidoc.cidoc_entity_bundle.e66_formation
-    - cidoc.cidoc_entity_bundle.e67_birth
-    - cidoc.cidoc_entity_bundle.e68_dissolution
-    - cidoc.cidoc_entity_bundle.e69_death
-    - cidoc.cidoc_entity_bundle.e6_destruction
-    - cidoc.cidoc_entity_bundle.e7_activity
-    - cidoc.cidoc_entity_bundle.e9_move
-    - cidoc.cidoc_entity_bundle.o1_killing
-    - cidoc.cidoc_entity_bundle.o2_active_dissolution
-    - cidoc.cidoc_entity_bundle.o3_active_destruction
-    - cidoc.cidoc_property.p4_has_time_span
+    - cidoc.cidoc_property.p100_was_death_of
   module:
     - cidoc
     - eva
-id: time_span_directly_linked_events
-label: 'Time span - directly linked events'
+id: p100_death_of
+label: 'P100 Death of'
 module: views
 description: ''
 tag: ''
@@ -58,23 +46,9 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
-        type: mini
+        type: none
         options:
-          items_per_page: 10
           offset: 0
-          id: 0
-          total_pages: null
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          tags:
-            previous: ‹‹
-            next: ››
       style:
         type: default
         options:
@@ -94,7 +68,7 @@ display:
           id: name
           table: cidoc_entity
           field: name
-          relationship: domain
+          relationship: range
           group_type: group
           admin_label: ''
           label: ''
@@ -160,12 +134,12 @@ display:
           id: property
           table: cidoc_reference
           field: property
-          relationship: reverse__cidoc_reference__range
+          relationship: reverse__cidoc_reference__domain
           group_type: group
           admin_label: ''
           operator: in
           value:
-            p4_has_time_span: p4_has_time_span
+            p100_was_death_of: p100_was_death_of
           group: 1
           exposed: false
           expose:
@@ -196,79 +170,28 @@ display:
           entity_type: cidoc_reference
           entity_field: property
           plugin_id: bundle
-        bundle:
-          id: bundle
-          table: cidoc_entity
-          field: bundle
-          relationship: domain
-          group_type: group
-          admin_label: ''
-          operator: in
-          value:
-            e12_production: e12_production
-            e5_event: e5_event
-            e6_destruction: e6_destruction
-            e66_formation: e66_formation
-            e67_birth: e67_birth
-            e68_dissolution: e68_dissolution
-            e69_death: e69_death
-            e7_activity: e7_activity
-            e9_move: e9_move
-            o1_killing: o1_killing
-            o2_active_dissolution: o2_active_dissolution
-            o3_active_destruction: o3_active_destruction
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: bundle
-          plugin_id: bundle
       sorts: {  }
       header: {  }
       footer: {  }
       empty: {  }
       relationships:
-        reverse__cidoc_reference__range:
-          id: reverse__cidoc_reference__range
+        reverse__cidoc_reference__domain:
+          id: reverse__cidoc_reference__domain
           table: cidoc_entity
-          field: reverse__cidoc_reference__range
+          field: reverse__cidoc_reference__domain
           relationship: none
           group_type: group
-          admin_label: range
+          admin_label: domain
           required: true
           entity_type: cidoc_entity
           plugin_id: entity_reverse
-        domain:
-          id: domain
-          table: cidoc_reference__domain
-          field: domain
-          relationship: reverse__cidoc_reference__range
+        range:
+          id: range
+          table: cidoc_reference__range
+          field: range
+          relationship: reverse__cidoc_reference__domain
           group_type: group
-          admin_label: 'domain: CIDOC entity'
+          admin_label: 'range: CIDOC entity'
           required: true
           plugin_id: standard
       arguments:
@@ -315,7 +238,6 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - url.query_args
       tags: {  }
   entity_view_1:
     display_plugin: entity_view
@@ -326,8 +248,9 @@ display:
       display_extenders: {  }
       entity_type: cidoc_entity
       bundles:
-        - e52_time_span
-      title: 'At this time'
+        - e69_death
+        - o1_killing
+      title: Died
       show_title: 1
     cache_metadata:
       max-age: -1
@@ -335,5 +258,4 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - url.query_args
       tags: {  }

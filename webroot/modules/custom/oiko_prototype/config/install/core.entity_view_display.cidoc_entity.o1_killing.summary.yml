@@ -38,6 +38,8 @@ content:
     settings:
       link_to_entity: true
     third_party_settings: {  }
+  p100_death_of_entity_view_1:
+    weight: 10
   p108_has_produced_entity_view_1:
     weight: 10
     settings: {  }
@@ -50,10 +52,16 @@ content:
     weight: 5
     settings: {  }
     third_party_settings: {  }
+  p12_occurred_in_the_presence_of_entity_view_1:
+    weight: 10
   p14_carried_out_by_entity_view_1:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+  p17_motivated_entity_view_1:
+    weight: 10
+  p17_was_motivated_by_entity_view_1:
+    weight: 10
   p4_has_time_span_entity_view_1:
     weight: 3
     settings: {  }

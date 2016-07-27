@@ -14,22 +14,32 @@ third_party_settings:
       children:
         - events_at_this_location_entity_view_1
       parent_name: ''
-      weight: 2
+      weight: 3
       label: 'At this location'
-      format_type: fieldset
+      format_type: html_element
       format_settings:
-        description: ''
+        element: div
+        show_label: false
+        label_element: h3
+        effect: none
+        speed: fast
+        attributes: ''
         classes: ''
         id: ''
     group_people:
       children:
         - people_entity_view_1
       parent_name: ''
-      weight: 3
+      weight: 4
       label: 'Related people'
-      format_type: fieldset
+      format_type: html_element
       format_settings:
-        description: ''
+        element: div
+        show_label: false
+        label_element: h3
+        effect: none
+        speed: fast
+        attributes: ''
         classes: ''
         id: ''
 id: cidoc_entity.e53_place.default
@@ -47,7 +57,7 @@ content:
     third_party_settings: {  }
   field_geodata:
     type: leaflet_formatter_default
-    weight: 1
+    weight: 2
     label: hidden
     settings:
       leaflet_map: 'Ancient Terrain'
@@ -85,10 +95,16 @@ content:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+  significance:
+    type: entity_reference_label
+    weight: 1
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
 hidden:
   citation: true
   content: true
   field_pleiades_uri: true
   internal_name: true
-  significance: true
   user_id: true

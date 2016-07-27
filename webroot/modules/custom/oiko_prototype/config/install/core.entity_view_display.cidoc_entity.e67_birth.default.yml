@@ -11,7 +11,7 @@ third_party_settings:
       children:
         - people_entity_view_1
       parent_name: ''
-      weight: 7
+      weight: 8
       label: 'Related people'
       format_type: html_element
       format_settings:
@@ -33,11 +33,11 @@ content:
     settings: {  }
     third_party_settings: {  }
   e67_birth_child_entity_view_1:
-    weight: 3
+    weight: 4
     settings: {  }
     third_party_settings: {  }
   e67_birth_parents_entity_view_1:
-    weight: 4
+    weight: 5
     settings: {  }
     third_party_settings: {  }
   name:
@@ -56,40 +56,63 @@ content:
     settings: {  }
     third_party_settings: {  }
   p10_falls_within_entity_view_1:
-    weight: 6
+    weight: 7
     settings: {  }
     third_party_settings: {  }
   p11_has_participant_entity_view_1:
-    weight: 8
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p12_occurred_in_the_presence_of_entity_view_1:
+    weight: 11
     settings: {  }
     third_party_settings: {  }
   p14_carried_out_by_entity_view_1:
-    weight: 11
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+  p15_influenced_entity_view_1:
+    weight: 12
     settings: {  }
     third_party_settings: {  }
   p16_used_specific_object_entity_view_1:
     weight: 9
     settings: {  }
     third_party_settings: {  }
+  p17_motivated_entity_view_1:
+    weight: 13
+    settings: {  }
+    third_party_settings: {  }
+  p17_was_motivated_by_entity_view_1:
+    weight: 14
+    settings: {  }
+    third_party_settings: {  }
   p4_has_time_span_entity_view_1:
-    weight: 5
+    weight: 6
     settings: {  }
     third_party_settings: {  }
   p7_took_place_at_map_entity_view_1:
-    weight: 1
-    settings: {  }
-    third_party_settings: {  }
-  p7_took_place_at_map_entity_view_2:
     weight: 2
     settings: {  }
     third_party_settings: {  }
+  p7_took_place_at_map_entity_view_2:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
   p9_forms_part_of_entity_view_1:
-    weight: 10
+    weight: 15
     settings: {  }
     third_party_settings: {  }
   people_entity_view_1:
     weight: 5
     settings: {  }
+    third_party_settings: {  }
+  significance:
+    type: entity_reference_label
+    weight: 1
+    label: above
+    settings:
+      link: false
     third_party_settings: {  }
 hidden:
   cidoc_properties: true
@@ -99,8 +122,6 @@ hidden:
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
   p10_includes_entity_view_1: true
-  p15_influenced_entity_view_1: true
   p15_was_influenced_by_entity_view_1: true
   p9__entity_view_1: true
-  significance: true
   user_id: true

@@ -14,9 +14,14 @@ third_party_settings:
       parent_name: ''
       weight: 3
       label: 'Related people'
-      format_type: fieldset
+      format_type: html_element
       format_settings:
-        description: ''
+        element: div
+        show_label: false
+        label_element: h3
+        effect: none
+        speed: fast
+        attributes: ''
         classes: ''
         id: ''
     group_at_this_time:
@@ -25,20 +30,31 @@ third_party_settings:
       parent_name: ''
       weight: 4
       label: 'At this time'
-      format_type: fieldset
+      format_type: html_element
       format_settings:
-        description: ''
-        classes: ''
+        label: 'At this time'
+        element: div
+        show_label: false
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
         id: ''
+        classes: ''
     group_in_this_period:
       children:
         - p10_falls_within_entity_view_1
       parent_name: ''
       weight: 2
       label: 'In this period'
-      format_type: fieldset
+      format_type: html_element
       format_settings:
-        description: ''
+        element: div
+        show_label: false
+        label_element: h3
+        effect: none
+        speed: fast
+        attributes: ''
         classes: ''
         id: ''
     group_in_period:
@@ -47,9 +63,14 @@ third_party_settings:
       parent_name: ''
       weight: 5
       label: Period
-      format_type: fieldset
+      format_type: html_element
       format_settings:
-        description: ''
+        element: div
+        show_label: false
+        label_element: h3
+        effect: none
+        speed: fast
+        attributes: ''
         classes: ''
         id: ''
 id: cidoc_entity.e52_time_span.default
@@ -58,7 +79,11 @@ bundle: e52_time_span
 mode: default
 content:
   cidoc_properties:
-    weight: 7
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  duplicate_of_p15_influenced_entity_view_1:
+    weight: 6
     settings: {  }
     third_party_settings: {  }
   internal_name:
@@ -77,6 +102,18 @@ content:
     third_party_settings: {  }
   p10_falls_within_entity_view_1:
     weight: 2
+    settings: {  }
+    third_party_settings: {  }
+  p10_includes_entity_view_1:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+  p15_influenced_entity_view_1:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+  p9__entity_view_1:
+    weight: 9
     settings: {  }
     third_party_settings: {  }
   people_entity_view_1:
