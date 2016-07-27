@@ -16,6 +16,8 @@ use Drupal\Core\Template\Attribute;
 function oiko_prototype_field_group_pre_render(&$element, &$group, &$rendering_object) {
   if ($rendering_object['#entity_type'] == 'cidoc_entity') {
     $existing_attrs = $element['#attributes'];
-    $existing_attrs->addClass('cidoc-field-group');
+    if (is_object($existing_attrs)) {
+      $existing_attrs->addClass('cidoc-field-group');
+    }
   }
 }
