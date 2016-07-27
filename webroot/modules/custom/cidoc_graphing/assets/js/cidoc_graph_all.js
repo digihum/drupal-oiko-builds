@@ -92,6 +92,19 @@ function setup() {
   });
   nodes = linkedNodes;
 
+  // Clear out links that don't link to any node.
+  var nodeids = [];
+  jQuery.each(nodes, function(index, node) {
+    nodeids.push(node.name);
+  });
+  var linkedLinks = [];
+  jQuery.each(links, function(index, link) {
+    if (nodeids.indexOf(link.source) != -1 && nodeids.indexOf(link.target) != -1) {
+      linkedLinks.push(link);
+    }
+  });
+  links = linkedLinks;
+
   /**
    * Re-jig our links so that they reference the node array indices.
    */

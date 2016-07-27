@@ -231,6 +231,21 @@
         "installation-source": "source"
     },
     {
+        "name": "Leaflet/Leaflet.draw",
+        "version": "0.3.0",
+        "version_normalized": "0.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Leaflet/Leaflet.draw",
+            "reference": "v0.3.0"
+        },
+        "require": {
+            "composer/installers": "^1.0.21"
+        },
+        "type": "drupal-library",
+        "installation-source": "source"
+    },
+    {
         "name": "oomphinc/composer-installers-extender",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -3500,11 +3515,11 @@
     },
     {
         "name": "drupal/leaflet_widget",
-        "version": "dev-8.x-1.x",
-        "version_normalized": "dev-8.x-1.x",
+        "version": "dev-8.x-2.x",
+        "version_normalized": "dev-8.x-2.x",
         "source": {
             "type": "git",
-            "url": "https://github.com/bforchhammer/leaflet_widget.git",
+            "url": "https://github.com/computerminds/leaflet_widget.git",
             "reference": "origin/8.x-1.x"
         },
         "require": {

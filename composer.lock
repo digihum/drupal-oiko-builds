@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "95418a045887e6a29a2cf61d9035d2b8",
-    "content-hash": "58df2430abebca2d49e841341973ae29",
+    "hash": "0e84d5368135c5824c261a12f9ae435b",
+    "content-hash": "38d4c55551125cf5963c95257a02c88c",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -14,6 +14,19 @@
                 "type": "git",
                 "url": "https://github.com/Leaflet/Leaflet.git",
                 "reference": "v0.7.7"
+            },
+            "require": {
+                "composer/installers": "^1.0.21"
+            },
+            "type": "drupal-library"
+        },
+        {
+            "name": "Leaflet/Leaflet.draw",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Leaflet/Leaflet.draw",
+                "reference": "v0.3.0"
             },
             "require": {
                 "composer/installers": "^1.0.21"
@@ -1756,17 +1769,17 @@
         },
         {
             "name": "drupal/leaflet_widget",
-            "version": "dev-8.x-1.x",
+            "version": "dev-8.x-2.x",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bforchhammer/leaflet_widget.git",
+                "url": "https://github.com/computerminds/leaflet_widget.git",
                 "reference": "origin/8.x-1.x"
             },
             "require": {
                 "composer/installers": "^1.0.21"
             },
             "type": "drupal-module",
-            "time": "2016-05-02 15:43:10"
+            "time": "2016-07-27 12:06:31"
         },
         {
             "name": "drupal/metatag",
