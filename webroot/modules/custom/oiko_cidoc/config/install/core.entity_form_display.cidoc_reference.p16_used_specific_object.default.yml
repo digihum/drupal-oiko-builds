@@ -4,6 +4,7 @@ dependencies:
   config:
     - cidoc.cidoc_property.p16_used_specific_object
     - field.field.cidoc_reference.p16_used_specific_object.domain
+    - field.field.cidoc_reference.p16_used_specific_object.field_mode_of_use
     - field.field.cidoc_reference.p16_used_specific_object.range
   module:
     - oiko_citation
@@ -31,6 +32,14 @@ content:
       size: '60'
       placeholder: ''
     third_party_settings: {  }
+  field_mode_of_use:
+    weight: 13
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
   langcode:
     type: language_select
     weight: 10
