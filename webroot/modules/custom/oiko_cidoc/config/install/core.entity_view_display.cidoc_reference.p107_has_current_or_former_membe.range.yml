@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p107_has_current_or_former_membe
+    - core.entity_view_mode.cidoc_reference.range
+    - field.field.cidoc_reference.p107_has_current_or_former_membe.domain
+id: cidoc_reference.p107_has_current_or_former_membe.range
+targetEntityType: cidoc_reference
+bundle: p107_has_current_or_former_membe
+mode: range
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+hidden:
+  citation: true
+  property: true
+  user_id: true
