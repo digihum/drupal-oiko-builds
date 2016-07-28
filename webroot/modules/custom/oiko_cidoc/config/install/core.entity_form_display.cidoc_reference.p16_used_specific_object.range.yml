@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_property.p16_used_specific_object
     - core.entity_form_mode.cidoc_reference.range
     - field.field.cidoc_reference.p16_used_specific_object.domain
+    - field.field.cidoc_reference.p16_used_specific_object.field_mode_of_use
     - field.field.cidoc_reference.p16_used_specific_object.range
   module:
     - oiko_citation
@@ -16,7 +17,7 @@ mode: range
 content:
   citation:
     type: entity_reference_citations
-    weight: 1
+    weight: 2
     settings:
       title: Citation
       title_plural: Citations
@@ -28,9 +29,17 @@ content:
     type: squid_entity_reference_autocomplete_tags
     settings:
       match_operator: STARTS_WITH
-      size: 60
+      size: '40'
       placeholder: 'Start typing to find a match or create new entity...'
     weight: 0
+    third_party_settings: {  }
+  field_mode_of_use:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 1
+    settings:
+      match_operator: CONTAINS
+      size: '20'
+      placeholder: 'Typing Tool, Storage Medium, etc.'
     third_party_settings: {  }
 hidden:
   langcode: true

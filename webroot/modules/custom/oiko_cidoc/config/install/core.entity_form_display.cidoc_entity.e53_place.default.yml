@@ -4,9 +4,11 @@ dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e53_place
     - field.field.cidoc_entity.e53_place.field_geodata
+    - field.field.cidoc_entity.e53_place.field_location_lookup
     - field.field.cidoc_entity.e53_place.field_pleiades_uri
   module:
     - field_group
+    - geocoder_autocomplete
     - leaflet_widget
     - link
     - paragraphs
@@ -68,6 +70,7 @@ third_party_settings:
         id: ''
     group_appellations:
       children:
+        - field_location_lookup
         - field_pleiades_uri
       parent_name: group_main_details
       weight: 5
@@ -134,8 +137,16 @@ content:
         readonly: 0
     third_party_settings: {  }
     type: leaflet_widget
+  field_location_lookup:
+    weight: 22
+    settings:
+      size: '60'
+      placeholder: 'Start typing to find a location'
+      autocomplete_route_name: geocoder_autocomplete.autocomplete
+    third_party_settings: {  }
+    type: geocoder_autocomplete
   field_pleiades_uri:
-    weight: 21
+    weight: 23
     settings:
       placeholder_url: ''
       placeholder_title: ''

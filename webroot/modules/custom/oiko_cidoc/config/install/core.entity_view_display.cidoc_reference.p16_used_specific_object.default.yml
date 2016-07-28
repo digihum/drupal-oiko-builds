@@ -4,6 +4,7 @@ dependencies:
   config:
     - cidoc.cidoc_property.p16_used_specific_object
     - field.field.cidoc_reference.p16_used_specific_object.domain
+    - field.field.cidoc_reference.p16_used_specific_object.field_mode_of_use
     - field.field.cidoc_reference.p16_used_specific_object.range
 id: cidoc_reference.p16_used_specific_object.default
 targetEntityType: cidoc_reference
@@ -16,6 +17,13 @@ content:
     weight: -3
     settings: {  }
     third_party_settings: {  }
+  field_mode_of_use:
+    weight: -1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
   property:
     label: inline
     type: entity_reference_label

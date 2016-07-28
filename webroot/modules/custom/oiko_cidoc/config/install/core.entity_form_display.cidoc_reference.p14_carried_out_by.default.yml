@@ -4,6 +4,7 @@ dependencies:
   config:
     - cidoc.cidoc_property.p14_carried_out_by
     - field.field.cidoc_reference.p14_carried_out_by.domain
+    - field.field.cidoc_reference.p14_carried_out_by.field_in_the_role_of
     - field.field.cidoc_reference.p14_carried_out_by.range
   module:
     - oiko_citation
@@ -25,20 +26,28 @@ content:
     third_party_settings: {  }
   domain:
     type: squid_entity_reference_autocomplete_tags
-    weight: 11
+    weight: 3
     settings:
       match_operator: CONTAINS
       size: '60'
       placeholder: ''
     third_party_settings: {  }
+  field_in_the_role_of:
+    weight: 0
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
   langcode:
     type: language_select
-    weight: 10
+    weight: 2
     settings: {  }
     third_party_settings: {  }
   range:
     type: squid_entity_reference_autocomplete_tags
-    weight: 12
+    weight: 4
     settings:
       match_operator: CONTAINS
       size: '60'

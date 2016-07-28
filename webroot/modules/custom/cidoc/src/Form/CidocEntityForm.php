@@ -192,7 +192,7 @@ class CidocEntityForm extends ContentEntityForm {
 
               $reference_display->buildForm($reference, $form[$element_key]['references'][$reference_id]['subform'], $form_state);
 
-              foreach (Element::children($form[$element_key]['references'][$reference_id]['subform']) as $key) {
+              foreach (Element::children($form[$element_key]['references'][$reference_id]['subform'], TRUE) as $key) {
                 // Recursively hide the title properties in the fields on this
                 // element, use them as table headers instead.
                 $title = $this->recursivelyFindAndHideElementTitle($form[$element_key]['references'][$reference_id]['subform'][$key]);
@@ -309,7 +309,7 @@ class CidocEntityForm extends ContentEntityForm {
    * Find a title somewhere inside the supplied element, hide and return it.
    */
   protected function recursivelyFindAndHideElementTitle(&$element) {
-    if (empty($element['#title'])) {
+    if (empty($element['#title']) || empty($element['#type'])) {
       foreach (Element::children($element) as $key) {
         if ($title = $this->recursivelyFindAndHideElementTitle($element[$key])) {
           return $title;

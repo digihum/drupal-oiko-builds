@@ -6,3 +6,12 @@ url-lookup:
     - core/jquery
     - core/drupalSettings
     - core/jquery.once
+
+geocoding-lookup:
+  version: 1.x
+  js:
+    js/geocoding-lookup.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings
+    - core/jquery.once

@@ -48,6 +48,7 @@ return array(
     'OomphInc\\ComposerInstallersExtender\\' => array($vendorDir . '/oomphinc/composer-installers-extender/src'),
     'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
     'League\\Csv\\' => array($vendorDir . '/league/csv/src'),
+    'Ivory\\HttpAdapter\\' => array($vendorDir . '/egeloen/http-adapter/src'),
     'Humbug\\SelfUpdate\\' => array($vendorDir . '/padraic/phar-updater/src'),
     'Humbug\\' => array($vendorDir . '/padraic/humbug_get_contents/src/Humbug'),
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),

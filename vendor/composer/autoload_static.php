@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd5a7956d29f8bc2fe3d185bd79d22402
+class ComposerStaticInit35ab58b783dfbcab4728e8c92323c6e9
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -18,6 +18,7 @@ class ComposerStaticInitd5a7956d29f8bc2fe3d185bd79d22402
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        'a16312f9300fed4a097923eacb0ba814' => __DIR__ . '/..' . '/igorw/get-in/src/get_in.php',
         'd9d39f82a605ebe5918f683dd402334c' => __DIR__ . '/..' . '/padraic/humbug_get_contents/src/function.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
@@ -98,6 +99,10 @@ class ComposerStaticInitd5a7956d29f8bc2fe3d185bd79d22402
         'L' => 
         array (
             'League\\Csv\\' => 11,
+        ),
+        'I' => 
+        array (
+            'Ivory\\HttpAdapter\\' => 18,
         ),
         'H' => 
         array (
@@ -303,6 +308,10 @@ class ComposerStaticInitd5a7956d29f8bc2fe3d185bd79d22402
         array (
             0 => __DIR__ . '/..' . '/league/csv/src',
         ),
+        'Ivory\\HttpAdapter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/egeloen/http-adapter/src',
+        ),
         'Humbug\\SelfUpdate\\' => 
         array (
             0 => __DIR__ . '/..' . '/padraic/phar-updater/src',
@@ -435,6 +444,13 @@ class ComposerStaticInitd5a7956d29f8bc2fe3d185bd79d22402
                 0 => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src',
             ),
         ),
+        'G' => 
+        array (
+            'Geocoder' => 
+            array (
+                0 => __DIR__ . '/..' . '/willdurand/geocoder/src',
+            ),
+        ),
         'E' => 
         array (
             'Egulias\\' => 
@@ -516,11 +532,11 @@ class ComposerStaticInitd5a7956d29f8bc2fe3d185bd79d22402
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd5a7956d29f8bc2fe3d185bd79d22402::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd5a7956d29f8bc2fe3d185bd79d22402::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitd5a7956d29f8bc2fe3d185bd79d22402::$prefixesPsr0;
-            $loader->fallbackDirsPsr0 = ComposerStaticInitd5a7956d29f8bc2fe3d185bd79d22402::$fallbackDirsPsr0;
-            $loader->classMap = ComposerStaticInitd5a7956d29f8bc2fe3d185bd79d22402::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit35ab58b783dfbcab4728e8c92323c6e9::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit35ab58b783dfbcab4728e8c92323c6e9::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit35ab58b783dfbcab4728e8c92323c6e9::$prefixesPsr0;
+            $loader->fallbackDirsPsr0 = ComposerStaticInit35ab58b783dfbcab4728e8c92323c6e9::$fallbackDirsPsr0;
+            $loader->classMap = ComposerStaticInit35ab58b783dfbcab4728e8c92323c6e9::$classMap;
 
         }, null, ClassLoader::class);
     }
