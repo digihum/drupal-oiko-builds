@@ -16,9 +16,11 @@ content:
     settings:
       link_to_entity: true
     third_party_settings: {  }
-  p108_has_produced_entity_view_1:
+  p12_occurred_in_the_presence_of_entity_view_1:
     weight: 10
-  p108_produced_by_entity_view_1:
+  p17_motivated_entity_view_1:
+    weight: 10
+  p17_was_motivated_by_entity_view_1:
     weight: 10
   p4_has_time_span_entity_view_1:
     weight: 1
@@ -36,6 +38,8 @@ hidden:
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
+  p108_has_produced_entity_view_1: true
+  p108_produced_by_entity_view_1: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p11_has_participant_entity_view_1: true

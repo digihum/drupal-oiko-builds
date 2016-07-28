@@ -11,7 +11,7 @@ third_party_settings:
       children:
         - p10_contains_entity_view_1
       parent_name: ''
-      weight: 2
+      weight: 3
       label: 'In this period'
       format_type: fieldset
       format_settings:
@@ -22,7 +22,7 @@ third_party_settings:
       children:
         - p4_has_time_span_entity_view_1
       parent_name: ''
-      weight: 3
+      weight: 4
       label: 'Occurred during'
       format_type: fieldset
       format_settings:
@@ -33,7 +33,7 @@ third_party_settings:
       children:
         - people_entity_view_1
       parent_name: ''
-      weight: 4
+      weight: 5
       label: 'Related people'
       format_type: fieldset
       format_settings:
@@ -46,13 +46,13 @@ bundle: e4_period
 mode: default
 content:
   cidoc_properties:
-    weight: 6
+    weight: 8
     settings: {  }
     third_party_settings: {  }
   internal_name:
     label: inline
     type: string
-    weight: 1
+    weight: 2
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -71,12 +71,26 @@ content:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+  p9__entity_view_1:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  p9_forms_part_of_entity_view_1:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
   people_entity_view_1:
     weight: 5
     settings: {  }
     third_party_settings: {  }
+  significance:
+    type: entity_reference_label
+    weight: 1
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
 hidden:
   citation: true
   content: true
-  significance: true
   user_id: true

@@ -327,6 +327,8 @@ display:
       entity_type: cidoc_entity
       bundles:
         - e52_time_span
+      title: 'At this time'
+      show_title: 1
     cache_metadata:
       max-age: -1
       contexts:

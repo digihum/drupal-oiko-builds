@@ -40,3 +40,13 @@ function oiko_profile_update_8102() {
   );
   \Drupal::service('module_installer')->install($modules);
 }
+
+/**
+ * Implements hook_update_N().
+ */
+function oiko_profile_update_8103() {
+  $config_factory = Drupal::configFactory();
+  $config_factory->getEditable('system.site')
+    ->set('page.front', '/prototype/map-of-events')
+    ->save();
+}

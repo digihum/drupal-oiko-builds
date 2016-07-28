@@ -8,7 +8,6 @@
 namespace Drupal\field_group\Plugin\field_group\FieldGroupFormatter;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Template\Attribute;
 use Drupal\field_group\FieldGroupFormatterBase;
@@ -18,7 +17,7 @@ use Drupal\field_group\FieldGroupFormatterBase;
  *
  * @FieldGroupFormatter(
  *   id = "html_element",
- *   label = @Translation("Html element"),
+ *   label = @Translation("HTML element"),
  *   description = @Translation("This fieldgroup renders the inner content in a HTML element with classes and attributes."),
  *   supported_contexts = {
  *     "form",
@@ -73,7 +72,7 @@ class HtmlElement extends FieldGroupFormatterBase {
     $element['#attributes'] = $element_attributes;
     if ($this->getSetting('show_label')) {
       $element['#title_element'] = $this->getSetting('label_element');
-      $element['#title'] = SafeMarkup::checkPlain($this->t($this->getLabel()));
+      $element['#title'] = Html::escape($this->t($this->getLabel()));
     }
 
     $form_state = new FormState();
@@ -101,6 +100,9 @@ class HtmlElement extends FieldGroupFormatterBase {
       '#options' => array(0 => $this->t('No'), 1 => $this->t('Yes')),
       '#default_value' => $this->getSetting('show_label'),
       '#weight' => 2,
+      '#attributes' => array(
+        'data-fieldgroup-selector' => 'show_label'
+      ),
     );
 
     $form['label_element'] = array(
@@ -108,6 +110,11 @@ class HtmlElement extends FieldGroupFormatterBase {
       '#type' => 'textfield',
       '#default_value' => $this->getSetting('label_element'),
       '#weight' => 3,
+      '#states' => array(
+        'visible' => array(
+          ':input[data-fieldgroup-selector="show_label"]' => array('value' => 1),
+        ),
+      ),
     );
 
     $form['attributes'] = array(
@@ -128,6 +135,9 @@ class HtmlElement extends FieldGroupFormatterBase {
       ),
       '#default_value' => $this->getSetting('effect'),
       '#weight' => 5,
+      '#attributes' => array(
+        'data-fieldgroup-selector' => 'effect'
+      ),
     );
 
     $form['speed'] = array(
@@ -136,6 +146,11 @@ class HtmlElement extends FieldGroupFormatterBase {
       '#options' => array('slow' => $this->t('Slow'), 'fast' => $this->t('Fast')),
       '#default_value' => $this->getSetting('speed'),
       '#weight' => 6,
+      '#states' => array(
+        '!visible' => array(
+          ':input[data-fieldgroup-selector="effect"]' => array('value' => 'none'),
+        ),
+      ),
     );
 
     return $form;

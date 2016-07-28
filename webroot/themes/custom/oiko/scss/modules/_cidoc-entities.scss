@@ -1,0 +1,15 @@
+.cidoc-field-group {
+  @include span(12 of 12);
+  
+  margin-bottom: 1em;
+}
+
+.fg-lifespan {
+  @include span(12 of 12);
+  
+  padding: 1em 0;
+  border-bottom: 2px solid $black;
+}
+.fg-lifespan > div {
+  @include span(6 of 12);
+}

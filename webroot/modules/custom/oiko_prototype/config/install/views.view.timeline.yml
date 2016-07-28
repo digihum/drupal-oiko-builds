@@ -6,6 +6,7 @@ dependencies:
     - field.storage.cidoc_entity.field_date
   module:
     - cidoc
+    - edtf
 id: timeline
 label: Timeline
 module: views
