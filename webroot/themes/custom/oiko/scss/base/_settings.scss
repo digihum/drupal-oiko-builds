@@ -1,0 +1,247 @@
+// Colours
+// --------------
+
+// Palette function,
+@function palette($palette, $tone: 'base') {
+  @return map-get(map-get($palettes, $palette), $tone);
+}
+$palettes: (
+        black: (
+                dark: #000,
+                base: #30302F,
+                light: #212121,
+        ),
+        white: (
+                base: #FFF,
+        ),
+        grey: (
+                base: #3D3D3D,
+                light: #F4F4F4,
+        ),
+        tan : (
+                base: #FE734A,
+        ),
+        rust: (
+                base: #A933OE,
+        ),
+        aqua: (
+                mid-dark: #ADD2D9,
+                base: #57F8EE,
+                light: #B7FBF8,
+                extra-light: #F6FDFF,
+        ),
+        turquoise: (
+                base: #9AB2B9,
+        ),
+        apple: (
+                base: #EDEFC4,
+        ),
+        satin: (
+                base: #D4C5C4,
+        ),
+);
+
+// Global foundation settings
+// ---------
+
+$global-font-size: 16px;
+$max-width: 1220px;
+$global-width: rem-calc($max-width);
+$global-lineheight: 1.5;
+$foundation-palette: (
+        primary: palette(black),
+        secondary: #777,
+        success: #3adb76,
+        warning: #ffae00,
+        alert: #ec5840,
+);
+$light-gray: palette(grey, light);
+$medium-gray: palette(grey);
+$dark-gray: palette(grey, dark);
+$black: palette(black);
+$white: palette(white);
+$body-background: palette(white);
+$body-font-color: palette(black, dark);
+$body-font-family: 'Alegreya Sans', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+$body-antialiased: true;
+$global-margin: rem-calc(25);
+$global-padding: rem-calc(25);
+$global-weight-normal: normal;
+$global-weight-bold: bold;
+$global-radius: 0;
+$global-text-direction: ltr;
+$global-flexbox: false;
+$print-transparent-backgrounds: true;
+
+
+// Breakpoints
+// --------------
+
+// The foundation format:
+$breakpoints: (
+        xs: 0,
+        s: 420px,
+        m: 640px,
+        l: 800px,
+        xl: 1025px,
+  // The point that we start to get margin around our default grid
+  // container.
+        xxl: $max-width + 20px,
+);
+$breakpoint-classes: (s m l);
+
+// Push the same $breakpoints map into 2 lists for breakpoint slicer.
+$slicer-breakpoints: ();
+$slicer-breakpoint-names: ();
+@each $key, $val in $breakpoints {
+  $slicer-breakpoint-names: append($slicer-breakpoint-names, $key);
+  $slicer-breakpoints: append($slicer-breakpoints, $val);
+}
+
+// This will determine the point that we switch from 'mobile' view to 'tablet/desktop'.
+$layout-switch: 'm';
+
+// Example breakpoint-slicer mixin usage:
+// (see https://github.com/lolmaus/breakpoint-slicer for full docs)
+//
+// Breakpoint:   0                 400px     600px     800px       1050px
+//               ├───────────────────┼─────────┼─────────┼───────────┼─────────>
+// Slice #:                xs        ·    s         m          l     ·    xl
+//               ·                   ·         ·         ·           ·
+//               ·                   ·         ·  at(m)  ·           ·
+//               ·                   ·         ├─────────┤           ·
+//               ·                   ·         ·         ·           ·
+//               ·                   ·         · from(m) ·           ·
+//               ·                   ·         ├───────────────────────────────>
+//               ·                   ·                   ·           ·
+//               ·                   ·            to(m)  ·           ·
+//               ├───────────────────────────────────────┤           ·
+//                                   ·                               ·
+//                                   ·         between(s, l)         ·
+//                                   ├───────────────────────────────┤
+
+// The grid
+// ------------------
+// We're going to be using susy, not the foundation grid.
+// These are just global default settings. Do feel free to use nested() etc
+// for creating grid contexts on the fly.
+$susy: (
+        columns: 12,  // The number of columns in your grid
+        gutters: 1/4, // The size of a gutter in relation to a single column
+        gutter-position: split,
+        container: $max-width,
+);
+
+
+// Base Typography
+// ------------------
+
+// I went through the PSD's and visually compared pt font sizes with in-browser
+// px sizes, and came up with the following 'best matches'
+// 36pt -> 38px
+// 24pt -> 25px
+// 18pt -> 19px
+// 16pt -> 17px
+// 14pt -> 14px
+// 12pt -> 12px
+
+$header-font-family: $body-font-family;
+$header-font-weight: $global-weight-normal;
+$header-font-style: normal;
+$font-family-monospace: Consolas, 'Liberation Mono', Courier, monospace;
+// We're changing base font size on mobile, so we need a custom map so we can do
+// appropriate rem-calcs per breakpoint.
+$base-font-sizes: (
+        xs: 12px,
+        m: $global-font-size,
+);
+$header-sizes: (
+        xs: (
+                'h1': 25,
+                'h2': 25,
+                'h3': 17,
+                'h4': 14,
+                'h5': 14,
+                'h6': 14,
+        ),
+        m: (
+                'h1': 38,
+                'h2': 38,
+                'h3': 25,
+                'h4': 19,
+                'h5': 19,
+                'h6': 19,
+        ),
+);
+$header-color: inherit;
+$header-lineheight: 1.4;
+$header-margin-bottom: 0.5rem;
+$header-text-rendering: optimizeLegibility;
+$small-font-size: 80%;
+$header-small-font-color: $medium-gray;
+$paragraph-lineheight: 1.6;
+$paragraph-margin-bottom: 1rem;
+$paragraph-text-rendering: optimizeLegibility;
+$code-color: $black;
+$code-font-family: $font-family-monospace;
+$code-font-weight: $global-weight-normal;
+$code-background: $light-gray;
+$code-border: 1px solid $medium-gray;
+$code-padding: rem-calc(2 5 1);
+$anchor-color: inherit;
+$anchor-color-hover: palette(tan);
+$anchor-text-decoration: underline;
+$anchor-text-decoration-hover: underline;
+$hr-width: $global-width;
+$hr-border: 1px solid $medium-gray;
+$hr-margin: rem-calc(20) auto;
+$list-lineheight: $paragraph-lineheight;
+$list-margin-bottom: $paragraph-margin-bottom;
+$list-style-type: disc;
+$list-style-position: outside;
+$list-side-margin: 1.25rem;
+$list-nested-side-margin: 1.25rem;
+$defnlist-margin-bottom: 1rem;
+$defnlist-term-weight: $global-weight-bold;
+$defnlist-term-margin-bottom: 0.3rem;
+$blockquote-color: $dark-gray;
+$blockquote-padding: rem-calc(9 20 0 19);
+$blockquote-border: 1px solid $medium-gray;
+$cite-font-size: rem-calc(13);
+$cite-color: $dark-gray;
+$keystroke-font: $font-family-monospace;
+$keystroke-color: $black;
+$keystroke-background: $light-gray;
+$keystroke-padding: rem-calc(2 4 0);
+$keystroke-radius: $global-radius;
+$abbr-underline: 1px dotted $black;
+$breadcrumbs-margin: $global-margin 0;
+$breadcrumbs-item-font-size: rem-calc(14);
+$breadcrumbs-item-color: palette(rust);
+$breadcrumbs-item-color-current: palette(tan);
+$breadcrumbs-item-slash: false;
+$tab-item-font-size: rem-calc(14);
+$tab-item-background-hover: $light-gray;
+
+// Forms
+// ---------
+
+$form-spacing: rem-calc(18);
+$input-font-size: rem-calc(16);
+$input-border: 2px solid palette(grey, mid-light);
+$input-border-focus: 2px solid palette(grey, mid-light);
+$input-placeholder-color: palette(grey, mid-dark);
+
+// Buttons
+// ------------------
+
+$close-button-size: 50px;
+$button-fill: hollow;
+$button-color: $black;
+$button-padding: 0.85em 3em;
+$button-sizes: (
+        tiny: 0.6rem,
+        small: 0.75rem,
+        default: rem-calc(14),
+        large: 1.25rem,
+);

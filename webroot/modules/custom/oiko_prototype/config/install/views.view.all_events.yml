@@ -77,7 +77,7 @@ display:
           name_field: nothing
           description_field: nothing
           map: 'Ancient Terrain'
-          height: '600'
+          height: '800'
           icon:
             iconUrl: ''
             shadowUrl: ''
@@ -613,20 +613,7 @@ display:
           plugin_id: bundle
       sorts: {  }
       title: 'All events'
-      header:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          empty: false
-          tokenize: false
-          content:
-            value: 'This is a simple map of all events in the system, with their associated locations.'
-            format: basic_html
-          plugin_id: text
+      header: {  }
       footer: {  }
       empty: {  }
       relationships:

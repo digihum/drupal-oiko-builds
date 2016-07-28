@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * Implements theme_preprocess().
+ * 
+ * @param $variables
+ * @param $hook
+ * @param $info
+ */
+function oiko_preprocess(&$variables, $hook, $info) {
+  if ($hook == "eva_display_entity_view") {
+    // Make our views titles actual titles.
+    $variables['title_prefix']['#markup'] = '<h3>';
+    $variables['title_suffix']['#markup'] = '</h3>';
+    
+    // Give our EVA views a distinctive class so we can style them later. 
+    $variables['attributes']['class'][] = 'eva_display_entity_view';
+  }
+}

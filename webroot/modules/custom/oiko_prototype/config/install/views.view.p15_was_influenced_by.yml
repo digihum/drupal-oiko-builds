@@ -249,6 +249,8 @@ display:
       entity_type: cidoc_entity
       bundles:
         - e7_activity
+      title: 'Influenced by'
+      show_title: 1
     cache_metadata:
       max-age: -1
       contexts:

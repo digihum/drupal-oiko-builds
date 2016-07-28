@@ -223,6 +223,8 @@ display:
       bundles:
         - e21_person
         - e74_group
+      title: 'Also known as'
+      show_title: 1
     cache_metadata:
       max-age: -1
       contexts:

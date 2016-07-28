@@ -265,6 +265,8 @@ display:
       bundles:
         - e21_person
         - e74_group
+      title: 'Participated in'
+      show_title: 1
     cache_metadata:
       max-age: -1
       contexts:
