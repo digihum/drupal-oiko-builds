@@ -3,6 +3,13 @@
 /**
  * Implements hook_form_FORM_ID_alter().
  */
+function oiko_pleiades_form_cidoc_entity_e53_place_form_alter(&$form, &$form_state, $form_id) {
+  oiko_pleiades_form_cidoc_entity_e53_place_edit_form_alter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
 function oiko_pleiades_form_cidoc_entity_e53_place_edit_form_alter(&$form, &$form_state, $form_id) {
   if (isset($form['field_geodata']) && isset($form['field_pleiades_uri'])) {
     // Add our Javascript library.

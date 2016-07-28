@@ -141,7 +141,7 @@ content:
     weight: 22
     settings:
       size: '60'
-      placeholder: ''
+      placeholder: 'Start typing to find a location'
       autocomplete_route_name: geocoder_autocomplete.autocomplete
     third_party_settings: {  }
     type: geocoder_autocomplete

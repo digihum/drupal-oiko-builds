@@ -9,7 +9,7 @@ field_name: field_location_lookup
 entity_type: cidoc_entity
 bundle: e53_place
 label: 'Modern location name lookup'
-description: 'Enter the modern location name of a place and you can pick the location from a choice searched on Google Maps.'
+description: 'Enter the modern location name of a place and you can pick the location from a choice searched on Google Maps. Once you have entered a location, you can use the lookup button to try and find the location on the map.'
 required: false
 translatable: false
 default_value: {  }

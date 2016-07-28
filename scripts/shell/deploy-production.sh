@@ -36,6 +36,8 @@ drush "@$DOMAIN" fra --bundle=oiko -y
 
 drush "@$DOMAIN" updb -y --entity-updates
 
+drush "@$DOMAIN" cache-rebuild -y
+
 service php5-fpm restart || true
 varnishadm "ban.url ." || true
 
