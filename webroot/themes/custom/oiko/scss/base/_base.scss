@@ -209,13 +209,13 @@ th.checkbox {
   vertical-align: -webkit-baseline-middle;
   transition: border-color 0.25s ease-out, background-color 0.25s ease-out, color 0.25s ease-out;
   &:hover {
-    background-color: palette(aqua);
-    border-color: palette(aqua);
+    background-color: palette(tan);
+    border-color: palette(tan);
   }
 }
 .button-highlight {
-  border-color: palette(aqua);
-  background-color: palette(aqua);
+  border-color: palette(tan);
+  background-color: palette(tan);
 }
 
 #{text-inputs()}, textarea {
