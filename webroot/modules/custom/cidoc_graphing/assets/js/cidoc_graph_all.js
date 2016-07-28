@@ -162,7 +162,7 @@ function setup() {
    */
   window.container = svg.append('g');
   window.zoom = d3.behavior.zoom()
-    .scaleExtent([1, 10])
+    .scaleExtent([0.1, 10])
     .on("zoom", zoomed);
   window.drag = d3.behavior.drag()
     .origin(function (d) {
