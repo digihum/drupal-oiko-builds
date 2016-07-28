@@ -207,11 +207,14 @@ function setup() {
       message = '';
       if (typeof (d.property) !== 'undefined') {
         message = d.property;
+        return '<strong></strong> <span style="color:white">' + message + '</span>';
       }
       if (typeof (d.bundle) !== 'undefined') {
         message = d.text + ' - ' + d.bundle;
+        return '<strong></strong> <a href="/cidoc-entity/' + d.name +'"><span style="color:white">' + message + '</span></a>';
       }
-      return "<strong></strong> <span style='color:white'>" + message + "</span>";
+
+
     });
 
   svg.call(tip);
@@ -231,7 +234,6 @@ function setup() {
       return "url(#end)";
     })
     .on('mouseover', tip.show)
-    .on('mouseout', tip.hide)
     .call(drag);
 
   window.circle = container.append("g").selectAll("circle")
@@ -244,7 +246,6 @@ function setup() {
       return bundle;
     })
     .on('mouseover', tip.show)
-    .on('mouseout', tip.hide)
     .on('click', fade(0.1))
     .on('dblclick', fade(1))
     .call(force.drag);
