@@ -14,4 +14,14 @@ function oiko_pleiades_form_cidoc_entity_e53_place_edit_form_alter(&$form, &$for
     $form['field_geodata']['#attributes']['class'][] = 'js-oiko-pleiades-geodata-target';
   }
 
+  if (isset($form['field_geodata']) && isset($form['field_location_lookup'])) {
+    // Add our Javascript library.
+    $form['#attached']['library'][] = 'oiko_pleiades/geocoding-lookup';
+
+    // Add our classes.
+    $form['#attributes']['class'][] = 'js-oiko-pleiades-geocoding-lookup';
+    $form['field_location_lookup']['#attributes']['class'][] = 'js-oiko-pleiades-geocoding-lookup';
+    $form['field_geodata']['#attributes']['class'][] = 'js-oiko-pleiades-geocoding-geodata-target';
+  }
+
 }

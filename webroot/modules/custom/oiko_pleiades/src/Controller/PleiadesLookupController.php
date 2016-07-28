@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class PleiadesLookupController.
@@ -59,6 +60,26 @@ class PleiadesLookupController extends ControllerBase {
     if (isset($responseJson['reprPoint'])) {
       return new JsonResponse(array('lat' => $responseJson['reprPoint'][1], 'lon' => $responseJson['reprPoint'][0]));
     }
+  }
+
+  public function geocoderLookup(Request $request) {
+    $location = $request->query->get('location');
+
+    $plugins = array('googlemaps');
+    $options = array(
+//      'geonames' => array(), // array of options
+      'googlemaps' => array(), // array of options
+//      'bingmaps' => array(), // array of options
+    );
+    $dumper_manager = \Drupal::service('plugin.manager.geocoder.dumper');
+    /** @var \Drupal\geocoder\DumperInterface $dumper */
+    $dumper = $dumper_manager->createInstance('wkt');
+
+    if ($addressCollection = \Drupal::service('geocoder')->geocode($location, $plugins, $options)) {
+      return new JsonResponse(['wkt' => $dumper->dump($addressCollection->first())]);
+    }
+
+    throw new NotFoundHttpException();
   }
 
 }
