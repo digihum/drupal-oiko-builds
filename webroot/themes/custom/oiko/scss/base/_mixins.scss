@@ -1,0 +1,34 @@
+@import "settings";
+
+@mixin in-small-layout {
+  @include to(prev-slice($layout-switch)) {
+    @content
+  }
+}
+
+@mixin in-large-layout {
+  @include from($layout-switch) {
+    @content
+  }
+}
+
+@mixin hide-in-small-layout {
+  @include in-small-layout {
+    display: none !important;
+  }
+}
+
+@mixin hide-in-large-layout {
+  @include in-large-layout {
+    display: none !important;
+  }
+}
+
+// This is a mixin for providing the 'default' full page grid container eg. if
+// you have a full bleed row, and need content within it to have a max-width.
+@mixin content-grid-container {
+  @include container();
+  box-sizing: content-box;
+  padding-left: gutter();
+  padding-right: gutter();
+}

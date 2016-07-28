@@ -178,6 +178,13 @@ class CidocReference extends ContentEntityBase implements CidocReferenceInterfac
       $reverse_entity->setReverseable(FALSE);
       $reverse_entity->save();
     }
+    
+    // Update the connection counters on the domain and range entities.
+    $fields = $update ? $this->original->getFields(FALSE) : $this->getFields(FALSE);
+    $domain = $fields['domain']->getValue()[0]['target_id'];
+    \Drupal\cidoc\Entity\CidocEntity::load($domain)->updateConnectionCounts();
+    $range  = $fields['range']->getValue()[0]['target_id'];
+    \Drupal\cidoc\Entity\CidocEntity::load($range)->updateConnectionCounts();
   }
 
   public function getReverseable() {

@@ -12,6 +12,3 @@ range_bundles:
 editability:
   domain: true
   range: true
-timesubwidget: {  }
-widget_description: {  }
-autocomplete_description: {  }

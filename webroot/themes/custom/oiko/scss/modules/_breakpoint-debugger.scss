@@ -1,0 +1,18 @@
+body.toolbar-fixed:after {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: #FFF;
+  color: #000;
+  border-radius: 100px;
+  border: 1px solid #bbb;
+  padding: 0.5em 1em;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 20px;
+  @for $i from 1 through total-slices() {
+    @include at($i) {
+      content: '#{nth($slicer-breakpoint-names, $i)}'
+    }
+  }
+}

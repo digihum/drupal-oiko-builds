@@ -152,3 +152,32 @@ function cidoc_update_8103() {
   $view->display_handler->setOption('path', 'admin/cidoc/cidoc-entities');
   $view->save();
 }
+
+/**
+ * Update all CIDOC entities to have values for connections_incoming/outgoing.
+ */
+function cidoc_update_8104(&$sandbox) {
+  if (!isset($sandbox['progress'])) {
+    $sandbox['progress'] = 0;
+    $sandbox['#finished'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = \Drupal::entityQuery('cidoc_entity')
+      ->count()
+      ->execute();
+  }
+  
+  // Work through all CIDOC entities, a few at a time.
+  $cidoc_entities = \Drupal::entityQuery('cidoc_entity')
+    ->sort('id', 'ASC')
+    ->range($sandbox['current'], 10)
+    ->execute();
+  
+  foreach($cidoc_entities as $cidoc_entity) {
+    // Do the update.
+    \Drupal\cidoc\Entity\CidocEntity::load($cidoc_entity)->updateConnectionCounts();
+    // Record our progress.
+    $sandbox['current']++;
+    $sandbox['progress'] = $sandbox['current'] / $sandbox['max'];
+    $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['current'] / $sandbox['max']);
+  }
+}

@@ -24,7 +24,6 @@ third_party_settings:
     group_main_deets:
       children:
         - name
-        - internal_name
         - citation
         - significance
         - group_main_details
@@ -96,7 +95,7 @@ third_party_settings:
         - group_production
         - group_usage
       parent_name: group_main_deets
-      weight: 8
+      weight: 7
       label: 'Main details'
       format_type: tabs
       format_settings:
@@ -157,7 +156,7 @@ content:
     third_party_settings: {  }
   citation:
     type: entity_reference_paragraphs
-    weight: 6
+    weight: 5
     settings:
       title: Citation
       title_plural: Citations
@@ -169,13 +168,6 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
-  internal_name:
-    type: string_textfield
-    weight: 5
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
   name:
     type: string_textfield
     weight: 4
@@ -185,7 +177,7 @@ content:
     third_party_settings: {  }
   significance:
     type: options_select
-    weight: 7
+    weight: 6
     settings: {  }
     third_party_settings: {  }
 hidden:
@@ -198,4 +190,5 @@ hidden:
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true
   content: true
+  internal_name: true
   user_id: true

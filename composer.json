@@ -30,7 +30,7 @@
             "type": "package",
             "package": {
                 "name": "drupal/leaflet_widget",
-                "version": "dev-8.x-1.x",
+                "version": "dev-8.x-2.x",
                 "type": "drupal-module",
                 "require": {
                     "composer/installers": "^1.0.21"
@@ -114,10 +114,10 @@
         "drupal/devel": "8.1.x-dev",
         "drupal/eva": "dev-8.x-1.x",
         "drupal/features": "8.3.x-dev",
-        "drupal/field_group": "8.1.0-rc4",
+        "drupal/field_group": "8.1.x-dev",
         "drupal/geofield": "8.1.0-alpha2",
         "drupal/leaflet": "8.1.x-dev",
-        "drupal/leaflet_widget": "dev-8.x-1.x",
+        "drupal/leaflet_widget": "dev-8.x-2.x",
         "drupal/metatag": "8.1.0-beta7",
         "drupal/migrate_plus": "8.2.0-beta1",
         "drupal/migrate_tools": "8.2.x-dev",

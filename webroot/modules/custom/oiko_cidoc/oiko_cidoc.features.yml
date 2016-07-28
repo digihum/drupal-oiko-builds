@@ -1,4 +1,2 @@
 bundle: oiko
-excluded:
-  - views.view.graphing_all_references
 required: true

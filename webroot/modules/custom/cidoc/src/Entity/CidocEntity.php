@@ -310,6 +310,22 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['connections_incoming'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Connections incoming'))
+      ->setDescription(t('A count of the number of incoming CIDOC references.'))
+      ->setDefaultValue(0)
+      ->setRequired(TRUE)
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['connections_outgoing'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Connections outgoing'))
+      ->setDescription(t('A count of the number of outgoing CIDOC references.'))
+      ->setDefaultValue(0)
+      ->setRequired(TRUE)
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+    
     return $fields;
   }
 
@@ -421,5 +437,24 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
     parent::postSave($storage, $update);
   }
 
-
+  /**
+   * Update the numbers of connections incoming/outgoing.
+   * i.e. the numbers of references to/from this entity.
+   */
+  public function updateConnectionCounts() {
+    $connections_outgoing = \Drupal::entityQuery('cidoc_reference')
+      ->condition('domain', $this->id())
+      ->count()
+      ->execute();
+    $this->set('connections_outgoing', $connections_outgoing);
+    
+    $connections_incoming = \Drupal::entityQuery('cidoc_reference')
+      ->condition('range', $this->id())
+      ->count()
+      ->execute();
+    $this->set('connections_incoming', $connections_incoming);
+    
+    $this->save();
+  }
+  
 }

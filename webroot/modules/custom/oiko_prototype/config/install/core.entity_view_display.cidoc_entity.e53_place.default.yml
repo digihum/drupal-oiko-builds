@@ -14,31 +14,59 @@ third_party_settings:
       children:
         - events_at_this_location_entity_view_1
       parent_name: ''
-      weight: 2
+      weight: 3
       label: 'At this location'
-      format_type: fieldset
+      format_type: html_element
       format_settings:
-        description: ''
+        element: div
+        show_label: false
+        label_element: h3
+        effect: none
+        speed: fast
+        attributes: ''
         classes: ''
         id: ''
     group_people:
       children:
         - people_entity_view_1
       parent_name: ''
-      weight: 3
+      weight: 4
       label: 'Related people'
-      format_type: fieldset
+      format_type: html_element
       format_settings:
-        description: ''
+        element: div
+        show_label: false
+        label_element: h3
+        effect: none
+        speed: fast
+        attributes: ''
         classes: ''
         id: ''
+    group_movements:
+      children:
+        - p26_destination_of_entity_view_1
+        - p27_moved_from_here_entity_view_1
+      parent_name: ''
+      weight: 5
+      label: Movements
+      format_type: html_element
+      format_settings:
+        label: Movements
+        id: ''
+        classes: ''
+        element: h3
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
 id: cidoc_entity.e53_place.default
 targetEntityType: cidoc_entity
 bundle: e53_place
 mode: default
 content:
   cidoc_properties:
-    weight: 5
+    weight: 6
     settings: {  }
     third_party_settings: {  }
   events_at_this_location_entity_view_1:
@@ -47,7 +75,7 @@ content:
     third_party_settings: {  }
   field_geodata:
     type: leaflet_formatter_default
-    weight: 1
+    weight: 2
     label: hidden
     settings:
       leaflet_map: 'Ancient Terrain'
@@ -81,14 +109,28 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+  p26_destination_of_entity_view_1:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  p27_moved_from_here_entity_view_1:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
   people_entity_view_1:
     weight: 4
     settings: {  }
+    third_party_settings: {  }
+  significance:
+    type: entity_reference_label
+    weight: 1
+    label: above
+    settings:
+      link: false
     third_party_settings: {  }
 hidden:
   citation: true
   content: true
   field_pleiades_uri: true
   internal_name: true
-  significance: true
   user_id: true

@@ -1,0 +1,29 @@
+.footer-links {
+  ul {
+    margin: 0;
+  }
+  li {
+    list-style: none;
+    display: inline;
+  }
+}
+
+.footer-links--link {
+  text-decoration: none;
+  position: relative;
+  margin-right: 20px;
+  padding-right: 20px;
+  white-space: nowrap;
+  &:after {
+    content: '|';
+    position: absolute;
+    right: 0;
+  }
+  li:last-child > & {
+    margin-right: 0;
+    padding-right: 0;
+    &:after {
+      content: '';
+    }
+  }
+}

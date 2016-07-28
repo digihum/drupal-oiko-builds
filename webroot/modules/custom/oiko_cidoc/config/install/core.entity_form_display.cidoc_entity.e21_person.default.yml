@@ -24,10 +24,10 @@ third_party_settings:
     group_main_deets:
       children:
         - name
-        - internal_name
         - citation
         - significance
         - group_main_details
+        - internal_name
       parent_name: group_main
       weight: 4
       label: 'Main details'
@@ -102,10 +102,6 @@ content:
     weight: 1
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p107_has_current_or_former_membe':
-    weight: 21
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:range:p98_brought_into_life':
     weight: 0
     settings: {  }
@@ -123,13 +119,6 @@ content:
   class_description:
     weight: 0
     settings: {  }
-    third_party_settings: {  }
-  internal_name:
-    type: string_textfield
-    weight: 2
-    settings:
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   name:
     type: string_textfield
@@ -157,4 +146,5 @@ hidden:
   'cidoc_properties:range:p96_by_mother': true
   'cidoc_properties:range:p97_from_father': true
   content: true
+  internal_name: true
   user_id: true

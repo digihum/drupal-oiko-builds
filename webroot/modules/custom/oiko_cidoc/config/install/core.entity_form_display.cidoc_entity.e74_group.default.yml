@@ -54,7 +54,6 @@ third_party_settings:
       children:
         - group_appellations
         - group_formation
-        - group_people
       parent_name: group_main_deets
       weight: 5
       label: 'Main details'
@@ -90,35 +89,13 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
-    group_people:
-      children:
-        - 'cidoc_properties:domain:p107_has_current_or_former_membe'
-        - 'cidoc_properties:range:p107_has_current_or_former_membe'
-      parent_name: group_main_details
-      weight: 7
-      label: People/groups
-      format_type: tab
-      format_settings:
-        formatter: closed
-        description: ''
-        classes: ''
-        id: ''
-        required_fields: true
 id: cidoc_entity.e74_group.default
 targetEntityType: cidoc_entity
 bundle: e74_group
 mode: default
 content:
-  'cidoc_properties:domain:p107_has_current_or_former_membe':
-    weight: 20
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p131_is_identified_by':
     weight: 4
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:range:p107_has_current_or_former_membe':
-    weight: 21
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p95_has_formed':
@@ -142,13 +119,6 @@ content:
   class_description:
     weight: 0
     settings: {  }
-    third_party_settings: {  }
-  internal_name:
-    type: string_textfield
-    weight: 2
-    settings:
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   name:
     type: string_textfield
@@ -178,4 +148,5 @@ hidden:
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true
   content: true
+  internal_name: true
   user_id: true

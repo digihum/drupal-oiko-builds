@@ -1,0 +1,41 @@
+.footer {
+  background-color: palette(grey);
+  color: #FFF;
+  padding-top: $global-padding;
+  padding-bottom: $global-padding;
+
+  a {
+    text-decoration: none;
+  }
+}
+.footer--spacer {
+  margin-top: $global-padding;
+}
+
+.footer--lower {
+  background-color: palette(black, light);
+  padding: 10px 0;
+  font-size: 12px;
+  @include to('l') {
+    text-align: center;
+  }
+}
+
+@include to('l') {
+  .footer--lower__copyright {
+    margin-bottom: 10px;
+  }
+}
+
+@include from('l') {
+  .footer--lower__copyright {
+    margin-left: gutter();
+    float: left;
+  }
+
+  .footer--lower__menu {
+    margin-right: gutter();
+    float: right;
+  }
+
+}

@@ -1,0 +1,106 @@
+@import "../base/global";
+
+// 'Main' layout
+// --------------
+// Used by default to layout the sidebars and main content on a
+// 12 column grid, in the default page.tpl.php
+
+.l-content-grid-container {
+  @include content-grid-container;
+}
+
+.l-full {
+  @include full();
+}
+
+.l-last {
+  @include last();
+}
+
+// On smaller screens, we put everything in a single column.
+@include in-small-layout {
+  .l-main-content,
+  .l-sidebar-first,
+  .l-sidebar-second {
+    @include full();
+  }
+}
+
+// On larger screens, we go multi-column.
+@include in-large-layout {
+  .l-sidebar-first {
+    @include span(3);
+  }
+  .l-sidebar-second {
+    @include span(3);
+  }
+  .l-has-no-sidebars .l-main-content {
+    @include full();
+  }
+  .l-has-both-sidebars .l-main-content {
+    @include span(6);
+  }
+  .l-has-sidebar-first .l-main-content {
+    @include span(9);
+  }
+  .l-has-sidebar-second .l-main-content {
+    @include span(9);
+  }
+  .l-half {
+    @include span(6 of 12);
+  }
+  .l-col-7 {
+    @include span(7 of 12);
+  }
+  .l-col-5 {
+    @include span(5 of 12);
+  }
+}
+
+
+// Half-width layout
+// -----------------
+// Primarily for where we have full-bleed on one half of the screen, we set up
+// a grid so we can still lay things out like span(3 of 6)
+
+@include in-large-layout {
+  .l-half-width {
+    width: 50%;
+    $width: susy-get(container) / 2;
+    @include with-layout($width 6) {
+      // Re-declare our generic utility class with the half-width context.
+      .l-content-grid-container {
+        @include content-grid-container;
+      }
+      .l-full {
+        @include full()
+      }
+    }
+  }
+  .l-half-width--left {
+    float: left;
+    .l-content-grid-container {
+      margin-right: 0;
+      padding-right: 0;
+    }
+  }
+  .l-half-width--right {
+    float: right;
+    .l-content-grid-container {
+      margin-left: 0;
+      padding-left: 0;
+    }
+  }
+
+}
+
+// Equal height columns
+// --------------------
+
+// Helper to equalise the height of child elements, if we're laying things out
+// in multiple columns.
+.l-equal-heights {
+  @include in-large-layout {
+    display: flex;
+  }
+}
