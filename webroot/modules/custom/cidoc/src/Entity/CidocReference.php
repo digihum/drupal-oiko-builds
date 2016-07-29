@@ -361,4 +361,12 @@ class CidocReference extends ContentEntityBase implements CidocReferenceInterfac
     return $fields;
   }
 
+  public function getDomain() {
+    return $this->get('domain')->getValue()[0]['target_id'];
+  }
+
+  public function getRange() {
+    return $this->get('range')->getValue()[0]['target_id'];
+  }
+
 }

@@ -3,6 +3,13 @@
 /**
  * Implements hook_form_FORM_ID_alter().
  */
+function oiko_pleiades_form_cidoc_entity_e53_place_form_alter(&$form, &$form_state, $form_id) {
+  oiko_pleiades_form_cidoc_entity_e53_place_edit_form_alter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
 function oiko_pleiades_form_cidoc_entity_e53_place_edit_form_alter(&$form, &$form_state, $form_id) {
   if (isset($form['field_geodata']) && isset($form['field_pleiades_uri'])) {
     // Add our Javascript library.
@@ -12,6 +19,16 @@ function oiko_pleiades_form_cidoc_entity_e53_place_edit_form_alter(&$form, &$for
     $form['#attributes']['class'][] = 'js-oiko-pleiades-lookup';
     $form['field_pleiades_uri']['#attributes']['class'][] = 'js-oiko-pleiades-uri-source';
     $form['field_geodata']['#attributes']['class'][] = 'js-oiko-pleiades-geodata-target';
+  }
+
+  if (isset($form['field_geodata']) && isset($form['field_location_lookup'])) {
+    // Add our Javascript library.
+    $form['#attached']['library'][] = 'oiko_pleiades/geocoding-lookup';
+
+    // Add our classes.
+    $form['#attributes']['class'][] = 'js-oiko-pleiades-geocoding-lookup';
+    $form['field_location_lookup']['#attributes']['class'][] = 'js-oiko-pleiades-geocoding-lookup';
+    $form['field_geodata']['#attributes']['class'][] = 'js-oiko-pleiades-geocoding-geodata-target';
   }
 
 }

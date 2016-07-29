@@ -5,3 +5,11 @@ oiko_pleiades.pleiades_lookup_controller_pleiadesLookup:
     _title: 'Pleiades Ajax Lookup'
   requirements:
     _permission: 'access pleiades lookup'
+
+oiko_pleiades.pleiades_lookup_controller_geocoderLookup:
+  path: '/oiko_pleiades/geocoder'
+  defaults:
+    _controller: '\Drupal\oiko_pleiades\Controller\PleiadesLookupController::geocoderLookup'
+    _title: 'Geocoder Ajax Lookup'
+  requirements:
+    _permission: 'access pleiades lookup'

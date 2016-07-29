@@ -1,0 +1,42 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p107_has_current_or_former_membe
+    - field.field.cidoc_reference.p107_has_current_or_former_membe.domain
+    - field.field.cidoc_reference.p107_has_current_or_former_membe.field_kind_of_member
+    - field.field.cidoc_reference.p107_has_current_or_former_membe.range
+id: cidoc_reference.p107_has_current_or_former_membe.default
+targetEntityType: cidoc_reference
+bundle: p107_has_current_or_former_membe
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+  field_kind_of_member:
+    weight: -1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  citation: true
+  user_id: true

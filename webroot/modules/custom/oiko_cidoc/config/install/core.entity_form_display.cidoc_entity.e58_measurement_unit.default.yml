@@ -24,6 +24,7 @@ third_party_settings:
     group_main_deets:
       children:
         - name
+        - internal_name
         - citation
         - significance
       parent_name: group_main_details
@@ -89,7 +90,7 @@ content:
     third_party_settings: {  }
   citation:
     type: entity_reference_paragraphs
-    weight: 4
+    weight: 5
     settings:
       title: Citation
       title_plural: Citations
@@ -101,6 +102,13 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+  internal_name:
+    type: string_textfield
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   name:
     type: string_textfield
     weight: 3
@@ -110,7 +118,7 @@ content:
     third_party_settings: {  }
   significance:
     type: options_select
-    weight: 5
+    weight: 6
     settings: {  }
     third_party_settings: {  }
 hidden:
@@ -120,5 +128,4 @@ hidden:
   'cidoc_properties:range:p16_used_specific_object': true
   'cidoc_properties:range:p2_has_type': true
   content: true
-  internal_name: true
   user_id: true
