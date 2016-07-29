@@ -3,29 +3,26 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e12_production
+  module:
+    - text
 id: cidoc_entity.e12_production.default
 targetEntityType: cidoc_entity
 bundle: e12_production
 mode: default
 content:
-  cidoc_properties:
+  content:
+    type: text_default
     weight: 20
+    label: hidden
     settings: {  }
     third_party_settings: {  }
   duplicate_of_p15_influenced_entity_view_1:
-    weight: 17
+    weight: 18
     settings: {  }
     third_party_settings: {  }
   duplicate_of_p15_was_influenced_by_entity_view_1:
-    weight: 16
+    weight: 17
     settings: {  }
-    third_party_settings: {  }
-  internal_name:
-    label: inline
-    type: string
-    weight: 19
-    settings:
-      link_to_entity: false
     third_party_settings: {  }
   name:
     label: hidden
@@ -34,12 +31,16 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+  p108_produced_object_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
   p10_falls_within_entity_view_1:
-    weight: 15
+    weight: 16
     settings: {  }
     third_party_settings: {  }
   p10_includes_entity_view_1:
-    weight: 14
+    weight: 15
     settings: {  }
     third_party_settings: {  }
   p11_has_participant_entity_view_1:
@@ -63,11 +64,11 @@ content:
     settings: {  }
     third_party_settings: {  }
   p17_motivated_entity_view_1:
-    weight: 10
+    weight: 11
     settings: {  }
     third_party_settings: {  }
   p17_was_motivated_by_entity_view_1:
-    weight: 11
+    weight: 12
     settings: {  }
     third_party_settings: {  }
   p4_has_time_span_entity_view_1:
@@ -83,15 +84,15 @@ content:
     settings: {  }
     third_party_settings: {  }
   p9__entity_view_1:
-    weight: 12
-    settings: {  }
-    third_party_settings: {  }
-  p9_forms_part_of_entity_view_1:
     weight: 13
     settings: {  }
     third_party_settings: {  }
+  p9_forms_part_of_entity_view_1:
+    weight: 14
+    settings: {  }
+    third_party_settings: {  }
   people_entity_view_1:
-    weight: 18
+    weight: 19
     settings: {  }
     third_party_settings: {  }
   significance:
@@ -102,6 +103,7 @@ content:
       link: false
     third_party_settings: {  }
 hidden:
+  cidoc_properties: true
   citation: true
-  content: true
+  internal_name: true
   user_id: true

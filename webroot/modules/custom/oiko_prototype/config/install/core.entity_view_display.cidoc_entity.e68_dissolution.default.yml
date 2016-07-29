@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e68_dissolution
   module:
     - field_group
+    - text
 third_party_settings:
   field_group:
     group_dissolved_group:
@@ -45,8 +46,10 @@ targetEntityType: cidoc_entity
 bundle: e68_dissolution
 mode: default
 content:
-  cidoc_properties:
+  content:
+    type: text_default
     weight: 20
+    label: hidden
     settings: {  }
     third_party_settings: {  }
   duplicate_of_p134_continues_entity_view_1:
@@ -156,7 +159,7 @@ content:
       link: false
     third_party_settings: {  }
 hidden:
+  cidoc_properties: true
   citation: true
-  content: true
   internal_name: true
   user_id: true

@@ -89,7 +89,7 @@ third_party_settings:
       children:
         - people_entity_view_1
       parent_name: ''
-      weight: 13
+      weight: 17
       label: 'Related people'
       format_type: html_element
       format_settings:
@@ -137,7 +137,7 @@ third_party_settings:
       children:
         - p95_formed_entity_view_1
       parent_name: ''
-      weight: 11
+      weight: 15
       label: Formed
       format_type: html_element
       format_settings:
@@ -153,7 +153,7 @@ third_party_settings:
       children:
         - p99_dissolved_entity_view_1
       parent_name: ''
-      weight: 12
+      weight: 16
       label: Dissolved
       format_type: html_element
       format_settings:
@@ -190,10 +190,6 @@ content:
     weight: 2
     settings: {  }
     third_party_settings: {  }
-  cidoc_properties:
-    weight: 14
-    settings: {  }
-    third_party_settings: {  }
   duplicate_of_p134_continues_entity_view_1:
     weight: 10
     settings: {  }
@@ -226,7 +222,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   p108_produced_object_entity_view_1:
-    weight: 10
+    weight: 11
     settings: {  }
     third_party_settings: {  }
   p11_participae_entity_view_1:
@@ -234,7 +230,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   p12_present_at_entity_view_1:
-    weight: 10
+    weight: 12
     settings: {  }
     third_party_settings: {  }
   p15_was_influenced_by_entity_view_1:
@@ -242,11 +238,11 @@ content:
     settings: {  }
     third_party_settings: {  }
   p17_motivated_entity_view_1:
-    weight: 10
+    weight: 13
     settings: {  }
     third_party_settings: {  }
   p4_has_time_span_entity_view_1:
-    weight: 10
+    weight: 14
     settings: {  }
     third_party_settings: {  }
   p95_formed_entity_view_1:
@@ -269,6 +265,7 @@ content:
       link: false
     third_party_settings: {  }
 hidden:
+  cidoc_properties: true
   citation: true
   content: true
   internal_name: true

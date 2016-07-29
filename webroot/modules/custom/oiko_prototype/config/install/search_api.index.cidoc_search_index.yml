@@ -1,0 +1,135 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.cidoc_entity.field_date
+    - search_api.server.oiko_search_server
+  module:
+    - search_api
+    - cidoc
+id: cidoc_search_index
+name: 'CIDOC Search Index'
+description: ''
+read_only: false
+field_settings:
+  name:
+    label: Name
+    datasource_id: 'entity:cidoc_entity'
+    property_path: name
+    type: text
+    boost: !!float 3
+  internal_name:
+    label: 'Internal name'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: internal_name
+    type: text
+    boost: !!float 2
+  content_1:
+    label: Content
+    datasource_id: 'entity:cidoc_entity'
+    property_path: content
+    type: text
+  human_value_1:
+    label: 'Date » Human readable'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: 'field_date:human_value'
+    type: string
+    dependencies:
+      config:
+        - field.storage.cidoc_entity.field_date
+processor_settings:
+  add_url:
+    plugin_id: add_url
+    settings: {  }
+  aggregated_field:
+    plugin_id: aggregated_field
+    settings: {  }
+  highlight:
+    plugin_id: highlight
+    settings:
+      highlight: server
+      excerpt: true
+      excerpt_length: 256
+      exclude_fields: {  }
+      prefix: '<strong>'
+      suffix: '</strong>'
+      weights:
+        postprocess_query: 0
+  html_filter:
+    plugin_id: html_filter
+    settings:
+      fields:
+        - name
+        - internal_name
+        - content_1
+        - human_value_1
+      title: true
+      alt: true
+      tags:
+        h1: 5
+        h2: 3
+        h3: 2
+        strong: 2
+        b: 2
+      weights:
+        preprocess_index: -10
+        preprocess_query: -10
+  ignorecase:
+    plugin_id: ignorecase
+    settings:
+      fields:
+        - name
+        - internal_name
+        - content_1
+        - human_value_1
+      weights:
+        preprocess_index: -10
+        preprocess_query: -10
+  rendered_item:
+    plugin_id: rendered_item
+    settings: {  }
+  tokenizer:
+    plugin_id: tokenizer
+    settings:
+      fields:
+        - name
+        - internal_name
+        - content_1
+      spaces: ''
+      overlap_cjk: 1
+      minimum_word_size: '3'
+      weights:
+        preprocess_index: -6
+        preprocess_query: -6
+  transliteration:
+    plugin_id: transliteration
+    settings:
+      fields:
+        - name
+        - internal_name
+        - content_1
+        - human_value_1
+      weights:
+        preprocess_index: -10
+        preprocess_query: -10
+options:
+  index_directly: true
+  cron_limit: 50
+datasource_settings:
+  'entity:cidoc_entity':
+    plugin_id: 'entity:cidoc_entity'
+    settings:
+      bundles:
+        default: true
+        selected: {  }
+  'entity:cidoc_reference':
+    plugin_id: 'entity:cidoc_reference'
+    settings:
+      bundles:
+        default: true
+        selected: {  }
+tracker_settings:
+  default:
+    plugin_id: default
+    settings: {  }
+server: oiko_search_server

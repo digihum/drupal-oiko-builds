@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e66_formation
   module:
     - field_group
+    - text
 third_party_settings:
   field_group:
     group_formed_group:
@@ -44,8 +45,10 @@ targetEntityType: cidoc_entity
 bundle: e66_formation
 mode: default
 content:
-  cidoc_properties:
-    weight: 22
+  content:
+    type: text_default
+    weight: 21
+    label: hidden
     settings: {  }
     third_party_settings: {  }
   duplicate_of_p134_continues_entity_view_1:
@@ -59,13 +62,6 @@ content:
   duplicate_of_p15_was_influenced_by_entity_view_1:
     weight: 18
     settings: {  }
-    third_party_settings: {  }
-  internal_name:
-    label: inline
-    type: string
-    weight: 21
-    settings:
-      link_to_entity: false
     third_party_settings: {  }
   name:
     label: hidden
@@ -162,6 +158,7 @@ content:
       link: false
     third_party_settings: {  }
 hidden:
+  cidoc_properties: true
   citation: true
-  content: true
+  internal_name: true
   user_id: true

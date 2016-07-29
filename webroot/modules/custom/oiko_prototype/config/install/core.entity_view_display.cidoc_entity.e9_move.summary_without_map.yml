@@ -119,6 +119,10 @@ content:
     weight: 14
     settings: {  }
     third_party_settings: {  }
+  p17_motivated_entity_view_1:
+    weight: 10
+  p17_was_motivated_by_entity_view_1:
+    weight: 10
   p4_has_time_span_entity_view_1:
     weight: 1
     settings: {  }

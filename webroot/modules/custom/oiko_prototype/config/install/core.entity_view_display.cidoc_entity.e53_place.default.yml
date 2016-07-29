@@ -8,6 +8,7 @@ dependencies:
   module:
     - field_group
     - leaflet
+    - text
 third_party_settings:
   field_group:
     group_at_this_location:
@@ -65,8 +66,10 @@ targetEntityType: cidoc_entity
 bundle: e53_place
 mode: default
 content:
-  cidoc_properties:
+  content:
+    type: text_default
     weight: 6
+    label: hidden
     settings: {  }
     third_party_settings: {  }
   events_at_this_location_entity_view_1:
@@ -129,8 +132,8 @@ content:
       link: false
     third_party_settings: {  }
 hidden:
+  cidoc_properties: true
   citation: true
-  content: true
   field_pleiades_uri: true
   internal_name: true
   user_id: true

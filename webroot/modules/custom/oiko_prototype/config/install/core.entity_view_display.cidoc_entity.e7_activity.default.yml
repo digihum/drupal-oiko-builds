@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e7_activity
   module:
     - field_group
+    - text
 third_party_settings:
   field_group:
     group_participants:
@@ -113,7 +114,7 @@ third_party_settings:
       children:
         - p15_was_influenced_by_entity_view_1
       parent_name: ''
-      weight: 10
+      weight: 13
       label: Influences
       format_type: html_element
       format_settings:
@@ -130,7 +131,7 @@ third_party_settings:
       children:
         - p16_used_specific_object_entity_view_1
       parent_name: ''
-      weight: 16
+      weight: 19
       label: 'Objects used'
       format_type: html_element
       format_settings:
@@ -147,7 +148,7 @@ third_party_settings:
       children:
         - p15_influenced_entity_view_1
       parent_name: ''
-      weight: 15
+      weight: 18
       label: Influenced
       format_type: html_element
       format_settings:
@@ -164,7 +165,7 @@ third_party_settings:
       children:
         - duplicate_of_p15_was_influenced_by_entity_view_1
       parent_name: ''
-      weight: 13
+      weight: 16
       label: Continues
       format_type: html_element
       format_settings:
@@ -181,7 +182,7 @@ third_party_settings:
       children:
         - duplicate_of_p15_influenced_entity_view_1
       parent_name: ''
-      weight: 14
+      weight: 17
       label: 'Continued by'
       format_type: html_element
       format_settings:
@@ -198,7 +199,7 @@ third_party_settings:
       children:
         - p9_forms_part_of_entity_view_1
       parent_name: ''
-      weight: 11
+      weight: 14
       label: 'Forms part of'
       format_type: html_element
       format_settings:
@@ -215,7 +216,7 @@ third_party_settings:
       children:
         - p9__entity_view_1
       parent_name: ''
-      weight: 12
+      weight: 15
       label: 'Constituent events'
       format_type: html_element
       format_settings:
@@ -233,8 +234,10 @@ targetEntityType: cidoc_entity
 bundle: e7_activity
 mode: default
 content:
-  cidoc_properties:
-    weight: 18
+  content:
+    type: text_default
+    weight: 20
+    label: hidden
     settings: {  }
     third_party_settings: {  }
   duplicate_of_p134_continues_entity_view_1:
@@ -248,13 +251,6 @@ content:
   duplicate_of_p15_was_influenced_by_entity_view_1:
     weight: 12
     settings: {  }
-    third_party_settings: {  }
-  internal_name:
-    label: inline
-    type: string
-    weight: 17
-    settings:
-      link_to_entity: false
     third_party_settings: {  }
   name:
     label: hidden
@@ -283,6 +279,10 @@ content:
     weight: 5
     settings: {  }
     third_party_settings: {  }
+  p12_occurred_in_the_presence_of_entity_view_1:
+    weight: 12
+    settings: {  }
+    third_party_settings: {  }
   p14_carried_out_by_entity_view_1:
     weight: 9
     settings: {  }
@@ -297,6 +297,14 @@ content:
     third_party_settings: {  }
   p16_used_specific_object_entity_view_1:
     weight: 11
+    settings: {  }
+    third_party_settings: {  }
+  p17_motivated_entity_view_1:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+  p17_was_motivated_by_entity_view_1:
+    weight: 10
     settings: {  }
     third_party_settings: {  }
   p4_has_time_span_entity_view_1:
@@ -331,6 +339,7 @@ content:
       link: false
     third_party_settings: {  }
 hidden:
+  cidoc_properties: true
   citation: true
-  content: true
+  internal_name: true
   user_id: true

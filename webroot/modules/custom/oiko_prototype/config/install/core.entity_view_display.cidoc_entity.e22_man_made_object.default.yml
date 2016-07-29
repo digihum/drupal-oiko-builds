@@ -3,13 +3,17 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e22_man_made_object
+  module:
+    - text
 id: cidoc_entity.e22_man_made_object.default
 targetEntityType: cidoc_entity
 bundle: e22_man_made_object
 mode: default
 content:
-  cidoc_properties:
+  content:
+    type: text_default
     weight: 7
+    label: hidden
     settings: {  }
     third_party_settings: {  }
   name:
@@ -47,7 +51,7 @@ content:
       link: false
     third_party_settings: {  }
 hidden:
+  cidoc_properties: true
   citation: true
-  content: true
   internal_name: true
   user_id: true

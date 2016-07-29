@@ -3,13 +3,17 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.o3_active_destruction
+  module:
+    - text
 id: cidoc_entity.o3_active_destruction.default
 targetEntityType: cidoc_entity
 bundle: o3_active_destruction
 mode: default
 content:
-  cidoc_properties:
-    weight: 19
+  content:
+    type: text_default
+    weight: 18
+    label: hidden
     settings: {  }
     third_party_settings: {  }
   duplicate_of_p134_continues_entity_view_1:
@@ -23,13 +27,6 @@ content:
   duplicate_of_p15_was_influenced_by_entity_view_1:
     weight: 8
     settings: {  }
-    third_party_settings: {  }
-  internal_name:
-    label: inline
-    type: string
-    weight: 18
-    settings:
-      link_to_entity: false
     third_party_settings: {  }
   name:
     label: hidden
@@ -118,6 +115,7 @@ content:
       link: false
     third_party_settings: {  }
 hidden:
+  cidoc_properties: true
   citation: true
-  content: true
+  internal_name: true
   user_id: true

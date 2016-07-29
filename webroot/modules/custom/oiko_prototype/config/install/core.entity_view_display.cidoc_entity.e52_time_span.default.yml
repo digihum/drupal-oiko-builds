@@ -6,13 +6,14 @@ dependencies:
     - field.field.cidoc_entity.e52_time_span.field_date
   module:
     - field_group
+    - text
 third_party_settings:
   field_group:
     group_people:
       children:
         - people_entity_view_1
       parent_name: ''
-      weight: 3
+      weight: 2
       label: 'Related people'
       format_type: html_element
       format_settings:
@@ -28,7 +29,7 @@ third_party_settings:
       children:
         - time_span_directly_linked_events_entity_view_1
       parent_name: ''
-      weight: 4
+      weight: 3
       label: 'At this time'
       format_type: html_element
       format_settings:
@@ -45,7 +46,7 @@ third_party_settings:
       children:
         - p10_falls_within_entity_view_1
       parent_name: ''
-      weight: 2
+      weight: 1
       label: 'In this period'
       format_type: html_element
       format_settings:
@@ -61,7 +62,7 @@ third_party_settings:
       children:
         - time_span_within_period_entity_view_1
       parent_name: ''
-      weight: 5
+      weight: 4
       label: Period
       format_type: html_element
       format_settings:
@@ -78,20 +79,15 @@ targetEntityType: cidoc_entity
 bundle: e52_time_span
 mode: default
 content:
-  cidoc_properties:
-    weight: 10
+  content:
+    type: text_default
+    weight: 9
+    label: hidden
     settings: {  }
     third_party_settings: {  }
   duplicate_of_p15_influenced_entity_view_1:
-    weight: 6
+    weight: 5
     settings: {  }
-    third_party_settings: {  }
-  internal_name:
-    label: inline
-    type: string
-    weight: 1
-    settings:
-      link_to_entity: false
     third_party_settings: {  }
   name:
     label: hidden
@@ -105,15 +101,15 @@ content:
     settings: {  }
     third_party_settings: {  }
   p10_includes_entity_view_1:
-    weight: 7
+    weight: 6
     settings: {  }
     third_party_settings: {  }
   p15_influenced_entity_view_1:
-    weight: 8
+    weight: 7
     settings: {  }
     third_party_settings: {  }
   p9__entity_view_1:
-    weight: 9
+    weight: 8
     settings: {  }
     third_party_settings: {  }
   people_entity_view_1:
@@ -129,8 +125,9 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  cidoc_properties: true
   citation: true
-  content: true
   field_date: true
+  internal_name: true
   significance: true
   user_id: true

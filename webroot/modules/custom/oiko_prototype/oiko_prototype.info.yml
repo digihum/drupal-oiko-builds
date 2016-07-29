@@ -9,7 +9,11 @@ dependencies:
   - geofield
   - leaflet
   - leaflet_views
+  - node
   - oiko_cidoc
+  - search_api
+  - search_api_db
+  - text
   - user
   - views
 package: Oiko

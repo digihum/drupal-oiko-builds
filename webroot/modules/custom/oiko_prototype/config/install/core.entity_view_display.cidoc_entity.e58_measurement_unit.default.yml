@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e58_measurement_unit
+  module:
+    - text
+id: cidoc_entity.e58_measurement_unit.default
+targetEntityType: cidoc_entity
+bundle: e58_measurement_unit
+mode: default
+content:
+  content:
+    type: text_default
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  cidoc_properties: true
+  citation: true
+  internal_name: true
+  people_entity_view_1: true
+  significance: true
+  user_id: true
