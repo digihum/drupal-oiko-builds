@@ -1,0 +1,198 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e7_activity
+    - core.entity_view_mode.cidoc_entity.summary_without_map
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_participants:
+      children: {  }
+      parent_name: ''
+      weight: 8
+      label: Participants
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_occurred:
+      children: {  }
+      parent_name: ''
+      weight: 9
+      label: 'Occurred on'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_people:
+      children: {  }
+      parent_name: ''
+      weight: 10
+      label: 'Related people'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_carried_out_by:
+      children: {  }
+      parent_name: ''
+      weight: 7
+      label: 'Carried out by'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_period:
+      children: {  }
+      parent_name: ''
+      weight: 6
+      label: Period
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_includes:
+      children: {  }
+      parent_name: ''
+      weight: 11
+      label: 'Includes these events and time periods'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_influences:
+      children: {  }
+      parent_name: ''
+      weight: 12
+      label: Influences
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_objects:
+      children: {  }
+      parent_name: ''
+      weight: 18
+      label: 'Objects used'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_influenced:
+      children: {  }
+      parent_name: ''
+      weight: 17
+      label: Influenced
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_continues:
+      children: {  }
+      parent_name: ''
+      weight: 15
+      label: Continues
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_continued_by:
+      children: {  }
+      parent_name: ''
+      weight: 16
+      label: 'Continued by'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_forms:
+      children: {  }
+      parent_name: ''
+      weight: 13
+      label: 'Forms part of'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+    group_sub_events:
+      children: {  }
+      parent_name: ''
+      weight: 14
+      label: 'Constituent events'
+      format_type: fieldset
+      format_settings:
+        description: ''
+        classes: ''
+        id: ''
+id: cidoc_entity.e7_activity.summary_without_map
+targetEntityType: cidoc_entity
+bundle: e7_activity
+mode: summary_without_map
+content:
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  p11_has_participant_entity_view_1:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  p12_occurred_in_the_presence_of_entity_view_1:
+    weight: 10
+  p14_carried_out_by_entity_view_1:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+  p16_used_specific_object_entity_view_1:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  p17_motivated_entity_view_1:
+    weight: 10
+  p17_was_motivated_by_entity_view_1:
+    weight: 10
+  p4_has_time_span_entity_view_1:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+  p7_took_place_at_map_entity_view_2:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  cidoc_properties: true
+  citation: true
+  content: true
+  duplicate_of_p134_continues_entity_view_1: true
+  duplicate_of_p15_influenced_entity_view_1: true
+  duplicate_of_p15_was_influenced_by_entity_view_1: true
+  internal_name: true
+  p108_has_produced_entity_view_1: true
+  p108_produced_by_entity_view_1: true
+  p10_falls_within_entity_view_1: true
+  p10_includes_entity_view_1: true
+  p15_influenced_entity_view_1: true
+  p15_was_influenced_by_entity_view_1: true
+  p7_took_place_at_map_entity_view_1: true
+  p9__entity_view_1: true
+  p9_forms_part_of_entity_view_1: true
+  people_entity_view_1: true
+  significance: true
+  user_id: true

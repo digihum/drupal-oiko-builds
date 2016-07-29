@@ -1,0 +1,19 @@
+name: 'Oiko Prototype'
+type: module
+core: 8.x
+dependencies:
+  - cidoc
+  - edtf
+  - eva
+  - field_group
+  - geofield
+  - leaflet
+  - leaflet_views
+  - node
+  - oiko_cidoc
+  - oiko_prototype
+  - search_api
+  - search_api_db
+  - text
+  - user
+  - views

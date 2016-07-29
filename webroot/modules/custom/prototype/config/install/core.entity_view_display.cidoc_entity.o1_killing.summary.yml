@@ -1,0 +1,93 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.o1_killing
+    - core.entity_view_mode.cidoc_entity.summary
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_people:
+      children:
+        - people_entity_view_1
+      parent_name: ''
+      weight: 6
+      label: 'Related people'
+      format_type: html_element
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        effect: none
+        speed: fast
+        attributes: ''
+        classes: ''
+        id: ''
+id: cidoc_entity.o1_killing.summary
+targetEntityType: cidoc_entity
+bundle: o1_killing
+mode: summary
+content:
+  duplicate_of_p134_continues_entity_view_1:
+    weight: 10
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    settings:
+      link_to_entity: true
+    third_party_settings: {  }
+  p100_death_of_entity_view_1:
+    weight: 10
+  p108_has_produced_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p108_produced_by_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p11_has_participant_entity_view_1:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  p12_occurred_in_the_presence_of_entity_view_1:
+    weight: 10
+  p14_carried_out_by_entity_view_1:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  p17_motivated_entity_view_1:
+    weight: 10
+  p17_was_motivated_by_entity_view_1:
+    weight: 10
+  p4_has_time_span_entity_view_1:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+  p7_took_place_at_map_entity_view_1:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+  p7_took_place_at_map_entity_view_2:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  cidoc_properties: true
+  citation: true
+  content: true
+  duplicate_of_p15_influenced_entity_view_1: true
+  duplicate_of_p15_was_influenced_by_entity_view_1: true
+  internal_name: true
+  p10_falls_within_entity_view_1: true
+  p10_includes_entity_view_1: true
+  p15_influenced_entity_view_1: true
+  p15_was_influenced_by_entity_view_1: true
+  p16_used_specific_object_entity_view_1: true
+  p9__entity_view_1: true
+  p9_forms_part_of_entity_view_1: true
+  people_entity_view_1: true
+  significance: true
+  user_id: true

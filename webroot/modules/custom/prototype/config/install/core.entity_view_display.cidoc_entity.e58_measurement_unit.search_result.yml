@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e58_measurement_unit
+    - core.entity_view_mode.cidoc_entity.search_result
+id: cidoc_entity.e58_measurement_unit.search_result
+targetEntityType: cidoc_entity
+bundle: e58_measurement_unit
+mode: search_result
+content:
+  name:
+    label: hidden
+    type: string
+    weight: -4
+    settings:
+      link_to_entity: true
+    third_party_settings: {  }
+  significance:
+    type: entity_reference_label
+    weight: 1
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+hidden:
+  cidoc_properties: true
+  citation: true
+  content: true
+  internal_name: true
+  people_entity_view_1: true
+  user_id: true

@@ -1,0 +1,133 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e52_time_span
+    - field.field.cidoc_entity.e52_time_span.field_date
+  module:
+    - field_group
+    - text
+third_party_settings:
+  field_group:
+    group_people:
+      children:
+        - people_entity_view_1
+      parent_name: ''
+      weight: 2
+      label: 'Related people'
+      format_type: html_element
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        effect: none
+        speed: fast
+        attributes: ''
+        classes: ''
+        id: ''
+    group_at_this_time:
+      children:
+        - time_span_directly_linked_events_entity_view_1
+      parent_name: ''
+      weight: 3
+      label: 'At this time'
+      format_type: html_element
+      format_settings:
+        label: 'At this time'
+        element: div
+        show_label: false
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+    group_in_this_period:
+      children:
+        - p10_falls_within_entity_view_1
+      parent_name: ''
+      weight: 1
+      label: 'In this period'
+      format_type: html_element
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        effect: none
+        speed: fast
+        attributes: ''
+        classes: ''
+        id: ''
+    group_in_period:
+      children:
+        - time_span_within_period_entity_view_1
+      parent_name: ''
+      weight: 4
+      label: Period
+      format_type: html_element
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        effect: none
+        speed: fast
+        attributes: ''
+        classes: ''
+        id: ''
+id: cidoc_entity.e52_time_span.default
+targetEntityType: cidoc_entity
+bundle: e52_time_span
+mode: default
+content:
+  content:
+    type: text_default
+    weight: 9
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  duplicate_of_p15_influenced_entity_view_1:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  p10_falls_within_entity_view_1:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+  p10_includes_entity_view_1:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  p15_influenced_entity_view_1:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+  p9__entity_view_1:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+  people_entity_view_1:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  time_span_directly_linked_events_entity_view_1:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  time_span_within_period_entity_view_1:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  cidoc_properties: true
+  citation: true
+  field_date: true
+  internal_name: true
+  significance: true
+  user_id: true

@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_entity.summary_without_map
+label: 'Summary without map'
+targetEntityType: cidoc_entity
+cache: true
