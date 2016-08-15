@@ -569,18 +569,7 @@ display:
           admin_label: ''
           operator: in
           value:
-            e12_production: e12_production
-            e5_event: e5_event
-            e6_destruction: e6_destruction
-            e66_formation: e66_formation
-            e67_birth: e67_birth
-            e68_dissolution: e68_dissolution
-            e69_death: e69_death
-            e7_activity: e7_activity
-            e9_move: e9_move
-            o1_killing: o1_killing
-            o2_active_dissolution: o2_active_dissolution
-            o3_active_destruction: o3_active_destruction
+            '--all-events--': '--all-events--'
           group: 1
           exposed: false
           expose:

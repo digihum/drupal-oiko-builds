@@ -21,6 +21,10 @@ class CidocEntityViewsData extends EntityViewsData implements EntityViewsDataInt
       'help' => $this->t('The CIDOC entity ID.'),
     );
 
+    if (isset($data['cidoc_entity']['bundle']['filter']['id'])) {
+      $data['cidoc_entity']['bundle']['filter']['id'] = 'cidoc_bundle';
+    }
+
     return $data;
   }
 
