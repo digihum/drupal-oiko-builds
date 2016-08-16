@@ -25,6 +25,26 @@ class CidocEntityViewsData extends EntityViewsData implements EntityViewsDataInt
       $data['cidoc_entity']['bundle']['filter']['id'] = 'cidoc_bundle';
     }
 
+    $data['cidoc_entity']['related_entities'] = array(
+      'title' => $this->t('CIDOC forward reference'),
+      'relationship' => array(
+        'label' => $this->t('Forward references'),
+        'base' => 'cidoc_entity',
+        'base field' => 'id',
+        'id' => 'cidoc_related_entity_forward',
+      ),
+    );
+
+    $data['cidoc_entity']['related_entities_reverse'] = array(
+      'title' => $this->t('CIDOC reverse reference'),
+      'relationship' => array(
+        'label' => $this->t('Reverse references'),
+        'base' => 'cidoc_entity',
+        'base field' => 'id',
+        'id' => 'cidoc_related_entity_reverse',
+      ),
+    );
+
     return $data;
   }
 
