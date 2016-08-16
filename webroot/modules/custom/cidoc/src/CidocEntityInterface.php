@@ -14,6 +14,16 @@ use Drupal\user\EntityOwnerInterface;
 interface CidocEntityInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
 
   /**
+   * Entity is not published.
+   */
+  const NOT_PUBLISHED = 0;
+
+  /**
+   * Entity is published.
+   */
+  const PUBLISHED = 1;
+
+  /**
    * Gets the CIDOC entity's name, using the internal name where available.
    *
    * @param bool $fallback

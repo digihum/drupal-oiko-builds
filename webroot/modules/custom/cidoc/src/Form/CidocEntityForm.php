@@ -2,6 +2,7 @@
 
 namespace Drupal\cidoc\Form;
 
+use Drupal\cidoc\CidocEntityInterface;
 use Drupal\cidoc\Entity\CidocEntity;
 use Drupal\cidoc\Entity\CidocProperty;
 use Drupal\Component\Utility\Html;
@@ -10,12 +11,15 @@ use Drupal\Component\Utility\Tags;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Entity\EntityReferenceSelection\SelectionInterface;
 use Drupal\Core\Entity\EntityReferenceSelection\SelectionWithAutocreateInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form controller for CIDOC entity edit forms.
@@ -25,16 +29,59 @@ use Drupal\Core\Url;
 class CidocEntityForm extends ContentEntityForm {
 
   /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $currentUser;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity.manager'),
+      $container->get('current_user')
+    );
+  }
+
+  /**
+   * Constructs a new CommentForm.
+   *
+   * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
+   *   The entity manager service.
+   * @param \Drupal\Core\Session\AccountInterface $current_user
+   *   The current user.
+   */
+  public function __construct(EntityManagerInterface $entity_manager, AccountInterface $current_user) {
+    parent::__construct($entity_manager);
+    $this->currentUser = $current_user;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function form(array $form, FormStateInterface $form_state) {
+    /** @var \Drupal\cidoc\CidocEntityInterface $cidoc_entity */
+    $cidoc_entity = $form_state->getFormObject()->getEntity();
+
+    // Prepare default values for form elements.
+    $is_admin = $this->currentUser->hasPermission($cidoc_entity->getEntityType()->getAdminPermission());
+    $status = $cidoc_entity->isPublished();
+
+    $form['status'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Published'),
+      '#default_value' => $status,
+      '#access' => $is_admin,
+      '#weight' => 20,
+    );
+
     $form = parent::form($form, $form_state);
 
     $form['#attached']['library'][] = 'cidoc/drupal.cidoc_dont_leave_me';
     $form['#attributes']['class'][] = 'cidoc-dont-leave-me-form';
 
-    /** @var \Drupal\cidoc\CidocEntityInterface $cidoc_entity */
-    $cidoc_entity = $form_state->getFormObject()->getEntity();
     $description = trim($cidoc_entity->bundle->entity->getDescription());
     $form['class_description'] = array(
       '#type' => 'item',
@@ -636,7 +683,7 @@ class CidocEntityForm extends ContentEntityForm {
 
     // If saving is an option, privileged users get dedicated form submit
     // buttons to continue onto stub entities after saving.
-    if (\Drupal::currentUser()->hasPermission('edit cidoc entities')) {
+    if ($this->currentUser->hasPermission('edit cidoc entities')) {
       // Add a "Save and continue" button.
       $element['continue'] = $element['submit'];
       // If the "Save and continue" button is clicked, we want to redirect.

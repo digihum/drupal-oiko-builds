@@ -136,9 +136,10 @@ function cidoc_update_8102() {
  * Give content editors permission to view the cidoc entity overview page.
  */
 function cidoc_update_8103() {
-  $role = \Drupal\user\Entity\Role::load('content_editor');
-  $role->grantPermission('access cidoc entity overview');
-  $role->save();
+  if ($role = \Drupal\user\Entity\Role::load('content_editor')) {
+    $role->grantPermission('access cidoc entity overview');
+    $role->save();
+  }
 
   $view = \Drupal\views\Views::getView('cidoc_entities');
   $view->setDisplay('default');
@@ -151,4 +152,17 @@ function cidoc_update_8103() {
   $view->setDisplay('page_1');
   $view->display_handler->setOption('path', 'admin/cidoc/cidoc-entities');
   $view->save();
+}
+
+/**
+ * Make status field translatable.
+ */
+function cidoc_update_8104() {
+  $update_manager = \Drupal::entityDefinitionUpdateManager();
+
+  /** @var BaseFieldDefinition $storage_definition */
+  $storage_definition = $update_manager->getFieldStorageDefinition('status', 'cidoc_entity');
+  $storage_definition->setTranslatable(TRUE);
+
+  $update_manager->updateFieldStorageDefinition($storage_definition);
 }

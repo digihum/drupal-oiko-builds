@@ -146,7 +146,7 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
    * {@inheritdoc}
    */
   public function setPublished($published) {
-    $this->set('status', $published ? NODE_PUBLISHED : NODE_NOT_PUBLISHED);
+    $this->set('status', $published ? CidocEntityInterface::PUBLISHED : CidocEntityInterface::NOT_PUBLISHED);
     return $this;
   }
 
@@ -228,6 +228,7 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
       ->setDescription(t('A boolean indicating whether the CIDOC entity is published.'))
+      ->setTranslatable(TRUE)
       ->setDefaultValue(TRUE);
 
     $fields['langcode'] = BaseFieldDefinition::create('language')
@@ -390,6 +391,21 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
     );
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function preSave(EntityStorageInterface $storage) {
+    parent::preSave($storage);
+
+    if (is_null($this->get('status')->value)) {
+      $published = \Drupal::currentUser()->hasPermission($this->getEntityType()->getAdminPermission()) ? CidocEntityInterface::PUBLISHED : CidocEntityInterface::NOT_PUBLISHED;
+      $this->setPublished($published);
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     if (!empty($this->stubReferences)) {
       // We need to create reference entities for these stubs.
