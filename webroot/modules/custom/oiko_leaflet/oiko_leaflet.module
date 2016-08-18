@@ -30,8 +30,10 @@ function oiko_leaflet_library_info_alter(array &$libraries, $module) {
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/intervalTree';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/vis';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/markercluster';
+    $libraries['leaflet-drupal']['dependencies'][] = 'core/jquery';
+    $libraries['leaflet-drupal']['dependencies'][] = 'core/drupal';
     $path = base_path() . drupal_get_path('module', 'oiko_leaflet') . '/js';
-    $libraries['leaflet-drupal']['js'][$path . '/leaflet.spider.js'] = array();
+//    $libraries['leaflet-drupal']['js'][$path . '/leaflet.spider.js'] = array();
     $libraries['leaflet-drupal']['js'][$path . '/leaflet.temporal.js'] = array();
   }
 }
