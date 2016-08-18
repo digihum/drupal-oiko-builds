@@ -25,6 +25,14 @@ function oiko_leaflet_library_info_alter(array &$libraries, $module) {
       'version' => '0.7.7',
       'license' => $libraries['leaflet'],
     );
+
+    $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/leaflet-overlapping-marker-spiderfier';
+    $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/intervalTree';
+    $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/vis';
+    $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/markercluster';
+    $path = base_path() . drupal_get_path('module', 'oiko_leaflet') . '/js';
+    $libraries['leaflet-drupal']['js'][$path . '/leaflet.spider.js'] = array();
+    $libraries['leaflet-drupal']['js'][$path . '/leaflet.temporal.js'] = array();
   }
 }
 

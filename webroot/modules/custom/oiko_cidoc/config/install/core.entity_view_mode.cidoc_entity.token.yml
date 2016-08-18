@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_entity.token
+label: Token
+targetEntityType: cidoc_entity
+cache: true

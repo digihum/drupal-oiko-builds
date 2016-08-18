@@ -3,3 +3,7 @@ services:
     class: Drupal\cidoc\Access\CidocEntityReferencesAccessCheck
     tags:
       - { name: access_check, applies_to: _access_cidoc_entity_references_info }
+  cidoc.entity_type_helper:
+    class: Drupal\cidoc\EntityTypeHelper
+    arguments: ["@cidoc_spec.entity_traversal", "@cidoc_spec.entity_factory", "@cidoc_spec.drupal_manager"]
+

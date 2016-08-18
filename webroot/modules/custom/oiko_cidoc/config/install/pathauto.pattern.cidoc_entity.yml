@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_entity
+label: 'CIDOC Entity'
+type: 'canonical_entities:cidoc_entity'
+pattern: 'data/[cidoc_entity:bundle:target_id]/[cidoc_entity:name]'
+selection_criteria: {  }
+selection_logic: and
+weight: 0
+relationships: {  }

@@ -13,6 +13,7 @@ dependencies:
   - link
   - oiko_citation
   - paragraphs
+  - pathauto
   - squid_autocomplete
   - taxonomy
   - text
