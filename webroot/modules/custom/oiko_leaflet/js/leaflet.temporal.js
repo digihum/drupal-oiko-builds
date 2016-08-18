@@ -283,9 +283,6 @@ L.timeLineControl = function (timeline, start, end, timelist) {
     if (drupalLeaflet.temporalDisplayedLayerGroup.getLayers().length > 1) {
       $(drupalLeaflet.timelineContainerDiv).show();
     }
-    else {
-      $(drupalLeaflet.timelineContainerDiv).hide();
-    }
   });
 
 })(jQuery);
