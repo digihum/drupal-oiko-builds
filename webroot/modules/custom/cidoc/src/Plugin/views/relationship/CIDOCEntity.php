@@ -67,6 +67,8 @@ class CIDOCEntity extends RelationshipPluginBase {
       $bundle_options[$bundle_key] = $bundle_info['label'];
     }
 
+    natsort($bundle_options);
+
     $form['limit_bundles'] = array(
       '#type' => 'checkboxes',
       '#options' => $bundle_options,
@@ -74,8 +76,6 @@ class CIDOCEntity extends RelationshipPluginBase {
       '#description' => $this->t('Optionally restrict the references added in by the properties that reference the entities.'),
       '#default_value' => $this->options['limit_bundles'],
     );
-
-    natsort($bundle_options);
 
     $type_options = [];
     foreach ($this->entityBundleInfo->getBundleInfo('cidoc_entity') as $bundle_key => $bundle_info) {
@@ -153,9 +153,7 @@ class CIDOCEntity extends RelationshipPluginBase {
       'adjusted' => TRUE
     );
 
-    if (!empty($this->options['required'])) {
-      $second['type'] = 'INNER';
-    }
+    $second['type'] = 'INNER';
 
     if (!empty($def['join_id'])) {
       $id = $def['join_id'];
@@ -181,9 +179,7 @@ class CIDOCEntity extends RelationshipPluginBase {
       'adjusted' => TRUE
     );
 
-    if (!empty($this->options['required'])) {
-      $third['type'] = 'INNER';
-    }
+    $third['type'] = 'INNER';
 
     if (!empty(array_filter($this->options['limit_types']))) {
       // Add a limit on the bundles that can be referenced.

@@ -11,3 +11,22 @@ leaflet-overlapping-marker-spiderfier:
     js/vendor/oms.min.js: {}
   dependencies:
     - leaflet/leaflet
+
+intervalTree:
+  js:
+    js/vendor/intervalTree.js: {}
+
+markercluster:
+  js:
+    js/vendor/leaflet.markercluster.js: {}
+  css:
+    component:
+      css/vendor/MarkerCluster.css: {}
+      css/vendor/MarkerCluster.Default.css: {}
+
+vis:
+  js:
+    js/vendor/vis.min.js: {}
+  css:
+    component:
+      css/vendor/vis.min.css: {}

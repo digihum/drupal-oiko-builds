@@ -3,3 +3,5 @@ type: module
 description: Oiko integration with the Leaflet map scripting library.
 core: 8.x
 package: Oiko
+dependencies:
+  - leaflet_views
