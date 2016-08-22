@@ -18,7 +18,6 @@ Drupal.behaviors.comparative_timeline = {
     this._timelineOptions = {
       selectable: false,
       align: 'right',
-      throttleRedraw: 50,
       showCurrentTime: false
       // showMajorLabels: true,
       // showMinorLabels: false

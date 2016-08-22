@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p89_falls_within
+label: 'P89 falls within'
+bidirectional: false
+reverse_label: 'P89 contains'
+domain_bundles:
+  - e53_place
+range_bundles:
+  - e53_place
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description: {  }
+autocomplete_description: {  }

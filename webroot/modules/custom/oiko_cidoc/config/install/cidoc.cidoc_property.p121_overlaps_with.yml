@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p121_overlaps_with
+label: 'P121 overlaps with'
+bidirectional: true
+reverse_label: 'P121 overlaps with'
+domain_bundles:
+  e53_place: e53_place
+range_bundles:
+  e53_place: e53_place
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''

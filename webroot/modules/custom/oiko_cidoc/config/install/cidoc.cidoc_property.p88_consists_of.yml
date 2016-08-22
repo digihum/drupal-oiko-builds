@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p88_consists_of
+label: 'P88 consists of'
+bidirectional: false
+reverse_label: 'P88 forms part of'
+domain_bundles:
+  - e53_place
+range_bundles:
+  - e53_place
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description: {  }
+autocomplete_description: {  }
