@@ -18,3 +18,8 @@
 .vis-custom-time {
   background-color: $medium-gray;
 }
+
+.vis-item {
+  background-color: rgba(palette(tan), .5);
+  border-color: rgba(palette(tan), 1);
+}
