@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies: {  }
+id: p122_borders_with
+label: 'P122 borders with'
+bidirectional: true
+reverse_label: 'P122 borders with'
+domain_bundles:
+  e53_place: e53_place
+range_bundles:
+  e53_place: e53_place
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''

@@ -59,6 +59,7 @@ third_party_settings:
     group_main_details:
       children:
         - group_appellations
+        - group_hierarchy
         - group_geodata
       parent_name: group_main_deets
       weight: 5
@@ -85,7 +86,7 @@ third_party_settings:
     group_geodata:
       children: {  }
       parent_name: group_main_details
-      weight: 6
+      weight: 7
       label: Geodata
       format_type: tab
       format_settings:
@@ -94,17 +95,50 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+    group_hierarchy:
+      children:
+        - 'cidoc_properties:domain:p88_consists_of'
+        - 'cidoc_properties:domain:p89_falls_within'
+        - 'cidoc_properties:domain:p121_overlaps_with'
+        - 'cidoc_properties:domain:p122_borders_with'
+      parent_name: group_main_details
+      weight: 6
+      label: Hierarchy
+      format_type: tab
+      format_settings:
+        label: Hierarchy
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
 id: cidoc_entity.e53_place.default
 targetEntityType: cidoc_entity
 bundle: e53_place
 mode: default
 content:
+  'cidoc_properties:domain:p121_overlaps_with':
+    weight: 22
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p122_borders_with':
+    weight: 23
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p131_is_identified_by':
     weight: 4
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p87_is_identified_by':
     weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p88_consists_of':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p89_falls_within':
+    weight: 21
     settings: {  }
     third_party_settings: {  }
   citation:
@@ -176,6 +210,8 @@ hidden:
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:range:p100_was_death_of': true
   'cidoc_properties:range:p11_had_participant': true
+  'cidoc_properties:range:p121_overlaps_with': true
+  'cidoc_properties:range:p122_borders_with': true
   'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p13_destroyed': true
   'cidoc_properties:range:p14_carried_out_by': true
@@ -186,6 +222,8 @@ hidden:
   'cidoc_properties:range:p26_moved_to': true
   'cidoc_properties:range:p27_moved_from': true
   'cidoc_properties:range:p7_took_place_at': true
+  'cidoc_properties:range:p88_consists_of': true
+  'cidoc_properties:range:p89_falls_within': true
   'cidoc_properties:range:p96_by_mother': true
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true

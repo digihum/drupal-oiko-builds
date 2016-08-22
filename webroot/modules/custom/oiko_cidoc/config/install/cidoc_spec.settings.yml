@@ -42,6 +42,8 @@ enabled_properties:
   - p27_moved_from
   - p78_is_identified_by
   - p87_is_identified_by
+  - p88_consists_of
+  - p89_falls_within
   - p95_has_formed
   - p96_by_mother
   - p97_from_father
@@ -50,6 +52,8 @@ enabled_properties:
   - p100_was_death_of
   - p107_has_current_or_former_member
   - p108_has_produced
+  - p121_overlaps_with
+  - p122_borders_with
   - p131_is_identified_by
   - p132_overlaps_with
   - p133_is_separated_from
