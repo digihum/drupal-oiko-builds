@@ -1,0 +1,16 @@
+
+oiko_timeline.comparative_timeline_controller_basePage:
+  path: 'comparative-timeline'
+  defaults:
+    _controller: '\Drupal\oiko_timeline\Controller\ComparativeTimelineController::basePage'
+    _title: 'Comparative timeline'
+  requirements:
+    _permission: 'access content'
+
+oiko_timeline.comparision_data:
+  path: 'comparative-timeline/data/{cidoc_entity}'
+  defaults:
+      _controller: '\Drupal\oiko_timeline\Controller\ComparativeTimelineController::fetchData'
+      _title: 'Comparative timeline data'
+  requirements:
+      _permission: 'access content'

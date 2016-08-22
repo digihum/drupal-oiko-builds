@@ -1,0 +1,19 @@
+comparative_timeline:
+  js:
+    js/comparative_timeline.js: {}
+  css:
+    component:
+      css/comparative_timeline.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/jquery.once
+    - oiko_leaflet/vis
+    - oiko_timeline/timelinejs
+
+#timelinejs:
+#  js:
+#    https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js: {}
+#  css:
+#    component:
+#      https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css: {}

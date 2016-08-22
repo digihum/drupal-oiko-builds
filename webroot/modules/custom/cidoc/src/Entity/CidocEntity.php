@@ -421,5 +421,98 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
     parent::postSave($storage, $update);
   }
 
+  /**
+   * Get reverse referenced entities from us.
+   *
+   * @param array $properties
+   * @param boolean $loaded
+   *
+   * @return array
+   */
+  public function getReverseReferences($properties = [], $loaded = TRUE) {
+    $query = \Drupal::entityQuery('cidoc_reference');
+    $query->condition('range', $this->id());
+    if (!empty($properties)) {
+      $query->condition('property', $properties, 'IN');
+    }
+    $query->addTag('cidoc_get_reverse_references_properties');
+    $references = $query->execute();
 
+    $entities = [];
+    if (!empty($references)) {
+      foreach (\Drupal::entityTypeManager()->getStorage('cidoc_reference')->loadMultiple($references) as $reference) {
+        /** @var CidocReference $domain */
+        $domain_entity_id = $reference->getDomain();
+        if ($loaded) {
+          $e = \Drupal::entityTypeManager()->getStorage('cidoc_entity')->load($domain_entity_id);
+          $entities[$domain_entity_id] = $e;
+        }
+        else {
+          $entities[$domain_entity_id] = $domain;
+        }
+
+      }
+    }
+    return array_filter($entities);
+  }
+
+  /**
+   * Get reverse referenced entities from us.
+   *
+   * @param array $properties
+   * @param boolean $loaded
+   *
+   * @return array
+   */
+  public function getForwardReferences($properties = [], $loaded = TRUE) {
+    $query = \Drupal::entityQuery('cidoc_reference');
+    $query->condition('domain', $this->id());
+    if (!empty($properties)) {
+      $query->condition('property', $properties, 'IN');
+    }
+    $query->addTag('cidoc_get_domain_references_properties');
+    $references = $query->execute();
+
+    $entities = [];
+    if (!empty($references)) {
+      foreach (\Drupal::entityTypeManager()->getStorage('cidoc_reference')->loadMultiple($references) as $reference) {
+        /** @var CidocReference $domain */
+        $range_entity_id = $reference->getRange();
+        if ($loaded) {
+          $e = \Drupal::entityTypeManager()->getStorage('cidoc_entity')->load($range_entity_id);
+          $entities[$range_entity_id] = $e;
+        }
+        else {
+          $entities[$range_entity_id] = $domain;
+        }
+
+      }
+    }
+    return array_filter($entities);
+  }
+
+  /**
+   * Return the temporal information for this entity if we can.
+   *
+   * @return array
+   *   The array of temporal information.
+   */
+  function getTemporalInformation() {
+
+    $time_spans = $this->getForwardReferences(['p4_has_time_span'], TRUE);
+    foreach ($time_spans as $time_span) {
+      $date_value = $time_span->field_date->getValue();
+      if (!empty($date_value[0]['value'])) {
+        return [
+          'machine' => $date_value[0]['value'],
+          'human' => $date_value[0]['human_value'],
+          'minmin' => $date_value[0]['minmin'],
+          'maxmax' => $date_value[0]['maxmax'],
+        ];
+      }
+
+
+    }
+    return [];
+  }
 }
