@@ -57,8 +57,9 @@ L.TimeLineControl = L.Control.extend({
     var _this4 = this;
 
     var options = {
-      "width":  "100%",
-      stack: false
+      width:  "100%",
+      stack: false,
+      showCurrentTime: false
     };
 
     // Create a Timeline
@@ -66,10 +67,10 @@ L.TimeLineControl = L.Control.extend({
     this._visTimeline = new vis.Timeline(container, this._visItems, options);
     var customDate = new Date();
     customDate = new Date(customDate.getFullYear(), customDate.getMonth(), customDate.getDate() + 1);
-    this._visTimeline.addCustomTime(customDate, 't1');
+    this._visTimeline.addCustomTime(customDate, 'tdrag');
     // Set timeline time change event, so cursor is set after moving custom time (blue)
     this._visTimeline.on('timechange', function(e) {
-      if (e.id === 't1') {
+      if (e.id === 'tdrag') {
         _this4._visTimelineChanged(e);
       }
     });
@@ -114,12 +115,7 @@ L.TimeLineControl = L.Control.extend({
       _this.callbacks.push(cb);
     }
     if (this.timelines.length !== timelineCount) {
-      // @TODO: get this working.
       this._recalculate();
-      // if (this.options.showTicks) {
-      //   this._rebuildDataList();
-      // }
-      // this.setTime(this.start);
     }
   },
   /**
@@ -153,7 +149,7 @@ L.TimeLineControl = L.Control.extend({
         end: 1000 * max,
         max: 1000 * max
       });
-      this._visTimeline.setCustomTime(500 * (min + max) , 't1');
+      this._visTimeline.setCustomTime(500 * (min + max) , 'tdrag');
       this.setTime(Math.round((min + max)/2));
     }
   },
@@ -242,15 +238,34 @@ L.timeLineControl = function (timeline, start, end, timelist) {
 
 
     drupalLeaflet.updateTemporalLayers = function() {
-      var features = this.temporalTree.lookup(this.time);
 
-      // Remove all existing temporal features.
-      // @TODO: we can make this more performant, by not removing the features we are going to add back in.
+      // Show half a year either side of our selection.
+      var offset = 365.25 * 86400 / 2;
+      // These are the features we want on our map.
+      var features = this.temporalTree.overlap(Math.floor(this.time - offset), Math.ceil(this.time + offset));
+      
+      var found, layer;
+
+      // Loop through the existing features on our map.
       for (var i = 0; i < drupalLeaflet.temporalDisplayedLayerGroup.getLayers().length; i++) {
-        var toRemove = drupalLeaflet.temporalDisplayedLayerGroup.getLayers()[i--];
-        drupalLeaflet.mainLayer.removeLayer(toRemove);
-        drupalLeaflet.temporalDisplayedLayerGroup.removeLayer(toRemove);
+        found = false;
+        layer = drupalLeaflet.temporalDisplayedLayerGroup.getLayers()[i];
+        // Search for this layer in our set of features we do want.
+        for (var j = 0; j < features.length; j++) {
+          if (features[j] === layer) {
+            found = true;
+            features.splice(j, 1);
+            break;
+          }
+        }
+        if (!found) {
+          // We didn't find this layer, so remove it and decrement i, so we process this i again.
+          i--;
+          drupalLeaflet.mainLayer.removeLayer(layer);
+          drupalLeaflet.temporalDisplayedLayerGroup.removeLayer(layer);
+        }
       }
+
       features.forEach(function (feature) {
         drupalLeaflet.mainLayer.addLayer(feature);
         drupalLeaflet.temporalDisplayedLayerGroup.addLayer(feature);

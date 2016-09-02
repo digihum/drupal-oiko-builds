@@ -2,11 +2,7 @@
 
 namespace Drupal\cidoc\Plugin\views\filter;
 
-use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\views\Plugin\views\filter\Bundle;
-use Drupal\views\ViewExecutable;
-use Drupal\views\Plugin\views\display\DisplayPluginBase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Filter class which allows filtering by entity bundles.

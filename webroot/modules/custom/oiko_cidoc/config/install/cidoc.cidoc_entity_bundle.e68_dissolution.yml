@@ -6,5 +6,8 @@ id: e68_dissolution
 label: 'E68 Dissolution'
 weight: -14
 group: auxiliary
-description: "<p>This class comprises the events that result in the formal or informal termination of an E74\nGroup of people.\nIf the dissolution was deliberate, the Dissolution event should also be instantiated as an E7\nActivity.</p>\n"
-examples: "<ul>\n<li>the fall of the Roman Empire</li>\n<li>the liquidation of Enron Corporation</li>\n</ul>\n"
+description: "<p>This class comprises the events that result in the formal or informal termination of an E74\r\nGroup of people.\r\nIf the dissolution was deliberate, the Dissolution event should also be instantiated as an E7\r\nActivity.</p>\r\n"
+examples: "<ul>\r\n<li>the fall of the Roman Empire</li>\r\n<li>the liquidation of Enron Corporation</li>\r\n</ul>\r\n"
+geoserializers:
+  event: event
+  move: '0'

@@ -6,5 +6,8 @@ id: e69_death
 label: 'E69 Death'
 weight: -19
 group: auxiliary
-description: "<p>This class comprises the deaths of human beings.</p>\r\n\r\n<p>If a person is killed, their death should be as an O1 Killing instead. The\r\ndeath or perishing of other living beings should be documented using E64 End of Existence.</p>\r\n"
-examples: "<ul>\r\n<li>the murder of Julius Caesar (O1)</li>\r\n<li>the death of Senator Paul Wellstone</li>\r\n</ul>\r\n"
+description: "<p>This class comprises the deaths of human beings.</p>\r\n\r\n<p>If a person is killed, their death should be instantiated as E69 Death and as E7 Activity. The\r\ndeath or perishing of other living beings should be documented using E64 End of Existence.</p>\r\n"
+examples: "<ul>\r\n<li>the murder of Julius Caesar (E69,E7)</li>\r\n<li>the death of Senator Paul Wellstone</li>\r\n</ul>\r\n"
+geoserializers:
+  event: event
+  move: '0'

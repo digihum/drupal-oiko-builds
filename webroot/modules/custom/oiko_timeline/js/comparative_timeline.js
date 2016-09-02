@@ -34,31 +34,6 @@ Drupal.behaviors.comparative_timeline = {
     this._visGroups = new vis.DataSet({});
     this._visTimeline = new vis.Timeline(this.$timelineContainer.get(0), this._visItems, this._visGroups, this._timelineOptions);
 
-    // var timelineJSON = {
-    //   events: [
-    //     {
-    //       start_date: {
-    //         year: 1
-    //       },
-    //       text: {
-    //         headline: "Headline",
-    //         text: "text"
-    //       }
-    //     }
-    //
-    //   ],
-    //   scale: "human"
-    // };
-    // this._timelineJSOptions = {
-    //   debug: true,
-    //   use_bc: 'BCE',
-    //   scale_factor: 1,
-    //   height: 400,
-    //   timenav_height: 250,
-    //   timenav_position: "top"
-    // };
-
-
 
     // Bind the data loader handler to the links.
     var self = this;

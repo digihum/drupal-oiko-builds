@@ -42,7 +42,6 @@ enabled_properties:
   - p27_moved_from
   - p78_is_identified_by
   - p87_is_identified_by
-  - p88_consists_of
   - p89_falls_within
   - p95_has_formed
   - p96_by_mother

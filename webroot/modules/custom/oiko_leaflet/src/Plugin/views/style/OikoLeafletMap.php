@@ -117,7 +117,16 @@ class OikoLeafletMap extends StylePluginBase {
       '#description' => $this->t('Which field contains temporal data?'),
       '#options' => $fields_temporal_data,
       '#default_value' => $this->options['temporal_data_source'],
-      '#required' => TRUE,
+      '#required' => FALSE,
+    );
+
+    // ID field
+    $form['id_field'] = array(
+      '#type' => 'select',
+      '#title' => $this->t('ID Field'),
+      '#description' => $this->t('Choose the field which be used as a internal ID.'),
+      '#options' => $fields,
+      '#default_value' => $this->options['id_field'],
     );
 
     // Name field
@@ -345,69 +354,17 @@ class OikoLeafletMap extends StylePluginBase {
    */
   function render() {
     $data = array();
+    $moves = array();
     $geofield_name = $this->options['data_source'];
     if ($this->options['data_source']) {
       $this->renderFields($this->view->result);
+      $entities = [];
       foreach ($this->view->result as $id => $result) {
-
-        $geofield_value = $this->getFieldValue($id, $geofield_name);
-
-        if (empty($geofield_value)) {
-          // In case the result is not among the raw results, get it from the
-          // rendered results.
-          $geofield_value = $this->rendered_fields[$id][$geofield_name];
-        }
-        if (!empty($geofield_value)) {
-          $points = leaflet_process_geofield($geofield_value);
-
-          // Render the entity with the selected view mode
-          if ($this->options['description_field'] === '#rendered_entity' && is_object($result)) {
-            $entity = entity_load($this->entity_type, $result->{$this->entity_info->getKey('id')});
-            $build = entity_view($entity, $this->options['view_mode']);
-            $description = drupal_render($build);
-          }
-          // Normal rendering via fields
-          elseif ($this->options['description_field']) {
-            $description = $this->rendered_fields[$id][$this->options['description_field']];
-          }
-
-          // Attach pop-ups if we have a description field
-          if (isset($description)) {
-            foreach ($points as &$point) {
-              $point['popup'] = $description;
-            }
-          }
-
-          // Attach also titles, they might be used later on
-          if ($this->options['name_field']) {
-            foreach ($points as &$point) {
-              $point['label'] = $this->rendered_fields[$id][$this->options['name_field']];
-            }
-          }
-
-          // If there is temporal data, add that to the points too.
-          if ($this->options['temporal_data_source']) {
-            $temporalfield_value_min = $this->getFieldValue($id, $this->options['temporal_data_source'], 'minmin');
-            $temporalfield_value_max = $this->getFieldValue($id, $this->options['temporal_data_source'], 'maxmax');
-            if (!empty($temporalfield_value_min) && !empty($temporalfield_value_max)) {
-              foreach ($points as &$point) {
-                $point['temporal'] = array(
-                  'minmin' => $temporalfield_value_min,
-                  'maxmax' => $temporalfield_value_max,
-                );
-              }
-            }
-          }
-
-
-          $data = array_merge($data, $points);
-
-          if (!empty($this->options['icon']) && $this->options['icon']['iconUrl']) {
-            foreach ($data as $key => $feature) {
-              $data[$key]['icon'] = $this->options['icon'];
-            }
-          }
-        }
+        $id = (string) $this->rendered_fields[$id][$this->options['id_field']];
+        $entities[$id] = $id;
+      }
+      foreach (entity_load_multiple('cidoc_entity', $entities) as $entity) {
+        $data = array_merge($data, $entity->getGeospatialData());
       }
     }
 
@@ -444,6 +401,7 @@ class OikoLeafletMap extends StylePluginBase {
     $options = parent::defineOptions();
     $options['data_source'] = array('default' => '');
     $options['temporal_data_source'] = array('default' => '');
+    $options['id_field'] = array('default' => '');
     $options['name_field'] = array('default' => '');
     $options['description_field'] = array('default' => '');
     $options['view_mode'] = array('default' => 'full');

@@ -486,7 +486,9 @@ class FeaturesManager implements FeaturesManagerInterface {
     $info = $this->getExtensionInfo($extension);
     $features_info = $this->getFeaturesInfo($extension);
     $bundle = $this->getAssigner()->findBundle($info, $features_info);
-    $short_name = $bundle->getShortName($extension->getName());
+    // Use the full extension name as the short_name.  Important to allow
+    // multiple modules with different namespaces such as oa_media, test_media.
+    $short_name = $extension->getName();
     return $this->initPackage($short_name, $info['name'], !empty($info['description']) ? $info['description'] : '', $info['type'], $bundle, $extension);
   }
 
@@ -1257,13 +1259,13 @@ class FeaturesManager implements FeaturesManagerInterface {
   public function statusLabel($status) {
     switch ($status) {
       case FeaturesManagerInterface::STATUS_NO_EXPORT:
-        return t('Not exported');
+        return $this->t('Not exported');
 
       case FeaturesManagerInterface::STATUS_UNINSTALLED:
-        return t('Uninstalled');
+        return $this->t('Uninstalled');
 
       case FeaturesManagerInterface::STATUS_INSTALLED:
-        return t('Installed');
+        return $this->t('Installed');
     }
   }
 
@@ -1273,10 +1275,10 @@ class FeaturesManager implements FeaturesManagerInterface {
   public function stateLabel($state) {
     switch ($state) {
       case FeaturesManagerInterface::STATE_DEFAULT:
-        return t('Default');
+        return $this->t('Default');
 
       case FeaturesManagerInterface::STATE_OVERRIDDEN:
-        return t('Changed');
+        return $this->t('Changed');
     }
   }
 

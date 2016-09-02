@@ -101,5 +101,11 @@ interface CidocEntityInterface extends ContentEntityInterface, EntityChangedInte
    */
   public function getReferencesNeedingPopulating();
 
+  public function getReverseReferences($properties = [], $loaded = TRUE);
+  public function getForwardReferences($properties = [], $loaded = TRUE);
+
+  public function getTemporalInformation();
+  public function getGeospatialData();
+
 
 }

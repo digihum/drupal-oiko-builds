@@ -2,6 +2,7 @@
 
 namespace Drupal\cidoc\Form;
 
+use Drupal\cidoc\Entity\CidocEntityBundle;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -17,6 +18,7 @@ class CidocEntityBundleForm extends EntityForm {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
+    /** @var CidocEntityBundle $cidoc_entity_bundle */
     $cidoc_entity_bundle = $this->entity;
     $form['label'] = array(
       '#type' => 'textfield',
@@ -73,6 +75,14 @@ class CidocEntityBundleForm extends EntityForm {
       '#type' => 'textarea',
       '#default_value' => $cidoc_entity_bundle->getExamples(),
       '#description' => t('This text will be displayed on the <em>Add CIDOC entity</em> page.'),
+    );
+
+    $form['geoserializers'] = array(
+      '#title' => t('Geoserializers'),
+      '#type' => 'checkboxes',
+      '#options' => $cidoc_entity_bundle->getGeoserializerOptions(),
+      '#default_value' => $cidoc_entity_bundle->getGeoserializers(),
+      '#description' => t('Select the plugins that will transform an entity of this type into geospatial data for rendering on maps.'),
     );
 
     return $form;

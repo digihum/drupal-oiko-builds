@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\features_ui\Form\AssignmentExcludeForm.
- */
-
 namespace Drupal\features_ui\Form;
 
 use Drupal\Core\Form\FormStateInterface;
@@ -72,7 +67,7 @@ class AssignmentExcludeForm extends AssignmentFormBase {
     );
 
     $machine_name = $this->currentBundle->getMachineName();
-    $machine_name = !empty($machine_name) ? $machine_name : t('none');
+    $machine_name = !empty($machine_name) ? $machine_name : $this->t('none');
     $form['module']['namespace'] = array(
       '#type' => 'checkbox',
       '#title' => $this->t("Don't exclude non-installed configuration by namespace"),

@@ -1,40 +1,12 @@
 (function (globals) {
   'use strict';
 
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
 
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
+  function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   /**
    * A node in the interval tree.
@@ -150,6 +122,34 @@
             overlaps.push(node.data);
           }
           overlaps.push.apply(overlaps, _toConsumableArray(this.lookup(point, node.right)));
+        }
+        return overlaps;
+      }
+
+      /**
+       * Find all intervals that overlap a certain interval.
+       *
+       * @param {Number} begin The start of the valid interval
+       * @param {Number} end The end of the valid interval
+       * @returns {*[]} An array of all values that overlap the given interval.
+       */
+
+    }, {
+      key: 'overlap',
+      value: function overlap(begin, end) {
+        var overlaps = [];
+        var node = this._root;
+        if (arguments.length === 3) {
+          node = arguments[2];
+        }
+        if (!(begin > node.high || node.low > end)) {
+          overlaps.push(node.data);
+        }
+        if (node.left && node.left.max > begin) {
+          overlaps.push.apply(overlaps, _toConsumableArray(this.overlap(begin, end, node.left)));
+        }
+        if (node.right && node.right.max > begin) {
+          overlaps.push.apply(overlaps, _toConsumableArray(this.overlap(begin, end, node.right)));
         }
         return overlaps;
       }

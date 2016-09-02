@@ -1,13 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\features_ui\Form\FeaturesEditForm.
- */
-
 namespace Drupal\features_ui\Form;
 
-use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\Xss;
 use Drupal\features\FeaturesAssignerInterface;
 use Drupal\features\FeaturesGeneratorInterface;
@@ -15,6 +10,7 @@ use Drupal\features\FeaturesManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+Use Drupal\Component\Render\FormattableMarkup;
 
 /**
  * Defines the features settings form.
@@ -95,6 +91,13 @@ class FeaturesEditForm extends FormBase {
   protected $allowConflicts;
 
   /**
+   * Config missing from active site.
+   *
+   * @var array
+   */
+  protected $missing;
+
+  /**
    * Constructs a FeaturesEditForm object.
    *
    * @param \Drupal\features\FeaturesManagerInterface $features_manager
@@ -107,6 +110,7 @@ class FeaturesEditForm extends FormBase {
     $this->excluded = [];
     $this->required = [];
     $this->conflicts = [];
+    $this->missing = [];
   }
 
   /**
@@ -134,19 +138,22 @@ class FeaturesEditForm extends FormBase {
     $session = $this->getRequest()->getSession();
     $trigger = $form_state->getTriggeringElement();
     if ($trigger['#name'] == 'package') {
+      // Save current bundle name for later ajax callback.
       $this->oldBundle = $this->bundle;
-      $bundle_name = $form_state->getValue('package');
-      $bundle = $this->assigner->getBundle($bundle_name);
     }
     elseif ($trigger['#name'] == 'conflicts') {
       if (isset($session)) {
         $session->set('features_allow_conflicts', $form_state->getValue('conflicts'));
       }
-      $bundle = $this->assigner->loadBundle();
+    }
+    if (!$form_state->isValueEmpty('package')) {
+      $bundle_name = $form_state->getValue('package');
+      $bundle = $this->assigner->getBundle($bundle_name);
     }
     else {
       $bundle = $this->assigner->loadBundle();
     }
+    // Only store bundle name, not full object.
     $this->bundle = $bundle->getMachineName();
 
     $this->allowConflicts = FALSE;
@@ -274,13 +281,32 @@ class FeaturesEditForm extends FormBase {
         '#name' => $method_id,
         '#value' => $this->t('@name', array('@name' => $method['name'])),
         '#attributes' => array(
-          'title' => SafeMarkup::checkPlain($method['description']),
+          'title' => Html::escape($method['description']),
         ),
       );
     }
 
     // Build the Component Listing panel on the right.
     $form['export'] = $this->buildComponentList($form_state);
+
+    if (!empty($this->missing)) {
+      if ($this->allowConflicts) {
+        $form['actions']['#prefix'] = '<strong>' .
+          $this->t('WARNING: Package contains configuration missing from site.') . '<br>' .
+          $this->t('This configuration will be removed if you export it.') .
+          '</strong>';
+      }
+      else {
+        foreach ($generation_info as $method_id => $method) {
+          unset($form['actions'][$method_id]);
+        }
+        $form['actions']['#prefix'] = '<strong>' .
+          $this->t('Package contains configuration missing from site.') . '<br>' .
+          $this->t('Import the feature to create the missing config before you can export it.') . '<br>' .
+          $this->t('Or, enable the Allow Conflicts option above.') .
+          '</strong>';
+      }
+    }
 
     $form['#attached'] = array(
       'library' => array(
@@ -386,7 +412,7 @@ class FeaturesEditForm extends FormBase {
     foreach ($export['components'] as $component => $component_info) {
 
       $component_items_count = count($component_info['_features_options']['sources']);
-      $label = SafeMarkup::format('@component (<span class="component-count">@count</span>)',
+      $label = new FormattableMarkup('@component (<span class="component-count">@count</span>)',
         array(
           '@component' => $config_types[$component],
           '@count' => $component_items_count,
@@ -398,7 +424,7 @@ class FeaturesEditForm extends FormBase {
         $count += count($component_info['_features_options'][$section]);
       }
       $extra_class = ($count == 0) ? 'features-export-empty' : '';
-      $component_name = str_replace('_', '-', SafeMarkup::checkPlain($component));
+      $component_name = str_replace('_', '-', Html::escape($component));
 
       if ($count + $component_items_count > 0) {
         $element[$component] = array(
@@ -447,6 +473,16 @@ class FeaturesEditForm extends FormBase {
         );
       }
     }
+
+    $element['features_missing'] = array(
+      '#theme' => 'item_list',
+      '#items' => $export['missing'],
+      '#title' => $this->t('Configuration missing from active site:'),
+      '#suffix' => '<div class="description">' .
+        $this->t('Import the feature to create the missing config listed above.') .
+        '</div>',
+    );
+
     $element['features_legend'] = array(
       '#type' => 'fieldset',
       '#title' => $this->t('Legend'),
@@ -536,6 +572,7 @@ class FeaturesEditForm extends FormBase {
     }
 
     // Make a map of the config data already exported to the Feature.
+    $this->missing = array();
     $exported_features_info = array();
     foreach ($this->package->getConfigOrig() as $item_name) {
       // Make sure the extension provided item exists in the active
@@ -547,13 +584,16 @@ class FeaturesEditForm extends FormBase {
         $exported_features_info[$item->getType()][$item->getShortName()] = $item->getLabel();
         // }
       }
+      else {
+        $this->missing[] = $item_name;
+      }
     }
     $exported_features_info['dependencies'] = $this->package->getDependencyInfo();
 
     // Make a map of any config specifically excluded and/or required.
     foreach (array('excluded', 'required') as $constraint) {
       $this->{$constraint} = array();
-      $info = isset($this->package->getFeaturesInfo()[$constraint]) ? $this->package->getFeaturesInfo()[$constraint] : array();
+      $info = !empty($this->package->{'get' . $constraint}()) ? $this->package->{'get' . $constraint}() : array();
       if (($constraint == 'required') && (empty($info) || !is_array($info))) {
         // If required is True or empty array, add all config as required
         $info = $this->package->getConfigOrig();
@@ -648,7 +688,7 @@ class FeaturesEditForm extends FormBase {
               $this->required[$component][$key] = $key;
             }
           }
-          elseif (isset($new_components[$key])) {
+          elseif (isset($new_components[$key]) || isset($config_new[$component][$key])) {
             // Option is in the New exported array.
             if (isset($exported_components[$key])) {
               // Option was already previously exported so it's part of the
@@ -682,7 +722,7 @@ class FeaturesEditForm extends FormBase {
               $section = 'detected';
               $default_value = NULL;
               // Check for item explicitly excluded.
-              if (isset($this->excluded[$component][$key]) && !$form_state->hasValue(array($component, 'detected', $key))) {
+              if (isset($this->excluded[$component][$key]) && !$form_state->isSubmitted()) {
                 $default_value = FALSE;
               }
               else {
@@ -712,12 +752,10 @@ class FeaturesEditForm extends FormBase {
             if (($section == 'detected') && ($default_value === FALSE)) {
               // If this was previously required, we don't need to set it as
               // excluded because it wasn't automatically assigned.
-              if (isset($this->required[$component][$key])) {
-                unset($this->required[$component][$key]);
-              }
-              else {
+              if (!isset($this->required[$component][$key]) || ($this->package->getRequired() === TRUE)) {
                 $this->excluded[$component][$key] = $key;
               }
+              unset($this->required[$component][$key]);
               // Remove excluded item from export.
               if ($component == 'dependencies') {
                 $export['package']->removeDependency($key);
@@ -771,6 +809,7 @@ class FeaturesEditForm extends FormBase {
     $export['features_exclude'] = $this->excluded;
     $export['features_require'] = $this->required;
     $export['conflicts'] = $this->conflicts;
+    $export['missing'] = $this->missing;
 
     return $export;
   }
@@ -786,9 +825,9 @@ class FeaturesEditForm extends FormBase {
    *   The human label for the item.
    */
   protected function configLabel($type, $key, $label) {
-    $value = SafeMarkup::checkPlain($label);
+    $value = Html::escape($label);
     if ($key != $label) {
-      $value .= '  <span class="config-name">(' . SafeMarkup::checkPlain($key) . ')</span>';
+      $value .= '  <span class="config-name">(' . Html::escape($key) . ')</span>';
     }
     if (isset($this->conflicts[$type][$key])) {
       // Show what package the conflict is stored in.
@@ -800,7 +839,7 @@ class FeaturesEditForm extends FormBase {
       if (isset($packages[$package_name])) {
         $package_name = $packages[$package_name]->getMachineName();
       }
-      $value .= '  <span class="config-name">[' . $this->t('in') . ' ' . SafeMarkup::checkPlain($package_name) . ']</span>';
+      $value .= '  <span class="config-name">[' . $this->t('in') . ' ' . Html::escape($package_name) . ']</span>';
     }
     return Xss::filterAdmin($value);
   }
