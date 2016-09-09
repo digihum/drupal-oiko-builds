@@ -1,162 +1,166 @@
 (function (globals) {
   'use strict';
+// Begin auto generated code.
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+/**
+ * A node in the interval tree.
+ *
+ * @property {Number} low Start of the interval
+ * @property {Number} high End of the interval
+ * @property {Number} min The lowest endpoint of this node's interval or any of
+ * its children.
+ * @property {Number} max The greatest endpoint of this node's interval or any
+ * of its children.
+ * @property {*} data The value of the interval
+ * @property {IntervalTreeNode?} left Left child (lower intervals)
+ * @property {IntervalTreeNode?} right Right child (higher intervals)
+ * @property {IntervalTreeNode?} parent The parent of this node
+ * @private
+ */
+var IntervalTreeNode = function IntervalTreeNode(low, high, data, parent) {
+  _classCallCheck(this, IntervalTreeNode);
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+  this.low = low;
+  this.high = high;
+  this.min = low;
+  this.max = high;
+  this.data = data;
+  this.left = null;
+  this.right = null;
+  this.parent = parent;
+};
+
+var IntervalTree = function () {
+  function IntervalTree() {
+    _classCallCheck(this, IntervalTree);
+
+    this._root = null;
+    this.size = 0;
+  }
 
   /**
-   * A node in the interval tree.
+   * Actually insert a new interval into the tree. This has a few extra
+   * arguments that don't really need to be exposed in the public API, hence the
+   * separation.
    *
-   * @property {Number} low Start of the interval
-   * @property {Number} high End of the interval
-   * @property {Number} max The greatest endpoint of this node's interval or any
-   * of its children.
-   * @property {*} data The value of the interval
-   * @property {IntervalTreeNode?} left Left child (lower intervals)
-   * @property {IntervalTreeNode?} right Right child (higher intervals)
-   * @property {IntervalTreeNode?} parent The parent of this node
    * @private
+   * @param {Number} begin Start of the interval
+   * @param {Number} end End of the interval
+   * @param {*} value The value of the interval
+   * @param {IntervalTreeNode?} node The current place we are looking at to add
+   * the interval
+   * @param {IntervalTreeNode?} parent The parent of the place we are looking to
+   * add the interval
+   * @param {String} parentSide The side of the parent we're looking at
+   * @returns {IntervalTreeNode} The newly added node
    */
-  var IntervalTreeNode = function IntervalTreeNode(low, high, data, parent) {
-    _classCallCheck(this, IntervalTreeNode);
 
-    this.low = low;
-    this.high = high;
-    this.max = high;
-    this.data = data;
-    this.left = null;
-    this.right = null;
-    this.parent = parent;
-  };
 
-  var IntervalTree = function () {
-    function IntervalTree() {
-      _classCallCheck(this, IntervalTree);
-
-      this._root = null;
-      this.size = 0;
+  _createClass(IntervalTree, [{
+    key: '_insert',
+    value: function _insert(begin, end, value, node, parent, parentSide) {
+      var newNode = void 0;
+      if (node === null) {
+        // The place we're looking at is available; let's put our node here.
+        newNode = new IntervalTreeNode(begin, end, value, parent);
+        if (parent === null) {
+          // No parent? Must be root.
+          this._root = newNode;
+        } else {
+          // Let the parent know about its new child
+          parent[parentSide] = newNode;
+        }
+      } else {
+        // No vacancies. Figure out which side we should be putting our interval,
+        // and then recurse.
+        var side = begin < node.low || begin === node.low && end < node.high ? 'left' : 'right';
+        newNode = this._insert(begin, end, value, node[side], node, side);
+        node.max = Math.max(node.max, newNode.max);
+        node.min = Math.min(node.min, newNode.min);
+      }
+      return newNode;
     }
 
     /**
-     * Actually insert a new interval into the tree. This has a few extra
-     * arguments that don't really need to be exposed in the public API, hence the
-     * separation.
+     * Insert a new value into the tree, for the given interval.
      *
-     * @private
-     * @param {Number} begin Start of the interval
-     * @param {Number} end End of the interval
-     * @param {*} value The value of the interval
-     * @param {IntervalTreeNode?} node The current place we are looking at to add
-     * the interval
-     * @param {IntervalTreeNode?} parent The parent of the place we are looking to
-     * add the interval
-     * @param {String} parentSide The side of the parent we're looking at
-     * @returns {IntervalTreeNode} The newly added node
+     * @param {Number} begin The start of the valid interval
+     * @param {Number} end The end of the valid interval
+     * @param {*} value The value for the interval
      */
 
+  }, {
+    key: 'insert',
+    value: function insert(begin, end, value) {
+      this._insert(begin, end, value, this._root, this._root);
+      this.size++;
+    }
 
-    _createClass(IntervalTree, [{
-      key: '_insert',
-      value: function _insert(begin, end, value, node, parent, parentSide) {
-        var newNode = void 0;
-        if (node === null) {
-          // The place we're looking at is available; let's put our node here.
-          newNode = new IntervalTreeNode(begin, end, value, parent);
-          if (parent === null) {
-            // No parent? Must be root.
-            this._root = newNode;
-          } else {
-            // Let the parent know about its new child
-            parent[parentSide] = newNode;
-          }
-        } else {
-          // No vacancies. Figure out which side we should be putting our interval,
-          // and then recurse.
-          var side = begin < node.low || begin === node.low && end < node.high ? 'left' : 'right';
-          newNode = this._insert(begin, end, value, node[side], node, side);
-          node.max = Math.max(node.max, newNode.max);
-        }
-        return newNode;
+    /**
+     * Find all intervals that cover a certain point.
+     *
+     * @param {Number} point The sought point
+     * @returns {*[]} An array of all values that are valid at the given point.
+     */
+
+  }, {
+    key: 'lookup',
+    value: function lookup(point) {
+      var overlaps = [];
+      var node = this._root;
+      if (arguments.length === 2) {
+        node = arguments[1];
       }
-
-      /**
-       * Insert a new value into the tree, for the given interval.
-       *
-       * @param {Number} begin The start of the valid interval
-       * @param {Number} end The end of the valid interval
-       * @param {*} value The value for the interval
-       */
-
-    }, {
-      key: 'insert',
-      value: function insert(begin, end, value) {
-        this._insert(begin, end, value, this._root, this._root);
-        this.size++;
-      }
-
-      /**
-       * Find all intervals that cover a certain point.
-       *
-       * @param {Number} point The sought point
-       * @returns {*[]} An array of all values that are valid at the given point.
-       */
-
-    }, {
-      key: 'lookup',
-      value: function lookup(point) {
-        var overlaps = [];
-        var node = this._root;
-        if (arguments.length === 2) {
-          node = arguments[1];
-        }
-        if (node === null || node.max < point) {
-          return overlaps;
-        }
-        overlaps.push.apply(overlaps, _toConsumableArray(this.lookup(point, node.left)));
-        if (node.low <= point) {
-          if (node.high >= point) {
-            overlaps.push(node.data);
-          }
-          overlaps.push.apply(overlaps, _toConsumableArray(this.lookup(point, node.right)));
-        }
+      if (node === null || node.max < point) {
         return overlaps;
       }
-
-      /**
-       * Find all intervals that overlap a certain interval.
-       *
-       * @param {Number} begin The start of the valid interval
-       * @param {Number} end The end of the valid interval
-       * @returns {*[]} An array of all values that overlap the given interval.
-       */
-
-    }, {
-      key: 'overlap',
-      value: function overlap(begin, end) {
-        var overlaps = [];
-        var node = this._root;
-        if (arguments.length === 3) {
-          node = arguments[2];
-        }
-        if (!(begin > node.high || node.low > end)) {
+      overlaps.push.apply(overlaps, _toConsumableArray(this.lookup(point, node.left)));
+      if (node.low <= point) {
+        if (node.high >= point) {
           overlaps.push(node.data);
         }
-        if (node.left && node.left.max > begin) {
-          overlaps.push.apply(overlaps, _toConsumableArray(this.overlap(begin, end, node.left)));
-        }
-        if (node.right && node.right.max > begin) {
-          overlaps.push.apply(overlaps, _toConsumableArray(this.overlap(begin, end, node.right)));
-        }
-        return overlaps;
+        overlaps.push.apply(overlaps, _toConsumableArray(this.lookup(point, node.right)));
       }
-    }]);
+      return overlaps;
+    }
 
-    return IntervalTree;
-  }();
+    /**
+     * Find all intervals that overlap a certain interval.
+     *
+     * @param {Number} begin The start of the valid interval
+     * @param {Number} end The end of the valid interval
+     * @returns {*[]} An array of all values that overlap the given interval.
+     */
+
+  }, {
+    key: 'overlap',
+    value: function overlap(begin, end) {
+      var overlaps = [];
+      var node = this._root;
+      if (arguments.length === 3) {
+        node = arguments[2];
+      }
+      if (!(begin > node.high || node.low > end)) {
+        overlaps.push(node.data);
+      }
+      if (node.left && node.left.max >= begin) {
+        overlaps.push.apply(overlaps, _toConsumableArray(this.overlap(begin, end, node.left)));
+      }
+      if (node.right && node.right.min <= end) {
+        overlaps.push.apply(overlaps, _toConsumableArray(this.overlap(begin, end, node.right)));
+      }
+      return overlaps;
+    }
+  }]);
+
+  return IntervalTree;
+}();
+// End auto generated code.
 
 
   globals.IntervalTree = IntervalTree;

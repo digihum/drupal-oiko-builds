@@ -264,10 +264,10 @@ function _drush_migrate_tools_execute_migration(MigrationInterface $migration, $
       array_walk($required_migrations, __FUNCTION__, $dependency_options);
     }
   }
-  if ($options['force']) {
+  if (!empty($options['force'])) {
     $migration->set('requirements', []);
   }
-  if ($options['update']) {
+  if (!empty($options['update'])) {
     $migration->getIdMap()->prepareUpdate();
   }
   $executable = new MigrateExecutable($migration, $log, $options);

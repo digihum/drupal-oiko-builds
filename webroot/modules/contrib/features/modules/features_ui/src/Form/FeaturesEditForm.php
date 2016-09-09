@@ -7,10 +7,12 @@ use Drupal\Component\Utility\Xss;
 use Drupal\features\FeaturesAssignerInterface;
 use Drupal\features\FeaturesGeneratorInterface;
 use Drupal\features\FeaturesManagerInterface;
+use Drupal\features\ConfigurationItem;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 Use Drupal\Component\Render\FormattableMarkup;
+use Drupal\config_update\ConfigRevertInterface;
 
 /**
  * Defines the features settings form.
@@ -98,15 +100,23 @@ class FeaturesEditForm extends FormBase {
   protected $missing;
 
   /**
+   * The config reverter.
+   *
+   * @var \Drupal\config_update\ConfigRevertInterface
+   */
+  protected $configRevert;
+
+  /**
    * Constructs a FeaturesEditForm object.
    *
    * @param \Drupal\features\FeaturesManagerInterface $features_manager
    *   The features manager.
    */
-  public function __construct(FeaturesManagerInterface $features_manager, FeaturesAssignerInterface $assigner, FeaturesGeneratorInterface $generator) {
+  public function __construct(FeaturesManagerInterface $features_manager, FeaturesAssignerInterface $assigner, FeaturesGeneratorInterface $generator, ConfigRevertInterface $config_revert) {
     $this->featuresManager = $features_manager;
     $this->assigner = $assigner;
     $this->generator = $generator;
+    $this->configRevert = $config_revert;
     $this->excluded = [];
     $this->required = [];
     $this->conflicts = [];
@@ -120,7 +130,8 @@ class FeaturesEditForm extends FormBase {
     return new static(
       $container->get('features.manager'),
       $container->get('features_assigner'),
-      $container->get('features_generator')
+      $container->get('features_generator'),
+      $container->get('features.config_update')
     );
   }
 
@@ -173,6 +184,17 @@ class FeaturesEditForm extends FormBase {
       $this->package = $this->featuresManager->initPackage($featurename, NULL, '', 'module', $bundle);
     }
     else {
+      $this->package = $packages[$featurename];
+    }
+
+    if (!empty($packages[$featurename]) && $this->package->getBundle() !== $this->bundle && $form_state->isValueEmpty('package')) {
+      // Make sure the current bundle matches what is stored in the package.
+      // But only do this if the Package value hasn't been manually changed.
+      $bundle = $this->assigner->getBundle($this->package->getBundle());
+      $this->bundle = $bundle->getMachineName();
+      $this->assigner->reset();
+      $this->assigner->assignConfigPackages(TRUE);
+      $packages = $this->featuresManager->getPackages();
       $this->package = $packages[$featurename];
     }
 
@@ -246,6 +268,16 @@ class FeaturesEditForm extends FormBase {
       '#size' => 30,
     );
 
+    list($full_name, $path) = $this->featuresManager->getExportInfo($this->package, $bundle);
+    $form['info']['directory'] = array(
+      '#title' => $this->t('Path'),
+      '#description' => $this->t('Path to export package using Write action, relative to root directory.'),
+      '#type' => 'textfield',
+      '#required' => FALSE,
+      '#default_value' => $path,
+      '#size' => 30,
+    );
+
     $require_all = $this->package->getRequiredAll();
     $form['info']['require_all'] = array(
       '#type' => 'checkbox',
@@ -306,6 +338,14 @@ class FeaturesEditForm extends FormBase {
           $this->t('Or, enable the Allow Conflicts option above.') .
           '</strong>';
       }
+      $form['actions']['import_missing'] = array(
+        '#type' => 'submit',
+        '#name' => 'import_missing',
+        '#value' => $this->t('Import Missing'),
+        '#attributes' => array(
+          'title' => $this->t('Import only the missing configuration items.'),
+        ),
+      );
     }
 
     $form['#attached'] = array(
@@ -359,7 +399,8 @@ class FeaturesEditForm extends FormBase {
    */
   public function featureExists($value, $element, $form_state) {
     $packages = $this->featuresManager->getPackages();
-    return isset($packages[$value]) || \Drupal::moduleHandler()->moduleExists($value);
+    // A package may conflict only if it's been exported.
+    return (isset($packages[$value]) && ($packages[$value]->getState() !== FeaturesManagerInterface::STATUS_NO_EXPORT)) || \Drupal::moduleHandler()->moduleExists($value);
   }
 
   /**
@@ -855,6 +896,7 @@ class FeaturesEditForm extends FormBase {
     $this->package->setMachineName($form_state->getValue('machine_name'));
     $this->package->setDescription($form_state->getValue('description'));
     $this->package->setVersion($form_state->getValue('version'));
+    $this->package->setDirectory($form_state->getValue('directory'));
     $this->package->setBundle($bundle->getMachineName());
     // Save it first just to create it in case it's a new package.
     $this->featuresManager->setPackage($this->package);
@@ -881,7 +923,10 @@ class FeaturesEditForm extends FormBase {
 
     // Set default redirect, but allow generators to change it later.
     $form_state->setRedirect('features.edit', array('featurename' => $this->package->getMachineName()));
-    if (!empty($method_id)) {
+    if ($method_id == 'import_missing') {
+      $this->importMissing();
+    }
+    elseif (!empty($method_id)) {
       $packages = array($this->package->getMachineName());
       $this->generator->generatePackages($method_id, $bundle, $packages);
       $this->generator->applyExportFormSubmit($method_id, $form, $form_state);
@@ -905,6 +950,27 @@ class FeaturesEditForm extends FormBase {
       }
     }
     return $config;
+  }
+
+  /**
+   * Imports the configuration missing from the active store
+   */
+  protected function importMissing() {
+    $config = $this->featuresManager->getConfigCollection();
+    $missing = $this->featuresManager->reorderMissing($this->missing);
+    foreach ($missing as $config_name) {
+      if (!isset($config[$config_name])) {
+        $item = $this->featuresManager->getConfigType($config_name);
+        $type = ConfigurationItem::fromConfigStringToConfigType($item['type']);
+        try {
+          $this->configRevert->import($type, $item['name_short']);
+          drupal_set_message($this->t('Imported @name', array('@name' => $config_name)));
+        } catch (\Exception $e) {
+          drupal_set_message($this->t('Error importing @name : @message',
+            array('@name' => $config_name, '@message' => $e->getMessage())), 'error');
+        }
+      }
+    }
   }
 
   /**
