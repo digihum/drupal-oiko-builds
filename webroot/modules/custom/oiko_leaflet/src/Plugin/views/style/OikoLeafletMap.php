@@ -94,31 +94,12 @@ class OikoLeafletMap extends StylePluginBase {
     }
 
     // Check whether we have a geo data field we can work with
-    if (!count($fields_geo_data)) {
+    if (!count($fields)) {
       $form['error'] = array(
-        '#markup' => $this->t('Please add at least one geofield to the view.'),
+        '#markup' => $this->t('Please add at least one ID field to the view.'),
       );
       return;
     }
-
-    // Map preset.
-    $form['data_source'] = array(
-      '#type' => 'select',
-      '#title' => $this->t('Data Source'),
-      '#description' => $this->t('Which field contains geodata?'),
-      '#options' => $fields_geo_data,
-      '#default_value' => $this->options['data_source'],
-      '#required' => TRUE,
-    );
-
-    $form['temporal_data_source'] = array(
-      '#type' => 'select',
-      '#title' => $this->t('Temporal data Source'),
-      '#description' => $this->t('Which field contains temporal data?'),
-      '#options' => $fields_temporal_data,
-      '#default_value' => $this->options['temporal_data_source'],
-      '#required' => FALSE,
-    );
 
     // ID field
     $form['id_field'] = array(
@@ -127,32 +108,6 @@ class OikoLeafletMap extends StylePluginBase {
       '#description' => $this->t('Choose the field which be used as a internal ID.'),
       '#options' => $fields,
       '#default_value' => $this->options['id_field'],
-    );
-
-    // Name field
-    $form['name_field'] = array(
-      '#type' => 'select',
-      '#title' => $this->t('Title Field'),
-      '#description' => $this->t('Choose the field which will appear as a title on tooltips.'),
-      '#options' => array_merge(array('' => ''), $fields),
-      '#default_value' => $this->options['name_field'],
-    );
-
-    $desc_options = array_merge(array('' => ''), $fields);
-    // Add an option to render the entire entity using a view mode
-    if ($this->entity_type) {
-      $desc_options += array(
-        '#rendered_entity' => '<' . $this->t('!entity entity', array('!entity' => $this->entity_type)) . '>',
-      );
-    }
-
-    $form['description_field'] = array(
-      '#type' => 'select',
-      '#title' => $this->t('Description Field'),
-      '#description' => $this->t('Choose the field or rendering method which will appear as a description on tooltips or popups.'),
-      '#required' => FALSE,
-      '#options' => $desc_options,
-      '#default_value' => $this->options['description_field'],
     );
 
     if ($this->entity_type) {
@@ -180,6 +135,13 @@ class OikoLeafletMap extends StylePluginBase {
         )
       );
     }
+
+    // Sidebar
+    $form['sidebar'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Display sidebar'),
+      '#default_value' => $this->options['sidebar'],
+    );
 
     // Choose a map preset
     $map_options = array();
@@ -354,9 +316,7 @@ class OikoLeafletMap extends StylePluginBase {
    */
   function render() {
     $data = array();
-    $moves = array();
-    $geofield_name = $this->options['data_source'];
-    if ($this->options['data_source']) {
+    if ($this->options['id_field']) {
       $this->renderFields($this->view->result);
       $entities = [];
       foreach ($this->view->result as $id => $result) {
@@ -370,6 +330,7 @@ class OikoLeafletMap extends StylePluginBase {
 
     // Always render the map, even if we do not have any data.
     $map = leaflet_map_get_info($this->options['map']);
+    $map['sidebar'] = $this->options['sidebar'];
     return leaflet_render_map($map, $data, $this->options['height'] . 'px');
   }
 
@@ -405,6 +366,7 @@ class OikoLeafletMap extends StylePluginBase {
     $options['name_field'] = array('default' => '');
     $options['description_field'] = array('default' => '');
     $options['view_mode'] = array('default' => 'full');
+    $options['sidebar'] = array('default' => FALSE);
     $options['map'] = array('default' => '');
     $options['height'] = array('default' => '400');
     $options['icon'] = array('default' => array());

@@ -1,0 +1,21 @@
+.sidebar {
+  bottom: 135px;
+  z-index: 3;
+}
+
+.sidebar-header {
+  background-color: palette(tan);
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.sidebar-tabs > li.active,
+.sidebar-tabs > ul > li.active {
+  background-color: palette(tan);
+  color: white;
+}
+.sidebar-tabs > li,
+.sidebar-tabs > ul > li {
+  color: palette(white);
+  background-color: palette(grey);
+}

@@ -28,7 +28,7 @@ gulp.task('compile:sass:oiko', function () {
     .pipe(postcss([ autoprefixer({ browsers: ['last 2 versions', 'ie >= 9', 'and_chr >= 2.3'] }) ]))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('webroot/themes/custom/oiko/css'))
-    .pipe(browserSync.stream({match: 'webroot/themes/custom/oiko/**/*css'}));
+    .pipe(browserSync.reload({stream: true}));
 });
 
 gulp.task('compile:sass', ['compile:sass:oiko']);

@@ -26,15 +26,16 @@ function oiko_leaflet_library_info_alter(array &$libraries, $module) {
       'license' => $libraries['leaflet'],
     );
 
-    $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/leaflet-overlapping-marker-spiderfier';
+    $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/leaflet-sleep';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/intervalTree';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/vis';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/markercluster';
+    $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/sidebar-v2';
     $libraries['leaflet-drupal']['dependencies'][] = 'core/jquery';
     $libraries['leaflet-drupal']['dependencies'][] = 'core/drupal';
     $path = base_path() . drupal_get_path('module', 'oiko_leaflet') . '/js';
-//    $libraries['leaflet-drupal']['js'][$path . '/leaflet.spider.js'] = array();
     $libraries['leaflet-drupal']['js'][$path . '/leaflet.temporal.js'] = array();
+    $libraries['leaflet-drupal']['js'][$path . '/leaflet.popups.js'] = array();
   }
 }
 
@@ -73,4 +74,11 @@ function oiko_leaflet_leaflet_map_info() {
         ),
       ),
   );
+}
+
+/**
+ * Implements hook_theme_registry_alter
+ */
+function oiko_leaflet_theme_registry_alter(&$theme_registry) {
+  $theme_registry['leaflet_map']['path'] = drupal_get_path('module', 'oiko_leaflet') . '/templates';
 }

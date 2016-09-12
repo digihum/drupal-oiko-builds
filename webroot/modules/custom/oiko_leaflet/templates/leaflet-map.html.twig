@@ -1,0 +1,50 @@
+{#
+/**
+ * @file
+ * Theme implementation to display a Leaflet map.
+ *
+ * This creates a placeholder for the map to be injected in.
+ *
+ * Available variables:
+ * - map_id
+ * - height
+ *
+ * Note: min-width is set so that a map will show when "Inline" is specified
+ * for the associated field label. This may of course be overridden. The default
+ * field label style is "Above" with a width of 100%.
+ *
+ * @ingroup themeable
+ *
+ */
+#}
+{% if map.sidebar %}
+<div id="leaflet-sidebar" class="sidebar collapsed">
+    <!-- Nav tabs -->
+    <div class="sidebar-tabs">
+        <ul role="tablist">
+            <li><a href="#information" role="tab"><i class="fa fa-bars"></i></a></li>
+            <li><a href="#discussion" role="tab"><i class="fa fa-bullhorn"></i></a></li>
+        </ul>
+    </div>
+
+    <!-- Tab panes -->
+    <div class="sidebar-content">
+        <div class="sidebar-pane" id="information">
+            <h1 class="sidebar-header">
+                <span class="sidebar-information-content-title">Details</span>
+                <span class="sidebar-close"><i class="fa fa-times"></i></span>
+            </h1>
+
+            <div class="sidebar-information-content-content"><p>Select a item on the map to display further information about it here.</p></div>
+
+        </div>
+
+        <div class="sidebar-pane" id="discussion">
+            <h1 class="sidebar-header">Discussions<span class="sidebar-close"><i class="fa fa-times"></i></span></h1>
+
+            <div class="sidebar-discussion-content-content"><p>Select a item on the map to display related discussions here.</p></div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<div id="{{ map_id }}" style="min-width: 150px; height: {{ height }}"></div>

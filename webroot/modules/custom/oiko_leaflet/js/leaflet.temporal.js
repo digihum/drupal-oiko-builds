@@ -1,4 +1,5 @@
 (function ($) {
+  'use strict';
 L.TimeLineControl = L.Control.extend({
   options: {
     position: 'bottomleft'
