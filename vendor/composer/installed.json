@@ -3336,7 +3336,7 @@
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/features",
-            "reference": "13841e6d2e7b359e640470ac9ae8641fa7794707"
+            "reference": "2abcd0956251196aa3baa060d2e30d394e49e59c"
         },
         "require": {
             "drupal/config": "8.*",
@@ -3349,7 +3349,7 @@
         "suggest": {
             "drupal/core": "Required by drupal/features_ui"
         },
-        "time": "2016-09-09 13:19:14",
+        "time": "2016-09-09 19:54:20",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
