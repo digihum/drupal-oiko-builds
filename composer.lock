@@ -1665,7 +1665,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/features",
-                "reference": "2abcd0956251196aa3baa060d2e30d394e49e59c"
+                "reference": "aa06e83a6566c502262e908cc23cda59a64867e5"
             },
             "require": {
                 "drupal/config": "8.*",
@@ -1690,7 +1690,7 @@
             ],
             "description": "Enables administrators to package configuration into modules.",
             "homepage": "https://www.drupal.org/project/features",
-            "time": "2016-09-09 19:54:20"
+            "time": "2016-09-12 16:52:55"
         },
         {
             "name": "drupal/field_group",
