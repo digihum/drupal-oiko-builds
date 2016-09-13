@@ -138,66 +138,73 @@ function leaflet_process_geofield($items = array()) {
     if (!($geom = geoPHP::load(isset($item['wkt']) ? $item['wkt'] : $item))) {
       continue;
     }
-    $datum = array('type' => strtolower($geom->geometryType()));
-
-    switch ($datum['type']) {
-      case 'point':
-        $datum += array(
-          'lat' => $geom->getY(),
-          'lon' => $geom->getX(),
-        );
-        break;
-
-      case 'linestring':
-        $components = $geom->getComponents();
-        foreach ($components as $component) {
-          $datum['points'][] = array(
-            'lat' => $component->getY(),
-            'lon' => $component->getX(),
-          );
-        }
-        break;
-
-      case 'polygon':
-        $tmp = $geom->getComponents();
-        $components = $tmp[0]->getComponents();
-        foreach ($components as $component) {
-          $datum['points'][] = array(
-            'lat' => $component->getY(),
-            'lon' => $component->getX(),
-          );
-        }
-        break;
-
-      case 'multipolygon':
-      case 'multipolyline':
-      case 'multilinestring':
-        if ($datum['type'] == 'multilinestring') {
-          $datum['type'] = 'multipolyline';
-        }
-        if ($datum['type'] == 'multipolygon') {
-          $tmp = $geom->getComponents();
-          $components = $tmp[0]->getComponents();
-        }
-        else {
-          $components = $geom->getComponents();
-        }
-        foreach ($components as $key => $component) {
-          $subcomponents = $component->getComponents();
-          foreach ($subcomponents as $subcomponent) {
-            $datum['component'][$key]['points'][] = array(
-              'lat' => $subcomponent->getY(),
-              'lon' => $subcomponent->getX(),
-            );
-          }
-          unset($subcomponent);
-        }
-        break;
-    }
-    $data[] = $datum;
+    $data[] = _leaflet_process_geofield_helper($geom);
   }
 
   return $data;
+}
+
+function _leaflet_process_geofield_helper($geom) {
+  $datum = array('type' => strtolower($geom->geometryType()));
+
+  switch ($datum['type']) {
+    case 'point':
+      $datum += array(
+        'lat' => $geom->getY(),
+        'lon' => $geom->getX(),
+      );
+      break;
+
+    case 'linestring':
+      $components = $geom->getComponents();
+      foreach ($components as $component) {
+        $datum['points'][] = array(
+          'lat' => $component->getY(),
+          'lon' => $component->getX(),
+        );
+      }
+      break;
+
+    case 'polygon':
+      $tmp = $geom->getComponents();
+      $components = $tmp[0]->getComponents();
+      foreach ($components as $component) {
+        $datum['points'][] = array(
+          'lat' => $component->getY(),
+          'lon' => $component->getX(),
+        );
+      }
+      break;
+
+    case 'multipolyline':
+    case 'multilinestring':
+      if ($datum['type'] == 'multilinestring') {
+        $datum['type'] = 'multipolyline';
+      }
+      $components = $geom->getComponents();
+      foreach ($components as $key => $component) {
+        $subcomponents = $component->getComponents();
+        foreach ($subcomponents as $subcomponent) {
+          $datum['component'][$key]['points'][] = array(
+            'lat' => $subcomponent->getY(),
+            'lon' => $subcomponent->getX(),
+          );
+        }
+        unset($subcomponent);
+      }
+      break;
+
+    case 'geometrycollection':
+    case 'multipolygon':
+      $components = $geom->getComponents();
+      foreach ($components as $key => $component) {
+        $datum['component'][$key] = _leaflet_process_geofield_helper($component);
+      }
+
+      break;
+
+  }
+  return $datum;
 }
 
 /**

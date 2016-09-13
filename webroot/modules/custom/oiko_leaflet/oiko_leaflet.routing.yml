@@ -1,13 +1,4 @@
 
-# In order to to create pages it is necessary to define routes for them.
-# A route maps a URL path to a controller. It defines what function
-# or method will be called when a URL is accessed.
-# If the user accesses http://drupal8.dev//cidoc-entity/{cidoc_entity}/popup, the routing
-# system will look for a route with that path. In this case it will find a
-# match, and execute the _controller callback. In this case the callback is
-# defined as a classname
-# ("\Drupal\oiko_leaflet\Controller\PopupContentController")
-# and a method ("view").
 oiko_leaflet.popup_content_controller_view:
   path: '/cidoc-entity/{cidoc_entity}/popup'
   defaults:
@@ -15,3 +6,11 @@ oiko_leaflet.popup_content_controller_view:
     _title: 'cidocCRMPopupConent'
   requirements:
     _permission: 'view published cidoc entities'
+
+oiko_leaflet.empire_controller_listall:
+  path: '/oiko_leaflet/empires/list.json'
+  defaults:
+    _controller: '\Drupal\oiko_leaflet\Controller\EmpireController::listAll'
+    _title: 'List All Empires'
+  requirements:
+    _permission: 'access content'

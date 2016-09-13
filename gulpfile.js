@@ -39,8 +39,18 @@ gulp.task('watch:sass:oiko', ['compile:sass:oiko'], function () {
 
 gulp.task('watch:sass', ['watch:sass:oiko']);
 
+
+gulp.task('compile:js', function () {
+  // return gulp.src("**/*.js").pipe(sourcemaps.init()).pipe(browserSync.reload());
+});
+
+gulp.task('watch:js', ['compile:js'], function (done) {
+  browserSync.reload();
+  done();
+});
+
 // Main watch task.
-gulp.task('watch', ['watch:sass']);
+gulp.task('watch', ['watch:sass', 'watch:js']);
 
 // Main compile task.
 gulp.task('compile', ['compile:sass']);
@@ -54,4 +64,6 @@ gulp.task('browsersync', ['watch'], function(){
 
   //initialize browsersync
   browserSync.init(files);
+
+  gulp.watch('webroot/modules/**/*.js', ['watch:js']);
 });
