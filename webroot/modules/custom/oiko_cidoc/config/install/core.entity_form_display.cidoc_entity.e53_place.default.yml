@@ -73,7 +73,6 @@ third_party_settings:
       children:
         - field_location_lookup
         - field_pleiades_uri
-        - field_geodata
       parent_name: group_main_details
       weight: 5
       label: Appellations
@@ -161,7 +160,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_geodata:
-    weight: 24
+    weight: 2
     settings:
       map:
         leaflet_map: 'Ancient Terrain'
@@ -174,8 +173,6 @@ content:
       input:
         show: '1'
         readonly: 0
-      upload:
-        show: '1'
     third_party_settings: {  }
     type: leaflet_widget
   field_location_lookup:

@@ -1,10 +1,6 @@
 .sidebar {
   bottom: 135px;
-  z-index: 1001;
-}
-
-.sidebar.leaflet-touch {
-  border-right: none;
+  z-index: 3;
 }
 
 .sidebar-header {

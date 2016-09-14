@@ -143,13 +143,6 @@ class OikoLeafletMap extends StylePluginBase {
       '#default_value' => $this->options['sidebar'],
     );
 
-    // Empires
-    $form['empires'] = array(
-      '#type' => 'checkbox',
-      '#title' => $this->t('Display empires'),
-      '#default_value' => $this->options['empires'],
-    );
-
     // Choose a map preset
     $map_options = array();
     foreach (leaflet_map_get_info() as $key => $map) {
@@ -338,7 +331,6 @@ class OikoLeafletMap extends StylePluginBase {
     // Always render the map, even if we do not have any data.
     $map = leaflet_map_get_info($this->options['map']);
     $map['sidebar'] = $this->options['sidebar'];
-    $map['empires'] = $this->options['empires'];
     return leaflet_render_map($map, $data, $this->options['height'] . 'px');
   }
 
@@ -375,7 +367,6 @@ class OikoLeafletMap extends StylePluginBase {
     $options['description_field'] = array('default' => '');
     $options['view_mode'] = array('default' => 'full');
     $options['sidebar'] = array('default' => FALSE);
-    $options['empires'] = array('default' => FALSE);
     $options['map'] = array('default' => '');
     $options['height'] = array('default' => '400');
     $options['icon'] = array('default' => array());

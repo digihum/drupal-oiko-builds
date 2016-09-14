@@ -3,45 +3,39 @@ status: true
 dependencies: {  }
 id: p132_overlaps_with
 label: 'P132 overlaps with'
-bidirectional: true
+bidirectional: false
 reverse_label: 'P132 overlaps with'
 domain_bundles:
-  e12_production: e12_production
-  e4_period: e4_period
-  e5_event: e5_event
-  e66_formation: e66_formation
-  e67_birth: e67_birth
-  e68_dissolution: e68_dissolution
-  e69_death: e69_death
-  e6_destruction: e6_destruction
-  e7_activity: e7_activity
-  e9_move: e9_move
-  o1_killing: o1_killing
-  o2_active_dissolution: o2_active_dissolution
-  o3_active_destruction: o3_active_destruction
+  0: e4_period
+  1: e5_event
+  4: e7_activity
+  5: e12_production
+  7: e66_formation
+  8: e67_birth
+  10: e68_dissolution
+  11: e69_death
+  12: e6_destruction
+  20: e9_move
+  21: o1_killing
+  22: o2_active_dissolution
+  23: o3_active_destruction
 range_bundles:
-  e12_production: e12_production
-  e4_period: e4_period
-  e5_event: e5_event
-  e66_formation: e66_formation
-  e67_birth: e67_birth
-  e68_dissolution: e68_dissolution
-  e69_death: e69_death
-  e6_destruction: e6_destruction
-  e7_activity: e7_activity
-  e9_move: e9_move
-  o1_killing: o1_killing
-  o2_active_dissolution: o2_active_dissolution
-  o3_active_destruction: o3_active_destruction
+  0: e4_period
+  1: e5_event
+  4: e7_activity
+  5: e12_production
+  7: e66_formation
+  8: e67_birth
+  10: e68_dissolution
+  11: e69_death
+  12: e6_destruction
+  20: e9_move
+  21: o1_killing
+  22: o2_active_dissolution
+  23: o3_active_destruction
 editability:
   domain: true
   range: true
-timesubwidget:
-  domain: false
-  range: false
-widget_description:
-  domain: ''
-  range: ''
-autocomplete_description:
-  domain: ''
-  range: ''
+timesubwidget: {  }
+widget_description: {  }
+autocomplete_description: {  }

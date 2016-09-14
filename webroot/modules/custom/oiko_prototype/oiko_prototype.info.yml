@@ -11,7 +11,6 @@ dependencies:
   - leaflet_views
   - oiko_cidoc
   - oiko_leaflet
-  - taxonomy
   - user
   - views
 package: Oiko

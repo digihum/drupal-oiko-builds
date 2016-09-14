@@ -1,0 +1,44 @@
+.forum {
+  border-bottom: 1px solid $light-gray;
+  margin: 1em 0;
+  width: 100%;
+
+  th {
+    background-color: $black;
+    border-bottom: 3px solid palette(tan);
+    color: $white;
+    padding: 1em;
+  }
+
+  td {
+    padding: 0.5em;
+  }
+
+  th, td {
+    border-left: 1px solid $white;
+    border-right: 1px solid $white;
+  }
+
+  .odd td {
+    border-color: $light-gray;
+  }
+
+  .even td {
+    background-color: $light-gray;
+  }
+
+  .indent {
+    margin-left: 1.5em;
+  }
+}
+
+.js-comment {
+  background-color: $light-gray;
+  margin-bottom: 1em;
+  padding: 1em;
+
+  footer {
+    float: left;
+    width: 250px;
+  }
+}
