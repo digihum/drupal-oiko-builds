@@ -21,8 +21,8 @@
     // Remove the popup.
     //lFeature.unbindPopup();
 
-    lFeature.on('mouseover', leafletPopupOpen);
-    lFeature.on('mouseout', leafletPopupClose);
+    // lFeature.on('mouseover', leafletPopupOpen);
+    // lFeature.on('mouseout', leafletPopupClose);
 
 
     // Add a click event that opens our marker in the sidebar.
