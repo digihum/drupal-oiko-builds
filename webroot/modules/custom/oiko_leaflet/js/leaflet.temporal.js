@@ -218,7 +218,7 @@ L.timeLineControl = function (timeline, start, end, timelist) {
     drupalLeaflet.updateTime = function(time) {
       this.time = typeof time === 'number' ? time : new Date(time).getTime();
       if (this.drawOnSetTime) {
-        this.updateTemporalLayersTrigger();
+        this.updateTemporalLayers();
       }
     };
 
@@ -237,25 +237,20 @@ L.timeLineControl = function (timeline, start, end, timelist) {
     drupalLeaflet.timelineControl.addTimeline(drupalLeaflet.temporalTree, $.proxy(drupalLeaflet.updateTime, drupalLeaflet));
 
 
-    drupalLeaflet.updateTemporalLayersTrigger = function() {
-      // Fire an event so that anyone can respond.
-      $(document).trigger('temporalShift', [this]);
-    };
 
     drupalLeaflet.updateTemporalLayers = function() {
-      var self = this;
 
       // Show half a year either side of our selection.
       var offset = 365.25 * 86400 / 2;
       // These are the features we want on our map.
-      var features = self.temporalTree.overlap(Math.floor(self.time - offset), Math.ceil(self.time + offset));
+      var features = this.temporalTree.overlap(Math.floor(this.time - offset), Math.ceil(this.time + offset));
       
       var found, layer;
 
       // Loop through the existing features on our map.
-      for (var i = 0; i < self.temporalDisplayedLayerGroup.getLayers().length; i++) {
+      for (var i = 0; i < drupalLeaflet.temporalDisplayedLayerGroup.getLayers().length; i++) {
         found = false;
-        layer = self.temporalDisplayedLayerGroup.getLayers()[i];
+        layer = drupalLeaflet.temporalDisplayedLayerGroup.getLayers()[i];
         // Search for this layer in our set of features we do want.
         for (var j = 0; j < features.length; j++) {
           if (features[j] === layer) {
@@ -267,19 +262,16 @@ L.timeLineControl = function (timeline, start, end, timelist) {
         if (!found) {
           // We didn't find this layer, so remove it and decrement i, so we process this i again.
           i--;
-          self.mainLayer.removeLayer(layer);
-          self.temporalDisplayedLayerGroup.removeLayer(layer);
+          drupalLeaflet.mainLayer.removeLayer(layer);
+          drupalLeaflet.temporalDisplayedLayerGroup.removeLayer(layer);
         }
       }
 
       features.forEach(function (feature) {
-        self.mainLayer.addLayer(feature);
-        self.temporalDisplayedLayerGroup.addLayer(feature);
+        drupalLeaflet.mainLayer.addLayer(feature);
+        drupalLeaflet.temporalDisplayedLayerGroup.addLayer(feature);
       });
     };
-    $(document).on('temporalShift', function(e, dl) {
-      $.proxy(drupalLeaflet.updateTemporalLayers, dl)();
-    });
   });
 
   $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
