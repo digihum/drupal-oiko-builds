@@ -283,6 +283,10 @@ content:
     weight: 5
     settings: {  }
     third_party_settings: {  }
+  p12_occurred_in_the_presence_of_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
   p14_carried_out_by_entity_view_1:
     weight: 9
     settings: {  }
@@ -297,6 +301,14 @@ content:
     third_party_settings: {  }
   p16_used_specific_object_entity_view_1:
     weight: 11
+    settings: {  }
+    third_party_settings: {  }
+  p17_motivated_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p17_was_motivated_by_entity_view_1:
+    weight: 10
     settings: {  }
     third_party_settings: {  }
   p4_has_time_span_entity_view_1:

@@ -1,0 +1,11 @@
+name: Browsersync
+type: module
+description: Integrates Browsersync (Node.js module) with Drupal.
+package: Nodejs
+# core: 8.x
+
+# Information added by Drupal.org packaging script on 2016-02-18
+version: '8.x-1.0-beta1'
+core: '8.x'
+project: 'browsersync'
+datestamp: 1455775143

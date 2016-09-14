@@ -49,6 +49,7 @@ use Drupal\field\Entity\FieldConfig;
  *     "group",
  *     "description",
  *     "examples",
+ *     "geoserializers",
  *     "uuid",
  *   }
  * )
@@ -96,6 +97,13 @@ class CidocEntityBundle extends ConfigEntityBundleBase {
    */
   protected $examples;
 
+  /**
+   * The enabled Geoserializers.
+   *
+   * @var array
+   */
+  protected $geoserializers = [];
+
   protected $crm_entity;
 
   function getCRMEntityName() {
@@ -139,6 +147,26 @@ class CidocEntityBundle extends ConfigEntityBundleBase {
    */
   public function getExamples() {
     return $this->examples;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getGeoserializers() {
+    return array_filter($this->geoserializers);
+  }
+
+  public function getGeoserializerOptions() {
+    $options = [];
+    $plugin_manager = \Drupal::service('plugin.manager.cidoc.geoserializer');
+
+    foreach ($plugin_manager->getDefinitions() as $definition) {
+      if (empty($definition['hidden'])) {
+        $options[$definition['id']] = t($definition['name']);
+      }
+    }
+
+    return $options;
   }
 
   /**

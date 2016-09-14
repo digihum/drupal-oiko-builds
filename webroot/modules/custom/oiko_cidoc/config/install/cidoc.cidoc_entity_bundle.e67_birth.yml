@@ -6,5 +6,8 @@ id: e67_birth
 label: 'E67 Birth'
 weight: -20
 group: auxiliary
-description: "<p>This class comprises the births of human beings. E67 Birth is a biological event focussing on\nthe context of people coming into life. (E63 Beginning of Existence comprises the coming into\nlife of any living beings).</p>\n\n<p>Twins, triplets etc. are brought into life by the same E67 Birth event. The introduction of the\nE67 Birth event as a documentation element allows the description of a range of family\nrelationships in a simple model. Suitable extensions may describe more details and the\ncomplexity of motherhood with the intervention of modern medicine. In this model, the\nbiological father is not seen as a necessary participant in the E67 Birth event.</p>\n"
-examples: "<ul>\n<li>the birth of Alexander the Great</li>\n</ul>\n"
+description: "<p>This class comprises the births of human beings. E67 Birth is a biological event focussing on\r\nthe context of people coming into life. (E63 Beginning of Existence comprises the coming into\r\nlife of any living beings).</p>\r\n\r\n<p>Twins, triplets etc. are brought into life by the same E67 Birth event. The introduction of the\r\nE67 Birth event as a documentation element allows the description of a range of family\r\nrelationships in a simple model. Suitable extensions may describe more details and the\r\ncomplexity of motherhood with the intervention of modern medicine. In this model, the\r\nbiological father is not seen as a necessary participant in the E67 Birth event.</p>\r\n"
+examples: "<ul>\r\n<li>the birth of Alexander the Great</li>\r\n</ul>\r\n"
+geoserializers:
+  event: event
+  move: '0'

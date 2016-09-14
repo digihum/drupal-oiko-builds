@@ -25,6 +25,12 @@ cidoc.cidoc_entity_bundle.*:
     examples:
       type: text
       label: 'Description'
+    geoserializers:
+      type: sequence
+      label: 'Enabled geoserializer plugins for this bundle'
+      sequence:
+        type: string
+        label: 'Geoserializer plugin ID'
     uuid:
       type: string
 

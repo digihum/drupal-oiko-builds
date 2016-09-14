@@ -50,3 +50,17 @@ function oiko_profile_update_8103() {
     ->set('page.front', '/prototype/map-of-events')
     ->save();
 }
+
+/**
+ * Implements hook_update_N().
+ */
+function oiko_profile_update_8104() {
+  \Drupal::service('module_installer')->install(['forum']);
+}
+
+/**
+ * Install color_field module.
+ */
+function oiko_profile_update_8105() {
+  \Drupal::service('module_installer')->install(['color_field']);
+}

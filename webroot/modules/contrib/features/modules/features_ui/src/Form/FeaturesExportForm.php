@@ -1,13 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\features_ui\Form\FeaturesExportForm.
- */
-
 namespace Drupal\features_ui\Form;
 
-use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\Xss;
 use Drupal\features\FeaturesAssignerInterface;
 use Drupal\features\FeaturesGeneratorInterface;
@@ -201,7 +196,7 @@ class FeaturesExportForm extends FormBase {
           '#name' => $method_id,
           '#value' => $this->t('@name', array('@name' => $method['name'])),
           '#attributes' => array(
-            'title' => SafeMarkup::checkPlain($method['description']),
+            'title' => Html::escape($method['description']),
           ),
         );
       }
@@ -310,7 +305,7 @@ class FeaturesExportForm extends FormBase {
     // Use 'data' instead of plain string value so a blank version doesn't
     // remove column from table.
     $element['version'] = array(
-      'data' => SafeMarkup::checkPlain($package->getVersion()),
+      'data' => Html::escape($package->getVersion()),
       'class' => array('column-nowrap'),
     );
     $overrides = $this->featuresManager->detectOverrides($package);
@@ -325,31 +320,33 @@ class FeaturesExportForm extends FormBase {
     // Bundle package configuration by type.
     $package_config = array();
     foreach ($package->getConfig() as $item_name) {
-      $item = $config_collection[$item_name];
-      $package_config[$item->getType()][] = array(
-        'name' => SafeMarkup::checkPlain($item_name),
-        'label' => SafeMarkup::checkPlain($item->getLabel()),
-        'class' => in_array($item_name, $overrides) ? 'features-override' :
-          (in_array($item_name, $new_config) ? 'features-detected' : ''),
-      );
+      if (isset($config_collection[$item_name])) {
+        $item = $config_collection[$item_name];
+        $package_config[$item->getType()][] = array(
+          'name' => Html::escape($item_name),
+          'label' => Html::escape($item->getLabel()),
+          'class' => in_array($item_name, $overrides) ? 'features-override' :
+            (in_array($item_name, $new_config) ? 'features-detected' : ''),
+        );
+      }
     }
     // Conflict config from other modules.
     foreach ($package->getConfigOrig() as $item_name) {
       if (!isset($config_collection[$item_name])) {
         $missing[] = $item_name;
         $package_config['missing'][] = array(
-          'name' => SafeMarkup::checkPlain($item_name),
-          'label' => SafeMarkup::checkPlain($item_name),
+          'name' => Html::escape($item_name),
+          'label' => Html::escape($item_name),
           'class' => 'features-missing',
         );
       }
       elseif (!in_array($item_name, $package->getConfig())) {
         $item = $config_collection[$item_name];
         $conflicts[] = $item_name;
-        $package_name = !empty($item->getPackage()) ? $item->getPackage() : t('PACKAGE NOT ASSIGNED');
+        $package_name = !empty($item->getPackage()) ? $item->getPackage() : $this->t('PACKAGE NOT ASSIGNED');
         $package_config[$item->getType()][] = array(
-          'name' => SafeMarkup::checkPlain($package_name),
-          'label' => SafeMarkup::checkPlain($item->getLabel()),
+          'name' => Html::escape($package_name),
+          'label' => Html::escape($item->getLabel()),
           'class' => 'features-conflict',
         );
       }
@@ -424,9 +421,9 @@ class FeaturesExportForm extends FormBase {
           'data' => array(
             '#type' => 'html_tag',
             '#tag' => 'span',
-            '#value' => SafeMarkup::checkPlain($label),
+            '#value' => Html::escape($label),
             '#attributes' => array(
-              'title' => SafeMarkup::checkPlain($type),
+              'title' => Html::escape($type),
               'class' => 'features-item-label',
             ),
           ),
@@ -435,8 +432,8 @@ class FeaturesExportForm extends FormBase {
           'data' => array(
             '#theme' => 'features_items',
             '#items' => $package_config[$type],
-            '#value' => SafeMarkup::checkPlain($label),
-            '#title' => SafeMarkup::checkPlain($type),
+            '#value' => Html::escape($label),
+            '#title' => Html::escape($type),
           ),
           'class' => 'item',
         );

@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e4_period
+    - field.field.cidoc_entity.e4_period.field_empire_outline
   module:
     - field_group
     - paragraphs
@@ -28,7 +29,7 @@ third_party_settings:
         - group_where
         - group_descriptive_text
       parent_name: group_main_deets
-      weight: 5
+      weight: 6
       label: 'Main details'
       format_type: tabs
       format_settings:
@@ -125,6 +126,7 @@ third_party_settings:
         - internal_name
         - citation
         - significance
+        - field_empire_outline
         - group_tabset
       parent_name: group_data
       weight: 3
@@ -223,6 +225,11 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
+  field_empire_outline:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
   internal_name:
     type: string_textfield
     weight: 2

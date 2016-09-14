@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_single_color
+    - taxonomy.vocabulary.empire
+  module:
+    - color_field
+id: taxonomy_term.empire.field_single_color
+field_name: field_single_color
+entity_type: taxonomy_term
+bundle: empire
+label: 'Map colour'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  opacity: 1
+field_type: color_field_type

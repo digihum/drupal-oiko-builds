@@ -7,3 +7,6 @@ services:
     class: Drupal\cidoc\EntityTypeHelper
     arguments: ["@cidoc_spec.entity_traversal", "@cidoc_spec.entity_factory", "@cidoc_spec.drupal_manager"]
 
+  plugin.manager.cidoc.geoserializer:
+    class: Drupal\cidoc\Geoserializer\GeoserializerPluginManager
+    parent: default_plugin_manager

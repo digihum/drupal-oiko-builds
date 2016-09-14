@@ -33,4 +33,15 @@ We are using Features to bundle up configuration. Once you've added some configu
 Theming
 -------
 
-There is a 'oiko' base theme in the themes directory with it's own README.md explaining how to use npm and gulp to get up and running.
+There is a 'oiko' base theme in the themes directory.
+
+To use, run:
+
+    npm install
+    npm run compile
+
+From the base of the project root (same place you run `composer install`) to compile the Sass etc.
+
+You can also watch for changes:
+
+    npm run watch

@@ -12,9 +12,17 @@ leaflet-overlapping-marker-spiderfier:
   dependencies:
     - leaflet/leaflet
 
+leaflet-sleep:
+  js:
+    js/vendor/leaflet.Sleep.js: {}
+  dependencies:
+    - leaflet/leaflet
+  version: 0.5.1-2
+
 intervalTree:
   js:
     js/vendor/intervalTree.js: {}
+  version: 0.3.2
 
 markercluster:
   js:
@@ -30,3 +38,35 @@ vis:
   css:
     component:
       css/vendor/vis.min.css: {}
+
+sidebar-v2:
+  js:
+    js/vendor/leaflet-sidebar.min.js: {}
+  css:
+    component:
+      css/vendor/leaflet-sidebar.min.css: {}
+      //maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css: {external: true}
+  version: v0.3.0
+  dependencies:
+      - core/drupal.ajax
+
+sidebar-v2.jquery:
+  js:
+    js/vendor/jquery-sidebar.min.js: {}
+  version: v0.3.0
+  dependencies:
+      - oiko_leaflet/sidebar-v2
+
+popups:
+  js:
+    js/leaflet.popups.js: {}
+  version: 0.1
+  dependencies:
+    - oiko_leaflet/sidebar-v2
+
+empires:
+  js:
+    js/leaflet.empires.js: {}
+  version: 0.1
+  dependencies:
+    - oiko_leaflet/intervalTree

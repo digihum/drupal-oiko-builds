@@ -94,56 +94,20 @@ class OikoLeafletMap extends StylePluginBase {
     }
 
     // Check whether we have a geo data field we can work with
-    if (!count($fields_geo_data)) {
+    if (!count($fields)) {
       $form['error'] = array(
-        '#markup' => $this->t('Please add at least one geofield to the view.'),
+        '#markup' => $this->t('Please add at least one ID field to the view.'),
       );
       return;
     }
 
-    // Map preset.
-    $form['data_source'] = array(
+    // ID field
+    $form['id_field'] = array(
       '#type' => 'select',
-      '#title' => $this->t('Data Source'),
-      '#description' => $this->t('Which field contains geodata?'),
-      '#options' => $fields_geo_data,
-      '#default_value' => $this->options['data_source'],
-      '#required' => TRUE,
-    );
-
-    $form['temporal_data_source'] = array(
-      '#type' => 'select',
-      '#title' => $this->t('Temporal data Source'),
-      '#description' => $this->t('Which field contains temporal data?'),
-      '#options' => $fields_temporal_data,
-      '#default_value' => $this->options['temporal_data_source'],
-      '#required' => TRUE,
-    );
-
-    // Name field
-    $form['name_field'] = array(
-      '#type' => 'select',
-      '#title' => $this->t('Title Field'),
-      '#description' => $this->t('Choose the field which will appear as a title on tooltips.'),
-      '#options' => array_merge(array('' => ''), $fields),
-      '#default_value' => $this->options['name_field'],
-    );
-
-    $desc_options = array_merge(array('' => ''), $fields);
-    // Add an option to render the entire entity using a view mode
-    if ($this->entity_type) {
-      $desc_options += array(
-        '#rendered_entity' => '<' . $this->t('!entity entity', array('!entity' => $this->entity_type)) . '>',
-      );
-    }
-
-    $form['description_field'] = array(
-      '#type' => 'select',
-      '#title' => $this->t('Description Field'),
-      '#description' => $this->t('Choose the field or rendering method which will appear as a description on tooltips or popups.'),
-      '#required' => FALSE,
-      '#options' => $desc_options,
-      '#default_value' => $this->options['description_field'],
+      '#title' => $this->t('ID Field'),
+      '#description' => $this->t('Choose the field which be used as a internal ID.'),
+      '#options' => $fields,
+      '#default_value' => $this->options['id_field'],
     );
 
     if ($this->entity_type) {
@@ -171,6 +135,20 @@ class OikoLeafletMap extends StylePluginBase {
         )
       );
     }
+
+    // Sidebar
+    $form['sidebar'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Display sidebar'),
+      '#default_value' => $this->options['sidebar'],
+    );
+
+    // Empires
+    $form['empires'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Display empires'),
+      '#default_value' => $this->options['empires'],
+    );
 
     // Choose a map preset
     $map_options = array();
@@ -345,74 +323,22 @@ class OikoLeafletMap extends StylePluginBase {
    */
   function render() {
     $data = array();
-    $geofield_name = $this->options['data_source'];
-    if ($this->options['data_source']) {
+    if ($this->options['id_field']) {
       $this->renderFields($this->view->result);
+      $entities = [];
       foreach ($this->view->result as $id => $result) {
-
-        $geofield_value = $this->getFieldValue($id, $geofield_name);
-
-        if (empty($geofield_value)) {
-          // In case the result is not among the raw results, get it from the
-          // rendered results.
-          $geofield_value = $this->rendered_fields[$id][$geofield_name];
-        }
-        if (!empty($geofield_value)) {
-          $points = leaflet_process_geofield($geofield_value);
-
-          // Render the entity with the selected view mode
-          if ($this->options['description_field'] === '#rendered_entity' && is_object($result)) {
-            $entity = entity_load($this->entity_type, $result->{$this->entity_info->getKey('id')});
-            $build = entity_view($entity, $this->options['view_mode']);
-            $description = drupal_render($build);
-          }
-          // Normal rendering via fields
-          elseif ($this->options['description_field']) {
-            $description = $this->rendered_fields[$id][$this->options['description_field']];
-          }
-
-          // Attach pop-ups if we have a description field
-          if (isset($description)) {
-            foreach ($points as &$point) {
-              $point['popup'] = $description;
-            }
-          }
-
-          // Attach also titles, they might be used later on
-          if ($this->options['name_field']) {
-            foreach ($points as &$point) {
-              $point['label'] = $this->rendered_fields[$id][$this->options['name_field']];
-            }
-          }
-
-          // If there is temporal data, add that to the points too.
-          if ($this->options['temporal_data_source']) {
-            $temporalfield_value_min = $this->getFieldValue($id, $this->options['temporal_data_source'], 'minmin');
-            $temporalfield_value_max = $this->getFieldValue($id, $this->options['temporal_data_source'], 'maxmax');
-            if (!empty($temporalfield_value_min) && !empty($temporalfield_value_max)) {
-              foreach ($points as &$point) {
-                $point['temporal'] = array(
-                  'minmin' => $temporalfield_value_min,
-                  'maxmax' => $temporalfield_value_max,
-                );
-              }
-            }
-          }
-
-
-          $data = array_merge($data, $points);
-
-          if (!empty($this->options['icon']) && $this->options['icon']['iconUrl']) {
-            foreach ($data as $key => $feature) {
-              $data[$key]['icon'] = $this->options['icon'];
-            }
-          }
-        }
+        $id = (string) $this->rendered_fields[$id][$this->options['id_field']];
+        $entities[$id] = $id;
+      }
+      foreach (entity_load_multiple('cidoc_entity', $entities) as $entity) {
+        $data = array_merge($data, $entity->getGeospatialData());
       }
     }
 
     // Always render the map, even if we do not have any data.
     $map = leaflet_map_get_info($this->options['map']);
+    $map['sidebar'] = $this->options['sidebar'];
+    $map['empires'] = $this->options['empires'];
     return leaflet_render_map($map, $data, $this->options['height'] . 'px');
   }
 
@@ -444,9 +370,12 @@ class OikoLeafletMap extends StylePluginBase {
     $options = parent::defineOptions();
     $options['data_source'] = array('default' => '');
     $options['temporal_data_source'] = array('default' => '');
+    $options['id_field'] = array('default' => '');
     $options['name_field'] = array('default' => '');
     $options['description_field'] = array('default' => '');
     $options['view_mode'] = array('default' => 'full');
+    $options['sidebar'] = array('default' => FALSE);
+    $options['empires'] = array('default' => FALSE);
     $options['map'] = array('default' => '');
     $options['height'] = array('default' => '400');
     $options['icon'] = array('default' => array());

@@ -1,0 +1,16 @@
+
+oiko_leaflet.popup_content_controller_view:
+  path: '/cidoc-entity/{cidoc_entity}/popup'
+  defaults:
+    _controller: '\Drupal\oiko_leaflet\Controller\PopupContentController::view'
+    _title: 'cidocCRMPopupConent'
+  requirements:
+    _permission: 'view published cidoc entities'
+
+oiko_leaflet.empire_controller_listall:
+  path: '/oiko_leaflet/empires/list.json'
+  defaults:
+    _controller: '\Drupal\oiko_leaflet\Controller\EmpireController::listAll'
+    _title: 'List All Empires'
+  requirements:
+    _permission: 'access content'

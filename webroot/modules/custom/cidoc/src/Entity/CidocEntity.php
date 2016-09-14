@@ -497,8 +497,7 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
    * @return array
    *   The array of temporal information.
    */
-  function getTemporalInformation() {
-
+  public function getTemporalInformation() {
     $time_spans = $this->getForwardReferences(['p4_has_time_span'], TRUE);
     foreach ($time_spans as $time_span) {
       $date_value = $time_span->field_date->getValue();
@@ -510,9 +509,22 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
           'maxmax' => $date_value[0]['maxmax'],
         ];
       }
-
-
     }
     return [];
+  }
+
+  /**
+   * Return an array of geospatial data for this entity.
+   */
+  public function getGeospatialData() {
+    $data = [];
+    // Get the geoserializer plugins for my bundle.
+    $activeSerializers = $this->bundle->entity->getGeoserializers();
+    $plugin_manager = \Drupal::service('plugin.manager.cidoc.geoserializer');
+    foreach ($activeSerializers as $activeSerializer) {
+      $data = array_merge($data, $plugin_manager->createInstance($activeSerializer)->getGeospatialData($this));
+    }
+
+    return $data;
   }
 }

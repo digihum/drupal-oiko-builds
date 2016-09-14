@@ -8,6 +8,7 @@
 @import "modules/footer-links";
 @import "modules/footer-links";
 @import "modules/navigation-bar";
+@import "modules/sidebar";
 @import "modules/tabs";
 @import "modules/cidoc-entities";
 
@@ -22,4 +23,8 @@
 .vis-item {
   background-color: rgba(palette(tan), .5);
   border-color: rgba(palette(tan), 1);
+}
+
+.tdrag > div {
+  background-color: rgba(palette(tan),.15);
 }
