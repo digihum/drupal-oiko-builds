@@ -1,0 +1,21 @@
+ul.links {
+  list-style-type: none;
+  margin-left: 0;
+
+  &:after {
+    clear: both;
+    content: ' ';
+    display: table;
+  }
+
+  li {
+    float: left;
+    padding-right: 1em;
+  }
+}
+
+.action-links {
+  list-style: none;
+  padding: 0;
+  margin: 1em 0;
+}

@@ -4,7 +4,6 @@ dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e53_place
     - field.field.cidoc_entity.e53_place.field_geodata
-    - field.field.cidoc_entity.e53_place.field_location_lookup
     - field.field.cidoc_entity.e53_place.field_pleiades_uri
   module:
     - field_group
@@ -132,7 +131,6 @@ content:
 hidden:
   citation: true
   content: true
-  field_location_lookup: true
   field_pleiades_uri: true
   internal_name: true
   user_id: true
