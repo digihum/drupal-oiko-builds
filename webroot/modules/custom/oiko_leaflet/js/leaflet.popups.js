@@ -8,23 +8,13 @@
 
       // Link into the click event for markers.
 
+
     }
   });
 
-  var leafletPopupOpen = function(e) {
-    this.openPopup();
-  };
-  var leafletPopupClose = function(e) {
-    this.closePopup();
-  };
   $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
     // Remove the popup.
-    //lFeature.unbindPopup();
-
-    lFeature.on('mouseover', leafletPopupOpen);
-    lFeature.on('mouseout', leafletPopupClose);
-
-
+    lFeature.unbindPopup();
     // Add a click event that opens our marker in the sidebar.
     lFeature.on('click', function() {
       Drupal.oiko.openLeafletSidebar(feature.id, feature.label, drupalLeaflet);

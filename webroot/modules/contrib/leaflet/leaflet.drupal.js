@@ -186,9 +186,6 @@
       case 'json':
         lFeature = this.create_json(feature.json);
         break;
-      case 'geometrycollection':
-        lFeature = this.create_collection(feature);
-        break;
       default:
         return; // Crash and burn.
     }
@@ -315,14 +312,6 @@
     else {
       return new L.MultiPolygon(polygons);
     }
-  };
-
-  Drupal.Leaflet.prototype.create_collection = function (collection) {
-    var layers = new L.featureGroup();
-    for (var x = 0; x < collection.component.length; x++) {
-      layers.addLayer(this.create_feature(collection.component[x]));
-    }
-    return layers;
   };
 
   Drupal.Leaflet.prototype.create_json = function (json) {

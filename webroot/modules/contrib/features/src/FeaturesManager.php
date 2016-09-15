@@ -480,10 +480,14 @@ class FeaturesManager implements FeaturesManagerInterface {
    * {@inheritdoc}
    */
   public function initPackage($machine_name, $name = NULL, $description = '', $type = 'module', FeaturesBundleInterface $bundle = NULL, Extension $extension = NULL) {
-    if (!isset($this->packages[$machine_name])) {
-      return $this->packages[$machine_name] = $this->getPackageObject($machine_name, $name, $description, $type, $bundle, $extension);
+    if (isset($this->packages[$machine_name])) {
+      return $this->packages[$machine_name];
     }
-    return $this->packages[$machine_name];
+    // Also look for existing package within the bundle
+    elseif (isset($bundle) && isset($this->packages[$bundle->getFullName($machine_name)])) {
+      return $this->packages[$bundle->getFullName($machine_name)];
+    }
+    return $this->packages[$machine_name] = $this->getPackageObject($machine_name, $name, $description, $type, $bundle, $extension);
   }
 
   /**
@@ -509,8 +513,7 @@ class FeaturesManager implements FeaturesManagerInterface {
     $dependencies = [];
     $type = $config->getType();
     if ($type != FeaturesManagerInterface::SYSTEM_SIMPLE_CONFIG) {
-      $provider = $this->entityManager->getDefinition($type)
-        ->getProvider();
+      $provider = $this->entityManager->getDefinition($type)->getProvider();
       // Ensure the provider is an installed module and not, for example, 'core'
       if (isset($module_list[$provider])) {
         $dependencies[] = $provider;
@@ -564,7 +567,7 @@ class FeaturesManager implements FeaturesManagerInterface {
         // - it is not flagged as excluded.
         $assignable = (!$item->isProviderExcluded() || $is_profile_package) && !$item->isExcluded();
         // An item is assignable if it was provided by the current package
-        $assignable = $assignable || ($item->getProvider() == $package->getFullName());
+        $assignable = $assignable || ($item->getProvider() == $package->getMachineName());
         $excluded_from_package = in_array($package_name, $item->getPackageExcluded());
         $already_in_package = in_array($item_name, $package->getConfig());
         if (($force || (!$already_assigned && $assignable && !$excluded_from_package)) && !$already_in_package) {
@@ -826,9 +829,9 @@ class FeaturesManager implements FeaturesManagerInterface {
     // If no extension was passed in, look for a match.
     if (!isset($extension)) {
       $module_list = $this->getFeaturesModules($bundle);
-      $full_name = $bundle->getFullName($package->getMachineName());
-      if (isset($module_list[$full_name])) {
-        $extension = $module_list[$full_name];
+      $module_name = $package->getMachineName();
+      if (isset($module_list[$module_name])) {
+        $extension = $module_list[$module_name];
       }
     }
 

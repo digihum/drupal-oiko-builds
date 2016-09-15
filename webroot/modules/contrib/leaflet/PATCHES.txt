@@ -17,7 +17,3 @@ Fixes the API docs to include a missing hook
 Source: https://www.drupal.org/files/issues/leaflet-add-hook_leaflet_map_info_alter-2746721-2.patch
 
 
-Allows use of geometrycollection
-Source: https://www.drupal.org/files/issues/leaflet-2799311-geometry-collection.patch
-
-
