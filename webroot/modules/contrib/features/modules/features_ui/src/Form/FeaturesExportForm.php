@@ -7,6 +7,7 @@ use Drupal\Component\Utility\Xss;
 use Drupal\features\FeaturesAssignerInterface;
 use Drupal\features\FeaturesGeneratorInterface;
 use Drupal\features\FeaturesManagerInterface;
+use Drupal\features\FeaturesBundleInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -171,7 +172,7 @@ class FeaturesExportForm extends FormBase {
       ),
     );
 
-    $form['preview'] = $this->buildListing($packages);
+    $form['preview'] = $this->buildListing($packages, $current_bundle);
 
     $form['#attached'] = array(
       'library' => array(
@@ -224,11 +225,13 @@ class FeaturesExportForm extends FormBase {
    *
    * @param \Drupal\features\Package[] $packages
    *   The packages.
+   * @param \Drupal\features\FeaturesBundleInterface $bundle
+   *   The current bundle
    *
    * @return array
    *   A render array of a form element.
    */
-  protected function buildListing(array $packages) {
+  protected function buildListing(array $packages, FeaturesBundleInterface $bundle) {
 
     $header = array(
       'name' => array('data' => $this->t('Feature')),
@@ -245,7 +248,7 @@ class FeaturesExportForm extends FormBase {
       if ($first && $package->getStatus() == FeaturesManagerInterface::STATUS_NO_EXPORT) {
         // Don't offer new non-profile packages that are empty.
         if ($package->getStatus() === FeaturesManagerInterface::STATUS_NO_EXPORT &&
-          !$this->assigner->getBundle()->isProfilePackage($package->getMachineName()) &&
+          !$bundle->isProfilePackage($package->getMachineName()) &&
           empty($package->getConfig())) {
           continue;
         }
@@ -258,7 +261,7 @@ class FeaturesExportForm extends FormBase {
           ),
         );
       }
-      $options[$package->getMachineName()] = $this->buildPackageDetail($package);
+      $options[$package->getMachineName()] = $this->buildPackageDetail($package, $bundle);
     }
 
     $element = array(
@@ -278,11 +281,13 @@ class FeaturesExportForm extends FormBase {
    *
    * @param \Drupal\features\Package $package
    *   The package.
+   * @param \Drupal\features\FeaturesBundleInterface
+   *   The current bundle.
    *
    * @return array
    *   A render array of a form element.
    */
-  protected function buildPackageDetail(Package $package) {
+  protected function buildPackageDetail(Package $package, FeaturesBundleInterface $bundle) {
     $config_collection = $this->featuresManager->getConfigCollection();
 
     $url = Url::fromRoute('features.edit', array('featurename' => $package->getMachineName()));
@@ -295,7 +300,7 @@ class FeaturesExportForm extends FormBase {
     // Except for the 'unpackaged' pseudo-package, display the full name, since
     // that's what will be generated.
     if ($machine_name !== 'unpackaged') {
-      $machine_name = $package->getFullName($machine_name);
+      $machine_name = $bundle->getFullName($machine_name);
     }
     $element['machine_name'] = $machine_name;
     $element['status'] = array(
@@ -312,6 +317,7 @@ class FeaturesExportForm extends FormBase {
     $new_config = $this->featuresManager->detectNew($package);
     $conflicts = array();
     $missing = array();
+    $moved = array();
 
     if ($package->getStatus() == FeaturesManagerInterface::STATUS_NO_EXPORT) {
       $overrides = array();
@@ -342,13 +348,24 @@ class FeaturesExportForm extends FormBase {
       }
       elseif (!in_array($item_name, $package->getConfig())) {
         $item = $config_collection[$item_name];
-        $conflicts[] = $item_name;
-        $package_name = !empty($item->getPackage()) ? $item->getPackage() : $this->t('PACKAGE NOT ASSIGNED');
-        $package_config[$item->getType()][] = array(
-          'name' => Html::escape($package_name),
-          'label' => Html::escape($item->getLabel()),
-          'class' => 'features-conflict',
-        );
+        if (empty($item->getProvider())) {
+          $conflicts[] = $item_name;
+          $package_name = !empty($item->getPackage()) ? $item->getPackage() : $this->t('PACKAGE NOT ASSIGNED');
+          $package_config[$item->getType()][] = array(
+            'name' => Html::escape($package_name),
+            'label' => Html::escape($item->getLabel()),
+            'class' => 'features-conflict',
+          );
+        }
+        else {
+          $moved[] = $item_name;
+          $package_name = !empty($item->getPackage()) ? $item->getPackage() : $this->t('PACKAGE NOT ASSIGNED');
+          $package_config[$item->getType()][] = array(
+            'name' => $this->t('Moved to @package', array('@package' => $package_name)),
+            'label' => Html::escape($item->getLabel()),
+            'class' => 'features-moved',
+          );
+        }
       }
     }
     // Add dependencies.
@@ -393,6 +410,14 @@ class FeaturesExportForm extends FormBase {
         '#title' => $this->t('Missing'),
         '#url' => Url::fromRoute('features.edit', array('featurename' => $package->getMachineName())),
         '#attributes' => array('class' => array('features-missing')),
+      );
+    }
+    if (!empty($moved)) {
+      $state_links[] = array(
+        '#type' => 'link',
+        '#title' => $this->t('Moved'),
+        '#url' => Url::fromRoute('features.edit', array('featurename' => $package->getMachineName())),
+        '#attributes' => array('class' => array('features-moved')),
       );
     }
     if (!empty($state_links)) {
