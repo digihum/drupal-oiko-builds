@@ -24,6 +24,8 @@ content:
     weight: 16
     settings: {  }
     third_party_settings: {  }
+  e6_destroyed_entity_view_1:
+    weight: 10
   internal_name:
     label: inline
     type: string

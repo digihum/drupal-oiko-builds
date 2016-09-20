@@ -1,8 +1,11 @@
-name: Oiko - Citation
+name: 'Oiko - Citation'
+description: 'Extensions to allow for citations'
 type: module
-description: Extensions to allow for citations
 core: 8.x
-package: Oiko
 dependencies:
+  - field
+  - link
   - paragraphs
   - squid_autocomplete
+  - taxonomy
+package: Oiko

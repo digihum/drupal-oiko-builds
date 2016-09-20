@@ -4,6 +4,7 @@ type: module
 core: 8.x
 dependencies:
   - cidoc
+  - color_field
   - edtf
   - field
   - field_group
