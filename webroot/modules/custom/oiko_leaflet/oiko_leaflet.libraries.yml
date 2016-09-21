@@ -19,6 +19,13 @@ leaflet-sleep:
     - leaflet/leaflet
   version: 0.5.1-2
 
+leaflet-textpath:
+  js:
+    js/vendor/leaflet.textpath.js: {}
+  dependencies:
+    - leaflet/leaflet
+  version: 1.1.0
+
 intervalTree:
   js:
     js/vendor/intervalTree.js: {}
@@ -70,3 +77,10 @@ empires:
   version: 0.1
   dependencies:
     - oiko_leaflet/intervalTree
+
+arrows:
+  js:
+    js/leaflet.arrows.js: {}
+  version: 0.1
+  dependencies:
+    - oiko_leaflet/leaflet-textpath

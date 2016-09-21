@@ -36,6 +36,7 @@ function oiko_leaflet_library_info_alter(array &$libraries, $module) {
     $libraries['leaflet-drupal']['js'][$path . '/leaflet.temporal.js'] = array();
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/popups';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/empires';
+    $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/arrows';
   }
 }
 
