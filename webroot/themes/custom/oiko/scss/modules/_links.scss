@@ -1,4 +1,4 @@
-ul.links {
+ul.inline {
   list-style-type: none;
   margin-left: 0;
 
@@ -9,7 +9,7 @@ ul.links {
   }
 
   li {
-    float: left;
+    display: inline-block;
     padding-right: 1em;
   }
 }
