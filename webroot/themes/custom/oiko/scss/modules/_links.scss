@@ -2,12 +2,6 @@ ul.inline {
   list-style-type: none;
   margin-left: 0;
 
-  &:after {
-    clear: both;
-    content: ' ';
-    display: table;
-  }
-
   li {
     display: inline-block;
     padding-right: 1em;
