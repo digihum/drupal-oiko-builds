@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\features_ui\Form\AssignmentFormBase.
+ */
+
 namespace Drupal\features_ui\Form;
 
 use Drupal\features\FeaturesManagerInterface;
@@ -73,7 +78,7 @@ abstract class AssignmentFormBase extends FormBase {
   /**
    * Adds configuration types checkboxes.
    */
-  protected function setConfigTypeSelect(&$form, $defaults, $type, $bundles_only = FALSE, $description = '') {
+  protected function setConfigTypeSelect(&$form, $defaults, $type, $bundles_only = FALSE) {
     $options = $this->featuresManager->listConfigTypes($bundles_only);
 
     if (!isset($form['types'])) {
@@ -86,7 +91,7 @@ abstract class AssignmentFormBase extends FormBase {
     $form['types']['config'] = array(
       '#type' => 'checkboxes',
       '#title' => $this->t('Configuration types'),
-      '#description' => !empty($description) ? $description : $this->t('Select types of configuration that should be considered @type types.', array('@type' => $type)),
+      '#description' => $this->t('Select types of configuration that should be considered @type types.', array('@type' => $type)),
       '#options' => $options,
       '#default_value' => $defaults,
     );
@@ -138,29 +143,13 @@ abstract class AssignmentFormBase extends FormBase {
   /**
    * Adds a "Save settings" submit action.
    */
-  protected function setActions(&$form, $method_id = NULL) {
-    $assignment_info = $this->assigner->getAssignmentMethods();
-    if (isset($method_id) && isset($assignment_info[$method_id])) {
-      $method = $assignment_info[$method_id];
-      $form['help_text'] = array(
-        '#markup' => $method['description'],
-        '#prefix' => '<p class="messages messages--status">',
-        '#suffix' => '</p>',
-        '#weight' => -99,
-      );
-    }
-
+  protected function setActions(&$form) {
     $form['actions'] = array('#type' => 'actions');
     $form['actions']['submit'] = array(
       '#type' => 'submit',
       '#button_type' => 'primary',
       '#value' => $this->t('Save settings'),
     );
-    $form['#attributes']['class'][] = 'features-assignment-settings-form';
-    $form['#attached'] = array(
-      'library' => array(
-        'features_ui/drupal.features_ui.admin',
-    ));
   }
 
   /**

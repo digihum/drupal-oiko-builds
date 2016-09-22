@@ -677,12 +677,14 @@ class ContainerBuilderTest extends \PHPUnit_Framework_TestCase
         $container->set('a', new \stdClass());
     }
 
+    /**
+     * @expectedException \BadMethodCallException
+     */
     public function testThrowsExceptionWhenAddServiceOnAFrozenContainer()
     {
         $container = new ContainerBuilder();
         $container->compile();
-        $container->set('a', $foo = new \stdClass());
-        $this->assertSame($foo, $container->get('a'));
+        $container->set('a', new \stdClass());
     }
 
     public function testNoExceptionWhenSetSyntheticServiceOnAFrozenContainer()

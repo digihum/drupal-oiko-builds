@@ -9,8 +9,6 @@ use Drupal\migrate\Row;
 /**
  * This plugin copies from the source to the destination.
  *
- * @link https://www.drupal.org/node/2135307 Online handbook documentation for get process plugin @endlink
- *
  * @MigrateProcessPlugin(
  *   id = "get"
  * )

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\migrate_tools\MigrateExecutable.
+ */
+
 namespace Drupal\migrate_tools;
 
 use Drupal\migrate\Event\MigratePreRowSaveEvent;
@@ -94,9 +99,6 @@ class MigrateExecutable extends MigrateExecutableBase {
     }
     if (isset($options['idlist'])) {
       $this->idlist = explode(',', $options['idlist']);
-      array_walk($this->idlist , function(&$value, $key) {
-        $value = explode(':', $value);
-      });
     }
 
     $this->listeners[MigrateEvents::MAP_SAVE] = [$this, 'onMapSave'];
@@ -334,20 +336,8 @@ class MigrateExecutable extends MigrateExecutableBase {
   public function onPrepareRow(MigratePrepareRowEvent $event) {
     if ($this->idlist) {
       $row = $event->getRow();
-      /**
-       * @TODO replace for $source_id = $row->getSourceIdValues(); when https://www.drupal.org/node/2698023 is fixed
-       */
-      $migration = $event->getMigration();
-      $source_id = array_merge(array_flip(array_keys($migration->getSourcePlugin()
-        ->getIds())), $row->getSourceIdValues());
-      $skip = TRUE;
-      foreach ($this->idlist as $item) {
-        if (array_values($source_id) === $item) {
-          $skip = FALSE;
-          break;
-        }
-      }
-      if ($skip) {
+      $source_id = $row->getSourceIdValues();
+      if (!in_array(reset($source_id), $this->idlist)) {
         throw new MigrateSkipRowException(NULL, FALSE);
       }
     }

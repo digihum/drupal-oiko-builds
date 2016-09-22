@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\features_ui\Form\AssignmentProfileForm.
+ */
+
 namespace Drupal\features_ui\Form;
 
 use Drupal\Core\Form\FormStateInterface;
@@ -54,7 +59,7 @@ class AssignmentProfileForm extends AssignmentFormBase {
       '#description' => $this->t('Select this option to add module and theme dependencies from the Standard install profile.'),
     );
 
-    $this->setActions($form, self::METHOD_ID);
+    $this->setActions($form);
 
     return $form;
   }

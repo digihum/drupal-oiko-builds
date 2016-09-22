@@ -44,7 +44,6 @@ class StorageReplaceDataWrapper implements StorageInterface {
   public function __construct(StorageInterface $storage, $collection = StorageInterface::DEFAULT_COLLECTION) {
     $this->storage = $storage;
     $this->collection = $collection;
-    $this->replacementData[$collection] = [];
   }
 
   /**
@@ -105,7 +104,7 @@ class StorageReplaceDataWrapper implements StorageInterface {
       $this->replacementData[$this->collection][$new_name] = $this->replacementData[$this->collection][$name];
       unset($this->replacementData[$this->collection][$name]);
     }
-    return $this->storage->rename($name, $new_name);
+    return $this->rename($name, $new_name);
   }
 
   /**
@@ -165,10 +164,8 @@ class StorageReplaceDataWrapper implements StorageInterface {
    * {@inheritdoc}
    */
   public function createCollection($collection) {
-    return new static(
-      $this->storage->createCollection($collection),
-      $collection
-    );
+    $this->collection = $collection;
+    return $this->storage->createCollection($collection);
   }
 
   /**

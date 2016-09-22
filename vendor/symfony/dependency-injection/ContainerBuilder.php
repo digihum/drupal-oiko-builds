@@ -381,14 +381,21 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     public function set($id, $service, $scope = self::SCOPE_CONTAINER)
     {
         $id = strtolower($id);
-        $set = isset($this->definitions[$id]);
 
-        if ($this->isFrozen() && ($set || isset($this->obsoleteDefinitions[$id])) && !$this->{$set ? 'definitions' : 'obsoleteDefinitions'}[$id]->isSynthetic()) {
+        if ($this->isFrozen()) {
             // setting a synthetic service on a frozen container is alright
-            throw new BadMethodCallException(sprintf('Setting service "%s" on a frozen container is not allowed.', $id));
+            if (
+                (!isset($this->definitions[$id]) && !isset($this->obsoleteDefinitions[$id]))
+                    ||
+                (isset($this->definitions[$id]) && !$this->definitions[$id]->isSynthetic())
+                    ||
+                (isset($this->obsoleteDefinitions[$id]) && !$this->obsoleteDefinitions[$id]->isSynthetic())
+            ) {
+                throw new BadMethodCallException(sprintf('Setting service "%s" on a frozen container is not allowed.', $id));
+            }
         }
 
-        if ($set) {
+        if (isset($this->definitions[$id])) {
             $this->obsoleteDefinitions[$id] = $this->definitions[$id];
         }
 

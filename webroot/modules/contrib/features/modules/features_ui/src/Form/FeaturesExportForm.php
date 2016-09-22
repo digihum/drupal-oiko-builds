@@ -1,13 +1,17 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\features_ui\Form\FeaturesExportForm.
+ */
+
 namespace Drupal\features_ui\Form;
 
-use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Component\Utility\Xss;
 use Drupal\features\FeaturesAssignerInterface;
 use Drupal\features\FeaturesGeneratorInterface;
 use Drupal\features\FeaturesManagerInterface;
-use Drupal\features\FeaturesBundleInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -172,7 +176,7 @@ class FeaturesExportForm extends FormBase {
       ),
     );
 
-    $form['preview'] = $this->buildListing($packages, $current_bundle);
+    $form['preview'] = $this->buildListing($packages);
 
     $form['#attached'] = array(
       'library' => array(
@@ -197,7 +201,7 @@ class FeaturesExportForm extends FormBase {
           '#name' => $method_id,
           '#value' => $this->t('@name', array('@name' => $method['name'])),
           '#attributes' => array(
-            'title' => Html::escape($method['description']),
+            'title' => SafeMarkup::checkPlain($method['description']),
           ),
         );
       }
@@ -225,13 +229,11 @@ class FeaturesExportForm extends FormBase {
    *
    * @param \Drupal\features\Package[] $packages
    *   The packages.
-   * @param \Drupal\features\FeaturesBundleInterface $bundle
-   *   The current bundle
    *
    * @return array
    *   A render array of a form element.
    */
-  protected function buildListing(array $packages, FeaturesBundleInterface $bundle) {
+  protected function buildListing(array $packages) {
 
     $header = array(
       'name' => array('data' => $this->t('Feature')),
@@ -248,7 +250,7 @@ class FeaturesExportForm extends FormBase {
       if ($first && $package->getStatus() == FeaturesManagerInterface::STATUS_NO_EXPORT) {
         // Don't offer new non-profile packages that are empty.
         if ($package->getStatus() === FeaturesManagerInterface::STATUS_NO_EXPORT &&
-          !$bundle->isProfilePackage($package->getMachineName()) &&
+          !$this->assigner->getBundle()->isProfilePackage($package->getMachineName()) &&
           empty($package->getConfig())) {
           continue;
         }
@@ -261,7 +263,7 @@ class FeaturesExportForm extends FormBase {
           ),
         );
       }
-      $options[$package->getMachineName()] = $this->buildPackageDetail($package, $bundle);
+      $options[$package->getMachineName()] = $this->buildPackageDetail($package);
     }
 
     $element = array(
@@ -281,13 +283,11 @@ class FeaturesExportForm extends FormBase {
    *
    * @param \Drupal\features\Package $package
    *   The package.
-   * @param \Drupal\features\FeaturesBundleInterface
-   *   The current bundle.
    *
    * @return array
    *   A render array of a form element.
    */
-  protected function buildPackageDetail(Package $package, FeaturesBundleInterface $bundle) {
+  protected function buildPackageDetail(Package $package) {
     $config_collection = $this->featuresManager->getConfigCollection();
 
     $url = Url::fromRoute('features.edit', array('featurename' => $package->getMachineName()));
@@ -300,7 +300,7 @@ class FeaturesExportForm extends FormBase {
     // Except for the 'unpackaged' pseudo-package, display the full name, since
     // that's what will be generated.
     if ($machine_name !== 'unpackaged') {
-      $machine_name = $bundle->getFullName($machine_name);
+      $machine_name = $package->getFullName($machine_name);
     }
     $element['machine_name'] = $machine_name;
     $element['status'] = array(
@@ -310,14 +310,13 @@ class FeaturesExportForm extends FormBase {
     // Use 'data' instead of plain string value so a blank version doesn't
     // remove column from table.
     $element['version'] = array(
-      'data' => Html::escape($package->getVersion()),
+      'data' => SafeMarkup::checkPlain($package->getVersion()),
       'class' => array('column-nowrap'),
     );
     $overrides = $this->featuresManager->detectOverrides($package);
     $new_config = $this->featuresManager->detectNew($package);
     $conflicts = array();
     $missing = array();
-    $moved = array();
 
     if ($package->getStatus() == FeaturesManagerInterface::STATUS_NO_EXPORT) {
       $overrides = array();
@@ -326,46 +325,33 @@ class FeaturesExportForm extends FormBase {
     // Bundle package configuration by type.
     $package_config = array();
     foreach ($package->getConfig() as $item_name) {
-      if (isset($config_collection[$item_name])) {
-        $item = $config_collection[$item_name];
-        $package_config[$item->getType()][] = array(
-          'name' => Html::escape($item_name),
-          'label' => Html::escape($item->getLabel()),
-          'class' => in_array($item_name, $overrides) ? 'features-override' :
-            (in_array($item_name, $new_config) ? 'features-detected' : ''),
-        );
-      }
+      $item = $config_collection[$item_name];
+      $package_config[$item->getType()][] = array(
+        'name' => SafeMarkup::checkPlain($item_name),
+        'label' => SafeMarkup::checkPlain($item->getLabel()),
+        'class' => in_array($item_name, $overrides) ? 'features-override' :
+          (in_array($item_name, $new_config) ? 'features-detected' : ''),
+      );
     }
     // Conflict config from other modules.
     foreach ($package->getConfigOrig() as $item_name) {
       if (!isset($config_collection[$item_name])) {
         $missing[] = $item_name;
         $package_config['missing'][] = array(
-          'name' => Html::escape($item_name),
-          'label' => Html::escape($item_name),
+          'name' => SafeMarkup::checkPlain($item_name),
+          'label' => SafeMarkup::checkPlain($item_name),
           'class' => 'features-missing',
         );
       }
       elseif (!in_array($item_name, $package->getConfig())) {
         $item = $config_collection[$item_name];
-        if (empty($item->getProvider())) {
-          $conflicts[] = $item_name;
-          $package_name = !empty($item->getPackage()) ? $item->getPackage() : $this->t('PACKAGE NOT ASSIGNED');
-          $package_config[$item->getType()][] = array(
-            'name' => Html::escape($package_name),
-            'label' => Html::escape($item->getLabel()),
-            'class' => 'features-conflict',
-          );
-        }
-        else {
-          $moved[] = $item_name;
-          $package_name = !empty($item->getPackage()) ? $item->getPackage() : $this->t('PACKAGE NOT ASSIGNED');
-          $package_config[$item->getType()][] = array(
-            'name' => $this->t('Moved to @package', array('@package' => $package_name)),
-            'label' => Html::escape($item->getLabel()),
-            'class' => 'features-moved',
-          );
-        }
+        $conflicts[] = $item_name;
+        $package_name = !empty($item->getPackage()) ? $item->getPackage() : t('PACKAGE NOT ASSIGNED');
+        $package_config[$item->getType()][] = array(
+          'name' => SafeMarkup::checkPlain($package_name),
+          'label' => SafeMarkup::checkPlain($item->getLabel()),
+          'class' => 'features-conflict',
+        );
       }
     }
     // Add dependencies.
@@ -412,14 +398,6 @@ class FeaturesExportForm extends FormBase {
         '#attributes' => array('class' => array('features-missing')),
       );
     }
-    if (!empty($moved)) {
-      $state_links[] = array(
-        '#type' => 'link',
-        '#title' => $this->t('Moved'),
-        '#url' => Url::fromRoute('features.edit', array('featurename' => $package->getMachineName())),
-        '#attributes' => array('class' => array('features-moved')),
-      );
-    }
     if (!empty($state_links)) {
       $element['state'] = array(
         'data' => $state_links,
@@ -446,9 +424,9 @@ class FeaturesExportForm extends FormBase {
           'data' => array(
             '#type' => 'html_tag',
             '#tag' => 'span',
-            '#value' => Html::escape($label),
+            '#value' => SafeMarkup::checkPlain($label),
             '#attributes' => array(
-              'title' => Html::escape($type),
+              'title' => SafeMarkup::checkPlain($type),
               'class' => 'features-item-label',
             ),
           ),
@@ -457,8 +435,8 @@ class FeaturesExportForm extends FormBase {
           'data' => array(
             '#theme' => 'features_items',
             '#items' => $package_config[$type],
-            '#value' => Html::escape($label),
-            '#title' => Html::escape($type),
+            '#value' => SafeMarkup::checkPlain($label),
+            '#title' => SafeMarkup::checkPlain($type),
           ),
           'class' => 'item',
         );
