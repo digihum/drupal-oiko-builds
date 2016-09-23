@@ -61,14 +61,16 @@ class EmpireController extends ControllerBase {
         // Mix in the field values of the actual empire.
         $empire = $cidoc_entity->field_empire_outline->entity;
         foreach ($geodata as &$item) {
-          $item['empire_data'] = array(
-            'label' => $empire->label(),
-            'id' => $empire->id(),
-            'color' => $empire->field_single_color->color,
-            'opacity' => $empire->field_single_color->opacity,
-          );
+          if (isset($item['temporal'])) {
+            $item['empire_data'] = array(
+              'label' => $empire->label(),
+              'id' => $empire->id(),
+              'color' => $empire->field_single_color->color,
+              'opacity' => $empire->field_single_color->opacity,
+            );
+            $data[] = $item;
+          }
         }
-        $data = array_merge($data, $geodata);
       }
     }
 
