@@ -106,13 +106,6 @@ class FeaturesManager implements FeaturesManagerInterface {
   protected $assigner;
 
   /**
-   * Cache module.features.yml data keyed by module name.
-   *
-   * @var array
-   */
-  protected $featureInfoCache;
-
-  /**
    * Constructs a FeaturesManager object.
    *
    * @param string $root
@@ -493,9 +486,7 @@ class FeaturesManager implements FeaturesManagerInterface {
     $info = $this->getExtensionInfo($extension);
     $features_info = $this->getFeaturesInfo($extension);
     $bundle = $this->getAssigner()->findBundle($info, $features_info);
-    // Use the full extension name as the short_name.  Important to allow
-    // multiple modules with different namespaces such as oa_media, test_media.
-    $short_name = $extension->getName();
+    $short_name = $bundle->getShortName($extension->getName());
     return $this->initPackage($short_name, $info['name'], !empty($info['description']) ? $info['description'] : '', $info['type'], $bundle, $extension);
   }
 
@@ -816,6 +807,7 @@ class FeaturesManager implements FeaturesManagerInterface {
       'status' => FeaturesManagerInterface::STATUS_DEFAULT,
       'version' => '',
       'state' => FeaturesManagerInterface::STATE_DEFAULT,
+      'directory' => $machine_name,
       'files' => [],
       'bundle' => $bundle->isDefault() ? '' : $bundle->getMachineName(),
       'extension' => NULL,
@@ -931,6 +923,8 @@ class FeaturesManager implements FeaturesManagerInterface {
    */
   protected function addPackageFiles(Package $package) {
     $config_collection = $this->getConfigCollection();
+    // Ensure the directory reflects the current full machine name.
+    $package->setDirectory($package->getMachineName());
     // Only add files if there is at least one piece of configuration
     // present.
     if ($package->getConfig()) {
@@ -1263,13 +1257,13 @@ class FeaturesManager implements FeaturesManagerInterface {
   public function statusLabel($status) {
     switch ($status) {
       case FeaturesManagerInterface::STATUS_NO_EXPORT:
-        return $this->t('Not exported');
+        return t('Not exported');
 
       case FeaturesManagerInterface::STATUS_UNINSTALLED:
-        return $this->t('Uninstalled');
+        return t('Uninstalled');
 
       case FeaturesManagerInterface::STATUS_INSTALLED:
-        return $this->t('Installed');
+        return t('Installed');
     }
   }
 
@@ -1279,10 +1273,10 @@ class FeaturesManager implements FeaturesManagerInterface {
   public function stateLabel($state) {
     switch ($state) {
       case FeaturesManagerInterface::STATE_DEFAULT:
-        return $this->t('Default');
+        return t('Default');
 
       case FeaturesManagerInterface::STATE_OVERRIDDEN:
-        return $this->t('Changed');
+        return t('Changed');
     }
   }
 
@@ -1290,16 +1284,11 @@ class FeaturesManager implements FeaturesManagerInterface {
    * {@inheritdoc}
    */
   public function getFeaturesInfo(Extension $extension) {
-    $module_name = $extension->getName();
-    if (isset($this->featureInfoCache[$module_name])) {
-      return $this->featureInfoCache[$module_name];
-    }
     $features_info = NULL;
-    $filename = $this->root . '/' . $extension->getPath() . '/' . $module_name . '.features.yml';
+    $filename = $this->root . '/' . $extension->getPath() . '/' . $extension->getName() . '.features.yml';
     if (file_exists($filename)) {
       $features_info = Yaml::decode(file_get_contents($filename));
     }
-    $this->featureInfoCache[$module_name] = $features_info;
     return $features_info;
   }
 

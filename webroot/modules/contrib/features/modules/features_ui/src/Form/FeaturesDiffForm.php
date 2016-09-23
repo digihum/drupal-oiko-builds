@@ -1,8 +1,13 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\features_ui\Form\FeaturesDiffForm.
+ */
+
 namespace Drupal\features_ui\Form;
 
-use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\SafeMarkup;
 use Drupal\features\ConfigurationItem;
 use Drupal\features\FeaturesAssignerInterface;
 use Drupal\features\FeaturesManagerInterface;
@@ -134,7 +139,7 @@ class FeaturesDiffForm extends FormBase {
                 'data' => array(
                   '#type' => 'html_tag',
                   '#tag' => 'h2',
-                  '#value' => Html::escape($package->getName()),
+                  '#value' => SafeMarkup::checkPlain($package->getName()),
                 ),
               ),
               '#attributes' => array(
@@ -251,7 +256,7 @@ class FeaturesDiffForm extends FormBase {
         'row' => array(
           'data' => array(
             '#type' => 'details',
-            '#title' => Html::escape($name),
+            '#title' => SafeMarkup::checkPlain($name),
             '#open' => TRUE,
             '#description' => array(
               'data' => $details,

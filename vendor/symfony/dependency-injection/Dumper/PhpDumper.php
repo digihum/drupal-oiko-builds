@@ -144,7 +144,6 @@ class PhpDumper extends Dumper
         if ($this->container->isFrozen()) {
             $code .= $this->addFrozenConstructor();
             $code .= $this->addFrozenCompile();
-            $code .= $this->addIsFrozenMethod();
         } else {
             $code .= $this->addConstructor();
         }
@@ -375,7 +374,7 @@ class PhpDumper extends Dumper
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    private function addServiceInstance($id, Definition $definition)
+    private function addServiceInstance($id, $definition)
     {
         $class = $definition->getClass();
 
@@ -425,7 +424,7 @@ class PhpDumper extends Dumper
      *
      * @return bool
      */
-    private function isSimpleInstance($id, Definition $definition)
+    private function isSimpleInstance($id, $definition)
     {
         foreach (array_merge(array($definition), $this->getInlinedDefinitions($definition)) as $sDefinition) {
             if ($definition !== $sDefinition && !$this->hasReference($id, $sDefinition->getMethodCalls())) {
@@ -449,7 +448,7 @@ class PhpDumper extends Dumper
      *
      * @return string
      */
-    private function addServiceMethodCalls($id, Definition $definition, $variableName = 'instance')
+    private function addServiceMethodCalls($id, $definition, $variableName = 'instance')
     {
         $calls = '';
         foreach ($definition->getMethodCalls() as $call) {
@@ -464,7 +463,7 @@ class PhpDumper extends Dumper
         return $calls;
     }
 
-    private function addServiceProperties($id, Definition $definition, $variableName = 'instance')
+    private function addServiceProperties($id, $definition, $variableName = 'instance')
     {
         $code = '';
         foreach ($definition->getProperties() as $name => $value) {
@@ -484,7 +483,7 @@ class PhpDumper extends Dumper
      *
      * @throws ServiceCircularReferenceException when the container contains a circular reference
      */
-    private function addServiceInlinedDefinitionsSetup($id, Definition $definition)
+    private function addServiceInlinedDefinitionsSetup($id, $definition)
     {
         $this->referenceVariables[$id] = new Variable('instance');
 
@@ -528,7 +527,7 @@ class PhpDumper extends Dumper
      *
      * @return string
      */
-    private function addServiceConfigurator($id, Definition $definition, $variableName = 'instance')
+    private function addServiceConfigurator($id, $definition, $variableName = 'instance')
     {
         if (!$callable = $definition->getConfigurator()) {
             return '';
@@ -560,7 +559,7 @@ class PhpDumper extends Dumper
      *
      * @return string
      */
-    private function addService($id, Definition $definition)
+    private function addService($id, $definition)
     {
         $this->definitionVariables = new \SplObjectStorage();
         $this->referenceVariables = array();
@@ -982,26 +981,6 @@ EOF;
     }
 
     /**
-     * Adds the isFrozen method for a frozen container.
-     *
-     * @return string
-     */
-    private function addIsFrozenMethod()
-    {
-        return <<<EOF
-
-    /*{$this->docStar}
-     * {@inheritdoc}
-     */
-    public function isFrozen()
-    {
-        return true;
-    }
-
-EOF;
-    }
-
-    /**
      * Adds the methodMap property definition.
      *
      * @return string
@@ -1144,7 +1123,7 @@ EOF;
      *
      * @throws InvalidArgumentException
      */
-    private function exportParameters(array $parameters, $path = '', $indent = 12)
+    private function exportParameters($parameters, $path = '', $indent = 12)
     {
         $php = array();
         foreach ($parameters as $key => $value) {

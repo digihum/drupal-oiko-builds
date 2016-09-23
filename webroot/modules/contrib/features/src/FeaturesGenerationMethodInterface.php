@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\features\FeaturesGenerationMethodInterface.
+ */
+
 namespace Drupal\features;
 
 use Drupal\Core\Form\FormStateInterface;

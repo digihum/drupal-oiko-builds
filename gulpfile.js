@@ -24,8 +24,7 @@ gulp.task('compile:sass:oiko', function () {
     .src('webroot/themes/custom/oiko/scss/**/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass(eyeglass(sassOptions)).on("error", sass.logError))
-    // Autoprefix our CSS for browsers with more than 5% of market share in the UK, or IE 10-11.
-    .pipe(postcss([ autoprefixer({ browsers: ['last 2 versions', 'ie >= 9', 'and_chr >= 2.3'] }) ]))
+    .pipe(postcss([ autoprefixer({ browsers: ['last 2 versions', 'ie >= 9'] }) ]))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('webroot/themes/custom/oiko/css'))
     .pipe(browserSync.reload({stream: true}));
