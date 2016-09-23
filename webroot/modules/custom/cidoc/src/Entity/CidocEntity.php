@@ -316,6 +316,29 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
   /**
    * {@inheritdoc}
    */
+  public static function postDelete(EntityStorageInterface $storage, array $entities) {
+    // Find and delete reference entities that use this as a domain or range.
+    /** @var CidocEntity $entity */
+    foreach ($entities as $entity) {
+      foreach ($entity->getProperties(NULL, FALSE) as $references) {
+        foreach ($references as $reference) {
+          /** @var CidocReference $reference */
+          $reference->delete();
+        }
+      }
+      foreach ($entity->getProperties(NULL, TRUE) as $references) {
+        foreach ($references as $reference) {
+          /** @var CidocReference $reference */
+          $reference->delete();
+        }
+      }
+    }
+    parent::postDelete($storage, $entities);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getProperties($property_name = NULL, $reverse = FALSE, $load_entities = TRUE) {
     $endpoint = $reverse ? 'range' : 'domain';
 
