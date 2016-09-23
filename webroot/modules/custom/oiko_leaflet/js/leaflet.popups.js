@@ -19,7 +19,9 @@
   };
   $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
     // Remove the popup.
-    lFeature.unbindPopup();
+    if (typeof lFeature.unbindPopup !== 'undefined') {
+      lFeature.unbindPopup();
+    }
 
     // lFeature.on('mouseover', leafletPopupOpen);
     // lFeature.on('mouseout', leafletPopupClose);
