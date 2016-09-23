@@ -20,6 +20,14 @@ abstract class GeoserializerPluginBase extends PluginBase implements Geoserializ
       '@link' => $entity->toLink($entity->getName())->toString(),
     ));
     $point['id'] = $entity->id();
+
+    // Convert cultural significance to color.
+    if (($significance = $entity->significance->entity) && ($color = $significance->field_icon_color->getValue()[0]['value'])) {
+      $point['color'] = $color;
+    }
+    else {
+      $point['color'] = 'blue';
+    }
     return $point;
   }
 

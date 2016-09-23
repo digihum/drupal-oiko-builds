@@ -50,7 +50,7 @@ var PolylineTextPath = {
 
         /* If not in SVG mode or Polyline not added to map yet return */
         /* setText will be called by onAdd, using value stored in this._text */
-        if (!L.Browser.svg || typeof this._map === 'undefined') {
+        if (!L.Browser.svg || typeof this._map === 'undefined' || (typeof this._map === 'object' && this._map === null)) {
           return this;
         }
 

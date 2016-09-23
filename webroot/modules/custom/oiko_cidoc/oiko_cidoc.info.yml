@@ -13,8 +13,9 @@ dependencies:
   - leaflet_widget
   - link
   - oiko_citation
+  - options
   - paragraphs
-  - pathauto
+  - path
   - squid_autocomplete
   - taxonomy
   - text

@@ -31,8 +31,6 @@
     });
   });
 
-
-
   Drupal.oiko = Drupal.oiko || {};
 
   Drupal.oiko.openLeafletSidebar = function(id, label, drupalLeaflet) {
