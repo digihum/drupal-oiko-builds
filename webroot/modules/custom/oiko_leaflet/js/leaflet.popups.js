@@ -3,11 +3,24 @@
 
   $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
     // Add the sidebar control if there's a sidebar control in the page markup.
-    if ($('#leaflet-sidebar').length) {
+    var $leafletSidebar = $('#leaflet-sidebar');
+    if ($leafletSidebar.length) {
       drupalLeaflet.sidebarControl = L.control.sidebar('leaflet-sidebar', {position: 'right'}).addTo(map);
 
       // Link into the click event for markers.
 
+      // When clicking a link to a cidoc entity from the sidebar, replace the
+      // sidebar instead of navigating to it.
+      $leafletSidebar.on('click', function(e) {
+        var $target = $(e.target);
+        var id = $target.data('cidoc-id');
+        var label = $target.data('cidoc-label');
+        if (id) {
+          e.preventDefault();
+          // Fall back to using the link text as the new sidebar title.
+          Drupal.oiko.openLeafletSidebar(id, !!(label) ? label : $target.text(), drupalLeaflet);
+        }
+      });
     }
   });
 
