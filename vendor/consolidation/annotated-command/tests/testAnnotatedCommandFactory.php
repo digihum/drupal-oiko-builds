@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Application;
 use Consolidation\AnnotatedCommand\Parser\CommandInfo;
+use Consolidation\AnnotatedCommand\AnnotationData;
 
 class AnnotatedCommandFactoryTests extends \PHPUnit_Framework_TestCase
 {
@@ -45,7 +46,7 @@ class AnnotatedCommandFactoryTests extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Symfony\Component\Console\Command\Command', $command);
         $this->assertEquals('my:cat', $command->getName());
         $this->assertEquals('This is the my:cat command', $command->getDescription());
-        $this->assertEquals("This command will concatinate two parameters. If the --flip flag\nis provided, then the result is the concatination of two and one.", $command->getHelp());
+        $this->assertEquals("This command will concatenate two parameters. If the --flip flag\nis provided, then the result is the concatenation of two and one.", $command->getHelp());
         $this->assertEquals('c', implode(',', $command->getAliases()));
         $this->assertEquals('my:cat [--flip] [--] <one> [<two>]', $command->getSynopsis());
         $this->assertEquals('my:cat bet alpha --flip', implode(',', $command->getUsages()));
@@ -87,7 +88,7 @@ class AnnotatedCommandFactoryTests extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Symfony\Component\Console\Command\Command', $command);
         $this->assertEquals('command:with-no-options', $command->getName());
         $this->assertEquals('This is a command with no options', $command->getDescription());
-        $this->assertEquals("This command will concatinate two parameters.", $command->getHelp());
+        $this->assertEquals("This command will concatenate two parameters.", $command->getHelp());
         $this->assertEquals('nope', implode(',', $command->getAliases()));
         $this->assertEquals('command:with-no-options <one> [<two>]', $command->getSynopsis());
         $this->assertEquals('command:with-no-options alpha bet', implode(',', $command->getUsages()));
@@ -182,6 +183,30 @@ class AnnotatedCommandFactoryTests extends \PHPUnit_Framework_TestCase
         $input = new StringInput('my:cat bet --flip');
         $input = new PassThroughArgsInput(['x', 'y', 'z'], $input);
         $this->assertRunCommandViaApplicationEquals($command, $input, 'x y zbet');
+        // Can't look at 'hasOption' until after the command initializes the
+        // option, because Symfony.
+        $this->assertTrue($input->hasOption('flip'));
+    }
+
+    function testPassThroughWithInputManipulation()
+    {
+        $commandFileInstance = new \Consolidation\TestUtils\ExampleCommandFile;
+        $commandFactory = new AnnotatedCommandFactory();
+        $commandInfo = $commandFactory->createCommandInfo($commandFileInstance, 'myRepeat');
+
+        $command = $commandFactory->createCommand($commandInfo, $commandFileInstance);
+
+        $input = new StringInput('my:repeat bet --repeat=2');
+        $input = new PassThroughArgsInput(['x', 'y', 'z'], $input);
+        $this->assertRunCommandViaApplicationEquals($command, $input, 'betx y zbetx y z');
+        // Symfony does not allow us to manipulate the options via setOption until
+        // the definition from the command object has been set up.
+        $input->setOption('repeat', 3);
+        $this->assertEquals(3, $input->getOption('repeat'));
+        $input->setArgument(0, 'q');
+        // Manipulating $input does not work -- the changes are not effective.
+        // The end result here should be 'qx y yqx y yqx y y'
+        $this->assertRunCommandViaApplicationEquals($command, $input, 'betx y zbetx y z');
     }
 
     function testHookedCommand()
@@ -210,6 +235,38 @@ class AnnotatedCommandFactoryTests extends \PHPUnit_Framework_TestCase
 
         $input = new StringInput('test:hook bar');
         $this->assertRunCommandViaApplicationEquals($command, $input, '<[bar]>');
+    }
+
+    function testAnnotatedHookedCommand()
+    {
+        $commandFileInstance = new \Consolidation\TestUtils\ExampleCommandFile();
+        $commandFactory = new AnnotatedCommandFactory();
+
+        $hookInfo = $commandFactory->createCommandInfo($commandFileInstance, 'hookTestAnnotatedHook');
+
+        $this->assertTrue($hookInfo->hasAnnotation('hook'));
+        $this->assertEquals('alter @hookme', $hookInfo->getAnnotation('hook'));
+
+        $commandFactory->registerCommandHook($hookInfo, $commandFileInstance);
+        $hookCallback = $commandFactory->hookManager()->get('@hookme', 'alter');
+        $this->assertTrue($hookCallback != null);
+        $this->assertEquals(1, count($hookCallback));
+        $this->assertEquals(2, count($hookCallback[0]));
+        $this->assertTrue(is_callable($hookCallback[0]));
+        $this->assertEquals('hookTestAnnotatedHook', $hookCallback[0][1]);
+
+        $commandInfo = $commandFactory->createCommandInfo($commandFileInstance, 'testAnnotationHook');
+        $annotationData = $commandInfo->getAnnotations();
+        $this->assertEquals('hookme,before,after', implode(',', $annotationData->keys()));
+        $this->assertEquals('@hookme,@before,@after', implode(',', array_map(function ($item) { return "@$item"; }, $annotationData->keys())));
+
+        $command = $commandFactory->createCommand($commandInfo, $commandFileInstance);
+
+        $this->assertInstanceOf('\Symfony\Component\Console\Command\Command', $command);
+        $this->assertEquals('test:annotation-hook', $command->getName());
+
+        $input = new StringInput('test:annotation-hook baz');
+        $this->assertRunCommandViaApplicationEquals($command, $input, '>(baz)<');
     }
 
     function testHookedCommandWithHookAddedLater()
@@ -274,6 +331,19 @@ class AnnotatedCommandFactoryTests extends \PHPUnit_Framework_TestCase
 
         $input = new StringInput('test:hello "Donald Duck"');
         $this->assertRunCommandViaApplicationEquals($command, $input, "I won't say hello to Donald Duck.", 1);
+
+        $input = new StringInput('test:hello "Drumph"');
+        $this->assertRunCommandViaApplicationEquals($command, $input, "Irrational value error.", 1);
+
+        // Try the last test again with a display error function installed.
+        $commandFactory->commandProcessor()->setDisplayErrorFunction(
+            function ($output, $message) {
+                $output->writeln("*** $message ****");
+            }
+        );
+
+        $input = new StringInput('test:hello "Drumph"');
+        $this->assertRunCommandViaApplicationEquals($command, $input, "*** Irrational value error. ****", 1);
     }
 
     function assertRunCommandViaApplicationEquals($command, $input, $expectedOutput, $expectedStatusCode = 0)
