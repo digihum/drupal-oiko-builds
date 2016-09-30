@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e12_production
+    - cidoc.cidoc_entity_bundle.e4_period
     - cidoc.cidoc_entity_bundle.e5_event
     - cidoc.cidoc_entity_bundle.e66_formation
     - cidoc.cidoc_entity_bundle.e67_birth
@@ -15,9 +16,11 @@ dependencies:
     - cidoc.cidoc_entity_bundle.o2_active_dissolution
     - cidoc.cidoc_entity_bundle.o3_active_destruction
     - system.menu.main
+    - taxonomy.vocabulary.empire
   module:
     - cidoc
     - oiko_leaflet
+    - taxonomy
     - user
 id: all_events
 label: 'All events'
@@ -67,11 +70,9 @@ display:
         type: oiko_leafet_map
         options:
           grouping: {  }
-          data_source: field_geodata
-          temporal_data_source: field_date
           id_field: id
-          name_field: nothing
-          description_field: nothing
+          sidebar: 1
+          empires: 1
           map: 'Ancient Terrain'
           height: '650'
           icon:
@@ -204,6 +205,7 @@ display:
           admin_label: ''
           operator: in
           value:
+            e4_period: e4_period
             '--all-events--': '--all-events--'
           group: 1
           exposed: false
@@ -271,6 +273,49 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           plugin_id: string
+        field_empire_outline_target_id:
+          id: field_empire_outline_target_id
+          table: cidoc_entity__field_empire_outline
+          field: field_empire_outline_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: empty
+          value: {  }
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          type: select
+          limit: true
+          vid: empire
+          hierarchy: false
+          error_message: true
+          plugin_id: taxonomy_index_tid
       sorts: {  }
       title: 'All events'
       header: {  }
@@ -348,6 +393,7 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - user
         - user.permissions
       tags: {  }
   page_1:
@@ -372,5 +418,6 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - user
         - user.permissions
       tags: {  }

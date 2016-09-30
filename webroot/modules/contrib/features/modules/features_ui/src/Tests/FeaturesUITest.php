@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\features_ui\Tests\FeaturesUITest.
+ */
+
 namespace Drupal\features_ui\Tests;
 
 use Drupal\simpletest\WebTestBase;

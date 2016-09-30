@@ -11,7 +11,7 @@ use Drupal\migrate\Row;
 /**
  * This plugin extracts a value from an array.
  *
- * @link https://www.drupal.org/node/2152731 Online handbook documentation for extract process plugin @endlink
+ * @see https://www.drupal.org/node/2152731
  *
  * @MigrateProcessPlugin(
  *   id = "extract"

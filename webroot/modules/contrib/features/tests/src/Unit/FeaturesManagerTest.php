@@ -154,12 +154,9 @@ class FeaturesManagerTest extends UnitTestCase {
 
   /**
    * @covers ::setPackage
-   * @covers ::getPackage
    */
   public function testSetPackage() {
-    $package = new Package('foo');
-    $this->featuresManager->setPackage($package);
-    $this->assertEquals($package, $this->featuresManager->getPackage('foo'));
+    // @todo
   }
 
   protected function getAssignInterPackageDependenciesConfigCollection() {
@@ -457,7 +454,7 @@ class FeaturesManagerTest extends UnitTestCase {
     \Drupal::getContainer()->set('info_parser', $info_parser->reveal());
 
     $bundle = $this->prophesize(FeaturesBundle::class);
-    $bundle->getFullName('test_module')->willReturn('test_module');
+    $bundle->getShortName('test_module')->willReturn('test_module');
     $bundle->isDefault()->willReturn(TRUE);
 
     $assigner = $this->prophesize(FeaturesAssignerInterface::class);
@@ -494,7 +491,7 @@ class FeaturesManagerTest extends UnitTestCase {
     \Drupal::getContainer()->set('info_parser', $info_parser->reveal());
 
     $bundle = $this->prophesize(FeaturesBundle::class);
-    $bundle->getFullName('test_module')->willReturn('test_module');
+    $bundle->getShortName('test_module')->willReturn('test_module');
     $bundle->isDefault()->willReturn(TRUE);
 
     $assigner = $this->prophesize(FeaturesAssignerInterface::class);
@@ -571,11 +568,8 @@ class FeaturesManagerTest extends UnitTestCase {
     return $data;
   }
 
-  /**
-   * @covers ::initPackage
-   **/
   public function testInitPackageWithNewPackage() {
-    $bundle = new FeaturesBundle(['machine_name' => 'test'], 'features_bundle');
+    $bundle = new FeaturesBundle(['machine_name' => 'default'], 'features_bundle');
 
     $features_manager = new TestFeaturesManager($this->root, $this->entityManager, $this->configFactory, $this->configStorage, $this->configManager, $this->moduleHandler);
     $features_manager->setAllModules([]);
@@ -587,18 +581,12 @@ class FeaturesManagerTest extends UnitTestCase {
     $this->assertEquals('test name', $package->getName());
     $this->assertEquals('test description', $package->getDescription());
     $this->assertEquals('module', $package->getType());
-    $this->assertEquals(['bundle' => 'test'], $package->getFeaturesInfo());
-    $this->assertEquals('test', $package->getBundle());
-    $this->assertEquals(FALSE, $package->getRequired());
-    $this->assertEquals([], $package->getExcluded());
+    $this->assertEquals('', $package->getBundle());
+    $this->assertEquals([], $package->getFeaturesInfo());
   }
 
-  /**
-   * @covers ::getFeaturesInfo
-   * @covers ::getFeaturesModules
-   **/
   public function testInitPackageWithExistingPackage() {
-    $bundle = new FeaturesBundle(['machine_name' => 'test'], 'features_bundle');
+    $bundle = new FeaturesBundle(['machine_name' => 'default'], 'features_bundle');
 
     $features_manager = new TestFeaturesManager('vfs://drupal', $this->entityManager, $this->configFactory, $this->configStorage, $this->configManager, $this->moduleHandler);
 
@@ -615,10 +603,7 @@ description: test description 2
 EOT
       ,
           'test_feature.features.yml' => <<<EOT
-bundle: test
-excluded:
-  - system.theme
-required: true
+true
 EOT
           ,
         ],
@@ -637,26 +622,8 @@ EOT
 
     $package = $features_manager->initPackage('test_feature', 'test name', 'test description', 'module', $bundle);
 
-    $this->assertEquals([
-      'bundle' => 'test',
-      'excluded' => [
-        0 => 'system.theme',
-      ],
-      'required' => TRUE,
-    ], $features_manager->getFeaturesInfo($extension));
-    $this->assertEquals(['test_feature' => $extension], $features_manager->getFeaturesModules($bundle));
-
     $this->assertInstanceOf(Package::class, $package);
-    $this->assertEquals([
-      'bundle' => 'test',
-      'excluded' => [
-        0 => 'system.theme',
-      ],
-      'required' => TRUE,
-    ], $package->getFeaturesInfo());
-    $this->assertEquals('test', $package->getBundle());
-    $this->assertEquals(TRUE, $package->getRequired());
-    $this->assertEquals(['system.theme'], $package->getExcluded());
+    $this->assertEquals(TRUE, $package->getFeaturesInfo());
   }
 
   /**

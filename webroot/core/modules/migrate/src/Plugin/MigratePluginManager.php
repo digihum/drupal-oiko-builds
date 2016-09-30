@@ -21,7 +21,7 @@ use Drupal\Core\Plugin\DefaultPluginManager;
  *
  * @ingroup migration
  */
-class MigratePluginManager extends DefaultPluginManager implements MigratePluginManagerInterface {
+class MigratePluginManager extends DefaultPluginManager {
 
   /**
    * Constructs a MigratePluginManager object.
@@ -49,6 +49,8 @@ class MigratePluginManager extends DefaultPluginManager implements MigratePlugin
 
   /**
    * {@inheritdoc}
+   *
+   * A specific createInstance method is necessary to pass the migration on.
    */
   public function createInstance($plugin_id, array $configuration = array(), MigrationInterface $migration = NULL) {
     $plugin_definition = $this->getDefinition($plugin_id);

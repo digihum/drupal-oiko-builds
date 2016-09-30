@@ -285,8 +285,6 @@ class Filesystem
      *
      * @param string $filename Path to the file
      *
-     * @return bool
-     *
      * @throws IOException When windows path is longer than 258 characters
      */
     private function isReadable($filename)

@@ -41,7 +41,7 @@ abstract class ConfigFormBase extends FormBase {
       '#button_type' => 'primary',
     );
 
-    // By default, render the form using system-config-form.html.twig.
+    // By default, render the form using theme_system_config_form().
     $form['#theme'] = 'system_config_form';
 
     return $form;

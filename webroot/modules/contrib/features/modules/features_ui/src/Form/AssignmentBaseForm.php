@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\features_ui\Form\AssignmentBaseForm.
+ */
+
 namespace Drupal\features_ui\Form;
 
 use Drupal\Core\Form\FormStateInterface;
@@ -33,7 +38,7 @@ class AssignmentBaseForm extends AssignmentFormBase {
     // the config type select options.
     $this->setContentTypeSelect($form, $settings['types']['content'], $this->t('base'), TRUE);
 
-    $this->setActions($form, self::METHOD_ID);
+    $this->setActions($form);
 
     return $form;
   }

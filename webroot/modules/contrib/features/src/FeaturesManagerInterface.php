@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\features\FeaturesManagerInterface.
+ */
+
 namespace Drupal\features;
 
 use Drupal\Core\Extension\Extension;
@@ -32,14 +37,6 @@ interface FeaturesManagerInterface {
    */
   const STATE_DEFAULT = 0;
   const STATE_OVERRIDDEN = 1;
-
-  /**
-   * Set the app.root.
-   *
-   * Should only be used by tests.
-   * @param string $root
-   */
-  public function setRoot($root);
 
   /**
    * Returns the active config store.
@@ -276,7 +273,7 @@ interface FeaturesManagerInterface {
    *   (optional) Bundle to use to add profile directories to the scan.
    * @param \Drupal\Core\Extension\Extension $extension
    *   (optional) An Extension object.
-   * @return \Drupal\features\Package
+   * @return array
    *   The created package array.
    */
   public function initPackage($machine_name, $name = NULL, $description = '', $type = 'module', FeaturesBundleInterface $bundle = NULL, Extension $extension = NULL);
@@ -515,7 +512,7 @@ interface FeaturesManagerInterface {
   public function getExportInfo(Package $package, FeaturesBundleInterface $bundle = NULL);
 
   /**
-   * Determines if the module is a Features package, optionally testing by
+   * Determines if the module is a Features package, optinally testing by
    * bundle.
    *
    * @param \Drupal\Core\Extension\Extension $module

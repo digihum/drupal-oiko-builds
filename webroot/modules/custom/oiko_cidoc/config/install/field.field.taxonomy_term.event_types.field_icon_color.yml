@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_icon_color
+    - taxonomy.vocabulary.event_types
+  module:
+    - options
+id: taxonomy_term.event_types.field_icon_color
+field_name: field_icon_color
+entity_type: taxonomy_term
+bundle: event_types
+label: 'Icon color'
+description: 'When events are displayed on a map the icon used will be this color.'
+required: true
+translatable: false
+default_value:
+  -
+    value: blue
+default_value_callback: ''
+settings: {  }
+field_type: list_string

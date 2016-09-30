@@ -62,7 +62,7 @@
      */
     prepareDialogButtons: function ($dialog) {
       var buttons = [];
-      var $buttons = $dialog.find('.form-actions input[type=submit], .form-actions a.button');
+      var $buttons = $dialog.find('.form-actions input[type=submit]');
       $buttons.each(function () {
         // Hidden form buttons need special attention. For browser consistency,
         // the button needs to be "visible" in order to have the enter key fire
@@ -74,22 +74,14 @@
           width: 0,
           height: 0,
           padding: 0,
-          border: 0,
-          overflow: 'hidden'
+          border: 0
         });
         buttons.push({
           text: $originalButton.html() || $originalButton.attr('value'),
           class: $originalButton.attr('class'),
           click: function (e) {
-            // If the original button is an anchor tag, triggering the "click"
-            // event will not simulate a click. Use the click method instead.
-            if ($originalButton.is('a')) {
-              $originalButton[0].click();
-            }
-            else {
-              $originalButton.trigger('mousedown').trigger('mouseup').trigger('click');
-              e.preventDefault();
-            }
+            $originalButton.trigger('mousedown').trigger('mouseup').trigger('click');
+            e.preventDefault();
           }
         });
       });

@@ -15,16 +15,11 @@ process:
     key: '@id'
     process:
       id:
-        # If the filter ID cannot be mapped, it will pass through unmodified
-        # because the bypass flag is set. When the user actually tries to
-        # view text through an invalid filter plugin, the filter system will
-        # fall back to filter_null and display a helpful error message.
-        plugin: filter_id
+        plugin: static_map
         bypass: true
         source: name
-        # No need to map anything -- filter plugin IDs haven't changed since
-        # Drupal 7.
-        map: { }
+        map:
+          php_code: filter_null
       settings:
         plugin: filter_settings
         source: settings

@@ -34,12 +34,12 @@ assignments:
     types:
       config:
         features_bundle: features_bundle
-    curated: true
+    curated: 1
     module:
-      installed: true
-      profile: true
-      namespace: true
-      namespace_any: false
+      installed: 1
+      profile: 1
+      namespace: 1
+      namespace_any: 0
     enabled: true
     weight: -5
   existing:
@@ -53,17 +53,24 @@ assignments:
     weight: 0
   optional:
     types:
-      config: {}
+      config:
+        image_style: image_style
+        migration: migration
+        rdf_mapping: rdf_mapping
+        responsive_image_style: responsive_image_style
+        search_page: search_page
+        tour: tour
+        view: view
     enabled: true
     weight: 0
   packages:
     enabled: true
     weight: -20
   profile:
-    curated: true
+    curated: 1
     standard:
-      files: true
-      dependencies: true
+      files: 1
+      dependencies: 1
     types:
       config:
         block: block

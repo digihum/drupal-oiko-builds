@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e4_period
+    - field.field.cidoc_entity.e4_period.field_empire_outline
   module:
     - field_group
 third_party_settings:
@@ -49,6 +50,13 @@ content:
     weight: 8
     settings: {  }
     third_party_settings: {  }
+  field_empire_outline:
+    weight: 9
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
   internal_name:
     label: inline
     type: string

@@ -106,19 +106,17 @@ abstract class FeaturesAssignmentMethodBase extends PluginBase implements Featur
     $settings = $current_bundle->getAssignmentSettings($this->getPluginId());
     $types = $settings['types']['config'];
 
-    if (!empty($types)) {
-      $config_collection = $this->featuresManager->getConfigCollection();
+    $config_collection = $this->featuresManager->getConfigCollection();
 
-      foreach ($config_collection as &$item) {
-        if (in_array($item->getType(), $types)) {
-          $item->setSubdirectory($subdirectory);
-        }
+    foreach ($config_collection as &$item) {
+      if (in_array($item->getType(), $types)) {
+        $item->setSubdirectory($subdirectory);
       }
-      // Clean up the $item pass by reference.
-      unset($item);
-
-      $this->featuresManager->setConfigCollection($config_collection);
     }
+    // Clean up the $item pass by reference.
+    unset($item);
+
+    $this->featuresManager->setConfigCollection($config_collection);
   }
 
 }
