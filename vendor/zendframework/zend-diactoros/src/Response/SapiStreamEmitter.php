@@ -11,7 +11,6 @@ namespace Zend\Diactoros\Response;
 
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
-use Zend\Diactoros\RelativeStream;
 
 class SapiStreamEmitter implements EmitterInterface
 {
@@ -57,13 +56,8 @@ class SapiStreamEmitter implements EmitterInterface
     private function emitBody(ResponseInterface $response, $maxBufferLength)
     {
         $body = $response->getBody();
-
-        if (! $body->isSeekable()) {
-            echo $body;
-            return;
-        }
-
         $body->rewind();
+
         while (! $body->eof()) {
             echo $body->read($maxBufferLength);
         }
@@ -78,23 +72,16 @@ class SapiStreamEmitter implements EmitterInterface
      */
     private function emitBodyRange(array $range, ResponseInterface $response, $maxBufferLength)
     {
-        list($unit, $first, $last, $length) = $range;
+        list($unit, $first, $last, $lenght) = $range;
 
+        ++$last; //zero-based position
         $body = $response->getBody();
+        $body->seek($first);
+        $pos = $first;
 
-        if (! $body->isSeekable()) {
-            $contents = $body->getContents();
-            echo substr($contents, $first, $last - $first + 1);
-            return;
-        }
-
-        $body = new RelativeStream($body, $first);
-        $body->rewind();
-        $pos = 0;
-        $length = $last - $first + 1;
-        while (! $body->eof() && $pos < $length) {
-            if (($pos + $maxBufferLength) > $length) {
-                echo $body->read($length - $pos);
+        while (! $body->eof() && $pos < $last) {
+            if (($pos + $maxBufferLength) > $last) {
+                echo $body->read($last - $pos);
                 break;
             }
 

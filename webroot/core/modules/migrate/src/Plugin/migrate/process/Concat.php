@@ -10,8 +10,6 @@ use Drupal\migrate\Row;
 /**
  * Concatenates the strings in the current value.
  *
- * @link https://www.drupal.org/node/2345927 Online handbook documentation for concat process plugin @endlink
- *
  * @MigrateProcessPlugin(
  *   id = "concat",
  *   handle_multiples = TRUE

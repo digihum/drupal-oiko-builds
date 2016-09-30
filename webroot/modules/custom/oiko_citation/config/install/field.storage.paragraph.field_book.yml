@@ -1,12 +1,9 @@
-uuid: ebc98f34-c9df-4b71-86c9-67dd728cf03b
 langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
     - taxonomy
-_core:
-  default_config_hash: S6cnGDdTcYXEfUJThQsCIClR15-ztUyTDJ9o1VnzHJE
 id: paragraph.field_book
 field_name: field_book
 entity_type: paragraph

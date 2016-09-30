@@ -20,15 +20,13 @@ class LazyLoadingMetadataFactoryTest extends \PHPUnit_Framework_TestCase
 {
     const CLASSNAME = 'Symfony\Component\Validator\Tests\Fixtures\Entity';
     const PARENTCLASS = 'Symfony\Component\Validator\Tests\Fixtures\EntityParent';
-    const INTERFACECLASS = 'Symfony\Component\Validator\Tests\Fixtures\EntityInterface';
 
-    public function testLoadClassMetadataWithInterface()
+    public function testLoadClassMetadata()
     {
         $factory = new LazyLoadingMetadataFactory(new TestLoader());
         $metadata = $factory->getMetadataFor(self::PARENTCLASS);
 
         $constraints = array(
-            new ConstraintA(array('groups' => array('Default', 'EntityInterface', 'EntityParent'))),
             new ConstraintA(array('groups' => array('Default', 'EntityParent'))),
         );
 
@@ -43,13 +41,12 @@ class LazyLoadingMetadataFactoryTest extends \PHPUnit_Framework_TestCase
         $constraints = array(
             new ConstraintA(array('groups' => array(
                 'Default',
-                'EntityInterface',
                 'EntityParent',
                 'Entity',
             ))),
             new ConstraintA(array('groups' => array(
                 'Default',
-                'EntityParent',
+                'EntityInterface',
                 'Entity',
             ))),
             new ConstraintA(array('groups' => array(
@@ -66,36 +63,27 @@ class LazyLoadingMetadataFactoryTest extends \PHPUnit_Framework_TestCase
         $cache = $this->getMock('Symfony\Component\Validator\Mapping\Cache\CacheInterface');
         $factory = new LazyLoadingMetadataFactory(new TestLoader(), $cache);
 
-        $parentClassConstraints = array(
-            new ConstraintA(array('groups' => array('Default', 'EntityInterface', 'EntityParent'))),
+        $tester = $this;
+        $constraints = array(
             new ConstraintA(array('groups' => array('Default', 'EntityParent'))),
         );
-        $interfaceConstraints = array(new ConstraintA(array('groups' => array('Default', 'EntityInterface'))));
 
         $cache->expects($this->never())
               ->method('has');
-        $cache->expects($this->exactly(2))
+        $cache->expects($this->once())
               ->method('read')
-              ->withConsecutive(
-                  array($this->equalTo(self::PARENTCLASS)),
-                  array($this->equalTo(self::INTERFACECLASS))
-              )
+              ->with($this->equalTo(self::PARENTCLASS))
               ->will($this->returnValue(false));
-        $cache->expects($this->exactly(2))
+        $cache->expects($this->once())
               ->method('write')
-              ->withConsecutive(
-                  $this->callback(function ($metadata) use ($interfaceConstraints) {
-                      return $interfaceConstraints == $metadata->getConstraints();
-                  }),
-                  $this->callback(function ($metadata) use ($parentClassConstraints) {
-                      return $parentClassConstraints == $metadata->getConstraints();
-                  })
-              );
+              ->will($this->returnCallback(function ($metadata) use ($tester, $constraints) {
+                  $tester->assertEquals($constraints, $metadata->getConstraints());
+              }));
 
         $metadata = $factory->getMetadataFor(self::PARENTCLASS);
 
         $this->assertEquals(self::PARENTCLASS, $metadata->getClassName());
-        $this->assertEquals($parentClassConstraints, $metadata->getConstraints());
+        $this->assertEquals($constraints, $metadata->getConstraints());
     }
 
     public function testReadMetadataFromCache()
@@ -104,6 +92,7 @@ class LazyLoadingMetadataFactoryTest extends \PHPUnit_Framework_TestCase
         $cache = $this->getMock('Symfony\Component\Validator\Mapping\Cache\CacheInterface');
         $factory = new LazyLoadingMetadataFactory($loader, $cache);
 
+        $tester = $this;
         $metadata = new ClassMetadata(self::PARENTCLASS);
         $metadata->addConstraint(new ConstraintA());
 

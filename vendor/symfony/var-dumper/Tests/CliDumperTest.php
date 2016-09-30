@@ -193,7 +193,7 @@ EOTXT
 
         $this->assertStringMatchesFormat(
             <<<EOTXT
-Closed resource @{$res}
+Unknown resource @{$res}
 
 EOTXT
             ,

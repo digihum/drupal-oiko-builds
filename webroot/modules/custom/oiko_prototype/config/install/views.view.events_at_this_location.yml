@@ -323,11 +323,12 @@ display:
         - 'languages:language_interface'
         - url
       tags:
-        - 'config:core.entity_view_display.cidoc_entity.e53_place.default'
-        - 'config:core.entity_view_display.cidoc_entity.e9_move.default'
+        - 'config:core.entity_view_display.cidoc_entity.e12_production.default'
         - 'config:core.entity_view_display.cidoc_entity.e21_person.default'
+        - 'config:core.entity_view_display.cidoc_entity.e22_man_made_object.default'
         - 'config:core.entity_view_display.cidoc_entity.e4_period.default'
         - 'config:core.entity_view_display.cidoc_entity.e52_time_span.default'
+        - 'config:core.entity_view_display.cidoc_entity.e53_place.default'
         - 'config:core.entity_view_display.cidoc_entity.e5_event.default'
         - 'config:core.entity_view_display.cidoc_entity.e5_event.summary_without_map'
         - 'config:core.entity_view_display.cidoc_entity.e66_formation.default'
@@ -347,6 +348,7 @@ display:
         - 'config:core.entity_view_display.cidoc_entity.e74_group.summary'
         - 'config:core.entity_view_display.cidoc_entity.e7_activity.default'
         - 'config:core.entity_view_display.cidoc_entity.e7_activity.summary_without_map'
+        - 'config:core.entity_view_display.cidoc_entity.e9_move.default'
         - 'config:core.entity_view_display.cidoc_entity.e9_move.summary'
         - 'config:core.entity_view_display.cidoc_entity.e9_move.summary_without_map'
         - 'config:core.entity_view_display.cidoc_entity.o1_killing.default'
@@ -374,7 +376,9 @@ display:
         - 'languages:language_interface'
         - url
       tags:
+        - 'config:core.entity_view_display.cidoc_entity.e12_production.default'
         - 'config:core.entity_view_display.cidoc_entity.e21_person.default'
+        - 'config:core.entity_view_display.cidoc_entity.e22_man_made_object.default'
         - 'config:core.entity_view_display.cidoc_entity.e4_period.default'
         - 'config:core.entity_view_display.cidoc_entity.e52_time_span.default'
         - 'config:core.entity_view_display.cidoc_entity.e53_place.default'

@@ -1220,9 +1220,7 @@ function file_directory_os_temp() {
 
   foreach ($directories as $directory) {
     if (is_dir($directory) && is_writable($directory)) {
-      // Both sys_get_temp_dir() and ini_get('upload_tmp_dir') can return paths
-      // with a trailing directory separator.
-      return rtrim($directory, DIRECTORY_SEPARATOR);
+      return $directory;
     }
   }
   return FALSE;

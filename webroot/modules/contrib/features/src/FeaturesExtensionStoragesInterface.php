@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\features\FeaturesExtensionStoragesInterface.
+ */
+
 namespace Drupal\features;
 
 use Drupal\Core\Config\InstallStorage;

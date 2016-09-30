@@ -73,8 +73,9 @@ final class Serializer extends AbstractSerializer
         if (! empty($headers)) {
             $headers = "\r\n" . $headers;
         }
-
-        $headers .= "\r\n\r\n";
+        if (! empty($body)) {
+            $headers .= "\r\n\r\n";
+        }
 
         return sprintf(
             $format,

@@ -106,13 +106,6 @@ class FeaturesManager implements FeaturesManagerInterface {
   protected $assigner;
 
   /**
-   * Cache module.features.yml data keyed by module name.
-   *
-   * @var array
-   */
-  protected $featureInfoCache;
-
-  /**
    * Constructs a FeaturesManager object.
    *
    * @param string $root
@@ -480,14 +473,10 @@ class FeaturesManager implements FeaturesManagerInterface {
    * {@inheritdoc}
    */
   public function initPackage($machine_name, $name = NULL, $description = '', $type = 'module', FeaturesBundleInterface $bundle = NULL, Extension $extension = NULL) {
-    if (isset($this->packages[$machine_name])) {
-      return $this->packages[$machine_name];
+    if (!isset($this->packages[$machine_name])) {
+      return $this->packages[$machine_name] = $this->getPackageObject($machine_name, $name, $description, $type, $bundle, $extension);
     }
-    // Also look for existing package within the bundle
-    elseif (isset($bundle) && isset($this->packages[$bundle->getFullName($machine_name)])) {
-      return $this->packages[$bundle->getFullName($machine_name)];
-    }
-    return $this->packages[$machine_name] = $this->getPackageObject($machine_name, $name, $description, $type, $bundle, $extension);
+    return $this->packages[$machine_name];
   }
 
   /**
@@ -497,9 +486,7 @@ class FeaturesManager implements FeaturesManagerInterface {
     $info = $this->getExtensionInfo($extension);
     $features_info = $this->getFeaturesInfo($extension);
     $bundle = $this->getAssigner()->findBundle($info, $features_info);
-    // Use the full extension name as the short_name.  Important to allow
-    // multiple modules with different namespaces such as oa_media, test_media.
-    $short_name = $extension->getName();
+    $short_name = $bundle->getShortName($extension->getName());
     return $this->initPackage($short_name, $info['name'], !empty($info['description']) ? $info['description'] : '', $info['type'], $bundle, $extension);
   }
 
@@ -513,7 +500,8 @@ class FeaturesManager implements FeaturesManagerInterface {
     $dependencies = [];
     $type = $config->getType();
     if ($type != FeaturesManagerInterface::SYSTEM_SIMPLE_CONFIG) {
-      $provider = $this->entityManager->getDefinition($type)->getProvider();
+      $provider = $this->entityManager->getDefinition($type)
+        ->getProvider();
       // Ensure the provider is an installed module and not, for example, 'core'
       if (isset($module_list[$provider])) {
         $dependencies[] = $provider;
@@ -567,7 +555,7 @@ class FeaturesManager implements FeaturesManagerInterface {
         // - it is not flagged as excluded.
         $assignable = (!$item->isProviderExcluded() || $is_profile_package) && !$item->isExcluded();
         // An item is assignable if it was provided by the current package
-        $assignable = $assignable || ($item->getProvider() == $package->getMachineName());
+        $assignable = $assignable || ($item->getProvider() == $package->getFullName());
         $excluded_from_package = in_array($package_name, $item->getPackageExcluded());
         $already_in_package = in_array($item_name, $package->getConfig());
         if (($force || (!$already_assigned && $assignable && !$excluded_from_package)) && !$already_in_package) {
@@ -819,6 +807,7 @@ class FeaturesManager implements FeaturesManagerInterface {
       'status' => FeaturesManagerInterface::STATUS_DEFAULT,
       'version' => '',
       'state' => FeaturesManagerInterface::STATE_DEFAULT,
+      'directory' => $machine_name,
       'files' => [],
       'bundle' => $bundle->isDefault() ? '' : $bundle->getMachineName(),
       'extension' => NULL,
@@ -829,9 +818,9 @@ class FeaturesManager implements FeaturesManagerInterface {
     // If no extension was passed in, look for a match.
     if (!isset($extension)) {
       $module_list = $this->getFeaturesModules($bundle);
-      $module_name = $package->getMachineName();
-      if (isset($module_list[$module_name])) {
-        $extension = $module_list[$module_name];
+      $full_name = $bundle->getFullName($package->getMachineName());
+      if (isset($module_list[$full_name])) {
+        $extension = $module_list[$full_name];
       }
     }
 
@@ -934,6 +923,8 @@ class FeaturesManager implements FeaturesManagerInterface {
    */
   protected function addPackageFiles(Package $package) {
     $config_collection = $this->getConfigCollection();
+    // Ensure the directory reflects the current full machine name.
+    $package->setDirectory($package->getMachineName());
     // Only add files if there is at least one piece of configuration
     // present.
     if ($package->getConfig()) {
@@ -1266,13 +1257,13 @@ class FeaturesManager implements FeaturesManagerInterface {
   public function statusLabel($status) {
     switch ($status) {
       case FeaturesManagerInterface::STATUS_NO_EXPORT:
-        return $this->t('Not exported');
+        return t('Not exported');
 
       case FeaturesManagerInterface::STATUS_UNINSTALLED:
-        return $this->t('Uninstalled');
+        return t('Uninstalled');
 
       case FeaturesManagerInterface::STATUS_INSTALLED:
-        return $this->t('Installed');
+        return t('Installed');
     }
   }
 
@@ -1282,10 +1273,10 @@ class FeaturesManager implements FeaturesManagerInterface {
   public function stateLabel($state) {
     switch ($state) {
       case FeaturesManagerInterface::STATE_DEFAULT:
-        return $this->t('Default');
+        return t('Default');
 
       case FeaturesManagerInterface::STATE_OVERRIDDEN:
-        return $this->t('Changed');
+        return t('Changed');
     }
   }
 
@@ -1293,16 +1284,11 @@ class FeaturesManager implements FeaturesManagerInterface {
    * {@inheritdoc}
    */
   public function getFeaturesInfo(Extension $extension) {
-    $module_name = $extension->getName();
-    if (isset($this->featureInfoCache[$module_name])) {
-      return $this->featureInfoCache[$module_name];
-    }
     $features_info = NULL;
-    $filename = $this->root . '/' . $extension->getPath() . '/' . $module_name . '.features.yml';
+    $filename = $this->root . '/' . $extension->getPath() . '/' . $extension->getName() . '.features.yml';
     if (file_exists($filename)) {
       $features_info = Yaml::decode(file_get_contents($filename));
     }
-    $this->featureInfoCache[$module_name] = $features_info;
     return $features_info;
   }
 

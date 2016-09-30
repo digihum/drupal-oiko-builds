@@ -20,10 +20,7 @@ class ConfigSingleImportExportTest extends WebTestBase {
   public static $modules = [
     'block',
     'config',
-    'config_test',
-    // Adding language module makes it possible to involve non-default
-    // (language.xx) collections in import/export operations.
-    'language',
+    'config_test'
   ];
 
   protected function setUp() {

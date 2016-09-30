@@ -50,6 +50,7 @@ class Move extends GeoserializerPluginBase {
             // We can only handle lines between points at the moment.
             $points[] = array(
               'type' => 'linestring',
+              'directional' => TRUE,
               'points' => array(
                 array(
                   'lat' => $from_point['lat'],

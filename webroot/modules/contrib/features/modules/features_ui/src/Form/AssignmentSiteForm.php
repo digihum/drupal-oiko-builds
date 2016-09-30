@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\features_ui\Form\AssignmentSiteForm.
+ */
+
 namespace Drupal\features_ui\Form;
 
 use Drupal\Core\Form\FormStateInterface;
@@ -26,7 +31,7 @@ class AssignmentSiteForm extends AssignmentFormBase {
     $settings = $this->currentBundle->getAssignmentSettings(self::METHOD_ID);
 
     $this->setConfigTypeSelect($form, $settings['types']['config'], $this->t('site'));
-    $this->setActions($form, self::METHOD_ID);
+    $this->setActions($form);
 
     return $form;
   }

@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e4_period
+    - field.storage.cidoc_entity.field_empire_outline
+    - taxonomy.vocabulary.empire
+id: cidoc_entity.e4_period.field_empire_outline
+field_name: field_empire_outline
+entity_type: cidoc_entity
+bundle: e4_period
+label: 'Empire outline'
+description: 'If this E4 period is linking the extent of an Empire with the temporal data for that Empire, select the Empire it relates to here or <a href="/admin/structure/taxonomy/manage/empire/add">add a new Empire</a>.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      empire: empire
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -3835,18 +3835,6 @@ $connection->insert('field_data_body')
   'body_summary' => '',
   'body_format' => 'filtered_html',
 ))
-->values(array(
-  'entity_type' => 'node',
-  'bundle' => 'article',
-  'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
-  'language' => 'und',
-  'delta' => '0',
-  'body_value' => "is - ...is that it's the absolute best show ever. Trust me, I would know.",
-  'body_summary' => '',
-  'body_format' => 'filtered_html',
-))
 ->execute();
 
 $connection->schema()->createTable('field_data_comment_body', array(
@@ -4942,18 +4930,6 @@ $connection->insert('field_data_field_link')
   'field_link_title' => 'Home',
   'field_link_attributes' => 'a:0:{}',
 ))
-->values(array(
-  'entity_type' => 'node',
-  'bundle' => 'article',
-  'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
-  'language' => 'und',
-  'delta' => '0',
-  'field_link_url' => '<front>',
-  'field_link_title' => 'Home',
-  'field_link_attributes' => 'a:1:{s:5:"title";s:0:"";}',
-))
 ->execute();
 
 $connection->schema()->createTable('field_data_field_long_text', array(
@@ -5195,16 +5171,6 @@ $connection->insert('field_data_field_tags')
   'entity_type' => 'node',
   'bundle' => 'article',
   'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
-  'language' => 'und',
-  'delta' => '0',
-  'field_tags_tid' => '9',
-))
-->values(array(
-  'entity_type' => 'node',
-  'bundle' => 'article',
-  'deleted' => '0',
   'entity_id' => '2',
   'revision_id' => '2',
   'language' => 'und',
@@ -5215,28 +5181,8 @@ $connection->insert('field_data_field_tags')
   'entity_type' => 'node',
   'bundle' => 'article',
   'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
-  'language' => 'und',
-  'delta' => '1',
-  'field_tags_tid' => '14',
-))
-->values(array(
-  'entity_type' => 'node',
-  'bundle' => 'article',
-  'deleted' => '0',
   'entity_id' => '2',
   'revision_id' => '2',
-  'language' => 'und',
-  'delta' => '2',
-  'field_tags_tid' => '17',
-))
-->values(array(
-  'entity_type' => 'node',
-  'bundle' => 'article',
-  'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
   'language' => 'und',
   'delta' => '2',
   'field_tags_tid' => '17',
@@ -5654,18 +5600,6 @@ $connection->insert('field_revision_body')
   'language' => 'und',
   'delta' => '0',
   'body_value' => "...is that it's the absolute best show ever. Trust me, I would know.",
-  'body_summary' => '',
-  'body_format' => 'filtered_html',
-))
-->values(array(
-  'entity_type' => 'node',
-  'bundle' => 'article',
-  'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
-  'language' => 'und',
-  'delta' => '0',
-  'body_value' => "is - ...is that it's the absolute best show ever. Trust me, I would know.",
   'body_summary' => '',
   'body_format' => 'filtered_html',
 ))
@@ -6776,18 +6710,6 @@ $connection->insert('field_revision_field_link')
   'field_link_title' => 'Home',
   'field_link_attributes' => 'a:0:{}',
 ))
-->values(array(
-  'entity_type' => 'node',
-  'bundle' => 'article',
-  'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
-  'language' => 'und',
-  'delta' => '0',
-  'field_link_url' => '<front>',
-  'field_link_title' => 'Home',
-  'field_link_attributes' => 'a:1:{s:5:"title";s:0:"";}',
-))
 ->execute();
 
 $connection->schema()->createTable('field_revision_field_long_text', array(
@@ -7032,16 +6954,6 @@ $connection->insert('field_revision_field_tags')
   'entity_type' => 'node',
   'bundle' => 'article',
   'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
-  'language' => 'und',
-  'delta' => '0',
-  'field_tags_tid' => '9',
-))
-->values(array(
-  'entity_type' => 'node',
-  'bundle' => 'article',
-  'deleted' => '0',
   'entity_id' => '2',
   'revision_id' => '2',
   'language' => 'und',
@@ -7052,28 +6964,8 @@ $connection->insert('field_revision_field_tags')
   'entity_type' => 'node',
   'bundle' => 'article',
   'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
-  'language' => 'und',
-  'delta' => '1',
-  'field_tags_tid' => '14',
-))
-->values(array(
-  'entity_type' => 'node',
-  'bundle' => 'article',
-  'deleted' => '0',
   'entity_id' => '2',
   'revision_id' => '2',
-  'language' => 'und',
-  'delta' => '2',
-  'field_tags_tid' => '17',
-))
-->values(array(
-  'entity_type' => 'node',
-  'bundle' => 'article',
-  'deleted' => '0',
-  'entity_id' => '3',
-  'revision_id' => '3',
   'language' => 'und',
   'delta' => '2',
   'field_tags_tid' => '17',
@@ -29782,23 +29674,7 @@ $connection->insert('node')
   'comment' => '2',
   'promote' => '1',
   'sticky' => '0',
-  'tnid' => '2',
-  'translate' => '0',
-))
-->values(array(
-  'nid' => '3',
-  'vid' => '3',
-  'type' => 'article',
-  'language' => 'is',
-  'title' => 'is - The thing about Deep Space 9',
-  'uid' => '1',
-  'status' => '1',
-  'created' => '1471428152',
-  'changed' => '1471428152',
-  'comment' => '2',
-  'promote' => '1',
-  'sticky' => '0',
-  'tnid' => '2',
+  'tnid' => '0',
   'translate' => '0',
 ))
 ->execute();
@@ -29937,14 +29813,6 @@ $connection->insert('node_comment_statistics')
   'last_comment_uid' => '1',
   'comment_count' => '1',
 ))
-->values(array(
-  'nid' => '3',
-  'cid' => '0',
-  'last_comment_timestamp' => '1471428152',
-  'last_comment_name' => NULL,
-  'last_comment_uid' => '1',
-  'comment_count' => '0',
-))
 ->execute();
 
 $connection->schema()->createTable('node_counter', array(
@@ -29995,18 +29863,6 @@ $connection->insert('node_counter')
   'totalcount' => '2',
   'daycount' => '0',
   'timestamp' => '1421727536',
-))
-->values(array(
-  'nid' => '2',
-  'totalcount' => '1',
-  'daycount' => '1',
-  'timestamp' => '1471428059',
-))
-->values(array(
-  'nid' => '3',
-  'totalcount' => '1',
-  'daycount' => '1',
-  'timestamp' => '1471428153',
 ))
 ->execute();
 
@@ -30111,18 +29967,6 @@ $connection->insert('node_revision')
   'title' => 'The thing about Deep Space 9',
   'log' => '',
   'timestamp' => '1441306832',
-  'status' => '1',
-  'comment' => '2',
-  'promote' => '1',
-  'sticky' => '0',
-))
-->values(array(
-  'nid' => '3',
-  'vid' => '3',
-  'uid' => '1',
-  'title' => 'is - The thing about Deep Space 9',
-  'log' => '',
-  'timestamp' => '1471428152',
   'status' => '1',
   'comment' => '2',
   'promote' => '1',
@@ -40268,24 +40112,6 @@ $connection->insert('taxonomy_index')
   'sticky' => '0',
   'created' => '1441306772',
 ))
-->values(array(
-  'nid' => '3',
-  'tid' => '9',
-  'sticky' => '0',
-  'created' => '1471428152',
-))
-->values(array(
-  'nid' => '3',
-  'tid' => '14',
-  'sticky' => '0',
-  'created' => '1471428152',
-))
-->values(array(
-  'nid' => '3',
-  'tid' => '17',
-  'sticky' => '0',
-  'created' => '1471428152',
-))
 ->execute();
 
 $connection->schema()->createTable('taxonomy_term_data', array(
@@ -41516,7 +41342,7 @@ $connection->insert('variable')
 ))
 ->values(array(
   'name' => 'language_content_type_article',
-  'value' => 's:1:"2";',
+  'value' => 's:1:"0";',
 ))
 ->values(array(
   'name' => 'language_content_type_blog',
@@ -41616,7 +41442,7 @@ $connection->insert('variable')
 ))
 ->values(array(
   'name' => 'menu_override_parent_selector',
-  'value' => 'b:0;',
+  'value' => 'b:1;',
 ))
 ->values(array(
   'name' => 'menu_parent_article',

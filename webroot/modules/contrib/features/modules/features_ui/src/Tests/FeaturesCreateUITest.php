@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\features_ui\Tests;
+namespace Drupal\features\Tests;
 
 use Drupal\Component\Serialization\Yaml;
 use Drupal\Core\Archiver\ArchiveTar;
@@ -105,8 +105,7 @@ class FeaturesCreateUITest extends WebTestBase {
     $features_info_filename = $module_path . '/' . $feature_name . '.features.yml';
     $parsed_features_info = Yaml::decode(file_get_contents($features_info_filename));
     $this->assertEqual([
-      'excluded' => ['system.theme'],
-      'required' => true,
+      'required' => ['user.settings', 'user.role.authenticated'],
     ], $parsed_features_info);
 
     $this->drupalGet('admin/modules');

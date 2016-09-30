@@ -9,6 +9,8 @@ targetEntityType: cidoc_entity
 bundle: e6_destruction
 mode: summary_without_map
 content:
+  e6_destroyed_entity_view_1:
+    weight: 10
   name:
     label: hidden
     type: string

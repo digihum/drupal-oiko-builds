@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\features\FeaturesManagerInterface.
+ */
+
 namespace Drupal\features;
 
 use Drupal\Core\Extension\Extension;
@@ -268,7 +273,7 @@ interface FeaturesManagerInterface {
    *   (optional) Bundle to use to add profile directories to the scan.
    * @param \Drupal\Core\Extension\Extension $extension
    *   (optional) An Extension object.
-   * @return \Drupal\features\Package
+   * @return array
    *   The created package array.
    */
   public function initPackage($machine_name, $name = NULL, $description = '', $type = 'module', FeaturesBundleInterface $bundle = NULL, Extension $extension = NULL);

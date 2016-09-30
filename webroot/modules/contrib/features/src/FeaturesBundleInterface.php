@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\features\FeaturesBundleInterface.
+ */
+
 namespace Drupal\features;
 
 /**
