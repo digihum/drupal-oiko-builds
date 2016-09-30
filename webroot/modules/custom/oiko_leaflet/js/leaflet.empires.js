@@ -77,11 +77,7 @@
           drupalLeaflet.timelineControl.recalculate();
         });
       });
-
-
-
     }
-
   });
 
 

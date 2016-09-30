@@ -129,12 +129,19 @@ class OikoLeafletMap extends StylePluginBase {
         '#states' => array(
           'visible' => array(
             ':input[name="style_options[description_field]"]' => array(
-              'value' => '#rendered_entity'
-            )
-          )
-        )
+              'value' => '#rendered_entity',
+            ),
+          ),
+        ),
       );
     }
+
+    // Clustering
+    $form['clustering'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use clustering'),
+      '#default_value' => $this->options['clustering'],
+    );
 
     // Sidebar
     $form['sidebar'] = array(
@@ -143,11 +150,25 @@ class OikoLeafletMap extends StylePluginBase {
       '#default_value' => $this->options['sidebar'],
     );
 
+    // Timeline
+    $form['timeline'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Display timeline'),
+      '#default_value' => $this->options['timeline'],
+    );
+
     // Empires
     $form['empires'] = array(
       '#type' => 'checkbox',
       '#title' => $this->t('Display empires'),
       '#default_value' => $this->options['empires'],
+      '#states' => array(
+        'visible' => array(
+          ':input[name="style_options[timeline]"]' => array(
+            'checked' => TRUE,
+          ),
+        ),
+      ),
     );
 
     // Choose a map preset
@@ -163,133 +184,19 @@ class OikoLeafletMap extends StylePluginBase {
       '#required' => TRUE,
     );
 
+    $form['full_height'] = array(
+      '#title' => $this->t('Full height'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->options['full_height'],
+    );
+
     $form['height'] = array(
-      '#title' => $this->t('Map height'),
+      '#title' => $this->t('Pixel height'),
       '#type' => 'textfield',
       '#field_suffix' => $this->t('px'),
       '#size' => 4,
       '#default_value' => $this->options['height'],
       '#required' => TRUE,
-    );
-
-    $form['icon'] = array(
-      '#title' => $this->t('Map Icon'),
-      '#type' => 'fieldset',
-      '#collapsible' => TRUE,
-      '#collapsed' => !isset($this->options['icon']['iconUrl']),
-    );
-
-    $form['icon']['iconUrl'] = array(
-      '#title' => $this->t('Icon URL'),
-      '#description' => $this->t('Can be an absolute or relative URL.'),
-      '#type' => 'textfield',
-      '#maxlength' => 999,
-      '#default_value' => $this->options['icon']['iconUrl'] ?: '',
-    );
-
-    $form['icon']['shadowUrl'] = array(
-      '#title' => $this->t('Icon Shadow URL'),
-      '#type' => 'textfield',
-      '#maxlength' => 999,
-      '#default_value' => $this->options['icon']['shadowUrl'] ?: '',
-    );
-
-    $form['icon']['iconSize'] = array(
-      '#title' => $this->t('Icon Size'),
-      '#type' => 'fieldset',
-      '#collapsible' => FALSE,
-      '#description' => $this->t('Size of the icon image in pixels.')
-    );
-
-    $form['icon']['iconSize']['x'] = array(
-      '#title' => $this->t('Width'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => isset($this->options['icon']['iconSize']['x']) ? $this->options['icon']['iconSize']['x'] : '',
-      '#element_validate' => array('form_validate_number'),
-    );
-
-    $form['icon']['iconSize']['y'] = array(
-      '#title' => $this->t('Height'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => isset($this->options['icon']['iconSize']['y']) ? $this->options['icon']['iconSize']['y'] : '',
-      '#element_validate' => array('form_validate_number'),
-    );
-
-    $form['icon']['iconAnchor'] = array(
-      '#title' => $this->t('Icon Anchor'),
-      '#type' => 'fieldset',
-      '#collapsible' => FALSE,
-      '#description' => $this->t('The coordinates of the "tip" of the icon (relative to its top left corner). The icon will be aligned so that this point is at the marker\'s geographical location.')
-    );
-
-    $form['icon']['iconAnchor']['x'] = array(
-      '#title' => $this->t('X'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => isset($this->options['icon']['iconAnchor']['x']) ? $this->options['icon']['iconAnchor']['x'] : '',
-      '#element_validate' => array('form_validate_number'),
-    );
-
-    $form['icon']['iconAnchor']['y'] = array(
-      '#title' => $this->t('Y'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => isset($this->options['icon']['iconAnchor']['y']) ? $this->options['icon']['iconAnchor']['y'] : '',
-      '#element_validate' => array('form_validate_number'),
-    );
-
-    $form['icon']['shadowAnchor'] = array(
-      '#title' => $this->t('Shadow Anchor'),
-      '#type' => 'fieldset',
-      '#collapsible' => FALSE,
-      '#description' => $this->t('The point from which the shadow is shown.')
-    );
-    $form['icon']['shadowAnchor']['x'] = array(
-      '#title' => $this->t('X'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => isset($this->options['icon']['shadowAnchor']['x']) ? $this->options['icon']['shadowAnchor']['x'] : '',
-      '#element_validate' => array('form_validate_number'),
-    );
-    $form['icon']['shadowAnchor']['y'] = array(
-      '#title' => $this->t('Y'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => isset($this->options['icon']['shadowAnchor']['y']) ? $this->options['icon']['shadowAnchor']['y'] : '',
-      '#element_validate' => array('form_validate_number'),
-    );
-
-    $form['icon']['popupAnchor'] = array(
-      '#title' => $this->t('Popup Anchor'),
-      '#type' => 'fieldset',
-      '#collapsible' => FALSE,
-      '#description' => $this->t('The point from which the marker popup opens, relative to the anchor point.')
-    );
-
-    $form['icon']['popupAnchor']['x'] = array(
-      '#title' => $this->t('X'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => isset($this->options['icon']['popupAnchor']['x']) ? $this->options['icon']['popupAnchor']['x'] : '',
-      '#element_validate' => array('form_validate_number'),
-    );
-
-    $form['icon']['popupAnchor']['y'] = array(
-      '#title' => $this->t('Y'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => isset($this->options['icon']['popupAnchor']['y']) ? $this->options['icon']['popupAnchor']['y'] : '',
-      '#element_validate' => array('form_validate_number'),
     );
   }
 
@@ -302,19 +209,6 @@ class OikoLeafletMap extends StylePluginBase {
     $style_options = $form_state->getValue('style_options');
     if (!empty($style_options['height']) && (!is_numeric($style_options['height']) || $style_options['height'] <= 0)) {
       $form_state->setError($form['height'], $this->t('Map height needs to be a positive number.'));
-    }
-    $icon_options = $style_options['icon'];
-    if (!empty($icon_options['iconUrl']) && !UrlHelper::isValid($icon_options['iconUrl'])) {
-      $form_state->setError($form['icon']['iconUrl'], $this->t('Icon URL is invalid.'));
-    }
-    if (!empty($icon_options['shadowUrl']) && !UrlHelper::isValid($icon_options['shadowUrl'])) {
-      $form_state->setError($form['icon']['shadowUrl'], $this->t('Shadow URL is invalid.'));
-    }
-    if (!empty($icon_options['iconSize']['x']) && (!is_numeric($icon_options['iconSize']['x']) || $icon_options['iconSize']['x'] <= 0)) {
-      $form_state->setError($form['icon']['iconSize']['x'], $this->t('Icon width needs to be a positive number.'));
-    }
-    if (!empty($icon_options['iconSize']['y']) && (!is_numeric($icon_options['iconSize']['y']) || $icon_options['iconSize']['y'] <= 0)) {
-      $form_state->setError($form['icon']['iconSize']['y'], $this->t('Icon height needs to be a positive number.'));
     }
   }
 
@@ -338,7 +232,10 @@ class OikoLeafletMap extends StylePluginBase {
     // Always render the map, even if we do not have any data.
     $map = leaflet_map_get_info($this->options['map']);
     $map['sidebar'] = $this->options['sidebar'];
-    $map['empires'] = $this->options['empires'];
+    $map['timeline'] = $this->options['timeline'];
+    $map['empires'] = $this->options['empires'] && $this->options['timeline'];
+    $map['clustering'] = $this->options['clustering'];
+    // @TODO Handle full_height.
     return leaflet_render_map($map, $data, $this->options['height'] . 'px');
   }
 
@@ -375,10 +272,12 @@ class OikoLeafletMap extends StylePluginBase {
     $options['description_field'] = array('default' => '');
     $options['view_mode'] = array('default' => 'full');
     $options['sidebar'] = array('default' => FALSE);
+    $options['timeline'] = array('default' => FALSE);
     $options['empires'] = array('default' => FALSE);
     $options['map'] = array('default' => '');
     $options['height'] = array('default' => '400');
-    $options['icon'] = array('default' => array());
+    $options['full_height'] = array('default' => FALSE);
+    $options['clustering'] = array('default' => TRUE);
     return $options;
   }
 }

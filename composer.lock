@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "628c382fff4657625a2b5c6d72233c9d",
-    "content-hash": "064bbcc31987f3b2430cdc77e88c2ed8",
+    "hash": "7c1e55ddad108f4348112898e0a9f21c",
+    "content-hash": "60a660a144ee55af6176c7dc9a49ecb8",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -412,12 +412,12 @@
             "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/consolidation-org/annotated-command.git",
+                "url": "https://github.com/consolidation/annotated-command.git",
                 "reference": "ed279df30b9386fd8e523003dc679421a87c52e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/consolidation-org/annotated-command/zipball/ed279df30b9386fd8e523003dc679421a87c52e0",
+                "url": "https://api.github.com/repos/consolidation/annotated-command/zipball/ed279df30b9386fd8e523003dc679421a87c52e0",
                 "reference": "ed279df30b9386fd8e523003dc679421a87c52e0",
                 "shasum": ""
             },
@@ -463,12 +463,12 @@
             "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/consolidation-org/output-formatters.git",
+                "url": "https://github.com/consolidation/output-formatters.git",
                 "reference": "6428d8fb30c9ed3b96314580808b3e4415b46dd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/consolidation-org/output-formatters/zipball/6428d8fb30c9ed3b96314580808b3e4415b46dd9",
+                "url": "https://api.github.com/repos/consolidation/output-formatters/zipball/6428d8fb30c9ed3b96314580808b3e4415b46dd9",
                 "reference": "6428d8fb30c9ed3b96314580808b3e4415b46dd9",
                 "shasum": ""
             },
@@ -1140,7 +1140,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/color_field-8.x-2.0-rc1.zip",
-                "reference": null,
+                "reference": "feef4168166f0b7bce76cd176645094109ad40dc",
                 "shasum": null
             },
             "require": {
@@ -1349,16 +1349,16 @@
         },
         {
             "name": "drupal/core",
-            "version": "8.1.8",
+            "version": "8.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal-composer/drupal-core.git",
-                "reference": "3f06f574ccc1e18b61ef150780fb1900c2f40abc"
+                "reference": "9562f733cdefd735337bf827b3ba5ad031aba4c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal-composer/drupal-core/zipball/3f06f574ccc1e18b61ef150780fb1900c2f40abc",
-                "reference": "3f06f574ccc1e18b61ef150780fb1900c2f40abc",
+                "url": "https://api.github.com/repos/drupal-composer/drupal-core/zipball/9562f733cdefd735337bf827b3ba5ad031aba4c3",
+                "reference": "9562f733cdefd735337bf827b3ba5ad031aba4c3",
                 "shasum": ""
             },
             "require": {
@@ -1517,7 +1517,7 @@
                 "GPL-2.0+"
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
-            "time": "2016-08-03 14:09:08"
+            "time": "2016-09-21 17:09:42"
         },
         {
             "name": "drupal/csv_serialization",
@@ -1902,7 +1902,8 @@
                     "New version of geofield uses composer for geophp dependency, geophp_load not needed": "https://www.drupal.org/files/issues/leaflet-remove_geophp_load_call-2731917-2.patch",
                     "Fixes Incorrect parameter icon_url in Drupal.Leaflet.prototype.create_icon": "https://www.drupal.org/files/issues/leaflet-fix_incorrect_parameter_name_in_create_icon-2732267-2.patch",
                     "Fixes maps not working on HTTPS": "https://www.drupal.org/files/issues/leaflet-ssl_support-2753703-2_0.patch",
-                    "Fixes the API docs to include a missing hook": "https://www.drupal.org/files/issues/leaflet-add-hook_leaflet_map_info_alter-2746721-2.patch"
+                    "Fixes the API docs to include a missing hook": "https://www.drupal.org/files/issues/leaflet-add-hook_leaflet_map_info_alter-2746721-2.patch",
+                    "Allows use of geometrycollection": "https://www.drupal.org/files/issues/leaflet-2799311-geometry-collection.patch"
                 }
             },
             "notification-url": "https://packagist.drupal-composer.org/downloads/",
@@ -1925,7 +1926,7 @@
                 "composer/installers": "^1.0.21"
             },
             "type": "drupal-module",
-            "time": "2016-07-27 14:39:54"
+            "time": "2016-09-20 10:25:00"
         },
         {
             "name": "drupal/metatag",

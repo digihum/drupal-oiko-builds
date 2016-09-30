@@ -3458,17 +3458,17 @@
     },
     {
         "name": "drupal/core",
-        "version": "8.1.8",
-        "version_normalized": "8.1.8.0",
+        "version": "8.1.10",
+        "version_normalized": "8.1.10.0",
         "source": {
             "type": "git",
             "url": "https://github.com/drupal-composer/drupal-core.git",
-            "reference": "3f06f574ccc1e18b61ef150780fb1900c2f40abc"
+            "reference": "9562f733cdefd735337bf827b3ba5ad031aba4c3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/drupal-composer/drupal-core/zipball/3f06f574ccc1e18b61ef150780fb1900c2f40abc",
-            "reference": "3f06f574ccc1e18b61ef150780fb1900c2f40abc",
+            "url": "https://api.github.com/repos/drupal-composer/drupal-core/zipball/9562f733cdefd735337bf827b3ba5ad031aba4c3",
+            "reference": "9562f733cdefd735337bf827b3ba5ad031aba4c3",
             "shasum": ""
         },
         "require": {
@@ -3605,8 +3605,13 @@
             "phpunit/phpunit": "~4.8",
             "symfony/css-selector": "~2.8"
         },
-        "time": "2016-08-03 14:09:08",
+        "time": "2016-09-21 17:09:42",
         "type": "drupal-core",
+        "extra": {
+            "patches_applied": {
+                "Prevent a notice from views_query_views_alter": "https://www.drupal.org/files/issues/2744069-5-views-in-queries.patch"
+            }
+        },
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
@@ -3751,7 +3756,7 @@
         "dist": {
             "type": "zip",
             "url": "https://ftp.drupal.org/files/projects/color_field-8.x-2.0-rc1.zip",
-            "reference": null,
+            "reference": "feef4168166f0b7bce76cd176645094109ad40dc",
             "shasum": null
         },
         "require": {
@@ -5124,7 +5129,7 @@
         "require": {
             "composer/installers": "^1.0.21"
         },
-        "time": "2016-07-27 14:39:54",
+        "time": "2016-09-20 10:25:00",
         "type": "drupal-module",
         "installation-source": "source"
     },
@@ -5806,12 +5811,12 @@
         "version_normalized": "1.0.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/consolidation-org/output-formatters.git",
+            "url": "https://github.com/consolidation/output-formatters.git",
             "reference": "6428d8fb30c9ed3b96314580808b3e4415b46dd9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/consolidation-org/output-formatters/zipball/6428d8fb30c9ed3b96314580808b3e4415b46dd9",
+            "url": "https://api.github.com/repos/consolidation/output-formatters/zipball/6428d8fb30c9ed3b96314580808b3e4415b46dd9",
             "reference": "6428d8fb30c9ed3b96314580808b3e4415b46dd9",
             "shasum": ""
         },
@@ -5906,12 +5911,12 @@
         "version_normalized": "1.0.1.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/consolidation-org/annotated-command.git",
+            "url": "https://github.com/consolidation/annotated-command.git",
             "reference": "ed279df30b9386fd8e523003dc679421a87c52e0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/consolidation-org/annotated-command/zipball/ed279df30b9386fd8e523003dc679421a87c52e0",
+            "url": "https://api.github.com/repos/consolidation/annotated-command/zipball/ed279df30b9386fd8e523003dc679421a87c52e0",
             "reference": "ed279df30b9386fd8e523003dc679421a87c52e0",
             "shasum": ""
         },

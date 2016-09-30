@@ -12,7 +12,7 @@ empires:
     js/leaflet.empires.js: {}
   version: VERSION
   dependencies:
-    - oiko_leaflet/intervalTree
+    - oiko_leaflet/temporal
     - core/jquery
 
 arrows:
@@ -39,6 +39,13 @@ timelineControl:
     - oiko_leaflet/vis
     - core/jquery
 
+cluster:
+  js:
+    js/leaflet.cluster.js: {}
+  version: VERSION
+  dependencies:
+    - oiko_leaflet/markercluster
+
 temporal:
   js:
     js/leaflet.temporal.js: {}
@@ -47,7 +54,7 @@ temporal:
     - oiko_leaflet/intervalTree
     - oiko_leaflet/timelineControl
     - core/jquery
-    - oiko_leaflet/markercluster
+    - oiko_leaflet/cluster
 
 # These are our external vendor libraries.
 
