@@ -25,6 +25,7 @@
       };
       this.timelines = [];
       this.callbacks = [];
+      this.doneCallbacks = [];
       L.Util.setOptions(this, defaultOptions);
       L.Util.setOptions(this, options);
       if (typeof options.start !== 'undefined') {
@@ -44,9 +45,6 @@
       var container = L.DomUtil.create('div', classes.join(' '));
       this.container = container;
       this._makeSlider(container);
-      if (this.options.showTicks) {
-        // this._buildDataList(container);
-      }
     },
     /**
      * Creates the range input
@@ -75,12 +73,26 @@
           _this4._visTimelineChanged(e);
         }
       });
+      this._visTimeline.on('timechanged', function(e) {
+        if (e.id === 'tdrag') {
+          _this4._visTimelineChangedDone(e);
+        }
+      });
     },
     _visTimelineChanged: function _visTimelineChanged(properties) {
       var time = Math.round(properties.time.getTime() / 1000);
       this.time = time;
       if (!this.options.waitToUpdateMap || e.type === 'change') {
         this.callbacks.forEach(function (cb) {
+          return cb(time);
+        });
+      }
+    },
+    _visTimelineChangedDone: function _visTimelineChangedDone(properties) {
+      var time = Math.round(properties.time.getTime() / 1000);
+      this.time = time;
+      if (!this.options.waitToUpdateMap || e.type === 'change') {
+        this.doneCallbacks.forEach(function (cb) {
           return cb(time);
         });
       }
@@ -102,7 +114,7 @@
       };
       this._visItems.add(obj);
     },
-    addTimeline: function addTimeline(timeline, cb) {
+    addTimeline: function addTimeline(timeline, cb, dcb) {
       var _this = this;
 
       // this.pause();
@@ -111,6 +123,7 @@
       if (_this.timelines.indexOf(timeline) === -1) {
         _this.timelines.push(timeline);
         _this.callbacks.push(cb);
+        _this.doneCallbacks.push(dcb);
       }
       if (this.timelines.length !== timelineCount) {
         this._recalculate();
@@ -164,6 +177,20 @@
         type: 'change',
         target: { value: time }
       });
+    },
+    changeTime: function changeTime(time) {
+      this.time = time;
+      this._visTimeline.setCustomTime(1000 * time, 'tdrag');
+      if (!this.options.waitToUpdateMap) {
+        this.callbacks.forEach(function (cb) {
+          return cb(time);
+        });
+      }
+      if (!this.options.waitToUpdateMap) {
+        this.doneCallbacks.forEach(function (cb) {
+          return cb(time);
+        });
+      }
     },
     onAdd: function onAdd(map) {
       this.map = map;

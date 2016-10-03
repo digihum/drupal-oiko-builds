@@ -3,7 +3,7 @@
   $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
 
     // If the map is using clustering add in the clusterer.
-    if (drupalLeaflet.map_definition.hasOwnProperty('clustering') && drupalLeaflet.map_definition.clustering) {
+    if (mapDefinition.hasOwnProperty('clustering') && mapDefinition.clustering) {
       drupalLeaflet.clusterer = L.markerClusterGroup({
         // Make the radius of the clusters quite small.
         maxClusterRadius: 40

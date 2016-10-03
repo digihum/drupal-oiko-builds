@@ -157,6 +157,13 @@ class OikoLeafletMap extends StylePluginBase {
       '#default_value' => $this->options['timeline'],
     );
 
+    // Page state
+    $form['pagestate'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Add map state to querystring'),
+      '#default_value' => $this->options['pagestate'],
+    );
+
     // Empires
     $form['empires'] = array(
       '#type' => 'checkbox',
@@ -232,6 +239,7 @@ class OikoLeafletMap extends StylePluginBase {
     // Always render the map, even if we do not have any data.
     $map = leaflet_map_get_info($this->options['map']);
     $map['sidebar'] = $this->options['sidebar'];
+    $map['pagestate'] = $this->options['pagestate'];
     $map['timeline'] = $this->options['timeline'];
     $map['empires'] = $this->options['empires'] && $this->options['timeline'];
     $map['clustering'] = $this->options['clustering'];
@@ -274,6 +282,7 @@ class OikoLeafletMap extends StylePluginBase {
     $options['sidebar'] = array('default' => FALSE);
     $options['timeline'] = array('default' => FALSE);
     $options['empires'] = array('default' => FALSE);
+    $options['pagestate'] = array('default' => FALSE);
     $options['map'] = array('default' => '');
     $options['height'] = array('default' => '400');
     $options['full_height'] = array('default' => FALSE);

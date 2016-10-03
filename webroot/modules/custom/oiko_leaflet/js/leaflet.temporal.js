@@ -15,11 +15,27 @@
 
       drupalLeaflet.drawOnSetTime = true;
 
+      drupalLeaflet.changeTime = function (time) {
+        time = typeof time === 'number' ? time : new Date(time).getTime();
+        this.timelineControl.changeTime(time);
+      };
+
       drupalLeaflet.updateTime = function (time) {
         this.time = typeof time === 'number' ? time : new Date(time).getTime();
         if (this.drawOnSetTime) {
           this.updateTemporalLayersTrigger();
         }
+      };
+
+      drupalLeaflet.timelineControlDoneChanged = function (time) {
+        // Fire an event so that anyone can respond.
+        $(document).trigger('temporalShifted', [this]);
+        // And fire an event on the map.
+        map.fire('temporalShifted', this);
+      };
+
+      drupalLeaflet.getTime = function () {
+        return this.time;
       };
 
       drupalLeaflet.timelineControl = new L.TimeLineControl({
@@ -34,12 +50,14 @@
       drupalLeaflet.timelineContainerDiv = drupalLeaflet.timelineControl.onAdd(map);
       $(drupalLeaflet.container).after(drupalLeaflet.timelineContainerDiv);
       $(drupalLeaflet.timelineContainerDiv).hide();
-      drupalLeaflet.timelineControl.addTimeline(drupalLeaflet.temporalTree, $.proxy(drupalLeaflet.updateTime, drupalLeaflet));
+      drupalLeaflet.timelineControl.addTimeline(drupalLeaflet.temporalTree, $.proxy(drupalLeaflet.updateTime, drupalLeaflet), $.proxy(drupalLeaflet.timelineControlDoneChanged, drupalLeaflet));
 
 
       drupalLeaflet.updateTemporalLayersTrigger = function () {
         // Fire an event so that anyone can respond.
         $(document).trigger('temporalShift', [this]);
+        // And fire an event on the map.
+        map.fire('temporalShift', this);
       };
 
       drupalLeaflet.recalculateTemporalBounds = function (min, max) {
@@ -103,7 +121,11 @@
       });
 
       $(document).on('leaflet.features', function(e, initial, drupalLeaflet) {
+        var previousTime = drupalLeaflet.getTime();
         drupalLeaflet.timelineControl.recalculate();
+        if (previousTime) {
+          drupalLeaflet.changeTime(previousTime);
+        }
         if (drupalLeaflet.temporalDisplayedLayerGroup.getLayers().length > 1) {
           $(drupalLeaflet.timelineContainerDiv).show();
         }

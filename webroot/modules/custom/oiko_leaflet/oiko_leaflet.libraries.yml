@@ -6,6 +6,15 @@ popups:
     - oiko_leaflet/sidebar-v2
     - core/drupal.ajax
     - core/jquery
+    - core/modernizr
+
+mapstate:
+  js:
+    js/leaflet.mapstate.js: {}
+  version: VERSION
+  dependencies:
+    - oiko_leaflet/temporal
+    - oiko_leaflet/leaflet-hash
 
 empires:
   js:
@@ -71,6 +80,13 @@ leaflet-textpath:
   dependencies:
     - leaflet/leaflet
   version: 1.1.0
+
+leaflet-hash:
+  js:
+    js/vendor/leaflet-hash.js: {}
+  dependencies:
+    - leaflet/leaflet
+  version: 0.2.1
 
 intervalTree:
   js:
