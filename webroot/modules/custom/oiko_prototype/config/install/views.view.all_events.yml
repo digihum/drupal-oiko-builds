@@ -71,25 +71,14 @@ display:
         options:
           grouping: {  }
           id_field: id
+          clustering: 1
           sidebar: 1
+          timeline: 1
+          pagestate: 1
           empires: 1
           map: 'Ancient Terrain'
+          full_height: 1
           height: '650'
-          icon:
-            iconUrl: ''
-            shadowUrl: ''
-            iconSize:
-              x: ''
-              'y': ''
-            iconAnchor:
-              x: ''
-              'y': ''
-            shadowAnchor:
-              x: ''
-              'y': ''
-            popupAnchor:
-              x: ''
-              'y': ''
       row:
         type: fields
       fields:
@@ -388,6 +377,22 @@ display:
           plugin_id: cidoc_related_entity_forward
       arguments: {  }
       display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - user
+        - user.permissions
+      tags: {  }
+  embed_1:
+    display_plugin: embed
+    id: embed_1
+    display_title: 'CIDOC view'
+    position: 1
+    display_options:
+      display_extenders: {  }
+      display_description: 'Used when viewing the page of a specific CIDOC entity'
     cache_metadata:
       max-age: -1
       contexts:

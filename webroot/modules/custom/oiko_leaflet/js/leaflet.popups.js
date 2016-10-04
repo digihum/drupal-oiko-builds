@@ -22,6 +22,15 @@
           Drupal.oiko.openLeafletSidebar(id, !!(label) ? label : $target.text(), drupalLeaflet, true);
         }
       });
+
+      // Check to see if we need to open the sidebar immediately.
+      $(document).once('oiko_leaflet__popups').each(function () {
+        if (drupalSettings.hasOwnProperty('oiko_leaflet') && drupalSettings.oiko_leaflet.hasOwnProperty('popup') && drupalSettings.oiko_leaflet.popup) {
+          // We might need to wait for everything we need to be loaded.
+
+          Drupal.oiko.openLeafletSidebar(drupalSettings.oiko_leaflet.popup.id, drupalSettings.oiko_leaflet.popup.label, Drupal.globalDrupalLeaflet, false);
+        }
+      });
     }
   });
 
