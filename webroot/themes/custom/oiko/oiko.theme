@@ -66,7 +66,7 @@ function oiko_preprocess_views_view(&$variables) {
   $view = $variables['view'];
   $display = $view->getDisplay()->getPluginId();
   $style = $view->getStyle()->getPluginId();
-  if ($display == 'page' && $style == 'oiko_leaflet_map') {
+  if ($display == 'page' && $style == 'oiko_leafet_map') {
     $variables['attributes']['class'][] = 'l-map-wrap';
   }
 }
