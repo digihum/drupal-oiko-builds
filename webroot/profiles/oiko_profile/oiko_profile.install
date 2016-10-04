@@ -64,3 +64,10 @@ function oiko_profile_update_8104() {
 function oiko_profile_update_8105() {
   \Drupal::service('module_installer')->install(['color_field']);
 }
+
+/**
+ * Install oiko_forum module.
+ */
+function oiko_profile_update_8106() {
+  \Drupal::service('module_installer')->install(['oiko_forum']);
+}

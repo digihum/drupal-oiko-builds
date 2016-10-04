@@ -18,6 +18,27 @@ function oiko_preprocess(&$variables, $hook, $info) {
   }
 }
 
+/**
+ * Implements hook_preprocess_HOOK() for comment templates.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the comment and entity objects.
+ *     Array keys: #comment, #commented_entity.
+ */
+function oiko_preprocess_comment(&$variables) {
+  if ($variables['commented_entity']->getEntityTypeId() == 'node') {
+    if ($variables['commented_entity']->bundle() == 'forum') {
+      $variables['attributes']['class'][] = 'forum-comment';
+      $variables['content_attributes']['class'][] = 'forum-comment-content';
+      $variables['user_picture'] = '';
+      $variables['submitted'] = [
+        '#markup' => t('Submitted by @username', ['@username' => $variables['author']]) . '<br />' . $variables['created']
+      ];
+    }
+  }
+}
+
 
 /**
  * Implements hook_element_info_alter().
@@ -36,6 +57,7 @@ function oiko_remove_theme_wrappers($element) {
   $element['#theme_wrappers'] = array();
   return $element;
 }
+
 
 /**
  * Implements template_preprocess_views_view().

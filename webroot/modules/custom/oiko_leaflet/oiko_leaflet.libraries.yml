@@ -6,13 +6,22 @@ popups:
     - oiko_leaflet/sidebar-v2
     - core/drupal.ajax
     - core/jquery
+    - core/modernizr
+
+mapstate:
+  js:
+    js/leaflet.mapstate.js: {}
+  version: VERSION
+  dependencies:
+    - oiko_leaflet/temporal
+    - oiko_leaflet/leaflet-hash
 
 empires:
   js:
     js/leaflet.empires.js: {}
   version: VERSION
   dependencies:
-    - oiko_leaflet/intervalTree
+    - oiko_leaflet/temporal
     - core/jquery
 
 arrows:
@@ -39,6 +48,13 @@ timelineControl:
     - oiko_leaflet/vis
     - core/jquery
 
+cluster:
+  js:
+    js/leaflet.cluster.js: {}
+  version: VERSION
+  dependencies:
+    - oiko_leaflet/markercluster
+
 temporal:
   js:
     js/leaflet.temporal.js: {}
@@ -47,7 +63,7 @@ temporal:
     - oiko_leaflet/intervalTree
     - oiko_leaflet/timelineControl
     - core/jquery
-    - oiko_leaflet/markercluster
+    - oiko_leaflet/cluster
 
 # These are our external vendor libraries.
 
@@ -64,6 +80,13 @@ leaflet-textpath:
   dependencies:
     - leaflet/leaflet
   version: 1.1.0
+
+leaflet-hash:
+  js:
+    js/vendor/leaflet-hash.js: {}
+  dependencies:
+    - leaflet/leaflet
+  version: 0.2.1
 
 intervalTree:
   js:

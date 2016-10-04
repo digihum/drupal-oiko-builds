@@ -6,6 +6,7 @@ use Drupal\cidoc\CidocEntityInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\oiko_leaflet\Ajax\HistoryPushCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityManager;
 
@@ -51,6 +52,12 @@ class PopupContentController extends ControllerBase {
 
     $response = new AjaxResponse();
     $response->addCommand(new HtmlCommand('.sidebar-information-content-content', $content));
+    $pushData = [
+      'type' => 'popup',
+      'id' => $cidoc_entity->id(),
+      'label' => $cidoc_entity->label(),
+    ];
+    $response->addCommand(new HistoryPushCommand($pushData, NULL, $cidoc_entity->toUrl()));
     return $response;
 
   }
