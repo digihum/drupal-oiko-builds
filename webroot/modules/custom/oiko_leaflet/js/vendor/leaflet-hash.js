@@ -116,7 +116,7 @@
 
 			var hash = this.formatHash(this.map, this.drupalLeaflet);
 			if (this.lastHash != hash) {
-				location.replace(hash);
+        history.replaceState(history.state, '', hash);
 				this.lastHash = hash;
 			}
 		},
@@ -131,7 +131,7 @@
 
 			var hash = this.formatHash(this.map, this.drupalLeaflet);
 			if (this.lastHash != hash) {
-				location.replace(hash);
+        history.replaceState(history.state, '', hash);
 				this.lastHash = hash;
 			}
 		},
