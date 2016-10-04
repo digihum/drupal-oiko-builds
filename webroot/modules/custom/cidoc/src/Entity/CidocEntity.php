@@ -93,6 +93,17 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
   /**
    * {@inheritdoc}
    */
+  public function toUrl($rel = 'canonical', array $options = []) {
+    $uri = parent::toUrl($rel, $options);
+    $uri_options = $uri->getOptions();
+    $uri_options['attributes']['data-cidoc-id'] = $this->id();
+    $uri_options['attributes']['data-cidoc-label'] = $this->label();
+    return $uri->setOptions($uri_options);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCreatedTime() {
     return $this->get('created')->value;
   }

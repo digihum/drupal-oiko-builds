@@ -1,0 +1,16 @@
+name: 'Oiko Forum'
+description: 'Provides a site forum.'
+type: module
+core: 8.x
+dependencies:
+  - cidoc
+  - comment
+  - field
+  - node
+  - oiko_cidoc
+  - path
+  - rdf
+  - taxonomy
+  - text
+  - user
+package: Oiko

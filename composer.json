@@ -211,6 +211,9 @@
             ]
         },
         "patches": {
+            "drupal/core": {
+                "Prevent a notice from views_query_views_alter": "https://www.drupal.org/files/issues/2744069-5-views-in-queries.patch"
+            },
             "drupal/add_to_head": {
                 "Add applies method patch": "https://www.drupal.org/files/issues/checkfordefinitiontype-2709377.patch"
             },

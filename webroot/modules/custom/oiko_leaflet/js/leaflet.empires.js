@@ -74,14 +74,14 @@
           lFeature.setStyle(styleOptions);
 
           drupalLeaflet.empires.temporalTree.insert(min, max, lFeature);
+          var previousTime = drupalLeaflet.getTime();
           drupalLeaflet.timelineControl.recalculate();
+          if (previousTime) {
+            drupalLeaflet.changeTime(previousTime);
+          }
         });
       });
-
-
-
     }
-
   });
 
 

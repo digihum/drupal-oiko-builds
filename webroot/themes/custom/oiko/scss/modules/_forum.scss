@@ -31,3 +31,18 @@
     margin-left: 1.5em;
   }
 }
+
+.forum-comment {
+  background-color: $light-gray;
+  margin-bottom: 1em;
+  padding: 1em;
+
+  footer {
+    float: left;
+    width: 12em;
+  }
+
+  .forum-comment-content {
+    overflow: hidden;
+  }
+}
