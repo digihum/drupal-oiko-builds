@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\field_group\Plugin\field_group\FieldGroupFormatter\AccordionItem.
- */
-
 namespace Drupal\field_group\Plugin\field_group\FieldGroupFormatter;
 
 use Drupal;
@@ -37,7 +32,7 @@ class AccordionItem extends FieldGroupFormatterBase {
 
     $element += array(
       '#type' => 'field_group_accordion_item',
-      '#collapsed' => $this->getSetting('formatter'),
+      '#open' => $this->getSetting('formatter') == 'open' ? TRUE : FALSE,
       '#description' => $this->getSetting('description'),
       '#title' => Drupal::translation()->translate($this->getLabel()),
     );

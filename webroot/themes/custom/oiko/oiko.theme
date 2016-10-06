@@ -38,3 +38,40 @@ function oiko_preprocess_comment(&$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - node: The node object.
+ *   - view_mode: View mode; e.g., 'full', 'teaser', etc.
+ */
+function oiko_preprocess_node(&$variables) {
+  if ($variables['node']->bundle() == 'forum') {
+    $variables['author_picture'] = '';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: A render element representing the field.
+ *   - attributes: A string containing the attributes for the wrapping div.
+ *   - title_attributes: A string containing the attributes for the title.
+ */
+function oiko_preprocess_field(&$variables) {
+  if ($variables['field_name'] == 'body') {
+    if ($variables['entity_type'] == 'node') {
+      /** @var \Drupal\node\Entity\Node $node */
+      if ($node = $variables['element']['#object']) {
+        if ($node->bundle() == 'forum') {
+          $variables['attributes']['class'][] = 'forum-topic-content';
+        }
+      }
+    }
+  }
+}
