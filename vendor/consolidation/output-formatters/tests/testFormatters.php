@@ -350,6 +350,13 @@ EOT;
         $this->assertFormattedOutputMatches('Will fail, not return', 'json', 'String cannot be converted to json');
     }
 
+    function testNoFormatterSelected()
+    {
+        $data = 'Hello';
+        $expected = $data;
+        $this->assertFormattedOutputMatches($expected, '', $data);
+    }
+
     function testSimpleCsv()
     {
         $data = ['a', 'b', 'c'];
@@ -394,13 +401,6 @@ EOT;
         $this->assertFormattedOutputMatches($expected, 'csv', $data);
     }
 
-    function testNoFormatterSelected()
-    {
-        $data = 'Hello';
-        $expected = $data;
-        $this->assertFormattedOutputMatches($expected, '', $data);
-    }
-
     function testCsvBothKindsOfQuotes()
     {
         $data = ["John's \"new\" book", "Mary's \"modified\" laptop"];
@@ -409,6 +409,38 @@ EOT;
 EOT;
 
         $this->assertFormattedOutputMatches($expected, 'csv', $data);
+    }
+
+    function testSimpleTsv()
+    {
+        $data = ['a', 'b', 'c'];
+        $expected = "a\tb\tc";
+
+        $this->assertFormattedOutputMatches($expected, 'tsv', $data);
+    }
+
+    function testLinesOfTsv()
+    {
+        $data = [['a', 'b', 'c'], ['x', 'y', 'z']];
+        $expected = "a\tb\tc\nx\ty\tz";
+
+        $this->assertFormattedOutputMatches($expected, 'tsv', $data);
+    }
+
+    function testTsvBothKindsOfQuotes()
+    {
+        $data = ["John's \"new\" book", "Mary's \"modified\" laptop"];
+        $expected = "John's \"new\" book\tMary's \"modified\" laptop";
+
+        $this->assertFormattedOutputMatches($expected, 'tsv', $data);
+    }
+
+    function testTsvWithEscapedValues()
+    {
+        $data = ["Red apple", "Yellow lemon", "Embedded\ttab"];
+        $expected = "Red apple\tYellow lemon\tEmbedded\\ttab";
+
+        $this->assertFormattedOutputMatches($expected, 'tsv', $data);
     }
 
     protected function missingCellTableExampleData()
@@ -447,6 +479,19 @@ a,b,c
 x,,z
 EOT;
         $this->assertFormattedOutputMatches($expectedCsv, 'csv', $data);
+
+        $expectedTsv = <<<EOT
+a\tb\tc
+x\t\tz
+EOT;
+        $this->assertFormattedOutputMatches($expectedTsv, 'tsv', $data);
+
+        $expectedTsvWithHeaders = <<<EOT
+One\tTwo\tThree
+a\tb\tc
+x\t\tz
+EOT;
+        $this->assertFormattedOutputMatches($expectedTsvWithHeaders, 'tsv', $data, new FormatterOptions(), ['include-field-labels' => true]);
     }
 
     protected function simpleTableExampleData()

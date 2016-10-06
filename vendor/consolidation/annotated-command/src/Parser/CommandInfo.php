@@ -1,6 +1,10 @@
 <?php
 namespace Consolidation\AnnotatedCommand\Parser;
 
+use Consolidation\AnnotatedCommand\Parser\Internal\CommandDocBlockParser;
+use Consolidation\AnnotatedCommand\Parser\Internal\CommandDocBlockParserFactory;
+use Consolidation\AnnotatedCommand\AnnotationData;
+
 /**
  * Given a class and method name, parse the annotations in the
  * DocBlock comment, and provide accessor methods for all of
@@ -37,12 +41,12 @@ class CommandInfo
     /**
      * @var DefaultsWithDescriptions
      */
-    protected $options = [];
+    protected $options;
 
     /**
      * @var DefaultsWithDescriptions
      */
-    protected $arguments = [];
+    protected $arguments;
 
     /**
      * @var array
@@ -50,9 +54,9 @@ class CommandInfo
     protected $exampleUsage = [];
 
     /**
-     * @var array
+     * @var AnnotationData
      */
-    protected $otherAnnotations = [];
+    protected $otherAnnotations;
 
     /**
      * @var array
@@ -70,6 +74,11 @@ class CommandInfo
     protected $returnType;
 
     /**
+     * @var string
+     */
+    protected $optionParamName;
+
+    /**
      * Create a new CommandInfo class for a particular method of a class.
      *
      * @param string|mixed $classNameOrInstance The name of a class, or an
@@ -80,11 +89,17 @@ class CommandInfo
     {
         $this->reflection = new \ReflectionMethod($classNameOrInstance, $methodName);
         $this->methodName = $methodName;
+        $this->otherAnnotations = new AnnotationData();
         // Set up a default name for the command from the method name.
         // This can be overridden via @command or @name annotations.
         $this->name = $this->convertName($this->reflection->name);
         $this->options = new DefaultsWithDescriptions($this->determineOptionsFromParameters(), false);
         $this->arguments = $this->determineAgumentClassifications();
+        // Remember the name of the last parameter, if it holds the options.
+        // We will use this information to ignore @param annotations for the options.
+        if (!empty($this->options)) {
+            $this->optionParamName = $this->lastParameterName();
+        }
     }
 
     /**
@@ -134,7 +149,7 @@ class CommandInfo
      * implementation method of this command that are not already
      * handled by the primary methods of this class.
      *
-     * @return array
+     * @return AnnotationData
      */
     public function getAnnotations()
     {
@@ -166,7 +181,7 @@ class CommandInfo
     public function hasAnnotation($annotation)
     {
         $this->parseDocBlock();
-        return array_key_exists($annotation, $this->otherAnnotations);
+        return isset($this->otherAnnotations[$annotation]);
     }
 
     /**
@@ -296,6 +311,15 @@ class CommandInfo
     }
 
     /**
+     * Return the name of the last parameter if it holds the options.
+     */
+    public function optionParamName()
+    {
+        return $this->optionParamName;
+    }
+
+
+    /**
      * An option might have a name such as 'silent|s'. In this
      * instance, we will allow the @option or @default tag to
      * reference the option only by name (e.g. 'silent' or 's'
@@ -418,6 +442,16 @@ class CommandInfo
         return $param->getDefaultValue();
     }
 
+    protected function lastParameterName()
+    {
+        $params = $this->reflection->getParameters();
+        $param = end($params);
+        if (!$param) {
+            return '';
+        }
+        return $param->name;
+    }
+
     /**
      * Helper; determine if an array is associative or not. An array
      * is not associative if its keys are numeric, and numbered sequentially
@@ -457,9 +491,9 @@ class CommandInfo
     protected function parseDocBlock()
     {
         if (!$this->docBlockIsParsed) {
-            $docblock = $this->reflection->getDocComment();
-            $parser = new CommandDocBlockParser($this);
-            $parser->parse($docblock);
+            // The parse function will insert data from the provided method
+            // into this object, using our accessors.
+            CommandDocBlockParserFactory::parse($this, $this->reflection);
             $this->docBlockIsParsed = true;
         }
     }

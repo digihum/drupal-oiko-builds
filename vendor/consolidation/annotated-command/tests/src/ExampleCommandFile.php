@@ -5,6 +5,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Consolidation\AnnotatedCommand\CommandError;
+use Consolidation\AnnotatedCommand\AnnotationData;
 
 /**
  * Test file used in the Annotation Factory tests.  It is also
@@ -26,15 +27,15 @@ class ExampleCommandFile
     /**
      * This is the my:cat command
      *
-     * This command will concatinate two parameters. If the --flip flag
-     * is provided, then the result is the concatination of two and one.
+     * This command will concatenate two parameters. If the --flip flag
+     * is provided, then the result is the concatenation of two and one.
      *
      * @param string $one The first parameter.
      * @param string $two The other parameter.
      * @option boolean $flip Whether or not the second parameter should come first in the result.
      * @aliases c
      * @usage bet alpha --flip
-     *   Concatinate "alpha" and "bet".
+     *   Concatenate "alpha" and "bet".
      */
     public function myCat($one, $two = '', $options = ['flip' => false])
     {
@@ -44,16 +45,21 @@ class ExampleCommandFile
         return "{$one}{$two}";
     }
 
+    public function myRepeat($one, $two = '', $options = ['repeat' => 1])
+    {
+        return str_repeat("{$one}{$two}", $options['repeat']);
+    }
+
     /**
      * This is a command with no options
      *
-     * This command will concatinate two parameters.
+     * This command will concatenate two parameters.
      *
      * @param $one The first parameter.
      * @param $two The other parameter.
      * @aliases nope
      * @usage alpha bet
-     *   Concatinate "alpha" and "bet".
+     *   Concatenate "alpha" and "bet".
      */
     public function commandWithNoOptions($one, $two = 'default')
     {
@@ -79,6 +85,7 @@ class ExampleCommandFile
      *
      * This command defines the option shortcut on the annotation instead of in the options array.
      *
+     * @param $opts The options
      * @option $silent|s Supress output.
      */
     public function shortcutOnAnnotation($opts = ['silent' => false])
@@ -153,9 +160,40 @@ class ExampleCommandFile
         return "<$result>";
     }
 
+    /**
+     * This test is very similar to the preceding test, except
+     * it uses an annotation hook instead of a named-function hook.
+     *
+     * @hookme
+     * @before >
+     * @after <
+     */
+    public function testAnnotationHook($parameter)
+    {
+        return "($parameter)";
+    }
+
+    /**
+     * Wrap the results of test:hook in whatever the @before and @after
+     * annotations contain.
+     *
+     * @hook alter @hookme
+     */
+    public function hookTestAnnotatedHook($result, $args, AnnotationData $annotationData)
+    {
+        $before = $annotationData->get('before', '-');
+        $after = $annotationData->get('after', '-');
+        return "$before$result$after";
+    }
+
     public function testHello($who)
     {
         return "Hello, $who.";
+    }
+
+    public function testException($what)
+    {
+        throw new \Exception($what);
     }
 
     /**
@@ -165,6 +203,9 @@ class ExampleCommandFile
     {
         if ($args['who'] == 'Donald Duck') {
             return new CommandError("I won't say hello to Donald Duck.");
+        }
+        if ($args['who'] == 'Drumph') {
+            throw new \Exception('Irrational value error.');
         }
     }
 

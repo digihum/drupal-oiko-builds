@@ -59,15 +59,10 @@ function oiko_profile_update_8104() {
 }
 
 /**
- * Install color_field module.
- */
-function oiko_profile_update_8105() {
-  \Drupal::service('module_installer')->install(['color_field']);
-}
-
-/**
+ * Implements hook_update_N().
+ *
  * Install oiko_forum module.
  */
-function oiko_profile_update_8106() {
+function oiko_profile_update_8105() {
   \Drupal::service('module_installer')->install(['oiko_forum']);
 }

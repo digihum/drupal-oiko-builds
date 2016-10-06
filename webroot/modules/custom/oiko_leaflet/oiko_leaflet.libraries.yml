@@ -1,55 +1,16 @@
-popups:
+actual-leaflet:
   js:
-    js/leaflet.popups.js: {}
-  version: VERSION
-  dependencies:
-    - oiko_leaflet/sidebar-v2
-    - core/drupal.ajax
-    - core/jquery
+    /libraries/Leaflet/dist/leaflet.js: {preprocess: false}
+  css:
+    component:
+      /libraries/Leaflet/dist/leaflet.css: {}
+  version: 0.7.7
 
-empires:
+leaflet-overlapping-marker-spiderfier:
   js:
-    js/leaflet.empires.js: {}
-  version: VERSION
+    js/vendor/oms.min.js: {}
   dependencies:
-    - oiko_leaflet/intervalTree
-    - core/jquery
-
-arrows:
-  js:
-    js/leaflet.arrows.js: {}
-  version: VERSION
-  dependencies:
-    - oiko_leaflet/leaflet-textpath
-    - core/jquery
-
-icons:
-  js:
-    js/leaflet.icons.js: {}
-  version: VERSION
-  dependencies:
-    - core/jquery
-    - core/drupalSettings
-
-timelineControl:
-  js:
-    js/leaflet.timelineControl.js: {}
-  version: VERSION
-  dependencies:
-    - oiko_leaflet/vis
-    - core/jquery
-
-temporal:
-  js:
-    js/leaflet.temporal.js: {}
-  version: VERSION
-  dependencies:
-    - oiko_leaflet/intervalTree
-    - oiko_leaflet/timelineControl
-    - core/jquery
-    - oiko_leaflet/markercluster
-
-# These are our external vendor libraries.
+    - leaflet/leaflet
 
 leaflet-sleep:
   js:
@@ -57,13 +18,6 @@ leaflet-sleep:
   dependencies:
     - leaflet/leaflet
   version: 0.5.1-2
-
-leaflet-textpath:
-  js:
-    js/vendor/leaflet.textpath.js: {}
-  dependencies:
-    - leaflet/leaflet
-  version: 1.1.0
 
 intervalTree:
   js:
@@ -93,6 +47,8 @@ sidebar-v2:
       css/vendor/leaflet-sidebar.min.css: {}
       //maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css: {external: true}
   version: v0.3.0
+  dependencies:
+      - drupal/ajax
 
 sidebar-v2.jquery:
   js:

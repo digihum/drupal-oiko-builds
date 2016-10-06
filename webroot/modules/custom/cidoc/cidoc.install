@@ -152,24 +152,3 @@ function cidoc_update_8103() {
   $view->display_handler->setOption('path', 'admin/cidoc/cidoc-entities');
   $view->save();
 }
-
-/**
- * Clean up references that reference entities that have been deleted.
- */
-function cidoc_update_8104() {
-  $references = \Drupal::entityQuery('cidoc_reference')
-    ->execute();
-  $messages = [];
-  foreach ($references as $reference) {
-    if ($entity = CidocReference::load($reference)) {
-      $domain = $entity->domain->entity;
-      $range = $entity->range->entity;
-      if (empty($domain) || empty($range)) {
-        $messages[] = t('Deleting reference: @ref', array('@ref' => $reference));
-        $entity->delete();
-      }
-    }
-  }
-
-  return implode(', ', $messages);
-}

@@ -30,15 +30,15 @@ class MyCommandClass
     /**
      * This is the my:cat command
      *
-     * This command will concatinate two parameters. If the --flip flag
-     * is provided, then the result is the concatination of two and one.
+     * This command will concatenate two parameters. If the --flip flag
+     * is provided, then the result is the concatenation of two and one.
      *
      * @param integer $one The first parameter.
      * @param integer $two The other parameter.
      * @option $flip Whether or not the second parameter should come first in the result.
      * @aliases c
      * @usage bet alpha --flip
-     *   Concatinate "alpha" and "bet".
+     *   Concatenate "alpha" and "bet".
      */
     public function myCat($one, $two, $options = ['flip' => false])
     {
@@ -153,8 +153,4 @@ As a shortcut for the above, the method `discoverNamespaced()` will take the las
 
 ## Comparison to Existing Solutions
 
-The existing solutions used their own hand-rolled regex-based parsers to process the contents of the DocBlock comments. consolidation/annotated-command uses the phpdocumentor/reflection-docblock project (which is itsle a regex-based parser) to interpret DocBlock contents. 
-
-## Caution Regarding Dependency Versions
-
-Note that phpunit requires phpspec/prophecy, which in turn requires phpdocumentor/reflection-docblock version 2.x.  This blocks consolidation/annotated-command from using the 3.x version of reflection-docblock. When prophecy updates to a newer version of reflection-docblock, then annotated-command will be forced to follow (or pin to an older version of phpunit). The internal classes of reflection-docblock are not exposed to users of consolidation/annotated-command, though, so this upgrade should not affect clients of this project.
+The existing solutions used their own hand-rolled regex-based parsers to process the contents of the DocBlock comments. consolidation/annotated-command uses the [phpdocumentor/reflection-docblock](https://github.com/phpDocumentor/ReflectionDocBlock) project (which is itself a regex-based parser) to interpret DocBlock contents. 

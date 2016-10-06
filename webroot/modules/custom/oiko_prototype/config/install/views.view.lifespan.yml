@@ -251,9 +251,7 @@ display:
         - url
         - url.query_args
       tags:
-        - 'config:core.entity_view_display.cidoc_entity.e12_production.default'
         - 'config:core.entity_view_display.cidoc_entity.e21_person.default'
-        - 'config:core.entity_view_display.cidoc_entity.e22_man_made_object.default'
         - 'config:core.entity_view_display.cidoc_entity.e4_period.default'
         - 'config:core.entity_view_display.cidoc_entity.e52_time_span.default'
         - 'config:core.entity_view_display.cidoc_entity.e53_place.default'
@@ -305,9 +303,7 @@ display:
         - url
         - url.query_args
       tags:
-        - 'config:core.entity_view_display.cidoc_entity.e12_production.default'
         - 'config:core.entity_view_display.cidoc_entity.e21_person.default'
-        - 'config:core.entity_view_display.cidoc_entity.e22_man_made_object.default'
         - 'config:core.entity_view_display.cidoc_entity.e4_period.default'
         - 'config:core.entity_view_display.cidoc_entity.e52_time_span.default'
         - 'config:core.entity_view_display.cidoc_entity.e53_place.default'

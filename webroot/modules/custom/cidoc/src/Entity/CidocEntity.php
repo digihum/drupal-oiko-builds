@@ -93,17 +93,6 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
   /**
    * {@inheritdoc}
    */
-  public function toUrl($rel = 'canonical', array $options = []) {
-    $uri = parent::toUrl($rel, $options);
-    $uri_options = $uri->getOptions();
-    $uri_options['attributes']['data-cidoc-id'] = $this->id();
-    $uri_options['attributes']['data-cidoc-label'] = $this->label();
-    return $uri->setOptions($uri_options);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getCreatedTime() {
     return $this->get('created')->value;
   }
@@ -322,29 +311,6 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
       ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function postDelete(EntityStorageInterface $storage, array $entities) {
-    // Find and delete reference entities that use this as a domain or range.
-    /** @var CidocEntity $entity */
-    foreach ($entities as $entity) {
-      foreach ($entity->getProperties(NULL, FALSE) as $references) {
-        foreach ($references as $reference) {
-          /** @var CidocReference $reference */
-          $reference->delete();
-        }
-      }
-      foreach ($entity->getProperties(NULL, TRUE) as $references) {
-        foreach ($references as $reference) {
-          /** @var CidocReference $reference */
-          $reference->delete();
-        }
-      }
-    }
-    parent::postDelete($storage, $entities);
   }
 
   /**

@@ -34,10 +34,6 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-  p108_produced_object_entity_view_1:
-    weight: 10
-    settings: {  }
-    third_party_settings: {  }
   p10_falls_within_entity_view_1:
     weight: 15
     settings: {  }

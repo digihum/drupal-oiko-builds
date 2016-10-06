@@ -1,9 +1,12 @@
+uuid: c9eb709b-7fba-4189-922b-6ee88fabca1b
 langcode: en
 status: true
 dependencies:
   module:
     - link
     - paragraphs
+_core:
+  default_config_hash: LD96t4ITXKWOzPXczofqsdRxkQgqayakNIAAO_dCbVs
 id: paragraph.field_uri
 field_name: field_uri
 entity_type: paragraph

@@ -3,46 +3,25 @@
 
   $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
     // Add the sidebar control if there's a sidebar control in the page markup.
-    var $leafletSidebar = $('#leaflet-sidebar');
-    if ($leafletSidebar.length) {
+    if ($('#leaflet-sidebar').length) {
       drupalLeaflet.sidebarControl = L.control.sidebar('leaflet-sidebar', {position: 'right'}).addTo(map);
 
       // Link into the click event for markers.
 
-      // When clicking a link to a cidoc entity from the sidebar, replace the
-      // sidebar instead of navigating to it.
-      $leafletSidebar.on('click', function(e) {
-        var $target = $(e.target);
-        var id = $target.data('cidoc-id');
-        var label = $target.data('cidoc-label');
-        if (id) {
-          e.preventDefault();
-          // Fall back to using the link text as the new sidebar title.
-          Drupal.oiko.openLeafletSidebar(id, !!(label) ? label : $target.text(), drupalLeaflet);
-        }
-      });
+
     }
   });
 
-  var leafletPopupOpen = function(e) {
-    this.openPopup();
-  };
-  var leafletPopupClose = function(e) {
-    this.closePopup();
-  };
   $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
     // Remove the popup.
     lFeature.unbindPopup();
-
-    // lFeature.on('mouseover', leafletPopupOpen);
-    // lFeature.on('mouseout', leafletPopupClose);
-
-
     // Add a click event that opens our marker in the sidebar.
     lFeature.on('click', function() {
       Drupal.oiko.openLeafletSidebar(feature.id, feature.label, drupalLeaflet);
     });
   });
+
+
 
   Drupal.oiko = Drupal.oiko || {};
 

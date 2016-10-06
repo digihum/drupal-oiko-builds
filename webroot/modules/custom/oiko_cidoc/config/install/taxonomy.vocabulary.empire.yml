@@ -1,8 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-name: Empire
-vid: empire
-description: ''
-hierarchy: 0
-weight: 0

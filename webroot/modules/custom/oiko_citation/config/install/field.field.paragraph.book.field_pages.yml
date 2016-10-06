@@ -1,9 +1,12 @@
+uuid: a605bc32-327e-4871-97df-cd5d8fc7833e
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_pages
     - paragraphs.paragraphs_type.book
+_core:
+  default_config_hash: y6m5HUzaahPWiI5JWHuBnFDTrEkQvB2mTN8l3h11-70
 id: paragraph.book.field_pages
 field_name: field_pages
 entity_type: paragraph

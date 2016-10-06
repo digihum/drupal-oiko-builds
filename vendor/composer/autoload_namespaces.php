@@ -6,10 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'phpDocumentor' => array($vendorDir . '/phpdocumentor/reflection-docblock/src'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Stack' => array($vendorDir . '/stack/builder/src'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'PEAR' => array($vendorDir . '/pear/pear_exception'),
     'Michelf' => array($vendorDir . '/michelf/php-markdown'),
     'Lurker' => array($vendorDir . '/henrikbjorn/lurker/src'),
@@ -26,6 +24,7 @@ return array(
     'Doctrine\\Common\\' => array($vendorDir . '/doctrine/common/lib'),
     'Consolidation' => array($vendorDir . '/drush/drush/lib'),
     'Console' => array($vendorDir . '/pear/console_getopt'),
+    'Asm89\\Stack' => array($vendorDir . '/asm89/stack-cors/src'),
     'Archive_Tar' => array($vendorDir . '/pear/archive_tar'),
     '' => array($vendorDir . '/pear/pear-core-minimal/src'),
 );

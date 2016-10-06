@@ -22,6 +22,8 @@ class CommandProcessor
     protected $hookManager;
     /** var FormatterManager */
     protected $formatterManager;
+    /** var callable */
+    protected $displayErrorFunction;
 
     public function __construct(HookManager $hookManager)
     {
@@ -42,6 +44,11 @@ class CommandProcessor
         $this->formatterManager = $formatterManager;
     }
 
+    public function setDisplayErrorFunction(callable $fn)
+    {
+        $this->displayErrorFunction = $fn;
+    }
+
     /**
      * Return the formatter manager
      * @return FormatterManager
@@ -55,7 +62,7 @@ class CommandProcessor
         OutputInterface $output,
         $names,
         $commandCallback,
-        $annotationData,
+        AnnotationData $annotationData,
         $args
     ) {
         $result = [];
@@ -65,11 +72,12 @@ class CommandProcessor
             $result = $this->validateRunAndAlter(
                 $names,
                 $commandCallback,
-                $args
+                $args,
+                $annotationData
             );
             return $this->handleResults($output, $names, $result, $annotationData, $options);
         } catch (\Exception $e) {
-            $result = new CommandError($e->getCode(), $e->getMessage());
+            $result = new CommandError($e->getMessage(), $e->getCode());
             return $this->handleResults($output, $names, $result, $annotationData, $options);
         }
     }
@@ -77,11 +85,12 @@ class CommandProcessor
     public function validateRunAndAlter(
         $names,
         $commandCallback,
-        $args
+        $args,
+        AnnotationData $annotationData
     ) {
         // Validators return any object to signal a validation error;
         // if the return an array, it replaces the arguments.
-        $validated = $this->hookManager()->validateArguments($names, $args);
+        $validated = $this->hookManager()->validateArguments($names, $args, $annotationData);
         if (is_object($validated)) {
             return $validated;
         }
@@ -91,18 +100,18 @@ class CommandProcessor
 
         // Run the command, alter the results, and then handle output and status
         $result = $this->runCommandCallback($commandCallback, $args);
-        return $this->processResults($names, $result, $args);
+        return $this->processResults($names, $result, $args, $annotationData);
     }
 
-    public function processResults($names, $result, $args = [])
+    public function processResults($names, $result, $args, $annotationData)
     {
-        return $this->hookManager()->alterResult($names, $result, $args);
+        return $this->hookManager()->alterResult($names, $result, $args, $annotationData);
     }
 
     /**
      * Handle the result output and status code calculation.
      */
-    public function handleResults(OutputInterface $output, $names, $result, $annotationData, $options = [])
+    public function handleResults(OutputInterface $output, $names, $result, AnnotationData $annotationData, $options = [])
     {
         $status = $this->hookManager()->determineStatusCode($names, $result);
         // If the result is an integer and no separate status code was provided, then use the result as the status and do no output.
@@ -114,12 +123,13 @@ class CommandProcessor
         // Get the structured output, the output stream and the formatter
         $structuredOutput = $this->hookManager()->extractOutput($names, $result);
         $output = $this->chooseOutputStream($output, $status);
-        if (($status == 0) && isset($this->formatterManager)) {
-            $this->writeUsingFormatter($output, $structuredOutput, $annotationData, $options);
-        } else {
-            $this->writeCommandOutput($output, $structuredOutput);
+        if ($status != 0) {
+            return $this->writeErrorMessage($output, $status, $structuredOutput, $result);
         }
-        return $status;
+        if (isset($this->formatterManager)) {
+            return $this->writeUsingFormatter($output, $structuredOutput, $annotationData, $options);
+        }
+        return $this->writeCommandOutput($output, $structuredOutput);
     }
 
     /**
@@ -186,16 +196,34 @@ class CommandProcessor
     /**
      * Call the formatter to output the provided data.
      */
-    protected function writeUsingFormatter(OutputInterface $output, $structuredOutput, $annotationData, $options)
+    protected function writeUsingFormatter(OutputInterface $output, $structuredOutput, AnnotationData $annotationData, $options)
     {
         $format = $this->getFormat($options);
-        $formatterOptions = new FormatterOptions($annotationData, $options);
+        $formatterOptions = new FormatterOptions($annotationData->getArrayCopy(), $options);
         $this->formatterManager->write(
             $output,
             $format,
             $structuredOutput,
             $formatterOptions
         );
+        return 0;
+    }
+
+    /**
+     * Description
+     * @param type $output
+     * @param type $status
+     * @param type $structuredOutput
+     * @return type
+     */
+    protected function writeErrorMessage($output, $status, $structuredOutput, $originalResult)
+    {
+        if (isset($this->displayErrorFunction)) {
+            call_user_func($this->displayErrorFunction, $output, $structuredOutput, $status, $originalResult);
+        } else {
+            $this->writeCommandOutput($output, $structuredOutput);
+        }
+        return $status;
     }
 
     /**
@@ -210,6 +238,7 @@ class CommandProcessor
         if (is_string($structuredOutput)) {
             $output->writeln($structuredOutput);
         }
+        return 0;
     }
 
     /**

@@ -1,5 +1,8 @@
+uuid: e23e584c-555d-4cc9-b1d5-058257a6ae07
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: vgpe8bAIwq00n83Y1Fey3AFZUdRbP-dRyrexvyEAmY4
 id: uri
 label: URI
