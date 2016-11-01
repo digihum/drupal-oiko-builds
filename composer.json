@@ -217,9 +217,6 @@
             "drupal/add_to_head": {
                 "Add applies method patch": "https://www.drupal.org/files/issues/checkfordefinitiontype-2709377.patch"
             },
-            "drupal/paragraphs": {
-                "Allow using paragraphs on non-translatable entities": "https://www.drupal.org/files/issues/paragraphs-2755897-cannot-use-paragraphs-on-non-translatable-entity-rc5_0.patch"
-            },
             "drupal/leaflet": {
                 "New version of geofield uses composer for geophp dependency, geophp_load not needed" : "https://www.drupal.org/files/issues/leaflet-remove_geophp_load_call-2731917-2.patch",
                 "Fixes Incorrect parameter icon_url in Drupal.Leaflet.prototype.create_icon" : "https://www.drupal.org/files/issues/leaflet-fix_incorrect_parameter_name_in_create_icon-2732267-2.patch",

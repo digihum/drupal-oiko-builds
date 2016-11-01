@@ -64,6 +64,14 @@ temporal:
     - oiko_leaflet/timelineControl
     - core/jquery
     - oiko_leaflet/cluster
+    - oiko_leaflet/moment.lang.oiko
+
+moment.lang.oiko:
+  js:
+    js/moment.lang.oiko.js: {}
+  version: VERSION
+  dependencies:
+    - oiko_leaflet/vis
 
 # These are our external vendor libraries.
 
