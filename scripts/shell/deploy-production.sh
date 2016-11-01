@@ -31,6 +31,8 @@ rm "$LIVE_DIR" && ln -s "$BUILD_DIR" "$LIVE_DIR"
 
 drush "@$DOMAIN" updb -y --entity-updates
 
+drush "@$DOMAIN" cc drush
+
 # Revert features.
 drush "@$DOMAIN" fra --bundle=oiko -y
 
