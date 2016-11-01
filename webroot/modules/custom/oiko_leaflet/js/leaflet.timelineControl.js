@@ -58,7 +58,21 @@
       var options = {
         width:  "100%",
         stack: false,
-        showCurrentTime: false
+        showCurrentTime: false,
+        hiddenDates: [
+          {start: '0000-01-01 00:00:00', end: '0001-01-01 00:00:00'}
+        ],
+        format: {
+          minorLabels: {
+            year: 'PPPP'
+          },
+          majorLabels: {
+            weekday:    'MMMM PPPP',
+            day:        'MMMM PPPP',
+            month: 'PPPP'
+          }
+        },
+        moment: vis.moment.utc
       };
 
       // Create a Timeline
