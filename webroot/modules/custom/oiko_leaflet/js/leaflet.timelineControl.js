@@ -85,11 +85,13 @@
       this._visTimeline.on('timechange', function(e) {
         if (e.id === 'tdrag') {
           _this4._visTimelineChanged(e);
+          _this4._updateDragTitle();
         }
       });
       this._visTimeline.on('timechanged', function(e) {
         if (e.id === 'tdrag') {
           _this4._visTimelineChangedDone(e);
+          _this4._updateDragTitle();
         }
       });
     },
@@ -119,6 +121,14 @@
           return cb(time);
         });
       }
+      this._updateDragTitle();
+    },
+    _updateDragTitle: function () {
+      var offset = 365.25 * 86400 / 2;
+      var low = this.time - offset;
+      var high = this.time + offset;
+      var format = 'D MMMM PPPP';
+      this._visTimeline.setCustomTimeTitle('Displaying: ' + vis.moment.utc(low * 1000).format(format) + ' -  ' + vis.moment.utc(high * 1000).format(format), 'tdrag');
     },
     addItem: function addItem(min, max) {
       var obj = {
