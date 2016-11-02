@@ -4,15 +4,21 @@
     var oldFormat = moment.fn.format;
     moment.fn.format = function(format) {
       // Introduce a new year format, PPPP that has CE and BCE.
+      var replaceNegativeYear = false;
       if (format && format.indexOf('PPPP') !== -1) {
         if (this.year() > 0) {
           format = format.replace(/PPPP/, 'Y[ CE]');
         }
         else {
           format = format.replace(/PPPP/, 'Y[ BCE]');
+          replaceNegativeYear = true;
         }
       }
-      return oldFormat.call(this, format);
+      var formatted = oldFormat.call(this, format);
+      if (replaceNegativeYear) {
+        formatted = formatted.replace(/-(\d+ BCE)/, '$1');
+      }
+      return formatted;
     }
   };
 
