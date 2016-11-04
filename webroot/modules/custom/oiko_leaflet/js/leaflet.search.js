@@ -542,6 +542,9 @@
       var instance = this;
       var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom searchContainer');
 
+      this.results = [];
+      this.resultCount = 0;
+
       //  @TOOO convert to use leaflet creation functions.
       var element = $(container);
       var $searchBox = $('<input id="searchBox" class="searchBox" placeholder="' + this.options.placeholderMessage + '"/>');
@@ -589,21 +592,61 @@
     },
     clearButtonClick: function () {
       this.$searchBox.val('');
-      lastSearch = "";
-      resultCount = 0;
-      features = [];
-      activeResult = -1;
+      this.lastSearch = "";
+      this.resultCount = 0;
+      this.results = [];
+      this.activeResult = -1;
       $("#resultsDiv").remove();
     },
     nextResult: function() {
+      if (this.resultCount > 0) {
+        if (this.activeResult !== -1) {
+          $('#listElement' + this.activeResult).toggleClass('active');
+        }
 
+        if (this.activeResult < this.resultCount - 1) {
+          $('#listElement' + (this.activeResult + 1)).toggleClass('active');
+          this.activeResult++;
+        }
+        else {
+          this.activeResult = -1;
+        }
+
+        this.fillSearchBox.call(this);
+
+        if (this.activeResult !== -1) {
+          console.log(this.activeResult);
+        }
+      }
     },
     prevResult: function() {
+      if (this.resultCount > 0) {
+        if (this.activeResult !== -1) {
+          $('#listElement' + this.activeResult).toggleClass('active');
+        }
 
+        if (this.activeResult === -1) {
+          $('#listElement' + (this.resultCount - 1)).toggleClass('active');
+          this.activeResult = this.resultCount - 1;
+        }
+        else if (this.activeResult === 0) {
+          this.activeResult--;
+        }
+        else {
+          $('#listElement' + (this.activeResult - 1)).toggleClass('active');
+          this.activeResult--;
+        }
+
+        this.fillSearchBox.call(this);
+
+        if (this.activeResult !== -1) {
+          console.log(this.activeResult);
+        }
+      }
     },
     processNoRecordsFoundOrError: function() {
-      resultCount = 0;
-      features = [];
+      this.resultCount = 0;
+      this.results = [];
       activeResult = -1;
       $("#resultsDiv").remove();
       if (searchLayer !== undefined) {
@@ -613,48 +656,119 @@
 
       var parent = $("#searchBox").parent();
       $("#resultsDiv").remove();
-      parent.append("<div id='resultsDiv' class='result'><i>" + lastSearch + " " + options.notFoundMessage + " <p><small>" + options.notFoundHint + "</small></i><div>");
+      parent.append("<div id='resultsDiv' class='result'><i>" + this.lastSearch + " " + options.notFoundMessage + " <p><small>" + options.notFoundHint + "</small></i><div>");
     },
     getValuesAsGeoJson: function () {
 
       var instance = this;
 
       activeResult = -1;
-      lastSearch = this.$searchBox.val();
+      this.lastSearch = this.$searchBox.val();
 
-      if (lastSearch === "") {
+      if (this.lastSearch === "") {
         return;
       }
 
       $.ajax({
-        url: 'http://oiko.drupal/search/crm-entities/' + lastSearch,
+        url: 'http://oiko.drupal/search/crm-entities/' + this.lastSearch,
         type: 'GET',
         dataType: 'json',
         success: function (json) {
-          console.log(json);
-
-          // if (json.type === "Feature") {
-          //   resultCount = 1;
-          //   features[0] = json;
-          //   featureCollection = json;
-          // }
-          // else {
-          //   resultCount = json.features.length;
-          //   features = json.features;
-          //
-          //   if (limitToSend === resultCount)
-          //     featureCollection = json.features.slice(0, json.features.length - 1);
-          //   else
-          //     featureCollection = json.features;
-          // }
-          // createDropDown(withPaging);
-          // searchLayerType = (withPaging ? 1 : 0);
+          instance.results = [];
+          // Populate the instance.results;
+          for (var i in json) {
+            if (json.hasOwnProperty(i)) {
+              var result = json[i];
+              instance.results[instance.results.length] = {
+                properties: {
+                  title: result.name,
+                  description: result.bundle,
+                  id: result.id
+                }
+              };
+            }
+          }
+          instance.resultCount = instance.results.length;
+          instance.createDropDown.call(instance);
         },
         error: function () {
           instance.processNoRecordsFoundOrError.call(instance);
         }
       });
+    },
+    createDropDown: function createDropDown() {
+      var instance = this;
+      var parent = this.$searchBox.parent();
 
+      $("#resultsDiv").remove();
+      parent.append("<div id='resultsDiv' class='result'><ul id='resultList' class='list'></ul><div>");
+
+      $("#resultsDiv")[0].style.position = this.$searchBox[0].style.position;
+      $("#resultsDiv")[0].style.left = (parseInt(this.$searchBox[0].style.left) - 10) + "px";
+      $("#resultsDiv")[0].style.bottom = this.$searchBox[0].style.bottom;
+      $("#resultsDiv")[0].style.right = this.$searchBox[0].style.right;
+      $("#resultsDiv")[0].style.top = (parseInt(this.$searchBox[0].style.top) + 25) + "px";
+      $("#resultsDiv")[0].style.zIndex = this.$searchBox[0].style.zIndex;
+
+      for (var i = 0; i < this.results.length; i++) {
+        var html = "<li id='listElement" + i + "' class='listResult'>";
+        html += "<span id='listElementContent" + i + "' class='content'>";
+        html += "<font size='2' color='#333' class='title'>" + this.results[i].properties.title + "</font><font size='1' color='#8c8c8c'> " + this.results[i].properties.description + "<font></span></li>";
+
+        $("#resultList").append(html);
+
+        $("#listElement" + i).mouseenter(function () {
+          instance.listElementMouseEnter.call(instance, this);
+        });
+
+        $("#listElement" + i).mouseleave(function () {
+          instance.listElementMouseLeave.call(instance, this);
+        });
+
+        $("#listElement" + i).mousedown(function () {
+          instance.listElementMouseDown.call(instance, this);
+        });
+      }
+    },
+    listElementMouseEnter: function (listElement) {
+
+      var index = parseInt(listElement.id.substr(11));
+
+      if (index !== this.activeResult) {
+        $('#listElement' + index).toggleClass('mouseover');
+      }
+    },
+    listElementMouseLeave: function (listElement) {
+      var index = parseInt(listElement.id.substr(11));
+
+      if (index !== this.activeResult) {
+        $('#listElement' + index).removeClass('mouseover');
+      }
+    },
+    listElementMouseDown: function (listElement) {
+      var index = parseInt(listElement.id.substr(11));
+
+      if (index !== this.activeResult) {
+        if (this.activeResult !== -1) {
+          $('#listElement' + this.activeResult).removeClass('active');
+        }
+
+        $('#listElement' + index).removeClass('mouseover');
+        $('#listElement' + index).addClass('active');
+
+        this.activeResult = index;
+        this.fillSearchBox.call(this);
+
+        console.log(this.activeResult);
+      }
+    },
+    fillSearchBox: function () {
+      if (this.activeResult === -1) {
+        this.$searchBox.val(this.lastSearch);
+      }
+      else {
+        this.$searchBox.val(this.results[this.activeResult].properties.title);
+      }
     }
   });
 
