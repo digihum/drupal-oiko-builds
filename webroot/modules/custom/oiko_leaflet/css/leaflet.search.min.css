@@ -1,4 +1,4 @@
-.searchBox {
+.leaflet-searchBox {
     width: 310px;
     height:46px;
     border: none;
@@ -7,7 +7,7 @@
     outline: none;
 }
 
-.searchButton {
+.leaflet-searchButton {
     background:url('./image/search_double.png') no-repeat;
     cursor:pointer;
     width: 24px;
@@ -18,11 +18,11 @@
     vertical-align: middle;
 }
 
-.searchButton:hover {
+.leaflet-searchButton:hover {
     background:url('./image/search_double.png') no-repeat -24px 0px;
 }
 
-.clearButton {
+.leaflet-clearButton {
     background:url('./image/clear_multiple.png') no-repeat;
     cursor:pointer;
     width: 24px;
@@ -34,22 +34,24 @@
     vertical-align: middle;
 }
 
-.clearButton:hover {
+.leaflet-clearButton:hover {
     background:url('./image/clear_multiple.png') no-repeat -24px 0px;
 }
 
-.divider {
+.leaflet-divider {
     width: 24px;
     border-left: solid 1px lightgrey;
     margin-left: 10px;
 }
 
-.result {
-    position: absolute;
+.leaflet-result {
     background-color: white;
-    width: 399px; //1 pixel less than search container beacause of border
-top: 200px;
+}
 
+.leaflet-result-list {
+    list-style-type:none;
+    padding-left:0;
+    margin: 0;
     border-style: solid;
     border-width: 1px;
     border-color: lightgrey;
@@ -62,54 +64,39 @@ top: 200px;
     box-shadow: 2px 2px 2px -2px gray;
 }
 
-.list {
-    list-style-type:none;
-    padding-left:0;
-    margin-bottom: 0px;
-    margin-top: 0px;
-}
-
-.listResult {
+.leaflet-result-list-item {
     background-color: white;
     height: 38px;
     margin-bottom: 0px;
     border-top: 1px solid #e6e6e6;
 }
 
-.listResult.active {
+.leaflet-result-list-item.active {
     background-color: lightskyblue;
 }
 
-.listResult.mouseover {
+.leaflet-result-list-item.mouseover {
     background-color: lightgrey;
 }
 
-.iconStyle {
+.leaflet-iconStyle {
     width: 24px;
     height: 24px;
     margin-left: 5px;
     vertical-align: middle;
 }
 
-.content {
+.leaflet-result-list-item .content {
     float: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     height: 38px;
-    width: 399px; //1 pixel less than search container beacause of border
-line-height:38px;
+    width: 310px;
+    line-height:38px;
 }
 
-.pagingDiv {
-    border-top: 1px solid #e6e6e6;
-}
-
-.pagingArrow {
-    vertical-align: bottom;
-}
-
-.title {
+.leaflet-result-list-item .title {
     margin-left: 10px;
-    line-height:38px;;
+    line-height:38px;
 }
