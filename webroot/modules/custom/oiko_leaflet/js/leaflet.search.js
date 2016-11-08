@@ -317,13 +317,47 @@
 
     if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search) {
       map.addControl(L.searchControl());
-    }
 
-    map.addEventListener('searchItem', function(e) {
-      // TODO: Search for the item on the map and scroll the map and timeline to it.
-      var id = e.properties.id;
-      var title = e.properties.title;
-    });
+      var featureCache = {};
+
+      // Build up a lovely map of Drupal feature id to lat/lon or bounds.
+      $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
+        if (feature.hasOwnProperty('id') && feature.id) {
+          if (feature.hasOwnProperty('lat') && feature.hasOwnProperty('lon')) {
+            featureCache[feature.id] = {
+              lat: feature.lat,
+              lon: feature.lon
+            };
+          }
+          else if (typeof lFeature.getBounds === 'function') {
+            featureCache[feature.id] = {
+              bounds: lFeature.getBounds().pad(0.5)
+            };
+          }
+          else {
+            // We don't know how to handle anything else at the moment.
+          }
+        }
+      });
+
+      // Listen for the searchItem event on the map, used when someone selects an item for searching.
+      map.addEventListener('searchItem', function (e) {
+        var id = e.properties.id;
+        var title = e.properties.title;
+        if (featureCache.hasOwnProperty(id)) {
+          if (featureCache[id].hasOwnProperty('lat')) {
+            map.panTo(L.latLng(featureCache[id].lat, featureCache[id].lon), {animate: true, duration: 0.5});
+          }
+          else if (featureCache[id].hasOwnProperty('bounds')) {
+            map.fitBounds(featureCache[id].bounds, {animate: true, duration: 0.5});
+          }
+          else {
+            // We don't know how to handle anything else at the moment.
+          }
+        }
+      });
+
+    }
 
   });
 
