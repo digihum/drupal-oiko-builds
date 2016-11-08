@@ -322,20 +322,22 @@
 
       // Build up a lovely map of Drupal feature id to lat/lon or bounds.
       $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
-        if (feature.hasOwnProperty('id') && feature.id) {
-          if (feature.hasOwnProperty('lat') && feature.hasOwnProperty('lon')) {
-            featureCache[feature.id] = {
-              lat: feature.lat,
-              lon: feature.lon
-            };
-          }
-          else if (typeof lFeature.getBounds === 'function') {
-            featureCache[feature.id] = {
-              bounds: lFeature.getBounds().pad(0.5)
-            };
-          }
-          else {
-            // We don't know how to handle anything else at the moment.
+        if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search) {
+          if (feature.hasOwnProperty('id') && feature.id) {
+            if (feature.hasOwnProperty('lat') && feature.hasOwnProperty('lon')) {
+              featureCache[feature.id] = {
+                lat: feature.lat,
+                lon: feature.lon
+              };
+            }
+            else if (typeof lFeature.getBounds === 'function') {
+              featureCache[feature.id] = {
+                bounds: lFeature.getBounds().pad(0.5)
+              };
+            }
+            else {
+              // We don't know how to handle anything else at the moment.
+            }
           }
         }
       });
