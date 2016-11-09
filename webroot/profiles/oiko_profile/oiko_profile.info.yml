@@ -66,6 +66,7 @@ dependencies:
 #  - metatag
 #  - pathauto
 #  - token
+  - search_api_db
 
 # ============================================================================ #
 # Dependencies: Custom modules # - alphabetical order please
@@ -453,8 +454,6 @@ config_devel:
   - core.entity_view_mode.paragraph.preview
   - editor.editor.basic_html
   - editor.editor.full_html
-  - features.bundle.oiko
-  - features.settings
   - field.field.cidoc_entity.e4_period.field_empire_outline
   - field.field.cidoc_entity.e52_time_span.field_date
   - field.field.cidoc_entity.e53_place.field_geodata

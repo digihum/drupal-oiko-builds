@@ -92,3 +92,10 @@ function oiko_profile_update_8108() {
 function oiko_profile_update_8109() {
   \Drupal::service('module_installer')->uninstall(['features']);
 }
+
+/**
+ * Add Search API DB.
+ */
+function oiko_profile_update_8110() {
+  \Drupal::service('module_installer')->install(['search_api_db']);
+}
