@@ -73,6 +73,7 @@ display:
           id_field: id
           clustering: 1
           sidebar: 1
+          search: 1
           timeline: 1
           pagestate: 1
           empires: 1
@@ -155,7 +156,7 @@ display:
           group_type: group
           admin_label: ''
           operator: '='
-          value: true
+          value: '1'
           group: 1
           exposed: false
           expose:
