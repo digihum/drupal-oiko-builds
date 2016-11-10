@@ -33,8 +33,8 @@ drush "@$DOMAIN" updb -y --entity-updates
 
 drush "@$DOMAIN" cc drush
 
-# Revert features.
-drush "@$DOMAIN" fra --bundle=oiko -y
+# Revert config.
+#drush "@$DOMAIN" cmci
 
 drush "@$DOMAIN" updb -y --entity-updates
 

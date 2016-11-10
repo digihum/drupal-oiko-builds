@@ -55,6 +55,17 @@ cluster:
   dependencies:
     - oiko_leaflet/markercluster
 
+search:
+  js:
+    js/leaflet.search.js: {}
+  css:
+    component:
+      css/leaflet.search.min.css: {}
+  version: VERSION
+  dependencies:
+    - leaflet/leaflet
+    - core/jquery
+
 temporal:
   js:
     js/leaflet.temporal.js: {}

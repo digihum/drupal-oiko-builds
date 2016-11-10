@@ -32,6 +32,14 @@
         }
       });
     }
+
+    map.addEventListener('searchItem', function(e) {
+      // TODO: Search for the item on the map and scroll the map and timeline to it.
+      var id = e.properties.id;
+      var title = e.properties.title;
+      // Bind into the search functionality.
+      Drupal.oiko.openLeafletSidebar(id, title, drupalLeaflet, true);
+    });
   });
 
   var leafletPopupOpen = function(e) {
@@ -40,6 +48,7 @@
   var leafletPopupClose = function(e) {
     this.closePopup();
   };
+
   $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
     // Remove the popup.
     if (typeof lFeature.unbindPopup !== 'undefined') {

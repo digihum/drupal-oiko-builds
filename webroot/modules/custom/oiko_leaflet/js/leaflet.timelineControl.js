@@ -215,6 +215,7 @@
           return cb(time);
         });
       }
+      this._updateDragTitle();
     },
     onAdd: function onAdd(map) {
       this.map = map;

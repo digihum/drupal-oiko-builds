@@ -71,3 +71,24 @@ function oiko_profile_update_8105() {
 function oiko_profile_update_8106() {
   \Drupal::service('module_installer')->install(['oiko_forum']);
 }
+
+/**
+ * Install cm_config_tools module.
+ */
+function oiko_profile_update_8107() {
+  \Drupal::service('module_installer')->install(['cm_config_tools']);
+}
+
+/**
+ * Remove old features.
+ */
+function oiko_profile_update_8108() {
+  \Drupal::service('module_installer')->uninstall(['oiko_site', 'oiko_forum', 'oiko_graphing']);
+}
+
+/**
+ * Remove features.
+ */
+function oiko_profile_update_8109() {
+  \Drupal::service('module_installer')->uninstall(['features']);
+}

@@ -150,6 +150,13 @@ class OikoLeafletMap extends StylePluginBase {
       '#default_value' => $this->options['sidebar'],
     );
 
+    // Search box
+    $form['search'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Display search box'),
+      '#default_value' => $this->options['search'],
+    );
+
     // Timeline
     $form['timeline'] = array(
       '#type' => 'checkbox',
@@ -241,6 +248,7 @@ class OikoLeafletMap extends StylePluginBase {
     $map['sidebar'] = $this->options['sidebar'];
     $map['pagestate'] = $this->options['pagestate'];
     $map['timeline'] = $this->options['timeline'];
+    $map['search'] = $this->options['search'];
     $map['empires'] = $this->options['empires'] && $this->options['timeline'];
     $map['clustering'] = $this->options['clustering'];
     // @TODO Handle full_height.
@@ -287,6 +295,7 @@ class OikoLeafletMap extends StylePluginBase {
     $options['height'] = array('default' => '400');
     $options['full_height'] = array('default' => FALSE);
     $options['clustering'] = array('default' => TRUE);
+    $options['search'] = array('default' => FALSE);
     return $options;
   }
 }

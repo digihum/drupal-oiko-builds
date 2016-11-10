@@ -102,34 +102,72 @@
       };
 
       $(document).on('temporalShift', function (e, dl) {
-        $.proxy(drupalLeaflet.updateTemporalLayers, dl)();
+        if (dl.map_definition.hasOwnProperty('search') && dl.map_definition.search) {
+          $.proxy(drupalLeaflet.updateTemporalLayers, dl)();
+        }
       });
 
       $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
-        if (feature.hasOwnProperty('temporal')) {
-          // Add this feature to our special LayerGroup of currently displayed features.
-          drupalLeaflet.temporalDisplayedLayerGroup.addLayer(lFeature);
+        if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
+          if (feature.hasOwnProperty('temporal')) {
+            // Add this feature to our special LayerGroup of currently displayed features.
+            drupalLeaflet.temporalDisplayedLayerGroup.addLayer(lFeature);
 
-          // And also add this feature to our IntervalTree, which is the record
-          // for everything that could be displayed.
-          var min = parseInt(feature.temporal.minmin, 10);
-          var max = parseInt(feature.temporal.maxmax, 10);
-          drupalLeaflet.temporalTree.insert(min, max, lFeature);
-          drupalLeaflet.recalculateTemporalBounds(min, max);
-          drupalLeaflet.timelineControl.addItem(min, max);
+            // And also add this feature to our IntervalTree, which is the record
+            // for everything that could be displayed.
+            var min = parseInt(feature.temporal.minmin, 10);
+            var max = parseInt(feature.temporal.maxmax, 10);
+            drupalLeaflet.temporalTree.insert(min, max, lFeature);
+            drupalLeaflet.recalculateTemporalBounds(min, max);
+            drupalLeaflet.timelineControl.addItem(min, max);
+          }
         }
       });
 
       $(document).on('leaflet.features', function(e, initial, drupalLeaflet) {
-        var previousTime = drupalLeaflet.getTime();
-        drupalLeaflet.timelineControl.recalculate();
-        if (previousTime) {
-          drupalLeaflet.changeTime(previousTime);
-        }
-        if (drupalLeaflet.temporalDisplayedLayerGroup.getLayers().length > 1) {
-          $(drupalLeaflet.timelineContainerDiv).show();
+        if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
+          var previousTime = drupalLeaflet.getTime();
+          drupalLeaflet.timelineControl.recalculate();
+          if (previousTime) {
+            drupalLeaflet.changeTime(previousTime);
+          }
+          if (drupalLeaflet.temporalDisplayedLayerGroup.getLayers().length > 1) {
+            $(drupalLeaflet.timelineContainerDiv).show();
+          }
         }
       });
+
+
+      // Search support.
+      if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search) {
+        var featureCache = {};
+
+        // Build up a lovely map of Drupal feature id to a timestamp.
+        $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
+          if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search) {
+            if (feature.hasOwnProperty('id') && feature.id) {
+              if (feature.hasOwnProperty('temporal')) {
+                var min = parseInt(feature.temporal.minmin, 10);
+                var max = parseInt(feature.temporal.maxmax, 10);
+                featureCache[feature.id] = {
+                  time: Math.round((min + max) * 0.5)
+                };
+              }
+            }
+          }
+        });
+
+        // Listen for the searchItem event on the map, used when someone selects an item for searching.
+        map.addEventListener('searchItem', function (e) {
+          var id = e.properties.id;
+          if (featureCache.hasOwnProperty(id)) {
+            if (featureCache[id].hasOwnProperty('time')) {
+              drupalLeaflet.changeTime.call(drupalLeaflet, featureCache[id].time);
+            }
+          }
+        });
+
+      }
 
     }
   });
