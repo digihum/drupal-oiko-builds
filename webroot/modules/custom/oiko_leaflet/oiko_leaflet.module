@@ -35,6 +35,7 @@ function oiko_leaflet_library_info_alter(array &$libraries, $module) {
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/icons';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/search';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/mapstate';
+    $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/locate';
   }
 
   if ($module === 'oiko_leaflet' && isset($libraries['icons'])) {
