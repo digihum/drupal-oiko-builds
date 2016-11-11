@@ -6,34 +6,43 @@ label: 'P2 has type'
 bidirectional: false
 reverse_label: 'P2 is type of'
 domain_bundles:
-  2: e52_time_span
-  3: e53_place
-  4: e54_dimension
-  7: e4_period
-  10: e5_event
-  11: e21_person
-  12: e74_group
-  17: e7_activity
-  23: e12_production
-  25: e66_formation
-  26: e67_birth
-  28: e68_dissolution
-  29: e69_death
-  30: e6_destruction
-  38: e9_move
-  39: o1_killing
-  40: o2_active_dissolution
-  41: o3_active_destruction
-  42: e22_man_made_object
-  61: e58_measurement_unit
-  66: e42_identifier
-  68: e49_time_appellation
-  71: e82_actor_appellation
+  e52_time_span: e52_time_span
+  e53_place: e53_place
+  e54_dimension: e54_dimension
+  e4_period: e4_period
+  e5_event: e5_event
+  e21_person: e21_person
+  e74_group: e74_group
+  e7_activity: e7_activity
+  e12_production: e12_production
+  e66_formation: e66_formation
+  e67_birth: e67_birth
+  e68_dissolution: e68_dissolution
+  e69_death: e69_death
+  e6_destruction: e6_destruction
+  e9_move: e9_move
+  o1_killing: o1_killing
+  o2_active_dissolution: o2_active_dissolution
+  o3_active_destruction: o3_active_destruction
+  e22_man_made_object: e22_man_made_object
+  e58_measurement_unit: e58_measurement_unit
+  e42_identifier: e42_identifier
+  e49_time_appellation: e49_time_appellation
+  e82_actor_appellation: e82_actor_appellation
 range_bundles:
-  3: e58_measurement_unit
+  e58_measurement_unit: e58_measurement_unit
 editability:
   domain: true
   range: true
-timesubwidget: {  }
-widget_description: {  }
-autocomplete_description: {  }
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

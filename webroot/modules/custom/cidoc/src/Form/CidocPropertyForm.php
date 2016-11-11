@@ -172,6 +172,25 @@ class CidocPropertyForm extends EntityForm {
         ),
       );
     }
+    $form['endpoints']['child_events'] = array(
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Child event data'),
+      '#options' => array(
+        'domain' => $this->t('Domain'),
+        'range' => $this->t('Range'),
+      ),
+      '#description' => $this->t('Select whether the domain or range lead to child events.'),
+      '#default_value' => array(),
+      '#attributes' => array(
+        'class' => array('cidoc-property-form-items-columns'),
+      ),
+    );
+    foreach ($form['endpoints']['child_events']['#options'] as $endpoint => $endpoint_label) {
+      if ($cidoc_property->isChildEvents($endpoint)) {
+        $form['endpoints']['child_events']['#default_value'][] = $endpoint;
+      }
+    }
+
     $form['endpoints']['widget_description'] = array(
       '#type' => 'fieldset',
       '#title' => $this->t('Widget descriptions'),

@@ -6,9 +6,9 @@ label: 'P98 brought into life'
 bidirectional: false
 reverse_label: 'P98 was born'
 domain_bundles:
-  - e67_birth
+  e67_birth: e67_birth
 range_bundles:
-  - e21_person
+  e21_person: e21_person
 editability:
   domain: true
   range: true
@@ -21,3 +21,6 @@ widget_description:
 autocomplete_description:
   domain: ''
   range: ''
+child_events:
+  domain: domain
+  range: 0

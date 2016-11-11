@@ -35,7 +35,6 @@ abstract class GeoserializerPluginBase extends PluginBase implements Geoserializ
     // Try and fetch temporal data from the related time.
 
     $temporalData = $entity->getTemporalInformation();
-    // @TODO: convert this to an array of return values.
     if  (!empty($temporalData)) {
       $temporalData = [$temporalData];
     }

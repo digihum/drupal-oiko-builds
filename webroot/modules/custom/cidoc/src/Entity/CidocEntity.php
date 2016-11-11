@@ -331,13 +331,13 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
     // Find and delete reference entities that use this as a domain or range.
     /** @var CidocEntity $entity */
     foreach ($entities as $entity) {
-      foreach ($entity->getProperties(NULL, FALSE) as $references) {
+      foreach ($entity->getReferences(NULL, FALSE) as $references) {
         foreach ($references as $reference) {
           /** @var CidocReference $reference */
           $reference->delete();
         }
       }
-      foreach ($entity->getProperties(NULL, TRUE) as $references) {
+      foreach ($entity->getReferences(NULL, TRUE) as $references) {
         foreach ($references as $reference) {
           /** @var CidocReference $reference */
           $reference->delete();
@@ -350,7 +350,7 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
   /**
    * {@inheritdoc}
    */
-  public function getProperties($property_name = NULL, $reverse = FALSE, $load_entities = TRUE) {
+  public function getReferences($property_name = NULL, $reverse = FALSE, $load_entities = TRUE) {
     $endpoint = $reverse ? 'range' : 'domain';
 
     $grouped = array();
@@ -461,9 +461,35 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
    * @param array $properties
    * @param boolean $loaded
    *
+   * @deprecated
    * @return array
    */
   public function getReverseReferences($properties = [], $loaded = TRUE) {
+    return $this->getReverseReferencedEntities($properties, $loaded);
+  }
+
+  /**
+   * Get reverse referenced entities from us.
+   *
+   * @param array $properties
+   * @param boolean $loaded
+   *
+   * @deprecated
+   * @return array
+   */
+  public function getForwardReferences($properties = [], $loaded = TRUE) {
+    return $this->getForwardReferencedEntities($properties, $loaded);
+  }
+
+  /**
+   * Get reverse referenced entities from us.
+   *
+   * @param array $properties
+   * @param boolean $loaded
+   *
+   * @return array
+   */
+  public function getReverseReferencedEntities($properties = [], $loaded = TRUE) {
     $query = \Drupal::entityQuery('cidoc_reference');
     $query->condition('range', $this->id());
     if (!empty($properties)) {
@@ -491,14 +517,14 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
   }
 
   /**
-   * Get reverse referenced entities from us.
+   * Get forward referenced entities.
    *
    * @param array $properties
    * @param boolean $loaded
    *
    * @return array
    */
-  public function getForwardReferences($properties = [], $loaded = TRUE) {
+  public function getForwardReferencedEntities($properties = [], $loaded = TRUE) {
     $query = \Drupal::entityQuery('cidoc_reference');
     $query->condition('domain', $this->id());
     if (!empty($properties)) {
@@ -560,5 +586,70 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
     }
 
     return $data;
+  }
+
+  public function getChildEventEntities() {
+    // Set up our arrays for traversing the graph.
+    $entities_to_walk = [];
+    $entities_walked = [];
+
+    // This is our return value.
+    $all_children = [];
+
+    // Start by traversing myself.
+    $entities_to_walk[$this->id()] = $this;
+
+    while (!empty($entities_to_walk)) {
+      $current_node = array_shift($entities_to_walk);
+      $entities_walked[$current_node->id()] = TRUE;
+
+      // Process the forward references.
+      /** @var \Drupal\cidoc\Entity\CidocEntityBundle $bundle */
+      $bundle = $current_node->bundle->entity;
+      $forward_fields = [];
+      if ($forward_properties = $bundle->getAllEditableProperties(FALSE)) {
+        /** @var \Drupal\cidoc\Entity\CidocProperty $forward_property */
+        foreach ($forward_properties as $forward_property) {
+          // If the range of this reference can lead us to event data, we're interested.
+          if ($forward_property->isChildEvents('range')) {
+            $forward_fields[] = $forward_property->id();
+          }
+        }
+      }
+      if (!empty($forward_fields)) {
+        $children = $current_node->getForwardReferencedEntities($forward_fields, TRUE);
+        /** @var \Drupal\cidoc\CidocEntityInterface $child */
+        foreach ($children as $child) {
+          if (!isset($entities_walked[$child->id()]) && !isset($entities_to_walk[$child->id()])) {
+            $all_children[$child->id()] = $child;
+            $entities_to_walk[$child->id()] = $child;
+          }
+        }
+      }
+
+      $reverse_fields = [];
+      if ($reverse_properties = $bundle->getAllEditableProperties(TRUE)) {
+        /** @var \Drupal\cidoc\Entity\CidocProperty $reverse_property */
+        foreach ($reverse_properties as $reverse_property) {
+          // If the domain of this reference can lead us to event data, we're interested.
+          if ($reverse_property->isChildEvents('domain')) {
+            $reverse_fields[] = $reverse_property->id();
+          }
+        }
+      }
+
+      if (!empty($reverse_fields)) {
+        $children = $current_node->getReverseReferencedEntities($reverse_fields, TRUE);
+        /** @var \Drupal\cidoc\CidocEntityInterface $child */
+        foreach ($children as $child) {
+          if (!isset($entities_walked[$child->id()]) && !isset($entities_to_walk[$child->id()])) {
+            $all_children[$child->id()] = $child;
+            $entities_to_walk[$child->id()] = $child;
+          }
+        }
+      }
+    }
+
+    return $all_children;
   }
 }

@@ -45,28 +45,28 @@ settings:
       field: name
       direction: ASC
     target_bundles:
+      e12_production: e12_production
+      e21_person: e21_person
+      e22_man_made_object: e22_man_made_object
+      e42_identifier: e42_identifier
+      e49_time_appellation: e49_time_appellation
+      e4_period: e4_period
       e52_time_span: e52_time_span
       e53_place: e53_place
       e54_dimension: e54_dimension
-      e4_period: e4_period
+      e58_measurement_unit: e58_measurement_unit
       e5_event: e5_event
-      e21_person: e21_person
-      e74_group: e74_group
-      e7_activity: e7_activity
-      e12_production: e12_production
       e66_formation: e66_formation
       e67_birth: e67_birth
       e68_dissolution: e68_dissolution
       e69_death: e69_death
       e6_destruction: e6_destruction
+      e74_group: e74_group
+      e7_activity: e7_activity
+      e82_actor_appellation: e82_actor_appellation
       e9_move: e9_move
       o1_killing: o1_killing
       o2_active_dissolution: o2_active_dissolution
       o3_active_destruction: o3_active_destruction
-      e22_man_made_object: e22_man_made_object
-      e58_measurement_unit: e58_measurement_unit
-      e42_identifier: e42_identifier
-      e49_time_appellation: e49_time_appellation
-      e82_actor_appellation: e82_actor_appellation
-    auto_create_bundle: e52_time_span
+    auto_create_bundle: e12_production
 field_type: entity_reference
