@@ -251,8 +251,8 @@ class OikoLeafletMap extends StylePluginBase {
     $map['search'] = $this->options['search'];
     $map['empires'] = $this->options['empires'] && $this->options['timeline'];
     $map['clustering'] = $this->options['clustering'];
-    // @TODO Handle full_height.
-    return leaflet_render_map($map, $data, $this->options['height'] . 'px');
+    $height = $this->options['full_height'] ? 'full' : $this->options['height'] . 'px';
+    return leaflet_render_map($map, $data, $height);
   }
 
   /**
