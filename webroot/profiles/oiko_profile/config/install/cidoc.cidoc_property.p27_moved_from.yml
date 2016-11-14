@@ -6,12 +6,21 @@ label: 'P27 moved from'
 bidirectional: false
 reverse_label: 'P27 was origin of'
 domain_bundles:
-  - e9_move
+  e9_move: e9_move
 range_bundles:
-  - e53_place
+  e53_place: e53_place
 editability:
   domain: true
   range: true
-timesubwidget: {  }
-widget_description: {  }
-autocomplete_description: {  }
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

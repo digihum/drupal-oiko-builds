@@ -15,6 +15,10 @@ use Drupal\user\UserInterface;
 /**
  * Defines the CIDOC reference entity.
  *
+ * These entities represent the actual relationships between CidocEntities.
+ * They are entities themselves so we can store data about the relationship
+ * on them. This is so that we can implement CIDOC-CRM subproperties.
+ *
  * @ingroup cidoc
  *
  * @ContentEntityType(
@@ -354,11 +358,25 @@ class CidocReference extends ContentEntityBase implements CidocReferenceInterfac
     return $fields;
   }
 
+  /**
+   * Get the first entity in the domain of this reference.
+   *
+   * @deprecated
+   * @return mixed
+   */
   public function getDomain() {
+    // @TODO: fairly certain this is wrong/could be done better.
     return $this->get('domain')->getValue()[0]['target_id'];
   }
 
+  /**
+   * Get the first entity in the range of this reference.
+   *
+   * @deprecated
+   * @return mixed
+   */
   public function getRange() {
+    // @TODO: fairly certain this is wrong/could be done better.
     return $this->get('range')->getValue()[0]['target_id'];
   }
 

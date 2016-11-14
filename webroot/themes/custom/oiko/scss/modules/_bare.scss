@@ -1,0 +1,7 @@
+.page--bare {
+  .tabs-wrapper,
+  .page-title-wrapper,
+  .breadcrumbs-wrapper {
+    @include visually-hidden();
+  }
+}

@@ -6,13 +6,22 @@ label: 'P99 dissolved'
 bidirectional: false
 reverse_label: 'P99 was dissolved by'
 domain_bundles:
-  - e68_dissolution
-  - o2_active_dissolution
+  e68_dissolution: e68_dissolution
+  o2_active_dissolution: o2_active_dissolution
 range_bundles:
-  - e74_group
+  e74_group: e74_group
 editability:
   domain: true
   range: true
-timesubwidget: {  }
-widget_description: {  }
-autocomplete_description: {  }
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

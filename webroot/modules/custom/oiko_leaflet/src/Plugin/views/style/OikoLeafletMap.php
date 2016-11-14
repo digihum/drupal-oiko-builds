@@ -212,6 +212,13 @@ class OikoLeafletMap extends StylePluginBase {
       '#default_value' => $this->options['height'],
       '#required' => TRUE,
     );
+
+    $form['locate'] = array(
+      '#title' => $this->t('Locate control'),
+      '#description' => $this->t('Adds a control to the map that the user can click to add their location to the map'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->options['locate'],
+    );
   }
 
   /**
@@ -251,8 +258,9 @@ class OikoLeafletMap extends StylePluginBase {
     $map['search'] = $this->options['search'];
     $map['empires'] = $this->options['empires'] && $this->options['timeline'];
     $map['clustering'] = $this->options['clustering'];
-    // @TODO Handle full_height.
-    return leaflet_render_map($map, $data, $this->options['height'] . 'px');
+    $map['locate'] = $this->options['locate'];
+    $height = $this->options['full_height'] ? 'full' : $this->options['height'] . 'px';
+    return leaflet_render_map($map, $data, $height);
   }
 
   /**
@@ -296,6 +304,7 @@ class OikoLeafletMap extends StylePluginBase {
     $options['full_height'] = array('default' => FALSE);
     $options['clustering'] = array('default' => TRUE);
     $options['search'] = array('default' => FALSE);
+    $options['locate'] = array('default' => FALSE);
     return $options;
   }
 }

@@ -6,24 +6,33 @@ label: 'P11 had participant'
 bidirectional: false
 reverse_label: 'P11 participated in'
 domain_bundles:
-  0: e5_event
-  3: e7_activity
-  4: e12_production
-  6: e66_formation
-  7: e67_birth
-  9: e68_dissolution
-  10: e69_death
-  11: e6_destruction
-  19: e9_move
-  20: o1_killing
-  21: o2_active_dissolution
-  22: o3_active_destruction
+  e5_event: e5_event
+  e7_activity: e7_activity
+  e12_production: e12_production
+  e66_formation: e66_formation
+  e67_birth: e67_birth
+  e68_dissolution: e68_dissolution
+  e69_death: e69_death
+  e6_destruction: e6_destruction
+  e9_move: e9_move
+  o1_killing: o1_killing
+  o2_active_dissolution: o2_active_dissolution
+  o3_active_destruction: o3_active_destruction
 range_bundles:
-  1: e21_person
-  2: e74_group
+  e21_person: e21_person
+  e74_group: e74_group
 editability:
   domain: true
   range: true
-timesubwidget: {  }
-widget_description: {  }
-autocomplete_description: {  }
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

@@ -88,7 +88,7 @@ interface CidocEntityInterface extends ContentEntityInterface, EntityChangedInte
    *   arrays, which are associative arrays of CIDOC reference entity ids,
    *   mapped to their entity objects unless $load_entities was falsey.
    */
-  public function getProperties($property_name = NULL, $reverse = FALSE, $load_entities = TRUE);
+  public function getReferences($property_name = NULL, $reverse = FALSE, $load_entities = TRUE);
 
   /**
    * Queries for entities referencing to/from this entity that need populating.
@@ -101,11 +101,20 @@ interface CidocEntityInterface extends ContentEntityInterface, EntityChangedInte
    */
   public function getReferencesNeedingPopulating();
 
+  /**
+   * @deprecated
+   */
   public function getReverseReferences($properties = [], $loaded = TRUE);
+
+  /**
+   * @deprecated
+   */
   public function getForwardReferences($properties = [], $loaded = TRUE);
+
+  public function getReverseReferencedEntities($properties = [], $loaded = TRUE);
+  public function getForwardReferencedEntities($properties = [], $loaded = TRUE);
+
 
   public function getTemporalInformation();
   public function getGeospatialData();
-
-
 }

@@ -6,12 +6,21 @@ label: 'P108 has produced'
 bidirectional: false
 reverse_label: 'P108 was produced by'
 domain_bundles:
-  - e12_production
+  e12_production: e12_production
 range_bundles:
-  1: e22_man_made_object
+  e22_man_made_object: e22_man_made_object
 editability:
   domain: true
   range: true
-timesubwidget: {  }
-widget_description: {  }
-autocomplete_description: {  }
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

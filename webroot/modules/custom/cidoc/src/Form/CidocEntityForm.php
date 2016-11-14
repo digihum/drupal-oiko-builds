@@ -119,7 +119,7 @@ class CidocEntityForm extends ContentEntityForm {
           }
 
           // Build list of reference IDs to show elements for.
-          $references = $cidoc_entity->getProperties($property_name, $reverse);
+          $references = $cidoc_entity->getReferences($property_name, $reverse);
           if (isset($references[$property_name])) {
             $ids = array_keys($references[$property_name]);
           }

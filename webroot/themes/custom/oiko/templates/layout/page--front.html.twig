@@ -43,54 +43,15 @@
  * @see html.html.twig
  */
 #}
-<div id="page" role="document" class="l-page">
-    <header role="banner" class="clearfix navigation-bar">
-        <div class="navigation-bar--center site-slogan heading-style-h1"><a href="/">Oikoumene</a></div>
-    </header>
-    <header role="banner" class="clearfix mobile-header hide-in-large-layout">
-        <a class="hamburger" data-toggle="hamburger_content">MENU</a>
-        <aside id='hamburger_content' class="hamburger-content" data-toggler=".is-open">
-            <button class="close-button" data-toggle="hamburger_content">&times;</button>
-            <h1>HAMBURGER MENU CONTENT</h1>
-        </aside>
-    </header>
+{% include directory ~ '/templates/layout/header.html.twig' %}
+<div id="main" role="main" class="clearfix l-main">
+    {{ page.primary_menu }}
+    {{ page.secondary_menu }}
+    {{ page.breadcrumb }}
+    {{ page.highlighted }}
+    {{ page.help }}
+    <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+    {{ page.content }}
+</div><!-- #main -->
+{% include directory ~ '/templates/layout/footer.html.twig' %}
 
-    <div id="main" role="main" class="clearfix">
-        {{ page.primary_menu }}
-        {{ page.secondary_menu }}
-
-        {{ page.breadcrumb }}
-
-
-
-
-        {{ page.highlighted }}
-
-        {{ page.help }}
-
-
-        <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
-
-            {{ page.content }}
-
-    </div><!-- #main -->
-
-        <footer id="footer" role="contentinfo" >
-            {{ page.footer }}
-            <div class="footer clearfix footer--upper">
-                <div class="footer__inner l-content-grid-container">
-
-                </div>
-            </div>
-            <div class="clearfix footer footer--lower">
-                <div class="footer__inner l-content-grid-container">
-                    <div class="footer--lower__copyright">
-                        Oikoumene - Warwick University
-
-                    </div>
-                    <div class="footer--lower__menu">{{ page.footer_lower }}</div>
-                </div>
-            </div>
-        </footer>
-
-</div>{# /.l-page #}

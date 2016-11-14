@@ -31,14 +31,14 @@ class CidocEntityViewBuilder extends EntityViewBuilder {
       if ($displays[$entity->bundle()]->getComponent('cidoc_properties')) {
         /** @var \Drupal\cidoc\CidocEntityInterface $entity */
         // Direct properties.
-        if ($grouped_references = $entity->getProperties()) {
+        if ($grouped_references = $entity->getReferences()) {
           foreach ($grouped_references as $property => $references) {
             $build[$id]['cidoc_properties']['ranges'][$property] = $view_builder->viewMultiple($references, 'domain');
           }
         }
 
         // Reverse properties.
-        if ($grouped_references = $entity->getProperties(NULL, TRUE)) {
+        if ($grouped_references = $entity->getReferences(NULL, TRUE)) {
           $properties = CidocProperty::loadMultiple(array_keys($grouped_references));
           foreach ($grouped_references as $property => $references) {
             if (!$properties[$property]->bidirectional) {

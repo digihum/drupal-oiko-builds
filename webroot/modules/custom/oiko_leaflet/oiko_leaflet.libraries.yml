@@ -32,6 +32,14 @@ arrows:
     - oiko_leaflet/leaflet-textpath
     - core/jquery
 
+locate:
+  js:
+    js/leaflet.locate.js: {}
+  version: VERSION
+  dependencies:
+    - oiko_leaflet/leaflet-locatecontrol
+    - core/jquery
+
 icons:
   js:
     js/leaflet.icons.js: {}
@@ -142,3 +150,13 @@ sidebar-v2.jquery:
   version: v0.3.0
   dependencies:
       - oiko_leaflet/sidebar-v2
+
+leaflet-locatecontrol:
+  js:
+    js/vendor/L.Control.Locate.min.js: {}
+  css:
+    component:
+      css/vendor/L.Control.Locate.min.css: {}
+  dependencies:
+    - leaflet/leaflet
+  version: v0.56.0

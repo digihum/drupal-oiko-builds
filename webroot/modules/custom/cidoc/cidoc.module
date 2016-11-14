@@ -56,7 +56,7 @@ function cidoc_entity_extra_field_info() {
 /**
  * Implements hook_query_TAG_alter().
  *
- * CidocEntity::getProperties() uses the entity query to get properties
+ * CidocEntity::getReferences() uses the entity query to get properties
  * references, but it needs the property names in the result in order to group
  * them. Entity query results are produced with fetchAllKeyed() so all we need
  * to do is change the second field to be the property column. Also sort by

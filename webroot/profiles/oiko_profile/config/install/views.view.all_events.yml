@@ -80,6 +80,7 @@ display:
           map: 'Ancient Terrain'
           full_height: 1
           height: '650'
+          locate: 1
       row:
         type: fields
       fields:

@@ -110,8 +110,8 @@ class ComparativeTimelineController extends ControllerBase {
     );
 
     // Places.
-    $cidoc_entity_query = $this->entityQuery->get('cidoc_entity')
-      ->condition('bundle', 'e53_place');
+    $cidoc_entity_query = $this->entityQuery->get('cidoc_entity');
+//      ->condition('bundle', 'e53_place');
 
     $place_ids = $cidoc_entity_query->execute();
 
@@ -147,12 +147,7 @@ class ComparativeTimelineController extends ControllerBase {
     ];
 
     // We need to get all events that happened at this place, and return times and other data for them.
-    // @TODO: swap this out for something that can handle getting 'children' too.
-    $events = $cidoc_entity->getReverseReferences([
-      'p7_took_place_at',
-      'p26_moved_to',
-      'p27_moved_from',
-    ], TRUE);
+    $events = $cidoc_entity->getChildEventEntities();
 
     foreach ($events as $event) {
       /** @var CidocEntity $event */

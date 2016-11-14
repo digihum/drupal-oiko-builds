@@ -6,24 +6,33 @@ label: 'P4 has time-span'
 bidirectional: false
 reverse_label: 'P4 is time-span of'
 domain_bundles:
-  2: e4_period
-  3: e5_event
-  6: e7_activity
-  7: e12_production
-  9: e66_formation
-  10: e67_birth
-  12: e68_dissolution
-  13: e69_death
-  14: e6_destruction
-  22: e9_move
-  23: o1_killing
-  24: o2_active_dissolution
-  25: o3_active_destruction
+  e4_period: e4_period
+  e5_event: e5_event
+  e7_activity: e7_activity
+  e12_production: e12_production
+  e66_formation: e66_formation
+  e67_birth: e67_birth
+  e68_dissolution: e68_dissolution
+  e69_death: e69_death
+  e6_destruction: e6_destruction
+  e9_move: e9_move
+  o1_killing: o1_killing
+  o2_active_dissolution: o2_active_dissolution
+  o3_active_destruction: o3_active_destruction
 range_bundles:
-  - e52_time_span
+  e52_time_span: e52_time_span
 editability:
   domain: true
   range: true
-timesubwidget: {  }
-widget_description: {  }
-autocomplete_description: {  }
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

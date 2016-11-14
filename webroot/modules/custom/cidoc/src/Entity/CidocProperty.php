@@ -13,6 +13,8 @@ use Drupal\field\Entity\FieldStorageConfig;
 /**
  * Defines the CIDOC property entity.
  *
+ * These entities represent the types of CidocReferences one can create.
+ *
  * @ConfigEntityType(
  *   id = "cidoc_property",
  *   label = @Translation("CIDOC property"),
@@ -47,6 +49,7 @@ use Drupal\field\Entity\FieldStorageConfig;
  *     "timesubwidget",
  *     "widget_description",
  *     "autocomplete_description",
+ *     "child_events",
  *   },
  *   links = {
  *     "canonical" = "/admin/structure/cidoc-properties/{cidoc_property}",
@@ -138,6 +141,13 @@ class CidocProperty extends ConfigEntityBundleBase {
    * @var array
    */
   public $autocomplete_description = array();
+
+  /**
+   * Which endpoints lead to events.
+   *
+   * @var array
+   */
+  public $child_events = array();
 
   /**
    * {@inheritdoc}
@@ -381,6 +391,20 @@ class CidocProperty extends ConfigEntityBundleBase {
    */
   public function getAutocompleteWidgetDescription($endpoint) {
     return isset($this->autocomplete_description[$endpoint]) ? $this->autocomplete_description[$endpoint] : '';
+  }
+
+  /**
+   * Get whether the property leads to child event data.
+   */
+  public function isChildEvents($endpoint) {
+    $val = FALSE;
+    switch ($endpoint) {
+      case 'domain':
+      case 'range':
+        $val = !empty($this->child_events[$endpoint]);
+        break;
+    }
+    return $val;
   }
 
 }
