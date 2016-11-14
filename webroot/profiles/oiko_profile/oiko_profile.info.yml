@@ -578,6 +578,8 @@ config_devel:
   - taxonomy.vocabulary.mode
   - taxonomy.vocabulary.role
   - taxonomy.vocabulary.source_books
+  - user.role.anonymous
+  - user.role.authenticated
   - views.view.all_events
   - views.view.appelations
   - views.view.appelations_real_names
