@@ -1967,6 +1967,7 @@ return array(
     'Drupal\\Core\\Test\\TestDatabase' => $baseDir . '/webroot/core/lib/Drupal/Core/Test/TestDatabase.php',
     'Drupal\\Core\\Test\\TestKernel' => $baseDir . '/webroot/core/lib/Drupal/Core/Test/TestKernel.php',
     'Drupal\\Core\\Test\\TestRunnerKernel' => $baseDir . '/webroot/core/lib/Drupal/Core/Test/TestRunnerKernel.php',
+    'Drupal\\Core\\Test\\TestStatus' => $baseDir . '/webroot/core/lib/Drupal/Core/Test/TestStatus.php',
     'Drupal\\Core\\Theme\\ActiveTheme' => $baseDir . '/webroot/core/lib/Drupal/Core/Theme/ActiveTheme.php',
     'Drupal\\Core\\Theme\\AjaxBasePageNegotiator' => $baseDir . '/webroot/core/lib/Drupal/Core/Theme/AjaxBasePageNegotiator.php',
     'Drupal\\Core\\Theme\\DefaultNegotiator' => $baseDir . '/webroot/core/lib/Drupal/Core/Theme/DefaultNegotiator.php',

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf70c5a0691df2100290ad1416dabf455
+class ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -2479,6 +2479,7 @@ class ComposerStaticInitf70c5a0691df2100290ad1416dabf455
         'Drupal\\Core\\Test\\TestDatabase' => __DIR__ . '/../..' . '/webroot/core/lib/Drupal/Core/Test/TestDatabase.php',
         'Drupal\\Core\\Test\\TestKernel' => __DIR__ . '/../..' . '/webroot/core/lib/Drupal/Core/Test/TestKernel.php',
         'Drupal\\Core\\Test\\TestRunnerKernel' => __DIR__ . '/../..' . '/webroot/core/lib/Drupal/Core/Test/TestRunnerKernel.php',
+        'Drupal\\Core\\Test\\TestStatus' => __DIR__ . '/../..' . '/webroot/core/lib/Drupal/Core/Test/TestStatus.php',
         'Drupal\\Core\\Theme\\ActiveTheme' => __DIR__ . '/../..' . '/webroot/core/lib/Drupal/Core/Theme/ActiveTheme.php',
         'Drupal\\Core\\Theme\\AjaxBasePageNegotiator' => __DIR__ . '/../..' . '/webroot/core/lib/Drupal/Core/Theme/AjaxBasePageNegotiator.php',
         'Drupal\\Core\\Theme\\DefaultNegotiator' => __DIR__ . '/../..' . '/webroot/core/lib/Drupal/Core/Theme/DefaultNegotiator.php',
@@ -4984,11 +4985,11 @@ class ComposerStaticInitf70c5a0691df2100290ad1416dabf455
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf70c5a0691df2100290ad1416dabf455::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf70c5a0691df2100290ad1416dabf455::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitf70c5a0691df2100290ad1416dabf455::$prefixesPsr0;
-            $loader->fallbackDirsPsr0 = ComposerStaticInitf70c5a0691df2100290ad1416dabf455::$fallbackDirsPsr0;
-            $loader->classMap = ComposerStaticInitf70c5a0691df2100290ad1416dabf455::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292::$prefixesPsr0;
+            $loader->fallbackDirsPsr0 = ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292::$fallbackDirsPsr0;
+            $loader->classMap = ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292::$classMap;
 
         }, null, ClassLoader::class);
     }
