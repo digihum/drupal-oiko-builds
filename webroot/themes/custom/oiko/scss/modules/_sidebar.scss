@@ -2,7 +2,7 @@
   top: 0;
   bottom: 0;
   height: 100%;
-  background-color: #fff
+  background-color: palette(grey, light);
 }
 
 .sidebar-right .sidebar-tabs {
@@ -128,7 +128,7 @@
   line-height: 40px;
   font-size: 14.4pt;
   color: #fff;
-  background-color: palette(tan);
+  background-color: palette(grey);
   margin-bottom: 20px;
   font-weight: bold;
 }

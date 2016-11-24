@@ -34,7 +34,7 @@ drush "@$DOMAIN" updb -y --entity-updates
 drush "@$DOMAIN" cc drush
 
 # Revert config.
-#drush "@$DOMAIN" cmci
+drush "@$DOMAIN" cmci -y
 
 drush "@$DOMAIN" updb -y --entity-updates
 

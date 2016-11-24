@@ -23,7 +23,11 @@
         <div class="sidebar-tabs">
             <ul role="tablist">
                 <li><a href="#information" role="tab"><i class="fa fa-bars"></i></a></li>
-                <!--<li><a href="#discussion" role="tab"><i class="fa fa-bullhorn"></i></a></li>-->
+                <li><a href="#discussion" role="tab"><i class="fa fa-comments"></i></a></li>
+            </ul>
+
+            <ul role="tablist">
+                <li><a href="#legend" role="tab"><i class="fa fa-map-o"></i></a></li>
             </ul>
         </div>
 
@@ -39,11 +43,17 @@
 
             </div>
 
-            <!--<div class="sidebar-pane" id="discussion">
-                <h1 class="sidebar-header">Discussions<span class="sidebar-close"><i class="fa fa-times"></i></span></h1>
+            <div class="sidebar-pane" id="discussion">
+                <h1 class="sidebar-header"><span class="sidebar-close"><i class="fa fa-times"></i></span> Discussions</h1>
 
                 <div class="sidebar-discussion-content-content"><p>Select a item on the map to display related discussions here.</p></div>
-            </div>-->
+            </div>
+
+            <div class="sidebar-pane" id="legend">
+                <h1 class="sidebar-header"><span class="sidebar-close"><i class="fa fa-times"></i></span> Legend</h1>
+
+                <div class="sidebar-legend-content-content"></div>
+            </div>
         </div>
     </div>
     <div class="leaflet-map-container">

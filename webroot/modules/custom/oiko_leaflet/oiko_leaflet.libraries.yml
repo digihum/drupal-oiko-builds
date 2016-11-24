@@ -141,7 +141,7 @@ sidebar-v2:
   css:
     component:
       css/vendor/leaflet-sidebar.min.css: {}
-      //maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css: {external: true}
+      //maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css: {external: true}
   version: v0.3.0
 
 sidebar-v2.jquery:

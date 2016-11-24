@@ -94,7 +94,8 @@ function oiko_leaflet_leaflet_map_info() {
  * Implements hook_theme_registry_alter
  */
 function oiko_leaflet_theme_registry_alter(&$theme_registry) {
-  $theme_registry['leaflet_map']['path'] = drupal_get_path('module', 'oiko_leaflet') . '/templates';
+  // @TOD: add this back when we know how to detect if the theme is using a template.
+//  $theme_registry['leaflet_map']['path'] = drupal_get_path('module', 'oiko_leaflet') . '/templates';
 }
 
 /**
