@@ -19,8 +19,6 @@ Drupal.behaviors.comparative_timeline = {
       selectable: false,
       align: 'right',
       showCurrentTime: false
-      // showMajorLabels: true,
-      // showMinorLabels: false
     };
     this._timelineMin = Infinity;
     this._timelineMax = -Infinity;
@@ -69,16 +67,12 @@ Drupal.behaviors.comparative_timeline = {
     }]);
 
     if (data.events !== null) {
-      // var timelineJSON = {
-      //   scale: "human",
-      //   events: []
-      // };
 
       for (var i = 0; i < data.events.length;i++) {
         var event = data.events[i];
         this._visItems.add([{
           type: event.type == 'period' ? 'background' : 'range',
-          content: event.label + ' ' + event.date_title,
+          content: '<a href="' + event.uri + '">' + event.label + ' ' + event.date_title + '</a>',
           start: event.minmin * 1000,
           end: event.maxmax * 1000,
           group: data.id
@@ -88,26 +82,12 @@ Drupal.behaviors.comparative_timeline = {
         this._timelineMax = Math.max(this._timelineMax, (event.maxmax + 86400 * 365 * 10) * 1000);
 
 
-        // var timelinejsData = {
-        //   start_date: new TL.Date(new Date(event.minmin * 1000)),
-        //   end_date: new TL.Date(new Date(event.maxmax * 1000)),
-        //   text: {
-        //     text: event.label,
-        //     headline: event.label
-        //   },
-        //   group: data.label
-        // };
-        //
-        // timelineJSON.events.push(timelinejsData);
-
       }
 
 
-      // this._timelineJS = new TL.Timeline('timeline-js-wrapper', timelineJSON, this._timelineJSOptions);
     }
 
     this.updateTimelineBounds();
-    // this._timelineJS.updateDisplay();
   };
 
   Drupal.OikoComparativeTimeline.prototype.updateTimelineBounds = function() {

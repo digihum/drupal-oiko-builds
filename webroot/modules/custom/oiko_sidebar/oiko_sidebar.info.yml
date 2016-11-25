@@ -1,0 +1,5 @@
+name: Oiko Sidebar
+description: 'Provides Oiko sidebar.'
+type: module
+core: 8.x
+package: Oiko

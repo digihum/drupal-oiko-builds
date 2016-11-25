@@ -94,8 +94,7 @@ function oiko_leaflet_leaflet_map_info() {
  * Implements hook_theme_registry_alter
  */
 function oiko_leaflet_theme_registry_alter(&$theme_registry) {
-  // @TOD: add this back when we know how to detect if the theme is using a template.
-//  $theme_registry['leaflet_map']['path'] = drupal_get_path('module', 'oiko_leaflet') . '/templates';
+  $theme_registry['leaflet_map']['path'] = drupal_get_path('module', 'oiko_leaflet') . '/templates';
 }
 
 /**
@@ -104,5 +103,10 @@ function oiko_leaflet_theme_registry_alter(&$theme_registry) {
 function oiko_leaflet_preprocess_leaflet_map(&$variables) {
   if ($variables['height'] == 'full') {
     unset($variables['height']);
+  }
+  if (!empty($variables['map']['sidebar'])) {
+    $variables['sidebar'] = [
+      '#theme' => 'sidebar',
+    ];
   }
 }

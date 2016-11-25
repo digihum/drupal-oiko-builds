@@ -1,0 +1,20 @@
+sidebar:
+  js:
+    js/oiko.sidebar.js: {}
+  version: VERSION
+  dependencies:
+    - core/drupal.ajax
+    - core/jquery
+    - core/jquery.once
+    - oiko_sidebar/sidebar.class
+    - core/modernizr
+
+sidebar.class:
+  js:
+    js/sidebar.class.js: {}
+  css:
+    component:
+      //maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css: {external: true}
+  version: VERSION
+  dependencies:
+    - core/jquery
