@@ -1,5 +1,4 @@
 <?php
-use Drupal\Core\Cache\CacheableMetadata;
 
 /**
  * Implements theme_preprocess().
@@ -75,6 +74,9 @@ function oiko_preprocess_field(&$variables) {
       }
     }
   }
+  if ($variables['field_name'] == 'field_crm_entities' && $variables['element']['#bundle'] == 'forum' && $variables['element']['#view_mode'] == 'full') {
+    $variables['attributes']['class'][] = 'forum-related-to';
+  }
 }
 
 /**
@@ -99,9 +101,6 @@ function oiko_preprocess_block(&$variables) {
 function oiko_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   $match = \Drupal::routeMatch();
   if ($match->getRouteName() == 'entity.cidoc_entity.canonical') {
-    array_unshift($suggestions, 'page__bare');
-  }
-  if ($match->getRouteName() == 'oiko_timeline.comparative_timeline_controller_basePage') {
     array_unshift($suggestions, 'page__bare');
   }
 }
@@ -135,42 +134,4 @@ function oiko_preprocess_views_view(&$variables) {
   if ($style == 'oiko_leafet_map' && $view->getStyle()->options['full_height']) {
     $variables['attributes']['class'][] = 'l-map-wrap';
   }
-}
-
-/**
- * Implements hook_preprocess().
- */
-function oiko_preprocess_leaflet_map(&$variables, $hook) {
-  $build = [
-    '#cache' => [
-      'tags' => \Drupal::service('entity.manager')->getDefinition('block')->getListCacheTags(),
-    ],
-  ];
-  $blockViewBuilder = \Drupal::service('entity.manager')->getViewBuilder('block');
-  // Load all region content assigned via blocks.
-  $cacheable_metadata_list = [];
-  $regions = \Drupal::service('block.repository')->getVisibleBlocksPerRegion($cacheable_metadata_list);
-  if (isset($regions['sidebar_legend'])) {
-    foreach ($regions['sidebar_legend'] as $key => $block) {
-      $block_plugin = $block->getPlugin();
-      if ($block_plugin instanceof MainContentBlockPluginInterface) {
-        continue;
-      }
-      elseif ($block_plugin instanceof TitleBlockPluginInterface) {
-        continue;
-      }
-      elseif ($block_plugin instanceof MessagesBlockPluginInterface) {
-        continue;
-      }
-      $build[$key] = $blockViewBuilder->view($block);
-    }
-  }
-  $merged_cacheable_metadata = CacheableMetadata::createFromRenderArray($build);
-  foreach ($cacheable_metadata_list as $cacheable_metadata) {
-    $merged_cacheable_metadata = $merged_cacheable_metadata->merge($cacheable_metadata);
-  }
-  $merged_cacheable_metadata->applyTo($build);
-
-  $variables['sidebar_legend'] = $build;
-
 }

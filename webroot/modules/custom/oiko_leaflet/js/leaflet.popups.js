@@ -76,6 +76,7 @@
 
     // Set up an AJAX request to replace the content.
     Drupal.oiko.displayContentInLeafletSidebar(id, drupalLeaflet, changeHistoryState);
+    Drupal.oiko.displayDiscussionInLeafletSidebar(id, drupalLeaflet, false);
 
   };
 
@@ -93,6 +94,27 @@
     // For anchor tags, these will go to the target of the anchor rather
     // than the usual location.
     element_settings.url = '/cidoc-entity/' + id + '/popup';
+    element_settings.oikoLeafletHistoryState = changeHistoryState;
+    Drupal.ajax(element_settings).execute();
+  };
+
+  window.addEventListener('popstate', function(e) {
+    if (e.state && e.state.hasOwnProperty('type') && e.state.type === 'popup') {
+      // This was a popup that we displayed earlier, call the same function again.
+      if (typeof Drupal.globalDrupalLeaflet !== 'undefined') {
+        Drupal.oiko.openLeafletSidebar(e.state.id, e.state.label, Drupal.globalDrupalLeaflet, false);
+      }
+    }
+  });
+
+  Drupal.oiko.displayDiscussionInLeafletSidebar = function(id, drupalLeaflet, changeHistoryState) {
+    var element_settings = {};
+    // Clicked links look better with the throbber than the progress bar.
+    element_settings.progress = {type: 'none'};
+
+    // For anchor tags, these will go to the target of the anchor rather
+    // than the usual location.
+    element_settings.url = '/discussion/' + id + '/popup';
     element_settings.oikoLeafletHistoryState = changeHistoryState;
     Drupal.ajax(element_settings).execute();
   };
@@ -128,7 +150,5 @@
       }
     }
   };
-
-
 
 })(jQuery);

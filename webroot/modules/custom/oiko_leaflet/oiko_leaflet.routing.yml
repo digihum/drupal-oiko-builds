@@ -7,6 +7,14 @@ oiko_leaflet.popup_content_controller_view:
   requirements:
     _permission: 'view published cidoc entities'
 
+oiko_leaflet.popup_discussion_controller_view:
+  path: '/discussion/{cidoc_entity}/popup'
+  defaults:
+    _controller: '\Drupal\oiko_leaflet\Controller\PopupDiscussionController::view'
+    _title: 'cidocCRMPopupDiscussion'
+  requirements:
+    _permission: 'view published cidoc entities'
+
 oiko_leaflet.empire_controller_listall:
   path: '/oiko_leaflet/empires/list.json'
   defaults:

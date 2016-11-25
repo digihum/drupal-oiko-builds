@@ -99,3 +99,15 @@ function oiko_profile_update_8109() {
 function oiko_profile_update_8110() {
   \Drupal::service('module_installer')->install(['search_api_db']);
 }
+
+/**
+ * Create our default forum.
+ */
+function oiko_profile_update_8111() {
+  $default_forum = [
+    'vid' => 'forums',
+    'name' => 'Data discussions',
+  ];
+  $term = \Drupal\taxonomy\Entity\Term::create($default_forum);
+  $term->save();
+}

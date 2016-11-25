@@ -94,8 +94,7 @@ function oiko_leaflet_leaflet_map_info() {
  * Implements hook_theme_registry_alter
  */
 function oiko_leaflet_theme_registry_alter(&$theme_registry) {
-  // @TOD: add this back when we know how to detect if the theme is using a template.
-//  $theme_registry['leaflet_map']['path'] = drupal_get_path('module', 'oiko_leaflet') . '/templates';
+  $theme_registry['leaflet_map']['path'] = drupal_get_path('module', 'oiko_leaflet') . '/templates';
 }
 
 /**
@@ -105,4 +104,26 @@ function oiko_leaflet_preprocess_leaflet_map(&$variables) {
   if ($variables['height'] == 'full') {
     unset($variables['height']);
   }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function oiko_leaflet_form_node_forum_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  // When we've clicked the 'Start a new discussion' button in the side panel,
+  // we want to pre-fill that entity in this form - its ID will be in the query
+  // string.
+  $cidoc_entity_id = \Drupal::request()->query->get('cidoc_entity_id');
+  if (is_numeric($cidoc_entity_id)) {
+    $cidoc_entity = \Drupal::entityTypeManager()->getStorage('cidoc_entity')->load($cidoc_entity_id);
+    $form['field_crm_entities']['widget'][0]['target_id']['#default_value'] = $cidoc_entity;
+  }
+  // If there's only one option, preselect it for convenience.
+  if (count($form['taxonomy_forums']['widget']['#options']) == 2) {
+    $options = $form['taxonomy_forums']['widget']['#options'];
+    unset($options['_none']);
+    $form['taxonomy_forums']['widget']['#default_value'] = key($options);
+  }
+  // Remove the preview button. It doesn't make sense here.
+  $form['actions']['preview']['#access'] = FALSE;
 }

@@ -634,7 +634,8 @@ config_devel:
   - views.view.time_span_directly_linked_events
   - views.view.time_span_within_period
   - views.view.timeline
-  - block.block.maplegendblock
+  - user.role.forum_user
+  - views.view.discussions_listing
 
 cm_config_tools:
   create_only:
