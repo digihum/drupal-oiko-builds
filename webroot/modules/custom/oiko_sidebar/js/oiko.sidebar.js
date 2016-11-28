@@ -3,7 +3,6 @@
 
   Drupal.oiko = Drupal.oiko || {};
 
-
   Drupal.behaviors.oiko_sidebar = {
     attach: function(context, settings) {
 

@@ -1,6 +1,8 @@
 (function ($) {
   'use strict';
 
+  Drupal.oiko = Drupal.oiko || {};
+
   $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
     // Add the sidebar control if there's a sidebar control in the page markup.
     if (mapDefinition.sidebar && Drupal.oiko.hasOwnProperty('sidebar')) {
@@ -50,11 +52,5 @@
       });
     }
   });
-
-
-
-
-
-
 
 })(jQuery);

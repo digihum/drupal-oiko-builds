@@ -111,3 +111,10 @@ function oiko_profile_update_8111() {
   $term = \Drupal\taxonomy\Entity\Term::create($default_forum);
   $term->save();
 }
+
+/**
+ * Enable the sidebar module.
+ */
+function oiko_profile_update_8112() {
+  \Drupal::service('module_installer')->install(['oiko_sidebar']);
+}
