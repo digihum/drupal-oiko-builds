@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "db4e121418eec93192b1bb2516afaefe",
+    "content-hash": "c9406bb9e5289694c123c360c97bd09e",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1306,27 +1306,19 @@
         },
         {
             "name": "drupal/config_update",
-            "version": "8.1.1",
+            "version": "dev-8.x-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/config_update.git",
-                "reference": "ac1526df5836a611f04bb421945beddb6306b7f2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/config_update-8.x-1.1.zip",
-                "reference": "ac1526df5836a611f04bb421945beddb6306b7f2",
-                "shasum": null
+                "reference": "f84f49be150c2032921e2cb99ffea5dbcb5f89ca"
             },
             "require": {
-                "drupal/config": "8.*",
                 "drupal/core": "8.*"
             },
             "replace": {
                 "drupal/config_update_ui": "self.version"
             },
             "suggest": {
-                "drupal/config": "Required by drupal/config_update_ui",
                 "drupal/core": "Required by drupal/config_update_ui"
             },
             "type": "drupal-module",
@@ -1341,7 +1333,7 @@
             ],
             "description": "Provides basic revert and update functionality for other modules",
             "homepage": "https://www.drupal.org/project/config_update",
-            "time": "2016-03-01T16:28:35+00:00"
+            "time": "2016-08-31 19:41:53"
         },
         {
             "name": "drupal/console",
@@ -7437,6 +7429,7 @@
         "drupal/add_to_head": 20,
         "drupal/cm_config_tools": 20,
         "drupal/config_devel": 20,
+        "drupal/config_update": 20,
         "drupal/devel": 20,
         "drupal/eva": 20,
         "drupal/features": 20,

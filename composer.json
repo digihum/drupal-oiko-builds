@@ -125,6 +125,7 @@
         "drupal/color_field": "8.2.0-rc1",
         "drupal/config_devel": "8.1.x-dev#92f735cae8e9fb328edca285340a5bfbf72028cc",
         "drupal/config_readonly": "8.1.0-beta2",
+        "drupal/config_update": "8.1.x-dev#f84f49be150c2032921e2cb99ffea5dbcb5f89ca",
         "drupal/console": "~0.10",
         "drupal/core": "~8.2",
         "drupal/csv_serialization": "8.1.0-alpha1",

@@ -44,18 +44,20 @@
  */
 #}
 {% include directory ~ '/templates/layout/header.html.twig' %}
-<div id="main" role="main" class="clearfix l-main l-content-grid-container">
-    <div class="layout-content">
-    {{ page.primary_menu }}
-    {{ page.secondary_menu }}
-    {{ page.breadcrumb }}
-    {{ page.highlighted }}
-    {{ page.help }}
-    </div>{# /.layout-content #}
-    <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
-    <div class="layout-content">
-        {{ page.content }}
-    </div>{# /.layout-content #}
+<div id="main" role="main" class="clearfix l-main-content">
+    <div class="l-content-grid-container">
+        <div class="layout-content">
+        {{ page.primary_menu }}
+        {{ page.secondary_menu }}
+        {{ page.breadcrumb }}
+        {{ page.highlighted }}
+        {{ page.help }}
+        </div>{# /.layout-content #}
+        <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+        <div class="layout-content">
+            {{ page.content }}
+        </div>{# /.layout-content #}
+    </div>
 </div><!-- #main -->
 {% include directory ~ '/templates/layout/footer.html.twig' %}
 

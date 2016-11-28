@@ -39,9 +39,24 @@
     padding: 0 1em;
   }
 
+  footer {
+    float: none;
+    padding: 0;
+    width: 100%;
+    a {
+      float: right;
+    }
+  }
+
   .forum-topic-content {
     padding: 0 1em;
   }
+}
+
+.forum-related-to {
+  margin-bottom: 30px;
+  border: 3px solid palette(satin, base);
+  padding: 15px;
 }
 
 .forum-comment {
@@ -50,11 +65,14 @@
   padding: 1em;
 }
 
-@include from('s') {
+@include from('m') {
   .forum-node {
     & > footer {
       float: left;
-      width: 10em;
+      width: 15em;
+      a {
+        float: none;
+      }
     }
 
     .forum-topic-content {
@@ -74,4 +92,8 @@
       overflow: hidden;
     }
   }
+}
+
+.sidebar-content .forum {
+  border: none;
 }

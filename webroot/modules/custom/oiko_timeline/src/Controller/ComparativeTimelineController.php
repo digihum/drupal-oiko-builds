@@ -61,50 +61,11 @@ class ComparativeTimelineController extends ControllerBase {
 
     $content = array();
 
-
-    // Give ourselves a container for the whole thing.
-    $content['timeline_container'] = array(
-      '#type' => 'container',
-      '#attributes' => array(
-        'class' => array(
-          'comparative-timeline-container',
-        ),
-      ),
+    $content['new_timeline'] = array(
+      '#theme' => 'comparative_timeline',
       '#attached' => array(
         'library' =>  array(
           'oiko_timeline/comparative_timeline'
-        ),
-      ),
-    );
-
-    // And for the timeline itself
-    $content['timeline_container']['timeline'] = array(
-      '#type' => 'container',
-      '#attributes' => array(
-        'class' => array(
-          'timeline-wrapper',
-        ),
-      ),
-    );
-
-    // And for the timeline itself
-    $content['timeline_container']['timeline.js'] = array(
-      '#type' => 'container',
-      '#attributes' => array(
-        'id' => 'timeline-js-wrapper',
-        'class' => array(
-          'timeline-js-wrapper',
-        ),
-      ),
-    );
-
-
-    // Add a nice form for all the places we have in the system.
-    $content['timeline_container']['places'] = array(
-      '#type' => 'container',
-      '#attributes' => array(
-        'class' => array(
-          'places-wrapper',
         ),
       ),
     );
@@ -115,23 +76,23 @@ class ComparativeTimelineController extends ControllerBase {
 
     $place_ids = $cidoc_entity_query->execute();
 
-    if (!empty($place_ids)) {
-      foreach ($this->entityTypeManager->getStorage('cidoc_entity')
-                 ->loadMultiple($place_ids) as $place) {
-        /** @var CidocEntity $place */
-        $content['timeline_container']['places'][$place->id()] = array(
-          '#suffix' => ' | ',
-          '#type' => 'link',
-          '#attributes' => array(
-            'class' => array(
-              'event-data-lookup',
-            ),
-          ),
-          '#title' => $place->label(),
-          '#url' => Url::fromRoute('oiko_timeline.comparision_data', ['cidoc_entity' => $place->id()]),
-        );
-      }
-    }
+//    if (!empty($place_ids)) {
+//      foreach ($this->entityTypeManager->getStorage('cidoc_entity')
+//                 ->loadMultiple($place_ids) as $place) {
+//        /** @var CidocEntity $place */
+//        $content['timeline_container']['places'][$place->id()] = array(
+//          '#suffix' => ' | ',
+//          '#type' => 'link',
+//          '#attributes' => array(
+//            'class' => array(
+//              'event-data-lookup',
+//            ),
+//          ),
+//          '#title' => $place->label(),
+//          '#url' => Url::fromRoute('oiko_timeline.comparision_data', ['cidoc_entity' => $place->id()]),
+//        );
+//      }
+//    }
 
 
 
@@ -155,6 +116,7 @@ class ComparativeTimelineController extends ControllerBase {
       if (isset($temporal['minmin']) || isset($temporal['maxmax'])) {
         $data['events'][] = array(
           'type' => $event->bundle() == 'e4_period' ? 'period' : 'event',
+          'uri' => $event->toUrl()->toString(),
           'id' => $event->id(),
           'label' => $event->label(),
           'date_title' => $temporal['human'],
