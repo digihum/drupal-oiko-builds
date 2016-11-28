@@ -1,0 +1,38 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - sharemessage.sharemessage.share_links_block
+  module:
+    - ctools
+    - node
+    - sharemessage
+  theme:
+    - oiko
+id: sharemessage_2
+theme: oiko
+region: content
+weight: -3
+provider: null
+plugin: sharemessage_block
+settings:
+  id: sharemessage_block
+  label: Share
+  provider: sharemessage
+  label_display: '0'
+  sharemessage: share_links_block
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      forum: forum
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+  node_type:
+    id: node_type
+    bundles:
+      forum: forum
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

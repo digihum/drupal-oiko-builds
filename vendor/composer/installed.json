@@ -5214,29 +5214,29 @@
         "require": {
             "composer/installers": "^1.0.21"
         },
-        "time": "2016-09-20 10:25:00",
+        "time": "2016-07-27 12:06:31",
         "type": "drupal-module",
         "installation-source": "source"
     },
     {
         "name": "drupal/token",
-        "version": "8.1.0-beta1",
-        "version_normalized": "8.1.0.0-beta1",
+        "version": "8.1.0-beta2",
+        "version_normalized": "8.1.0.0-beta2",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/token",
-            "reference": "1c68e82525fda1bd12021502da81b929b9ae5c02"
+            "reference": "724ccaa7a60f1aa7e8883e82de737115b0f73a3f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/token-8.x-1.0-beta1.zip",
-            "reference": "1c68e82525fda1bd12021502da81b929b9ae5c02",
+            "url": "https://ftp.drupal.org/files/projects/token-8.x-1.0-beta2.zip",
+            "reference": "724ccaa7a60f1aa7e8883e82de737115b0f73a3f",
             "shasum": null
         },
         "require": {
             "drupal/core": "8.*"
         },
-        "time": "2016-08-09 07:03:16",
+        "time": "2016-09-20 10:19:14",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
@@ -5253,32 +5253,35 @@
     },
     {
         "name": "drupal/metatag",
-        "version": "8.1.0-beta7",
-        "version_normalized": "8.1.0.0-beta7",
+        "version": "8.1.0-beta11",
+        "version_normalized": "8.1.0.0-beta11",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/metatag",
-            "reference": "c12149e7ea0444bed959018384d48d1f79d42af3"
+            "reference": "a0d1796064674306573b9dae1ae2c8b0394d7ef4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/metatag-8.x-1.0-beta7.zip",
-            "reference": "c12149e7ea0444bed959018384d48d1f79d42af3",
+            "url": "https://ftp.drupal.org/files/projects/metatag-8.x-1.0-beta11.zip",
+            "reference": "a0d1796064674306573b9dae1ae2c8b0394d7ef4",
             "shasum": null
         },
         "require": {
             "drupal/core": "8.*",
-            "drupal/field": "8.*",
             "drupal/token": "8.*"
         },
         "replace": {
+            "drupal/metatag_dc": "self.version",
+            "drupal/metatag_facebook": "self.version",
+            "drupal/metatag_google_plus": "self.version",
             "drupal/metatag_open_graph": "self.version",
-            "drupal/metatag_twitter_cards": "self.version"
+            "drupal/metatag_twitter_cards": "self.version",
+            "drupal/metatag_verification": "self.version"
         },
         "suggest": {
-            "drupal/core": "Required by drupal/metatag_open_graph, drupal/metatag_twitter_cards"
+            "drupal/core": "Required by drupal/metatag_dc, drupal/metatag_facebook, drupal/metatag_google_plus, drupal/metatag_open_graph, drupal/metatag_twitter_cards, drupal/metatag_verification"
         },
-        "time": "2016-04-03 18:17:59",
+        "time": "2016-10-31 15:33:38",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
@@ -5588,6 +5591,49 @@
         ],
         "description": "Provides a generic framework for modules offering search capabilities.",
         "homepage": "https://www.drupal.org/project/search_api"
+    },
+    {
+        "name": "drupal/sharemessage",
+        "version": "8.1.0-beta1",
+        "version_normalized": "8.1.0.0-beta1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/sharemessage.git",
+            "reference": "1f6f082129c868f6f8016d31902964012a12d93f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/sharemessage-8.x-1.0-beta1.zip",
+            "reference": "1f6f082129c868f6f8016d31902964012a12d93f",
+            "shasum": null
+        },
+        "require": {
+            "drupal/core": "8.*"
+        },
+        "replace": {
+            "drupal/sharemessage_demo": "self.version"
+        },
+        "suggest": {
+            "drupal/block": "Required by drupal/sharemessage_demo",
+            "drupal/core": "Required by drupal/sharemessage_demo",
+            "drupal/node": "Required by drupal/sharemessage_demo",
+            "drupal/path": "Required by drupal/sharemessage_demo",
+            "drupal/text": "Required by drupal/sharemessage_demo"
+        },
+        "time": "2016-05-30 20:34:10",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-8.x-1.x": "8.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Sharing module using AddThis widgets and entity based storage.",
+        "homepage": "https://www.drupal.org/project/sharemessage"
     },
     {
         "name": "drupal/squid_autocomplete",

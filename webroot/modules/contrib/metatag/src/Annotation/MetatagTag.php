@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains the \Drupal\metatag\Annotation\MetatagTag annotation plugin.
- */
 
 namespace Drupal\metatag\Annotation;
 
@@ -69,6 +65,13 @@ class MetatagTag extends Plugin {
    * @var string
    */
   public $type;
+
+  /**
+   * True if URL must use HTTPS.
+   *
+   * @var boolean
+   */
+  protected $secure;
 
   /**
    * True if more than one is allowed.

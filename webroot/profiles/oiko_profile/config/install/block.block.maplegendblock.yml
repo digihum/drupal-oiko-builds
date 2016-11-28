@@ -8,7 +8,7 @@ dependencies:
 id: maplegendblock
 theme: oiko
 region: sidebar_legend
-weight: 0
+weight: -8
 provider: null
 plugin: map_legend_block
 settings:

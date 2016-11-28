@@ -30,6 +30,7 @@
     $('#leaflet-sidebar .sidebar-information-content-title').text(label);
     $('#leaflet-sidebar .sidebar-information-content-content').text(Drupal.t('Loading details...'));
     $('#leaflet-sidebar .sidebar-discussion-content-content').text(Drupal.t('Loading discussions...'));
+    $('#leaflet-sidebar .sidebar-share-content-content').text(Drupal.t('Loading share links...'));
   };
 
   Drupal.oiko.displayContentInLeafletSidebar = function(id, changeHistoryState) {
@@ -52,6 +53,13 @@
     discussion_element_settings.url = '/discussion/' + id + '/popup';
     discussion_element_settings.oikoLeafletHistoryState = false;
     Drupal.ajax(discussion_element_settings).execute();
+
+    // Load in the social links.
+    var social_element_settings = {};
+    social_element_settings.progress = {type: 'none'};
+    social_element_settings.url = '/share/' + id + '/popup';
+    social_element_settings.oikoLeafletHistoryState = false;
+    Drupal.ajax(social_element_settings).execute();
   };
 
   window.addEventListener('popstate', function(e) {

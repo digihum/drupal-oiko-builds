@@ -118,3 +118,10 @@ function oiko_profile_update_8111() {
 function oiko_profile_update_8112() {
   \Drupal::service('module_installer')->install(['oiko_sidebar']);
 }
+
+/**
+ * Enable metatag & sharemessage modules.
+ */
+function oiko_profile_update_8113() {
+  \Drupal::service('module_installer')->install(['metatag_open_graph', 'metatag_twitter_cards', 'metatag_facebook', 'sharemessage']);
+}

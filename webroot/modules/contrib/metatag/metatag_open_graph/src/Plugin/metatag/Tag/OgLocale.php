@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\metatag_open_graph\Plugin\metatag\Tag\OgLocale.
- */
 
 namespace Drupal\metatag_open_graph\Plugin\metatag\Tag;
 
@@ -19,6 +15,7 @@ use \Drupal\metatag\Plugin\metatag\Tag\MetaPropertyBase;
  *   group = "open_graph",
  *   weight = 26,
  *   type = "string",
+ *   secure = FALSE,
  *   multiple = FALSE
  * )
  */

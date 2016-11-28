@@ -6,7 +6,7 @@ dependencies:
 id: oiko_local_actions
 theme: oiko
 region: content
-weight: -7
+weight: -5
 provider: null
 plugin: local_actions_block
 settings:

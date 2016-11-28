@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies: {  }
+id: share_links_block
+label: 'Share links block'
+title: '[site:name] | [current-page:title]'
+message_long: '[site:slogan]'
+message_short: 'Oikoumene: [current-page:title]'
+image_url: ''
+fallback_image: ''
+video_url: ''
+share_url: ''
+plugin: addthis
+enforce_usage: false
+settings: {  }

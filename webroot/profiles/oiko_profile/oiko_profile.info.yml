@@ -63,10 +63,14 @@ dependencies:
 #  - kint
   - leaflet_widget
 #  - leaflet_views
-#  - metatag
+  - metatag
+  - metatag_facebook
+  - metatag_twitter_cards
+  - metatag_open_graph
 #  - pathauto
 #  - token
   - search_api_db
+  - sharemessage
 
 # ============================================================================ #
 # Dependencies: Custom modules # - alphabetical order please
@@ -100,6 +104,8 @@ config_devel:
   - block.block.oiko_page_title
   - block.block.oiko_powered
   - block.block.oiko_tools
+  - block.block.sharemessage
+  - block.block.sharemessage_2
   - cidoc.cidoc_entity_bundle.e12_production
   - cidoc.cidoc_entity_bundle.e21_person
   - cidoc.cidoc_entity_bundle.e22_man_made_object
@@ -559,6 +565,7 @@ config_devel:
   - field.storage.taxonomy_term.forum_container
   - filter.format.basic_html
   - filter.format.restricted_html
+  - metatag.metatag_defaults
   - node.type.forum
   - paragraphs.paragraphs_type.book
   - paragraphs.paragraphs_type.uri
@@ -568,6 +575,9 @@ config_devel:
   - search_api.index.crm_entities
   - search_api.server.db_search_backend
   - seven.settings
+  - sharemessage.addthis
+  - sharemessage.settings
+  - sharemessage.sharemessage.share_links_block
   - system.menu.footer
   - system.theme.global
   - system.theme
