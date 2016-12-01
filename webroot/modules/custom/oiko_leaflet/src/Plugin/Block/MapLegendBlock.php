@@ -57,6 +57,14 @@ class MapLegendBlock extends BlockBase {
       }
     }
 
+    $image = [
+      '#theme' => 'image',
+      '#uri' => $icons['blue'],
+    ];
+    $list_items[] = $this->t('@image&nbsp;&nbsp;Other', [
+      '@image' => $renderer->render($image),
+    ]);
+
     if (!empty($list_items)) {
       $build['map_legend_block'] = array(
         '#theme' => 'item_list',
