@@ -129,6 +129,7 @@ markercluster:
       css/vendor/MarkerCluster.Default.css: {}
 
 vis:
+  version: v4.17.0
   js:
     js/vendor/vis.min.js: {}
   css:

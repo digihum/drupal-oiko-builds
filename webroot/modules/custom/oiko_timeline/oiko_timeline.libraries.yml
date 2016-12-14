@@ -7,9 +7,11 @@ comparative_timeline:
   dependencies:
     - core/jquery
     - core/drupal
+    - core/drupalSettings
     - core/jquery.once
     - oiko_leaflet/vis
     - oiko_timeline/timelinejs
+    - oiko_leaflet/moment.lang.oiko
 
 #timelinejs:
 #  js:

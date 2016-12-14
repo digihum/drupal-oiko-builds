@@ -1,0 +1,4 @@
+services:
+  oiko_citation.hook_implementations:
+    class: Drupal\oiko_citation\OikoCitationHookImplementations
+

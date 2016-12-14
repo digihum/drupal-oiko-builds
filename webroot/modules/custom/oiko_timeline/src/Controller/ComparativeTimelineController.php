@@ -63,39 +63,7 @@ class ComparativeTimelineController extends ControllerBase {
 
     $content['new_timeline'] = array(
       '#theme' => 'comparative_timeline',
-      '#attached' => array(
-        'library' =>  array(
-          'oiko_timeline/comparative_timeline'
-        ),
-      ),
     );
-
-    // Places.
-    $cidoc_entity_query = $this->entityQuery->get('cidoc_entity');
-//      ->condition('bundle', 'e53_place');
-
-    $place_ids = $cidoc_entity_query->execute();
-
-//    if (!empty($place_ids)) {
-//      foreach ($this->entityTypeManager->getStorage('cidoc_entity')
-//                 ->loadMultiple($place_ids) as $place) {
-//        /** @var CidocEntity $place */
-//        $content['timeline_container']['places'][$place->id()] = array(
-//          '#suffix' => ' | ',
-//          '#type' => 'link',
-//          '#attributes' => array(
-//            'class' => array(
-//              'event-data-lookup',
-//            ),
-//          ),
-//          '#title' => $place->label(),
-//          '#url' => Url::fromRoute('oiko_timeline.comparision_data', ['cidoc_entity' => $place->id()]),
-//        );
-//      }
-//    }
-
-
-
 
     return $content;
   }
@@ -114,6 +82,12 @@ class ComparativeTimelineController extends ControllerBase {
       /** @var CidocEntity $event */
       $temporal = $event->getTemporalInformation();
       if (isset($temporal['minmin']) || isset($temporal['maxmax'])) {
+        if (($significance = $event->significance->entity) && ($color = $significance->field_icon_color->getValue()[0]['value'])) {
+          $event_color = $color;
+        }
+        else {
+          $event_color = 'blue';
+        }
         $data['events'][] = array(
           'type' => $event->bundle() == 'e4_period' ? 'period' : 'event',
           'uri' => $event->toUrl()->toString(),
@@ -122,6 +96,7 @@ class ComparativeTimelineController extends ControllerBase {
           'date_title' => $temporal['human'],
           'minmin' => $temporal['minmin'],
           'maxmax' => $temporal['maxmax'],
+          'color' => $event_color,
         );
       }
     }

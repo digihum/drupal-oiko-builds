@@ -9,7 +9,6 @@ use Drupal\views\Views;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Component\Utility\Xss;
-use Drupal\Core\Utility\Token;
 
 /**
  * Implements hook_entity_extra_field_info() to add the view fields to relevant entities
@@ -20,7 +19,9 @@ function eva_entity_extra_field_info() {
 
   foreach ($views as $entity => $data) {
     foreach ($data as $view) {
-      $bundles = $view['bundles'];
+      // if no bundles are set, apply to all bundles
+      // per current 7.x behavior (http://cgit.drupalcode.org/eva/tree/eva.module#n25)
+      $bundles = !empty($view['bundles'])? $view['bundles'] : array_keys(\Drupal::service('entity_type.bundle.info')->getBundleInfo($entity));
       foreach ($bundles as $bundle) {
         $extra[$entity][$bundle]['display'][$view['name'] . '_' . $view['display']] = array(
           'label' => (empty($view['title'])) ? $view['name'] : $view['title'], 
@@ -90,9 +91,9 @@ function eva_get_views($type = NULL, $reset = FALSE) {
 }
 
 /**
- * implement hook_entity_view_alter()
+ * Implements hook_entity_view()
  */
-function eva_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+function eva_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   $type = $entity->getEntityTypeId();
   $views = eva_get_views($type);
 
@@ -142,7 +143,7 @@ function eva_get_arguments_from_token_string($string, $type, $object) {
   if (empty($args)) {
     return array();
   }
-  $args = Token::replace($args, array($type => $object), array('sanitize' => FALSE));
+  $args = \Drupal::token()->replace($args, array($type => $object), array('sanitize' => FALSE));
   return explode('/', $args);
 }
 
@@ -191,4 +192,9 @@ function template_preprocess_eva_display_entity_view(&$variables) {
   $variables['exposed_form_as_field'] = $display->getOption('exposed_form_as_field');
   // inject the dom ID since this isn't done automatically
   $variables['dom_id'] = $view->dom_id;
+
+  $variables['view_array']['#view_id'] = $view->storage->id();
+  $variables['view_array']['#view_display_show_admin_links'] = $view->getShowAdminLinks();
+  $variables['view_array']['#view_display_plugin_id'] = $display->getPluginId();
+  views_add_contextual_links($variables['view_array'], 'view', $display->getLinkDisplay());
 }
