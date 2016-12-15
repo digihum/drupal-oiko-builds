@@ -59,7 +59,12 @@ Drupal.behaviors.comparative_timeline = {
         $searchBox.delayKeyup(function (event) {
           switch (event.keyCode) {
             case 13: // enter
-              instance.searchButtonClick.call(instance);
+              if (instance.activeResult !== -1) {
+                instance.searchResultSelected.call(instance, instance.activeResult);
+              }
+              else {
+                instance.searchButtonClick.call(instance);
+              }
               break;
             case 38: // up arrow
               instance.prevResult.call(instance);
@@ -146,10 +151,6 @@ Drupal.behaviors.comparative_timeline = {
           }
 
           this.fillSearchBox.call(this);
-
-          if (this.activeResult !== -1) {
-            this.searchResultSelected.call(this, this.activeResult);
-          }
         }
       },
       prevResult: function() {
@@ -172,10 +173,6 @@ Drupal.behaviors.comparative_timeline = {
           }
 
           this.fillSearchBox.call(this);
-
-          if (this.activeResult !== -1) {
-            this.searchResultSelected.call(this, this.activeResult);
-          }
         }
       },
       processNoRecordsFoundOrError: function() {
@@ -304,7 +301,9 @@ Drupal.behaviors.comparative_timeline = {
         }
       },
       searchResultSelected: function(index) {
+        this.$searchBox.blur();
         this.timeline.searchBoxSelectHandler.call(this.timeline, this.results[index]);
+
       }
     };
 
@@ -318,6 +317,7 @@ Drupal.behaviors.comparative_timeline = {
   Drupal.OikoComparativeTimeline = function ($outerContainer, element_settings) {
     var timeline = this;
     var defaults = {
+      loadingItems: {}
     };
 
     $.extend(this, defaults, element_settings);
@@ -326,6 +326,7 @@ Drupal.behaviors.comparative_timeline = {
 
     this.$timelineContainer = this.$outerContainer.find('.js-comparative-timeline');
     this.$addNewContainer = this.$outerContainer.find('.js-comparative-timeline-add-new');
+    this.$ajaxLoader = this.$outerContainer.find('.js-loading-graphic');
     this._timelineOptions = {
       align: 'auto',
       showCurrentTime: false,
@@ -363,22 +364,6 @@ Drupal.behaviors.comparative_timeline = {
     this.initialise.call(this);
   };
 
-  Drupal.OikoComparativeTimeline.prototype.buildNewSelect = function () {
-    var timeline = this;
-    var options = '<option>Select comparision to add</option>';
-    for (var indx in this.defaultOptions) {
-      if (this.defaultOptions.hasOwnProperty(indx)) {
-        options += '<option value="' + indx + '">' + this.defaultOptions[indx] + '</option>';
-      }
-    }
-    var $select = $('<select name="new-line">' + options + '</select>');
-    $select.bind('change', function() {
-      timeline.addNewSelectChangeHandler.call(timeline, this);
-    });
-
-    return $select;
-  };
-
   Drupal.OikoComparativeTimeline.prototype.buildSearchBox = function () {
     var timeline = this;
 
@@ -388,20 +373,34 @@ Drupal.behaviors.comparative_timeline = {
   Drupal.OikoComparativeTimeline.prototype.searchBoxSelectHandler = function (item) {
     var timeline = this;
     var url = '/comparative-timeline/data/' + item.properties.id;
+    this.nowLoading(item.properties.id);
     $.get(url, function(data) {
+      timeline.doneLoading(item.properties.id);
       timeline.addDataToTimeline.call(timeline, data);
+
     });
   };
 
-  Drupal.OikoComparativeTimeline.prototype.addNewSelectChangeHandler = function (selectElement) {
-    var timeline = this;
-    var $selectElement = $(selectElement);
-    if ($selectElement.val()) {
-      var url = $selectElement.val();
-      $.get(url, function(data) {
-        timeline.addDataToTimeline.call(timeline, data);
-      });
+
+  Drupal.OikoComparativeTimeline.prototype.nowLoading = function(id) {
+    this.loadingItems[id] = true;
+    this.evalLoadingState();
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.doneLoading = function(id) {
+    delete this.loadingItems[id];
+    this.evalLoadingState();
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.evalLoadingState = function() {
+    var items = false;
+    for (var i in this.loadingItems) {
+      if (this.loadingItems.hasOwnProperty(i) && this.loadingItems[i]) {
+        items = true;
+        break;
+      }
     }
+    this.$ajaxLoader.toggleClass('js-loading-graphic--comparative-timeline-working', items);
   };
 
   Drupal.OikoComparativeTimeline.prototype.initialise = function () {

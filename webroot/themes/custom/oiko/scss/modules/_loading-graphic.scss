@@ -1,0 +1,8 @@
+
+.loading-graphic {
+  background-image: url('../images/ajax-loader.gif');
+  background-repeat: no-repeat;
+  height: $ajax-loading-graphic-size;
+  width: $ajax-loading-graphic-size;
+  display: none;
+}

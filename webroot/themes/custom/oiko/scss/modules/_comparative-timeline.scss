@@ -1,0 +1,72 @@
+.comparative-timeline-container {
+  background-color: palette(grey, light);
+
+  .vis-item {
+    height: 14px;
+    cursor: pointer;
+    font-family: $small-copy-font-family;
+    .vis-item-overflow {
+      overflow: hidden;
+      font-size: 12px;
+      line-height: 12px;
+      .vis-item-content {
+        padding: 1px 5px;
+      }
+    }
+  }
+
+  .vis-labelset .vis-label .vis-inner {
+    min-height: 150px;
+    max-width: 160px;
+  }
+
+  // Styling of the actual timeline at the bottom.
+  .vis-panel.vis-bottom {
+    background-color: rgba(palette(tan), .2);
+  }
+
+  // Styling of the different classifications of items.
+  .oiko-timeline-item--blue {
+    @include timeline-item(palette(blue));
+  }
+
+  .oiko-timeline-item--green {
+    @include timeline-item(palette(green));
+  }
+
+  .oiko-timeline-item--purple {
+    @include timeline-item(palette(purple));
+  }
+
+  .oiko-timeline-item--red {
+    @include timeline-item(palette(red));
+  }
+
+  .oiko-timeline-item--turquoise {
+    @include timeline-item(palette(turquoise));
+  }
+
+  .oiko-timeline-item--yellow {
+    @include timeline-item(palette(yellow));
+  }
+}
+
+.comparative-timeline__header {
+  background-color: palette(white);
+  position: relative;
+
+  .leaflet-searchBox {
+    height: $sidebar-header-height;
+  }
+
+  .loading-graphic {
+    position: absolute;
+    top: ($sidebar-header-height - $ajax-loading-graphic-size) / 2;
+    right: ($sidebar-header-height - $ajax-loading-graphic-size) / 2 + 5px;
+  }
+}
+
+.js-loading-graphic--comparative-timeline-working {
+  display: inline !important;
+}
+
