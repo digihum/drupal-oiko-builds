@@ -418,6 +418,28 @@ Drupal.behaviors.comparative_timeline = {
     this._visTimeline.on('select', function(properties) {
       timeline.selectedTimelineItems.call(timeline, properties);
     });
+    this.$timelineContainer.bind('click', function(e) {
+      $target = $(e.target);
+      if ($target.is('.js-comparative-timeline-remove-link')) {
+        // We need to remove this group.
+        if ($target.data('groupId')) {
+          timeline.removeGroupFromTimeline($target.data('groupId'));
+        }
+      }
+    });
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.removeGroupFromTimeline = function(groupId) {
+    // Find the items to remove.
+    var ids = this._visItems.getIds({
+      filter: function(item) {
+        return item.group == groupId;
+      }
+    });
+    if (ids.length) {
+      this._visItems.remove(ids);
+    }
+    this._visGroups.remove(groupId);
   };
 
   Drupal.OikoComparativeTimeline.prototype.selectedTimelineItems = function (properties) {
@@ -437,15 +459,16 @@ Drupal.behaviors.comparative_timeline = {
     // Add a group:
     this._visGroups.add([{
       id: data.id,
-      content: data.label
+      content: '<span class="js-comparative-timeline-remove-link fa fa-times" data-group-id="' + data.id + '"></span>&nbsp;' + data.label
     }]);
 
     if (data.events !== null) {
+      var newEvents = [];
       for (var i = 0; i < data.events.length;i++) {
         var event = data.events[i];
         var minmin = parseInt(event.minmin, 10);
         var maxmax = parseInt(event.maxmax, 10);
-        this._visItems.add([{
+        newEvents.push({
           id: event.id,
           type: event.type == 'period' ? 'background' : 'range',
           content: event.label + ' ' + event.date_title,
@@ -454,11 +477,12 @@ Drupal.behaviors.comparative_timeline = {
           end: maxmax * 1000,
           group: data.id,
           className: 'oiko-timeline-item--' + event.color
-        }]);
+        });
 
         this._timelineMin = Math.min(this._timelineMin, (minmin - 86400 * 365 * 10));
         this._timelineMax = Math.max(this._timelineMax, (maxmax + 86400 * 365 * 10));
       }
+      this._visItems.add(newEvents);
     }
     this.updateTimelineBounds();
   };
