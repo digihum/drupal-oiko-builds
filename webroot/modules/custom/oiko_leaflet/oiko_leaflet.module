@@ -4,6 +4,7 @@
  * @file
  * Intergration with leaflet for the Oiko project.
  */
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_library_info_alter().
@@ -131,4 +132,16 @@ function oiko_leaflet_form_node_forum_form_alter(&$form, \Drupal\Core\Form\FormS
   }
   // Remove the preview button. It doesn't make sense here.
   $form['actions']['preview']['#access'] = FALSE;
+}
+
+function oiko_leaflet_sharemessage_token_context_alter($entity, &$context) {
+  if ($cidoc_entity = \Drupal::request()->attributes->get('cidoc_entity')) {
+    $context['cidoc_entity'] = $cidoc_entity;
+  }
+}
+
+function oiko_leaflet_form_sharemessage_edit_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  if (isset($form['sharemessage_token_help']['browser']['#token_types'])) {
+    $form['sharemessage_token_help']['browser']['#token_types'][] = 'cidoc_entity';
+  }
 }

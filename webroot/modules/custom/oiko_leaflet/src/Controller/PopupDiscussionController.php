@@ -53,12 +53,6 @@ class PopupDiscussionController extends ControllerBase {
 
     $response = new AjaxResponse();
     $response->addCommand(new HtmlCommand('.sidebar-discussion-content-content', $discussions));
-    $pushData = [
-      'type' => 'popup',
-      'id' => $cidoc_entity->id(),
-      'label' => $cidoc_entity->label(),
-    ];
-    $response->addCommand(new HistoryPushCommand($pushData, NULL, $cidoc_entity->toUrl()));
     return $response;
 
   }

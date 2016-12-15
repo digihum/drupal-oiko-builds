@@ -95,14 +95,7 @@ class PopupShareController extends ControllerBase {
 
     $response = new AjaxResponse();
     $response->addCommand(new HtmlCommand('.sidebar-share-content-content', $share_links));
-    $pushData = [
-      'type' => 'popup',
-      'id' => $cidoc_entity->id(),
-      'label' => $cidoc_entity->label(),
-    ];
-    $response->addCommand(new HistoryPushCommand($pushData, NULL, $cidoc_entity->toUrl()));
     return $response;
-
   }
 
 }

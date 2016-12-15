@@ -148,6 +148,7 @@
         "drupal/search_api": "8.1.0-beta3",
         "drupal/sharemessage": "^8.1@beta",
         "drupal/squid_autocomplete": "8.1.0-alpha5",
+        "drupal/twig_xdebug": "^8.1",
         "drush/drush": "~8.0",
         "oomphinc/composer-installers-extender": "dev-master",
         "wikimedia/composer-merge-plugin": "^1.3"
