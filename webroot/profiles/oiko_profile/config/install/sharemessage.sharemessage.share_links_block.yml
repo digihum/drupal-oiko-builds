@@ -3,13 +3,13 @@ status: true
 dependencies: {  }
 id: share_links_block
 label: 'Share links block'
-title: '[site:name] | [current-page:title]'
+title: '[site:name] | [cidoc_entity:name]'
 message_long: '[site:slogan]'
-message_short: 'Oikoumene: [current-page:title]'
+message_short: 'Oikoumene: [cidoc_entity:name]'
 image_url: ''
 fallback_image: ''
 video_url: ''
-share_url: ''
+share_url: '[cidoc_entity:url]'
 plugin: addthis
 enforce_usage: false
 settings: {  }
