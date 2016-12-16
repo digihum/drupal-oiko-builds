@@ -6,11 +6,11 @@
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^6.3.7",
-    "breakpoint-sass": "^2.7.0",
+    "breakpoint-sass": "2.7.0",
     "breakpoint-slicer": "github:stevetweeddale/breakpoint-slicer",
     "browser-sync": "^2.13.0",
     "eyeglass": "^0.8.3",
-    "foundation-sites": "^6.2.3",
+    "foundation-sites": "6.2.3",
     "gulp": "^3.9.1",
     "gulp-postcss": "^6.1.1",
     "gulp-sass": "^2.3.2",
