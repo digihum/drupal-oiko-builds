@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\metatag_open_graph\Plugin\metatag\Tag\OgImageWidth.
- */
 
 namespace Drupal\metatag_open_graph\Plugin\metatag\Tag;
 
@@ -19,6 +15,7 @@ use \Drupal\metatag\Plugin\metatag\Tag\MetaPropertyBase;
  *   group = "open_graph",
  *   weight = 13,
  *   type = "integer",
+ *   secure = FALSE,
  *   multiple = FALSE
  * )
  */

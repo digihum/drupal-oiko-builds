@@ -3,10 +3,10 @@ popups:
     js/leaflet.popups.js: {}
   version: VERSION
   dependencies:
-    - oiko_leaflet/sidebar-v2
     - core/drupal.ajax
     - core/jquery
     - core/modernizr
+    - oiko_sidebar/sidebar
 
 mapstate:
   js:
@@ -129,27 +129,12 @@ markercluster:
       css/vendor/MarkerCluster.Default.css: {}
 
 vis:
+  version: v4.17.0
   js:
     js/vendor/vis.min.js: {}
   css:
     component:
       css/vendor/vis.min.css: {}
-
-sidebar-v2:
-  js:
-    js/vendor/leaflet-sidebar.min.js: {}
-  css:
-    component:
-      css/vendor/leaflet-sidebar.min.css: {}
-      //maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css: {external: true}
-  version: v0.3.0
-
-sidebar-v2.jquery:
-  js:
-    js/vendor/jquery-sidebar.min.js: {}
-  version: v0.3.0
-  dependencies:
-      - oiko_leaflet/sidebar-v2
 
 leaflet-locatecontrol:
   js:

@@ -4,6 +4,7 @@
  * @file
  * Intergration with leaflet for the Oiko project.
  */
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_library_info_alter().
@@ -103,5 +104,44 @@ function oiko_leaflet_theme_registry_alter(&$theme_registry) {
 function oiko_leaflet_preprocess_leaflet_map(&$variables) {
   if ($variables['height'] == 'full') {
     unset($variables['height']);
+  }
+  if (!empty($variables['map']['sidebar'])) {
+    $variables['sidebar'] = [
+      '#theme' => 'sidebar',
+    ];
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function oiko_leaflet_form_node_forum_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  // When we've clicked the 'Start a new discussion' button in the side panel,
+  // we want to pre-fill that entity in this form - its ID will be in the query
+  // string.
+  $cidoc_entity_id = \Drupal::request()->query->get('cidoc_entity_id');
+  if (is_numeric($cidoc_entity_id)) {
+    $cidoc_entity = \Drupal::entityTypeManager()->getStorage('cidoc_entity')->load($cidoc_entity_id);
+    $form['field_crm_entities']['widget'][0]['target_id']['#default_value'] = $cidoc_entity;
+  }
+  // If there's only one option, preselect it for convenience.
+  if (count($form['taxonomy_forums']['widget']['#options']) == 2) {
+    $options = $form['taxonomy_forums']['widget']['#options'];
+    unset($options['_none']);
+    $form['taxonomy_forums']['widget']['#default_value'] = key($options);
+  }
+  // Remove the preview button. It doesn't make sense here.
+  $form['actions']['preview']['#access'] = FALSE;
+}
+
+function oiko_leaflet_sharemessage_token_context_alter($entity, &$context) {
+  if ($cidoc_entity = \Drupal::request()->attributes->get('cidoc_entity')) {
+    $context['cidoc_entity'] = $cidoc_entity;
+  }
+}
+
+function oiko_leaflet_form_sharemessage_edit_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  if (isset($form['sharemessage_token_help']['browser']['#token_types'])) {
+    $form['sharemessage_token_help']['browser']['#token_types'][] = 'cidoc_entity';
   }
 }

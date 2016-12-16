@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_leaflet
+  theme:
+    - oiko
+id: maplegendblock
+theme: oiko
+region: sidebar_legend
+weight: -8
+provider: null
+plugin: map_legend_block
+settings:
+  id: map_legend_block
+  label: 'Map legend block'
+  provider: oiko_leaflet
+  label_display: '0'
+visibility: {  }

@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\metatag\Plugin\metatag\Tag\Keywords.
- */
 
 namespace Drupal\metatag\Plugin\metatag\Tag;
 
@@ -17,6 +13,7 @@ namespace Drupal\metatag\Plugin\metatag\Tag;
  *   group = "basic",
  *   weight = 4,
  *   type = "label",
+ *   secure = FALSE,
  *   multiple = FALSE
  * )
  */

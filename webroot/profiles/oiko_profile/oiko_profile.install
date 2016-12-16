@@ -99,3 +99,29 @@ function oiko_profile_update_8109() {
 function oiko_profile_update_8110() {
   \Drupal::service('module_installer')->install(['search_api_db']);
 }
+
+/**
+ * Create our default forum.
+ */
+function oiko_profile_update_8111() {
+  $default_forum = [
+    'vid' => 'forums',
+    'name' => 'Data discussions',
+  ];
+  $term = \Drupal\taxonomy\Entity\Term::create($default_forum);
+  $term->save();
+}
+
+/**
+ * Enable the sidebar module.
+ */
+function oiko_profile_update_8112() {
+  \Drupal::service('module_installer')->install(['oiko_sidebar']);
+}
+
+/**
+ * Enable metatag & sharemessage modules.
+ */
+function oiko_profile_update_8113() {
+  \Drupal::service('module_installer')->install(['metatag_open_graph', 'metatag_twitter_cards', 'metatag_facebook', 'sharemessage']);
+}

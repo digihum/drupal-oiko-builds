@@ -1,0 +1,4 @@
+services:
+  oiko_cidoc.hook_implementations:
+    class: Drupal\oiko_cidoc\OikoCidocHookImplementations
+

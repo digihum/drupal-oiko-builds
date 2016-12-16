@@ -1,4 +1,5 @@
 <?php
+use Drupal\Core\Cache\CacheableMetadata;
 
 /**
  * Implements theme_preprocess().
@@ -74,6 +75,9 @@ function oiko_preprocess_field(&$variables) {
       }
     }
   }
+  if ($variables['field_name'] == 'field_crm_entities' && $variables['element']['#bundle'] == 'forum' && $variables['element']['#view_mode'] == 'full') {
+    $variables['attributes']['class'][] = 'forum-related-to';
+  }
 }
 
 /**
@@ -98,6 +102,9 @@ function oiko_preprocess_block(&$variables) {
 function oiko_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   $match = \Drupal::routeMatch();
   if ($match->getRouteName() == 'entity.cidoc_entity.canonical') {
+    array_unshift($suggestions, 'page__bare');
+  }
+  if ($match->getRouteName() == 'oiko_timeline.comparative_timeline_controller_basePage') {
     array_unshift($suggestions, 'page__bare');
   }
 }

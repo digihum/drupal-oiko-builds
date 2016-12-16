@@ -128,12 +128,12 @@ class ConfigUpdateTest extends WebTestBase {
     // Add a new search page from the search UI and verify report.
     $this->drupalPostForm('admin/config/search/pages', [
       'search_type' => 'node_search',
-    ], 'Add new page');
+    ], 'Add search page');
     $this->drupalPostForm(NULL, [
       'label' => 'test',
       'id'    => 'test',
       'path'  => 'test',
-    ], 'Add search page');
+    ], 'Save');
     $this->drupalGet('admin/config/development/configuration/report/type/search_page');
     $added = ['search.page.test' => 'test'];
     $this->assertReport('Search page', [], $added, [], []);

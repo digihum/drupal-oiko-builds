@@ -1,0 +1,11 @@
+name: Share Message
+type: module
+description: 'Sharing module using AddThis widgets and entity based storage.'
+# core: 8.x
+configure: sharemessage.settings
+
+# Information added by Drupal.org packaging script on 2016-05-30
+version: '8.x-1.0-beta1'
+core: '8.x'
+project: 'sharemessage'
+datestamp: 1464640750

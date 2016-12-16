@@ -3799,38 +3799,30 @@
     },
     {
         "name": "drupal/config_update",
-        "version": "8.1.1",
-        "version_normalized": "8.1.1.0",
+        "version": "dev-8.x-1.x",
+        "version_normalized": "dev-8.x-1.x",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/config_update.git",
-            "reference": "ac1526df5836a611f04bb421945beddb6306b7f2"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/config_update-8.x-1.1.zip",
-            "reference": "ac1526df5836a611f04bb421945beddb6306b7f2",
-            "shasum": null
+            "reference": "f84f49be150c2032921e2cb99ffea5dbcb5f89ca"
         },
         "require": {
-            "drupal/config": "8.*",
             "drupal/core": "8.*"
         },
         "replace": {
             "drupal/config_update_ui": "self.version"
         },
         "suggest": {
-            "drupal/config": "Required by drupal/config_update_ui",
             "drupal/core": "Required by drupal/config_update_ui"
         },
-        "time": "2016-03-01 16:28:35",
+        "time": "2016-08-31 19:41:53",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
                 "dev-8.x-1.x": "8.1.x-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "notification-url": "https://packagist.drupal-composer.org/downloads/",
         "license": [
             "GPL-2.0+"
@@ -4721,27 +4713,6 @@
         "homepage": "http://drupal.org/project/devel"
     },
     {
-        "name": "drupal/eva",
-        "version": "dev-8.x-1.x",
-        "version_normalized": "dev-8.x-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/eva.git",
-            "reference": "origin/8.x-1.x"
-        },
-        "require": {
-            "composer/installers": "^1.0.21"
-        },
-        "time": "2013-03-09 23:09:04",
-        "type": "drupal-module",
-        "extra": {
-            "patches_applied": {
-                "EVA Patch for D8": "https://www.drupal.org/files/issues/eva-working-d8-1937618-21.patch"
-            }
-        },
-        "installation-source": "source"
-    },
-    {
         "name": "drupal/features",
         "version": "dev-8.x-3.x",
         "version_normalized": "dev-8.x-3.x",
@@ -5228,23 +5199,23 @@
     },
     {
         "name": "drupal/token",
-        "version": "8.1.0-beta1",
-        "version_normalized": "8.1.0.0-beta1",
+        "version": "8.1.0-beta2",
+        "version_normalized": "8.1.0.0-beta2",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/token",
-            "reference": "1c68e82525fda1bd12021502da81b929b9ae5c02"
+            "reference": "724ccaa7a60f1aa7e8883e82de737115b0f73a3f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/token-8.x-1.0-beta1.zip",
-            "reference": "1c68e82525fda1bd12021502da81b929b9ae5c02",
+            "url": "https://ftp.drupal.org/files/projects/token-8.x-1.0-beta2.zip",
+            "reference": "724ccaa7a60f1aa7e8883e82de737115b0f73a3f",
             "shasum": null
         },
         "require": {
             "drupal/core": "8.*"
         },
-        "time": "2016-08-09 07:03:16",
+        "time": "2016-09-20 10:19:14",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
@@ -5261,32 +5232,35 @@
     },
     {
         "name": "drupal/metatag",
-        "version": "8.1.0-beta7",
-        "version_normalized": "8.1.0.0-beta7",
+        "version": "8.1.0-beta11",
+        "version_normalized": "8.1.0.0-beta11",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/metatag",
-            "reference": "c12149e7ea0444bed959018384d48d1f79d42af3"
+            "reference": "a0d1796064674306573b9dae1ae2c8b0394d7ef4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/metatag-8.x-1.0-beta7.zip",
-            "reference": "c12149e7ea0444bed959018384d48d1f79d42af3",
+            "url": "https://ftp.drupal.org/files/projects/metatag-8.x-1.0-beta11.zip",
+            "reference": "a0d1796064674306573b9dae1ae2c8b0394d7ef4",
             "shasum": null
         },
         "require": {
             "drupal/core": "8.*",
-            "drupal/field": "8.*",
             "drupal/token": "8.*"
         },
         "replace": {
+            "drupal/metatag_dc": "self.version",
+            "drupal/metatag_facebook": "self.version",
+            "drupal/metatag_google_plus": "self.version",
             "drupal/metatag_open_graph": "self.version",
-            "drupal/metatag_twitter_cards": "self.version"
+            "drupal/metatag_twitter_cards": "self.version",
+            "drupal/metatag_verification": "self.version"
         },
         "suggest": {
-            "drupal/core": "Required by drupal/metatag_open_graph, drupal/metatag_twitter_cards"
+            "drupal/core": "Required by drupal/metatag_dc, drupal/metatag_facebook, drupal/metatag_google_plus, drupal/metatag_open_graph, drupal/metatag_twitter_cards, drupal/metatag_verification"
         },
-        "time": "2016-04-03 18:17:59",
+        "time": "2016-10-31 15:33:38",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
@@ -5598,6 +5572,49 @@
         "homepage": "https://www.drupal.org/project/search_api"
     },
     {
+        "name": "drupal/sharemessage",
+        "version": "8.1.0-beta1",
+        "version_normalized": "8.1.0.0-beta1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/sharemessage.git",
+            "reference": "1f6f082129c868f6f8016d31902964012a12d93f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/sharemessage-8.x-1.0-beta1.zip",
+            "reference": "1f6f082129c868f6f8016d31902964012a12d93f",
+            "shasum": null
+        },
+        "require": {
+            "drupal/core": "8.*"
+        },
+        "replace": {
+            "drupal/sharemessage_demo": "self.version"
+        },
+        "suggest": {
+            "drupal/block": "Required by drupal/sharemessage_demo",
+            "drupal/core": "Required by drupal/sharemessage_demo",
+            "drupal/node": "Required by drupal/sharemessage_demo",
+            "drupal/path": "Required by drupal/sharemessage_demo",
+            "drupal/text": "Required by drupal/sharemessage_demo"
+        },
+        "time": "2016-05-30 20:34:10",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-8.x-1.x": "8.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Sharing module using AddThis widgets and entity based storage.",
+        "homepage": "https://www.drupal.org/project/sharemessage"
+    },
+    {
         "name": "drupal/squid_autocomplete",
         "version": "8.1.0-alpha5",
         "version_normalized": "8.1.0.0-alpha5",
@@ -5629,6 +5646,101 @@
         ],
         "description": "Provides autocompletion widgets with square brackets instead of parenthesis.",
         "homepage": "https://www.drupal.org/project/squid_autocomplete"
+    },
+    {
+        "name": "ajgl/breakpoint-twig-extension",
+        "version": "0.3.0",
+        "version_normalized": "0.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ajgarlag/AjglBreakpointTwigExtension.git",
+            "reference": "0dfa4f0ae3bbeb6c8036e3e6d6c204c43b090155"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ajgarlag/AjglBreakpointTwigExtension/zipball/0dfa4f0ae3bbeb6c8036e3e6d6c204c43b090155",
+            "reference": "0dfa4f0ae3bbeb6c8036e3e6d6c204c43b090155",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0",
+            "twig/twig": "^1.14"
+        },
+        "require-dev": {
+            "symfony/framework-bundle": "^2.3",
+            "symfony/twig-bundle": "^2.3"
+        },
+        "suggest": {
+            "ext-xdebug": "The Xdebug extension is required for the breakpoint to work",
+            "symfony/framework-bundle": "The framework bundle to integrate the extension into Symfony",
+            "symfony/twig-bundle": "The twig bundle to integrate the extension into Symfony"
+        },
+        "time": "2016-03-31 18:09:32",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.4.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Ajgl\\Twig\\Extension\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Antonio J. García Lagar",
+                "email": "aj@garcialagar.es",
+                "homepage": "http://aj.garcialagar.es",
+                "role": "developer"
+            }
+        ],
+        "description": "Twig extension to set breakpoints",
+        "homepage": "https://github.com/ajgarlag/AjglBreakpointTwigExtension",
+        "keywords": [
+            "Xdebug",
+            "breakpoint",
+            "twig"
+        ]
+    },
+    {
+        "name": "drupal/twig_xdebug",
+        "version": "8.1.0",
+        "version_normalized": "8.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/twig_xdebug.git",
+            "reference": "89bb68cbcc869a5795b8e3bc9b395554f752b601"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/twig_xdebug-8.x-1.0.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "ajgl/breakpoint-twig-extension": "0.3",
+            "drupal/core": "8.*"
+        },
+        "time": "2016-06-03 03:13:57",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-8.x-1.x": "8.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Enables Xdebug breakpoints in Twig.",
+        "homepage": "https://www.drupal.org/project/twig_xdebug"
     },
     {
         "name": "symfony/var-dumper",
@@ -6359,5 +6471,24 @@
         ],
         "description": "Extend the composer/installers plugin to accept any arbitrary package type.",
         "homepage": "http://www.oomphinc.com/"
+    },
+    {
+        "name": "drupal/eva",
+        "version": "dev-8.x-1.x",
+        "version_normalized": "dev-8.x-1.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/eva.git",
+            "reference": "origin/8.x-1.x"
+        },
+        "require": {
+            "composer/installers": "^1.0.21"
+        },
+        "time": "2013-03-09 23:09:04",
+        "type": "drupal-module",
+        "extra": {
+            "patches_applied": []
+        },
+        "installation-source": "source"
     }
 ]

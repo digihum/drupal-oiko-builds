@@ -56,7 +56,15 @@ field_settings:
     property_path: internal_name
     type: text
     boost: !!float 2
+  child_events:
+    label: 'Child event count'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: cidoc_child_events
+    type: integer
 processor_settings:
+  cidoc:
+    plugin_id: cidoc
+    settings: {  }
   add_url:
     plugin_id: add_url
     settings: {  }
@@ -79,9 +87,6 @@ processor_settings:
       weights:
         preprocess_index: -10
         preprocess_query: -10
-  rendered_item:
-    plugin_id: rendered_item
-    settings: {  }
   ignorecase:
     plugin_id: ignorecase
     settings:
@@ -125,6 +130,9 @@ processor_settings:
       weights:
         preprocess_index: -8
         preprocess_query: -8
+  rendered_item:
+    plugin_id: rendered_item
+    settings: {  }
   stopwords:
     plugin_id: stopwords
     settings:

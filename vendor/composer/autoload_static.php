@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292
+class ComposerStaticInit26a11eb612423fd28747b274e8aef310
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -136,6 +136,7 @@ class ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292
         'A' => 
         array (
             'Alchemy\\Zippy\\' => 14,
+            'Ajgl\\Twig\\Extension\\' => 20,
         ),
     );
 
@@ -384,6 +385,10 @@ class ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292
         array (
             0 => __DIR__ . '/..' . '/alchemy/zippy/src',
         ),
+        'Ajgl\\Twig\\Extension\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ajgl/breakpoint-twig-extension/src',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -518,6 +523,9 @@ class ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292
     );
 
     public static $classMap = array (
+        'Ajgl\\Twig\\Extension\\BreakpointExtension' => __DIR__ . '/..' . '/ajgl/breakpoint-twig-extension/src/BreakpointExtension.php',
+        'Ajgl\\Twig\\Extension\\SymfonyBundle\\AjglBreakpointTwigExtensionBundle' => __DIR__ . '/..' . '/ajgl/breakpoint-twig-extension/src/SymfonyBundle/AjglBreakpointTwigExtensionBundle.php',
+        'Ajgl\\Twig\\Extension\\SymfonyBundle\\DependencyInjection\\AjglBreakpointTwigExtensionExtension' => __DIR__ . '/..' . '/ajgl/breakpoint-twig-extension/src/SymfonyBundle/DependencyInjection/AjglBreakpointTwigExtensionExtension.php',
         'Alchemy\\Zippy\\Adapter\\AbstractAdapter' => __DIR__ . '/..' . '/alchemy/zippy/src/Adapter/AbstractAdapter.php',
         'Alchemy\\Zippy\\Adapter\\AbstractBinaryAdapter' => __DIR__ . '/..' . '/alchemy/zippy/src/Adapter/AbstractBinaryAdapter.php',
         'Alchemy\\Zippy\\Adapter\\AbstractTarAdapter' => __DIR__ . '/..' . '/alchemy/zippy/src/Adapter/AbstractTarAdapter.php',
@@ -4985,11 +4993,11 @@ class ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292::$prefixesPsr0;
-            $loader->fallbackDirsPsr0 = ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292::$fallbackDirsPsr0;
-            $loader->classMap = ComposerStaticInit02d7d12d9b25e8b740a17c3d47644292::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit26a11eb612423fd28747b274e8aef310::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit26a11eb612423fd28747b274e8aef310::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit26a11eb612423fd28747b274e8aef310::$prefixesPsr0;
+            $loader->fallbackDirsPsr0 = ComposerStaticInit26a11eb612423fd28747b274e8aef310::$fallbackDirsPsr0;
+            $loader->classMap = ComposerStaticInit26a11eb612423fd28747b274e8aef310::$classMap;
 
         }, null, ClassLoader::class);
     }

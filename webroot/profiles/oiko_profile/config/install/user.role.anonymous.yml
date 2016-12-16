@@ -9,3 +9,4 @@ permissions:
   - 'access content'
   - 'view published cidoc entities'
   - 'access comments'
+  - 'view sharemessages'

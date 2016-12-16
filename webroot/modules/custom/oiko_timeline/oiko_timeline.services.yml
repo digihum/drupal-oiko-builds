@@ -1,0 +1,3 @@
+services:
+  oiko_timeline.hook_implementations:
+    class: Drupal\oiko_timeline\OikoTimelineHookImplementations

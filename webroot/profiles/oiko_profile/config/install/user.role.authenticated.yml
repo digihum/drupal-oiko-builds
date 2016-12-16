@@ -10,3 +10,4 @@ permissions:
   - 'edit own comments'
   - 'post comments'
   - 'access comments'
+  - 'view sharemessages'

@@ -2,62 +2,456 @@
 
 Drupal.behaviors.comparative_timeline = {
   attach: function(context, settings) {
-    $(context).find('.comparative-timeline-container').each(function() {
+    $(context).find('.js-comparative-timeline-container').once('comparative_timeline').each(function() {
       var $component = $(this);
       if ($component.data('comparative_timeline') == undefined) {
-        $component.data('comparative_timeline', new Drupal.OikoComparativeTimeline($component));
+        $component.data('comparative_timeline', new Drupal.OikoComparativeTimeline($component, settings.oiko_timeline));
       }
     });
   }
 };
 
+  // Debounced keyup.
+  $.fn.delayKeyup = function (callback, ms) {
+    var timer = 0;
+    $(this).keyup(function (event) {
 
-  Drupal.OikoComparativeTimeline = function ($container) {
-    this.$container = $container;
-    this.$timelineContainer = $container.find('.timeline-wrapper');
+      if (event.keyCode !== 13 && event.keyCode !== 38 && event.keyCode !== 40) {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          callback(event);
+        }, ms);
+      }
+      else {
+        callback(event);
+      }
+    });
+    return $(this);
+  };
+
+  Drupal.OikoComparativeTimelineSearch = function ($outerContainer, element_settings) {
+    var instance = this;
+    var defaults = {
+      results: [],
+      resultCount: 0,
+      collapseOnBlur: true,
+      options: {
+        placeholderMessage: "Search",
+        searchButtonTitle: "Search",
+        clearButtonTitle: "Clear",
+        notFoundMessage: "not found.",
+        notFoundHint: "Make sure your search criteria is correct and try again."
+      },
+      init : function (container) {
+        var element = $(container);
+        var $searchBox = $('<input class="leaflet-searchBox" placeholder="' + this.options.placeholderMessage + '"/>');
+        element.append($searchBox);
+        var $searchButton = $('<input class="leaflet-searchButton" type="submit" value="" title="' + this.options.searchButtonTitle + '"/>');
+        element.append($searchButton);
+        element.append('<span class="leaflet-divider"></span>');
+        var $clearButton = $('<input class="leaflet-clearButton" type="submit"  value="" title="' + this.options.clearButtonTitle + '">');
+        element.append($clearButton);
+
+        instance.$resultsDiv = $("<div class='leaflet-result'><div>");
+        element.append(instance.$resultsDiv);
+
+
+        $searchBox.delayKeyup(function (event) {
+          switch (event.keyCode) {
+            case 13: // enter
+              if (instance.activeResult !== -1) {
+                instance.searchResultSelected.call(instance, instance.activeResult);
+              }
+              else {
+                instance.searchButtonClick.call(instance);
+              }
+              break;
+            case 38: // up arrow
+              instance.prevResult.call(instance);
+              break;
+            case 40: // down arrow
+              instance.nextResult.call(instance);
+              break;
+            case 37: //left arrow, Do Nothing
+            case 39: //right arrow, Do Nothing
+              break;
+            default:
+              if ($searchBox.val().length > 0) {
+                instance.getValuesAsGeoJson.call(instance);
+              }
+              else {
+                instance.clearButtonClick.call(instance);
+              }
+              break;
+          }
+        }, 300);
+
+        $searchBox.focus(function () {
+          if (instance.$resultsDiv.length) {
+            instance.$resultsDiv[0].style.display = "block";
+          }
+        });
+
+        $searchBox.blur(function () {
+          if (instance.$resultsDiv.length) {
+            if (instance.collapseOnBlur) {
+              instance.$resultsDiv[0].style.display = "none";
+            }
+            else {
+              instance.collapseOnBlur = true;
+
+              window.setTimeout(function ()
+              {
+                instance.$searchBox.focus();
+              }, 0);
+            }
+          }
+
+        });
+
+        $searchButton.click(function () {
+          instance.searchButtonClick.call(instance);
+        });
+
+        $clearButton.click(function () {
+          instance.clearButtonClick.call(instance);
+        });
+
+        this.$searchBox = $searchBox;
+        this.$searchButton = $searchButton;
+        this.$clearButton = $clearButton;
+
+        return container;
+      },
+      searchButtonClick: function() {
+        this.$searchBox.focus();
+      },
+      clearButtonClick: function () {
+        this.$searchBox.val('');
+        this.lastSearch = "";
+        this.resultCount = 0;
+        this.results = [];
+        this.activeResult = -1;
+        this.$resultsDiv.empty();
+        this.$searchBox.focus();
+      },
+      nextResult: function() {
+        if (this.resultCount > 0) {
+          this.$resultsDiv.find('.leaflet-result-list-item').removeClass('mouseover');
+          if (this.activeResult !== -1) {
+            this.$resultsDiv.find('.leaflet-result-list-item').removeClass('active');
+          }
+
+          if (this.activeResult < this.resultCount - 1) {
+            this.activeResult++;
+            this.$resultsDiv.find(".leaflet-result-list-item[data-index='" + this.activeResult + "']").addClass('active');
+          }
+          else {
+            this.activeResult = -1;
+          }
+
+          this.fillSearchBox.call(this);
+        }
+      },
+      prevResult: function() {
+        if (this.resultCount > 0) {
+          this.$resultsDiv.find('.leaflet-result-list-item').removeClass('mouseover');
+          if (this.activeResult !== -1) {
+            this.$resultsDiv.find('.leaflet-result-list-item').removeClass('active');
+          }
+
+          if (this.activeResult === -1) {
+            this.activeResult = this.resultCount - 1;
+            this.$resultsDiv.find(".leaflet-result-list-item[data-index='" + this.activeResult + "']").addClass('active');
+          }
+          else if (this.activeResult === 0) {
+            this.activeResult--;
+          }
+          else {
+            this.activeResult--;
+            this.$resultsDiv.find(".leaflet-result-list-item[data-index='" + this.activeResult + "']").addClass('active');
+          }
+
+          this.fillSearchBox.call(this);
+        }
+      },
+      processNoRecordsFoundOrError: function() {
+        this.resultCount = 0;
+        this.results = [];
+        this.activeResult = -1;
+        this.$resultsDiv.empty();
+
+        this.$resultsDiv.append("<i>" + this.lastSearch + " " + this.options.notFoundMessage + " <p><small>" + this.options.notFoundHint + "</small></i>");
+      },
+      getValuesAsGeoJson: function () {
+
+        var instance = this;
+
+        this.activeResult = -1;
+        this.lastSearch = this.$searchBox.val();
+
+        if (this.lastSearch === "") {
+          return;
+        }
+
+        $.ajax({
+          url: Drupal.url('search/crm-entities/' + this.lastSearch),
+          type: 'GET',
+          dataType: 'json',
+          success: function (json) {
+            instance.results = [];
+            // Populate the instance.results;
+            for (var i in json) {
+              if (json.hasOwnProperty(i)) {
+                var result = json[i];
+                instance.results[instance.results.length] = {
+                  properties: {
+                    title: result.name,
+                    description: result.bundle,
+                    id: result.id
+                  }
+                };
+              }
+            }
+            instance.resultCount = instance.results.length;
+            if (instance.resultCount) {
+              instance.createDropDown.call(instance);
+            }
+            else {
+              instance.processNoRecordsFoundOrError.call(instance);
+            }
+          },
+          error: function () {
+            instance.processNoRecordsFoundOrError.call(instance);
+          }
+        });
+      },
+      createDropDown: function createDropDown() {
+        var instance = this;
+        var parent = this.$searchBox.parent();
+
+        instance.$resultsDiv.empty();
+        var $resultsList = $("<ul class='leaflet-result-list'></ul>");
+        instance.$resultsDiv.append($resultsList);
+
+        for (var i = 0; i < this.results.length; i++) {
+          var html = "<li class='leaflet-result-list-item' data-index='" + i + "'>";
+          html += "<span class='content'>";
+          html += "<font size='2' color='#333' class='title'>" + this.results[i].properties.title + "</font><font size='1' color='#8c8c8c'> " + this.results[i].properties.description + "<font></span></li>";
+
+          var $resultItem = $(html);
+
+          $resultsList.append($resultItem);
+
+          $resultItem.mouseenter(function () {
+            instance.listElementMouseEnter.call(instance, this);
+          });
+
+          $resultItem.mouseleave(function () {
+            instance.listElementMouseLeave.call(instance, this);
+          });
+
+          $resultItem.mousedown(function () {
+            instance.listElementMouseDown.call(instance, this);
+          });
+        }
+      },
+      listElementMouseEnter: function (listElement) {
+
+        var $listElement = $(listElement);
+
+        var index = parseInt($listElement.data('index'), 10);
+
+        if (index !== this.activeResult) {
+          $listElement.addClass('mouseover');
+        }
+      },
+      listElementMouseLeave: function (listElement) {
+        var $listElement = $(listElement);
+        var index = parseInt($listElement.data('index'), 10);
+
+        if (index !== this.activeResult) {
+          $listElement.removeClass('mouseover');
+        }
+      },
+      listElementMouseDown: function (listElement) {
+        var $listElement = $(listElement);
+        var index = parseInt($listElement.data('index'), 10);
+
+        if (index !== this.activeResult) {
+          if (this.activeResult !== -1) {
+            this.$resultsDiv.find('.leaflet-result-list-item').removeClass('active');
+          }
+
+          $listElement.removeClass('mouseover');
+          $listElement.addClass('active');
+
+          this.activeResult = index;
+          this.fillSearchBox.call(this);
+
+          this.searchResultSelected.call(this, this.activeResult);
+        }
+      },
+      fillSearchBox: function () {
+        if (this.activeResult === -1) {
+          this.$searchBox.val(this.lastSearch);
+        }
+        else {
+          this.$searchBox.val(this.results[this.activeResult].properties.title);
+        }
+      },
+      searchResultSelected: function(index) {
+        this.$searchBox.blur();
+        this.timeline.searchBoxSelectHandler.call(this.timeline, this.results[index]);
+
+      }
+    };
+
+    $.extend(this, defaults, element_settings);
+
+    this.$outerContainer = this.init.call(this, $outerContainer);
+
+    return this;
+  };
+
+  Drupal.OikoComparativeTimeline = function ($outerContainer, element_settings) {
+    var timeline = this;
+    var defaults = {
+      loadingItems: {}
+    };
+
+    $.extend(this, defaults, element_settings);
+
+    this.$outerContainer = $outerContainer;
+
+    this.$timelineContainer = this.$outerContainer.find('.js-comparative-timeline');
+    this.$addNewContainer = this.$outerContainer.find('.js-comparative-timeline-add-new');
+    this.$ajaxLoader = this.$outerContainer.find('.js-loading-graphic');
     this._timelineOptions = {
-      selectable: false,
-      align: 'right',
-      showCurrentTime: false
-      // showMajorLabels: true,
-      // showMinorLabels: false
+      align: 'auto',
+      showCurrentTime: false,
+      margin: {
+        item : {
+          horizontal: 0,
+          vertical: 1
+        }
+      },
+      orientation: {
+        axis: 'bottom',
+        item: 'top'
+      },
+      selectable : true,
+      hiddenDates: [
+        {start: '0000-01-01 00:00:00', end: '0001-01-01 00:00:00'}
+      ],
+      format: {
+        minorLabels: {
+          year: 'PPPP'
+        },
+        majorLabels: {
+          weekday:    'MMMM PPPP',
+          day:        'MMMM PPPP',
+          month: 'PPPP'
+        }
+      },
+      moment: vis.moment.utc,
+      zoomMax: 1000 * 86400 * 365.25 * 100,
+      zoomMin: 1000 * 86400 * 365.25
     };
     this._timelineMin = Infinity;
     this._timelineMax = -Infinity;
 
-    this.initialise();
+    this.initialise.call(this);
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.buildSearchBox = function () {
+    var timeline = this;
+
+    return this.$addNewContainer.data('search_box', new Drupal.OikoComparativeTimelineSearch(this.$addNewContainer, {timeline: this}));
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.searchBoxSelectHandler = function (item) {
+    var timeline = this;
+    var url = '/comparative-timeline/data/' + item.properties.id;
+    this.nowLoading(item.properties.id);
+    $.get(url, function(data) {
+      timeline.doneLoading(item.properties.id);
+      timeline.addDataToTimeline.call(timeline, data);
+
+    });
+  };
+
+
+  Drupal.OikoComparativeTimeline.prototype.nowLoading = function(id) {
+    this.loadingItems[id] = true;
+    this.evalLoadingState();
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.doneLoading = function(id) {
+    delete this.loadingItems[id];
+    this.evalLoadingState();
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.evalLoadingState = function() {
+    var items = false;
+    for (var i in this.loadingItems) {
+      if (this.loadingItems.hasOwnProperty(i) && this.loadingItems[i]) {
+        items = true;
+        break;
+      }
+    }
+    this.$ajaxLoader.toggleClass('js-loading-graphic--comparative-timeline-working', items);
   };
 
   Drupal.OikoComparativeTimeline.prototype.initialise = function () {
+    var timeline = this;
     // Construct the vis timeline datasets.
     this._visItems = new vis.DataSet({});
     this._visGroups = new vis.DataSet({});
     this._visTimeline = new vis.Timeline(this.$timelineContainer.get(0), this._visItems, this._visGroups, this._timelineOptions);
 
+    // Add the comparision select box.
+    // this.$addNewContainer.append(this.buildNewSelect.call(this));
+    this.buildSearchBox.call(this);
 
-    // Bind the data loader handler to the links.
-    var self = this;
-    this.$container.find('a.event-data-lookup').click(function(e) {
-      e.preventDefault();
-      self.dataLoad.call(self, this);
+    // Hook events up.
+    this._visTimeline.on('select', function(properties) {
+      timeline.selectedTimelineItems.call(timeline, properties);
+    });
+    this.$timelineContainer.bind('click', function(e) {
+      $target = $(e.target);
+      if ($target.is('.js-comparative-timeline-remove-link')) {
+        // We need to remove this group.
+        if ($target.data('groupId')) {
+          timeline.removeGroupFromTimeline($target.data('groupId'));
+        }
+      }
     });
   };
 
-  Drupal.OikoComparativeTimeline.prototype.dataLoad = function(link) {
-    var $link = $(link);
-    var self = this;
-
-    // We construct a jQuery ajax request to fetch the data, and add it to the timeline once loaded.
-    var url = $link.attr('href');
-    $link.hide();
-    $.get(url, function(data) {
-      self.addDataToTimeline.call(self, data);
-    }).
-    fail(function() {
-      $link.show();
+  Drupal.OikoComparativeTimeline.prototype.removeGroupFromTimeline = function(groupId) {
+    // Find the items to remove.
+    var ids = this._visItems.getIds({
+      filter: function(item) {
+        return item.group == groupId;
+      }
     });
+    if (ids.length) {
+      this._visItems.remove(ids);
+    }
+    this._visGroups.remove(groupId);
+  };
 
+  Drupal.OikoComparativeTimeline.prototype.selectedTimelineItems = function (properties) {
+    var selected;
+    for (var i in properties.items) {
+      selected = properties.items[i];
+    }
 
+    if (selected) {
+      var item = this._visItems.get(selected);
+      Drupal.oiko.openSidebar(selected, item.title, false);
+    }
   };
 
   Drupal.OikoComparativeTimeline.prototype.addDataToTimeline = function(data) {
@@ -65,64 +459,53 @@ Drupal.behaviors.comparative_timeline = {
     // Add a group:
     this._visGroups.add([{
       id: data.id,
-      content: data.label
+      content: '<span class="js-comparative-timeline-remove-link fa fa-times" data-group-id="' + data.id + '"></span>&nbsp;' + data.label
     }]);
 
     if (data.events !== null) {
-      // var timelineJSON = {
-      //   scale: "human",
-      //   events: []
-      // };
-
+      var newEvents = [];
       for (var i = 0; i < data.events.length;i++) {
         var event = data.events[i];
-        this._visItems.add([{
+        var minmin = parseInt(event.minmin, 10);
+        var maxmax = parseInt(event.maxmax, 10);
+        newEvents.push({
+          id: event.id,
           type: event.type == 'period' ? 'background' : 'range',
           content: event.label + ' ' + event.date_title,
-          start: event.minmin * 1000,
-          end: event.maxmax * 1000,
-          group: data.id
-        }]);
+          title: event.label,
+          start: minmin * 1000,
+          end: maxmax * 1000,
+          group: data.id,
+          className: 'oiko-timeline-item--' + event.color
+        });
 
-        this._timelineMin = Math.min(this._timelineMin, (event.minmin - 86400 * 365 * 10) * 1000);
-        this._timelineMax = Math.max(this._timelineMax, (event.maxmax + 86400 * 365 * 10) * 1000);
-
-
-        // var timelinejsData = {
-        //   start_date: new TL.Date(new Date(event.minmin * 1000)),
-        //   end_date: new TL.Date(new Date(event.maxmax * 1000)),
-        //   text: {
-        //     text: event.label,
-        //     headline: event.label
-        //   },
-        //   group: data.label
-        // };
-        //
-        // timelineJSON.events.push(timelinejsData);
-
+        this._timelineMin = Math.min(this._timelineMin, (minmin - 86400 * 365 * 10));
+        this._timelineMax = Math.max(this._timelineMax, (maxmax + 86400 * 365 * 10));
       }
-
-
-      // this._timelineJS = new TL.Timeline('timeline-js-wrapper', timelineJSON, this._timelineJSOptions);
+      this._visItems.add(newEvents);
     }
-
     this.updateTimelineBounds();
-    // this._timelineJS.updateDisplay();
   };
 
   Drupal.OikoComparativeTimeline.prototype.updateTimelineBounds = function() {
     var moved = false;
-    if (this._timelineMin !== Infinity) {
+    if (this._timelineMin != Infinity) {
       this._visTimeline.setOptions({
-        min: this._timelineMin
+        min: this._timelineMin * 1000
       });
       moved = true;
     }
-    if (this._timelineMax !== Infinity) {
+    if (this._timelineMax != -Infinity) {
       this._visTimeline.setOptions({
-        max: this._timelineMax
+        max: this._timelineMax * 1000
       });
       moved = true;
+    }
+
+    if ((this._timelineMin != Infinity) && (this._timelineMax != -Infinity)) {
+      this._visTimeline.setOptions({
+        zoomMax: (this._timelineMax - this._timelineMin) * 1000
+      });
     }
 
     if (moved) {
