@@ -317,7 +317,8 @@ Drupal.behaviors.comparative_timeline = {
   Drupal.OikoComparativeTimeline = function ($outerContainer, element_settings) {
     var timeline = this;
     var defaults = {
-      loadingItems: {}
+      loadingItems: {},
+      preselectedLinks: []
     };
 
     $.extend(this, defaults, element_settings);
@@ -365,22 +366,22 @@ Drupal.behaviors.comparative_timeline = {
   };
 
   Drupal.OikoComparativeTimeline.prototype.buildSearchBox = function () {
-    var timeline = this;
-
     return this.$addNewContainer.data('search_box', new Drupal.OikoComparativeTimelineSearch(this.$addNewContainer, {timeline: this}));
   };
 
   Drupal.OikoComparativeTimeline.prototype.searchBoxSelectHandler = function (item) {
-    var timeline = this;
-    var url = '/comparative-timeline/data/' + item.properties.id;
-    this.nowLoading(item.properties.id);
-    $.get(url, function(data) {
-      timeline.doneLoading(item.properties.id);
-      timeline.addDataToTimeline.call(timeline, data);
-
-    });
+    this.loadDataHandler.call(this, item.properties.id);
   };
 
+  Drupal.OikoComparativeTimeline.prototype.loadDataHandler = function (groupID) {
+    var timeline = this;
+    var url = '/comparative-timeline/data/' + groupID;
+    this.nowLoading(groupID);
+    $.get(url, function(data) {
+      timeline.doneLoading(groupID);
+      timeline.addDataToTimeline.call(timeline, data);
+    });
+  };
 
   Drupal.OikoComparativeTimeline.prototype.nowLoading = function(id) {
     this.loadingItems[id] = true;
@@ -410,8 +411,22 @@ Drupal.behaviors.comparative_timeline = {
     this._visGroups = new vis.DataSet({});
     this._visTimeline = new vis.Timeline(this.$timelineContainer.get(0), this._visItems, this._visGroups, this._timelineOptions);
 
+    // Add the preselected options.
+    if (timeline.hasOwnProperty('defaultOptions')) {
+      var defaultOptionTitle, defaultOptionId;
+      for (defaultOptionId in timeline.defaultOptions) {
+        defaultOptionTitle = timeline.defaultOptions[defaultOptionId];
+        var $link = $('<a href="#">').text(defaultOptionTitle).data('groupId', defaultOptionId).addClass('comparative-timeline--preselect-link').click(function(e) {
+          e.preventDefault();
+          timeline.loadDataHandler.call(timeline, $(this).data('groupId'));
+          $(this).hide();
+        });
+        this.$addNewContainer.append($link)
+        this.preselectedLinks.push($link);
+      }
+    }
+
     // Add the comparision select box.
-    // this.$addNewContainer.append(this.buildNewSelect.call(this));
     this.buildSearchBox.call(this);
 
     // Hook events up.
@@ -440,6 +455,13 @@ Drupal.behaviors.comparative_timeline = {
       this._visItems.remove(ids);
     }
     this._visGroups.remove(groupId);
+
+    // If this is one of the pre-built links, put it back.
+    for (var i in this.preselectedLinks) {
+      if ($(this.preselectedLinks[i]).data('groupId') == groupId) {
+        $(this.preselectedLinks[i]).show();
+      }
+    }
   };
 
   Drupal.OikoComparativeTimeline.prototype.selectedTimelineItems = function (properties) {

@@ -33,7 +33,7 @@ function oiko_timeline_preprocess_comparative_timeline(&$variables, $hook) {
   $links = [];
 
   foreach ($loaded as $entity) {
-    $links[Url::fromRoute('oiko_timeline.comparision_data', ['cidoc_entity' => $entity->id()])->toString()] = $entity->label();
+    $links[$entity->id()] = $entity->label();
   }
 
   // Work out what items to show in the initial select.
