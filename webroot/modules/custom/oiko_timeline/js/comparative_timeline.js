@@ -195,7 +195,7 @@ Drupal.behaviors.comparative_timeline = {
         }
 
         $.ajax({
-          url: Drupal.url('search/crm-entities/' + this.lastSearch),
+          url: Drupal.url('search/timeline-crm-entities/' + this.lastSearch),
           type: 'GET',
           dataType: 'json',
           success: function (json) {
@@ -450,15 +450,16 @@ Drupal.behaviors.comparative_timeline = {
 
     if (selected) {
       var item = this._visItems.get(selected);
-      Drupal.oiko.openSidebar(selected, item.title, false);
+      Drupal.oiko.openSidebar(selected.substr(1 + properties.items[i].lastIndexOf('-')), item.title, false);
     }
   };
 
   Drupal.OikoComparativeTimeline.prototype.addDataToTimeline = function(data) {
     // We have some data, we should add it to the timeline.
+    var groupId = data.id;
     // Add a group:
     this._visGroups.add([{
-      id: data.id,
+      id: groupId,
       content: '<span class="js-comparative-timeline-remove-link fa fa-times" data-group-id="' + data.id + '"></span>&nbsp;' + data.label
     }]);
 
@@ -469,7 +470,7 @@ Drupal.behaviors.comparative_timeline = {
         var minmin = parseInt(event.minmin, 10);
         var maxmax = parseInt(event.maxmax, 10);
         newEvents.push({
-          id: event.id,
+          id: groupId + '-' + event.id,
           type: event.type == 'period' ? 'background' : 'range',
           content: event.label + ' ' + event.date_title,
           title: event.label,

@@ -61,6 +61,11 @@ field_settings:
     datasource_id: 'entity:cidoc_entity'
     property_path: cidoc_child_events
     type: integer
+  status:
+    label: 'Publishing status'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: status
+    type: boolean
 processor_settings:
   cidoc:
     plugin_id: cidoc
