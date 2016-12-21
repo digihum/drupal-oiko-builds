@@ -508,6 +508,13 @@ Drupal.behaviors.comparative_timeline = {
       this._visItems.add(newEvents);
     }
     this.updateTimelineBounds();
+
+    // If this is one of the pre-built links, put it back.
+    for (var i in this.preselectedLinks) {
+      if ($(this.preselectedLinks[i]).data('groupId') == groupId) {
+        $(this.preselectedLinks[i]).hide();
+      }
+    }
   };
 
   Drupal.OikoComparativeTimeline.prototype.updateTimelineBounds = function() {

@@ -23,7 +23,13 @@
       // Set up an AJAX request to replace the content.
       Drupal.oiko.displayContentInLeafletSidebar(id, changeHistoryState);
     }
+  };
 
+  Drupal.oiko.openSidebarLegend = function () {
+    // Open the sidebar.
+    if (Drupal.oiko.hasOwnProperty('sidebar')) {
+      Drupal.oiko.sidebar.open('legend');
+    }
   };
 
   Drupal.oiko.displayLoadingContentInLeafletSidebar = function(label) {

@@ -16,7 +16,14 @@
   text-transform: uppercase;
   display: inline-block;
   background: url('../images/globe.png') no-repeat left center;
-  padding-left: 45px;
-  background-size: 35px;
+  padding-left: 40px;
+  background-size: 28px;
+
+  @include from('m') {
+    padding-left: 45px;
+    background-size: 35px;
+  }
+
+
 
 }

@@ -29,6 +29,13 @@
 
           Drupal.oiko.openSidebar(drupalSettings.oiko_leaflet.popup.id, drupalSettings.oiko_leaflet.popup.label, false);
         }
+        else {
+          // We need to open the sidebar on wide screens.
+          if (window.matchMedia('(min-width: 641px)').matches) {
+            console.log('opening');
+            Drupal.oiko.openSidebarLegend();
+          }
+        }
       });
     }
 
