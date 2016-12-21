@@ -32,6 +32,16 @@ entity.cidoc_reference.collection:
   title: 'CIDOC CRM entity property references'
   weight: 11
 
+# CIDOC bundle tasks.
+entity.cidoc_entity_bundle.edit_form:
+  title: 'Edit'
+  route_name: entity.cidoc_entity_bundle.edit_form
+  base_route: entity.cidoc_entity_bundle.edit_form
+entity.cidoc_entity_bundle.collection:
+  title: List
+  route_name: entity.cidoc_entity_bundle.collection
+  base_route: entity.cidoc_entity_bundle.collection
+
 # CIDOC reference routing definitions.
 entity.cidoc_reference.canonical:
   route_name: entity.cidoc_reference.canonical
