@@ -54,8 +54,8 @@ class OikoTimelineHookImplementations {
     if ($entity->getEntityTypeId() == 'cidoc_entity') {
       // If we'd get any results on the timeline, add a link to it.
       /** @var CidocEntity $entity */
-      if ($entity->hasChildEventEntities()) {
-        $build['timeline_link'] = \Drupal\Core\Link::createFromRoute(t('Compare on timeline'), 'oiko_timeline.comparative_timeline_controller_basePage', [], ['query' => ['items' => $entity->id()]])
+      if ($display->getComponent('timeline_link') && $entity->hasChildEventEntities()) {
+        $build['timeline_link'] = \Drupal\Core\Link::createFromRoute(t('Start comparing %title with other items on the Comparative Timeline', ['%title' => $entity->label()]), 'oiko_timeline.comparative_timeline_controller_basePage', [], ['query' => ['items' => $entity->id()]])
           ->toRenderable();
       }
     }

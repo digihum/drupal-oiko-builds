@@ -42,6 +42,16 @@ entity.cidoc_entity_bundle.collection:
   route_name: entity.cidoc_entity_bundle.collection
   base_route: entity.cidoc_entity_bundle.collection
 
+# CIDOC property tasks.
+entity.cidoc_property.edit_form:
+  title: 'Edit'
+  route_name: entity.cidoc_property.edit_form
+  base_route: entity.cidoc_property.edit_form
+entity.cidoc_property.collection:
+  title: List
+  route_name: entity.cidoc_property.collection
+  base_route: entity.cidoc_property.collection
+
 # CIDOC reference routing definitions.
 entity.cidoc_reference.canonical:
   route_name: entity.cidoc_reference.canonical

@@ -9,6 +9,7 @@ dependencies:
     - eva
     - geofield
     - leaflet_views
+    - oiko_leaflet
 id: p7_took_place_at_map
 label: 'P7 Took place at'
 module: views
@@ -360,14 +361,131 @@ display:
         - o2_active_dissolution
         - o3_active_destruction
       display_description: ''
+      fields:
+        id:
+          id: id
+          table: cidoc_entity
+          field: id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: 0
+          alter:
+            alter_text: 0
+            text: ''
+            make_link: 0
+            path: ''
+            absolute: 0
+            external: 0
+            replace_spaces: 0
+            path_case: none
+            trim_whitespace: 0
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: 0
+            max_length: '0'
+            word_boundary: 1
+            ellipsis: 1
+            more_link: 0
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: 0
+            trim: 0
+            preserve_tags: ''
+            html: 0
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: 1
+          empty: ''
+          hide_empty: 0
+          empty_zero: 0
+          hide_alter_empty: 1
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: 1
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: 0
+          entity_type: cidoc_entity
+          entity_field: id
+          plugin_id: field
+      defaults:
+        fields: false
+        filters: false
+        filter_groups: false
+        relationships: false
+        style: false
+        row: false
+      filters: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      relationships: {  }
+      style:
+        type: oiko_leafet_map
+        options:
+          grouping:
+            -
+              field: ''
+              rendered: 1
+              rendered_strip: 0
+            -
+              field: ''
+              rendered: 1
+              rendered_strip: 0
+            -
+              field: ''
+              rendered: 1
+              rendered_strip: 0
+            -
+              field: ''
+              rendered: 1
+              rendered_strip: 0
+          id_field: id
+          clustering: 1
+          sidebar: 0
+          search: 0
+          timeline: 0
+          pagestate: 0
+          empires: 0
+          map: 'Ancient Terrain'
+          full_height: 0
+          height: '400'
+          locate: 0
+      row:
+        type: fields
+        options:
+          inline: {  }
+          separator: ''
+          hide_empty: false
+          default_field_elements: true
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-      tags:
-        - 'config:field.storage.cidoc_entity.field_geodata'
+      tags: {  }
   entity_view_2:
     display_plugin: entity_view
     id: entity_view_2

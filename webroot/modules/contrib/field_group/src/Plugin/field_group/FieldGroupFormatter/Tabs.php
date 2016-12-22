@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\field_group\Plugin\field_group\FieldGroupFormatter\HorizontalTabs.
- */
-
 namespace Drupal\field_group\Plugin\field_group\FieldGroupFormatter;
 
 use Drupal\Component\Utility\Html;
@@ -33,6 +28,7 @@ class Tabs extends FieldGroupFormatterBase {
    * {@inheritdoc}
    */
   public function preRender(&$element, $rendering_object) {
+    parent::preRender($element, $rendering_object);
 
     $element += array(
       '#prefix' => '<div class=" ' . implode(' ' , $this->getClasses()) . '">',
@@ -70,8 +66,6 @@ class Tabs extends FieldGroupFormatterBase {
       $on_form = $this->context == 'form';
       $element = HorizontalTabs::processHorizontalTabs($element, $form_state, $on_form);
     }
-
-    $element['#attached']['library'][] = 'field_group/formatter.tabs';
 
     // Make sure the group has 1 child. This is needed to succeed at form_pre_render_vertical_tabs().
     // Skipping this would force us to move all child groups to this array, making it an un-nestable.

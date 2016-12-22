@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a4719f73c5f38717912a2a1e5605cafa",
-    "content-hash": "76649dd7b846b915584a7673a8f34caa",
+    "hash": "bc61fd5cce3c9a8cfdd528f316e74d31",
+    "content-hash": "7b52a413ef7fd66a51b92698245ba082",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1869,15 +1869,20 @@
         },
         {
             "name": "drupal/field_group",
-            "version": "dev-8.x-1.x",
+            "version": "8.1.0-rc6",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/field_group",
-                "reference": "77c5dfa28f7a4d7880bedc1cd2accf2d5986697c"
+                "reference": "acd3aaef1d0c9822b81ce7fdff8a12ef3844b4e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/field_group-8.x-1.0-rc6.zip",
+                "reference": null,
+                "shasum": null
             },
             "require": {
-                "drupal/core": "8.*",
-                "drupal/field": "8.*"
+                "drupal/core": "8.*"
             },
             "replace": {
                 "drupal/field_group_migrate": "self.version"
@@ -1889,6 +1894,9 @@
             "extra": {
                 "branch-alias": {
                     "dev-8.x-1.x": "8.1.x-dev"
+                },
+                "patches_applied": {
+                    "HTML in titles": "https://www.drupal.org/files/issues/field_group-2822299-html-group-labels_0.patch"
                 }
             },
             "notification-url": "https://packagist.drupal-composer.org/downloads/",
@@ -1897,7 +1905,7 @@
             ],
             "description": "Provides the ability to group your fields on both form and display.",
             "homepage": "https://www.drupal.org/project/field_group",
-            "time": "2016-06-25 12:10:54"
+            "time": "2016-11-28 20:35:38"
         },
         {
             "name": "drupal/geocoder",
@@ -7580,7 +7588,6 @@
         "drupal/devel": 20,
         "drupal/eva": 20,
         "drupal/features": 20,
-        "drupal/field_group": 20,
         "drupal/leaflet": 20,
         "drupal/leaflet_widget": 20,
         "drupal/migrate_tools": 20,

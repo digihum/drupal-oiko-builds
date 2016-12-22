@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\field_group\Plugin\field_group\FieldGroupFormatter\Div.
- */
-
 namespace Drupal\field_group\Plugin\field_group\FieldGroupFormatter;
 
 use Drupal\Component\Utility\Html;
@@ -51,6 +46,11 @@ class Fieldset extends FieldGroupFormatterBase {
     if (!empty($classes)) {
       $element['#attributes'] += array('class' => $classes);
     }
+
+    if ($this->getSetting('required_fields')) {
+      $element['#attached']['library'][] = 'field_group/formatter.fieldset';
+      $element['#attached']['library'][] = 'field_group/core';
+    }
   }
 
   /**
@@ -59,6 +59,13 @@ class Fieldset extends FieldGroupFormatterBase {
   public function settingsForm() {
 
     $form = parent::settingsForm();
+
+    $form['description'] = array(
+      '#title' => $this->t('Description'),
+      '#type' => 'textarea',
+      '#default_value' => $this->getSetting('description'),
+      '#weight' => -4,
+    );
 
     if ($this->context == 'form') {
       $form['required_fields'] = array(

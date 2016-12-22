@@ -250,7 +250,7 @@ display:
   entity_view_1:
     display_plugin: entity_view
     id: entity_view_1
-    display_title: EVA
+    display_title: 'All people EVA'
     position: 1
     display_options:
       display_extenders: {  }
@@ -281,7 +281,8 @@ display:
         - o3_active_destruction
       defaults:
         title: true
-      show_title: 1
+      show_title: 0
+      display_description: ''
     cache_metadata:
       max-age: -1
       contexts:

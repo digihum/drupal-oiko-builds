@@ -565,7 +565,6 @@ config_devel:
   - field.storage.taxonomy_term.forum_container
   - filter.format.basic_html
   - filter.format.restricted_html
-  - metatag.metatag_defaults
   - node.type.forum
   - paragraphs.paragraphs_type.book
   - paragraphs.paragraphs_type.uri

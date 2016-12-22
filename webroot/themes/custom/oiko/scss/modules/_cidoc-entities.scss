@@ -1,7 +1,29 @@
 .cidoc-field-group {
-  @include span(12 of 12);
-  
-  margin-bottom: 1em;
+  margin: 20px 0;
+  padding: 10px 5px;
+
+  h3 {
+    background-color: palette(grey, light);
+    color: palette(tan);
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-bottom: 1px solid palette(tan);
+    padding: 5px 10px;
+
+    .sidebar-pane & {
+      margin-right: -20px;
+      margin-left: -20px;
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+  }
+
+  .sidebar-pane & {
+    margin-right: -20px;
+    margin-left: -20px;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
 }
 
 .fg-lifespan {

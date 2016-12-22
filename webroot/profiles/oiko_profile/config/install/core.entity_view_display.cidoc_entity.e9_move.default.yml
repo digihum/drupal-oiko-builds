@@ -218,8 +218,12 @@ content:
     third_party_settings: {  }
   p17_motivated_entity_view_1:
     weight: 10
+    settings: {  }
+    third_party_settings: {  }
   p17_was_motivated_by_entity_view_1:
     weight: 10
+    settings: {  }
+    third_party_settings: {  }
   p4_has_time_span_entity_view_1:
     weight: 6
     settings: {  }
@@ -247,7 +251,12 @@ content:
     settings:
       link: false
     third_party_settings: {  }
+  timeline_link:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   citation: true
   content: true
+  timeline_preselect_option: true
   user_id: true

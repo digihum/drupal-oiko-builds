@@ -10,3 +10,6 @@ services:
   plugin.manager.cidoc.geoserializer:
     class: Drupal\cidoc\Geoserializer\GeoserializerPluginManager
     parent: default_plugin_manager
+
+  cidoc.hook_implementations:
+      class: Drupal\cidoc\CidocHookImplementations

@@ -85,7 +85,7 @@
 
 .sidebar-right .sidebar-content {
   left: 0;
-  right: 40px
+  right: 40px;
 }
 
 .sidebar-pane {
@@ -151,9 +151,13 @@
       order: 2;
       position: relative;
       flex-direction: column;
-      width: 25%;
+      width: 40%;
       min-width: 320px;
       transition: width 500ms;
+
+      @include from('xxl') {
+        width: 35%;
+      }
 
       &.collapsed {
         min-width: 0;
