@@ -342,8 +342,10 @@ config_devel:
   - core.entity_view_display.cidoc_entity.o1_killing.summary
   - core.entity_view_display.cidoc_entity.o1_killing.summary_without_map
   - core.entity_view_display.cidoc_entity.o2_active_dissolution.default
+  - core.entity_view_display.cidoc_entity.o2_active_dissolution.popup
   - core.entity_view_display.cidoc_entity.o2_active_dissolution.summary_without_map
   - core.entity_view_display.cidoc_entity.o3_active_destruction.default
+  - core.entity_view_display.cidoc_entity.o3_active_destruction.popup
   - core.entity_view_display.cidoc_entity.o3_active_destruction.summary_without_map
   - core.entity_view_display.cidoc_reference.p100_was_death_of.default
   - core.entity_view_display.cidoc_reference.p100_was_death_of.domain
