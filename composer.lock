@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bc61fd5cce3c9a8cfdd528f316e74d31",
-    "content-hash": "7b52a413ef7fd66a51b92698245ba082",
+    "hash": "82532f15da7a0a9519286ed4aa18e189",
+    "content-hash": "35250ea284d6155d73d039e306cc123c",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1234,17 +1234,11 @@
         },
         {
             "name": "drupal/cm_config_tools",
-            "version": "dev-8.x-1.x-multibucket",
+            "version": "dev-8.x-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/cm_config_tools.git",
-                "reference": "9fa889782947e34984a59a90e1d9dae4abbb246d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/cm_config_tools-8.x-1.x-multibucket.zip",
-                "reference": "9fa889782947e34984a59a90e1d9dae4abbb246d",
-                "shasum": null
+                "reference": "69373c02f50bbeb2e2f4675da4e565d4ae327920"
             },
             "require": {
                 "drupal/config": "8.*",
@@ -1269,7 +1263,7 @@
             ],
             "description": "Provides advanced configuration management workflow functionality.",
             "homepage": "http://www.computerminds.co.uk",
-            "time": "2016-10-21 13:18:27"
+            "time": "2016-12-12 13:17:26"
         },
         {
             "name": "drupal/color_field",
@@ -1400,12 +1394,12 @@
             "version": "0.11.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/hechoendrupal/DrupalConsole.git",
+                "url": "https://github.com/hechoendrupal/drupal-console.git",
                 "reference": "e0912b0f52455542d18d39f12387f297ec0f6cac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/DrupalConsole/zipball/e0912b0f52455542d18d39f12387f297ec0f6cac",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console/zipball/e0912b0f52455542d18d39f12387f297ec0f6cac",
                 "reference": "e0912b0f52455542d18d39f12387f297ec0f6cac",
                 "shasum": ""
             },
@@ -1878,7 +1872,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/field_group-8.x-1.0-rc6.zip",
-                "reference": null,
+                "reference": "acd3aaef1d0c9822b81ce7fdff8a12ef3844b4e1",
                 "shasum": null
             },
             "require": {
@@ -2077,7 +2071,7 @@
                 "composer/installers": "^1.0.21"
             },
             "type": "drupal-module",
-            "time": "2016-09-20 10:25:00"
+            "time": "2016-05-02 15:43:10"
         },
         {
             "name": "drupal/metatag",
