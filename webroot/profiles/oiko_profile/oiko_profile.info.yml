@@ -671,7 +671,7 @@ cm_config_tools:
     - block.block.maplegendblock
     - user.role.forum_user
     - views.view.discussions_listing
-  deleted:
+  delete:
     - views.view.person_death
     - views.view.person_killed
     - views.view.person_parents
