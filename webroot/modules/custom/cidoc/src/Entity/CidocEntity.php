@@ -534,7 +534,12 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
     return $data;
   }
 
-  public function getChildEventEntities() {
+  public function hasChildEventEntities() {
+    $children = $this->getChildEventEntities(TRUE);
+    return !empty($children);
+  }
+
+  public function getChildEventEntities($return_on_first_match = FALSE) {
     // Set up our arrays for traversing the graph.
     $entities_to_walk = [];
     $entities_walked = [];
@@ -569,6 +574,10 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
           if (!isset($entities_walked[$child->id()]) && !isset($entities_to_walk[$child->id()])) {
             $all_children[$child->id()] = $child;
             $entities_to_walk[$child->id()] = $child;
+            // An early exit if requested.
+            if ($return_on_first_match) {
+              break 2;
+            }
           }
         }
       }
@@ -591,6 +600,10 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
           if (!isset($entities_walked[$child->id()]) && !isset($entities_to_walk[$child->id()])) {
             $all_children[$child->id()] = $child;
             $entities_to_walk[$child->id()] = $child;
+            // An early exit if requested.
+            if ($return_on_first_match) {
+              break 2;
+            }
           }
         }
       }

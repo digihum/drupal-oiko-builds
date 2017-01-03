@@ -5,10 +5,12 @@
   background-color: palette(grey, light);
 }
 
-.sidebar-right {
-  border-left: 1px solid palette(grey);
-  box-shadow: 0 0 10px 5px rgba(palette(grey), 0.1);
-  z-index: 1;
+@include from($layout-switch) {
+  .sidebar-right {
+    border-left: 1px solid palette(grey);
+    box-shadow: 0 0 10px 5px rgba(palette(grey), 0.1);
+    z-index: 1;
+  }
 }
 
 .sidebar-right .sidebar-tabs {
@@ -71,7 +73,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, .95);
+  background-color: rgba(255, 255, 255, 1);
   overflow-x: hidden;
   overflow-y: auto
 }
@@ -83,7 +85,7 @@
 
 .sidebar-right .sidebar-content {
   left: 0;
-  right: 40px
+  right: 40px;
 }
 
 .sidebar-pane {
@@ -100,26 +102,79 @@
 
 .l-map-wrap {
   .sidebar {
-    order: 2;
-    position: relative;
-    flex-direction: column;
-    width: 25%;
     transition: width 500ms;
     &.collapsed {
       width: 40px;
     }
+  }
+}
 
-    .sidebar-content {
-      overflow: auto;
+@include to('s') {
+  .l-map-wrap {
+    position: relative;
+    padding-right: 40px;
+
+    .sidebar {
+      transition: left 500ms;
+      position: absolute;
+      z-index: 1001;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      &.collapsed {
+        left: auto;
+      }
+
+      .sidebar-content {
+        overflow: auto;
+      }
+    }
+
+    .comparative-timeline-container,
+    .leaflet-map-container {
+      width: 100%;
+    }
+
+    .leaflet-map-container {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
     }
   }
+}
 
-  .comparative-timeline-container,
-  .leaflet-map-container {
-    order: 1;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+@include from($layout-switch) {
+  .l-map-wrap {
+    .sidebar {
+      order: 2;
+      position: relative;
+      flex-direction: column;
+      width: 40%;
+      min-width: 320px;
+      transition: width 500ms;
+
+      @include from('xxl') {
+        width: 35%;
+      }
+
+      &.collapsed {
+        min-width: 0;
+      }
+
+      .sidebar-content {
+        overflow: auto;
+      }
+    }
+
+    .comparative-timeline-container,
+    .leaflet-map-container {
+      order: 1;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
   }
 }
 

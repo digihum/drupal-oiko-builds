@@ -8,6 +8,16 @@
 
       $(context).find('.oiko-sidebar').once('oiko_sidebar').each(function () {
         Drupal.oiko.sidebar = new Drupal.Sidebar(this, {position: 'right'});
+        Drupal.oiko.sidebar.$sidebar.on('click', function(e) {
+          var $target = $(e.target);
+          var id = $target.data('cidoc-id');
+          var label = $target.data('cidoc-label');
+          if (id) {
+            e.preventDefault();
+            // Fall back to using the link text as the new sidebar title.
+            Drupal.oiko.openSidebar(id, !!(label) ? label : $target.text(), true);
+          }
+        });
       });
     }
   };
@@ -23,7 +33,13 @@
       // Set up an AJAX request to replace the content.
       Drupal.oiko.displayContentInLeafletSidebar(id, changeHistoryState);
     }
+  };
 
+  Drupal.oiko.openSidebarLegend = function () {
+    // Open the sidebar.
+    if (Drupal.oiko.hasOwnProperty('sidebar')) {
+      Drupal.oiko.sidebar.open('legend');
+    }
   };
 
   Drupal.oiko.displayLoadingContentInLeafletSidebar = function(label) {

@@ -121,7 +121,7 @@
         "drupal/add_to_head": "dev-8.x-1.x",
         "drupal/admin_toolbar": "^8.1.14",
         "drupal/browsersync": "8.1.0-beta1",
-        "drupal/cm_config_tools": "dev-8.x-1.x-multibucket",
+        "drupal/cm_config_tools": "dev-8.x-1.x",
         "drupal/color_field": "8.2.0-rc1",
         "drupal/config_devel": "8.1.x-dev#92f735cae8e9fb328edca285340a5bfbf72028cc",
         "drupal/config_readonly": "8.1.0-beta2",
@@ -133,7 +133,7 @@
         "drupal/devel": "8.1.x-dev",
         "drupal/eva": "dev-8.x-1.x",
         "drupal/features": "8.3.x-dev",
-        "drupal/field_group": "8.1.x-dev",
+        "drupal/field_group": "8.1.0-rc6",
         "drupal/geocoder": "8.2.0-alpha4",
         "drupal/geocoder_autocomplete": "8.1.0-alpha1",
         "drupal/geofield": "8.1.0-alpha2",
@@ -236,6 +236,9 @@
             },
             "drupal/eva": {
                 "EVA Patch for D8" : "https://www.drupal.org/files/issues/eva-working-d8-1937618-21.patch"
+            },
+            "drupal/field_group": {
+                "HTML in titles": "https://www.drupal.org/files/issues/field_group-2822299-html-group-labels_0.patch"
             }
         }
     },

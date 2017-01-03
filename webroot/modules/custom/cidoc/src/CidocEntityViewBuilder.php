@@ -28,30 +28,14 @@ class CidocEntityViewBuilder extends EntityViewBuilder {
     $view_builder = \Drupal::entityTypeManager()->getViewBuilder('cidoc_reference');
 
     foreach ($entities as $id => $entity) {
-      if ($displays[$entity->bundle()]->getComponent('cidoc_properties')) {
-        /** @var \Drupal\cidoc\CidocEntityInterface $entity */
-        // Direct properties.
-        if ($grouped_references = $entity->getReferences()) {
+      /** @var \Drupal\cidoc\CidocEntityInterface $entity */
+      foreach (array(CidocProperty::DOMAIN_ENDPOINT => FALSE, CidocProperty::RANGE_ENDPOINT => TRUE) as $source_field => $reverse) {
+        if ($grouped_references = $entity->getReferences(NULL, $reverse)) {
           foreach ($grouped_references as $property => $references) {
-            $build[$id]['cidoc_properties']['ranges'][$property] = $view_builder->viewMultiple($references, 'domain');
-          }
-        }
-
-        // Reverse properties.
-        if ($grouped_references = $entity->getReferences(NULL, TRUE)) {
-          $properties = CidocProperty::loadMultiple(array_keys($grouped_references));
-          foreach ($grouped_references as $property => $references) {
-            if (!$properties[$property]->bidirectional) {
-              $build[$id]['cidoc_properties']['domains'][$property] = $view_builder->viewMultiple($references, 'range');
+            if ($displays[$entity->bundle()]->getComponent('cidoc_properties:' . $source_field . ':' . $property)) {
+              $build[$id]['cidoc_properties:' . $source_field . ':' . $property] = $view_builder->viewMultiple($references, $source_field);
             }
           }
-        }
-
-        if (isset($build[$id]['cidoc_properties'])) {
-          $build[$id]['cidoc_properties'] += array(
-            '#type' => 'item',
-            '#title' => t('CIDOC properties'),
-          );
         }
       }
     }

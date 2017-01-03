@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - cidoc.cidoc_entity_bundle.e21_person
     - cidoc.cidoc_entity_bundle.e53_place
     - field.storage.cidoc_reference.domain
     - field.storage.cidoc_reference.range
@@ -309,11 +310,16 @@ display:
             sort_order: asc
             number_of_records: 0
             format: default_summary
-          specify_validation: false
+          specify_validation: true
           validate:
-            type: none
+            type: 'entity:cidoc_entity'
             fail: 'not found'
-          validate_options: {  }
+          validate_options:
+            bundles:
+              e21_person: e21_person
+            operation: view
+            multiple: 0
+            access: false
           break_phrase: false
           not: false
           entity_type: cidoc_entity

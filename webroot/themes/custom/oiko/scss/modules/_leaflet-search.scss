@@ -59,19 +59,19 @@
   border-style: solid;
   border-width: 1px;
   border-color: lightgrey;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
   border-radius: 4px;
-
-  -moz-box-shadow: 2px 2px 2px -2px gray;
-  -webkit-box-shadow: 2px 2px 2px -2px gray;
   box-shadow: 2px 2px 2px -2px gray;
+}
+
+.leaflet-search--not-found {
+  border-top: 1px solid #e6e6e6;
+  padding: 10px 10px 0;
 }
 
 .leaflet-result-list-item {
   background-color: white;
   height: 38px;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   border-top: 1px solid #e6e6e6;
 }
 

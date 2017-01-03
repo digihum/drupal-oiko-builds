@@ -1,11 +1,30 @@
 (function ($) {
 
+  $.QueryString = (function(a) {
+    if (a == "") return {};
+    var b = {};
+    for (var i = 0; i < a.length; ++i)
+    {
+      var p=a[i].split('=', 2);
+      if (p.length != 2) continue;
+      b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+    }
+    return b;
+  })(window.location.search.substr(1).split('&'));
+
 Drupal.behaviors.comparative_timeline = {
   attach: function(context, settings) {
     $(context).find('.js-comparative-timeline-container').once('comparative_timeline').each(function() {
       var $component = $(this);
       if ($component.data('comparative_timeline') == undefined) {
         $component.data('comparative_timeline', new Drupal.OikoComparativeTimeline($component, settings.oiko_timeline));
+        if ($.QueryString['items']) {
+          var items = $.QueryString['items'].split(',');
+          for (var i in items) {
+            console.log(items[i]);
+            $component.data('comparative_timeline').loadDataHandler(items[i]);
+          }
+        }
       }
     });
   }
@@ -195,7 +214,7 @@ Drupal.behaviors.comparative_timeline = {
         }
 
         $.ajax({
-          url: Drupal.url('search/crm-entities/' + this.lastSearch),
+          url: Drupal.url('search/timeline-crm-entities/' + this.lastSearch),
           type: 'GET',
           dataType: 'json',
           success: function (json) {
@@ -317,7 +336,8 @@ Drupal.behaviors.comparative_timeline = {
   Drupal.OikoComparativeTimeline = function ($outerContainer, element_settings) {
     var timeline = this;
     var defaults = {
-      loadingItems: {}
+      loadingItems: {},
+      preselectedLinks: []
     };
 
     $.extend(this, defaults, element_settings);
@@ -365,22 +385,22 @@ Drupal.behaviors.comparative_timeline = {
   };
 
   Drupal.OikoComparativeTimeline.prototype.buildSearchBox = function () {
-    var timeline = this;
-
     return this.$addNewContainer.data('search_box', new Drupal.OikoComparativeTimelineSearch(this.$addNewContainer, {timeline: this}));
   };
 
   Drupal.OikoComparativeTimeline.prototype.searchBoxSelectHandler = function (item) {
-    var timeline = this;
-    var url = '/comparative-timeline/data/' + item.properties.id;
-    this.nowLoading(item.properties.id);
-    $.get(url, function(data) {
-      timeline.doneLoading(item.properties.id);
-      timeline.addDataToTimeline.call(timeline, data);
-
-    });
+    this.loadDataHandler.call(this, item.properties.id);
   };
 
+  Drupal.OikoComparativeTimeline.prototype.loadDataHandler = function (groupID) {
+    var timeline = this;
+    var url = '/comparative-timeline/data/' + groupID;
+    this.nowLoading(groupID);
+    $.get(url, function(data) {
+      timeline.doneLoading(groupID);
+      timeline.addDataToTimeline.call(timeline, data);
+    });
+  };
 
   Drupal.OikoComparativeTimeline.prototype.nowLoading = function(id) {
     this.loadingItems[id] = true;
@@ -410,8 +430,22 @@ Drupal.behaviors.comparative_timeline = {
     this._visGroups = new vis.DataSet({});
     this._visTimeline = new vis.Timeline(this.$timelineContainer.get(0), this._visItems, this._visGroups, this._timelineOptions);
 
+    // Add the preselected options.
+    if (timeline.hasOwnProperty('defaultOptions')) {
+      var defaultOptionTitle, defaultOptionId;
+      for (defaultOptionId in timeline.defaultOptions) {
+        defaultOptionTitle = timeline.defaultOptions[defaultOptionId];
+        var $link = $('<a href="#">').text(defaultOptionTitle).data('groupId', defaultOptionId).addClass('comparative-timeline--preselect-link').click(function(e) {
+          e.preventDefault();
+          timeline.loadDataHandler.call(timeline, $(this).data('groupId'));
+          $(this).hide();
+        });
+        this.$addNewContainer.append($link)
+        this.preselectedLinks.push($link);
+      }
+    }
+
     // Add the comparision select box.
-    // this.$addNewContainer.append(this.buildNewSelect.call(this));
     this.buildSearchBox.call(this);
 
     // Hook events up.
@@ -440,6 +474,13 @@ Drupal.behaviors.comparative_timeline = {
       this._visItems.remove(ids);
     }
     this._visGroups.remove(groupId);
+
+    // If this is one of the pre-built links, put it back.
+    for (var i in this.preselectedLinks) {
+      if ($(this.preselectedLinks[i]).data('groupId') == groupId) {
+        $(this.preselectedLinks[i]).show();
+      }
+    }
   };
 
   Drupal.OikoComparativeTimeline.prototype.selectedTimelineItems = function (properties) {
@@ -450,15 +491,16 @@ Drupal.behaviors.comparative_timeline = {
 
     if (selected) {
       var item = this._visItems.get(selected);
-      Drupal.oiko.openSidebar(selected, item.title, false);
+      Drupal.oiko.openSidebar(selected.substr(1 + properties.items[i].lastIndexOf('-')), item.title, false);
     }
   };
 
   Drupal.OikoComparativeTimeline.prototype.addDataToTimeline = function(data) {
     // We have some data, we should add it to the timeline.
+    var groupId = data.id;
     // Add a group:
     this._visGroups.add([{
-      id: data.id,
+      id: groupId,
       content: '<span class="js-comparative-timeline-remove-link fa fa-times" data-group-id="' + data.id + '"></span>&nbsp;' + data.label
     }]);
 
@@ -469,7 +511,7 @@ Drupal.behaviors.comparative_timeline = {
         var minmin = parseInt(event.minmin, 10);
         var maxmax = parseInt(event.maxmax, 10);
         newEvents.push({
-          id: event.id,
+          id: groupId + '-' + event.id,
           type: event.type == 'period' ? 'background' : 'range',
           content: event.label + ' ' + event.date_title,
           title: event.label,
@@ -485,6 +527,13 @@ Drupal.behaviors.comparative_timeline = {
       this._visItems.add(newEvents);
     }
     this.updateTimelineBounds();
+
+    // If this is one of the pre-built links, put it back.
+    for (var i in this.preselectedLinks) {
+      if ($(this.preselectedLinks[i]).data('groupId') == groupId) {
+        $(this.preselectedLinks[i]).hide();
+      }
+    }
   };
 
   Drupal.OikoComparativeTimeline.prototype.updateTimelineBounds = function() {

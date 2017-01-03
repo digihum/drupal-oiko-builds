@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\field_group\Form\FieldGroupAddForm.
- */
-
 namespace Drupal\field_group\Form;
 
 use Drupal\Core\Form\FormBase;
@@ -245,11 +240,12 @@ class FieldGroupAddForm extends FormBase {
         'children' =>[],
         'parent_name' => '',
         'weight' => 20,
-        'label' => $form_state->get('group_label'),
         'format_type' => $form_state->get('group_formatter'),
       );
 
       $new_group->format_settings = $form_state->getValue('format_settings');
+      $new_group->label = $new_group->format_settings['label'];
+      unset($new_group->format_settings['label']);
       $new_group->format_settings += _field_group_get_default_formatter_settings($form_state->get('group_formatter'), $this->context);
 
       field_group_group_save($new_group);

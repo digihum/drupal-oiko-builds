@@ -179,7 +179,7 @@
       this.activeResult = -1;
       this.$resultsDiv.empty();
 
-      this.$resultsDiv.append("<i>" + this.lastSearch + " " + this.options.notFoundMessage + " <p><small>" + this.options.notFoundHint + "</small></i>");
+      this.$resultsDiv.append('<div class="leaflet-search--not-found"><i>' + this.lastSearch + " " + this.options.notFoundMessage + " <p><small>" + this.options.notFoundHint + "</small></i></div>");
     },
     getValuesAsGeoJson: function () {
 

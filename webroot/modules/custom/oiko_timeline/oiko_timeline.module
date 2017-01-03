@@ -33,7 +33,7 @@ function oiko_timeline_preprocess_comparative_timeline(&$variables, $hook) {
   $links = [];
 
   foreach ($loaded as $entity) {
-    $links[Url::fromRoute('oiko_timeline.comparision_data', ['cidoc_entity' => $entity->id()])->toString()] = $entity->label();
+    $links[$entity->id()] = $entity->label();
   }
 
   // Work out what items to show in the initial select.
@@ -56,4 +56,18 @@ function oiko_timeline_preprocess_comparative_timeline(&$variables, $hook) {
  */
 function oiko_timeline_entity_base_field_info(\Drupal\Core\Entity\EntityTypeInterface $entity_type) {
   return \Drupal::service('oiko_timeline.hook_implementations')->entity_base_field_info($entity_type);
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function oiko_timeline_entity_extra_field_info() {
+  return \Drupal::service('oiko_timeline.hook_implementations')->extra_field_info();
+}
+
+/**
+ * Implements hook_entity_view_alter()
+ */
+function oiko_timeline_entity_view_alter(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display) {
+  return \Drupal::service('oiko_timeline.hook_implementations')->entity_view_alter($build, $entity, $display);
 }

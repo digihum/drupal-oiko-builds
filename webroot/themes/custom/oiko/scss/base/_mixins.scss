@@ -72,3 +72,9 @@
   border-color: rgba($color, 1);
   color: pick-visible-color($color, $body-font-color, $white);
 }
+
+@mixin pill($color) {
+  background-color: rgba($color, .25);
+  margin: 0.5em;
+  padding: 0.25em 0.5em ;
+}

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\field_group\FieldGroupFormatterBase.
- */
-
 namespace Drupal\field_group;
 
 use Drupal\Core\Field\PluginSettingsBase;
@@ -162,6 +157,7 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
     // Add a required-fields class to trigger the js.
     if ($this->getSetting('required_fields')) {
       $classes[] = 'required-fields';
+      $classes[] = 'field-group-' . str_replace('_', '-', $this->getBaseId());
     }
 
     if ($this->getSetting('classes')) {
@@ -169,6 +165,15 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
     }
 
     return $classes;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function preRender(&$element, $rendering_object) {
+    $element['#group_name'] = $this->group->group_name;
+    $element['#entity_type'] = $this->group->entity_type;
+    $element['#bundle'] = $this->group->bundle;
   }
 
 }

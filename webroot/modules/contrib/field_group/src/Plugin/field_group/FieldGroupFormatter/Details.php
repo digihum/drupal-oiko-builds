@@ -1,11 +1,5 @@
 <?php
 
-/**
-/**
- * @file
- * Contains \Drupal\field_group\Plugin\field_group\FieldGroupFormatter\Details.
- */
-
 namespace Drupal\field_group\Plugin\field_group\FieldGroupFormatter;
 
 use Drupal\Component\Utility\Html;
@@ -30,6 +24,7 @@ class Details extends FieldGroupFormatterBase {
    * {@inheritdoc}
    */
   public function preRender(&$element, $rendering_object) {
+    parent::preRender($element, $rendering_object);
 
     $element += array(
       '#type' => 'details',
@@ -52,6 +47,11 @@ class Details extends FieldGroupFormatterBase {
       $element += array(
         '#description' => $this->getSetting('description'),
       );
+    }
+
+    if ($this->getSetting('required_fields')) {
+      $element['#attached']['library'][] = 'field_group/formatter.details';
+      $element['#attached']['library'][] = 'field_group/core';
     }
   }
 
