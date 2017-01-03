@@ -18,7 +18,7 @@
         if (id) {
           e.preventDefault();
           // Fall back to using the link text as the new sidebar title.
-          Drupal.oiko.openSidebar(id, !!(label) ? label : $target.text(), drupalLeaflet, true);
+          Drupal.oiko.openSidebar(id, !!(label) ? label : $target.text(), true);
         }
       });
 
@@ -32,7 +32,6 @@
         else {
           // We need to open the sidebar on wide screens.
           if (window.matchMedia('(min-width: 641px)').matches) {
-            console.log('opening');
             Drupal.oiko.openSidebarLegend();
           }
         }
