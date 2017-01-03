@@ -33,7 +33,7 @@ third_party_settings:
       children:
         - timeline_link
       parent_name: ''
-      weight: 9
+      weight: 6
       format_type: html_element
       format_settings:
         id: ''
@@ -68,7 +68,7 @@ third_party_settings:
         - 'cidoc_properties:range:p26_moved_to'
         - 'cidoc_properties:range:p7_took_place_at'
       parent_name: ''
-      weight: 6
+      weight: 4
       format_type: html_element
       format_settings:
         label: '<span class="fa fa-calendar-o">&nbsp;&nbsp;</span>Events and Activities'
@@ -88,7 +88,7 @@ third_party_settings:
         - 'cidoc_properties:domain:p122_borders_with'
         - 'cidoc_properties:domain:p121_overlaps_with'
       parent_name: ''
-      weight: 20
+      weight: 5
       format_type: html_element
       format_settings:
         id: ''
