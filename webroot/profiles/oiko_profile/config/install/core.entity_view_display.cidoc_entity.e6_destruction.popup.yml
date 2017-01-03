@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_entity_bundle.e69_death
+    - cidoc.cidoc_entity_bundle.e6_destruction
     - core.entity_view_mode.cidoc_entity.popup
   module:
     - field_group
@@ -80,6 +80,23 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+    group_objects:
+      children:
+        - 'cidoc_properties:domain:p13_destroyed'
+      parent_name: ''
+      weight: 4
+      label: '<span class="fa fa-cubes">&nbsp;&nbsp;</span>Objects used'
+      format_type: html_element
+      format_settings:
+        label: '<span class="fa fa-cubes">&nbsp;&nbsp;</span>Objects used'
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
     group_forms:
       children:
         - 'cidoc_properties:domain:p9_consists_of'
@@ -149,31 +166,11 @@ third_party_settings:
         effect: none
         speed: fast
       label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Appellations'
-    group_death_of:
-      children:
-        - 'cidoc_properties:domain:p100_was_death_of'
-      parent_name: ''
-      weight: 4
-      format_type: html_element
-      format_settings:
-        id: ''
-        classes: ''
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-      label: '<span class="fa fa-id-badge">&nbsp;&nbsp;</span>Death of'
-id: cidoc_entity.e69_death.popup
+id: cidoc_entity.e6_destruction.popup
 targetEntityType: cidoc_entity
-bundle: e69_death
+bundle: e6_destruction
 mode: popup
 content:
-  'cidoc_properties:domain:p100_was_death_of':
-    weight: 13
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
     weight: 20
     settings: {  }
@@ -305,8 +302,8 @@ hidden:
   citation: true
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
+  e6_destroyed_entity_view_1: true
   internal_name: true
-  p100_death_of_entity_view_1: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p11_has_participant_entity_view_1: true

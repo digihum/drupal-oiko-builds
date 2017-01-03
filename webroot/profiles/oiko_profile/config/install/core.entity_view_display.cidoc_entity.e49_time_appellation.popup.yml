@@ -2,66 +2,13 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_entity_bundle.e69_death
+    - cidoc.cidoc_entity_bundle.e49_time_appellation
     - core.entity_view_mode.cidoc_entity.popup
   module:
     - field_group
     - text
 third_party_settings:
   field_group:
-    group_participants:
-      children:
-        - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
-        - 'cidoc_properties:domain:p11_had_participant'
-      parent_name: ''
-      weight: 7
-      label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Participants'
-      format_type: html_element
-      format_settings:
-        label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Participants'
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-        id: ''
-        classes: ''
-    group_occurred:
-      children:
-        - 'cidoc_properties:domain:p4_has_time_span'
-      parent_name: ''
-      weight: 8
-      label: '<span class="fa fa-calendar">&nbsp;&nbsp;</span>Occurred on'
-      format_type: html_element
-      format_settings:
-        label: '<span class="fa fa-calendar">&nbsp;&nbsp;</span>Occurred on'
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-        id: ''
-        classes: ''
-    group_period:
-      children:
-        - 'cidoc_properties:domain:p10_falls_within'
-        - 'cidoc_properties:range:p10_falls_within'
-      parent_name: ''
-      weight: 9
-      label: '<span class="fa fa-clock-o">&nbsp;&nbsp;</span>Period'
-      format_type: html_element
-      format_settings:
-        label: '<span class="fa fa-clock-o">&nbsp;&nbsp;</span>Period'
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-        id: ''
-        classes: ''
     group_influences:
       children:
         - 'cidoc_properties:range:p17_was_motivated_by'
@@ -82,10 +29,10 @@ third_party_settings:
         classes: ''
     group_forms:
       children:
-        - 'cidoc_properties:domain:p9_consists_of'
-        - 'cidoc_properties:range:p9_consists_of'
-        - 'cidoc_properties:domain:p132_overlaps_with'
-        - 'cidoc_properties:domain:p133_is_separated_from'
+        - 'cidoc_properties:range:p78_is_identified_by'
+        - 'cidoc_properties:range:p1_is_identified_by'
+        - 'cidoc_properties:range:p16_used_specific_object'
+        - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
       parent_name: ''
       weight: 11
       label: '<span class="fa fa-sitemap">&nbsp;&nbsp;</span>Event structure'
@@ -116,22 +63,6 @@ third_party_settings:
         effect: none
         speed: fast
       label: '<span class="fa fa-tasks">&nbsp;&nbsp;</span>Comparative Timeline'
-    group_places:
-      children:
-        - 'cidoc_properties:domain:p7_took_place_at'
-      parent_name: ''
-      weight: 6
-      format_type: html_element
-      format_settings:
-        id: ''
-        classes: ''
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-      label: '<span class="fa fa-map">&nbsp;&nbsp;</span>Places'
     group_appellations:
       children:
         - name
@@ -149,31 +80,11 @@ third_party_settings:
         effect: none
         speed: fast
       label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Appellations'
-    group_death_of:
-      children:
-        - 'cidoc_properties:domain:p100_was_death_of'
-      parent_name: ''
-      weight: 4
-      format_type: html_element
-      format_settings:
-        id: ''
-        classes: ''
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-      label: '<span class="fa fa-id-badge">&nbsp;&nbsp;</span>Death of'
-id: cidoc_entity.e69_death.popup
+id: cidoc_entity.e49_time_appellation.popup
 targetEntityType: cidoc_entity
-bundle: e69_death
+bundle: e49_time_appellation
 mode: popup
 content:
-  'cidoc_properties:domain:p100_was_death_of':
-    weight: 13
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
     weight: 20
     settings: {  }
@@ -198,10 +109,6 @@ content:
     weight: 29
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p13_destroyed':
-    weight: 5
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p14_carried_out_by':
     weight: 20
     settings: {  }
@@ -211,7 +118,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p16_used_specific_object':
-    weight: 6
+    weight: 12
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p17_was_motivated_by':
@@ -219,11 +126,15 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p1_is_identified_by':
-    weight: 1
+    weight: 2
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p4_has_time_span':
     weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p78_is_identified_by':
+    weight: 1
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p7_took_place_at':
@@ -238,6 +149,10 @@ content:
     weight: 21
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:range:p12_occurred_in_the_presence_of':
+    weight: 24
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p133_is_separated_from':
     weight: 13
     settings: {  }
@@ -250,8 +165,24 @@ content:
     weight: 27
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:range:p16_used_specific_object':
+    weight: 23
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p17_was_motivated_by':
     weight: 25
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p1_is_identified_by':
+    weight: 22
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p4_has_time_span':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p78_is_identified_by':
+    weight: 21
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p9_consists_of':
@@ -266,6 +197,12 @@ content:
     third_party_settings: {  }
   duplicate_of_p134_continues_entity_view_1:
     weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  field_date:
+    type: edtf_human_readable_formatter
+    weight: 0
+    label: inline
     settings: {  }
     third_party_settings: {  }
   name:
@@ -306,7 +243,6 @@ hidden:
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
-  p100_death_of_entity_view_1: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p11_has_participant_entity_view_1: true
@@ -322,5 +258,7 @@ hidden:
   p9__entity_view_1: true
   p9_forms_part_of_entity_view_1: true
   people_entity_view_1: true
+  time_span_directly_linked_events_entity_view_1: true
+  time_span_within_period_entity_view_1: true
   timeline_preselect_option: true
   user_id: true

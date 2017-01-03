@@ -319,10 +319,19 @@ cm_config_tools:
     - core.entity_view_display.cidoc_entity.e12_production.default
     - core.entity_view_display.cidoc_entity.e12_production.popup
     - core.entity_view_display.cidoc_entity.e21_person.default
+    - core.entity_view_display.cidoc_entity.e21_person.popup
     - core.entity_view_display.cidoc_entity.e22_man_made_object.default
+    - core.entity_view_display.cidoc_entity.e22_man_made_object.popup
     - core.entity_view_display.cidoc_entity.e4_period.default
+    - core.entity_view_display.cidoc_entity.e4_period.popup
     - core.entity_view_display.cidoc_entity.e52_time_span.default
+    - core.entity_view_display.cidoc_entity.e52_time_span.popup
+    - core.entity_view_display.cidoc_entity.e58_measurement_unit.popup
+    - core.entity_view_display.cidoc_entity.e42_identifier.popup
+    - core.entity_view_display.cidoc_entity.e49_time_appellation.popup
+    - core.entity_view_display.cidoc_entity.e82_actor_appellation.popup
     - core.entity_view_display.cidoc_entity.e53_place.default
+    - core.entity_view_display.cidoc_entity.e53_place.popup
     - core.entity_view_display.cidoc_entity.e5_event.default
     - core.entity_view_display.cidoc_entity.e5_event.popup
     - core.entity_view_display.cidoc_entity.e5_event.summary_without_map
@@ -332,6 +341,7 @@ cm_config_tools:
     - core.entity_view_display.cidoc_entity.e67_birth.default
     - core.entity_view_display.cidoc_entity.e67_birth.popup
     - core.entity_view_display.cidoc_entity.e67_birth.summary
+    - core.entity_view_display.cidoc_entity.e54_dimension.popup
     - core.entity_view_display.cidoc_entity.e67_birth.summary_without_map
     - core.entity_view_display.cidoc_entity.e68_dissolution.default
     - core.entity_view_display.cidoc_entity.e68_dissolution.popup
@@ -342,8 +352,10 @@ cm_config_tools:
     - core.entity_view_display.cidoc_entity.e69_death.summary
     - core.entity_view_display.cidoc_entity.e69_death.summary_without_map
     - core.entity_view_display.cidoc_entity.e6_destruction.default
+    - core.entity_view_display.cidoc_entity.e6_destruction.popup
     - core.entity_view_display.cidoc_entity.e6_destruction.summary_without_map
     - core.entity_view_display.cidoc_entity.e74_group.default
+    - core.entity_view_display.cidoc_entity.e74_group.popup
     - core.entity_view_display.cidoc_entity.e74_group.summary
     - core.entity_view_display.cidoc_entity.e7_activity.default
     - core.entity_view_display.cidoc_entity.e7_activity.popup
@@ -353,6 +365,7 @@ cm_config_tools:
     - core.entity_view_display.cidoc_entity.e9_move.summary
     - core.entity_view_display.cidoc_entity.e9_move.summary_without_map
     - core.entity_view_display.cidoc_entity.o1_killing.default
+    - core.entity_view_display.cidoc_entity.o1_killing.popup
     - core.entity_view_display.cidoc_entity.o1_killing.summary
     - core.entity_view_display.cidoc_entity.o1_killing.summary_without_map
     - core.entity_view_display.cidoc_entity.o2_active_dissolution.default
@@ -622,7 +635,6 @@ cm_config_tools:
     - views.view.important_events
     - views.view.important_people
     - views.view.key_achievements
-    - views.view.lifespan
     - views.view.map_of_places_people_went
     - views.view.p100_death_of
     - views.view.p108_produced_object
@@ -652,9 +664,6 @@ cm_config_tools:
     - views.view.p9_
     - views.view.p9_forms_part_of
     - views.view.people
-    - views.view.person_death
-    - views.view.person_killed
-    - views.view.person_parents
     - views.view.places_people_went
     - views.view.time_span_directly_linked_events
     - views.view.time_span_within_period
@@ -662,3 +671,8 @@ cm_config_tools:
     - block.block.maplegendblock
     - user.role.forum_user
     - views.view.discussions_listing
+  deleted:
+    - views.view.person_death
+    - views.view.person_killed
+    - views.view.person_parents
+    - views.view.lifespan

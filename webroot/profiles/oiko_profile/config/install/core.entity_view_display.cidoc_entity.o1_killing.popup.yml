@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_entity_bundle.e69_death
+    - cidoc.cidoc_entity_bundle.o1_killing
     - core.entity_view_mode.cidoc_entity.popup
   module:
     - field_group
@@ -11,6 +11,7 @@ third_party_settings:
   field_group:
     group_participants:
       children:
+        - 'cidoc_properties:domain:p14_carried_out_by'
         - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
         - 'cidoc_properties:domain:p11_had_participant'
       parent_name: ''
@@ -64,7 +65,9 @@ third_party_settings:
         classes: ''
     group_influences:
       children:
+        - 'cidoc_properties:domain:p17_was_motivated_by'
         - 'cidoc_properties:range:p17_was_motivated_by'
+        - 'cidoc_properties:domain:p15_was_influenced_by'
         - 'cidoc_properties:range:p15_was_influenced_by'
       parent_name: ''
       weight: 10
@@ -80,10 +83,29 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+    group_objects:
+      children:
+        - 'cidoc_properties:domain:p16_used_specific_object'
+      parent_name: ''
+      weight: 5
+      label: '<span class="fa fa-cubes">&nbsp;&nbsp;</span>Objects used'
+      format_type: html_element
+      format_settings:
+        label: '<span class="fa fa-cubes">&nbsp;&nbsp;</span>Objects used'
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
     group_forms:
       children:
         - 'cidoc_properties:domain:p9_consists_of'
         - 'cidoc_properties:range:p9_consists_of'
+        - 'cidoc_properties:domain:p134_continued'
+        - 'cidoc_properties:range:p134_continued'
         - 'cidoc_properties:domain:p132_overlaps_with'
         - 'cidoc_properties:domain:p133_is_separated_from'
       parent_name: ''
@@ -165,9 +187,9 @@ third_party_settings:
         effect: none
         speed: fast
       label: '<span class="fa fa-id-badge">&nbsp;&nbsp;</span>Death of'
-id: cidoc_entity.e69_death.popup
+id: cidoc_entity.o1_killing.popup
 targetEntityType: cidoc_entity
-bundle: e69_death
+bundle: o1_killing
 mode: popup
 content:
   'cidoc_properties:domain:p100_was_death_of':

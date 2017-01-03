@@ -2,31 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_entity_bundle.e69_death
+    - cidoc.cidoc_entity_bundle.e4_period
     - core.entity_view_mode.cidoc_entity.popup
+    - field.field.cidoc_entity.e4_period.field_empire_outline
   module:
     - field_group
     - text
 third_party_settings:
   field_group:
-    group_participants:
-      children:
-        - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
-        - 'cidoc_properties:domain:p11_had_participant'
-      parent_name: ''
-      weight: 7
-      label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Participants'
-      format_type: html_element
-      format_settings:
-        label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Participants'
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-        id: ''
-        classes: ''
     group_occurred:
       children:
         - 'cidoc_properties:domain:p4_has_time_span'
@@ -120,7 +103,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:p7_took_place_at'
       parent_name: ''
-      weight: 6
+      weight: 4
       format_type: html_element
       format_settings:
         id: ''
@@ -149,31 +132,11 @@ third_party_settings:
         effect: none
         speed: fast
       label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Appellations'
-    group_death_of:
-      children:
-        - 'cidoc_properties:domain:p100_was_death_of'
-      parent_name: ''
-      weight: 4
-      format_type: html_element
-      format_settings:
-        id: ''
-        classes: ''
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-      label: '<span class="fa fa-id-badge">&nbsp;&nbsp;</span>Death of'
-id: cidoc_entity.e69_death.popup
+id: cidoc_entity.e4_period.popup
 targetEntityType: cidoc_entity
-bundle: e69_death
+bundle: e4_period
 mode: popup
 content:
-  'cidoc_properties:domain:p100_was_death_of':
-    weight: 13
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
     weight: 20
     settings: {  }
@@ -198,10 +161,6 @@ content:
     weight: 29
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p13_destroyed':
-    weight: 5
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p14_carried_out_by':
     weight: 20
     settings: {  }
@@ -211,7 +170,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p16_used_specific_object':
-    weight: 6
+    weight: 12
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p17_was_motivated_by':
@@ -305,8 +264,9 @@ hidden:
   citation: true
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
+  field_empire_outline: true
   internal_name: true
-  p100_death_of_entity_view_1: true
+  p10_contains_entity_view_1: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p11_has_participant_entity_view_1: true
