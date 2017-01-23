@@ -15,7 +15,7 @@ class ShareMessageViewModesTest extends ShareMessageTestBase {
   public function testShareMessageViewModes() {
 
     $this->drupalGet('admin/config/services/sharemessage/add');
-    $edit = [
+    $edit = array(
       'label' => 'Share Message Test Label',
       'id' => 'sharemessage_test_label',
       'plugin' => 'addthis',
@@ -24,9 +24,9 @@ class ShareMessageViewModesTest extends ShareMessageTestBase {
       'message_short' => 'Share Message Test Short Description',
       'image_url' => 'http://www.example.com/drupal.jpg',
       'share_url' => 'http://www.example.com',
-    ];
+    );
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $this->assertText(t('Share Message @label has been added.', ['@label' => $edit['label']]), 'Share Message is successfully saved.');
+    $this->assertText(t('Share Message @label has been added.', array('@label' => $edit['label'])), 'Share Message is successfully saved.');
 
     $this->drupalGet('sharemessage-test/sharemessage_test_label');
     $this->assertShareButtons($edit, 'addthis_16x16_style', TRUE);

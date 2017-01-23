@@ -41,50 +41,8 @@ function sharemessage_update_8002() {
  * Implements hook_install().
  */
 function sharemessage_install() {
-  user_role_grant_permissions(AccountInterface::ANONYMOUS_ROLE, ['view sharemessages']);
-  user_role_grant_permissions(AccountInterface::AUTHENTICATED_ROLE, ['view sharemessages']);
-}
-
-/**
- * Implements hook_requirements().
- */
-function sharemessage_requirements($phase) {
-  $requirements = [];
-
-  if ($phase == 'runtime') {
-    $library_discovery = \Drupal::service('library.discovery');
-    $library = $library_discovery->getLibraryByName('sharemessage', 'socialshareprivacy');
-    $has_social_share = FALSE;
-    if (isset($library['library path'])) {
-      $has_social_share = is_file(ltrim($library['library path'], '/') . '/jquery.socialshareprivacy.min.js');
-    };
-    $storage = \Drupal::entityTypeManager()->getStorage('sharemessage');
-    $in_use = (int) $storage->getQuery()
-      ->condition('plugin', 'socialshareprivacy')
-      ->count()
-      ->execute();
-
-    $requirements['socialshareprivacy_library'] = [
-      'title' => t('Share message'),
-      'value' => t('Installed correctly'),
-      'description' => t('Share message module has been installed correctly.'),
-    ];
-
-    if (!$has_social_share) {
-      if ($in_use) {
-        $requirements['socialshareprivacy_library']['value'] = t('Dependencies not found');
-        $requirements['socialshareprivacy_library']['severity'] = REQUIREMENT_ERROR;
-        $requirements['socialshareprivacy_library']['description'] = t('The <a href=":url">Social Share Privacy library</a> should be installed in <strong>/libraries/socialshareprivacy</strong>. The directory must contain jquery.socialshareprivacy.min.js and stylesheets/jquery.socialshareprivacy.min.css', [':url' => 'http://panzi.github.io/SocialSharePrivacy/']);
-      }
-      else {
-        $requirements['socialshareprivacy_library']['value'] = t('Social Share Privacy plugin');
-        $requirements['socialshareprivacy_library']['severity'] = REQUIREMENT_INFO;
-        $requirements['socialshareprivacy_library']['description'] = t('Share message adds the Social Share Privacy plugin, please visit <a href=":url">this page</a> for download instructions and place the library in <strong>/libraries/socialshareprivacy</strong>. The directory must contain jquery.socialshareprivacy.min.js and stylesheets/jquery.socialshareprivacy.min.css.', [':url' => 'http://panzi.github.io/SocialSharePrivacy/']);
-      }
-    }
-  }
-
-  return $requirements;
+  user_role_grant_permissions(AccountInterface::ANONYMOUS_ROLE, array('view sharemessages'));
+  user_role_grant_permissions(AccountInterface::AUTHENTICATED_ROLE, array('view sharemessages'));
 }
 
 /**

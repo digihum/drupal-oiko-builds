@@ -24,11 +24,11 @@ class Addthis extends SharePluginBase implements  SharePluginInterface {
    */
   public function build($context, $plugin_attributes) {
 
-    $attributes = new Attribute(['class' => [
+    $attributes = new Attribute(array('class' => array(
       'addthis_toolbox',
       'addthis_default_style',
       $this->shareMessage->getSetting('icon_style') ?: \Drupal::config('sharemessage.addthis')->get('icon_style'),
-    ]]);
+    )));
 
     if ($plugin_attributes) {
       $attributes['addthis:url'] = $this->shareMessage->getUrl($context);
@@ -37,22 +37,22 @@ class Addthis extends SharePluginBase implements  SharePluginInterface {
     }
 
     // Add AddThis buttons.
-    $build = [
+    $build = array(
       '#theme' => 'sharemessage_addthis',
       '#attributes' => $attributes,
       '#services' => $this->shareMessage->getSetting('services') ?: \Drupal::config('sharemessage.addthis')->get('services'),
       '#additional_services' => $this->getSetting('additional_services') ?: \Drupal::config('sharemessage.addthis')->get('additional_services'),
       '#counter' => $this->getSetting('counter') ?: \Drupal::config('sharemessage.addthis')->get('counter'),
       '#twitter_template' => $this->shareMessage->getTokenizedField($this->shareMessage->message_short, $context),
-      '#attached' => [
+      '#attached' => array(
         'library' => ['sharemessage/addthis'],
-        'drupalSettings' => [
-          'addthis_config' => [
+        'drupalSettings' => array(
+          'addthis_config' => array(
             'data_track_addressbar' => TRUE,
-          ],
-        ],
-      ],
-    ];
+          ),
+        ),
+      ),
+    );
     $cacheability_metadata = CacheableMetadata::createFromObject(\Drupal::config('sharemessage.addthis'));
     $cacheability_metadata->applyTo($build);
     return $build;
@@ -79,67 +79,67 @@ class Addthis extends SharePluginBase implements  SharePluginInterface {
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
 
     // Settings fieldset.
-    $form['override_default_settings'] = [
+    $form['override_default_settings'] = array(
       '#type' => 'checkbox',
       '#title' => t('Override default settings'),
       '#default_value' => $this->getSetting('override_default_settings'),
-    ];
+    );
 
-    $form['services'] = [
+    $form['services'] = array(
       '#title' => t('Visible services'),
       '#type' => 'select',
       '#multiple' => TRUE,
       '#options' => sharemessage_get_addthis_services(),
       '#default_value' => $this->getSetting('services'),
       '#size' => 10,
-      '#states' => [
-        'invisible' => [
-          ':input[name="settings[override_default_settings]"]' => ['checked' => FALSE],
-        ],
-      ],
-    ];
+      '#states' => array(
+        'invisible' => array(
+          ':input[name="settings[override_default_settings]"]' => array('checked' => FALSE),
+        ),
+      ),
+    );
 
-    $form['additional_services'] = [
+    $form['additional_services'] = array(
       '#type' => 'checkbox',
       '#title' => t('Show additional services button'),
       '#default_value' => $this->getSetting('additional_services'),
-      '#states' => [
-        'invisible' => [
-          ':input[name="settings[override_default_settings]"]' => ['checked' => FALSE],
-        ],
-      ],
-    ];
+      '#states' => array(
+        'invisible' => array(
+          ':input[name="settings[override_default_settings]"]' => array('checked' => FALSE),
+        ),
+      ),
+    );
 
-    $form['counter'] = [
+    $form['counter'] = array(
       '#type' => 'select',
       '#title' => t('Show AddThis counter'),
       '#empty_option' => t('No'),
-      '#options' => [
+      '#options' => array(
         'addthis_pill_style' => t('Pill style'),
         'addthis_bubble_style' => t('Bubble style'),
-      ],
+      ),
       '#default_value' => $this->getSetting('counter'),
-      '#states' => [
-        'invisible' => [
-          ':input[name="settings[override_default_settings]"]' => ['checked' => FALSE],
-        ],
-      ],
-    ];
+      '#states' => array(
+        'invisible' => array(
+          ':input[name="settings[override_default_settings]"]' => array('checked' => FALSE),
+        ),
+      ),
+    );
 
-    $form['icon_style'] = [
+    $form['icon_style'] = array(
       '#title' => t('Default icon style'),
       '#type' => 'radios',
-      '#options' => [
+      '#options' => array(
         'addthis_16x16_style' => '16x16 pix',
         'addthis_32x32_style' => '32x32 pix',
-      ],
+      ),
       '#default_value' => $this->getSetting('icon_style'),
-      '#states' => [
-        'invisible' => [
-          ':input[name="settings[override_default_settings]"]' => ['checked' => FALSE],
-        ],
-      ],
-    ];
+      '#states' => array(
+        'invisible' => array(
+          ':input[name="settings[override_default_settings]"]' => array('checked' => FALSE),
+        ),
+      ),
+    );
 
     return $form;
   }

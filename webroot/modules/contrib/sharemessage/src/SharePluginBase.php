@@ -73,7 +73,7 @@ abstract class SharePluginBase extends PluginBase implements SharePluginInterfac
    * {@inheritdoc}
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-    return [];
+    // Nothing to do here by default.
   }
 
   /**

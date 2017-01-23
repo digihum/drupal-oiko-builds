@@ -5965,24 +5965,21 @@
     },
     {
         "name": "drupal/sharemessage",
-        "version": "1.0.0-beta2",
-        "version_normalized": "1.0.0.0-beta2",
+        "version": "1.0.0-beta1",
+        "version_normalized": "1.0.0.0-beta1",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/sharemessage",
-            "reference": "8.x-1.0-beta2"
+            "reference": "8.x-1.0-beta1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/sharemessage-8.x-1.0-beta2.zip",
-            "reference": "8.x-1.0-beta2",
-            "shasum": "8a65e9976d7d905c04f9990624ce0427c5c53dd8"
+            "url": "https://ftp.drupal.org/files/projects/sharemessage-8.x-1.0-beta1.zip",
+            "reference": null,
+            "shasum": "2dee08fc0b649df0a3de4c5c64f3b81e244388ea"
         },
         "require": {
             "drupal/core": "~8.0"
-        },
-        "require-dev": {
-            "drupal/token": "*"
         },
         "type": "drupal-module",
         "extra": {
@@ -5990,7 +5987,7 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0-beta2",
+                "version": "8.x-1.0-beta1",
                 "datestamp": "1481758983"
             }
         },

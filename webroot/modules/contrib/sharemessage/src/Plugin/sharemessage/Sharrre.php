@@ -15,7 +15,9 @@ use Drupal\Core\Url;
  * @SharePlugin(
  *   id = "sharrre",
  *   label = @Translation("Sharrre"),
- *   description = @Translation("Sharrre is a jQuery plugin that allows you to create nice widgets sharing for Facebook, Twitter, Google Plus (with PHP script) and more. (http://sharrre.com)"),
+ *   description = @Translation("Sharrre is a jQuery plugin that allows you to
+ *   create nice widgets sharing for Facebook, Twitter, Google Plus
+ *   (with PHP script) and more. (http://sharrre.com)"),
  * )
  */
 class Sharrre extends SharePluginBase implements  SharePluginInterface {
@@ -38,13 +40,13 @@ class Sharrre extends SharePluginBase implements  SharePluginInterface {
 
     // Check for both, local library and remote URL.
     if (!\Drupal::moduleHandler()->moduleExists('libraries') && !\Drupal::config('sharemessage.sharrre')->get('library_url') && $show_message) {
-      $form['message'] = [
+      $form['message'] = array(
         '#type' => 'container',
         '#markup' => t('Either set the library locally (in /libraries/sharrre) and enable the libraries module or enter the remote URL on <a href=":sharrre_settings">Sharrre settings page</a>.', [':sharrre_settings' => Url::fromRoute('sharemessage.sharrre.settings')->toString()]),
-        '#attributes' => [
-          'class' => ['messages messages--error'],
-        ],
-      ];
+        '#attributes' => array(
+          'class' => array('messages messages--error'),
+        ),
+      );
       return $form;
     }
 
@@ -53,13 +55,13 @@ class Sharrre extends SharePluginBase implements  SharePluginInterface {
       $directory = libraries_get_path('sharrre');
       $file = 'jquery.sharrre.min.js';
       if (!file_exists($directory . '/' . $file) && $show_message) {
-        $form['message'] = [
+        $form['message'] = array(
           '#type' => 'container',
           '#markup' => t('The library file is not present in the expected directory (/libraries/sharrre).'),
-          '#attributes' => [
-            'class' => ['messages messages--error'],
-          ],
-        ];
+          '#attributes' => array(
+            'class' => array('messages messages--error'),
+          ),
+        );
         return $form;
       }
     }
@@ -70,9 +72,9 @@ class Sharrre extends SharePluginBase implements  SharePluginInterface {
    */
   public function build($context, $plugin_attributes) {
 
-    $attributes = new Attribute(['id' => [
+    $attributes = new Attribute(array('id' => array(
       'sharemessage',
-    ]]);
+    )));
 
     if ($plugin_attributes) {
       $attributes['sharrre:url'] = $this->shareMessage->getUrl($context);
@@ -81,13 +83,13 @@ class Sharrre extends SharePluginBase implements  SharePluginInterface {
     }
 
     // Add Sharrre buttons.
-    $build = [
+    $build = array(
       '#theme' => 'sharemessage_sharrre',
       '#attributes' => $attributes,
-      '#attached' => [
+      '#attached' => array(
         'library' => ['sharemessage/sharrre'],
-        'drupalSettings' => [
-          'sharrre_config' => [
+        'drupalSettings' => array(
+          'sharrre_config' => array(
             'services' => $this->shareMessage->getSetting('services') ?: \Drupal::config('sharemessage.sharrre')->get('services'),
             'library_url' => $this->shareMessage->getSetting('library_url') ?: \Drupal::config('sharemessage.sharrre')->get('library_url'),
             'shorter_total' => $this->shareMessage->getSetting('shorter_total') ?: \Drupal::config('sharemessage.sharrre')->get('shorter_total'),
@@ -96,10 +98,10 @@ class Sharrre extends SharePluginBase implements  SharePluginInterface {
             'enable_tracking' => $this->shareMessage->getSetting('enable_tracking') ?: \Drupal::config('sharemessage.sharrre')->get('enable_tracking'),
             'url_curl' => Url::fromRoute('sharemessage.sharrre.counter')->toString(),
             'url' => $this->shareMessage->share_url,
-          ],
-        ],
-      ],
-    ];
+          ),
+        ),
+      ),
+    );
     $cacheability_metadata = CacheableMetadata::createFromObject(\Drupal::config('sharemessage.sharrre'));
     $cacheability_metadata->applyTo($build);
     return $build;
@@ -126,17 +128,17 @@ class Sharrre extends SharePluginBase implements  SharePluginInterface {
     }
 
     // Settings fieldset.
-    $form['override_default_settings'] = [
+    $form['override_default_settings'] = array(
       '#type' => 'checkbox',
       '#title' => t('Override default settings'),
       '#default_value' => $this->getSetting('override_default_settings'),
-    ];
+    );
 
-    $form['services'] = [
+    $form['services'] = array(
       '#title' => t('Visible services'),
       '#type' => 'select',
       '#multiple' => TRUE,
-      '#options' => [
+      '#options' => array (
         'googlePlus' => $this->t('Google+'),
         'facebook' => $this->t('Facebook'),
         'twitter' => $this->t('Twitter'),
@@ -145,73 +147,59 @@ class Sharrre extends SharePluginBase implements  SharePluginInterface {
         'stumbleupon' => $this->t('StumpleUpon'),
         'linkedin' => $this->t('Linkedin'),
         'pinterest' => $this->t('Pinterest'),
-      ],
+      ),
       '#default_value' => $this->getSetting('services'),
       '#size' => 10,
-      '#states' => [
-        'invisible' => [
-          ':input[name="settings[override_default_settings]"]' => ['checked' => FALSE],
-        ],
-      ],
-    ];
+      '#states' => array(
+        'invisible' => array(
+          ':input[name="settings[override_default_settings]"]' => array('checked' => FALSE),
+        ),
+      ),
+    );
 
-    $form['sharrre_website_documentation'] = [
-      '#type' => 'item',
-      '#title' => t('See the <a href=":url">Sharrre documentation</a> page for more information.',[':url' => 'http://sharrre.com']),
-      '#states' => [
-        'invisible' => [
-          ':input[name="settings[override_default_settings]"]' => ['checked' => FALSE],
-        ],
-      ],
-    ];
-
-    $form['shorter_total'] = [
+    $form['shorter_total'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Shorter total'),
-      '#description' => t('Format number like 1.2k or 5M.'),
+      '#title' => t('Format number like 1.2k or 5M'),
       '#default_value' => $this->getSetting('shorter_total'),
-      '#states' => [
-        'invisible' => [
-          ':input[name="settings[override_default_settings]"]' => ['checked' => FALSE],
-        ],
-      ],
-    ];
+      '#states' => array(
+        'invisible' => array(
+          ':input[name="settings[override_default_settings]"]' => array('checked' => FALSE),
+        ),
+      ),
+    );
 
-    $form['enable_counter'] = [
+    $form['enable_hover'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Counter'),
-      '#description' => t('Enable the total counter.'),
-      '#default_value' => $this->getSetting('enable_counter'),
-      '#states' => [
-        'invisible' => [
-          ':input[name="settings[override_default_settings]"]' => ['checked' => FALSE],
-        ],
-      ],
-    ];
-
-    $form['enable_hover'] = [
-      '#type' => 'checkbox',
-      '#title' => t('Hover'),
-      '#description' => t('Allow displaying the sharing buttons when hovering over the counter.'),
+      '#title' => t('Allow the sharing buttons'),
       '#default_value' => $this->getSetting('enable_hover'),
-      '#states' => [
-        'invisible' => [
-          ':input[name="settings[override_default_settings]"]' => ['checked' => FALSE],
-        ],
-      ],
-    ];
+      '#states' => array(
+        'invisible' => array(
+          ':input[name="settings[override_default_settings]"]' => array('checked' => FALSE),
+        ),
+      ),
+    );
 
-    $form['enable_tracking'] = [
+    $form['enable_counter'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Tracking'),
-      '#description' => t('Allow tracking social interaction with Google Analytics.'),
+      '#title' => t('Enable the total counter'),
+      '#default_value' => $this->getSetting('enable_counter'),
+      '#states' => array(
+        'invisible' => array(
+          ':input[name="settings[override_default_settings]"]' => array('checked' => FALSE),
+        ),
+      ),
+    );
+
+    $form['enable_tracking'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Allow tracking social interaction with Google Analytics'),
       '#default_value' => $this->getSetting('enable_tracking'),
-      '#states' => [
-        'invisible' => [
-          ':input[name="settings[override_default_settings]"]' => ['checked' => FALSE],
-        ],
-      ],
-    ];
+      '#states' => array(
+        'invisible' => array(
+          ':input[name="settings[override_default_settings]"]' => array('checked' => FALSE),
+        ),
+      ),
+    );
 
     return $form;
   }

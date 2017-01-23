@@ -11,7 +11,8 @@ use Drupal\sharemessage\SharePluginInterface;
  * @SharePlugin(
  *   id = "ogheaders",
  *   label = @Translation("OG Headers"),
- *   description = @Translation("Open graph headers are used when users want to use it as a framework or a background tool only.")
+ *   description = @Translation("Open graph headers are used when users want to
+ *   use it as a framework or a background tool only.")
  * )
  */
 class OGHeaders extends SharePluginBase implements SharePluginInterface {

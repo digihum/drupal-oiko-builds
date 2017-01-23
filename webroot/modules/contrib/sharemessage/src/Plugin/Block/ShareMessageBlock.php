@@ -69,9 +69,9 @@ class ShareMessageBlock extends BlockBase implements ContainerFactoryPluginInter
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return [
+    return array(
       'sharemessage' => NULL,
-    ];
+    );
   }
 
   /**
@@ -86,16 +86,16 @@ class ShareMessageBlock extends BlockBase implements ContainerFactoryPluginInter
    */
   public function blockForm($form, FormStateInterface $form_state) {
     $sharemessages = $this->storageController->loadMultiple();
-    $options = [];
+    $options = array();
     foreach ($sharemessages as $sharemessage) {
       $options[$sharemessage->id()] = $sharemessage->label();
     }
-    $form['sharemessage'] = [
+    $form['sharemessage'] = array(
       '#type' => 'select',
       '#title' => t('Select the sharemessage that should be displayed'),
       '#default_value' => $this->configuration['sharemessage'],
       '#options' => $options,
-    ];
+    );
     return $form;
   }
 
@@ -129,9 +129,9 @@ class ShareMessageBlock extends BlockBase implements ContainerFactoryPluginInter
    * {@inheritdoc}
    */
   public function calculateDependencies() {
-    return [
-      'config' => ['sharemessage.sharemessage.' . $this->configuration['sharemessage']],
-    ];
+    return array(
+      'config' => array('sharemessage.sharemessage.' . $this->configuration['sharemessage']),
+    );
   }
 
 }

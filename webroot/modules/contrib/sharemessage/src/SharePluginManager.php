@@ -35,7 +35,7 @@ class SharePluginManager extends DefaultPluginManager {
    *   Array of plugin labels, keyed by the plugin id.
    */
   public function getLabels() {
-    $list = [];
+    $list = array();
     foreach ($this->getDefinitions() as $plugin => $definition) {
       $list[$plugin] = $definition['label'];
     }

@@ -36,68 +36,68 @@ class AddthisSettingsForm extends ConfigFormBase {
     $config = $this->config('sharemessage.addthis');
 
     // AddThis specific settings.
-    $form['addthis_profile_id'] = [
+    $form['addthis_profile_id'] = array(
       '#title' => t('AddThis Profile ID'),
       '#type' => 'textfield',
       '#default_value' => $config->get('addthis_profile_id'),
-    ];
+    );
 
-    $form['default_services'] = [
+    $form['default_services'] = array(
       '#title' => t('Default visible services'),
       '#type' => 'select',
       '#multiple' => TRUE,
       '#options' => sharemessage_get_addthis_services(),
       '#default_value' => $config->get('services'),
       '#size' => 10,
-    ];
+    );
 
-    $form['default_additional_services'] = [
+    $form['default_additional_services'] = array(
       '#type' => 'checkbox',
       '#title' => t('Show additional services button'),
       '#default_value' => $config->get('additional_services'),
-    ];
+    );
 
-    $form['default_counter'] = [
+    $form['default_counter'] = array(
       '#type' => 'select',
       '#title' => t('Show AddThis counter'),
       '#empty_option' => t('No'),
-      '#options' => [
+      '#options' => array(
         'addthis_pill_style' => t('Pill style'),
         'addthis_bubble_style' => t('Bubble style'),
-      ],
+      ),
       '#default_value' => $config->get('counter'),
-    ];
+    );
 
-    $form['default_icon_style'] = [
+    $form['default_icon_style'] = array(
       '#title' => t('Default icon style'),
       '#type' => 'radios',
-      '#options' => [
+      '#options' => array(
         'addthis_16x16_style' => '16x16 pix',
         'addthis_32x32_style' => '32x32 pix',
-      ],
+      ),
       '#default_value' => $config->get('icon_style'),
-    ];
+    );
 
-    $form['local_services_definition'] = [
+    $form['local_services_definition'] = array(
       '#type' => 'checkbox',
       '#title' => t('Use local service definitions file'),
       '#description' => t('Check this if you are behind a firewall and the module cannot access the services definition at http://cache.addthiscdn.com/services/v1/sharing.en.json.'),
       '#default_value' => $config->get('local_services_definition'),
-    ];
+    );
 
-    $form['shared_video_width'] = [
+    $form['shared_video_width'] = array(
       '#title' => t('Video height'),
       '#description' => t('The width of the player when sharing a video.'),
       '#type' => 'textfield',
       '#default_value' => $config->get('shared_video_width'),
-    ];
+    );
 
-    $form['shared_video_height'] = [
+    $form['shared_video_height'] = array(
       '#title' => t('Video height'),
       '#description' => t('The height of the player when sharing a video.'),
       '#type' => 'textfield',
       '#default_value' => $config->get('shared_video_height'),
-    ];
+    );
 
     return parent::buildForm($form, $form_state);
   }

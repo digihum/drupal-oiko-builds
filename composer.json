@@ -144,7 +144,7 @@
         "drupal/paragraphs": "^1@RC",
         "drupal/pathauto": "dev-8.x-1.x",
         "drupal/search_api": "1.0-beta3",
-        "drupal/sharemessage": "^1@beta",
+        "drupal/sharemessage": "1.0-beta1",
         "drupal/squid_autocomplete": "1.0-alpha5",
         "drupal/twig_xdebug": "^1",
         "drush/drush": "~8.0",

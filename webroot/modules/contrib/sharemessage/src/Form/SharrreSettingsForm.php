@@ -43,20 +43,20 @@ class SharrreSettingsForm extends ConfigFormBase {
     }
 
     $url = 'http://jster.net/library/sharrre';
-    $form['library_url'] = [
+    $form['library_url'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Remote URL for Sharrre Library (minimized version)'),
-      '#description' => $this->t('Set the URL for a Web-Hosted minimized version of Sharrre library (jquery.sharrre.min.js with the leading slashes), or leave empty if using the library locally. You can retrieve the library from <a href=":url">Sharrre CDN</a>.', [
+      '#description' => $this->t('Set the URL for a Web-Hosted minimized version of Sharrre library (jquery.sharrre.min.js with the leading slashes), or leave empty if using the library locally. You can retrieve the library from <a href=":url">Sharrre CDN</a>.', array(
         ':url' => $url,
-      ]),
+      )),
       '#default_value' => $sharrre_config->get('library_url'),
-    ];
+    );
 
-    $form['default_services'] = [
+    $form['default_services'] = array(
       '#title' => t('Default visible services'),
       '#type' => 'select',
       '#multiple' => TRUE,
-      '#options' => [
+      '#options' => array(
         'googlePlus' => t('Google+'),
         'facebook' => t('Facebook'),
         'twitter' => t('Twitter'),
@@ -65,48 +65,34 @@ class SharrreSettingsForm extends ConfigFormBase {
         'stumbleupon' => t('StumpleUpon'),
         'linkedin' => t('Linkedin'),
         'pinterest' => t('Pinterest'),
-      ],
+      ),
       '#default_value' => $sharrre_config->get('services'),
       '#size' => 10,
-    ];
+    );
 
-    $form['sharrre_website_documentation'] = [
-      '#type' => 'label',
-      '#title' => t('See the <a href=":url">Sharrre documentation</a> page for more information.', [':url' => 'http://sharrre.com']),
-    ];
-
-    $form['shorter_total'] = [
+    $form['shorter_total'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Shorter total'),
-      '#description' => t('Format number like 1.2k or 5M.'),
+      '#title' => t('Format number like 1.2k or 5M'),
       '#default_value' => $sharrre_config->get('shorter_total'),
-    ];
+    );
 
-    $form['enable_counter'] = [
+    $form['enable_hover'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Counter'),
-      '#description' => t('Enable the total counter.'),
-      '#default_value' => $sharrre_config->get('enable_counter'),
-    ];
-
-    $form['enable_hover'] = [
-      '#type' => 'checkbox',
-      '#title' => t('Hover'),
-      '#description' => t('Allow displaying the sharing buttons when hovering over the counter.'),
+      '#title' => t('Allow the sharing buttons'),
       '#default_value' => $sharrre_config->get('enable_hover'),
-      '#states' => [
-        'invisible' => [
-          ':input[name="enable_counter"]' => ['checked' => FALSE],
-        ]
-      ],
-    ];
+    );
 
-    $form['enable_tracking'] = [
+    $form['enable_counter'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Tracking'),
-      '#description' => t('Allow tracking social interaction with Google Analytics.'),
+      '#title' => t('Enable the total counter'),
+      '#default_value' => $sharrre_config->get('enable_counter'),
+    );
+
+    $form['enable_tracking'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Allow tracking social interaction with Google Analytics'),
       '#default_value' => $sharrre_config->get('enable_tracking'),
-    ];
+    );
 
     return $form;
   }

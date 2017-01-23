@@ -84,15 +84,6 @@ interface ShareMessageInterface extends ConfigEntityInterface {
   public function getSetting($key);
 
   /**
-   * Sets an additional runtime context for tokenizing.
-   *
-   * @param array $context
-   *   The context that will be used for following token replacements when this
-   *   Share Message is shown.
-   */
-  public function setRuntimeContext(array $context);
-
-  /**
    * Gets a context for tokenizing.
    *
    * @param string $view_mode
@@ -126,17 +117,6 @@ interface ShareMessageInterface extends ConfigEntityInterface {
   public function buildOGTags($context);
 
   /**
-   * Adds meta tags in order to share images on Twitter.
-   *
-   * @param array $context
-   *   The context for the token replacements.
-   *
-   * @return array
-   *   The twitter tags.
-   */
-  public function buildTwitterCardTags($context);
-
-  /**
    * Tokenizes a field, if it is set.
    *
    * @param string $property_value
@@ -161,37 +141,5 @@ interface ShareMessageInterface extends ConfigEntityInterface {
    *   The URL for this Share Message.
    */
   public function getUrl($context);
-
-  /**
-   * Gets the selected entity type.
-   *
-   * @return string
-   *   The entity type.
-   */
-  public function getExtraFieldEntityType();
-
-  /**
-   * Sets the selected entity type.
-   *
-   * @param string $extra_field_entity_type
-   *   The entity type to be set.
-   */
-  public function setExtraFieldEntityType($extra_field_entity_type);
-
-  /**
-   * Gets the enabled entity type bundles list.
-   *
-   * @return array
-   *   The entity type bundles list.
-   */
-  public function getExtraFieldBundles();
-
-  /**
-   * Sets the enabled entity type bundles list.
-   *
-   * @param string[] $extra_field_bundles
-   *   The entity type bundles list to be set.
-   */
-  public function setExtraFieldBundles(array $extra_field_bundles);
 
 }

@@ -16,7 +16,7 @@ provider: null
 plugin: sharemessage_block
 settings:
   id: sharemessage_block
-  label: 'Share Message - AddThis'
+  label: 'Share message - AddThis'
   provider: sharemessage
   label_display: visible
   sharemessage: share_message_addthis_demo
