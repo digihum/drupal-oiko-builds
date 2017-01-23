@@ -1,7 +1,7 @@
 <?php
 namespace Consolidation\OutputFormatters\Formatters;
 
-use Consolidation\OutputFormatters\FormatterOptions;
+use Consolidation\OutputFormatters\Options\FormatterOptions;
 use Consolidation\OutputFormatters\StructuredData\RenderCellInterface;
 
 trait RenderTableDataTrait
@@ -21,7 +21,7 @@ trait RenderTableDataTrait
     {
         foreach ($restructuredData as $id => $row) {
             foreach ($row as $key => $cellData) {
-                $restructuredData[$id][$key] = $originalData->renderCell($key, $cellData, $options);
+                $restructuredData[$id][$key] = $originalData->renderCell($key, $cellData, $options, $row);
             }
         }
         return $restructuredData;

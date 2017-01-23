@@ -3,7 +3,9 @@
  * @file
  * New Sharing Module.
  */
-
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\sharemessage\Entity\ShareMessage;
 
 /**
@@ -23,23 +25,37 @@ function sharemessage_check_machine_name_if_exist($value) {
  * Implements hook_libraries_info().
  */
 function sharemessage_libraries_info() {
-  $libraries = array(
-    'sharrre' => array(
+  $libraries = [
+    'sharrre' => [
       'name' => 'Sharrre',
       'vendor url' => 'http://sharrre.com',
       'download url' => 'http://sharrre.com/#download',
-      'version arguments' => array(
+      'version arguments' => [
         'file' => 'jquery.sharrre.min.js',
         'pattern' => '/Version: (.*)/',
         'lines' => 5,
-      ),
-      'files' => array(
-        'js' => array(
-          'jquery.sharrre.min.js' => array(),
-        ),
-      ),
-    ),
-  );
+      ],
+      'files' => [
+        'js' => [
+          'jquery.sharrre.min.js' => [],
+        ],
+      ],
+    ],
+    'socialshareprivacy' => [
+      'name' => 'socialshareprivacy',
+      'vendor url' => 'http://panzi.github.io',
+      'download url' => 'http://panzi.github.io/SocialSharePrivacy/',
+      'version' => 'unknown',
+      'files' => [
+        'js' => [
+          'jquery.socialshareprivacy.min.js' => [],
+        ],
+        'css' => [
+          'stylesheets/jquery.socialshareprivacy.min.css' => [],
+        ],
+      ],
+    ],
+  ];
   return $libraries;
 }
 
@@ -53,7 +69,7 @@ function sharemessage_library_info_alter(&$libraries, $extension) {
   // Add the profile id to the URL if present.
   $profile_id = \Drupal::config('sharemessage.addthis')->get('addthis_profile_id');
   if ($profile_id) {
-    $libraries['addthis']['js']['//s7.addthis.com/js/300/addthis_widget.js##pubid=' . $profile_id] = $libraries['addthis']['js']['//s7.addthis.com/js/300/addthis_widget.js'];
+    $libraries['addthis']['js']['//s7.addthis.com/js/300/addthis_widget.js#pubid=' . $profile_id] = $libraries['addthis']['js']['//s7.addthis.com/js/300/addthis_widget.js'];
     unset($libraries['addthis']['js']['//s7.addthis.com/js/300/addthis_widget.js']);
   }
 
@@ -63,15 +79,15 @@ function sharemessage_library_info_alter(&$libraries, $extension) {
   $config = \Drupal::config('sharemessage.sharrre');
   if ($library_url = $config->get('library_url')) {
     // Cloud hosted player, use external JavaScript.
-    $libraries['sharrre']['js'][$library_url] = array(
+    $libraries['sharrre']['js'][$library_url] = [
       'type' => 'external',
-    );
+    ];
   }
   elseif (\Drupal::moduleHandler()->moduleExists('libraries')) {
     $info = libraries_detect('sharrre');
-    $libraries['sharrre'] += array(
+    $libraries['sharrre'] += [
       'version' => $info['installed'] ? $info['version'] : 'web-hosted',
-    );
+    ];
     if ($info['installed']) {
       // Because the library is self hosted, use files from library definition.
       if (!empty($info['files']['js'])) {
@@ -89,26 +105,50 @@ function sharemessage_library_info_alter(&$libraries, $extension) {
       }
     }
   }
+
+  if (\Drupal::moduleHandler()->moduleExists('libraries')) {
+    $info = libraries_detect('socialshareprivacy');
+    $libraries['socialshareprivacy'] += [
+      'version' => $info['version'],
+    ];
+    if ($info['installed']) {
+      $libraries['socialshareprivacy']['library path'] = $info['library path'];
+      $path_js = '/' . $info['library path'] . '/jquery.socialshareprivacy.min.js';
+      $libraries['socialshareprivacy']['js'][$path_js] = [];
+      $path_css = '/' . $info['library path'] . '/stylesheets/jquery.socialshareprivacy.min.css';
+      $libraries['socialshareprivacy']['css']['base'][$path_css] = [];
+    }
+  }
+  else {
+    // Without libraries.module, we can't discover the location, assume it is in
+    // the top-level /libraries folder.
+    $libraries['socialshareprivacy'] += [
+      'version' => 'unknown',
+    ];
+    $libraries['socialshareprivacy']['library path'] = '/libraries/socialshareprivacy';
+    $libraries['socialshareprivacy']['js']['/libraries/socialshareprivacy/jquery.socialshareprivacy.min.js'] = [];
+    $libraries['socialshareprivacy']['css']['base']['/libraries/socialshareprivacy/stylesheets/jquery.socialshareprivacy.min.css'] = [];
+  }
+
 }
 
 /**
  * Implements hook_page_attachments().
  */
 function sharemessage_page_attachments(&$page) {
-  $smid = \Drupal::request()->query->get('smid');
-  $page['#cache']['contexts'][] = 'url.query_args:smid';
-  $config = \Drupal::config('sharemessage.addthis');
+  $config = \Drupal::config('sharemessage.settings');
   \Drupal::service('renderer')->addCacheableDependency($page, $config);
-  if (!empty($smid) && \Drupal::config('sharemessage.settings')->get('message_enforcement')) {
-    /** @var \Drupal\sharemessage\ShareMessageInterface $sharemessage */
-    $sharemessage = ShareMessage::load($smid);
-    if ($sharemessage) {
-      \Drupal::service('renderer')->addCacheableDependency($page, $sharemessage);
-      foreach ($sharemessage->buildOGTags($sharemessage->getContext()) as $tag) {
-        $page['#attached']['html_head'][] = [
-          $tag,
-          str_replace(':', '_', $tag['#attributes']['property']),
-        ];
+  if ($config->get('message_enforcement')) {
+    $smid = \Drupal::request()->query->get('smid');
+    $page['#cache']['contexts'][] = 'url.query_args:smid';
+    if (!empty($smid)) {
+      /** @var \Drupal\sharemessage\ShareMessageInterface $sharemessage */
+      $sharemessage = ShareMessage::load($smid);
+      if ($sharemessage) {
+        \Drupal::service('renderer')->addCacheableDependency($page, $sharemessage);
+        foreach ($sharemessage->buildOGTags($sharemessage->getContext()) as $tag) {
+          $page['#attached']['html_head'][] = [$tag, str_replace(':', '_', $tag['#attributes']['property'])];
+        }
       }
     }
   }
@@ -128,12 +168,12 @@ function sharemessage_get_addthis_services() {
       $json = addthis_get_services_json();
       $output = json_decode($json);
       if (!empty($output)) {
-        $options = array((string)t('Common') => array(), (string) t('Mail') => array(), (string) t('Other') => array());
+        $options = [(string)t('Common') => [], (string) t('Mail') => [], (string) t('Other') => []];
         foreach ($output->data as $service) {
-          if (in_array($service->code, array('facebook', 'facebook_like', 'twitter', 'xing', 'linkedin', 'wordpress', 'google_plusone_share'))) {
+          if (in_array($service->code, ['facebook', 'facebook_like', 'twitter', 'xing', 'linkedin', 'wordpress', 'google_plusone_share'])) {
             $options[(string) t('Common')][$service->code] = $service->name;
           }
-          elseif (in_array($service->code, array('mail', 'gmail', 'yahoomail', 'aolmail', 'email', 'mailto'))) {
+          elseif (in_array($service->code, ['mail', 'gmail', 'yahoomail', 'aolmail', 'email', 'mailto'])) {
             $options[(string) t('Mail')][$service->code] = $service->name;
           }
           else {
@@ -178,27 +218,97 @@ function addthis_get_services_json() {
 * Implements hook_theme().
 */
 function sharemessage_theme() {
-  return array(
-    'sharemessage_addthis' => array(
-      'variables' => array(
+  return [
+    'sharemessage_addthis' => [
+      'variables' => [
         'entity' => NULL,
-        'services' => array(),
+        'services' => [],
         'additional_services' => FALSE,
         'counter' => FALSE,
-        'attributes' => array(),
+        'attributes' => [],
         'twitter_template' => NULL,
-      ),
-    ),
-    'sharemessage_sharrre' => array(
-      'variables' => array(
-        'services' => array(),
+      ],
+    ],
+    'sharemessage_sharrre' => [
+      'variables' => [
+        'services' => [],
         'enable_hover' => TRUE,
         'enable_counter' => TRUE,
         'enable_tracking' => TRUE,
         'shorter_total' => TRUE,
-        'attributes' => array(),
+        'attributes' => [],
         'id' => 'test',
-      ),
-    ),
-  );
+      ],
+    ],
+    'sharemessage_socialshareprivacy' => [
+      'variables' => [
+        'attributes' => [],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function sharemessage_entity_extra_field_info() {
+  $extra = [];
+
+  /** @var \Drupal\sharemessage\ShareMessageInterface $sharemessage_storage */
+  $sharemessage_storage = \Drupal::entityTypeManager()->getStorage('sharemessage');
+  foreach ($sharemessage_storage->loadMultiple() as $sharemessage) {
+    $entity_type = $sharemessage->getExtraFieldEntityType();
+    if ($entity_type) {
+      // Expose the Share Message extra field.
+      $bundles = $sharemessage->getExtraFieldBundles();
+      if (!$bundles) {
+        $bundles = array_keys(\Drupal::service('entity_type.bundle.info')->getBundleInfo($entity_type));
+      }
+      foreach ($bundles as $bundle) {
+        $extra[$entity_type][$bundle] = [
+          'display' => [
+            'sharemessage__' . $sharemessage->id() => [
+              'label' => $sharemessage->label(),
+              'visible' => FALSE,
+            ],
+          ],
+        ];
+      }
+    }
+  }
+
+  return $extra;
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function sharemessage_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  foreach ($display->getComponents() as $name => $component) {
+    if (strstr($name, 'sharemessage__') !== FALSE) {
+      list (, $id) = explode('__', $name, 2);
+      // Ensure that there is a Share Message with the detected ID to load and
+      // that the context's bundle is one of the extra field's list.
+      // This is needed because the Share Message settings can be changed and
+      // that might not be immediately reflected in the view display.
+      /** @var \Drupal\sharemessage\ShareMessageInterface $sharemessage */
+      if ($sharemessage = ShareMessage::load($id)) {
+        if (($sharemessage->getExtraFieldEntityType() == $entity->getEntityTypeId()) && (!$sharemessage->getExtraFieldBundles() || in_array($entity->bundle(), $sharemessage->getExtraFieldBundles()))) {
+          // Default to the entity type ID for the token type.
+          $entity_type_id = $entity->getEntityTypeId();
+
+          // Some entity types have token types that do not match their entity
+          // type ID. If the token module is available, use it to get the
+          // correct token type. This is necessary for taxonomy_term/term, for
+          // example.
+          if (\Drupal::moduleHandler()->moduleExists('token')) {
+            $entity_type_id = \Drupal::service('token.entity_mapper')->getTokenTypeForEntityType($entity->getEntityTypeId());
+          }
+          // Add the runtime context to get the correct token context.
+          $sharemessage->setRuntimeContext([$entity_type_id => $entity]);
+          $build[$name] = \Drupal::entityTypeManager()->getViewBuilder('sharemessage')->view($sharemessage);
+        }
+      }
+    }
+  }
 }

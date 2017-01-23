@@ -52,6 +52,6 @@ class SharePlugin extends Plugin {
    *
    * @var array
    */
-  public $default_settings = array();
+  public $default_settings = [];
 
 }

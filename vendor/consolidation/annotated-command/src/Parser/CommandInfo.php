@@ -1,13 +1,27 @@
 <?php
 namespace Consolidation\AnnotatedCommand\Parser;
 
+use Symfony\Component\Console\Input\InputOption;
+use Consolidation\AnnotatedCommand\Parser\Internal\CommandDocBlockParser;
+use Consolidation\AnnotatedCommand\Parser\Internal\CommandDocBlockParserFactory;
+use Consolidation\AnnotatedCommand\AnnotationData;
+
 /**
  * Given a class and method name, parse the annotations in the
  * DocBlock comment, and provide accessor methods for all of
  * the elements that are needed to create a Symfony Console Command.
+ *
+ * Note that the name of this class is now somewhat of a misnomer,
+ * as we now use it to hold annotation data for hooks as well as commands.
+ * It would probably be better to rename this to MethodInfo at some point.
  */
 class CommandInfo
 {
+    /**
+     * Serialization schema version. Incremented every time the serialization schema changes.
+     */
+    const SERIALIZATION_SCHEMA_VERSION = 1;
+
     /**
      * @var \ReflectionMethod
      */
@@ -17,7 +31,7 @@ class CommandInfo
      * @var boolean
      * @var string
     */
-    protected $docBlockIsParsed;
+    protected $docBlockIsParsed = false;
 
     /**
      * @var string
@@ -37,12 +51,12 @@ class CommandInfo
     /**
      * @var DefaultsWithDescriptions
      */
-    protected $options = [];
+    protected $options;
 
     /**
      * @var DefaultsWithDescriptions
      */
-    protected $arguments = [];
+    protected $arguments;
 
     /**
      * @var array
@@ -50,14 +64,19 @@ class CommandInfo
     protected $exampleUsage = [];
 
     /**
-     * @var array
+     * @var AnnotationData
      */
-    protected $otherAnnotations = [];
+    protected $otherAnnotations;
 
     /**
      * @var array
      */
     protected $aliases = [];
+
+    /**
+     * @var InputOption[]
+     */
+    protected $inputOptions;
 
     /**
      * @var string
@@ -73,18 +92,190 @@ class CommandInfo
      * Create a new CommandInfo class for a particular method of a class.
      *
      * @param string|mixed $classNameOrInstance The name of a class, or an
-     *   instance of it.
+     *   instance of it, or an array of cached data.
      * @param string $methodName The name of the method to get info about.
+     * @param array $cache Cached data
+     * @deprecated Use CommandInfo::create() or CommandInfo::deserialize()
+     *   instead. In the future, this constructor will be protected.
      */
-    public function __construct($classNameOrInstance, $methodName)
+    public function __construct($classNameOrInstance, $methodName, $cache = [])
     {
         $this->reflection = new \ReflectionMethod($classNameOrInstance, $methodName);
         $this->methodName = $methodName;
+
+        if (!empty($cache)) {
+            $this->constructFromCache($cache);
+            $this->docBlockIsParsed = true;
+        } else {
+            $this->constructFromClassAndMethod($classNameOrInstance, $methodName);
+        }
+    }
+
+    public static function create($classNameOrInstance, $methodName)
+    {
+        return new self($classNameOrInstance, $methodName);
+    }
+
+    public static function deserialize($cache)
+    {
+        $cache = (array)$cache;
+
+        $classNameOrInstance = $cache['class'];
+        $methodName = $cache['method_name'];
+
+        // If the cache came from a newer version, ignore it and
+        // regenerate the cached information.
+        if (!static::isValidSerializedData($cache)) {
+            return self::create($classNameOrInstance, $methodName);
+        }
+        return new self($classNameOrInstance, $methodName, $cache);
+    }
+
+    public static function isValidSerializedData($cache)
+    {
+        return
+            isset($cache['schema']) &&
+            ($cache['schema'] > 0) &&
+            ($cache['schema'] <= self::SERIALIZATION_SCHEMA_VERSION);
+    }
+
+    protected function constructFromClassAndMethod($classNameOrInstance, $methodName)
+    {
+        $this->otherAnnotations = new AnnotationData();
         // Set up a default name for the command from the method name.
         // This can be overridden via @command or @name annotations.
-        $this->name = $this->convertName($this->reflection->name);
+        $this->name = $this->convertName($methodName);
         $this->options = new DefaultsWithDescriptions($this->determineOptionsFromParameters(), false);
         $this->arguments = $this->determineAgumentClassifications();
+    }
+
+    protected function constructFromCache($info_array)
+    {
+        $info_array += $this->defaultSerializationData();
+
+        $this->name = $info_array['name'];
+        $this->methodName = $info_array['method_name'];
+        $this->otherAnnotations = new AnnotationData((array) $info_array['annotations']);
+        $this->arguments = new DefaultsWithDescriptions();
+        $this->options = new DefaultsWithDescriptions();
+        $this->aliases = $info_array['aliases'];
+        $this->help = $info_array['help'];
+        $this->description = $info_array['description'];
+        $this->exampleUsage = $info_array['example_usages'];
+        $this->returnType = $info_array['return_type'];
+
+        foreach ((array)$info_array['arguments'] as $key => $info) {
+            $info = (array)$info;
+            $this->arguments->add($key, $info['description']);
+            if (array_key_exists('default', $info)) {
+                $this->arguments->setDefaultValue($key, $info['default']);
+            }
+        }
+        foreach ((array)$info_array['options'] as $key => $info) {
+            $info = (array)$info;
+            $this->options->add($key, $info['description']);
+            if (array_key_exists('default', $info)) {
+                $this->options->setDefaultValue($key, $info['default']);
+            }
+        }
+
+        $this->input_options = [];
+        foreach ((array)$info_array['input_options'] as $i => $option) {
+            $option = (array) $option;
+            $this->inputOptions[$i] = new InputOption(
+                $option['name'],
+                $option['shortcut'],
+                $option['mode'],
+                $option['description'],
+                $option['default']
+            );
+        }
+    }
+
+    public function serialize()
+    {
+        $info = [
+            'schema' => self::SERIALIZATION_SCHEMA_VERSION,
+            'class' => $this->reflection->getDeclaringClass()->getName(),
+            'method_name' => $this->getMethodName(),
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'help' => $this->getHelp(),
+            'aliases' => $this->getAliases(),
+            'annotations' => $this->getAnnotations()->getArrayCopy(),
+            // Todo: Test This.
+            'topics' => $this->getTopics(),
+            'example_usages' => $this->getExampleUsages(),
+            'return_type' => $this->getReturnType(),
+        ] + $this->defaultSerializationData();
+        foreach ($this->arguments()->getValues() as $key => $val) {
+            $info['arguments'][$key] = [
+                'description' => $this->arguments()->getDescription($key),
+            ];
+            if ($this->arguments()->hasDefault($key)) {
+                $info['arguments'][$key]['default'] = $val;
+            }
+        }
+        foreach ($this->options()->getValues() as $key => $val) {
+            $info['options'][$key] = [
+                'description' => $this->options()->getDescription($key),
+            ];
+            if ($this->options()->hasDefault($key)) {
+                $info['options'][$key]['default'] = $val;
+            }
+        }
+        foreach ($this->getParameters() as $i => $parameter) {
+            // TODO: Also cache input/output params
+        }
+        foreach ($this->inputOptions() as $i => $option) {
+            $mode = 0;
+            if ($option->isValueRequired()) {
+                $mode |= InputOption::VALUE_REQUIRED;
+            }
+            if ($option->isValueOptional()) {
+                $mode |= InputOption::VALUE_OPTIONAL;
+            }
+            if ($option->isArray()) {
+                $mode |= InputOption::VALUE_IS_ARRAY;
+            }
+            if (!$mode) {
+                $mode = InputOption::VALUE_NONE;
+            }
+
+            $info['input_options'][$i] = [
+                'name' => $option->getName(),
+                'shortcut' => $option->getShortcut(),
+                'mode' => $mode,
+                'description' => $option->getDescription(),
+                'default' => null,
+            ];
+            if ($option->isValueOptional()) {
+                $info['input_options'][$i]['default'] = $option->getDefault();
+            }
+        }
+        return $info;
+    }
+
+    /**
+     * Default data for serialization.
+     * @return array
+     */
+    protected function defaultSerializationData()
+    {
+        return [
+            'description' => '',
+            'help' => '',
+            'aliases' => [],
+            'annotations' => [],
+            'topics' => [],
+            'example_usages' => [],
+            'return_type' => [],
+            'parameters' => [],
+            'arguments' => [],
+            'arguments' => [],
+            'options' => [],
+            'input_options' => [],
+        ];
     }
 
     /**
@@ -116,6 +307,7 @@ class CommandInfo
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
     }
 
     public function getReturnType()
@@ -127,6 +319,7 @@ class CommandInfo
     public function setReturnType($returnType)
     {
         $this->returnType = $returnType;
+        return $this;
     }
 
     /**
@@ -134,12 +327,32 @@ class CommandInfo
      * implementation method of this command that are not already
      * handled by the primary methods of this class.
      *
-     * @return array
+     * @return AnnotationData
      */
-    public function getAnnotations()
+    public function getRawAnnotations()
     {
         $this->parseDocBlock();
         return $this->otherAnnotations;
+    }
+
+    /**
+     * Get any annotations included in the docblock comment,
+     * also including default values such as @command.  We add
+     * in the default @command annotation late, and only in a
+     * copy of the annotation data because we use the existance
+     * of a @command to indicate that this CommandInfo is
+     * a command, and not a hook or anything else.
+     *
+     * @return AnnotationData
+     */
+    public function getAnnotations()
+    {
+        return new AnnotationData(
+            $this->getRawAnnotations()->getArrayCopy() +
+            [
+                'command' => $this->getName(),
+            ]
+        );
     }
 
     /**
@@ -166,16 +379,24 @@ class CommandInfo
     public function hasAnnotation($annotation)
     {
         $this->parseDocBlock();
-        return array_key_exists($annotation, $this->otherAnnotations);
+        return isset($this->otherAnnotations[$annotation]);
     }
 
     /**
      * Save any tag that we do not explicitly recognize in the
      * 'otherAnnotations' map.
      */
-    public function addOtherAnnotation($name, $content)
+    public function addAnnotation($name, $content)
     {
         $this->otherAnnotations[$name] = $content;
+    }
+
+    /**
+     * Remove an annotation that was previoudly set.
+     */
+    public function removeAnnotation($name)
+    {
+        unset($this->otherAnnotations[$name]);
     }
 
     /**
@@ -197,6 +418,7 @@ class CommandInfo
     public function setDescription($description)
     {
         $this->description = $description;
+        return $this;
     }
 
     /**
@@ -215,6 +437,7 @@ class CommandInfo
     public function setHelp($help)
     {
         $this->help = $help;
+        return $this;
     }
 
     /**
@@ -238,6 +461,7 @@ class CommandInfo
             $aliases = explode(',', static::convertListToCommaSeparated($aliases));
         }
         $this->aliases = array_filter($aliases);
+        return $this;
     }
 
     /**
@@ -263,6 +487,21 @@ class CommandInfo
     public function setExampleUsage($usage, $description)
     {
         $this->exampleUsage[$usage] = $description;
+        return $this;
+    }
+
+    /**
+     * Return the topics for this command.
+     *
+     * @return string[]
+     */
+    public function getTopics()
+    {
+        if (!$this->hasAnnotation('topics')) {
+            return [];
+        }
+        $topics = $this->getAnnotation('topics');
+        return explode(',', trim($topics));
     }
 
     /**
@@ -293,6 +532,48 @@ class CommandInfo
     public function options()
     {
         return $this->options;
+    }
+
+    /**
+     * Get the inputOptions for the options associated with this CommandInfo
+     * object, e.g. via @option annotations, or from
+     * $options = ['someoption' => 'defaultvalue'] in the command method
+     * parameter list.
+     *
+     * @return InputOption[]
+     */
+    public function inputOptions()
+    {
+        if (!isset($this->inputOptions)) {
+            $this->inputOptions = $this->createInputOptions();
+        }
+        return $this->inputOptions;
+    }
+
+    protected function createInputOptions()
+    {
+        $explicitOptions = [];
+
+        $opts = $this->options()->getValues();
+        foreach ($opts as $name => $defaultValue) {
+            $description = $this->options()->getDescription($name);
+
+            $fullName = $name;
+            $shortcut = '';
+            if (strpos($name, '|')) {
+                list($fullName, $shortcut) = explode('|', $name, 2);
+            }
+
+            if (is_bool($defaultValue)) {
+                $explicitOptions[$fullName] = new InputOption($fullName, $shortcut, InputOption::VALUE_NONE, $description);
+            } elseif ($defaultValue === InputOption::VALUE_REQUIRED) {
+                $explicitOptions[$fullName] = new InputOption($fullName, $shortcut, InputOption::VALUE_REQUIRED, $description);
+            } else {
+                $explicitOptions[$fullName] = new InputOption($fullName, $shortcut, InputOption::VALUE_OPTIONAL, $description, $defaultValue);
+            }
+        }
+
+        return $explicitOptions;
     }
 
     /**
@@ -457,9 +738,9 @@ class CommandInfo
     protected function parseDocBlock()
     {
         if (!$this->docBlockIsParsed) {
-            $docblock = $this->reflection->getDocComment();
-            $parser = new CommandDocBlockParser($this);
-            $parser->parse($docblock);
+            // The parse function will insert data from the provided method
+            // into this object, using our accessors.
+            CommandDocBlockParserFactory::parse($this, $this->reflection);
             $this->docBlockIsParsed = true;
         }
     }

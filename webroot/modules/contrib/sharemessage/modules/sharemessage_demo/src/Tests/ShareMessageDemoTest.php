@@ -16,7 +16,7 @@ class ShareMessageDemoTest extends WebTestBase {
    *
    * @var string[]
    */
-  public static $modules = ['sharemessage_demo', 'path', 'block', 'filter'];
+  public static $modules = ['path', 'block', 'filter'];
 
   /**
    * {@inheritdoc}
@@ -24,9 +24,10 @@ class ShareMessageDemoTest extends WebTestBase {
   protected function setUp() {
     parent::setUp();
     // Install bartik theme.
-    \Drupal::service('theme_handler')->install(array('bartik'));
+    \Drupal::service('theme_handler')->install(['bartik']);
     $theme_settings = $this->config('system.theme');
     $theme_settings->set('default', 'bartik')->save();
+    \Drupal::service('module_installer')->install(['sharemessage', 'sharemessage_demo']);
   }
 
   /**
@@ -45,7 +46,7 @@ class ShareMessageDemoTest extends WebTestBase {
 
     $this->drupalLogin($admin_user);
     $this->drupalGet('admin/structure/block');
-    $this->assertText(t('Share message'));
+    $this->assertText(t('Share Message'));
     $this->clickLink(t('Configure'), 0);
 
     $this->drupalGet('admin/structure/types');
@@ -55,7 +56,7 @@ class ShareMessageDemoTest extends WebTestBase {
     $this->drupalGet('admin/content');
     $this->clickLink(t('Share Message demo'));
     $this->assertText(t('Welcome to the Share Message demo module!'));
-    $this->assertText(t('Share message'));
+    $this->assertText(t('Share Message'));
     // Assert the demo links are correct.
     $node = $this->getNodeByTitle('Share Message demo');
     $this->drupalGet('node/' . $node->id());
@@ -80,9 +81,15 @@ class ShareMessageDemoTest extends WebTestBase {
     $this->assertRaw('<meta property="og:url" content="' . $this->getUrl() . '" />');
 
     // Test that Sharrre plugin works.
-    $this->assertText('Share message - Sharrre');
+    $this->assertText('Share Message - Sharrre');
     $this->assertRaw('<div id="block-sharemessage-sharrre" class="block block-sharemessage block-sharemessage-block">');
     $this->assertRaw('"services":{"googlePlus":"googlePlus","facebook":"facebook","twitter":"twitter"}');
+
+    // Test that Social Share Privacy plugin works.
+    $this->assertText('Share Message - Social Share Privacy');
+    $this->assertRaw('<div id="block-sharemessage-socialshareprivacy" class="block block-sharemessage block-sharemessage-block">');
+    $this->assertRaw('"twitter":{"status":true');
+    $this->assertRaw('"facebook":{"status":true');
   }
 
 }

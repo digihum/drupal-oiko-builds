@@ -1,6 +1,7 @@
 <?php
 namespace Consolidation\OutputFormatters;
 
+use Consolidation\OutputFormatters\Options\FormatterOptions;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,6 +16,7 @@ class FormatterOptionsTests extends \PHPUnit_Framework_TestCase
             new InputArgument('unused', InputArgument::REQUIRED),
             new InputOption(FormatterOptions::FORMAT, null, InputOption::VALUE_REQUIRED),
             new InputOption(FormatterOptions::TABLE_STYLE, null, InputOption::VALUE_REQUIRED),
+            new InputOption(FormatterOptions::FIELD, null, InputOption::VALUE_REQUIRED),
             new InputOption(FormatterOptions::FIELDS, null, InputOption::VALUE_REQUIRED),
             new InputOption(FormatterOptions::INCLUDE_FIELD_LABELS, null, InputOption::VALUE_NONE),
             new InputOption(FormatterOptions::ROW_LABELS, null, InputOption::VALUE_REQUIRED),
@@ -27,6 +29,11 @@ class FormatterOptionsTests extends \PHPUnit_Framework_TestCase
         $definition = new InputDefinition($optionDefinitions);
         $input->bind($definition);
         return $input;
+    }
+
+    protected function getFormat(FormatterOptions $options, $defaults = [])
+    {
+        return $options->get(FormatterOptions::FORMAT, [], $options->get(FormatterOptions::DEFAULT_FORMAT, $defaults, ''));
     }
 
     public function testFormatterOptions() {
@@ -73,22 +80,22 @@ class FormatterOptionsTests extends \PHPUnit_Framework_TestCase
 
         // Configuration has higher priority than defaults
         $options = new FormatterOptions($configurationData, $userOptions);
-        $this->assertEquals('table', $options->getFormat());
-        $this->assertEquals('table', $options->getFormat($defaults));
+        $this->assertEquals('table', $this->getFormat($options));
+        $this->assertEquals('table', $this->getFormat($options, $defaults));
 
         // Override has higher priority than configuration and defaults
         $options = new FormatterOptions($configurationData, $userOptions);
         $newOptions = $options->override([FormatterOptions::DEFAULT_FORMAT => 'json']);
-        $this->assertEquals('json', $newOptions->getFormat());
-        $this->assertEquals('json', $newOptions->getFormat($defaults));
+        $this->assertEquals('json', $this->getFormat($newOptions));
+        $this->assertEquals('json', $this->getFormat($newOptions, $defaults));
 
         $options = new FormatterOptions($configurationData, $userOptions);
         $options->setConfigurationDefault(FormatterOptions::DEFAULT_FORMAT, 'php');
-        $this->assertEquals('table', $options->getFormat());
+        $this->assertEquals('table', $this->getFormat($options));
 
         $options = new FormatterOptions($configurationData, $userOptions);
         $options->setConfigurationData([]);
-        $this->assertEquals('', $options->getFormat());
+        $this->assertEquals('', $this->getFormat($options));
 
         // It is only possible to override options that appear in '$default'
         // with $input; if there are no defaults, then the --format=yaml

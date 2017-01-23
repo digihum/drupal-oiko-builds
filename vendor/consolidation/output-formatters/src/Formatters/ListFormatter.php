@@ -1,12 +1,11 @@
 <?php
 namespace Consolidation\OutputFormatters\Formatters;
 
-use Symfony\Component\Console\Output\OutputInterface;
-use Consolidation\OutputFormatters\FormatterInterface;
-use Consolidation\OutputFormatters\FormatterOptions;
-use Consolidation\OutputFormatters\OverrideRestructureInterface;
+use Consolidation\OutputFormatters\Options\FormatterOptions;
 use Consolidation\OutputFormatters\StructuredData\ListDataInterface;
 use Consolidation\OutputFormatters\StructuredData\RenderCellInterface;
+use Consolidation\OutputFormatters\Transformations\OverrideRestructureInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Display the data in a simple list.
@@ -14,7 +13,7 @@ use Consolidation\OutputFormatters\StructuredData\RenderCellInterface;
  * This formatter prints a plain, unadorned list of data,
  * with each data item appearing on a separate line.  If you
  * wish your list to contain headers, then use the table
- * formatter, and wrap your data in an AssociativeList.
+ * formatter, and wrap your data in an PropertyList.
  */
 class ListFormatter implements FormatterInterface, OverrideRestructureInterface, RenderDataInterface
 {
@@ -35,7 +34,7 @@ class ListFormatter implements FormatterInterface, OverrideRestructureInterface,
         // then we will render whatever data its 'getListData'
         // method provides.
         if ($structuredOutput instanceof ListDataInterface) {
-            return $this->renderData($structuredOutput, $structuredOutput->getListData(), $options);
+            return $this->renderData($structuredOutput, $structuredOutput->getListData($options), $options);
         }
     }
 
@@ -53,7 +52,7 @@ class ListFormatter implements FormatterInterface, OverrideRestructureInterface,
     protected function renderEachCell($originalData, $restructuredData, FormatterOptions $options)
     {
         foreach ($restructuredData as $key => $cellData) {
-            $restructuredData[$key] = $originalData->renderCell($key, $cellData, $options);
+            $restructuredData[$key] = $originalData->renderCell($key, $cellData, $options, $restructuredData);
         }
         return $restructuredData;
     }

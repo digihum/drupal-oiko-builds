@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies: {  }
 id: share_message_addthis_demo
-label: 'Share message - AddThis demo'
+label: 'Share Message - AddThis demo'
 title: 'Sharemessage for AddThis plugin'
 message_long: 'AddThis sharemessage long description for sharing.'
 message_short: 'AddThis sharemessage short description for sharing.'

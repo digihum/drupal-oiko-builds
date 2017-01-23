@@ -13,6 +13,8 @@ use Drupal\node\Entity\Node;
 function sharemessage_demo_install() {
   // Ensure the translation fields are created in the database.
   \Drupal::service('entity.definition_update_manager')->applyUpdates();
+  // Ensure to rebuild router, as it is lazily rebuild in the module installer.
+  \Drupal::service('router.builder')->rebuild();
 
   // Create an introduction node.
   $description_node = Node::create([
@@ -21,7 +23,7 @@ function sharemessage_demo_install() {
     'uid' => '0',
     'body' => [
       'value' => '<p>' . t('Welcome to the Share Message demo module!') . '</p>'
-        . '<p>' . t('This module provides an exportable entity of share widgets (Share Messages) using the <a href=":addthis">AddThis</a>, <a href=":sharrre">Sharrre</a> or other pluggable share widgets,. It can be used as a block and provides a settings page where the share widget is highly configurable.', [':addthis' => Url::fromUri('http://www.addthis.com/')->toString(), ':sharrre' => Url::fromUri('http://www.sharrre.com/')->toString()]) .'</p>'
+        . '<p>' . t('This module provides an exportable entity of share widgets (Share Messages) using the <a href=":addthis">AddThis</a>, <a href=":sharrre">Sharrre</a>, <a href=":ssp">Social Share Privacy</a> or other pluggable share widgets,. It can be used as a block and provides a settings page where the share widget is highly configurable.', [':addthis' => Url::fromUri('http://www.addthis.com/')->toString(), ':sharrre' => Url::fromUri('http://www.sharrre.com/')->toString(), ':ssp' => Url::fromUri('http://panzi.github.io/SocialSharePrivacy/')->toString()]) .'</p>'
         . '<p>' . t('The Share Message demo module includes the configuration needed for enabling social media sharing widgets on a <a href=":drupal">Drupal</a> site.', [':drupal' => Url::fromUri('https://www.drupal.org/')->toString()]) .'</p>'
         . '<p>' . t('It contains the default <a href=":settings">Share Message settings</a> and adds a <a href=":demo">Share Message demo</a> with some dummy values to be shared to the <a href=":list">Share Message list</a>.', [':settings' => Url::fromRoute('sharemessage.settings.settings')->toString(), ':demo' => Url::fromUri('base:admin/config/services/sharemessage/manage/share_message_addthis_demo')->toString(), ':list' => Url::fromRoute('entity.sharemessage.collection')->toString()]) . '<p>'
         . '<ul>'

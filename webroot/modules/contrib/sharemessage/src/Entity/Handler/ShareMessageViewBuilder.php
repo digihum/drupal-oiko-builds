@@ -15,19 +15,19 @@ class ShareMessageViewBuilder extends EntityViewBuilder {
    * {@inheritdoc}
    */
   public function view(EntityInterface $entity, $view_mode = 'full', $langcode = NULL) {
-    $build = $this->viewMultiple(array($entity), $view_mode, $langcode);
+    $build = $this->viewMultiple([$entity], $view_mode, $langcode);
     return reset($build);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function viewMultiple(array $entities = array(), $view_mode = 'full', $langcode = NULL) {
+  public function viewMultiple(array $entities = [], $view_mode = 'full', $langcode = NULL) {
     if (empty($entities)) {
-      return array();
+      return [];
     }
 
-    $build = array();
+    $build = [];
     foreach ($entities as $entity) {
       /* @var \Drupal\sharemessage\ShareMessageInterface $entity */
 
@@ -43,6 +43,7 @@ class ShareMessageViewBuilder extends EntityViewBuilder {
           ],
         ],
       ];
+      $cacheability_metadata->addCacheableDependency(\Drupal::config('sharemessage.settings'));
       $cacheability_metadata->applyTo($build[$entity->id()]);
 
       $context = $entity->getContext($view_mode);
@@ -51,13 +52,19 @@ class ShareMessageViewBuilder extends EntityViewBuilder {
 
       // Add OG Tags to the page if there are none added yet and a corresponding
       // view mode was set (or it was altered into such a view mode in getContent()).
-      $og_view_modes = array('full', 'only_og_tags', 'no_attributes');
+      $og_view_modes = ['full', 'only_og_tags', 'no_attributes'];
       if (!$is_overridden && in_array($context['view_mode'], $og_view_modes)) {
         $build[$entity->id()]['#attached']['html_head'] = $this->mapHeadElements($entity->buildOGTags($context));
       }
 
+      // Add twitter card meta tags if setting is active.
+      if (\Drupal::config('sharemessage.settings')->get('add_twitter_card')) {
+        $twitter_tags = $entity->buildTwitterCardTags($context);
+        $build[$entity->id()]['#attached']['html_head'] = array_merge($build[$entity->id()]['#attached']['html_head'], $twitter_tags);
+      }
+
       if ($entity->hasPlugin() && $view_mode != 'only_og_tags') {
-        $attributes_view_modes = array('full', 'attributes_only');
+        $attributes_view_modes = ['full', 'attributes_only'];
         $plugin_attributes = in_array($context['view_mode'], $attributes_view_modes);
         $build[$entity->id()][$entity->getPluginID()] = $entity->getPlugin()->build($context, $plugin_attributes);
       }
@@ -82,12 +89,12 @@ class ShareMessageViewBuilder extends EntityViewBuilder {
    *   The new structured buildOGTags array to work with drupal_add_html_head.
    */
   protected function mapHeadElements(array $elements) {
-    $mapped = array();
+    $mapped = [];
     foreach ($elements as $element) {
-      $mapped[] = array(
+      $mapped[] = [
         $element,
         str_replace(':', '_', $element['#attributes']['property']),
-      );
+      ];
     }
     return $mapped;
   }
