@@ -92,10 +92,6 @@ function cm_config_tools_drush_command() {
     'aliases' => array('cmci'),
   );
 
-  // @TODO Add command to suggest dependants. Optionally invoke it from
-  // drush_cm_config_tools_export(). See the @TODO note in
-  // ExtensionConfigHandlerInterface::export() for options.
-
   $items['cm-config-tools-revert'] = $dependencies + array(
     'description' => $description,
     'arguments' => array(
@@ -106,6 +102,20 @@ function cm_config_tools_drush_command() {
       'drush cm-config-tools-revert migrate_plus.migration.hotels' => 'Revert the hotels migration.',
     ),
     'aliases' => array('cmcr'),
+  );
+
+  $items['cm-config-tools-suggest'] = array(
+    'description' => "List the dependencies of an extension's default configuration.",
+    'arguments' => array(
+      'module' => 'Module machine name.',
+    ),
+    'examples' => array(
+      'drush cm-config-tools-suggest MODULE_NAME' => 'List the dependencies of the configuration',
+    ),
+    'aliases' => array('cmcs'),
+    'outputformat' => array(
+      'default' => 'yaml',
+    ),
   );
 
   return $items;
@@ -363,55 +373,11 @@ function drush_cm_config_tools_sort_preview_table($a, $b) {
 
 /**
  * Drush command callback.
- *
- * This could really just be part of config_update. The only 'magic' this
- * provides is to translate from a full config name (including prefix and
- * provider) to the 'short' name, which the methods on ConfigReverter use, and
- * to allow reverting multiple config items in one operation.
- *
- * @see \Drupal\config_update\ConfigReverter::import()
- * @see \Drupal\config_update\ConfigReverter::revert()
  */
 function drush_cm_config_tools_revert($names) {
-  $names = array_map('trim', explode(',', $names));
-  $errors = [];
-  if ($names) {
-    $type_manager = \Drupal::entityTypeManager();
-    /** @var \Drupal\config_update\ConfigLister $config_lister */
-    $config_lister = \Drupal::service('config_update.config_list');
-    /** @var \Drupal\config_update\ConfigReverter $reverter */
-    $reverter = \Drupal::service('config_update.config_update');
-    list($active_list, , ) = $config_lister->listConfig('type', 'system.all');
-
-    foreach ($names as $full_name) {
-      // ConfigReverter methods require the 'short' name for typed config,
-      // otherwise 'system.simple'.
-      if ($type = $config_lister->getTypeNameByConfigName($full_name)) {
-        /** @var \Drupal\Core\Config\Entity\ConfigEntityTypeInterface $definition */
-        $definition = $type_manager->getDefinition($type);
-        $prefix = $definition->getConfigPrefix() . '.';
-        if (strpos($full_name, $prefix) === 0) {
-          $name = substr($full_name, strlen($prefix));
-        }
-        else {
-          $errors[$full_name] = dt('Config @name does not match expected config prefix.', array('@name' => $full_name));
-          continue;
-        }
-      }
-      else {
-        $type = 'system.simple';
-        $name = $full_name;
-      }
-
-      $method = in_array($full_name, $active_list) ? 'revert' : 'import';
-      if (!$reverter->{$method}($type, $name)) {
-        $errors[$name] = dt('Config @name could not be reverted.', array('@name' => $name));
-      }
-    }
-  }
-  else {
-    $errors[] = dt('No configuration specified to revert.');
-  }
+  /** @var \Drupal\cm_config_tools\ExtensionConfigHandler $helper */
+  $helper = \Drupal::service('cm_config_tools');
+  $errors = $helper->revert($names);
 
   if ($errors) {
     foreach ($errors as $error) {
@@ -421,4 +387,12 @@ function drush_cm_config_tools_revert($names) {
   else {
     return drush_log(dt('Configuration items successfully reverted.'), LogLevel::SUCCESS);
   }
+}
+
+/**
+ * Drush command callback.
+ */
+function drush_cm_config_tools_suggest($extension) {
+  $dependencies = \Drupal::service('cm_config_tools')->getExtensionConfigSuggestions($extension);
+  return $dependencies;
 }

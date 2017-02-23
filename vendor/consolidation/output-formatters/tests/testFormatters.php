@@ -1,10 +1,12 @@
 <?php
 namespace Consolidation\OutputFormatters;
 
-use Consolidation\TestUtils\AssociativeListWithCsvCells;
+use Consolidation\TestUtils\PropertyListWithCsvCells;
 use Consolidation\TestUtils\RowsOfFieldsWithAlternatives;
-use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
+use Consolidation\OutputFormatters\Options\FormatterOptions;
 use Consolidation\OutputFormatters\StructuredData\AssociativeList;
+use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
+use Consolidation\OutputFormatters\StructuredData\PropertyList;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
@@ -333,7 +335,7 @@ EOT;
     /**
      * @expectedException \Consolidation\OutputFormatters\Exception\IncompatibleDataException
      * @expectedExceptionCode 1
-     * @expectedExceptionMessage Data provided to Consolidation\OutputFormatters\Formatters\CsvFormatter must be one of an instance of Consolidation\OutputFormatters\StructuredData\RowsOfFields, an instance of Consolidation\OutputFormatters\StructuredData\AssociativeList or an array. Instead, a string was provided.
+     * @expectedExceptionMessage Data provided to Consolidation\OutputFormatters\Formatters\CsvFormatter must be one of an instance of Consolidation\OutputFormatters\StructuredData\RowsOfFields, an instance of Consolidation\OutputFormatters\StructuredData\PropertyList or an array. Instead, a string was provided.
      */
     function testBadDataTypeForCsv()
     {
@@ -348,6 +350,41 @@ EOT;
     function testBadDataTypeForJson()
     {
         $this->assertFormattedOutputMatches('Will fail, not return', 'json', 'String cannot be converted to json');
+    }
+
+    function testNoFormatterSelected()
+    {
+        $data = 'Hello';
+        $expected = $data;
+        $this->assertFormattedOutputMatches($expected, '', $data);
+    }
+
+    function testRenderTableAsString()
+    {
+        $data = new RowsOfFields([['f1' => 'A', 'f2' => 'B', 'f3' => 'C'], ['f1' => 'x', 'f2' => 'y', 'f3' => 'z']]);
+        $expected = "A\tB\tC\nx\ty\tz";
+
+        $this->assertFormattedOutputMatches($expected, 'string', $data);
+    }
+
+    function testRenderTableAsStringWithSingleField()
+    {
+        $data = new RowsOfFields([['f1' => 'q', 'f2' => 'r', 'f3' => 's'], ['f1' => 'x', 'f2' => 'y', 'f3' => 'z']]);
+        $expected = "q\nx";
+
+        $options = new FormatterOptions([FormatterOptions::DEFAULT_STRING_FIELD => 'f1']);
+
+        $this->assertFormattedOutputMatches($expected, 'string', $data, $options);
+    }
+
+    function testRenderTableAsStringWithSingleFieldAndUserSelectedField()
+    {
+        $data = new RowsOfFields([['f1' => 'q', 'f2' => 'r', 'f3' => 's'], ['f1' => 'x', 'f2' => 'y', 'f3' => 'z']]);
+        $expected = "r\ny";
+
+        $options = new FormatterOptions([FormatterOptions::DEFAULT_STRING_FIELD => 'f1']);
+
+        $this->assertFormattedOutputMatches($expected, 'string', $data, $options, ['fields' => 'f2']);
     }
 
     function testSimpleCsv()
@@ -394,13 +431,6 @@ EOT;
         $this->assertFormattedOutputMatches($expected, 'csv', $data);
     }
 
-    function testNoFormatterSelected()
-    {
-        $data = 'Hello';
-        $expected = $data;
-        $this->assertFormattedOutputMatches($expected, '', $data);
-    }
-
     function testCsvBothKindsOfQuotes()
     {
         $data = ["John's \"new\" book", "Mary's \"modified\" laptop"];
@@ -409,6 +439,38 @@ EOT;
 EOT;
 
         $this->assertFormattedOutputMatches($expected, 'csv', $data);
+    }
+
+    function testSimpleTsv()
+    {
+        $data = ['a', 'b', 'c'];
+        $expected = "a\tb\tc";
+
+        $this->assertFormattedOutputMatches($expected, 'tsv', $data);
+    }
+
+    function testLinesOfTsv()
+    {
+        $data = [['a', 'b', 'c'], ['x', 'y', 'z']];
+        $expected = "a\tb\tc\nx\ty\tz";
+
+        $this->assertFormattedOutputMatches($expected, 'tsv', $data);
+    }
+
+    function testTsvBothKindsOfQuotes()
+    {
+        $data = ["John's \"new\" book", "Mary's \"modified\" laptop"];
+        $expected = "John's \"new\" book\tMary's \"modified\" laptop";
+
+        $this->assertFormattedOutputMatches($expected, 'tsv', $data);
+    }
+
+    function testTsvWithEscapedValues()
+    {
+        $data = ["Red apple", "Yellow lemon", "Embedded\ttab"];
+        $expected = "Red apple\tYellow lemon\tEmbedded\\ttab";
+
+        $this->assertFormattedOutputMatches($expected, 'tsv', $data);
     }
 
     protected function missingCellTableExampleData()
@@ -447,6 +509,49 @@ a,b,c
 x,,z
 EOT;
         $this->assertFormattedOutputMatches($expectedCsv, 'csv', $data);
+
+        $expectedTsv = <<<EOT
+a\tb\tc
+x\t\tz
+EOT;
+        $this->assertFormattedOutputMatches($expectedTsv, 'tsv', $data);
+
+        $expectedTsvWithHeaders = <<<EOT
+One\tTwo\tThree
+a\tb\tc
+x\t\tz
+EOT;
+        $this->assertFormattedOutputMatches($expectedTsvWithHeaders, 'tsv', $data, new FormatterOptions(), ['include-field-labels' => true]);
+    }
+
+    function testTableWithWordWrapping()
+    {
+        $options = new FormatterOptions();
+        $options->setWidth(42);
+
+        $data = [
+            [
+                'first' => 'This is a really long cell that contains a lot of data. When it is rendered, it should be wrapped across multiple lines.',
+                'second' => 'This is the second column of the same table. It is also very long, and should be wrapped across multiple lines, just like the first column.',
+            ]
+        ];
+        $data = new RowsOfFields($data);
+
+        $expected = <<<EOT
+ ------------------- --------------------
+  First               Second
+ ------------------- --------------------
+  This is a really    This is the second
+  long cell that      column of the same
+  contains a lot of   table. It is also
+  data. When it is    very long, and
+  rendered, it        should be wrapped
+  should be wrapped   across multiple
+  across multiple     lines, just like
+  lines.              the first column.
+ ------------------- --------------------
+EOT;
+        $this->assertFormattedOutputMatches($expected, 'table', $data, $options);
     }
 
     protected function simpleTableExampleData()
@@ -469,9 +574,9 @@ EOT;
     }
 
     /**
-     * @expectedException \Consolidation\OutputFormatters\Exception\IncompatibleDataException
+     * @expectedException \Consolidation\OutputFormatters\Exception\InvalidFormatException
      * @expectedExceptionCode 1
-     * @expectedExceptionMessage Data provided to Consolidation\OutputFormatters\Formatters\TableFormatter must be either an instance of Consolidation\OutputFormatters\StructuredData\RowsOfFields or an instance of Consolidation\OutputFormatters\StructuredData\AssociativeList. Instead, an array was provided.
+     * @expectedExceptionMessage The format table cannot be used with the data produced by this command, which was an array.  Valid formats are: csv,json,list,php,print-r,string,tsv,var_export,xml,yaml
      */
     function testIncompatibleDataForTableFormatter()
     {
@@ -480,9 +585,9 @@ EOT;
     }
 
     /**
-     * @expectedException \Consolidation\OutputFormatters\Exception\IncompatibleDataException
+     * @expectedException \Consolidation\OutputFormatters\Exception\InvalidFormatException
      * @expectedExceptionCode 1
-     * @expectedExceptionMessage Data provided to Consolidation\OutputFormatters\Formatters\SectionsFormatter must be an instance of Consolidation\OutputFormatters\StructuredData\RowsOfFields. Instead, an array was provided.
+     * @expectedExceptionMessage The format sections cannot be used with the data produced by this command, which was an array.  Valid formats are: csv,json,list,php,print-r,string,tsv,var_export,xml,yaml
      */
     function testIncompatibleDataForSectionsFormatter()
     {
@@ -688,6 +793,18 @@ EOT;
         $this->assertFormattedOutputMatches($expectedWithReorderedFields, 'table', $data, $configurationData, ['fields' => ['San', 'Ichi']]);
         $this->assertFormattedOutputMatches($expectedWithReorderedFields, 'table', $data, $configurationData, ['fields' => 'San,Ichi']);
 
+        $expectedWithRegexField = <<<EOT
+ ------ -----
+  Ichi   San
+ ------ -----
+  a      c
+  x      z
+ ------ -----
+EOT;
+        $this->assertFormattedOutputMatches($expectedWithRegexField, 'table', $data, $configurationData, ['fields' => ['/e$/']]);
+        $this->assertFormattedOutputMatches($expectedWithRegexField, 'table', $data, $configurationData, ['fields' => ['*e']]);
+        $this->assertFormattedOutputMatches($expectedWithRegexField, 'table', $data, $configurationData, ['default-fields' => ['*e']]);
+
         $expectedSections = <<<EOT
 
 Walrus
@@ -715,9 +832,47 @@ EOT;
 }
 EOT;
         $this->assertFormattedOutputMatches($expectedJson, 'json', $data, $configurationData, ['fields' => ['San', 'Ichi']]);
+
+        $expectedSingleField = <<<EOT
+ -----
+  San
+ -----
+  c
+  z
+ -----
+EOT;
+        $this->assertFormattedOutputMatches($expectedSingleField, 'table', $data, $configurationData, ['field' => 'San']);
+    }
+
+    /**
+     * @expectedException \Consolidation\OutputFormatters\Exception\UnknownFieldException
+     * @expectedExceptionCode 1
+     * @expectedExceptionMessage The requested field, 'Shi', is not defined.
+     */
+    function testNoSuchFieldException()
+    {
+        $configurationData = new FormatterOptions(
+            [
+                'field-labels' => ['one' => 'Ichi', 'two' => 'Ni', 'three' => 'San'],
+                'row-labels' => ['id-123' => 'Walrus', 'id-456' => 'Carpenter'],
+            ]
+        );
+        $data = $this->simpleTableExampleData();
+        $this->assertFormattedOutputMatches('Will throw before comparing', 'table', $data, $configurationData, ['field' => 'Shi']);
     }
 
     protected function simpleListExampleData()
+    {
+        $data = [
+            'one' => 'apple',
+            'two' => 'banana',
+            'three' => 'carrot',
+        ];
+        return new PropertyList($data);
+    }
+
+    // Test with the deprecated data structure
+    protected function simpleListExampleDataUsingAssociativeList()
     {
         $data = [
             'one' => 'apple',
@@ -728,9 +883,9 @@ EOT;
     }
 
     /**
-     * @expectedException \Consolidation\OutputFormatters\Exception\IncompatibleDataException
+     * @expectedException \Consolidation\OutputFormatters\Exception\InvalidFormatException
      * @expectedExceptionCode 1
-     * @expectedExceptionMessage Data provided to Consolidation\OutputFormatters\Formatters\TableFormatter must be either an instance of Consolidation\OutputFormatters\StructuredData\RowsOfFields or an instance of Consolidation\OutputFormatters\StructuredData\AssociativeList. Instead, an array was provided.
+     * @expectedExceptionMessage The format table cannot be used with the data produced by this command, which was an array.  Valid formats are: csv,json,list,php,print-r,string,tsv,var_export,xml,yaml
      */
     function testIncompatibleListDataForTableFormatter()
     {
@@ -738,9 +893,25 @@ EOT;
         $this->assertFormattedOutputMatches('Should throw an exception before comparing the table data', 'table', $data->getArrayCopy());
     }
 
+    function testEmptyList()
+    {
+        $data = new RowsOfFields([]);
+
+        $expected = <<<EOT
+ --- ---- -----
+  I   II   III
+ --- ---- -----
+EOT;
+
+        // If we provide field labels, then the output will change to reflect that.
+        $formatterOptionsWithFieldLables = new FormatterOptions();
+        $formatterOptionsWithFieldLables
+            ->setFieldLabels(['one' => 'I', 'two' => 'II', 'three' => 'III']);
+        $this->assertFormattedOutputMatches($expected, 'table', $data, $formatterOptionsWithFieldLables);
+    }
+
     function testSimpleList()
     {
-        $data = $this->simpleListExampleData();
 
         $expected = <<<EOT
  ------- --------
@@ -749,7 +920,46 @@ EOT;
   Three   carrot
  ------- --------
 EOT;
+        $data = $this->simpleListExampleDataUsingAssociativeList();
+
         $this->assertFormattedOutputMatches($expected, 'table', $data);
+
+        $data = $this->simpleListExampleData();
+
+        $this->assertFormattedOutputMatches($expected, 'table', $data);
+
+        $expected = <<<EOT
+ ----- --------
+  I     apple
+  II    banana
+  III   carrot
+ ----- --------
+EOT;
+        // If we provide field labels, then the output will change to reflect that.
+        $formatterOptionsWithFieldLables = new FormatterOptions();
+        $formatterOptionsWithFieldLables
+            ->setFieldLabels(['one' => 'I', 'two' => 'II', 'three' => 'III']);
+        $this->assertFormattedOutputMatches($expected, 'table', $data, $formatterOptionsWithFieldLables);
+
+        $expectedDrushStyleTable = <<<EOT
+ One   : apple
+ Two   : banana
+ Three : carrot
+EOT;
+
+        // If we provide field labels, then the output will change to reflect that.
+        $formatterOptionsWithFieldLables = new FormatterOptions();
+        $formatterOptionsWithFieldLables
+            ->setTableStyle('compact')
+            ->setListDelimiter(':');
+        $this->assertFormattedOutputMatches($expectedDrushStyleTable, 'table', $data, $formatterOptionsWithFieldLables);
+
+
+        // Adding an extra field that does not exist in the data set should not change the output
+        $formatterOptionsWithExtraFieldLables = new FormatterOptions();
+        $formatterOptionsWithExtraFieldLables
+            ->setFieldLabels(['one' => 'I', 'two' => 'II', 'three' => 'III', 'four' => 'IV']);
+        $this->assertFormattedOutputMatches($expected, 'table', $data, $formatterOptionsWithExtraFieldLables);
 
         $expectedRotated = <<<EOT
  ------- -------- --------
@@ -766,6 +976,13 @@ banana
 carrot
 EOT;
         $this->assertFormattedOutputMatches($expectedList, 'list', $data);
+
+        $expectedReorderedList = <<< EOT
+carrot
+apple
+EOT;
+        $options = new FormatterOptions([FormatterOptions::FIELDS => 'three,one']);
+        $this->assertFormattedOutputMatches($expectedReorderedList, 'list', $data, $options);
 
         $expectedCsv = <<< EOT
 One,Two,Three
@@ -796,6 +1013,29 @@ EOT;
         $this->assertFormattedOutputMatches($expectedCsv, 'csv', $data, $options);
     }
 
+    protected function associativeListWithRenderer()
+    {
+        $data = [
+            'one' => 'apple',
+            'two' => ['banana', 'plantain'],
+            'three' => 'carrot',
+            'four' => ['peaches', 'pumpkin pie'],
+        ];
+        $list = new PropertyList($data);
+
+        $list->addRendererFunction(
+            function ($key, $cellData, FormatterOptions $options)
+            {
+                if (is_array($cellData)) {
+                    return implode(',', $cellData);
+                }
+                return $cellData;
+            }
+        );
+
+        return $list;
+    }
+
     protected function associativeListWithCsvCells()
     {
         $data = [
@@ -804,13 +1044,17 @@ EOT;
             'three' => 'carrot',
             'four' => ['peaches', 'pumpkin pie'],
         ];
-        return new AssociativeListWithCsvCells($data);
+        return new PropertyListWithCsvCells($data);
     }
 
-    function testAssociativeListWithCsvCells()
+    function testPropertyListWithCsvCells()
     {
-        $data = $this->associativeListWithCsvCells();
+        $this->doPropertyListWithCsvCells($this->associativeListWithRenderer());
+        $this->doPropertyListWithCsvCells($this->associativeListWithCsvCells());
+    }
 
+    function doPropertyListWithCsvCells($data)
+    {
         $expected = <<<EOT
  ------- ---------------------
   One     apple
@@ -837,6 +1081,12 @@ EOT;
 
         $expectedCsvNoHeaders = 'apple,"banana,plantain",carrot,"peaches,pumpkin pie"';
         $this->assertFormattedOutputMatches($expectedCsvNoHeaders, 'csv', $data, new FormatterOptions(), ['include-field-labels' => false]);
+
+        $expectedTsv = <<< EOT
+apple\tbanana,plantain\tcarrot\tpeaches,pumpkin pie
+EOT;
+        $this->assertFormattedOutputMatches($expectedTsv, 'tsv', $data);
+
     }
 
     function testSimpleListWithFieldLabels()
@@ -867,12 +1117,10 @@ EOT;
         $this->assertFormattedOutputMatches($expectedWithReorderedFields, 'table', $data, $configurationData, ['fields' => ['San', 'Ichi']]);
 
         $expectedJson = <<<EOT
-[
-    {
-        "three": "carrot",
-        "one": "apple"
-    }
-]
+{
+    "three": "carrot",
+    "one": "apple"
+}
 EOT;
         $this->assertFormattedOutputMatches($expectedJson, 'json', $data, $configurationData, ['fields' => ['San', 'Ichi']]);
     }
@@ -1027,8 +1275,8 @@ EOT;
 {
     "name": "widget-collection",
     "description": "A couple of widgets.",
-    "widgets": [
-        {
+    "widgets": {
+        "usual": {
             "name": "usual",
             "colors": [
                 "red",
@@ -1041,7 +1289,7 @@ EOT;
                 "triangle"
             ]
         },
-        {
+        "unusual": {
             "name": "unusual",
             "colors": [
                 "muave",
@@ -1054,7 +1302,7 @@ EOT;
                 "trapazoid"
             ]
         }
-    ]
+    }
 }
 EOT;
 

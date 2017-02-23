@@ -1,13 +1,16 @@
 <?php
 namespace Consolidation\AnnotatedCommand;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 use Consolidation\AnnotatedCommand\Hooks\HookManager;
 use Consolidation\AnnotatedCommand\Parser\CommandInfo;
+use Consolidation\OutputFormatters\FormatterManager;
+use Consolidation\OutputFormatters\Options\FormatterOptions;
+use Consolidation\AnnotatedCommand\Help\HelpDocumentAlter;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * AnnotatedCommands are created automatically by the
@@ -24,11 +27,13 @@ use Consolidation\AnnotatedCommand\Parser\CommandInfo;
  *
  * @package Consolidation\AnnotatedCommand
  */
-class AnnotatedCommand extends Command
+class AnnotatedCommand extends Command implements HelpDocumentAlter
 {
     protected $commandCallback;
     protected $commandProcessor;
     protected $annotationData;
+    protected $examples = [];
+    protected $topics = [];
     protected $usesInputInterface;
     protected $usesOutputInterface;
     protected $returnType;
@@ -44,7 +49,7 @@ class AnnotatedCommand extends Command
         // AnnotatedCommand.  Alternately, we break out a new subclass.
         // The command factory instantiates the subclass.
         if (get_class($this) != 'Consolidation\AnnotatedCommand\AnnotatedCommand') {
-            $commandInfo = new CommandInfo($this, 'execute');
+            $commandInfo = CommandInfo::create($this, 'execute');
             if (!isset($name)) {
                 $name = $commandInfo->getName();
             }
@@ -52,20 +57,23 @@ class AnnotatedCommand extends Command
         parent::__construct($name);
         if ($commandInfo && $commandInfo->hasAnnotation('command')) {
             $this->setCommandInfo($commandInfo);
+            $this->setCommandOptions($commandInfo);
         }
     }
 
     public function setCommandCallback($commandCallback)
     {
         $this->commandCallback = $commandCallback;
+        return $this;
     }
 
     public function setCommandProcessor($commandProcessor)
     {
         $this->commandProcessor = $commandProcessor;
+        return $this;
     }
 
-    public function getCommandProcessor()
+    public function commandProcessor()
     {
         // If someone is using an AnnotatedCommand, and is NOT getting
         // it from an AnnotatedCommandFactory OR not correctly injecting
@@ -87,11 +95,29 @@ class AnnotatedCommand extends Command
     public function setReturnType($returnType)
     {
         $this->returnType = $returnType;
+        return $this;
+    }
+
+    public function getAnnotationData()
+    {
+        return $this->annotationData;
     }
 
     public function setAnnotationData($annotationData)
     {
         $this->annotationData = $annotationData;
+        return $this;
+    }
+
+    public function getTopics()
+    {
+        return $this->topics;
+    }
+
+    public function setTopics($topics)
+    {
+        $this->topics = $topics;
+        return $this;
     }
 
     public function setCommandInfo($commandInfo)
@@ -100,13 +126,85 @@ class AnnotatedCommand extends Command
         $this->setHelp($commandInfo->getHelp());
         $this->setAliases($commandInfo->getAliases());
         $this->setAnnotationData($commandInfo->getAnnotations());
+        $this->setTopics($commandInfo->getTopics());
         foreach ($commandInfo->getExampleUsages() as $usage => $description) {
-            // Symfony Console does not support attaching a description to a usage
-            $this->addUsage($usage);
+            $this->addUsageOrExample($usage, $description);
         }
         $this->setCommandArguments($commandInfo);
-        $this->setCommandOptions($commandInfo);
         $this->setReturnType($commandInfo->getReturnType());
+        return $this;
+    }
+
+    protected function addUsageOrExample($usage, $description)
+    {
+        $this->addUsage($usage);
+        if (!empty($description)) {
+            $this->examples[$usage] = $description;
+        }
+    }
+
+    public function helpAlter(\DomDocument $originalDom)
+    {
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->appendChild($commandXML = $dom->createElement('command'));
+        $commandXML->setAttribute('id', $this->getName());
+        $commandXML->setAttribute('name', $this->getName());
+
+        // Get the original <command> element and its top-level elements.
+        $originalCommandXML = $this->getSingleElementByTagName($dom, $originalDom, 'command');
+        $originalUsagesXML = $this->getSingleElementByTagName($dom, $originalCommandXML, 'usages');
+        $originalDescriptionXML = $this->getSingleElementByTagName($dom, $originalCommandXML, 'description');
+        $originalHelpXML = $this->getSingleElementByTagName($dom, $originalCommandXML, 'help');
+        $originalArgumentsXML = $this->getSingleElementByTagName($dom, $originalCommandXML, 'arguments');
+        $originalOptionsXML = $this->getSingleElementByTagName($dom, $originalCommandXML, 'options');
+
+        // Keep only the first of the <usage> elements
+        $newUsagesXML = $dom->createElement('usages');
+        $firstUsageXML = $this->getSingleElementByTagName($dom, $originalUsagesXML, 'usage');
+        $newUsagesXML->appendChild($firstUsageXML);
+
+        // Create our own <example> elements
+        $newExamplesXML = $dom->createElement('examples');
+        foreach ($this->examples as $usage => $description) {
+            $newExamplesXML->appendChild($exampleXML = $dom->createElement('example'));
+            $exampleXML->appendChild($usageXML = $dom->createElement('usage', $usage));
+            $exampleXML->appendChild($descriptionXML = $dom->createElement('description', $description));
+        }
+
+        // Create our own <alias> elements
+        $newAliasesXML = $dom->createElement('aliases');
+        foreach ($this->getAliases() as $alias) {
+            $newAliasesXML->appendChild($dom->createElement('alias', $alias));
+        }
+
+        // Create our own <topic> elements
+        $newTopicsXML = $dom->createElement('topics');
+        foreach ($this->getTopics() as $topic) {
+            $newTopicsXML->appendChild($topicXML = $dom->createElement('topic', $topic));
+        }
+
+        // Place the different elements into the <command> element in the desired order
+        $commandXML->appendChild($newUsagesXML);
+        $commandXML->appendChild($newExamplesXML);
+        $commandXML->appendChild($originalDescriptionXML);
+        $commandXML->appendChild($originalArgumentsXML);
+        $commandXML->appendChild($originalOptionsXML);
+        $commandXML->appendChild($originalHelpXML);
+        $commandXML->appendChild($newAliasesXML);
+        $commandXML->appendChild($newTopicsXML);
+
+        return $dom;
+    }
+
+    protected function getSingleElementByTagName($dom, $parent, $tagName)
+    {
+        // There should always be exactly one '<command>' element.
+        $elements = $parent->getElementsByTagName($tagName);
+        $result = $elements->item(0);
+
+        $result = $dom->importNode($result, true);
+
+        return $result;
     }
 
     protected function setCommandArguments($commandInfo)
@@ -114,6 +212,7 @@ class AnnotatedCommand extends Command
         $this->setUsesInputInterface($commandInfo);
         $this->setUsesOutputInterface($commandInfo);
         $this->setCommandArgumentsFromParameters($commandInfo);
+        return $this;
     }
 
     /**
@@ -133,6 +232,7 @@ class AnnotatedCommand extends Command
     {
         $params = $commandInfo->getParameters();
         $this->usesInputInterface = $this->checkUsesInputInterface($params);
+        return $this;
     }
 
     /**
@@ -147,6 +247,7 @@ class AnnotatedCommand extends Command
         $this->usesOutputInterface =
             (count($params) > $index) &&
             ($params[$index] instanceof OutputInterface);
+        return $this;
     }
 
     protected function setCommandArgumentsFromParameters($commandInfo)
@@ -158,6 +259,7 @@ class AnnotatedCommand extends Command
             $parameterMode = $this->getCommandArgumentMode($hasDefault, $defaultValue);
             $this->addArgument($name, $parameterMode, $description, $defaultValue);
         }
+        return $this;
     }
 
     protected function getCommandArgumentMode($hasDefault, $defaultValue)
@@ -171,113 +273,160 @@ class AnnotatedCommand extends Command
         return InputArgument::OPTIONAL;
     }
 
-    protected function setCommandOptions($commandInfo)
+    public function setCommandOptions($commandInfo, $automaticOptions = [])
     {
-        $opts = $commandInfo->options()->getValues();
-        foreach ($opts as $name => $val) {
-            $description = $commandInfo->options()->getDescription($name);
+        $inputOptions = $commandInfo->inputOptions();
 
-            $fullName = $name;
-            $shortcut = '';
-            if (strpos($name, '|')) {
-                list($fullName, $shortcut) = explode('|', $name, 2);
+        $this->addOptions($inputOptions + $automaticOptions, $automaticOptions);
+        return $this;
+    }
+
+    public function addOptions($inputOptions, $automaticOptions = [])
+    {
+        foreach ($inputOptions as $name => $inputOption) {
+            $description = $inputOption->getDescription();
+
+            if (empty($description) && isset($automaticOptions[$name])) {
+                $description = $automaticOptions[$name]->getDescription();
+                $inputOption = static::inputOptionSetDescription($inputOption, $description);
             }
-
-            if (is_bool($val)) {
-                $this->addOption($fullName, $shortcut, InputOption::VALUE_NONE, $description);
-            } else {
-                $this->addOption($fullName, $shortcut, InputOption::VALUE_OPTIONAL, $description, $val);
-            }
+            $this->getDefinition()->addOption($inputOption);
         }
     }
 
-    protected function getArgsWithPassThrough($input)
+    protected static function inputOptionSetDescription($inputOption, $description)
     {
-        $args = $input->getArguments();
-
-        // When called via the Application, the first argument
-        // will be the command name. The Application alters the
-        // input definition to match, adding a 'command' argument
-        // to the beginning.
-        array_shift($args);
-        if ($input instanceof PassThroughArgsInput) {
-            return $this->appendPassThroughArgs($input, $args);
+        // Recover the 'mode' value, because Symfony is stubborn
+        $mode = 0;
+        if ($inputOption->isValueRequired()) {
+            $mode |= InputOption::VALUE_REQUIRED;
         }
-        return $args;
+        if ($inputOption->isValueOptional()) {
+            $mode |= InputOption::VALUE_OPTIONAL;
+        }
+        if ($inputOption->isArray()) {
+            $mode |= InputOption::VALUE_IS_ARRAY;
+        }
+        if (!$mode) {
+            $mode = InputOption::VALUE_NONE;
+        }
+
+        $inputOption = new InputOption(
+            $inputOption->getName(),
+            $inputOption->getShortcut(),
+            $mode,
+            $description,
+            $inputOption->getDefault()
+        );
+        return $inputOption;
     }
 
-    protected function getArgsAndOptions($input)
+    /**
+     * Returns all of the hook names that may be called for this command.
+     *
+     * @return array
+     */
+    public function getNames()
     {
-        if (!$input) {
-            return [];
-        }
-        // Get passthrough args, and add the options on the end.
-        $args = $this->getArgsWithPassThrough($input);
-        $args[] = $input->getOptions();
-        return $args;
+        return HookManager::getNames($this, $this->commandCallback);
     }
 
-    protected function appendPassThroughArgs($input, $args)
+    /**
+     * Add any options to this command that are defined by hook implementations
+     */
+    public function optionsHook()
     {
-        $passThrough = $input->getPassThroughArgs();
-        $definition = $this->getDefinition();
-        $argumentDefinitions = $definition->getArguments();
-        $lastParameter = end($argumentDefinitions);
-        if ($lastParameter && $lastParameter->isArray()) {
-            $args[$lastParameter->getName()] = array_merge($args[$lastParameter->getName()], $passThrough);
-        } else {
-            $args[$lastParameter->getName()] = implode(' ', $passThrough);
-        }
-        return $args;
-    }
-
-    protected function getNames()
-    {
-        return array_merge(
-            [$this->getName()],
-            $this->getAliases()
+        $this->commandProcessor()->optionsHook(
+            $this,
+            $this->getNames(),
+            $this->annotationData
         );
     }
 
+    public function optionsHookForHookAnnotations($commandInfoList)
+    {
+        foreach ($commandInfoList as $commandInfo) {
+            $inputOptions = $commandInfo->inputOptions();
+            $this->addOptions($inputOptions);
+            foreach ($commandInfo->getExampleUsages() as $usage => $description) {
+                if (!in_array($usage, $this->getUsages())) {
+                    $this->addUsageOrExample($usage, $description);
+                }
+            }
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+        $this->commandProcessor()->interact(
+            $input,
+            $output,
+            $this->getNames(),
+            $this->annotationData
+        );
+    }
+
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        // Allow the hook manager a chance to provide configuration values,
+        // if there are any registered hooks to do that.
+        $this->commandProcessor()->initializeHook($input, $this->getNames(), $this->annotationData);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Get passthrough args, and add the options on the end.
-        $args = $this->getArgsAndOptions($input);
-
-        if ($this->usesInputInterface) {
-            array_unshift($args, $input);
-        }
-        if ($this->usesOutputInterface) {
-            array_unshift($args, $output);
-        }
-
         // Validate, run, process, alter, handle results.
-        return $this->getCommandProcessor()->process(
+        return $this->commandProcessor()->process(
             $output,
             $this->getNames(),
             $this->commandCallback,
-            $this->annotationData,
-            $args
+            $this->createCommandData($input, $output)
         );
     }
 
+    /**
+     * This function is available for use by a class that may
+     * wish to extend this class rather than use annotations to
+     * define commands. Using this technique does allow for the
+     * use of annotations to define hooks.
+     */
     public function processResults(InputInterface $input, OutputInterface $output, $results)
     {
-        $commandProcessor = $this->getCommandProcessor();
+        $commandData = $this->createCommandData($input, $output);
+        $commandProcessor = $this->commandProcessor();
         $names = $this->getNames();
-        $args = $this->getArgsAndOptions($input);
         $results = $commandProcessor->processResults(
             $names,
             $results,
-            $args
+            $commandData
         );
-        $options = end($args);
         return $commandProcessor->handleResults(
             $output,
             $names,
             $results,
-            $this->annotationData,
-            $options
+            $commandData
         );
+    }
+
+    protected function createCommandData(InputInterface $input, OutputInterface $output)
+    {
+        $commandData = new CommandData(
+            $this->annotationData,
+            $input,
+            $output
+        );
+
+        $commandData->setUseIOInterfaces(
+            $this->usesOutputInterface,
+            $this->usesInputInterface
+        );
+
+        return $commandData;
     }
 }

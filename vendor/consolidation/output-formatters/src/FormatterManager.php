@@ -1,24 +1,39 @@
 <?php
 namespace Consolidation\OutputFormatters;
 
-use Symfony\Component\Console\Output\OutputInterface;
-use Consolidation\OutputFormatters\Exception\UnknownFormatException;
-use Consolidation\OutputFormatters\Formatters\RenderDataInterface;
 use Consolidation\OutputFormatters\Exception\IncompatibleDataException;
-use Consolidation\OutputFormatters\Transformations\DomToArraySimplifier;
+use Consolidation\OutputFormatters\Exception\InvalidFormatException;
+use Consolidation\OutputFormatters\Exception\UnknownFormatException;
+use Consolidation\OutputFormatters\Formatters\FormatterInterface;
+use Consolidation\OutputFormatters\Formatters\RenderDataInterface;
+use Consolidation\OutputFormatters\Options\FormatterOptions;
+use Consolidation\OutputFormatters\Options\OverrideOptionsInterface;
 use Consolidation\OutputFormatters\StructuredData\RestructureInterface;
+use Consolidation\OutputFormatters\Transformations\DomToArraySimplifier;
+use Consolidation\OutputFormatters\Transformations\OverrideRestructureInterface;
+use Consolidation\OutputFormatters\Transformations\SimplifyToArrayInterface;
+use Consolidation\OutputFormatters\Validate\ValidationInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Consolidation\OutputFormatters\StructuredData\OriginalDataInterface;
 
 /**
  * Manage a collection of formatters; return one on request.
  */
 class FormatterManager
 {
+    /** var FormatterInterface[] */
     protected $formatters = [];
+    /** var SimplifyToArrayInterface[] */
     protected $arraySimplifiers = [];
 
     public function __construct()
     {
-        $this->formatters = [
+    }
+
+    public function addDefaultFormatters()
+    {
+        $defaultFormatters = [
             'string' => '\Consolidation\OutputFormatters\Formatters\StringFormatter',
             'yaml' => '\Consolidation\OutputFormatters\Formatters\YamlFormatter',
             'xml' => '\Consolidation\OutputFormatters\Formatters\XmlFormatter',
@@ -28,13 +43,19 @@ class FormatterManager
             'var_export' => '\Consolidation\OutputFormatters\Formatters\VarExportFormatter',
             'list' => '\Consolidation\OutputFormatters\Formatters\ListFormatter',
             'csv' => '\Consolidation\OutputFormatters\Formatters\CsvFormatter',
+            'tsv' => '\Consolidation\OutputFormatters\Formatters\TsvFormatter',
             'table' => '\Consolidation\OutputFormatters\Formatters\TableFormatter',
             'sections' => '\Consolidation\OutputFormatters\Formatters\SectionsFormatter',
         ];
-
-        // Make the empty format an alias for the 'string' formatter.
+        foreach ($defaultFormatters as $id => $formatterClassname) {
+            $formatter = new $formatterClassname;
+            $this->addFormatter($id, $formatter);
+        }
         $this->addFormatter('', $this->formatters['string']);
+    }
 
+    public function addDefaultSimplifiers()
+    {
         // Add our default array simplifier (DOMDocument to array)
         $this->addSimplifier(new DomToArraySimplifier());
     }
@@ -43,12 +64,12 @@ class FormatterManager
      * Add a formatter
      *
      * @param string $key the identifier of the formatter to add
-     * @param string $formatterClassname the class name of the formatter to add
+     * @param string $formatter the class name of the formatter to add
      * @return FormatterManager
      */
-    public function addFormatter($key, $formatterClassname)
+    public function addFormatter($key, FormatterInterface $formatter)
     {
-        $this->formatters[$key] = $formatterClassname;
+        $this->formatters[$key] = $formatter;
         return $this;
     }
 
@@ -65,6 +86,60 @@ class FormatterManager
     }
 
     /**
+     * Return a set of InputOption based on the annotations of a command.
+     * @param FormatterOptions $options
+     * @return InputOption[]
+     */
+    public function automaticOptions(FormatterOptions $options, $dataType)
+    {
+        $automaticOptions = [];
+
+        // At the moment, we only support automatic options for --format
+        // and --fields, so exit if the command returns no data.
+        if (!isset($dataType)) {
+            return [];
+        }
+
+        $validFormats = $this->validFormats($dataType);
+        if (empty($validFormats)) {
+            return [];
+        }
+
+        $availableFields = $options->get(FormatterOptions::FIELD_LABELS);
+        $hasDefaultStringField = $options->get(FormatterOptions::DEFAULT_STRING_FIELD);
+        $defaultFormat = $hasDefaultStringField ? 'string' : ($availableFields ? 'table' : 'yaml');
+
+        if (count($validFormats) > 1) {
+            // Make an input option for --format
+            $description = 'Format the result data. Available formats: ' . implode(',', $validFormats);
+            $automaticOptions[FormatterOptions::FORMAT] = new InputOption(FormatterOptions::FORMAT, '', InputOption::VALUE_OPTIONAL, $description, $defaultFormat);
+        }
+
+        if ($availableFields) {
+            $defaultFields = $options->get(FormatterOptions::DEFAULT_FIELDS, [], '');
+            $description = 'Available fields: ' . implode(', ', $this->availableFieldsList($availableFields));
+            $automaticOptions[FormatterOptions::FIELDS] = new InputOption(FormatterOptions::FIELDS, '', InputOption::VALUE_OPTIONAL, $description, $defaultFields);
+            $automaticOptions[FormatterOptions::FIELD] = new InputOption(FormatterOptions::FIELD, '', InputOption::VALUE_OPTIONAL, "Select just one field, and force format to 'string'.", '');
+        }
+
+        return $automaticOptions;
+    }
+
+    /**
+     * Given a list of available fields, return a list of field descriptions.
+     * @return string[]
+     */
+    protected function availableFieldsList($availableFields)
+    {
+        return array_map(
+            function ($key) use ($availableFields) {
+                return $availableFields[$key] . " ($key)";
+            },
+            array_keys($availableFields)
+        );
+    }
+
+    /**
      * Return the identifiers for all valid data types that have been registered.
      *
      * @param mixed $dataType \ReflectionObject or other description of the produced data type
@@ -75,7 +150,7 @@ class FormatterManager
         $validFormats = [];
         foreach ($this->formatters as $formatId => $formatterName) {
             $formatter = $this->getFormatter($formatId);
-            if ($this->isValidFormat($formatter, $dataType)) {
+            if (!empty($formatId) && $this->isValidFormat($formatter, $dataType)) {
                 $validFormats[] = $formatId;
             }
         }
@@ -88,21 +163,28 @@ class FormatterManager
         if (is_array($dataType)) {
             $dataType = new \ReflectionClass('\ArrayObject');
         }
+        if (!is_object($dataType) && !class_exists($dataType)) {
+            return false;
+        }
         if (!$dataType instanceof \ReflectionClass) {
             $dataType = new \ReflectionClass($dataType);
+        }
+        return $this->isValidDataType($formatter, $dataType);
+    }
+
+    public function isValidDataType(FormatterInterface $formatter, \ReflectionClass $dataType)
+    {
+        if ($this->canSimplifyToArray($dataType)) {
+            if ($this->isValidFormat($formatter, [])) {
+                return true;
+            }
         }
         // If the formatter does not implement ValidationInterface, then
         // it is presumed that the formatter only accepts arrays.
         if (!$formatter instanceof ValidationInterface) {
             return $dataType->isSubclassOf('ArrayObject') || ($dataType->getName() == 'ArrayObject');
         }
-        $supportedTypes = $formatter->validDataTypes();
-        foreach ($supportedTypes as $supportedType) {
-            if (($dataType->getName() == $supportedType->getName()) || $dataType->isSubclassOf($supportedType->getName())) {
-                return true;
-            }
-        }
-        return false;
+        return $formatter->isValidDataType($dataType);
     }
 
     /**
@@ -116,6 +198,12 @@ class FormatterManager
     public function write(OutputInterface $output, $format, $structuredOutput, FormatterOptions $options)
     {
         $formatter = $this->getFormatter((string)$format);
+        if (!is_string($structuredOutput) && !$this->isValidFormat($formatter, $structuredOutput)) {
+            $validFormats = $this->validFormats($structuredOutput);
+            throw new InvalidFormatException((string)$format, $structuredOutput, $validFormats);
+        }
+        // Give the formatter a chance to override the options
+        $options = $this->overrideOptions($formatter, $structuredOutput, $options);
         $structuredOutput = $this->validateAndRestructure($formatter, $structuredOutput, $options);
         $formatter->write($output, $structuredOutput, $options);
     }
@@ -150,10 +238,17 @@ class FormatterManager
      */
     public function getFormatter($format)
     {
+        // The client must inject at least one formatter before asking for
+        // any formatters; if not, we will provide all of the usual defaults
+        // as a convenience.
+        if (empty($this->formatters)) {
+            $this->addDefaultFormatters();
+            $this->addDefaultSimplifiers();
+        }
         if (!$this->hasFormatter($format)) {
             throw new UnknownFormatException($format);
         }
-        $formatter = new $this->formatters[$format];
+        $formatter = $this->formatters[$format];
         return $formatter;
     }
 
@@ -215,16 +310,37 @@ class FormatterManager
 
     protected function simplifyToArray($structuredOutput, FormatterOptions $options)
     {
+        // We can do nothing unless the provided data is an object.
+        if (!is_object($structuredOutput)) {
+            return $structuredOutput;
+        }
         // Check to see if any of the simplifiers can convert the given data
         // set to an array.
+        $outputDataType = new \ReflectionClass($structuredOutput);
         foreach ($this->arraySimplifiers as $simplifier) {
-            $structuredOutput = $simplifier->simplifyToArray($structuredOutput, $options);
+            if ($simplifier->canSimplify($outputDataType)) {
+                $structuredOutput = $simplifier->simplifyToArray($structuredOutput, $options);
+            }
+        }
+        // Convert data structure back into its original form, if necessary.
+        if ($structuredOutput instanceof OriginalDataInterface) {
+            return $structuredOutput->getOriginalData();
         }
         // Convert \ArrayObjects to a simple array.
         if ($structuredOutput instanceof \ArrayObject) {
             return $structuredOutput->getArrayCopy();
         }
         return $structuredOutput;
+    }
+
+    protected function canSimplifyToArray(\ReflectionClass $structuredOutput)
+    {
+        foreach ($this->arraySimplifiers as $simplifier) {
+            if ($simplifier->canSimplify($structuredOutput)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -259,5 +375,21 @@ class FormatterManager
         if ($formatter instanceof OverrideRestructureInterface) {
             return $formatter->overrideRestructure($structuredOutput, $options);
         }
+    }
+
+    /**
+     * Allow the formatter to mess with the configuration options before any
+     * transformations et. al. get underway.
+     * @param FormatterInterface $formatter
+     * @param mixed $structuredOutput
+     * @param FormatterOptions $options
+     * @return FormatterOptions
+     */
+    public function overrideOptions(FormatterInterface $formatter, $structuredOutput, FormatterOptions $options)
+    {
+        if ($formatter instanceof OverrideOptionsInterface) {
+            return $formatter->overrideOptions($structuredOutput, $options);
+        }
+        return $options;
     }
 }

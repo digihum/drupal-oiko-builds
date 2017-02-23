@@ -2,8 +2,9 @@
 namespace Consolidation\OutputFormatters\Transformations;
 
 use Consolidation\OutputFormatters\StructuredData\TableDataInterface;
+use Consolidation\OutputFormatters\StructuredData\OriginalDataInterface;
 
-class TableTransformation extends \ArrayObject implements TableDataInterface
+class TableTransformation extends \ArrayObject implements TableDataInterface, OriginalDataInterface
 {
     protected $headers;
     protected $rowLabels;
@@ -80,7 +81,7 @@ class TableTransformation extends \ArrayObject implements TableDataInterface
         return $rowid;
     }
 
-    public function getData()
+    public function getOriginalData()
     {
         return $this->getArrayCopy();
     }
@@ -89,7 +90,7 @@ class TableTransformation extends \ArrayObject implements TableDataInterface
     {
         $data = $this->getArrayCopy();
         if ($this->isList()) {
-            $data = $this->getListData();
+            $data = $this->convertTableToList();
         }
         if ($includeRowKey) {
             $data = $this->getRowDataWithKey($data);
@@ -97,7 +98,7 @@ class TableTransformation extends \ArrayObject implements TableDataInterface
         return $data;
     }
 
-    protected function getListData()
+    protected function convertTableToList()
     {
         $result = [];
         foreach ($this as $row) {
