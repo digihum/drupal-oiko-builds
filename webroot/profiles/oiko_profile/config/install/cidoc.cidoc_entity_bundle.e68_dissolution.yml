@@ -4,6 +4,7 @@ dependencies: {  }
 crm_entity: e68_dissolution
 id: e68_dissolution
 label: 'E68 Dissolution'
+friendly_label: Dissolution
 weight: -14
 group: auxiliary
 description: "<p>This class comprises the events that result in the formal or informal termination of an E74\r\nGroup of people.\r\nIf the dissolution was deliberate, the Dissolution event should also be instantiated as an E7\r\nActivity.</p>\r\n"

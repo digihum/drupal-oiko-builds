@@ -4,6 +4,7 @@ dependencies: {  }
 crm_entity: o2_active_dissolution
 id: o2_active_dissolution
 label: 'O2 Active Dissolution'
+friendly_label: 'Active Dissolution'
 weight: -15
 group: auxiliary
 description: "<p>This class comprises the events that result in the deliberate termination of an E74\r\nGroup of people.</p>\r\n"

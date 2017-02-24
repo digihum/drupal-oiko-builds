@@ -4,7 +4,11 @@ dependencies: {  }
 crm_entity: e42_identifier
 id: e42_identifier
 label: 'E42 Identifier'
+friendly_label: Identifier
 weight: 20
 group: auxiliary
-description: "<p>This class comprises strings or codes assigned to instances of E1 CRM Entity in order to\nidentify them uniquely and permanently within the context of one or more organisations. Such\ncodes are often known as inventory numbers, registration codes, etc. and are typically\ncomposed of alphanumeric sequences. The class E42 Identifier is not normally used for\nmachine-generated identifiers used for automated processing unless these are also used by\nhuman agents.</p>\n"
-examples: "<ul>\n<li>“MM.GE.195”</li>\n<li>“13.45.1976”</li>\n<li>“OXCMS: 1997.4.1”</li>\n<li>ISSN “0041-5278”</li>\n<li>ISRC “FIFIN8900116”</li>\n<li>Shelf mark “Res 8 P 10”</li>\n<li>“Guillaume de Machaut (1300?-1377)” [a controlled personal name heading that follows\nthe French rules]</li>\n</ul>\n"
+description: "<p>This class comprises strings or codes assigned to instances of E1 CRM Entity in order to\r\nidentify them uniquely and permanently within the context of one or more organisations. Such\r\ncodes are often known as inventory numbers, registration codes, etc. and are typically\r\ncomposed of alphanumeric sequences. The class E42 Identifier is not normally used for\r\nmachine-generated identifiers used for automated processing unless these are also used by\r\nhuman agents.</p>\r\n"
+examples: "<ul>\r\n<li>“MM.GE.195”</li>\r\n<li>“13.45.1976”</li>\r\n<li>“OXCMS: 1997.4.1”</li>\r\n<li>ISSN “0041-5278”</li>\r\n<li>ISRC “FIFIN8900116”</li>\r\n<li>Shelf mark “Res 8 P 10”</li>\r\n<li>“Guillaume de Machaut (1300?-1377)” [a controlled personal name heading that follows\r\nthe French rules]</li>\r\n</ul>\r\n"
+geoserializers:
+  event: '0'
+  move: '0'

@@ -4,6 +4,7 @@ dependencies: {  }
 crm_entity: o1_killing
 id: o1_killing
 label: 'O1 Killing'
+friendly_label: Killing
 weight: -20
 group: auxiliary
 description: "<p>This class comprises the deaths of human beings actively by other actors.</p>\r\n"

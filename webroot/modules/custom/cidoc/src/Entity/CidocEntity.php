@@ -263,10 +263,6 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
       ->setDescription(t('A boolean indicating whether the CIDOC entity has been populated.'))
       ->setDefaultValue(FALSE);
 
-    // @TODO: This should not really be part of the CIDOC module.
-    // Add a field for types of entity.
-
-
     return $fields;
   }
 

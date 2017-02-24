@@ -4,6 +4,7 @@ dependencies: {  }
 crm_entity: e66_formation
 id: e66_formation
 label: 'E66 Formation'
+friendly_label: Formation
 weight: -15
 group: auxiliary
 description: "<p>This class comprises events that result in the formation of a formal or informal E74 Group of\r\npeople, such as a club, society, association, corporation or nation.</p>\r\n\r\n<p>E66 Formation does not include the arbitrary aggregation of people who do not act as a\r\ncollective.\r\nThe formation of an instance of E74 Group does not mean that the group is populated with\r\nmembers at the time of formation. In order to express the joining of members at the time of\r\nformation, the respective activity should be simultaneously an instance of both E66 Formation\r\nand E85 Joining.</p>\r\n"

@@ -45,6 +45,7 @@ use Drupal\field\Entity\FieldConfig;
  *     "crm_entity",
  *     "id",
  *     "label",
+ *     "friendly_label",
  *     "weight",
  *     "group",
  *     "description",
@@ -68,6 +69,13 @@ class CidocEntityBundle extends ConfigEntityBundleBase {
    * @var string
    */
   protected $label;
+
+  /**
+   * A human readable for the property.
+   *
+   * @var string
+   */
+  public $friendly_label;
 
   /**
    * The weight of the bundle.
@@ -119,6 +127,13 @@ class CidocEntityBundle extends ConfigEntityBundleBase {
     catch (FactoryException $e) {
       return NULL;
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFriendlyLabel() {
+    return !empty($this->friendly_label) ? $this->friendly_label : $this->label();
   }
 
   /**
