@@ -64,7 +64,6 @@ third_party_settings:
       label: '<span class="fa fa-tasks">&nbsp;&nbsp;</span>Comparative Timeline'
     group_appellations:
       children:
-        - name
         - 'cidoc_properties:domain:p78_is_identified_by'
         - 'cidoc_properties:domain:p1_is_identified_by'
       parent_name: ''
@@ -189,13 +188,6 @@ content:
     label: inline
     settings: {  }
     third_party_settings: {  }
-  name:
-    type: string
-    weight: 0
-    label: inline
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
   p108_has_produced_entity_view_1:
     weight: 10
     settings: {  }
@@ -227,6 +219,7 @@ hidden:
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
+  name: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p11_has_participant_entity_view_1: true

@@ -46,7 +46,6 @@ third_party_settings:
       label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Participants'
     group_appellations:
       children:
-        - name
         - 'cidoc_properties:domain:p1_is_identified_by'
       parent_name: ''
       weight: 3
@@ -307,13 +306,6 @@ content:
     weight: 9
     settings: {  }
     third_party_settings: {  }
-  name:
-    label: hidden
-    type: string
-    weight: 4
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
   p108_produced_by_entity_view_1:
     weight: 10
     settings: {  }
@@ -339,6 +331,7 @@ hidden:
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
+  name: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p15_influenced_entity_view_1: true

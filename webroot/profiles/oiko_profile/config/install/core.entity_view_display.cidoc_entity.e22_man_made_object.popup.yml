@@ -11,7 +11,6 @@ third_party_settings:
   field_group:
     group_appellations:
       children:
-        - name
         - 'cidoc_properties:domain:p1_is_identified_by'
       parent_name: ''
       weight: 2
@@ -175,13 +174,6 @@ content:
     weight: 6
     settings: {  }
     third_party_settings: {  }
-  name:
-    label: hidden
-    type: string
-    weight: 0
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
   p108_produced_by_entity_view_1:
     weight: 11
     settings: {  }
@@ -216,6 +208,7 @@ hidden:
   internal_name: true
   key_achievements_entity_view_1: true
   lifespan_entity_view_1: true
+  name: true
   p108_produced_object_entity_view_1: true
   p108_was_produced_by_entity_view_1: true
   p11_participae_entity_view_1: true

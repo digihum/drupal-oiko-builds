@@ -134,7 +134,6 @@ third_party_settings:
       label: '<span class="fa fa-map">&nbsp;&nbsp;</span>Places'
     group_appellations:
       children:
-        - name
         - 'cidoc_properties:domain:p1_is_identified_by'
       parent_name: ''
       weight: 3
@@ -290,13 +289,6 @@ content:
     weight: 10
     settings: {  }
     third_party_settings: {  }
-  name:
-    type: string
-    weight: 0
-    label: inline
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
   p108_has_produced_entity_view_1:
     weight: 10
     settings: {  }
@@ -330,6 +322,7 @@ hidden:
   e67_birth_child_entity_view_1: true
   e67_birth_parents_entity_view_1: true
   internal_name: true
+  name: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p11_has_participant_entity_view_1: true
