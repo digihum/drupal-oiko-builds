@@ -5,6 +5,8 @@ id: p133_is_separated_from
 label: 'P133 is separated from'
 bidirectional: true
 reverse_label: 'P133 is separated from'
+friendly_label: 'Is separated from'
+reverse_friendly_label: ''
 domain_bundles:
   e12_production: e12_production
   e4_period: e4_period
@@ -45,3 +47,6 @@ widget_description:
 autocomplete_description:
   domain: ''
   range: ''
+child_events:
+  domain: 0
+  range: 0

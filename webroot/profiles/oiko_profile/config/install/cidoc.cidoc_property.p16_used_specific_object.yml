@@ -5,6 +5,8 @@ id: p16_used_specific_object
 label: 'P16 used specific object'
 bidirectional: false
 reverse_label: 'P16 was used for'
+friendly_label: 'Used specific object'
+reverse_friendly_label: 'Was used for'
 domain_bundles:
   e7_activity: e7_activity
   e66_formation: e66_formation

@@ -5,6 +5,8 @@ id: p107_has_current_or_former_membe
 label: 'P107 has current or former member'
 bidirectional: false
 reverse_label: 'P107 is current or former member of'
+friendly_label: 'Has current or former member'
+reverse_friendly_label: 'Is current or former member of'
 domain_bundles:
   e74_group: e74_group
 range_bundles:

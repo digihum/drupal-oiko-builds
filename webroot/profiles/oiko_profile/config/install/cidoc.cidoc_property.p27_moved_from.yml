@@ -5,6 +5,8 @@ id: p27_moved_from
 label: 'P27 moved from'
 bidirectional: false
 reverse_label: 'P27 was origin of'
+friendly_label: 'Moved from'
+reverse_friendly_label: 'Was origin of'
 domain_bundles:
   e9_move: e9_move
 range_bundles:

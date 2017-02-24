@@ -5,6 +5,8 @@ id: p7_took_place_at
 label: 'P7 took place at'
 bidirectional: false
 reverse_label: 'P7 witnessed'
+friendly_label: 'Took place at'
+reverse_friendly_label: Witnessed
 domain_bundles:
   e4_period: e4_period
   e5_event: e5_event

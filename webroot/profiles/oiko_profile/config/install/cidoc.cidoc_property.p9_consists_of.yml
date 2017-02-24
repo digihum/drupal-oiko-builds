@@ -5,6 +5,8 @@ id: p9_consists_of
 label: 'P9 consists of'
 bidirectional: false
 reverse_label: 'P9 forms part of'
+friendly_label: 'Consists of'
+reverse_friendly_label: 'Forms part of'
 domain_bundles:
   e4_period: e4_period
   e5_event: e5_event

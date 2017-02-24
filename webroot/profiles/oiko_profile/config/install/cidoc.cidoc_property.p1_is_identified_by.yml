@@ -5,6 +5,8 @@ id: p1_is_identified_by
 label: 'P1 is identified by'
 bidirectional: false
 reverse_label: 'P1 identifies'
+friendly_label: 'Identified by'
+reverse_friendly_label: Identifies
 domain_bundles:
   e12_production: e12_production
   e21_person: e21_person

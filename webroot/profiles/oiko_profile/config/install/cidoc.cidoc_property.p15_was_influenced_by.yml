@@ -5,6 +5,8 @@ id: p15_was_influenced_by
 label: 'P15 was influenced by'
 bidirectional: false
 reverse_label: 'P15 influenced'
+friendly_label: 'Was influenced by'
+reverse_friendly_label: Influenced
 domain_bundles:
   e7_activity: e7_activity
   e66_formation: e66_formation

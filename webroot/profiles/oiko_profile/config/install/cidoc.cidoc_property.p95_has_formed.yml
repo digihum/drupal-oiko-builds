@@ -5,6 +5,8 @@ id: p95_has_formed
 label: 'P95 has formed'
 bidirectional: false
 reverse_label: 'P95 was formed by'
+friendly_label: 'Has formed'
+reverse_friendly_label: 'Was formed by'
 domain_bundles:
   e66_formation: e66_formation
 range_bundles:
