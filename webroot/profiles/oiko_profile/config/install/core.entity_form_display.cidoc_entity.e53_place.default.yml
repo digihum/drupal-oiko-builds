@@ -77,7 +77,7 @@ third_party_settings:
         - field_geodata
       parent_name: group_main_details
       weight: 5
-      label: Appellations
+      label: 'Also known as'
       format_type: tab
       format_settings:
         formatter: closed

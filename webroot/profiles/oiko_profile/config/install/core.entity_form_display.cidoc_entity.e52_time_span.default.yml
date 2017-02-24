@@ -68,7 +68,7 @@ third_party_settings:
         - 'cidoc_properties:domain:p78_is_identified_by'
       parent_name: group_main_details
       weight: 5
-      label: Appellations
+      label: 'Also known as'
       format_type: tab
       format_settings:
         formatter: closed

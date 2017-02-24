@@ -148,7 +148,7 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Appellations'
+      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Also known as'
     group_death_of:
       children:
         - 'cidoc_properties:domain:p100_was_death_of'

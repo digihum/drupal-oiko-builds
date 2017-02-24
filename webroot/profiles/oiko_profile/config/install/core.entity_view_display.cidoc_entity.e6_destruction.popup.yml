@@ -165,7 +165,7 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Appellations'
+      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Also known as'
 id: cidoc_entity.e6_destruction.popup
 targetEntityType: cidoc_entity
 bundle: e6_destruction
