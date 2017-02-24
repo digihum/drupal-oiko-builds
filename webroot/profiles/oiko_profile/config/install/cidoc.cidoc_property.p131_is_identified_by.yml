@@ -26,4 +26,4 @@ autocomplete_description:
   range: ''
 child_events:
   domain: domain
-  range: range
+  range: 0
