@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains Drupal\eva\Plugin\views\display\Eva.
+ */
+
 namespace Drupal\eva\Plugin\views\display;
 
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
@@ -52,7 +57,7 @@ class Eva extends DisplayPluginBase {
     parent::optionsSummary($categories, $options);
 
     $categories['entity_view'] = array(
-      'title' => $this->t('Entity content settings'),
+      'title' => t('Entity content settings'),
       'column' => 'second',
       'build' => array(
         '#weight' => -10,
@@ -114,7 +119,7 @@ class Eva extends DisplayPluginBase {
           }
         }
 
-        $form['#title'] .= $this->t('Entity type');
+        $form['#title'] .= t('Entity type');
         $form['entity_type'] = array(
           '#type' => 'radios',
           '#required' => TRUE,
@@ -167,7 +172,7 @@ class Eva extends DisplayPluginBase {
         );
 
         $form['token']['default_argument'] = array(
-          '#title' => $this->t('Arguments'),
+          '#title' => t('Arguments'),
           '#type' => 'textfield',
           '#default_value' => $this->getOption('default_argument'),
           '#description' => $this->t('You may use token replacement to provide arguments based on the current entity. Separate arguments with "/".'),
@@ -175,7 +180,7 @@ class Eva extends DisplayPluginBase {
         break;
 
       case 'show_title':
-        $form['#title'] .= $this->t('Show title');
+        $form['#title'] .= t('Show title');
         $form['show_title'] = array(
           '#type' => 'checkbox',
           '#title' => $this->t('Show the title of the view above the attached view.'),
@@ -272,7 +277,7 @@ class Eva extends DisplayPluginBase {
   }
   
   public function getPath() {
-    if (isset($this->view->current_entity)) {
+    if (isset($this->view->current_entity)) { 
       $uri = $this->view->current_entity->url();
       if ($uri) {
         $uri['options']['absolute'] = TRUE;
@@ -295,3 +300,5 @@ class Eva extends DisplayPluginBase {
     }
   }
 }
+
+

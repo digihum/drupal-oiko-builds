@@ -131,7 +131,7 @@
         "drupal/csv_serialization": "1.0-alpha1",
         "drupal/ctools": "3.0-alpha26",
         "drupal/devel": "1.x-dev",
-        "drupal/eva": "dev-8.x-1.x",
+        "drupal/eva": "~1.0",
         "drupal/field_group": "1.0-rc6",
         "drupal/geocoder": "2.0-alpha4",
         "drupal/geocoder_autocomplete": "1.0-alpha1",
@@ -232,11 +232,11 @@
                 "Fixes the API docs to include a missing hook": "https://www.drupal.org/files/issues/leaflet-add-hook_leaflet_map_info_alter-2746721-2.patch",
                 "Allows use of geometrycollection": "https://www.drupal.org/files/issues/leaflet-2799311-geometry-collection.patch"
             },
-            "drupal/eva": {
-                "EVA Patch for D8" : "https://www.drupal.org/files/issues/eva-working-d8-1937618-21.patch"
-            },
             "drupal/field_group": {
                 "HTML in titles": "https://www.drupal.org/files/issues/field_group-2822299-html-group-labels_0.patch"
+            },
+            "drupal/eva": {
+                "EVA can display on unselected bundle": "https://www.drupal.org/files/issues/eva-2856350-display-mode-still-rendered.patch"
             }
         }
     },

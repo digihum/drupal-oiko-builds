@@ -664,8 +664,6 @@ cm_config_tools:
     - views.view.p9_
     - views.view.p9_forms_part_of
     - views.view.people
-    - views.view.time_span_directly_linked_events
-    - views.view.time_span_within_period
     - views.view.timeline
     - block.block.maplegendblock
     - user.role.forum_user
@@ -676,3 +674,5 @@ cm_config_tools:
     - views.view.person_parents
     - views.view.lifespan
     - views.view.places_people_went
+    - views.view.time_span_directly_linked_events
+    - views.view.time_span_within_period
