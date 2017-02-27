@@ -62,8 +62,7 @@ class OikoLeafletMap extends StylePluginBase {
    * {@inheritdoc}
    */
   public function evenEmpty() {
-    // Render map even if there is no data.
-    return TRUE;
+    return parent::evenEmpty() || !empty($this->options['empty_map']);
   }
 
   /**
@@ -171,6 +170,13 @@ class OikoLeafletMap extends StylePluginBase {
       '#default_value' => $this->options['pagestate'],
     );
 
+    // Render if empty
+    $form['empty_map'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Render the map even if there no results.'),
+      '#default_value' => $this->options['empty_map'],
+    );
+
     // Empires
     $form['empires'] = array(
       '#type' => 'checkbox',
@@ -250,17 +256,21 @@ class OikoLeafletMap extends StylePluginBase {
       }
     }
 
-    // Always render the map, even if we do not have any data.
-    $map = leaflet_map_get_info($this->options['map']);
-    $map['sidebar'] = $this->options['sidebar'];
-    $map['pagestate'] = $this->options['pagestate'];
-    $map['timeline'] = $this->options['timeline'];
-    $map['search'] = $this->options['search'];
-    $map['empires'] = $this->options['empires'] && $this->options['timeline'];
-    $map['clustering'] = $this->options['clustering'];
-    $map['locate'] = $this->options['locate'];
-    $height = $this->options['full_height'] ? 'full' : $this->options['height'] . 'px';
-    return leaflet_render_map($map, $data, $height);
+    if (!empty($data) || (empty($data) && $this->evenEmpty())) {
+      $map = leaflet_map_get_info($this->options['map']);
+      $map['sidebar'] = $this->options['sidebar'];
+      $map['pagestate'] = $this->options['pagestate'];
+      $map['timeline'] = $this->options['timeline'];
+      $map['search'] = $this->options['search'];
+      $map['empires'] = $this->options['empires'] && $this->options['timeline'];
+      $map['clustering'] = $this->options['clustering'];
+      $map['locate'] = $this->options['locate'];
+      $height = $this->options['full_height'] ? 'full' : $this->options['height'] . 'px';
+      return leaflet_render_map($map, $data, $height);
+    }
+    else {
+      return array();
+    }
   }
 
   /**
@@ -299,6 +309,7 @@ class OikoLeafletMap extends StylePluginBase {
     $options['timeline'] = array('default' => FALSE);
     $options['empires'] = array('default' => FALSE);
     $options['pagestate'] = array('default' => FALSE);
+    $options['empty_map'] = array('default' => FALSE);
     $options['map'] = array('default' => '');
     $options['height'] = array('default' => '400');
     $options['full_height'] = array('default' => FALSE);
