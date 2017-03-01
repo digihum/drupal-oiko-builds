@@ -13,10 +13,11 @@ mode: range
 content:
   domain:
     label: inline
-    type: entity_reference_label
+    type: entity_reference_entity_view
     weight: 0
     settings:
-      link: true
+      view_mode: inline_field
+      link: false
     third_party_settings: {  }
 hidden:
   citation: true

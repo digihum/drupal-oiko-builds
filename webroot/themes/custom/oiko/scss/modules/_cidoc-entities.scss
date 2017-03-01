@@ -35,3 +35,18 @@
 .fg-lifespan > div {
   @include span(6 of 12);
 }
+
+
+.cidoc-entity--inline {
+  div {
+    display: inline;
+  }
+
+  .cidoc_reference {
+    margin-left: 1em;
+
+    .field__label {
+      @include visually-hidden();
+    }
+  }
+}

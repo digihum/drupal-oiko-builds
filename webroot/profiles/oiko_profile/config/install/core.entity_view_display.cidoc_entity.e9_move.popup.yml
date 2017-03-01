@@ -270,10 +270,6 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-  duplicate_of_p134_continues_entity_view_1:
-    weight: 10
-    settings: {  }
-    third_party_settings: {  }
   e9_move_map_entity_view_1:
     weight: 0
     settings: {  }
@@ -310,10 +306,6 @@ content:
     weight: 10
     settings: {  }
     third_party_settings: {  }
-  p15_was_influenced_by_entity_view_1:
-    weight: 10
-    settings: {  }
-    third_party_settings: {  }
   significance:
     type: entity_reference_label
     weight: 2
@@ -328,6 +320,7 @@ content:
 hidden:
   'cidoc_properties:domain:p2_has_type': true
   citation: true
+  duplicate_of_p134_continues_entity_view_1: true
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
@@ -335,6 +328,7 @@ hidden:
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p15_influenced_entity_view_1: true
+  p15_was_influenced_by_entity_view_1: true
   p16_used_specific_object_entity_view_1: true
   p17_motivated_entity_view_1: true
   p17_was_motivated_by_entity_view_1: true

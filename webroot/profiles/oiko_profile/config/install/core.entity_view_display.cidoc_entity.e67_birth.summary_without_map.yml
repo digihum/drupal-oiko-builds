@@ -23,10 +23,40 @@ targetEntityType: cidoc_entity
 bundle: e67_birth
 mode: summary_without_map
 content:
-  duplicate_of_p134_continues_entity_view_1:
-    weight: 10
-    settings: {  }
-    third_party_settings: {  }
+  'cidoc_properties:domain:p10_falls_within':
+    weight: 20
+  'cidoc_properties:domain:p11_had_participant':
+    weight: 20
+  'cidoc_properties:domain:p12_occurred_in_the_presence_of':
+    weight: 20
+  'cidoc_properties:domain:p132_overlaps_with':
+    weight: 20
+  'cidoc_properties:domain:p133_is_separated_from':
+    weight: 20
+  'cidoc_properties:domain:p1_is_identified_by':
+    weight: 20
+  'cidoc_properties:domain:p2_has_type':
+    weight: 20
+  'cidoc_properties:domain:p4_has_time_span':
+    weight: 20
+  'cidoc_properties:domain:p7_took_place_at':
+    weight: 20
+  'cidoc_properties:domain:p96_by_mother':
+    weight: 20
+  'cidoc_properties:domain:p97_from_father':
+    weight: 20
+  'cidoc_properties:domain:p98_brought_into_life':
+    weight: 20
+  'cidoc_properties:domain:p9_consists_of':
+    weight: 20
+  'cidoc_properties:range:p10_falls_within':
+    weight: 21
+  'cidoc_properties:range:p15_was_influenced_by':
+    weight: 21
+  'cidoc_properties:range:p17_was_motivated_by':
+    weight: 21
+  'cidoc_properties:range:p9_consists_of':
+    weight: 21
   e67_birth_parents_entity_view_1:
     weight: 3
     settings: {  }
@@ -40,10 +70,6 @@ content:
     third_party_settings: {  }
   p12_occurred_in_the_presence_of_entity_view_1:
     weight: 10
-  p16_used_specific_object_entity_view_1:
-    weight: 9
-    settings: {  }
-    third_party_settings: {  }
   p17_motivated_entity_view_1:
     weight: 10
   p17_was_motivated_by_entity_view_1:
@@ -56,10 +82,13 @@ content:
     weight: 2
     settings: {  }
     third_party_settings: {  }
+  timeline_link:
+    weight: 0
 hidden:
   cidoc_properties: true
   citation: true
   content: true
+  duplicate_of_p134_continues_entity_view_1: true
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   e67_birth_child_entity_view_1: true
@@ -72,9 +101,11 @@ hidden:
   p14_carried_out_by_entity_view_1: true
   p15_influenced_entity_view_1: true
   p15_was_influenced_by_entity_view_1: true
+  p16_used_specific_object_entity_view_1: true
   p7_took_place_at_map_entity_view_1: true
   p9__entity_view_1: true
   p9_forms_part_of_entity_view_1: true
   people_entity_view_1: true
   significance: true
+  timeline_preselect_option: true
   user_id: true
