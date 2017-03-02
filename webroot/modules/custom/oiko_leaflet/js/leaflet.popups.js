@@ -32,7 +32,9 @@
         else {
           // We need to open the sidebar on wide screens.
           if (window.matchMedia('(min-width: 641px)').matches) {
-            Drupal.oiko.openSidebarLegend();
+            $(window).bind('load', function() {
+              Drupal.oiko.openSidebarLegend();
+            });
           }
         }
       });

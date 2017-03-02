@@ -18,6 +18,7 @@
 
     this.$sidebar = $(element);
     this.$sidebar.addClass('sidebar-' + this.position);
+    this.$sidebar.removeClass('js-sidebar-initial-load');
 
     this.$tabs = this.$sidebar.find('ul.sidebar-tabs > li, .sidebar-tabs > ul > li');
     this.$panes = this.$sidebar.find('div.sidebar-content > div.sidebar-pane');
