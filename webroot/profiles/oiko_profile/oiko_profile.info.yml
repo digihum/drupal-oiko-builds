@@ -4,6 +4,7 @@ description: Install profile for the Oiko
 core: 8.x
 
 dependencies:
+  - google_analytics
   - eu_cookie_compliance
   - eva
   - forum
@@ -604,6 +605,7 @@ cm_config_tools:
     - field.storage.taxonomy_term.forum_container
     - filter.format.basic_html
     - filter.format.restricted_html
+    - google_analytics.settings
     - node.settings
     - node.type.forum
     - paragraphs.paragraphs_type.book

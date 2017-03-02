@@ -60,7 +60,7 @@ class PopupContentController extends ControllerBase {
     ];
     $response->addCommand(new HistoryPushCommand($pushData, NULL, $cidoc_entity->toUrl()));
     // Add in the GA response too.
-    $response->addCommand(new GAEventCommand('pageview', ['dimension1' => $cidoc_entity->getOwner()->getDisplayName()]));
+    $response->addCommand(new GAEventCommand('pageview', ['dimension1' => $cidoc_entity->getOwner()->id()]));
     return $response;
 
   }

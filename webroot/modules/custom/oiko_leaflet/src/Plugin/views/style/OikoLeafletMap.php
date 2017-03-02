@@ -7,7 +7,7 @@
 
 namespace Drupal\oiko_leaflet\Plugin\views\style;
 
-use Drupal\Component\Utility\UrlHelper;
+use Drupal\cidoc\CidocEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\style\StylePluginBase;
@@ -38,7 +38,7 @@ class OikoLeafletMap extends StylePluginBase {
    *
    * @var bool
    */
-  protected $usesFields = TRUE;
+  protected $usesFields = FALSE;
 
   /**
    * If this view is displaying an entity, save the entity type and info.
@@ -71,43 +71,6 @@ class OikoLeafletMap extends StylePluginBase {
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
 
-    // Get a list of fields and a sublist of geo data fields in this view
-    $fields = array();
-    $fields_geo_data = array();
-    $fields_temporal_data = array();
-    foreach ($this->displayHandler->getHandlers('field') as $field_id => $handler) {
-      $label = $handler->adminLabel() ?: $field_id;
-      $fields[$field_id] = $label;
-      if (is_a($handler, '\Drupal\views\Plugin\views\field\Field')) {
-        $field_storage_definitions = \Drupal::entityManager()
-          ->getFieldStorageDefinitions($handler->getEntityType());
-        $field_storage_definition = $field_storage_definitions[$handler->definition['field_name']];
-
-        if ($field_storage_definition->getType() == 'geofield') {
-          $fields_geo_data[$field_id] = $label;
-        }
-        if ($field_storage_definition->getType() == 'edtf') {
-          $fields_temporal_data[$field_id] = $label;
-        }
-      }
-    }
-
-    // Check whether we have a geo data field we can work with
-    if (!count($fields)) {
-      $form['error'] = array(
-        '#markup' => $this->t('Please add at least one ID field to the view.'),
-      );
-      return;
-    }
-
-    // ID field
-    $form['id_field'] = array(
-      '#type' => 'select',
-      '#title' => $this->t('ID Field'),
-      '#description' => $this->t('Choose the field which be used as a internal ID.'),
-      '#options' => $fields,
-      '#default_value' => $this->options['id_field'],
-    );
 
     if ($this->entity_type) {
 
@@ -244,15 +207,11 @@ class OikoLeafletMap extends StylePluginBase {
    */
   function render() {
     $data = array();
-    if ($this->options['id_field']) {
-      $this->renderFields($this->view->result);
-      $entities = [];
-      foreach ($this->view->result as $id => $result) {
-        $id = (string) $this->rendered_fields[$id][$this->options['id_field']];
-        $entities[$id] = $id;
-      }
-      foreach (entity_load_multiple('cidoc_entity', $entities) as $entity) {
-        $data = array_merge($data, $entity->getGeospatialData());
+
+    foreach ($this->view->result as $row) {
+      if (isset($row->_entity) && ($row->_entity instanceof CidocEntityInterface)) {
+        /** @var CidocEntityInterface $row->_entity */
+        $data = array_merge($data, $row->_entity->getGeospatialData());
       }
     }
 
