@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: content_page
+label: 'Content page'
+type: 'canonical_entities:node'
+pattern: 'content/[node:title]'
+selection_criteria:
+  b05cd2d8-a61e-42f3-8e8f-2bc85e7821c0:
+    id: node_type
+    bundles:
+      content_page: content_page
+    negate: false
+    context_mapping:
+      node: node
+selection_logic: and
+weight: -5
+relationships: {  }

@@ -310,6 +310,7 @@ cm_config_tools:
     - core.entity_form_display.cidoc_reference.p9_consists_of.domain
     - core.entity_form_display.cidoc_reference.p9_consists_of.range
     - core.entity_form_display.comment.comment_forum.default
+    - core.entity_form_display.node.content_page.default
     - core.entity_form_display.node.forum.default
     - core.entity_form_display.paragraph.book.default
     - core.entity_form_display.paragraph.uri.default
@@ -474,6 +475,8 @@ cm_config_tools:
     - core.entity_view_display.cidoc_reference.p9_consists_of.domain
     - core.entity_view_display.cidoc_reference.p9_consists_of.range
     - core.entity_view_display.comment.comment_forum.default
+    - core.entity_view_display.node.content_page.default
+    - core.entity_view_display.node.content_page.teaser
     - core.entity_view_display.node.forum.default
     - core.entity_view_display.node.forum.teaser
     - core.entity_view_display.paragraph.book.default
@@ -566,6 +569,7 @@ cm_config_tools:
     - field.field.cidoc_reference.p9_consists_of.domain
     - field.field.cidoc_reference.p9_consists_of.range
     - field.field.comment.comment_forum.comment_body
+    - field.field.node.content_page.body
     - field.field.node.forum.body
     - field.field.node.forum.comment_forum
     - field.field.node.forum.field_crm_entities
@@ -602,6 +606,7 @@ cm_config_tools:
     - paragraphs.paragraphs_type.book
     - paragraphs.paragraphs_type.uri
     - pathauto.pattern.cidoc_entity
+    - pathauto.pattern.content_page
     - rdf.mapping.node.forum
     - rdf.mapping.taxonomy_term.forums
     - search_api.index.crm_entities
@@ -622,6 +627,7 @@ cm_config_tools:
     - taxonomy.vocabulary.source_books
     - user.role.anonymous
     - user.role.authenticated
+    - user.role.content_editor
     - user.role.forum_user
     - views.view.all_events
     - views.view.appelations
@@ -679,3 +685,5 @@ cm_config_tools:
     - views.view.p100_death_of
     - views.view.p4_has_time_span
     - views.view.people
+  implicit:
+    - node.type.content_page
