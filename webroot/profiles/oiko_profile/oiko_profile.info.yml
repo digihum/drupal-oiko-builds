@@ -602,6 +602,7 @@ cm_config_tools:
     - field.storage.taxonomy_term.forum_container
     - filter.format.basic_html
     - filter.format.restricted_html
+    - node.settings
     - node.type.forum
     - paragraphs.paragraphs_type.book
     - paragraphs.paragraphs_type.uri
