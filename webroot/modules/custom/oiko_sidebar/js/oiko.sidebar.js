@@ -107,4 +107,20 @@
     }
   };
 
+  /**
+   * Command to push a state into the history API.
+   *
+   * @param {Drupal.Ajax} [ajax]
+   *   The Drupal Ajax object.
+   * @param {object} response
+   *   Object holding the server response.
+   * @param {number} [status]
+   *   The HTTP status code.
+   */
+  Drupal.AjaxCommands.prototype.oikoGAEvent = function (ajax, response) {
+    if (typeof ga !== 'undefined') {
+      ga('send', response.event, response.args);
+    }
+  };
+
 })(jQuery);
