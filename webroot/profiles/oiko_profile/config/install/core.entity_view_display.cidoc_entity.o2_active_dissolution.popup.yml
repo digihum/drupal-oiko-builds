@@ -176,6 +176,10 @@ targetEntityType: cidoc_entity
 bundle: o2_active_dissolution
 mode: popup
 content:
+  cidoc_admin_links:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
     weight: 20
     settings: {  }

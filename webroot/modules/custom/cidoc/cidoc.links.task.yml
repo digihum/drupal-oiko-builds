@@ -15,6 +15,11 @@ entity.cidoc_entity.delete_form:
   title: Delete
   weight: 10
 
+entity.cidoc_entity.edit_preview:
+  route_name:  entity.cidoc_entity.edit_preview
+  base_route:  entity.cidoc_entity.canonical
+  title: 'View for editing'
+
 entity.cidoc_entity.populate_properties:
   route_name:  entity.cidoc_entity.populate_properties
   base_route:  entity.cidoc_entity.canonical
@@ -26,6 +31,7 @@ entity.cidoc_entity.collection:
   base_route:  entity.cidoc_entity.collection
   title: 'CIDOC CRM entities'
   weight: 10
+
 entity.cidoc_reference.collection:
   route_name:  entity.cidoc_reference.collection
   base_route:  entity.cidoc_entity.collection

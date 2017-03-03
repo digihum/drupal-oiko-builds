@@ -192,6 +192,10 @@ targetEntityType: cidoc_entity
 bundle: e12_production
 mode: popup
 content:
+  cidoc_admin_links:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p108_has_produced':
     weight: 20
     settings: {  }

@@ -743,7 +743,7 @@ class CidocEntityForm extends ContentEntityForm {
 
     $element = $form_state->getTriggeringElement();
     if (empty($element['#ramble_on'])) {
-      $form_state->setRedirect('entity.cidoc_entity.canonical', ['cidoc_entity' => $cidoc_entity->id()]);
+      $form_state->setRedirect('entity.cidoc_entity.edit_preview', ['cidoc_entity' => $cidoc_entity->id()]);
       drupal_set_message($this->t('Saved CIDOC entity %label.', ['%label' => $cidoc_entity->label()]));
     }
     else {
@@ -792,14 +792,14 @@ class CidocEntityForm extends ContentEntityForm {
         }
 
         if (!$redirect_entity) {
-          $form_state->setRedirect('entity.cidoc_entity.canonical', ['cidoc_entity' => $cidoc_entity->id()]);
+          $form_state->setRedirect('entity.cidoc_entity.edit_preview', ['cidoc_entity' => $cidoc_entity->id()]);
           $populate_entity = CidocEntity::load($populate_id);
-          drupal_set_message($this->t('Saved CIDOC entity %label. All entitities associated with %root_label have now been populated.', ['%label' => $cidoc_entity->label(), '%root_label' => $populate_entity->label()]));
+          drupal_set_message($this->t('Saved CIDOC entity %label. All entities associated with %root_label have now been populated.', ['%label' => $cidoc_entity->label(), '%root_label' => $populate_entity->label()]));
         }
       }
       else {
-        $form_state->setRedirect('entity.cidoc_entity.canonical', ['cidoc_entity' => $cidoc_entity->id()]);
-        drupal_set_message($this->t('Saved CIDOC entity %label. All entitities associated with %label have already been populated.', ['%label' => $cidoc_entity->label()]));
+        $form_state->setRedirect('entity.cidoc_entity.edit_preview', ['cidoc_entity' => $cidoc_entity->id()]);
+        drupal_set_message($this->t('Saved CIDOC entity %label. All entities associated with %label have already been populated.', ['%label' => $cidoc_entity->label()]));
       }
     }
   }

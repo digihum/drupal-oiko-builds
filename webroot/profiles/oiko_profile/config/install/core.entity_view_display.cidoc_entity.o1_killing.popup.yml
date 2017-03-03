@@ -191,6 +191,10 @@ targetEntityType: cidoc_entity
 bundle: o1_killing
 mode: popup
 content:
+  cidoc_admin_links:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p100_was_death_of':
     weight: 13
     settings: {  }

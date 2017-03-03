@@ -50,6 +50,7 @@ use Drupal\user\UserInterface;
  *   },
  *   links = {
  *     "canonical" = "/cidoc-entity/{cidoc_entity}",
+ *     "edit_preview" = "/cidoc-entity/{cidoc_entity}/edit-preview",
  *     "add-form" = "/cidoc-entity/add/{cidoc_entity_bundle}",
  *     "edit-form" = "/cidoc-entity/{cidoc_entity}/edit",
  *     "delete-form" = "/cidoc-entity/{cidoc_entity}/delete",

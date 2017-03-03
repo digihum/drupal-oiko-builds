@@ -1,5 +1,0 @@
-name: 'Oiko Forum'
-description: 'Provides a site forum.'
-type: module
-core: 8.x
-package: Oiko

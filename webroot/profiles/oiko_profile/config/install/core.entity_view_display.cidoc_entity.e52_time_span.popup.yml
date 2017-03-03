@@ -15,7 +15,7 @@ third_party_settings:
         - 'cidoc_properties:range:p17_was_motivated_by'
         - 'cidoc_properties:range:p15_was_influenced_by'
       parent_name: ''
-      weight: 10
+      weight: 4
       label: '<span class="fa fa-exchange">&nbsp;&nbsp;</span>Influences'
       format_type: html_element
       format_settings:
@@ -32,7 +32,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:range:p4_has_time_span'
       parent_name: ''
-      weight: 11
+      weight: 5
       label: '<span class="fa fa-sitemap">&nbsp;&nbsp;</span>Event structure'
       format_type: html_element
       format_settings:
@@ -49,7 +49,7 @@ third_party_settings:
       children:
         - timeline_link
       parent_name: ''
-      weight: 12
+      weight: 6
       format_type: html_element
       format_settings:
         id: ''
@@ -83,6 +83,10 @@ targetEntityType: cidoc_entity
 bundle: e52_time_span
 mode: popup
 content:
+  cidoc_admin_links:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
     weight: 20
     settings: {  }
@@ -173,7 +177,7 @@ content:
     third_party_settings: {  }
   field_date:
     type: edtf_human_readable_formatter
-    weight: 0
+    weight: 1
     label: inline
     settings: {  }
     third_party_settings: {  }

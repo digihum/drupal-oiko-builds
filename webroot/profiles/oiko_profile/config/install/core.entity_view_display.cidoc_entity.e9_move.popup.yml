@@ -172,6 +172,10 @@ targetEntityType: cidoc_entity
 bundle: e9_move
 mode: popup
 content:
+  cidoc_admin_links:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
   cidoc_properties:
     weight: 18
     settings: {  }

@@ -13,7 +13,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:p1_is_identified_by'
       parent_name: ''
-      weight: 2
+      weight: 3
       format_type: html_element
       format_settings:
         id: ''
@@ -29,7 +29,7 @@ third_party_settings:
       children:
         - timeline_link
       parent_name: ''
-      weight: 9
+      weight: 7
       format_type: html_element
       format_settings:
         id: ''
@@ -47,7 +47,7 @@ third_party_settings:
         - 'cidoc_properties:range:p17_was_motivated_by'
         - 'cidoc_properties:range:p15_was_influenced_by'
       parent_name: ''
-      weight: 3
+      weight: 4
       format_type: html_element
       format_settings:
         id: ''
@@ -63,7 +63,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:range:p108_has_produced'
       parent_name: ''
-      weight: 7
+      weight: 6
       format_type: html_element
       format_settings:
         label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Lifecycle'
@@ -82,7 +82,7 @@ third_party_settings:
         - 'cidoc_properties:range:p13_destroyed'
         - 'cidoc_properties:range:p16_used_specific_object'
       parent_name: ''
-      weight: 6
+      weight: 5
       format_type: html_element
       format_settings:
         label: '<span class="fa fa-calendar-o">&nbsp;&nbsp;</span>Events and Activities'
@@ -100,6 +100,10 @@ targetEntityType: cidoc_entity
 bundle: e22_man_made_object
 mode: popup
 content:
+  cidoc_admin_links:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p131_is_identified_by':
     weight: 1
     settings: {  }
@@ -166,7 +170,7 @@ content:
     third_party_settings: {  }
   content:
     type: text_default
-    weight: 0
+    weight: 1
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -180,7 +184,7 @@ content:
     third_party_settings: {  }
   significance:
     type: entity_reference_label
-    weight: 1
+    weight: 2
     label: above
     settings:
       link: false

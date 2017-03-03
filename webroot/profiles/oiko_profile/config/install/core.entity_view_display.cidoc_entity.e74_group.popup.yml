@@ -14,7 +14,7 @@ third_party_settings:
         - 'cidoc_properties:domain:p131_is_identified_by'
         - 'cidoc_properties:domain:p1_is_identified_by'
       parent_name: ''
-      weight: 2
+      weight: 3
       format_type: html_element
       format_settings:
         id: ''
@@ -30,7 +30,7 @@ third_party_settings:
       children:
         - timeline_link
       parent_name: ''
-      weight: 9
+      weight: 8
       format_type: html_element
       format_settings:
         id: ''
@@ -47,7 +47,7 @@ third_party_settings:
         - 'cidoc_properties:range:p17_was_motivated_by'
         - 'cidoc_properties:range:p15_was_influenced_by'
       parent_name: ''
-      weight: 3
+      weight: 4
       format_type: html_element
       format_settings:
         id: ''
@@ -64,7 +64,7 @@ third_party_settings:
         - 'cidoc_properties:domain:p107_has_current_or_former_membe'
         - 'cidoc_properties:range:p107_has_current_or_former_membe'
       parent_name: ''
-      weight: 4
+      weight: 5
       format_type: html_element
       format_settings:
         label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Members'
@@ -120,6 +120,10 @@ targetEntityType: cidoc_entity
 bundle: e74_group
 mode: popup
 content:
+  cidoc_admin_links:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p107_has_current_or_former_membe':
     weight: 13
     settings: {  }
@@ -194,7 +198,7 @@ content:
     third_party_settings: {  }
   content:
     type: text_default
-    weight: 0
+    weight: 1
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -212,7 +216,7 @@ content:
     third_party_settings: {  }
   significance:
     type: entity_reference_label
-    weight: 1
+    weight: 2
     label: above
     settings:
       link: false

@@ -16,7 +16,7 @@ use Drupal\Core\Template\Attribute;
 function oiko_prototype_field_group_pre_render(&$element, &$group, &$rendering_object) {
   if ($rendering_object['#entity_type'] == 'cidoc_entity') {
     if (isset($element['#attributes']) && is_object($element['#attributes'])) {
-      $element['#attributes']->addClass('cidoc-field-group');
+      $element['#attributes']->addClass('cidoc-field-group')->addClass('fancy-titles');
       // Shortcut - use the group name as a class so we can do theming.
       if (!empty($group->group_name)) {
         $element['#attributes']->addClass($group->group_name);
