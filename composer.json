@@ -132,7 +132,7 @@
         "drupal/ctools": "3.0-alpha26",
         "drupal/devel": "1.x-dev",
         "drupal/eu_cookie_compliance": "^1.0",
-        "drupal/eva": "~1.0",
+        "drupal/eva": "1.x-dev",
         "drupal/field_group": "1.0-rc6",
         "drupal/geocoder": "2.0-alpha4",
         "drupal/geocoder_autocomplete": "1.0-alpha1",
@@ -238,7 +238,7 @@
                 "HTML in titles": "https://www.drupal.org/files/issues/field_group-2822299-html-group-labels_0.patch"
             },
             "drupal/eva": {
-                "EVA can display on unselected bundle": "https://www.drupal.org/files/issues/eva-2856350-display-mode-still-rendered.patch"
+                "EVA can display on unselected bundle": "https://www.drupal.org/files/issues/eva-2856350-display-mode-still-rendered-12.patch"
             }
         }
     },

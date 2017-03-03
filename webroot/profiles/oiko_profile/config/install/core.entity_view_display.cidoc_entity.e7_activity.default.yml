@@ -315,10 +315,6 @@ content:
     weight: 21
     settings: {  }
     third_party_settings: {  }
-  duplicate_of_p134_continues_entity_view_1:
-    weight: 10
-    settings: {  }
-    third_party_settings: {  }
   duplicate_of_p15_influenced_entity_view_1:
     weight: 12
     settings: {  }

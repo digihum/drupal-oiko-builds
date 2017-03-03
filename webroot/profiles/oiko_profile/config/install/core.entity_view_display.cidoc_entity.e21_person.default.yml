@@ -298,10 +298,6 @@ content:
     weight: 10
     settings: {  }
     third_party_settings: {  }
-  p15_was_influenced_by_entity_view_1:
-    weight: 10
-    settings: {  }
-    third_party_settings: {  }
   p4_has_time_span_entity_view_1:
     weight: 11
     settings: {  }

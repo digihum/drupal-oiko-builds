@@ -96,10 +96,6 @@ content:
     weight: 21
     settings: {  }
     third_party_settings: {  }
-  duplicate_of_p134_continues_entity_view_1:
-    weight: 10
-    settings: {  }
-    third_party_settings: {  }
   duplicate_of_p15_influenced_entity_view_1:
     weight: 9
     settings: {  }
@@ -152,14 +148,6 @@ content:
     third_party_settings: {  }
   p15_influenced_entity_view_1:
     weight: 12
-    settings: {  }
-    third_party_settings: {  }
-  p15_was_influenced_by_entity_view_1:
-    weight: 10
-    settings: {  }
-    third_party_settings: {  }
-  p16_used_specific_object_entity_view_1:
-    weight: 10
     settings: {  }
     third_party_settings: {  }
   p17_motivated_entity_view_1:
