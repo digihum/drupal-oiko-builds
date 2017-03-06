@@ -631,6 +631,7 @@ cm_config_tools:
     - filter.format.basic_html
     - filter.format.restricted_html
     - google_analytics.settings
+    - image.style.comparative_timeline_logo
     - node.settings
     - node.type.forum
     - paragraphs.paragraphs_type.book
