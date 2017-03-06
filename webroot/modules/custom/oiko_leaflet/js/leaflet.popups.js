@@ -53,7 +53,6 @@
 
 
       $(window).bind('oikoSidebarOpen', function(e, id) {
-        debugger;
         if (featureCache.hasOwnProperty(id)) {
           map.panInsideBounds(featureCache[id], {animate: false});
         }
