@@ -396,7 +396,7 @@ Drupal.behaviors.comparative_timeline = {
     var url = '/comparative-timeline/data/' + groupID;
     this.nowLoading(groupID);
     $.get(url, function(data) {
-      timeline.doneLoading(groupID);
+      timeline.doneLoading.call(timeline, groupID);
       timeline.addDataToTimeline.call(timeline, data);
     });
   };
@@ -507,7 +507,7 @@ Drupal.behaviors.comparative_timeline = {
     // Add a group:
     this._visGroups.add([{
       id: groupId,
-      content: '<span class="js-comparative-timeline-remove-link fa fa-times" data-group-id="' + data.id + '"></span>&nbsp;' + data.label
+      content: '<span class="js-comparative-timeline-remove-link fa fa-times" data-group-id="' + data.id + '"></span>&nbsp;' + data.label + data.logo
     }]);
 
     if (data.events !== null) {

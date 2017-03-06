@@ -22,11 +22,11 @@
               $container.data('leaflet').add_features(data.features);
             }
           }
+          // Destroy features so that an AJAX reload does not get parts of the old set.
+          // Required when the View has "Use AJAX" set to Yes.
+          // @todo Is this still necessary? Needs testing.
+          data.features = null;
         });
-        // Destroy features so that an AJAX reload does not get parts of the old set.
-        // Required when the View has "Use AJAX" set to Yes.
-        // @todo Is this still necessary? Needs testing.
-        data.features = null;
       });
     }
   };

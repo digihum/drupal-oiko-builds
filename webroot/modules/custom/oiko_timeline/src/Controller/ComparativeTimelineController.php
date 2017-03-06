@@ -72,6 +72,13 @@ class ComparativeTimelineController extends ControllerBase {
     $data = [
       'id' => $cidoc_entity->id(),
       'label' => $cidoc_entity->label(),
+      'logo' => render($cidoc_entity->timeline_logo->view([
+        'label' => 'hidden',
+        'type' => 'image',
+        'settings' => [
+          'image_style' => 'comparative_timeline_logo',
+        ],
+      ])),
       'events' => [],
     ];
 
