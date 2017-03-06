@@ -117,4 +117,6 @@ interface CidocEntityInterface extends ContentEntityInterface, EntityChangedInte
 
   public function getTemporalInformation();
   public function getGeospatialData();
+
+  public function hasGeospatialData();
 }

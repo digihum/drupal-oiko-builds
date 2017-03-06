@@ -151,6 +151,22 @@ third_party_settings:
         id: ''
         classes: ''
       label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Groups'
+    group_map:
+      children:
+        - map_link
+      parent_name: ''
+      weight: 20
+      format_type: html_element
+      label: '<span class="fa fa-map">&nbsp;&nbsp;</span>Map'
+      format_settings:
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
 id: cidoc_entity.e21_person.popup
 targetEntityType: cidoc_entity
 bundle: e21_person
@@ -224,6 +240,10 @@ content:
     type: text_default
     weight: 1
     label: above
+    settings: {  }
+    third_party_settings: {  }
+  map_link:
+    weight: 21
     settings: {  }
     third_party_settings: {  }
   map_of_places_people_went_entity_view_1:

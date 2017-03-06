@@ -164,6 +164,22 @@ third_party_settings:
         effect: none
         speed: fast
       label: '<span class="fa fa-id-badge">&nbsp;&nbsp;</span>Death of'
+    group_map:
+      children:
+        - map_link
+      parent_name: ''
+      weight: 20
+      format_type: html_element
+      label: '<span class="fa fa-map">&nbsp;&nbsp;</span>Map'
+      format_settings:
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
 id: cidoc_entity.e69_death.popup
 targetEntityType: cidoc_entity
 bundle: e69_death
@@ -265,6 +281,10 @@ content:
     type: text_default
     weight: 1
     label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  map_link:
+    weight: 34
     settings: {  }
     third_party_settings: {  }
   p108_has_produced_entity_view_1:

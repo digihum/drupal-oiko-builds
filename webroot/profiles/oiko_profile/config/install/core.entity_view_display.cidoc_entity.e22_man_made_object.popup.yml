@@ -95,6 +95,22 @@ third_party_settings:
         id: ''
         classes: ''
       label: '<span class="fa fa-calendar-o">&nbsp;&nbsp;</span>Events and Activities'
+    group_map:
+      children:
+        - map_link
+      parent_name: ''
+      weight: 20
+      format_type: html_element
+      label: '<span class="fa fa-map">&nbsp;&nbsp;</span>Map'
+      format_settings:
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
 id: cidoc_entity.e22_man_made_object.popup
 targetEntityType: cidoc_entity
 bundle: e22_man_made_object
@@ -172,6 +188,10 @@ content:
     type: text_default
     weight: 1
     label: above
+    settings: {  }
+    third_party_settings: {  }
+  map_link:
+    weight: 23
     settings: {  }
     third_party_settings: {  }
   p108_produced_by_entity_view_1:

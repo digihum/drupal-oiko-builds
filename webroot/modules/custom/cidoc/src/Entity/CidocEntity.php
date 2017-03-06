@@ -531,6 +531,11 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
     return $data;
   }
 
+  public function hasGeospatialData() {
+    $data = $this->getGeospatialData();
+    return !empty($data);
+  }
+
   public function hasChildEventEntities() {
     $children = $this->getChildEventEntities(TRUE);
     return !empty($children);

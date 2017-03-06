@@ -146,3 +146,17 @@ function oiko_leaflet_form_sharemessage_edit_form_alter(array &$form, FormStateI
     $form['sharemessage_token_help']['browser']['#token_types'][] = 'cidoc_entity';
   }
 }
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function oiko_leaflet_entity_extra_field_info() {
+  return \Drupal::service('oiko_leaflet.hook_implementations')->extra_field_info();
+}
+
+/**
+ * Implements hook_entity_view_alter()
+ */
+function oiko_leaflet_entity_view_alter(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display) {
+  return \Drupal::service('oiko_leaflet.hook_implementations')->entity_view_alter($build, $entity, $display);
+}
