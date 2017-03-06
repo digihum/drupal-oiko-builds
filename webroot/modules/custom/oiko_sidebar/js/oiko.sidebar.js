@@ -32,6 +32,9 @@
 
       // Set up an AJAX request to replace the content.
       Drupal.oiko.displayContentInLeafletSidebar(id, changeHistoryState);
+
+      // Fire some events.
+      $(window).trigger('oikoSidebarOpen', [id, label]);
     }
   };
 

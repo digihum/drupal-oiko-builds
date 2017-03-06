@@ -21,7 +21,6 @@ Drupal.behaviors.comparative_timeline = {
         if ($.QueryString['items']) {
           var items = $.QueryString['items'].split(',');
           for (var i in items) {
-            console.log(items[i]);
             $component.data('comparative_timeline').loadDataHandler(items[i]);
           }
         }
@@ -461,6 +460,13 @@ Drupal.behaviors.comparative_timeline = {
         }
       }
     });
+    $(window).bind('oikoSidebarOpen', function(e, id) {
+      // Find the selected item in our items, and select it.
+      var selectedItems = timeline._visItems.getIds({filter: function(item) {
+        return item.event == id;
+      }});
+      timeline._visTimeline.setSelection(selectedItems, {focus: selectedItems.length > 0});
+    });
   };
 
   Drupal.OikoComparativeTimeline.prototype.removeGroupFromTimeline = function(groupId) {
@@ -518,6 +524,7 @@ Drupal.behaviors.comparative_timeline = {
           start: minmin * 1000,
           end: maxmax * 1000,
           group: data.id,
+          event: event.id,
           className: 'oiko-timeline-item--' + event.color
         });
 
