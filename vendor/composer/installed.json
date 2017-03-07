@@ -3899,6 +3899,9 @@
             "drupal": {
                 "version": "8.x-1.x-dev",
                 "datestamp": "1483547343"
+            },
+            "patches_applied": {
+                "https://www.drupal.org/node/2850746": "https://www.drupal.org/files/issues/diffing_imports_with-2850746-2.patch"
             }
         },
         "installation-source": "source",

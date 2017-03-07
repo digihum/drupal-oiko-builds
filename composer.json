@@ -216,6 +216,9 @@
             ]
         },
         "patches": {
+            "drupal/cm_config_tools": {
+                "https://www.drupal.org/node/2850746": "https://www.drupal.org/files/issues/diffing_imports_with-2850746-2.patch"
+            },
             "drupal/core": {
                 "Prevent a notice from views_query_views_alter": "https://www.drupal.org/files/issues/2744069-5-views-in-queries.patch"
             },
