@@ -439,7 +439,7 @@ Drupal.behaviors.comparative_timeline = {
           timeline.loadDataHandler.call(timeline, $(this).data('groupId'));
           $(this).hide();
         });
-        this.$addNewContainer.append($link)
+        this.$addNewContainer.append($link);
         this.preselectedLinks.push($link);
       }
     }
