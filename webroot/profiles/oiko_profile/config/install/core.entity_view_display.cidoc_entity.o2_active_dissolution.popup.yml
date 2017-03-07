@@ -157,7 +157,6 @@ third_party_settings:
       label: '<span class="fa fa-map">&nbsp;&nbsp;</span>Places'
     group_appellations:
       children:
-        - name
         - 'cidoc_properties:domain:p1_is_identified_by'
       parent_name: ''
       weight: 3
@@ -171,12 +170,32 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Appellations'
+      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Also known as'
+    group_map:
+      children:
+        - map_link
+      parent_name: ''
+      weight: 20
+      format_type: html_element
+      label: '<span class="fa fa-map">&nbsp;&nbsp;</span>Map'
+      format_settings:
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
 id: cidoc_entity.o2_active_dissolution.popup
 targetEntityType: cidoc_entity
 bundle: o2_active_dissolution
 mode: popup
 content:
+  cidoc_admin_links:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
     weight: 20
     settings: {  }
@@ -271,16 +290,9 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-  duplicate_of_p134_continues_entity_view_1:
-    weight: 10
+  map_link:
+    weight: 34
     settings: {  }
-    third_party_settings: {  }
-  name:
-    type: string
-    weight: 0
-    label: inline
-    settings:
-      link_to_entity: false
     third_party_settings: {  }
   p108_has_produced_entity_view_1:
     weight: 10
@@ -310,9 +322,11 @@ hidden:
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:range:p132_overlaps_with': true
   citation: true
+  duplicate_of_p134_continues_entity_view_1: true
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
+  name: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p11_has_participant_entity_view_1: true

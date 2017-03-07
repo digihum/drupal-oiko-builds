@@ -14,7 +14,7 @@ third_party_settings:
         - 'cidoc_properties:range:p17_was_motivated_by'
         - 'cidoc_properties:range:p15_was_influenced_by'
       parent_name: ''
-      weight: 3
+      weight: 4
       label: '<span class="fa fa-exchange">&nbsp;&nbsp;</span>Influences'
       format_type: html_element
       format_settings:
@@ -32,7 +32,7 @@ third_party_settings:
         - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
         - 'cidoc_properties:range:p16_used_specific_object'
       parent_name: ''
-      weight: 4
+      weight: 5
       label: '<span class="fa fa-sitemap">&nbsp;&nbsp;</span>Event structure'
       format_type: html_element
       format_settings:
@@ -49,7 +49,7 @@ third_party_settings:
       children:
         - timeline_link
       parent_name: ''
-      weight: 5
+      weight: 6
       format_type: html_element
       format_settings:
         id: ''
@@ -63,10 +63,9 @@ third_party_settings:
       label: '<span class="fa fa-tasks">&nbsp;&nbsp;</span>Comparative Timeline'
     group_appellations:
       children:
-        - name
         - 'cidoc_properties:domain:p1_is_identified_by'
       parent_name: ''
-      weight: 2
+      weight: 3
       format_type: html_element
       format_settings:
         id: ''
@@ -77,12 +76,32 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Appellations'
+      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Also known as'
+    group_map:
+      children:
+        - map_link
+      parent_name: ''
+      weight: 20
+      format_type: html_element
+      label: '<span class="fa fa-map">&nbsp;&nbsp;</span>Map'
+      format_settings:
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
 id: cidoc_entity.e58_measurement_unit.popup
 targetEntityType: cidoc_entity
 bundle: e58_measurement_unit
 mode: popup
 content:
+  cidoc_admin_links:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
     weight: 20
     settings: {  }
@@ -181,12 +200,8 @@ content:
     third_party_settings: {  }
   content:
     type: text_default
-    weight: 0
+    weight: 1
     label: hidden
-    settings: {  }
-    third_party_settings: {  }
-  duplicate_of_p134_continues_entity_view_1:
-    weight: 10
     settings: {  }
     third_party_settings: {  }
   field_date:
@@ -195,12 +210,9 @@ content:
     label: inline
     settings: {  }
     third_party_settings: {  }
-  name:
-    type: string
-    weight: 0
-    label: inline
-    settings:
-      link_to_entity: false
+  map_link:
+    weight: 34
+    settings: {  }
     third_party_settings: {  }
   p108_has_produced_entity_view_1:
     weight: 10
@@ -210,13 +222,9 @@ content:
     weight: 10
     settings: {  }
     third_party_settings: {  }
-  p7_took_place_at_map_entity_view_1:
-    weight: 0
-    settings: {  }
-    third_party_settings: {  }
   significance:
     type: entity_reference_label
-    weight: 1
+    weight: 2
     label: inline
     settings:
       link: false
@@ -231,9 +239,11 @@ hidden:
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p2_has_type': true
   citation: true
+  duplicate_of_p134_continues_entity_view_1: true
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
+  name: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p11_has_participant_entity_view_1: true
@@ -245,6 +255,7 @@ hidden:
   p17_motivated_entity_view_1: true
   p17_was_motivated_by_entity_view_1: true
   p4_has_time_span_entity_view_1: true
+  p7_took_place_at_map_entity_view_1: true
   p7_took_place_at_map_entity_view_2: true
   p9__entity_view_1: true
   p9_forms_part_of_entity_view_1: true

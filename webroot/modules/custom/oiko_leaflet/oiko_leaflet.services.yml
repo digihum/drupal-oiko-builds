@@ -1,0 +1,3 @@
+services:
+  oiko_leaflet.hook_implementations:
+    class: Drupal\oiko_leaflet\OikoleafletHookImplementations

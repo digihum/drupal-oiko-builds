@@ -5,6 +5,8 @@ id: p17_was_motivated_by
 label: 'P17 was motivated by'
 bidirectional: false
 reverse_label: 'P17 motivated'
+friendly_label: 'Was motivated by'
+reverse_friendly_label: Motivated
 domain_bundles:
   e7_activity: e7_activity
   e66_formation: e66_formation

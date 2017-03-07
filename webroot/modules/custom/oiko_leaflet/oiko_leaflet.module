@@ -37,6 +37,7 @@ function oiko_leaflet_library_info_alter(array &$libraries, $module) {
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/search';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/mapstate';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/locate';
+    $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/loading';
   }
 
   if ($module === 'oiko_leaflet' && isset($libraries['icons'])) {
@@ -144,4 +145,18 @@ function oiko_leaflet_form_sharemessage_edit_form_alter(array &$form, FormStateI
   if (isset($form['sharemessage_token_help']['browser']['#token_types'])) {
     $form['sharemessage_token_help']['browser']['#token_types'][] = 'cidoc_entity';
   }
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function oiko_leaflet_entity_extra_field_info() {
+  return \Drupal::service('oiko_leaflet.hook_implementations')->extra_field_info();
+}
+
+/**
+ * Implements hook_entity_view_alter()
+ */
+function oiko_leaflet_entity_view_alter(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display) {
+  return \Drupal::service('oiko_leaflet.hook_implementations')->entity_view_alter($build, $entity, $display);
 }

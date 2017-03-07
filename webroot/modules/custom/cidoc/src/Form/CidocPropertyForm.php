@@ -72,6 +72,27 @@ class CidocPropertyForm extends EntityForm {
       ),
     );
 
+    $form['labels']['friendly_label'] = array(
+      '#type' => 'textfield',
+      '#size' => 40,
+      '#title' => t('Friendly label'),
+      '#description'   => $this->t('This will be shown in the visitor facing side of the site. If not specified, the Label will be used.'),
+      '#default_value' => $cidoc_property->friendly_label,
+    );
+
+    $form['labels']['reverse_friendly_label'] = array(
+      '#type' => 'textfield',
+      '#size' => 40,
+      '#title' => t('Friendly Reverse label'),
+      '#description'   => $this->t('This will be shown in the visitor facing side of the site. If not specified the Reverse label will be used. This is not applicable to bi-directional properties.'),
+      '#default_value' => $cidoc_property->reverse_friendly_label,
+      '#states' => array(
+        'visible' => array(
+          ':input[name="bidirectional"]' => array('checked' => FALSE),
+        ),
+      ),
+    );
+
     $options_bundles = [];
     foreach (\Drupal::service('entity_type.bundle.info')->getBundleInfo('cidoc_entity') as $bundle_id => $bundle) {
       $options_bundles[$bundle_id] = $bundle['label'];

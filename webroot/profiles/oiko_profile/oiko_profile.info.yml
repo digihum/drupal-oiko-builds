@@ -4,6 +4,8 @@ description: Install profile for the Oiko
 core: 8.x
 
 dependencies:
+  - google_analytics
+  - eu_cookie_compliance
   - eva
   - forum
   - pathauto
@@ -104,6 +106,7 @@ cm_config_tools:
     - system.menu.main
     - system.menu.tools
   managed:
+    - block.block.maplegendblock
     - block.block.oiko_account_menu
     - block.block.oiko_branding
     - block.block.oiko_breadcrumbs
@@ -309,6 +312,7 @@ cm_config_tools:
     - core.entity_form_display.cidoc_reference.p9_consists_of.domain
     - core.entity_form_display.cidoc_reference.p9_consists_of.range
     - core.entity_form_display.comment.comment_forum.default
+    - core.entity_form_display.node.content_page.default
     - core.entity_form_display.node.forum.default
     - core.entity_form_display.paragraph.book.default
     - core.entity_form_display.paragraph.uri.default
@@ -318,61 +322,87 @@ cm_config_tools:
     - core.entity_form_mode.cidoc_reference.range
     - core.entity_view_display.cidoc_entity.e12_production.default
     - core.entity_view_display.cidoc_entity.e12_production.popup
+    - core.entity_view_display.cidoc_entity.e12_production.preview
     - core.entity_view_display.cidoc_entity.e21_person.default
     - core.entity_view_display.cidoc_entity.e21_person.popup
+    - core.entity_view_display.cidoc_entity.e21_person.preview
     - core.entity_view_display.cidoc_entity.e22_man_made_object.default
     - core.entity_view_display.cidoc_entity.e22_man_made_object.popup
+    - core.entity_view_display.cidoc_entity.e22_man_made_object.preview
+    - core.entity_view_display.cidoc_entity.e42_identifier.popup
+    - core.entity_view_display.cidoc_entity.e42_identifier.preview
+    - core.entity_view_display.cidoc_entity.e49_time_appellation.popup
+    - core.entity_view_display.cidoc_entity.e49_time_appellation.preview
     - core.entity_view_display.cidoc_entity.e4_period.default
     - core.entity_view_display.cidoc_entity.e4_period.popup
+    - core.entity_view_display.cidoc_entity.e4_period.preview
     - core.entity_view_display.cidoc_entity.e52_time_span.default
     - core.entity_view_display.cidoc_entity.e52_time_span.popup
-    - core.entity_view_display.cidoc_entity.e58_measurement_unit.popup
-    - core.entity_view_display.cidoc_entity.e42_identifier.popup
-    - core.entity_view_display.cidoc_entity.e49_time_appellation.popup
-    - core.entity_view_display.cidoc_entity.e82_actor_appellation.popup
+    - core.entity_view_display.cidoc_entity.e52_time_span.preview
     - core.entity_view_display.cidoc_entity.e53_place.default
     - core.entity_view_display.cidoc_entity.e53_place.popup
+    - core.entity_view_display.cidoc_entity.e53_place.preview
+    - core.entity_view_display.cidoc_entity.e54_dimension.popup
+    - core.entity_view_display.cidoc_entity.e54_dimension.preview
+    - core.entity_view_display.cidoc_entity.e58_measurement_unit.popup
+    - core.entity_view_display.cidoc_entity.e58_measurement_unit.preview
     - core.entity_view_display.cidoc_entity.e5_event.default
     - core.entity_view_display.cidoc_entity.e5_event.popup
+    - core.entity_view_display.cidoc_entity.e5_event.preview
     - core.entity_view_display.cidoc_entity.e5_event.summary_without_map
     - core.entity_view_display.cidoc_entity.e66_formation.default
     - core.entity_view_display.cidoc_entity.e66_formation.popup
+    - core.entity_view_display.cidoc_entity.e66_formation.preview
     - core.entity_view_display.cidoc_entity.e66_formation.summary
     - core.entity_view_display.cidoc_entity.e67_birth.default
+    - core.entity_view_display.cidoc_entity.e67_birth.inline_field
     - core.entity_view_display.cidoc_entity.e67_birth.popup
+    - core.entity_view_display.cidoc_entity.e67_birth.preview
     - core.entity_view_display.cidoc_entity.e67_birth.summary
-    - core.entity_view_display.cidoc_entity.e54_dimension.popup
     - core.entity_view_display.cidoc_entity.e67_birth.summary_without_map
     - core.entity_view_display.cidoc_entity.e68_dissolution.default
     - core.entity_view_display.cidoc_entity.e68_dissolution.popup
+    - core.entity_view_display.cidoc_entity.e68_dissolution.preview
     - core.entity_view_display.cidoc_entity.e68_dissolution.summary
     - core.entity_view_display.cidoc_entity.e68_dissolution.summary_without_map
     - core.entity_view_display.cidoc_entity.e69_death.default
+    - core.entity_view_display.cidoc_entity.e69_death.inline_field
     - core.entity_view_display.cidoc_entity.e69_death.popup
+    - core.entity_view_display.cidoc_entity.e69_death.preview
     - core.entity_view_display.cidoc_entity.e69_death.summary
     - core.entity_view_display.cidoc_entity.e69_death.summary_without_map
     - core.entity_view_display.cidoc_entity.e6_destruction.default
     - core.entity_view_display.cidoc_entity.e6_destruction.popup
+    - core.entity_view_display.cidoc_entity.e6_destruction.preview
     - core.entity_view_display.cidoc_entity.e6_destruction.summary_without_map
     - core.entity_view_display.cidoc_entity.e74_group.default
     - core.entity_view_display.cidoc_entity.e74_group.popup
+    - core.entity_view_display.cidoc_entity.e74_group.preview
     - core.entity_view_display.cidoc_entity.e74_group.summary
     - core.entity_view_display.cidoc_entity.e7_activity.default
     - core.entity_view_display.cidoc_entity.e7_activity.popup
+    - core.entity_view_display.cidoc_entity.e7_activity.preview
     - core.entity_view_display.cidoc_entity.e7_activity.summary_without_map
+    - core.entity_view_display.cidoc_entity.e82_actor_appellation.popup
+    - core.entity_view_display.cidoc_entity.e82_actor_appellation.preview
     - core.entity_view_display.cidoc_entity.e9_move.default
     - core.entity_view_display.cidoc_entity.e9_move.popup
+    - core.entity_view_display.cidoc_entity.e9_move.preview
     - core.entity_view_display.cidoc_entity.e9_move.summary
     - core.entity_view_display.cidoc_entity.e9_move.summary_without_map
     - core.entity_view_display.cidoc_entity.o1_killing.default
+    - core.entity_view_display.cidoc_entity.o1_killing.inline_field
     - core.entity_view_display.cidoc_entity.o1_killing.popup
+    - core.entity_view_display.cidoc_entity.o1_killing.preview
     - core.entity_view_display.cidoc_entity.o1_killing.summary
     - core.entity_view_display.cidoc_entity.o1_killing.summary_without_map
     - core.entity_view_display.cidoc_entity.o2_active_dissolution.default
     - core.entity_view_display.cidoc_entity.o2_active_dissolution.popup
+    - core.entity_view_display.cidoc_entity.o2_active_dissolution.preview
     - core.entity_view_display.cidoc_entity.o2_active_dissolution.summary_without_map
     - core.entity_view_display.cidoc_entity.o3_active_destruction.default
     - core.entity_view_display.cidoc_entity.o3_active_destruction.popup
+    - core.entity_view_display.cidoc_entity.o3_active_destruction.preview
     - core.entity_view_display.cidoc_entity.o3_active_destruction.summary_without_map
     - core.entity_view_display.cidoc_reference.p100_was_death_of.default
     - core.entity_view_display.cidoc_reference.p100_was_death_of.domain
@@ -471,6 +501,8 @@ cm_config_tools:
     - core.entity_view_display.cidoc_reference.p9_consists_of.domain
     - core.entity_view_display.cidoc_reference.p9_consists_of.range
     - core.entity_view_display.comment.comment_forum.default
+    - core.entity_view_display.node.content_page.default
+    - core.entity_view_display.node.content_page.teaser
     - core.entity_view_display.node.forum.default
     - core.entity_view_display.node.forum.teaser
     - core.entity_view_display.paragraph.book.default
@@ -478,7 +510,9 @@ cm_config_tools:
     - core.entity_view_display.taxonomy_term.empire.default
     - core.entity_view_display.taxonomy_term.event_types.default
     - core.entity_view_display.taxonomy_term.forums.default
+    - core.entity_view_mode.cidoc_entity.inline_field
     - core.entity_view_mode.cidoc_entity.popup
+    - core.entity_view_mode.cidoc_entity.preview
     - core.entity_view_mode.cidoc_entity.search_index
     - core.entity_view_mode.cidoc_entity.summary
     - core.entity_view_mode.cidoc_entity.summary_without_map
@@ -489,6 +523,7 @@ cm_config_tools:
     - core.entity_view_mode.paragraph.preview
     - editor.editor.basic_html
     - editor.editor.full_html
+    - eu_cookie_compliance.settings
     - field.field.cidoc_entity.e4_period.field_empire_outline
     - field.field.cidoc_entity.e52_time_span.field_date
     - field.field.cidoc_entity.e53_place.field_geodata
@@ -562,6 +597,7 @@ cm_config_tools:
     - field.field.cidoc_reference.p9_consists_of.domain
     - field.field.cidoc_reference.p9_consists_of.range
     - field.field.comment.comment_forum.comment_body
+    - field.field.node.content_page.body
     - field.field.node.forum.body
     - field.field.node.forum.comment_forum
     - field.field.node.forum.field_crm_entities
@@ -570,8 +606,8 @@ cm_config_tools:
     - field.field.paragraph.book.field_pages
     - field.field.paragraph.uri.field_uri
     - field.field.taxonomy_term.empire.field_single_color
-    - field.field.taxonomy_term.event_types.field_single_color
     - field.field.taxonomy_term.event_types.field_icon_color
+    - field.field.taxonomy_term.event_types.field_single_color
     - field.field.taxonomy_term.forums.forum_container
     - field.storage.cidoc_entity.field_date
     - field.storage.cidoc_entity.field_empire_outline
@@ -594,10 +630,14 @@ cm_config_tools:
     - field.storage.taxonomy_term.forum_container
     - filter.format.basic_html
     - filter.format.restricted_html
+    - google_analytics.settings
+    - image.style.comparative_timeline_logo
+    - node.settings
     - node.type.forum
     - paragraphs.paragraphs_type.book
     - paragraphs.paragraphs_type.uri
     - pathauto.pattern.cidoc_entity
+    - pathauto.pattern.content_page
     - rdf.mapping.node.forum
     - rdf.mapping.taxonomy_term.forums
     - search_api.index.crm_entities
@@ -607,8 +647,8 @@ cm_config_tools:
     - sharemessage.settings
     - sharemessage.sharemessage.share_links_block
     - system.menu.footer
-    - system.theme.global
     - system.theme
+    - system.theme.global
     - taxonomy.vocabulary.empire
     - taxonomy.vocabulary.event_types
     - taxonomy.vocabulary.forums
@@ -618,61 +658,63 @@ cm_config_tools:
     - taxonomy.vocabulary.source_books
     - user.role.anonymous
     - user.role.authenticated
+    - user.role.content_editor
+    - user.role.forum_user
     - views.view.all_events
-    - views.view.appelations
-    - views.view.appelations_real_names
     - views.view.cidoc_entities
     - views.view.crm_entity_search
-    - views.view.duplicate_of_p134_continues
-    - views.view.duplicate_of_p15_influenced
-    - views.view.duplicate_of_p15_was_influenced_by
-    - views.view.e67_birth_child
+    - views.view.discussions_listing
     - views.view.e67_birth_parents
-    - views.view.e6_destroyed
     - views.view.e9_move_map
-    - views.view.events_at_this_location
     - views.view.graphing_all_entities
     - views.view.important_events
     - views.view.important_people
-    - views.view.key_achievements
     - views.view.map_of_places_people_went
-    - views.view.p100_death_of
     - views.view.p108_produced_object
-    - views.view.p108_was_produced_by
-    - views.view.p10_contains
-    - views.view.p10_falls_within
-    - views.view.p10_includes
     - views.view.p11_has_participant
-    - views.view.p11_participae
     - views.view.p12_occurred_in_the_presence_of
     - views.view.p12_present_at
     - views.view.p14_carried_out_by
-    - views.view.p15_influenced
-    - views.view.p15_was_influenced_by
-    - views.view.p16_object_used_for
     - views.view.p16_used_specific_object
     - views.view.p17_motivated
     - views.view.p17_was_motivated_by
-    - views.view.p26_destination_of
-    - views.view.p27_moved_from_here
-    - views.view.p4_has_time_span
     - views.view.p7_took_place_at_map
     - views.view.p95_formed
     - views.view.p95_formed_group
     - views.view.p99_dissolved
     - views.view.p99_dissov_group
+    - views.view.timeline
+  delete:
+    - views.view.appelations
+    - views.view.appelations_real_names
+    - views.view.duplicate_of_p134_continues
+    - views.view.duplicate_of_p15_influenced
+    - views.view.duplicate_of_p15_was_influenced_by
+    - views.view.e67_birth_child
+    - views.view.e6_destroyed
+    - views.view.events_at_this_location
+    - views.view.key_achievements
+    - views.view.lifespan
+    - views.view.p100_death_of
+    - views.view.p108_was_produced_by
+    - views.view.p10_contains
+    - views.view.p10_falls_within
+    - views.view.p10_includes
+    - views.view.p11_participae
+    - views.view.p15_influenced
+    - views.view.p15_was_influenced_by
+    - views.view.p16_object_used_for
+    - views.view.p26_destination_of
+    - views.view.p27_moved_from_here
+    - views.view.p4_has_time_span
     - views.view.p9_
     - views.view.p9_forms_part_of
     - views.view.people
-    - views.view.places_people_went
-    - views.view.time_span_directly_linked_events
-    - views.view.time_span_within_period
-    - views.view.timeline
-    - block.block.maplegendblock
-    - user.role.forum_user
-    - views.view.discussions_listing
-  delete:
     - views.view.person_death
     - views.view.person_killed
     - views.view.person_parents
-    - views.view.lifespan
+    - views.view.places_people_went
+    - views.view.time_span_directly_linked_events
+    - views.view.time_span_within_period
+  implicit:
+    - node.type.content_page

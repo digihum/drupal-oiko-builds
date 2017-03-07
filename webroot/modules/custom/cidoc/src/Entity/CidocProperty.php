@@ -43,6 +43,8 @@ use Drupal\field\Entity\FieldStorageConfig;
  *     "label",
  *     "bidirectional",
  *     "reverse_label",
+ *     "friendly_label",
+ *     "reverse_friendly_label",
  *     "domain_bundles",
  *     "range_bundles",
  *     "editability",
@@ -82,11 +84,25 @@ class CidocProperty extends ConfigEntityBundleBase {
   protected $label;
 
   /**
-   * The reverse human-readable name of this property.
+   * The reverse CIDOC name of this property.
    *
    * @var string
    */
   public $reverse_label;
+
+  /**
+   * A human readable for the property.
+   *
+   * @var string
+   */
+  public $friendly_label;
+
+  /**
+   * The reverse human-readable name of this property.
+   *
+   * @var string
+   */
+  public $reverse_friendly_label;
 
   /**
    * Whether a property is considered symmetric or not.
@@ -148,6 +164,27 @@ class CidocProperty extends ConfigEntityBundleBase {
    * @var array
    */
   public $child_events = array();
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFriendlyLabel() {
+    return !empty($this->friendly_label) ? $this->friendly_label : $this->label();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getReverseFriendlyLabel() {
+    return !empty($this->reverse_friendly_label) ? $this->reverse_friendly_label : $this->getReverseLabel();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getReverseLabel() {
+    return !empty($this->reverse_label) ? $this->reverse_label : $this->label();
+  }
 
   /**
    * {@inheritdoc}

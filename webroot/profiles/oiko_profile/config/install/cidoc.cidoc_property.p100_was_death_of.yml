@@ -5,6 +5,8 @@ id: p100_was_death_of
 label: 'P100 was death of'
 bidirectional: false
 reverse_label: 'P100 died in'
+friendly_label: 'Was death of'
+reverse_friendly_label: 'Died in'
 domain_bundles:
   e69_death: e69_death
   o1_killing: o1_killing

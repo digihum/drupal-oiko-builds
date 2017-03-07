@@ -46,7 +46,6 @@ third_party_settings:
       label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Participants'
     group_appellations:
       children:
-        - name
         - 'cidoc_properties:domain:p1_is_identified_by'
       parent_name: ''
       weight: 3
@@ -60,7 +59,7 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Appellations'
+      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Also known as'
     group_places:
       children:
         - 'cidoc_properties:domain:p27_moved_from'
@@ -168,11 +167,31 @@ third_party_settings:
         effect: none
         speed: fast
       label: '<span class="fa fa-tasks">&nbsp;&nbsp;</span>Comparative Timeline'
+    group_map:
+      children:
+        - map_link
+      parent_name: ''
+      weight: 20
+      format_type: html_element
+      label: '<span class="fa fa-map">&nbsp;&nbsp;</span>Map'
+      format_settings:
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
 id: cidoc_entity.e9_move.popup
 targetEntityType: cidoc_entity
 bundle: e9_move
 mode: popup
 content:
+  cidoc_admin_links:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
   cidoc_properties:
     weight: 18
     settings: {  }
@@ -271,10 +290,6 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-  duplicate_of_p134_continues_entity_view_1:
-    weight: 10
-    settings: {  }
-    third_party_settings: {  }
   e9_move_map_entity_view_1:
     weight: 0
     settings: {  }
@@ -307,18 +322,11 @@ content:
     weight: 9
     settings: {  }
     third_party_settings: {  }
-  name:
-    label: hidden
-    type: string
-    weight: 4
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-  p108_produced_by_entity_view_1:
-    weight: 10
+  map_link:
+    weight: 47
     settings: {  }
     third_party_settings: {  }
-  p15_was_influenced_by_entity_view_1:
+  p108_produced_by_entity_view_1:
     weight: 10
     settings: {  }
     third_party_settings: {  }
@@ -336,12 +344,15 @@ content:
 hidden:
   'cidoc_properties:domain:p2_has_type': true
   citation: true
+  duplicate_of_p134_continues_entity_view_1: true
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
+  name: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p15_influenced_entity_view_1: true
+  p15_was_influenced_by_entity_view_1: true
   p16_used_specific_object_entity_view_1: true
   p17_motivated_entity_view_1: true
   p17_was_motivated_by_entity_view_1: true

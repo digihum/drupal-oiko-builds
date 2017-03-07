@@ -10,3 +10,4 @@ permissions:
   - 'view published cidoc entities'
   - 'access comments'
   - 'view sharemessages'
+  - 'display eu cookie compliance popup'

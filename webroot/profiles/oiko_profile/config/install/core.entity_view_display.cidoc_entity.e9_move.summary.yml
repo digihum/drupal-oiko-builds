@@ -102,10 +102,52 @@ targetEntityType: cidoc_entity
 bundle: e9_move
 mode: summary
 content:
-  duplicate_of_p134_continues_entity_view_1:
-    weight: 8
-    settings: {  }
-    third_party_settings: {  }
+  'cidoc_properties:domain:p10_falls_within':
+    weight: 20
+  'cidoc_properties:domain:p11_had_participant':
+    weight: 20
+  'cidoc_properties:domain:p12_occurred_in_the_presence_of':
+    weight: 20
+  'cidoc_properties:domain:p132_overlaps_with':
+    weight: 20
+  'cidoc_properties:domain:p133_is_separated_from':
+    weight: 20
+  'cidoc_properties:domain:p134_continued':
+    weight: 20
+  'cidoc_properties:domain:p14_carried_out_by':
+    weight: 20
+  'cidoc_properties:domain:p15_was_influenced_by':
+    weight: 20
+  'cidoc_properties:domain:p16_used_specific_object':
+    weight: 20
+  'cidoc_properties:domain:p17_was_motivated_by':
+    weight: 20
+  'cidoc_properties:domain:p1_is_identified_by':
+    weight: 20
+  'cidoc_properties:domain:p25_moved':
+    weight: 20
+  'cidoc_properties:domain:p26_moved_to':
+    weight: 20
+  'cidoc_properties:domain:p27_moved_from':
+    weight: 20
+  'cidoc_properties:domain:p2_has_type':
+    weight: 20
+  'cidoc_properties:domain:p4_has_time_span':
+    weight: 20
+  'cidoc_properties:domain:p7_took_place_at':
+    weight: 20
+  'cidoc_properties:domain:p9_consists_of':
+    weight: 20
+  'cidoc_properties:range:p10_falls_within':
+    weight: 21
+  'cidoc_properties:range:p134_continued':
+    weight: 21
+  'cidoc_properties:range:p15_was_influenced_by':
+    weight: 21
+  'cidoc_properties:range:p17_was_motivated_by':
+    weight: 21
+  'cidoc_properties:range:p9_consists_of':
+    weight: 21
   e9_move_map_entity_view_1:
     weight: 2
     settings: {  }
@@ -161,10 +203,13 @@ content:
     weight: 7
     settings: {  }
     third_party_settings: {  }
+  timeline_link:
+    weight: 0
 hidden:
   cidoc_properties: true
   citation: true
   content: true
+  duplicate_of_p134_continues_entity_view_1: true
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
@@ -177,4 +222,5 @@ hidden:
   p9_forms_part_of_entity_view_1: true
   people_entity_view_1: true
   significance: true
+  timeline_preselect_option: true
   user_id: true

@@ -37,6 +37,22 @@ interface CidocReferenceInterface extends ContentEntityInterface, EntityChangedI
   public function getReverseLabel();
 
   /**
+   * Gets the friendly label of the CIDOC property.
+   *
+   * @return string
+   *   The CIDOC property label.
+   */
+  public function getFriendlyLabel();
+
+  /**
+   * Gets the reverse friendly label of the CIDOC property.
+   *
+   * @return string
+   *   The CIDOC property label.
+   */
+  public function getReverseFriendlyLabel();
+
+  /**
    * Gets the CIDOC reference creation timestamp.
    *
    * @return int

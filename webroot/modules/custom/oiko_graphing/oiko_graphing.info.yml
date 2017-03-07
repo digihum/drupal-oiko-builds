@@ -1,5 +1,0 @@
-name: Graphing
-description: 'Provides integration with the graphing'
-type: module
-core: 8.x
-package: Oiko

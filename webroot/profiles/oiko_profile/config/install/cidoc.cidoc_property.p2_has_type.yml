@@ -5,6 +5,8 @@ id: p2_has_type
 label: 'P2 has type'
 bidirectional: false
 reverse_label: 'P2 is type of'
+friendly_label: 'has type'
+reverse_friendly_label: 'Is type of'
 domain_bundles:
   e52_time_span: e52_time_span
   e53_place: e53_place

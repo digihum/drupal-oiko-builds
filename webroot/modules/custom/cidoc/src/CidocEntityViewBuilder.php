@@ -5,6 +5,7 @@ namespace Drupal\cidoc;
 use Drupal\cidoc\Entity\CidocProperty;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityViewBuilder;
+use Drupal\Core\Url;
 use Drupal\views\Views;
 
 /**
@@ -38,7 +39,50 @@ class CidocEntityViewBuilder extends EntityViewBuilder {
           }
         }
       }
+
+      // Add the all properties field.
+      if ($displays[$entity->bundle()]->getComponent('cidoc_properties')) {
+        foreach (array(CidocProperty::DOMAIN_ENDPOINT => FALSE, CidocProperty::RANGE_ENDPOINT => TRUE) as $source_field => $reverse) {
+          if ($grouped_references = $entity->getReferences(NULL, $reverse)) {
+            foreach ($grouped_references as $property => $references) {
+                $build[$id]['cidoc_properties'][$source_field . ':' . $property] = $view_builder->viewMultiple($references, $source_field);
+            }
+          }
+        }
+      }
     }
+
+    // Add the admin links if requested.
+    if ($displays[$entity->bundle()]->getComponent('cidoc_admin_links')) {
+      $links = [];
+      if (($route = Url::fromRoute('entity.cidoc_entity.edit_preview', ['cidoc_entity' => $entity->id()])) && $route->access()) {
+        $links[] = \Drupal::l($this->t('View for editing'), $route);
+      }
+      if (($route = Url::fromRoute('entity.cidoc_entity.edit_form', ['cidoc_entity' => $entity->id()])) && $route->access()) {
+        $links[] = \Drupal::l($this->t('Edit'), $route);
+      }
+      if (($route = Url::fromRoute('entity.cidoc_entity.populate_properties', ['cidoc_entity' => $entity->id()])) && $route->access()) {
+        $links[] = \Drupal::l($this->t('Populate properties'), $route);
+      }
+      $build[$id]['cidoc_admin_links'] = [
+        '#theme' => 'item_list',
+        '#title' => $this->t('<span class="fa fa-pencil">&nbsp;&nbsp;</span>Editor links'),
+        '#attributes' => [
+          'class' => [
+            'inline',
+          ],
+        ],
+        '#items' => $links,
+        '#theme_wrappers' => [
+          'container' => [
+            '#attributes' => [
+              'class' => ['fancy-titles'],
+            ],
+          ],
+        ],
+      ];
+    }
+
   }
 
   public function view(EntityInterface $entity, $view_mode = 'full', $langcode = NULL) {

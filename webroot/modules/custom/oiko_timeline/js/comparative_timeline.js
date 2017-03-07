@@ -21,7 +21,6 @@ Drupal.behaviors.comparative_timeline = {
         if ($.QueryString['items']) {
           var items = $.QueryString['items'].split(',');
           for (var i in items) {
-            console.log(items[i]);
             $component.data('comparative_timeline').loadDataHandler(items[i]);
           }
         }
@@ -397,7 +396,7 @@ Drupal.behaviors.comparative_timeline = {
     var url = '/comparative-timeline/data/' + groupID;
     this.nowLoading(groupID);
     $.get(url, function(data) {
-      timeline.doneLoading(groupID);
+      timeline.doneLoading.call(timeline, groupID);
       timeline.addDataToTimeline.call(timeline, data);
     });
   };
@@ -440,7 +439,7 @@ Drupal.behaviors.comparative_timeline = {
           timeline.loadDataHandler.call(timeline, $(this).data('groupId'));
           $(this).hide();
         });
-        this.$addNewContainer.append($link)
+        this.$addNewContainer.append($link);
         this.preselectedLinks.push($link);
       }
     }
@@ -460,6 +459,13 @@ Drupal.behaviors.comparative_timeline = {
           timeline.removeGroupFromTimeline($target.data('groupId'));
         }
       }
+    });
+    $(window).bind('oikoSidebarOpen', function(e, id) {
+      // Find the selected item in our items, and select it.
+      var selectedItems = timeline._visItems.getIds({filter: function(item) {
+        return item.event == id;
+      }});
+      timeline._visTimeline.setSelection(selectedItems, {focus: selectedItems.length > 0});
     });
   };
 
@@ -501,7 +507,7 @@ Drupal.behaviors.comparative_timeline = {
     // Add a group:
     this._visGroups.add([{
       id: groupId,
-      content: '<span class="js-comparative-timeline-remove-link fa fa-times" data-group-id="' + data.id + '"></span>&nbsp;' + data.label
+      content: '<span class="js-comparative-timeline-remove-link fa fa-times" data-group-id="' + data.id + '"></span>&nbsp;' + data.label + data.logo
     }]);
 
     if (data.events !== null) {
@@ -518,6 +524,7 @@ Drupal.behaviors.comparative_timeline = {
           start: minmin * 1000,
           end: maxmax * 1000,
           group: data.id,
+          event: event.id,
           className: 'oiko-timeline-item--' + event.color
         });
 

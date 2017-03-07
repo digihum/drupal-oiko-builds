@@ -32,7 +32,44 @@ class CidocEntityHtmlRouteProvider extends AdminHtmlRouteProvider {
     $add_page_route = $this->getAddPageRoute($entity_type);
     $collection->add("$entity_type_id.add_page", $add_page_route);
 
+    if ($preview_route = $this->getEditPreviewRoute($entity_type)) {
+      $collection->add("entity.{$entity_type_id}.edit_preview", $preview_route);
+    }
+
     return $collection;
+  }
+
+  /**
+   * Gets the preview route.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
+   *   The entity type.
+   *
+   * @return \Symfony\Component\Routing\Route|null
+   *   The generated route, if available.
+   */
+  protected function getEditPreviewRoute(EntityTypeInterface $entity_type) {
+    if ($entity_type->hasLinkTemplate('edit_preview') && $entity_type->hasViewBuilderClass()) {
+      $entity_type_id = $entity_type->id();
+      $route = new Route($entity_type->getLinkTemplate('edit_preview'));
+      $route
+        ->addDefaults([
+          '_entity_view' => "{$entity_type_id}.preview",
+          '_title_callback' => '\Drupal\Core\Entity\Controller\EntityController::title',
+        ])
+        ->setRequirement('_entity_access', "{$entity_type_id}.update")
+        ->setOption('parameters', [
+          $entity_type_id => ['type' => 'entity:' . $entity_type_id],
+        ])
+        ->setOption('_admin_route', TRUE);
+
+      // Entity types with serial IDs can specify this in their route
+      // requirements, improving the matching process.
+      if ($this->getEntityTypeIdKeyType($entity_type) === 'integer') {
+        $route->setRequirement($entity_type_id, '\d+');
+      }
+      return $route;
+    }
   }
 
   /**

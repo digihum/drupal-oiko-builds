@@ -5,6 +5,8 @@ id: p13_destroyed
 label: 'P13 destroyed'
 bidirectional: false
 reverse_label: 'P13 was destroyed by'
+friendly_label: Destroyed
+reverse_friendly_label: 'Was destroyed by'
 domain_bundles:
   e6_destruction: e6_destruction
   o3_active_destruction: o3_active_destruction

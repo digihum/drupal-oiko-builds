@@ -5,6 +5,8 @@ id: p96_by_mother
 label: 'P96 by mother'
 bidirectional: false
 reverse_label: 'P96 gave birth'
+friendly_label: 'By mother'
+reverse_friendly_label: 'Gave birth'
 domain_bundles:
   e67_birth: e67_birth
 range_bundles:

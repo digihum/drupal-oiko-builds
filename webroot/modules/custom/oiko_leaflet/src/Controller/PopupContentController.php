@@ -6,6 +6,7 @@ use Drupal\cidoc\CidocEntityInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\oiko_leaflet\Ajax\GAEventCommand;
 use Drupal\oiko_leaflet\Ajax\HistoryPushCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityManager;
@@ -58,6 +59,8 @@ class PopupContentController extends ControllerBase {
       'label' => $cidoc_entity->label(),
     ];
     $response->addCommand(new HistoryPushCommand($pushData, NULL, $cidoc_entity->toUrl()));
+    // Add in the GA response too.
+    $response->addCommand(new GAEventCommand('pageview', ['dimension1' => $cidoc_entity->getOwner()->id()]));
     return $response;
 
   }

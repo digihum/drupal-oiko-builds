@@ -34,6 +34,24 @@ class OikoTimelineHookImplementations {
         ->setDefaultValue(FALSE)
         ->setDisplayConfigurable('view', TRUE);
 
+
+      $fields['timeline_logo'] = BaseFieldDefinition::create('image')
+        ->setLabel(t('Comparative timeline image label'))
+        ->setTranslatable(FALSE)
+        ->setDescription(t('A logo or image that will be displayed in this entity\'s  comparative timeline lane when this entity is added for comparision.'))
+        ->setSetting('file_directory', 'ct-logos/[date:custom:Y]-[date:custom:m]')
+        ->setSetting('alt_field', TRUE)
+        ->setSetting('alt_field_required', FALSE)
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayOptions('form', array(
+          'type' => 'image_image',
+          'weight' => 10,
+          'settings' => array(
+          ),
+        ))
+        ->setDefaultValue(FALSE)
+        ->setDisplayConfigurable('view', TRUE);
+
       return $fields;
     }
   }

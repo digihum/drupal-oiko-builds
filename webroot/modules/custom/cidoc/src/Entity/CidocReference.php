@@ -220,6 +220,20 @@ class CidocReference extends ContentEntityBase implements CidocReferenceInterfac
   /**
    * {@inheritdoc}
    */
+  public function getFriendlyLabel() {
+    return $this->property->entity->getFriendlyLabel();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getReverseFriendlyLabel() {
+    return $this->property->entity->getReverseFriendlyLabel();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCreatedTime() {
     return $this->get('created')->value;
   }

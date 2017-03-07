@@ -38,6 +38,14 @@ class CidocEntityBundleForm extends EntityForm {
       '#disabled' => !$cidoc_entity_bundle->isNew(),
     );
 
+    $form['friendly_label'] = array(
+      '#type' => 'textfield',
+      '#size' => 40,
+      '#title' => t('Friendly label'),
+      '#description'   => $this->t('This will be shown in the visitor facing side of the site. If not specified, the Label will be used.'),
+      '#default_value' => $cidoc_entity_bundle->friendly_label,
+    );
+
     $form['crm_entity'] = array(
       '#title' => $this->t('CIDOC-CRM Entity'),
       '#type' => 'textfield',

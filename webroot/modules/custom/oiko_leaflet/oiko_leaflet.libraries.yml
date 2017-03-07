@@ -40,6 +40,13 @@ locate:
     - oiko_leaflet/leaflet-locatecontrol
     - core/jquery
 
+loading:
+  js:
+    js/leaflet.loading.js: {}
+  version: VERSION
+  dependencies:
+    - core/jquery
+
 icons:
   js:
     js/leaflet.icons.js: {}

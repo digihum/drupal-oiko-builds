@@ -4,13 +4,13 @@ namespace Consolidation\OutputFormatters\Formatters;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
 
-use Consolidation\OutputFormatters\FormatterInterface;
-use Consolidation\OutputFormatters\ValidationInterface;
-use Consolidation\OutputFormatters\FormatterOptions;
+use Consolidation\OutputFormatters\Validate\ValidDataTypesInterface;
+use Consolidation\OutputFormatters\Options\FormatterOptions;
+use Consolidation\OutputFormatters\Validate\ValidDataTypesTrait;
 use Consolidation\OutputFormatters\StructuredData\TableDataInterface;
 use Consolidation\OutputFormatters\Transformations\ReorderFields;
 use Consolidation\OutputFormatters\Exception\IncompatibleDataException;
-use Consolidation\OutputFormatters\StructuredData\AssociativeList;
+use Consolidation\OutputFormatters\StructuredData\PropertyList;
 
 /**
  * Display sections of data.
@@ -20,8 +20,9 @@ use Consolidation\OutputFormatters\StructuredData\AssociativeList;
  * is rendered in two columns, with the key in the first column
  * and the value in the second column.
  */
-class SectionsFormatter implements FormatterInterface, ValidationInterface, RenderDataInterface
+class SectionsFormatter implements FormatterInterface, ValidDataTypesInterface, RenderDataInterface
 {
+    use ValidDataTypesTrait;
     use RenderTableDataTrait;
 
     public function validDataTypes()
@@ -38,7 +39,7 @@ class SectionsFormatter implements FormatterInterface, ValidationInterface, Rend
     public function validate($structuredData)
     {
         // If the provided data was of class RowsOfFields
-        // or AssociativeList, it will be converted into
+        // or PropertyList, it will be converted into
         // a TableTransformation object by the restructure call.
         if (!$structuredData instanceof TableDataInterface) {
             throw new IncompatibleDataException(
@@ -61,7 +62,7 @@ class SectionsFormatter implements FormatterInterface, ValidationInterface, Rend
             $rowLabel = $tableTransformer->getRowLabel($rowid);
             $output->writeln('');
             $output->writeln($rowLabel);
-            $sectionData = new AssociativeList($row);
+            $sectionData = new PropertyList($row);
             $sectionOptions = new FormatterOptions([], $options->getOptions());
             $sectionTableTransformer = $sectionData->restructure($sectionOptions);
             $table->setRows($sectionTableTransformer->getTableData(true));

@@ -1,8 +1,7 @@
 <?php
 namespace Consolidation\OutputFormatters\Transformations;
 
-use Consolidation\OutputFormatters\SimplifyToArrayInterface;
-use Consolidation\OutputFormatters\FormatterOptions;
+use Consolidation\OutputFormatters\Options\FormatterOptions;
 use Consolidation\OutputFormatters\StructuredData\Xml\DomDataInterface;
 use Consolidation\OutputFormatters\StructuredData\Xml\XmlSchema;
 
@@ -13,6 +12,17 @@ class DomToArraySimplifier implements SimplifyToArrayInterface
 {
     public function __construct()
     {
+    }
+
+    /**
+     * @param ReflectionClass $dataType
+     */
+    public function canSimplify(\ReflectionClass $dataType)
+    {
+        return
+            $dataType->isSubclassOf('\Consolidation\OutputFormatters\StructuredData\Xml\DomDataInterface') ||
+            $dataType->isSubclassOf('DOMDocument') ||
+            ($dataType->getName() == 'DOMDocument');
     }
 
     public function simplifyToArray($structuredData, FormatterOptions $options)
@@ -80,7 +90,7 @@ class DomToArraySimplifier implements SimplifyToArrayInterface
         } else {
             $result = $this->getUniqueChildren($element->nodeName, $element);
         }
-        return $result;
+        return array_filter($result);
     }
 
     /**
@@ -143,7 +153,12 @@ class DomToArraySimplifier implements SimplifyToArrayInterface
             if ($this->valueCanBeSimplified($value)) {
                 $value = array_shift($value);
             }
-            $simplifiedChildren[$parentKey][] = $value;
+            $id = $this->getIdOfValue($value);
+            if ($id) {
+                $simplifiedChildren[$parentKey][$id] = $value;
+            } else {
+                $simplifiedChildren[$parentKey][] = $value;
+            }
         }
         return $simplifiedChildren;
     }
@@ -166,6 +181,25 @@ class DomToArraySimplifier implements SimplifyToArrayInterface
         }
         $data = array_shift($value);
         return is_string($data);
+    }
+
+    /**
+     * If the object has an 'id' or 'name' element, then use that
+     * as the array key when storing this value in its parent.
+     * @param mixed $value
+     * @return string
+     */
+    protected function getIdOfValue($value)
+    {
+        if (!is_array($value)) {
+            return false;
+        }
+        if (array_key_exists('id', $value)) {
+            return trim($value['id'], '-');
+        }
+        if (array_key_exists('name', $value)) {
+            return trim($value['name'], '-');
+        }
     }
 
     /**

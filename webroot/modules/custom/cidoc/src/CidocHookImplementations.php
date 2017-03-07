@@ -30,6 +30,18 @@ class CidocHookImplementations {
         'weight' => -20,
       );
 
+      $extra['cidoc_entity'][$bundle]['display']['cidoc_properties'] = array(
+        'label' => t('All CIDOC Properties'),
+        'weight' => 19,
+        'visible' => FALSE,
+      );
+
+      $extra['cidoc_entity'][$bundle]['display']['cidoc_admin_links'] = array(
+        'label' => t('Admin edit links'),
+        'weight' => -20,
+        'visible' => FALSE,
+      );
+
       foreach (array(CidocProperty::DOMAIN_ENDPOINT => FALSE, CidocProperty::RANGE_ENDPOINT => TRUE) as $source_field => $reverse) {
         /** @var CidocEntityBundle $bundle_entity */
         if ($applicable_properties = $bundle_entity->getAllEditableProperties($reverse)) {

@@ -21,3 +21,7 @@ Allows use of geometrycollection
 Source: https://www.drupal.org/files/issues/leaflet-2799311-geometry-collection.patch
 
 
+https://www.drupal.org/node/2858091#comment-11971355
+Source: https://www.drupal.org/files/issues/leaflet-2858091-no-features-on-ajax.patch
+
+

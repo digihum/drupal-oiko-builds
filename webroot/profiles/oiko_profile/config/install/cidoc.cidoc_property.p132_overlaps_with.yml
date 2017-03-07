@@ -5,6 +5,8 @@ id: p132_overlaps_with
 label: 'P132 overlaps with'
 bidirectional: true
 reverse_label: 'P132 overlaps with'
+friendly_label: 'Overlaps with'
+reverse_friendly_label: ''
 domain_bundles:
   e12_production: e12_production
   e4_period: e4_period
@@ -45,3 +47,6 @@ widget_description:
 autocomplete_description:
   domain: ''
   range: ''
+child_events:
+  domain: 0
+  range: 0

@@ -2,19 +2,13 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_property.p11_had_participant
-    - cidoc.cidoc_property.p14_carried_out_by
-    - cidoc.cidoc_property.p16_used_specific_object
-    - cidoc.cidoc_property.p25_moved
     - cidoc.cidoc_property.p26_moved_to
     - cidoc.cidoc_property.p27_moved_from
-    - cidoc.cidoc_property.p7_took_place_at
     - field.storage.cidoc_entity.field_geodata
   module:
     - cidoc
     - eva
     - geofield
-    - leaflet_views
     - oiko_leaflet
 id: e9_move_map
 label: 'E9 Move - MAP'

@@ -42,10 +42,10 @@ function template_preprocess_cidoc_reference(array &$variables) {
   /** @var \Drupal\cidoc\Entity\CidocReference $entity */
   $entity = $variables['elements']['#cidoc_reference'];
   if ($variables['elements']['#view_mode'] === 'range') {
-    $variables['elements']['domain']['#title'] = $entity->getReverseLabel();
+    $variables['elements']['domain']['#title'] = $entity->getReverseFriendlyLabel();
   }
   if ($variables['elements']['#view_mode'] === 'domain') {
-    $variables['elements']['range']['#title'] = $entity->getPropertyLabel();
+    $variables['elements']['range']['#title'] = $entity->getFriendlyLabel();
   }
 
   // Helpful $content variable for templates.

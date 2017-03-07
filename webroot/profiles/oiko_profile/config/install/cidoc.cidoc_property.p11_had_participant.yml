@@ -5,6 +5,8 @@ id: p11_had_participant
 label: 'P11 had participant'
 bidirectional: false
 reverse_label: 'P11 participated in'
+friendly_label: 'Had participant'
+reverse_friendly_label: 'Participated in'
 domain_bundles:
   e5_event: e5_event
   e7_activity: e7_activity

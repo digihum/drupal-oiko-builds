@@ -32,6 +32,9 @@
 
       // Set up an AJAX request to replace the content.
       Drupal.oiko.displayContentInLeafletSidebar(id, changeHistoryState);
+
+      // Fire some events.
+      $(window).trigger('oikoSidebarOpen', [id, label]);
     }
   };
 
@@ -104,6 +107,22 @@
       else {
         // Should we polyfill?
       }
+    }
+  };
+
+  /**
+   * Command to push a state into the history API.
+   *
+   * @param {Drupal.Ajax} [ajax]
+   *   The Drupal Ajax object.
+   * @param {object} response
+   *   Object holding the server response.
+   * @param {number} [status]
+   *   The HTTP status code.
+   */
+  Drupal.AjaxCommands.prototype.oikoGAEvent = function (ajax, response) {
+    if (typeof ga !== 'undefined') {
+      ga('send', response.event, response.args);
     }
   };
 

@@ -76,6 +76,7 @@ display:
           search: 1
           timeline: 1
           pagestate: 1
+          empty_map: 1
           empires: 1
           map: 'Ancient Terrain'
           full_height: 1

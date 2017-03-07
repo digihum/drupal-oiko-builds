@@ -9,7 +9,6 @@ return array(
     'phpDocumentor' => array($vendorDir . '/phpdocumentor/reflection-docblock/src'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Stack' => array($vendorDir . '/stack/builder/src'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'PEAR' => array($vendorDir . '/pear/pear_exception'),
     'Michelf' => array($vendorDir . '/michelf/php-markdown'),
     'Lurker' => array($vendorDir . '/henrikbjorn/lurker/src'),

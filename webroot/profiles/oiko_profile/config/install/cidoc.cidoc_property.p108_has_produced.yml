@@ -5,6 +5,8 @@ id: p108_has_produced
 label: 'P108 has produced'
 bidirectional: false
 reverse_label: 'P108 was produced by'
+friendly_label: 'Has produced'
+reverse_friendly_label: 'Was produced by'
 domain_bundles:
   e12_production: e12_production
 range_bundles:

@@ -139,12 +139,12 @@
 
 
       // Search support.
-      if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search) {
+      if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search || drupalLeaflet.map_definition.hasOwnProperty('sidebar') && drupalLeaflet.map_definition.sidebar) {
         var featureCache = {};
 
         // Build up a lovely map of Drupal feature id to a timestamp.
         $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
-          if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search) {
+          if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search || drupalLeaflet.map_definition.hasOwnProperty('sidebar') && drupalLeaflet.map_definition.sidebar) {
             if (feature.hasOwnProperty('id') && feature.id) {
               if (feature.hasOwnProperty('temporal')) {
                 var min = parseInt(feature.temporal.minmin, 10);
@@ -167,8 +167,16 @@
           }
         });
 
-      }
+        // Listen for the sidebar being opened, and ensure that our time is correct.
+        $(window).bind('oikoSidebarOpen', function(e, id) {
+          if (featureCache.hasOwnProperty(id)) {
+            if (featureCache[id].hasOwnProperty('time')) {
+              drupalLeaflet.changeTime.call(drupalLeaflet, featureCache[id].time);
+            }
+          }
+        });
 
+      }
     }
   });
 

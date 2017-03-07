@@ -125,3 +125,17 @@ function oiko_profile_update_8112() {
 function oiko_profile_update_8113() {
   \Drupal::service('module_installer')->install(['metatag_open_graph', 'metatag_twitter_cards', 'metatag_facebook', 'sharemessage']);
 }
+
+/**
+ * Enable the GA module.
+ */
+function oiko_profile_update_8114() {
+  \Drupal::service('module_installer')->install(['google_analytics']);
+}
+
+/**
+ * Enable the cookie compliance module.
+ */
+function oiko_profile_update_8115() {
+  \Drupal::service('module_installer')->install(['eu_cookie_compliance']);
+}

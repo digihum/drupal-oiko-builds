@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: comparative_timeline_logo
+label: 'Comparative Timeline Logo'
+effects:
+  f53898cb-c805-4712-8d07-442a8d26cb11:
+    uuid: f53898cb-c805-4712-8d07-442a8d26cb11
+    id: image_scale
+    weight: 1
+    data:
+      width: 300
+      height: null
+      upscale: true
