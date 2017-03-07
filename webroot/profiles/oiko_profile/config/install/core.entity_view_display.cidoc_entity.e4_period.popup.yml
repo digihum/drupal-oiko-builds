@@ -293,5 +293,6 @@ hidden:
   p9__entity_view_1: true
   p9_forms_part_of_entity_view_1: true
   people_entity_view_1: true
+  timeline_logo: true
   timeline_preselect_option: true
   user_id: true

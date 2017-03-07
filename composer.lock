@@ -1278,7 +1278,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/cm_config_tools",
-                "reference": "b1a8a5d22a6051282e85f717d9fc1d219f3e2af9"
+                "reference": "b1967c154c8c8fd62a0c5e6f285391cb8ead4cc0"
             },
             "require": {
                 "drupal/config_update": "*",
@@ -1291,7 +1291,7 @@
                 },
                 "drupal": {
                     "version": "8.x-1.x-dev",
-                    "datestamp": "1483547343"
+                    "datestamp": "1486461783"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -1317,7 +1317,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/cm_config_tools"
             },
-            "time": "2017-02-07 10:00:30"
+            "time": "2017-03-07 10:40:20"
         },
         {
             "name": "drupal/color_field",

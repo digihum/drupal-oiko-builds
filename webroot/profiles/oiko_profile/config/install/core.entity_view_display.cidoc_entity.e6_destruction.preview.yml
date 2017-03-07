@@ -77,6 +77,7 @@ hidden:
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   e6_destroyed_entity_view_1: true
+  map_link: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p11_has_participant_entity_view_1: true
@@ -92,5 +93,6 @@ hidden:
   p9__entity_view_1: true
   p9_forms_part_of_entity_view_1: true
   timeline_link: true
+  timeline_logo: true
   timeline_preselect_option: true
   user_id: true

@@ -218,7 +218,10 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  cidoc_admin_links: true
   citation: true
   content: true
+  map_link: true
+  timeline_logo: true
   timeline_preselect_option: true
   user_id: true

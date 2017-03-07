@@ -275,5 +275,6 @@ hidden:
   person_death_entity_view_1: true
   person_killed_entity_view_1: true
   person_parents_entity_view_1: true
+  timeline_logo: true
   timeline_preselect_option: true
   user_id: true

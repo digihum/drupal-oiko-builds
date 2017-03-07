@@ -262,5 +262,6 @@ hidden:
   people_entity_view_1: true
   time_span_directly_linked_events_entity_view_1: true
   time_span_within_period_entity_view_1: true
+  timeline_logo: true
   timeline_preselect_option: true
   user_id: true

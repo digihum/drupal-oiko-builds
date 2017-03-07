@@ -203,6 +203,7 @@ content:
   timeline_link:
     weight: 0
 hidden:
+  cidoc_admin_links: true
   cidoc_properties: true
   citation: true
   content: true
@@ -210,6 +211,7 @@ hidden:
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
+  map_link: true
   p108_has_produced_entity_view_1: true
   p108_produced_by_entity_view_1: true
   p10_falls_within_entity_view_1: true
@@ -222,5 +224,6 @@ hidden:
   p9_forms_part_of_entity_view_1: true
   people_entity_view_1: true
   significance: true
+  timeline_logo: true
   timeline_preselect_option: true
   user_id: true
