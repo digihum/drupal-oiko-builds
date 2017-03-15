@@ -73,6 +73,7 @@ class oikoApp {
   addTo($wrapper) {
     this.$wrapper = $wrapper;
     this.store.dispatch(appLoadingAddToDOM());
+    // This should initialise the app, so making sure the correct visualisation is displayed etc.
   }
 
   getStore() {
