@@ -206,6 +206,27 @@
         "description": "Composer plugin to merge multiple composer.json files"
     },
     {
+        "name": "Leaflet/Leaflet",
+        "version": "1.0.3",
+        "version_normalized": "1.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Leaflet/Leaflet.git",
+            "reference": "v1.0.3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/Leaflet/Leaflet/archive/v1.0.3.zip",
+            "reference": "v1.0.3",
+            "shasum": null
+        },
+        "require": {
+            "composer/installers": "^1.0.21"
+        },
+        "type": "drupal-library",
+        "installation-source": "dist"
+    },
+    {
         "name": "Leaflet/Leaflet.draw",
         "version": "0.3.0",
         "version_normalized": "0.3.0.0",
@@ -5644,21 +5665,6 @@
         }
     },
     {
-        "name": "Leaflet/Leaflet",
-        "version": "0.7.7",
-        "version_normalized": "0.7.7.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/Leaflet/Leaflet.git",
-            "reference": "v0.7.7"
-        },
-        "require": {
-            "composer/installers": "^1.0.21"
-        },
-        "type": "drupal-library",
-        "installation-source": "source"
-    },
-    {
         "name": "drupal/leaflet",
         "version": "dev-1.x",
         "version_normalized": "dev-1.x",
@@ -5668,8 +5674,7 @@
             "reference": "a3274e4"
         },
         "require": {
-            "drupal/core": "~8.0",
-            "leaflet/leaflet": "^0.7.7"
+            "drupal/core": "~8.0"
         },
         "time": "2016-04-04 21:22:53",
         "type": "drupal-module",
@@ -5678,8 +5683,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0-beta1+1-dev",
-                "datestamp": "1476171839"
+                "version": "8.x-1.0-beta1+3-dev",
+                "datestamp": "1485300782"
             },
             "patches_applied": {
                 "New version of geofield uses composer for geophp dependency, geophp_load not needed": "https://www.drupal.org/files/issues/leaflet-remove_geophp_load_call-2731917-2.patch",

@@ -4,6 +4,24 @@
     options: {
       position: 'bottomleft'
     },
+    // Returns a function, that, as long as it continues to be invoked, will not
+    // be triggered. The function will be called after it stops being called for
+    // N milliseconds. If `immediate` is passed, trigger the function on the
+    // leading edge, instead of the trailing.
+    debounce: function debounce(func, wait, immediate) {
+      var timeout;
+      return function() {
+        var context = this, args = arguments;
+        var later = function() {
+          timeout = null;
+          if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+      };
+    },
     initialize: function initialize() {
       var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
@@ -16,6 +34,7 @@
         },
         showTicks: false,
         waitToUpdateMap: false,
+        waitToUpdateTimeline: true,
         position: 'bottomleft',
         steps: 1000,
         drupalLeaflet: {
@@ -26,6 +45,7 @@
       this.timelines = [];
       this.callbacks = [];
       this.doneCallbacks = [];
+      this.rangeChangedCallbacks = [];
       L.Util.setOptions(this, defaultOptions);
       L.Util.setOptions(this, options);
       if (typeof options.start !== 'undefined') {
@@ -34,6 +54,10 @@
       if (typeof options.end !== 'undefined') {
         this.end = options.end;
       }
+    },
+    updateTimelineWithData: function updateTimelineWithData() {
+      this.waitToUpdateTimeline = false;
+      this._visTimeline.setItems(this._visItems.get());
     },
     /**
      * Create all of the DOM for the control.
@@ -77,7 +101,7 @@
 
       // Create a Timeline
       this._visItems = new vis.DataSet([]);
-      this._visTimeline = new vis.Timeline(container, this._visItems, options);
+      this._visTimeline = new vis.Timeline(container, [], options);
       var customDate = new Date();
       customDate = new Date(customDate.getFullYear(), customDate.getMonth(), customDate.getDate() + 1);
       this._visTimeline.addCustomTime(customDate, 'tdrag');
@@ -86,12 +110,24 @@
         if (e.id === 'tdrag') {
           _this4._visTimelineChanged(e);
           _this4._updateDragTitle();
+
         }
       });
       this._visTimeline.on('timechanged', function(e) {
         if (e.id === 'tdrag') {
           _this4._visTimelineChangedDone(e);
           _this4._updateDragTitle();
+          _this4.map.fireEvent('temporalBrowserTimeChanged', {current: _this4.getTime()});
+        }
+      });
+      this._visTimeline.on('rangechanged', function(e) {
+        _this4._visTimelineRangedChanged(e);
+        _this4.map.fireEvent('temporalBrowserRangeChanged');
+      });
+      this._visTimeline.on('doubleClick', function(e) {
+        if (typeof e.time !== 'undefined') {
+          var time = Math.round(e.time.getTime() / 1000);
+          _this4.changeTime(time);
         }
       });
     },
@@ -113,6 +149,15 @@
         });
       }
     },
+    _visTimelineRangedChanged: function _visTimelineRangedChanged(properties) {
+      var start = Math.round(properties.start.getTime() / 1000);
+      var end = Math.round(properties.end.getTime() / 1000);
+      if (!this.options.waitToUpdateMap) {
+        this.rangeChangedCallbacks.forEach(function (cb) {
+          return cb(start, end);
+        });
+      }
+    },
     _sliderChanged: function _sliderChanged(e) {
       var time = parseFloat(e.target.value, 10);
       this.time = time;
@@ -122,6 +167,7 @@
         });
       }
       this._updateDragTitle();
+      this.map.fireEvent('temporalBrowserTimeChanged', {current: this.getTime()});
     },
     _updateDragTitle: function () {
       var offset = 365.25 * 86400 / 2;
@@ -137,8 +183,11 @@
         type: 'background'
       };
       this._visItems.add(obj);
+      if (this.waitToUpdateTimeline) {
+        this.updateTimelineWithData();
+      }
     },
-    addTimeline: function addTimeline(timeline, cb, dcb) {
+    addTimeline: function addTimeline(timeline, cb, dcb, rdcb) {
       var _this = this;
 
       // this.pause();
@@ -148,6 +197,7 @@
         _this.timelines.push(timeline);
         _this.callbacks.push(cb);
         _this.doneCallbacks.push(dcb);
+        _this.rangeChangedCallbacks.push(rdcb);
       }
       if (this.timelines.length !== timelineCount) {
         this._recalculate();
@@ -202,6 +252,31 @@
         target: { value: time }
       });
     },
+    setWindow: function setWindow(start, end) {
+      this._visTimeline.setWindow(start * 1000, end * 1000, {animation: false});
+    },
+    setTimeAndWindow: function setTimeAndWindow(time, start, end) {
+      if (time !== 0) {
+        this.time = time;
+        this._visTimeline.setCustomTime(1000 * time, 'tdrag');
+      }
+
+      this._visTimeline.setWindow(1000 * start, 1000 * end, {animation: false});
+      if (time !== 0) {
+        if (!this.options.waitToUpdateMap) {
+          this.callbacks.forEach(function (cb) {
+            return cb(time);
+          });
+        }
+        if (!this.options.waitToUpdateMap) {
+          this.doneCallbacks.forEach(function (cb) {
+            return cb(time);
+          });
+        }
+        this._updateDragTitle();
+      }
+      this.map.fireEvent('temporalBrowserRangeChanged');
+    },
     changeTime: function changeTime(time) {
       this.time = time;
       this._visTimeline.setCustomTime(1000 * time, 'tdrag');
@@ -216,6 +291,17 @@
         });
       }
       this._updateDragTitle();
+      this.map.fireEvent('temporalBrowserTimeChanged', {current: this.getTime()});
+    },
+    getTime: function getTime() {
+      return Math.round(this._visTimeline.getCustomTime('tdrag') / 1000);
+    },
+    getWindow: function getWindow() {
+      var timewindow = this._visTimeline.getWindow();
+      return {
+        start: Math.round(timewindow.start.getTime() / 1000),
+        end:  Math.round(timewindow.end.getTime() / 1000)
+      }
     },
     onAdd: function onAdd(map) {
       this.map = map;

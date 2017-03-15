@@ -94,6 +94,13 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
   /**
    * {@inheritdoc}
    */
+  public function getFriendlyLabel() {
+    return $this->bundle->entity->getFriendlyLabel();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function toUrl($rel = 'canonical', array $options = []) {
     $uri = parent::toUrl($rel, $options);
     $uri_options = $uri->getOptions();

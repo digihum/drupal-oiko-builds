@@ -34,9 +34,12 @@
         Drupal.oiko.openSidebar(id, title, true);
       });
 
-      $(window).bind('oikoSidebarOpen', function(e, id) {
+      $(window).bind('oikoSidebarOpening', function(e, id) {
         if (featureCache.hasOwnProperty(id)) {
-          map.panInsideBounds(featureCache[id], {animate: false});
+          if (!map.getBounds().contains(featureCache[id])) {
+            map.panInsideBounds(featureCache[id]);
+          }
+
         }
       });
     }
@@ -55,7 +58,7 @@
       }
       else if (typeof lFeature.getLatLng !== 'undefined') {
         var center = lFeature.getLatLng();
-        featureCache[feature.id] = leafletLatLngToBounds(center, 1000 * 30);
+        featureCache[feature.id] = leafletLatLngToBounds(center, 1000);
       }
 
       // Add a click event that opens our marker in the sidebar.

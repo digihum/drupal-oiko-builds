@@ -120,9 +120,12 @@ function oiko_preprocess_cidoc_entity(array &$variables) {
 function oiko_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   $match = \Drupal::routeMatch();
   if ($match->getRouteName() == 'entity.cidoc_entity.canonical') {
-    array_unshift($suggestions, 'page__bare');
+//    array_unshift($suggestions, 'page__bare');
   }
   if ($match->getRouteName() == 'oiko_timeline.comparative_timeline_controller_basePage') {
+    array_unshift($suggestions, 'page__bare');
+  }
+  if ($match->getRouteName() == 'oiko_leaflet.map_page_controller_baseMap') {
     array_unshift($suggestions, 'page__bare');
   }
 }

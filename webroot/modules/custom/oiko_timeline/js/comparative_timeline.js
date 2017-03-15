@@ -497,7 +497,7 @@ Drupal.behaviors.comparative_timeline = {
 
     if (selected) {
       var item = this._visItems.get(selected);
-      Drupal.oiko.openSidebar(selected.substr(1 + properties.items[i].lastIndexOf('-')), item.title, false);
+      Drupal.oiko.openSidebar(selected.substr(1 + properties.items[i].lastIndexOf('-')), item.title, true);
     }
   };
 

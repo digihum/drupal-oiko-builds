@@ -34,7 +34,28 @@
       });
 
       return icon;
-    }
+    };
+
+    // @TODO: Move this elsewhere.
+    drupalLeaflet.create_multipoly = function (multipoly) {
+      var polygons = [];
+      for (var x = 0; x < multipoly.component.length; x++) {
+        var latlngs = [];
+        var polygon = multipoly.component[x];
+        for (var i = 0; i < polygon.points.length; i++) {
+          var latlng = new L.LatLng(polygon.points[i].lat, polygon.points[i].lon);
+          latlngs.push(latlng);
+          this.bounds.push(latlng);
+        }
+        polygons.push(latlngs);
+      }
+      if (multipoly.multipolyline) {
+        return new L.MultiPolyline(polygons);
+      }
+      else {
+        return new L.Polygon(polygons);
+      }
+    };
 
   });
 

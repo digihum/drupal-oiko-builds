@@ -74,7 +74,13 @@ class EmpireController extends ControllerBase {
       }
     }
 
-    return new CacheableJsonResponse($data);
+    $response = new CacheableJsonResponse($data);
+    foreach ($loaded as $entity) {
+      $response->addCacheableDependency($entity);
+    }
+    $definition = $this->entity_type_manager->getDefinition('cidoc_entity');
+    $response->getCacheableMetadata()->addCacheTags($definition->getListCacheTags());
+    return $response;
   }
 
 }
