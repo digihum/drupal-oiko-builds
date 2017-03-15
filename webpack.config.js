@@ -2,16 +2,16 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-    entry: './webroot/modules/custom/oiko_sidebar/es6/main.js',
+    entry: './webroot/modules/custom/oiko_app/js/main.js',
     output: {
-        path: path.join(__dirname, 'webroot', 'modules', 'custom', 'oiko_sidebar', 'js'),
+        path: path.join(__dirname, 'webroot/modules/custom/oiko_app'),
         filename: 'oiko.app.js'
     },
     module: {
         loaders: [
             {
                 loader: 'babel-loader',
-                test: path.join(__dirname, 'webroot', 'modules', 'custom', 'oiko_sidebar', 'es6'),
+                test: path.join(__dirname, 'webroot/modules/custom/oiko_app/js'),
                 query: {
                   presets: 'es2015',
                 },

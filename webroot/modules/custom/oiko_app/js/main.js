@@ -1,33 +1,33 @@
-import { createStore, applyMiddleware } from 'redux';
-import oikoApp from './reducers';
 import { setMapState,  setTimeBrowserState, addAppModule, appModuleDoneLoading } from './actions';
-import createHistory from 'history/createBrowserHistory';
-import { connectHistory, updateLocation } from './redux-history';
-import thunkMiddleware from 'redux-thunk';
-import createLogger from 'redux-logger'
-import debounce from './plumbing/debounce';
-import { connectSidebar } from './sidebar';
 import { createOikoApp } from './store';
+import $ from './jquery';
 
-const app = createOikoApp(jQuery);
+// Spin up a new instance of our OikoApp.
+const app = createOikoApp();
 
-const store = app.getStore();
-
-const $ = jQuery;
+// const store = app.getStore();
 
 Drupal.oiko = Drupal.oiko || {};
 
 Drupal.oiko.addAppModule = (moduleName) => {
-  return store.dispatch(addAppModule(moduleName));
+  // return store.dispatch(addAppModule(moduleName));
 };
 
 Drupal.oiko.appModuleDoneLoading = (moduleName) => {
-  return store.dispatch(appModuleDoneLoading(moduleName));
+  // return store.dispatch(appModuleDoneLoading(moduleName));
 };
 
 Drupal.oiko.getAppState = () => {
-  return store.getState();
+  // return store.getState();
 };
+
+$(() => {
+  $('.js-oiko-app-loader').once('js-oiko-app-loader').each(() => {
+    const $wrapper = $(this);
+    app.addTo($wrapper);
+    $wrapper.data('oikoApp', app);
+  });
+});
 
 
 // @TODO: Move all of this elsewhere.

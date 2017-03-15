@@ -33,7 +33,8 @@
     "node-libs-browser": "^2.0.0",
     "susy": "^2.2.12",
     "vinyl-buffer": "^1.0.0",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "webpack-bundle-size-analyzer": "^2.5.0"
   },
   "scripts": {
     "compile": "gulp compile",

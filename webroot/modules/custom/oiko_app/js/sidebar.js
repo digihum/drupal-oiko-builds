@@ -1,4 +1,4 @@
-import { UPDATE_LOCATION } from './redux-history';
+import { UPDATE_LOCATION } from './vendor/redux-history';
 import { changeQueryString, fetchQueryStringElements } from './plumbing/querystring-helpers';
 
 import { QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY } from './querystring-definitions';

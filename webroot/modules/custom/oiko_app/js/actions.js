@@ -37,3 +37,16 @@ export const APP_MODULE_DONE_LOADING = 'oiko/APP_MODULE_DONE_LOADING';
 export function appModuleDoneLoading(name) {
   return { type: APP_MODULE_DONE_LOADING, name }
 }
+
+// This is the very initial state of the app.
+export const APP_LOADING_BOOT = 0;
+
+export const APP_LOADING_START = 1;
+export function appLoadingStart() {
+  return { type: APP_LOADING_START }
+}
+
+export const APP_LOADING_ADD_TO_DOM = 2;
+export function appLoadingAddToDOM() {
+  return { type: APP_LOADING_ADD_TO_DOM }
+}

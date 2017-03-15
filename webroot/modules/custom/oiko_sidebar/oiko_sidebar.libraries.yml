@@ -8,7 +8,6 @@ sidebar:
     - core/jquery.once
     - oiko_sidebar/sidebar.class
     - core/modernizr
-    - oiko_sidebar/oikoApp
 
 sidebar.class:
   js:
@@ -19,12 +18,3 @@ sidebar.class:
   version: VERSION
   dependencies:
     - core/jquery
-
-# This is the main statefull OikoApp, this pops things into the URL etc.
-oikoApp:
-  js:
-      js/oiko.app.js: { }
-  version: '1.0.0'
-  dependencies:
-    - core/domready
-    - core/drupalSettings

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import { UPDATE_LOCATION, locationReducer } from './redux-history';
+import { UPDATE_LOCATION, locationReducer } from './vendor/redux-history';
 
-import { SET_MAP_STATE, SET_TIME_BROWSER_STATE, SET_VISUALISATION, ADD_APP_MODULE, APP_MODULE_DONE_LOADING } from './actions';
+import { SET_MAP_STATE, SET_TIME_BROWSER_STATE, SET_VISUALISATION, ADD_APP_MODULE, APP_MODULE_DONE_LOADING, APP_LOADING_BOOT, APP_LOADING_START, APP_LOADING_ADD_TO_DOM } from './actions';
 import { REQUEST_CIDOC_ENTITY, RECEIVE_CIDOC_ENTITY, cidocEntityReducer } from './sidebar';
 
 import { QUERYSTRING_VARIABLE_VISUALISATION, QUERYSTRING_VARIABLE_MAP_ZOOM, QUERYSTRING_VARIABLE_MAP_CENTER_LAT, QUERYSTRING_VARIABLE_MAP_CENTER_LNG, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END, QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY } from './querystring-definitions';
@@ -79,6 +79,18 @@ function visualisation(state = 'map', action) {
   }
 }
 
+function appLoading(state = APP_LOADING_BOOT, action) {
+  switch (action.type) {
+    case APP_LOADING_BOOT:
+    case APP_LOADING_START:
+    case APP_LOADING_ADD_TO_DOM:
+      return Math.max(state, action.type);
+
+    default:
+      return state;
+  }
+}
+
 /**
  * Reduce the app modules state slice.
  *
@@ -135,6 +147,7 @@ function oikoLocation(locationReducerFunction) {
 }
 
 const oikoAppReducers = combineReducers({
+  appLoading,
   visualisation,
   mapState,
   timeBrowserState,
