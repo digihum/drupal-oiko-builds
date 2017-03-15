@@ -176,6 +176,7 @@ content:
   timeline_link:
     weight: 0
 hidden:
+  cidoc_admin_links: true
   cidoc_properties: true
   citation: true
   content: true
@@ -187,6 +188,7 @@ hidden:
   e9_move_map_entity_view_3: true
   e9_move_map_entity_view_4: true
   internal_name: true
+  map_link: true
   p108_produced_by_entity_view_1: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
@@ -197,5 +199,6 @@ hidden:
   p9_forms_part_of_entity_view_1: true
   people_entity_view_1: true
   significance: true
+  timeline_logo: true
   timeline_preselect_option: true
   user_id: true

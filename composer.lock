@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e91cd546f8bd0073bc2af9b6ca38fd0",
+    "content-hash": "73f0bbf75be4b665a8fbd07005d7a925",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1278,7 +1278,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/cm_config_tools",
-                "reference": "b1a8a5d22a6051282e85f717d9fc1d219f3e2af9"
+                "reference": "b1967c154c8c8fd62a0c5e6f285391cb8ead4cc0"
             },
             "require": {
                 "drupal/config_update": "*",
@@ -1291,7 +1291,7 @@
                 },
                 "drupal": {
                     "version": "8.x-1.x-dev",
-                    "datestamp": "1483547343"
+                    "datestamp": "1486461783"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -1317,7 +1317,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/cm_config_tools"
             },
-            "time": "2017-02-07 10:00:30"
+            "time": "2017-03-07 10:40:20"
         },
         {
             "name": "drupal/color_field",
@@ -2528,7 +2528,8 @@
                     "Fixes Incorrect parameter icon_url in Drupal.Leaflet.prototype.create_icon": "https://www.drupal.org/files/issues/leaflet-fix_incorrect_parameter_name_in_create_icon-2732267-2.patch",
                     "Fixes maps not working on HTTPS": "https://www.drupal.org/files/issues/leaflet-ssl_support-2753703-2_0.patch",
                     "Fixes the API docs to include a missing hook": "https://www.drupal.org/files/issues/leaflet-add-hook_leaflet_map_info_alter-2746721-2.patch",
-                    "Allows use of geometrycollection": "https://www.drupal.org/files/issues/leaflet-2799311-geometry-collection.patch"
+                    "Allows use of geometrycollection": "https://www.drupal.org/files/issues/leaflet-2799311-geometry-collection.patch",
+                    "https://www.drupal.org/node/2858091#comment-11971355": "https://www.drupal.org/files/issues/leaflet-2858091-no-features-on-ajax.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",

@@ -37,6 +37,7 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  cidoc_admin_links: true
   cidoc_properties: true
   'cidoc_properties:domain:p10_falls_within': true
   'cidoc_properties:domain:p11_had_participant': true
@@ -62,6 +63,7 @@ hidden:
   e67_birth_child_entity_view_1: true
   e67_birth_parents_entity_view_1: true
   internal_name: true
+  map_link: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p11_has_participant_entity_view_1: true
@@ -78,5 +80,6 @@ hidden:
   p9_forms_part_of_entity_view_1: true
   significance: true
   timeline_link: true
+  timeline_logo: true
   timeline_preselect_option: true
   user_id: true

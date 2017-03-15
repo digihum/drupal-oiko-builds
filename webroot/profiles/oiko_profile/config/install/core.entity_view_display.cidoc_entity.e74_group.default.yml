@@ -194,6 +194,30 @@ content:
     weight: 14
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:p107_has_current_or_former_membe':
+    weight: 20
+  'cidoc_properties:domain:p131_is_identified_by':
+    weight: 20
+  'cidoc_properties:domain:p1_is_identified_by':
+    weight: 20
+  'cidoc_properties:domain:p2_has_type':
+    weight: 20
+  'cidoc_properties:range:p107_has_current_or_former_membe':
+    weight: 21
+  'cidoc_properties:range:p11_had_participant':
+    weight: 21
+  'cidoc_properties:range:p12_occurred_in_the_presence_of':
+    weight: 21
+  'cidoc_properties:range:p14_carried_out_by':
+    weight: 21
+  'cidoc_properties:range:p15_was_influenced_by':
+    weight: 21
+  'cidoc_properties:range:p17_was_motivated_by':
+    weight: 21
+  'cidoc_properties:range:p95_has_formed':
+    weight: 21
+  'cidoc_properties:range:p99_dissolved':
+    weight: 21
   duplicate_of_p134_continues_entity_view_1:
     weight: 10
     settings: {  }
@@ -264,8 +288,14 @@ content:
     settings:
       link: false
     third_party_settings: {  }
+  timeline_link:
+    weight: 0
 hidden:
+  cidoc_admin_links: true
   citation: true
   content: true
   internal_name: true
+  map_link: true
+  timeline_logo: true
+  timeline_preselect_option: true
   user_id: true

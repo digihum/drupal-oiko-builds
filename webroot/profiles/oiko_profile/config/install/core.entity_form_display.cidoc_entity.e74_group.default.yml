@@ -167,6 +167,13 @@ content:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+  timeline_logo:
+    type: image_image
+    weight: 10
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
     weight: 10
