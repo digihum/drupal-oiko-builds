@@ -248,7 +248,6 @@
         visSlice = {
           start: slices[i].start * 1000,
           end: slices[i].end * 1000,
-          count: count,
           className: 'timeline-browser-item-count--' + Math.round(count / this._maxOfCounts * this.options.numberOfClasses),
           type: 'background'
         };
@@ -256,13 +255,17 @@
       }
 
       // Dedupe the visSlices.
-      var lastCount;
+      var lastClass;
       for (var i = 0;i < visSlices.length;i++) {
-        if (lastCount == visSlices[i].count) {
-
+        if (lastClass == visSlices[i].className) {
+          // Expand the previous slice to this slices end.
+          visSlices[i - 1].end = visSlices[i].end
+          // This is a duplicate slice and can go, and we will reprocess this i value.
+          visSlices[i].splice(i, 1);
+          i--;
         }
         else {
-
+          lastClass = visSlices[i].className;
         }
       }
 
