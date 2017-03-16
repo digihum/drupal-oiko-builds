@@ -40,11 +40,17 @@ function extensions(parentClass) { return {
 
   onAdd: function onAdd(map) {
     this.map = map;
-    map.on('temporal.shift', this._onTemporalChange, this);
+    this.map.on('temporal.shift', this._onTemporalChange, this);
+    this.map.on('temporal.getBounds', this._onTemporalGetBounds, this);
+    this.map.on('temporal.getCounts', this._onTemporalGetCounts, this);
+    this.map.on('temporal.getStartAndEnds', this._onTemporalgetStartAndEnds, this);
   },
 
   onRemove: function onRemove() {
     this.map.off('temporal.shift', this._onTemporalChange, this);
+    this.map.off('temporal.getBounds', this._onTemporalGetBounds, this);
+    this.map.off('temporal.getCounts', this._onTemporalGetCounts, this);
+    this.map.off('temporal.getStartAndEnds', this._onTemporalgetStartAndEnds, this);
   },
 
   addLayer: function addLayer(layer) {
@@ -57,6 +63,8 @@ function extensions(parentClass) { return {
 
     this._temporalLayers.push(layer);
     this._temporalTree.insert(layer.temporal.start, layer.temporal.end, layer);
+
+    // @TODO: Need to debounce this.
     this.map.fire('temporal.rebase');
   },
 
@@ -79,9 +87,12 @@ function extensions(parentClass) { return {
       this._temporalLayers.splice(i, 1);
     }
 
-    // @TODO: remove the layer from the IntervalTree.
-    // @TODO: we can't do that at the moment, eek, we need to create a new IntervalTree.
+    this._temporalTree = new IntervalTree();
+    for (i = 0; i < this._temporalLayers.length; i++) {
+      this._temporalTree.insert(this._temporalLayers[i].temporal.start, this._temporalLayers[i].temporal.end, this._temporalLayers[i]);
+    }
 
+    // @TODO: Need to debounce this.
     this.map.fire('temporal.rebase');
   },
 
@@ -130,6 +141,43 @@ function extensions(parentClass) { return {
       layer = features[k];
       this._visibleLayers.push(layer);
       this._targetLayer.addLayer(layer);
+    }
+  },
+
+  _onTemporalGetBounds: function(e) {
+    if (!this.options.visibleInTimelineBrowser) {
+      return;
+    }
+    var bounds = {
+      min: Infinity,
+      max: -Infinity
+    };
+
+    // Process all our temporal items.
+    for (var i = 0; i < this._temporalLayers.length; i++) {
+      bounds.min = Math.min(bounds.min, this._temporalLayers[i].temporal.start);
+      bounds.max = Math.max(bounds.max, this._temporalLayers[i].temporal.end);
+    }
+
+    e.boundsCallback(bounds.min, bounds.max);
+  },
+
+  _onTemporalGetCounts: function(e) {
+    if (!this.options.visibleInTimelineBrowser) {
+      return;
+    }
+    e.countsCallback(this._temporalTree.size ? this._temporalTree.overlap(e.slice.start, e.slice.end).length : 0);
+  },
+
+  _onTemporalgetStartAndEnds: function(e) {
+    if (!this.options.visibleInTimelineBrowser) {
+      return;
+    }
+    if (this._temporalTree.size) {
+      var items = this._temporalTree.overlap(e.slice.start, e.slice.end);
+      for (var i = 0; i < items.length;i++) {
+        e.startEndCallback(items[i].temporal.start, items[i].temporal.end);
+      }
     }
   }
 }};

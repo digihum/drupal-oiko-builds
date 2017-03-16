@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\image\Kernel;
 
+use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
@@ -107,6 +108,15 @@ class ImageItemTest extends FieldKernelTestBase {
     $this->assertEqual($entity->image_test->width, $image->getWidth());
     $this->assertEqual($entity->image_test->height, $image->getHeight());
     $this->assertEqual($entity->image_test->alt, $new_alt);
+
+    // Validate entity is a file and don't gather dimensions if it is not.
+    $entity->image_test = NULL;
+    $entity->image_test->target_id = 0;
+    $this->setExpectedException(EntityStorageException::class, "A malformed file was provided. Cannot determine its dimensions.");
+    $entity->save();
+
+    $this->assertEmpty($entity->image_test->width);
+    $this->assertEmpty($entity->image_test->height);
 
     // Check that the image item can be set to the referenced file directly.
     $entity->image_test = $this->image;

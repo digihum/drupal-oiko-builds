@@ -63,7 +63,7 @@
 
       // Add a click event that opens our marker in the sidebar.
       lFeature.on('click', function () {
-        Drupal.oiko.openSidebar(feature.id, feature.label, true);
+        Drupal.oiko.openSidebar(feature.id);
       });
     }
   });

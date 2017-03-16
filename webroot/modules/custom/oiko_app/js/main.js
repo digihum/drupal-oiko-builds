@@ -5,29 +5,29 @@ import $ from './jquery';
 // Spin up a new instance of our OikoApp.
 const app = createOikoApp();
 
-// const store = app.getStore();
+const store = app.getStore();
 
 Drupal.oiko = Drupal.oiko || {};
 
 Drupal.oiko.addAppModule = (moduleName) => {
-  // return store.dispatch(addAppModule(moduleName));
+  return app.getStore().dispatch(addAppModule(moduleName));
 };
 
 Drupal.oiko.appModuleDoneLoading = (moduleName) => {
-  // return store.dispatch(appModuleDoneLoading(moduleName));
+  return app.getStore().dispatch(appModuleDoneLoading(moduleName));
 };
 
 Drupal.oiko.getAppState = () => {
-  // return store.getState();
+  return app.getStore().getState();
 };
 
-$(() => {
-  $('.js-oiko-app-loader').once('js-oiko-app-loader').each(() => {
-    const $wrapper = $(this);
-    app.addTo($wrapper);
-    $wrapper.data('oikoApp', app);
-  });
-});
+// $(() => {
+//   $('.js-oiko-app-loader').once('js-oiko-app-loader').each(() => {
+//     const $wrapper = $(this);
+//     app.addTo($wrapper);
+//     $wrapper.data('oikoApp', app);
+//   });
+// });
 
 
 // @TODO: Move all of this elsewhere.
@@ -35,6 +35,8 @@ $(() => {
 // Probably a better way to write this.
 $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
   if (mapDefinition.hasOwnProperty('pagestate') && mapDefinition.pagestate) {
+
+    window.drupalLeaflet  =drupalLeaflet;
 
     const handleMapMove = (e) => {
       let center = map.getCenter();
@@ -87,40 +89,38 @@ $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
       let needsUpdate = false;
       const state = store.getState();
       const currentTime = drupalLeaflet.timelineControl.getTime();
+      const currentVisibleWindow = drupalLeaflet.timelineControl.getWindow();
 
       // Check to see if the current time was just moved.
-      if (e.type == 'temporalBrowserTimeChanged' && currentTime != state.timeBrowserState.current) {
+      if (e.type == 'temporal.shifted' && currentTime != state.timeBrowserState.current) {
         needsUpdate = true;
       }
 
       // Check to see if the range window of the timeline has changed.
-      if (e.type == 'temporalBrowserRangeChanged' && (state.timeBrowserState.start != drupalLeaflet.rangeStart || state.timeBrowserState.end != drupalLeaflet.rangeEnd)) {
+      if (e.type == 'temporal.visibleWindowChanged' && (state.timeBrowserState.start != currentVisibleWindow.start || state.timeBrowserState.end != currentVisibleWindow.end)) {
         needsUpdate = true;
       }
 
       if (needsUpdate) {
-        store.dispatch(setTimeBrowserState(currentTime, drupalLeaflet.rangeStart, drupalLeaflet.rangeEnd));
+        store.dispatch(setTimeBrowserState(currentTime, currentVisibleWindow.start, currentVisibleWindow.end));
       }
     };
 
     const handleMapTemporalStoreStateChange = () => {
-      let needsUpdate = false;
-      let state = store.getState();
+      const state = store.getState();
       const currentTime = drupalLeaflet.timelineControl.getTime();
-      needsUpdate = needsUpdate || (state.timeBrowserState.current != currentTime);
-
       const currentWindow = drupalLeaflet.timelineControl.getWindow();
 
-      needsUpdate = needsUpdate || (state.timeBrowserState.start != currentWindow.start || state.timeBrowserState.end != currentWindow.end);
+      const needsUpdate = (state.timeBrowserState.current != currentTime) || (state.timeBrowserState.start != currentWindow.start || state.timeBrowserState.end != currentWindow.end);
 
       if (needsUpdate) {
-        drupalLeaflet.changeTimeAndWindow(state.timeBrowserState.current, state.timeBrowserState.start, state.timeBrowserState.end);
+        drupalLeaflet.timelineControl.setTimeAndWindow(state.timeBrowserState.current, state.timeBrowserState.start, state.timeBrowserState.end);
       }
     };
     if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
       $(window).on('oiko.loaded', () => {
         handleMapTemporalStoreStateChange();
-        map.on('temporalBrowserTimeChanged temporalBrowserRangeChanged', handleMapTemporalShift);
+        map.on('temporal.shifted temporal.visibleWindowChanged', handleMapTemporalShift);
         store.subscribe(handleMapTemporalStoreStateChange);
       });
 

@@ -6,7 +6,6 @@ import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger'
 import { connectSidebar } from './sidebar';
 import $ from './jquery';
-import { mapComponent } from './map/map';
 import { appLoadingStart, appLoadingAddToDOM }  from './actions';
 
 /**
@@ -37,7 +36,7 @@ class oikoApp {
     );
 
     connectHistory(history, this.store);
-    // connectSidebar($, this.store);
+    connectSidebar($, this.store);
 
     this.initFired = false;
 
@@ -66,7 +65,6 @@ class oikoApp {
       this.store.subscribe(checkInitState)
     });
 
-    this.mapComponent = new mapComponent(this);
     this.store.dispatch(appLoadingStart());
   }
 

@@ -1944,8 +1944,6 @@ var _jquery = __webpack_require__(52);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _map = __webpack_require__(53);
-
 var _actions = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -1976,7 +1974,7 @@ var oikoApp = function () {
     this.store = (0, _redux.createStore)(_reducers2.default, initialState, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)()));
 
     (0, _reduxHistory.connectHistory)(history, this.store);
-    // connectSidebar($, this.store);
+    (0, _sidebar.connectSidebar)(_jquery2.default, this.store);
 
     this.initFired = false;
 
@@ -2029,7 +2027,6 @@ var oikoApp = function () {
       _this.store.subscribe(checkInitState);
     });
 
-    this.mapComponent = new _map.mapComponent(this);
     this.store.dispatch((0, _actions.appLoadingStart)());
   }
 
@@ -4086,35 +4083,38 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Spin up a new instance of our OikoApp.
 var app = (0, _store.createOikoApp)();
 
-// const store = app.getStore();
+var store = app.getStore();
 
 Drupal.oiko = Drupal.oiko || {};
 
 Drupal.oiko.addAppModule = function (moduleName) {
-  // return store.dispatch(addAppModule(moduleName));
+  return app.getStore().dispatch((0, _actions.addAppModule)(moduleName));
 };
 
 Drupal.oiko.appModuleDoneLoading = function (moduleName) {
-  // return store.dispatch(appModuleDoneLoading(moduleName));
+  return app.getStore().dispatch((0, _actions.appModuleDoneLoading)(moduleName));
 };
 
 Drupal.oiko.getAppState = function () {
-  // return store.getState();
+  return app.getStore().getState();
 };
 
-(0, _jquery2.default)(function () {
-  (0, _jquery2.default)('.js-oiko-app-loader').once('js-oiko-app-loader').each(function () {
-    var $wrapper = (0, _jquery2.default)(undefined);
-    app.addTo($wrapper);
-    $wrapper.data('oikoApp', app);
-  });
-});
+// $(() => {
+//   $('.js-oiko-app-loader').once('js-oiko-app-loader').each(() => {
+//     const $wrapper = $(this);
+//     app.addTo($wrapper);
+//     $wrapper.data('oikoApp', app);
+//   });
+// });
+
 
 // @TODO: Move all of this elsewhere.
 //
 // Probably a better way to write this.
 (0, _jquery2.default)(document).on('leaflet.map', function (e, mapDefinition, map, drupalLeaflet) {
   if (mapDefinition.hasOwnProperty('pagestate') && mapDefinition.pagestate) {
+
+    window.drupalLeaflet = drupalLeaflet;
 
     var handleMapMove = function handleMapMove(e) {
       var center = map.getCenter();
@@ -4167,40 +4167,38 @@ Drupal.oiko.getAppState = function () {
       var needsUpdate = false;
       var state = store.getState();
       var currentTime = drupalLeaflet.timelineControl.getTime();
+      var currentVisibleWindow = drupalLeaflet.timelineControl.getWindow();
 
       // Check to see if the current time was just moved.
-      if (e.type == 'temporalBrowserTimeChanged' && currentTime != state.timeBrowserState.current) {
+      if (e.type == 'temporal.shifted' && currentTime != state.timeBrowserState.current) {
         needsUpdate = true;
       }
 
       // Check to see if the range window of the timeline has changed.
-      if (e.type == 'temporalBrowserRangeChanged' && (state.timeBrowserState.start != drupalLeaflet.rangeStart || state.timeBrowserState.end != drupalLeaflet.rangeEnd)) {
+      if (e.type == 'temporal.visibleWindowChanged' && (state.timeBrowserState.start != currentVisibleWindow.start || state.timeBrowserState.end != currentVisibleWindow.end)) {
         needsUpdate = true;
       }
 
       if (needsUpdate) {
-        store.dispatch((0, _actions.setTimeBrowserState)(currentTime, drupalLeaflet.rangeStart, drupalLeaflet.rangeEnd));
+        store.dispatch((0, _actions.setTimeBrowserState)(currentTime, currentVisibleWindow.start, currentVisibleWindow.end));
       }
     };
 
     var handleMapTemporalStoreStateChange = function handleMapTemporalStoreStateChange() {
-      var needsUpdate = false;
       var state = store.getState();
       var currentTime = drupalLeaflet.timelineControl.getTime();
-      needsUpdate = needsUpdate || state.timeBrowserState.current != currentTime;
-
       var currentWindow = drupalLeaflet.timelineControl.getWindow();
 
-      needsUpdate = needsUpdate || state.timeBrowserState.start != currentWindow.start || state.timeBrowserState.end != currentWindow.end;
+      var needsUpdate = state.timeBrowserState.current != currentTime || state.timeBrowserState.start != currentWindow.start || state.timeBrowserState.end != currentWindow.end;
 
       if (needsUpdate) {
-        drupalLeaflet.changeTimeAndWindow(state.timeBrowserState.current, state.timeBrowserState.start, state.timeBrowserState.end);
+        drupalLeaflet.timelineControl.setTimeAndWindow(state.timeBrowserState.current, state.timeBrowserState.start, state.timeBrowserState.end);
       }
     };
     if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
       (0, _jquery2.default)(window).on('oiko.loaded', function () {
         handleMapTemporalStoreStateChange();
-        map.on('temporalBrowserTimeChanged temporalBrowserRangeChanged', handleMapTemporalShift);
+        map.on('temporal.shifted temporal.visibleWindowChanged', handleMapTemporalShift);
         store.subscribe(handleMapTemporalStoreStateChange);
       });
     }
@@ -4302,34 +4300,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 var $ = jQuery;
 exports.default = $;
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.mapComponent = mapComponent;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function mapComponent(oikoApp) {
-  return new MapComponent(oikoApp);
-}
-
-var MapComponent = function MapComponent(oikoApp) {
-  _classCallCheck(this, MapComponent);
-
-  this.app = oikoApp;
-
-  // this.loadingState =
-
-  this.app.getStore().subscribe;
-};
 
 /***/ })
 /******/ ]);

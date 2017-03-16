@@ -104,8 +104,12 @@
   display: none
 }
 
-.vis-item.vis-background {
-  background-color: rgba(palette(tan), .15);
+$steps: 25;
+@for $i from 0 through $steps {
+  .vis-item.vis-background.timeline-browser-item-count--#{$i} {
+    background-color:  scale-color(darken(palette(tan), 33%), $lightness: 15 + (($steps - $i) / $steps * 85));
+    border: none;
+  }
 }
 
 .vis-custom-time {

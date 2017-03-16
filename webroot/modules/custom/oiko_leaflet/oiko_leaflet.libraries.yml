@@ -23,6 +23,7 @@ empires:
   dependencies:
     - oiko_leaflet/temporal
     - core/jquery
+    - oiko_app/app
 
 arrows:
   js:
@@ -93,11 +94,11 @@ temporal:
     - oiko_leaflet/moment.lang.oiko
     - oiko_sidebar/oikoApp
     - oiko_leaflet/leaflet.temporal-layer-group
+    - oiko_app/app
 
 
 leaflet.temporal-layer-group:
   js:
-    js/leaflet.temporal-layer-group.js: {}
     js/leaflet.temporal-layer-group-helper.js: {}
   version: VERSION
   dependencies:

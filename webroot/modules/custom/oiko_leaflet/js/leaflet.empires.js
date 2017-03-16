@@ -28,7 +28,7 @@
       // with temporal data.
       drupalLeaflet.empires.empiresLayerGroup = L.layerGroup();
       drupalLeaflet.empires.empiresLayerGroup.addTo(map);
-      drupalLeaflet.empires.empiresLayerHelper = L.temporalLayerHelper(drupalLeaflet.empires.empiresLayerGroup);
+      drupalLeaflet.empires.empiresLayerHelper = L.temporalLayerHelper(drupalLeaflet.empires.empiresLayerGroup, {visibleInTimelineBrowser: false});
       drupalLeaflet.empires.empiresLayerHelper.addTo(map);
 
       // Go get the empire data.
