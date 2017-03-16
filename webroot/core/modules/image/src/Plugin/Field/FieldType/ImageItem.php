@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\file\Entity\File;
+use Drupal\file\FileInterface;
 use Drupal\file\Plugin\Field\FieldType\FileItem;
 
 /**
@@ -313,12 +314,17 @@ class ImageItem extends FileItem {
     $height = $this->height;
 
     // Determine the dimensions if necessary.
-    if (empty($width) || empty($height)) {
-      $image = \Drupal::service('image.factory')->get($this->entity->getFileUri());
-      if ($image->isValid()) {
-        $this->width = $image->getWidth();
-        $this->height = $image->getHeight();
+    if (($this->entity instanceof FileInterface)) {
+      if (empty($width) || empty($height)) {
+        $image = \Drupal::service('image.factory')->get($this->entity->getFileUri());
+        if ($image->isValid()) {
+          $this->width = $image->getWidth();
+          $this->height = $image->getHeight();
+        }
       }
+    }
+    else {
+      trigger_error(sprintf("A malformed file was provided. Cannot determine its dimensions."), E_USER_WARNING);
     }
   }
 
