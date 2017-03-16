@@ -248,6 +248,7 @@
         visSlice = {
           start: slices[i].start * 1000,
           end: slices[i].end * 1000,
+          count: count,
           className: 'timeline-browser-item-count--' + Math.round(count / this._maxOfCounts * this.options.numberOfClasses),
           type: 'background'
         };
@@ -255,8 +256,14 @@
       }
 
       // Dedupe the visSlices.
+      var lastCount;
       for (var i = 0;i < visSlices.length;i++) {
-        
+        if (lastCount == visSlices[i].count) {
+
+        }
+        else {
+
+        }
       }
 
       console.log(visSlices.length);
