@@ -1,16 +1,22 @@
 (function() {
-
+  'use strict';
 function extensions(parentClass) { return {
 
+  options: {
+    visibleInTimelineBrowser: true,
+    temporalRangeWindow: 0
+  },
+
   initialize: function (targetLayer, options) {
+    L.Util.setOptions(this, options);
     this._targetLayer = targetLayer;
     this._visibleLayers = [];
     this._staticLayers = [];
-    this._temporalRangeWindow = options.temporalRangeWindow || 0;
+    this._temporalLayers = [];
     this._temporalTree = new IntervalTree();
   },
 
-  addTo: function (map) {
+  addTo: function addTo(map) {
     this.remove();
     this._map = map;
 
@@ -18,7 +24,7 @@ function extensions(parentClass) { return {
     return this;
   },
 
-  remove: function () {
+  remove: function remove() {
     if (!this._map) {
       return this;
     }
@@ -36,21 +42,25 @@ function extensions(parentClass) { return {
     this.map = map;
     map.on('temporal.shift', this._onTemporalChange, this);
   },
+
   onRemove: function onRemove() {
     this.map.off('temporal.shift', this._onTemporalChange, this);
   },
 
-  addLayer: function (layer) {
+  addLayer: function addLayer(layer) {
     // This isn't a temporal layer, so just add it to our list of static layers.
     if (!('temporal' in layer) || !('start' in layer.temporal) || !('end' in layer.temporal)) {
       this._staticLayers.push(layer);
       this._targetLayer.addLayer(layer);
       return;
     }
-    this._temporalTree.insert(layer.temporal.start, layer.temporal.end, layer)
+
+    this._temporalLayers.push(layer);
+    this._temporalTree.insert(layer.temporal.start, layer.temporal.end, layer);
+    this.map.fire('temporal.rebase');
   },
 
-  removeLayer: function (layer) {
+  removeLayer: function removeLayer(layer) {
     this._targetLayer.removeLayer(layer);
     var i;
 
@@ -63,6 +73,16 @@ function extensions(parentClass) { return {
     if (i !== -1) {
       this._staticLayers.splice(i, 1);
     }
+
+    i = this._temporalLayers.indexOf(layer);
+    if (i !== -1) {
+      this._temporalLayers.splice(i, 1);
+    }
+
+    // @TODO: remove the layer from the IntervalTree.
+    // @TODO: we can't do that at the moment, eek, we need to create a new IntervalTree.
+
+    this.map.fire('temporal.rebase');
   },
 
   clearLayers: function () {
@@ -76,11 +96,11 @@ function extensions(parentClass) { return {
     var features = [];
     if (this._temporalTree.size) {
       // Get the layers we should be showing.
-      if (this._temporalRangeWindow == 0) {
+      if (this.options.temporalRangeWindow == 0) {
         features = this._temporalTree.lookup(Math.ceil(e.time));
       }
       else {
-        features = this._temporalTree.overlap(Math.floor(e.time - this._temporalRangeWindow), Math.ceil(e.time + this._temporalRangeWindow));
+        features = this._temporalTree.overlap(Math.floor(e.time - this.options.temporalRangeWindow), Math.ceil(e.time + this.options.temporalRangeWindow));
       }
     }
 

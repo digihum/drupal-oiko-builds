@@ -12,21 +12,22 @@
 
       drupalLeaflet.timeSelectionWindowSize = 365.25 * 86400 / 2;
 
-      // Temporal stuff, we want a layer group to keep track of Leaflet features
-      // with temporal data.
-      // drupalLeaflet.temporalDisplayedLayerGroup = L.layerGroup.temporal({temporalRangeWindow: drupalLeaflet.timeSelectionWindowSize});
-
-      var targetLayer = L.featureGroup.subGroup(drupalLeaflet.mainLayer);
-      targetLayer.addTo(map);
-      var layerHelper = L.temporalLayerHelper(targetLayer, {temporalRangeWindow: drupalLeaflet.timeSelectionWindowSize});
-      layerHelper.addTo(map);
-
-      // drupalLeaflet.clusterer.checkIn(drupalLeaflet.temporalDisplayedLayerGroup);
-      // drupalLeaflet.temporalDisplayedLayerGroup.addTo(map);
+      // We have a target layer that we want to add our feature to.
       drupalLeaflet.temporalDisplayedLayerGroup = L.featureGroup.subGroup(drupalLeaflet.mainLayer);
       drupalLeaflet.temporalDisplayedLayerGroup.addTo(map);
+      // And then we have a TemporalLayerHelper that will add a remove layers to our layer group above.
       drupalLeaflet.temporalDisplayedLayerHelper = L.temporalLayerHelper(targetLayer, {temporalRangeWindow: drupalLeaflet.timeSelectionWindowSize});
       drupalLeaflet.temporalDisplayedLayerHelper.addTo(map);
+
+      // Add a timeline control to the map.
+      drupalLeaflet.timelineControl = new L.TimeLineControl({
+        formatOutput: function (date) {
+          return new Date(date).toString();
+        },
+        drupalLeaflet: drupalLeaflet
+      });
+      drupalLeaflet.timelineControl.addTo(map);
+
 
       // Instantiate an IntervalTree to make searching for what to hide/show easier.
       drupalLeaflet.temporalTree = new IntervalTree();
@@ -91,13 +92,6 @@
       drupalLeaflet.getTime = function () {
         return this.time;
       };
-
-      drupalLeaflet.timelineControl = new L.TimeLineControl({
-        formatOutput: function (date) {
-          return new Date(date).toString();
-        },
-        drupalLeaflet: drupalLeaflet
-      });
 
       // Add an extra div, and plonk the timeline widget in it.
       drupalLeaflet.timelineContainerDiv = drupalLeaflet.timelineControl.onAdd(map);

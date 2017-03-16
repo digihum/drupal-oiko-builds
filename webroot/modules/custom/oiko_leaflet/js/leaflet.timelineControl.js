@@ -1,53 +1,29 @@
-(function ($) {
+(function () {
   'use strict';
   L.TimeLineControl = L.Control.extend({
-    options: {
-      position: 'bottomleft'
-    },
-    // Returns a function, that, as long as it continues to be invoked, will not
-    // be triggered. The function will be called after it stops being called for
-    // N milliseconds. If `immediate` is passed, trigger the function on the
-    // leading edge, instead of the trailing.
-    debounce: function debounce(func, wait, immediate) {
-      var timeout;
-      return function() {
-        var context = this, args = arguments;
-        var later = function() {
-          timeout = null;
-          if (!immediate) func.apply(context, args);
-        };
-        var callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
-      };
-    },
-    initialize: function initialize() {
-      var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-      var defaultOptions = {
-        duration: 10000,
-        enableKeyboardControls: false,
-        enablePlayback: false,
-        formatOutput: function formatOutput(output) {
-          return '' + (output || '');
-        },
-        showTicks: false,
-        waitToUpdateMap: false,
-        waitToUpdateTimeline: true,
-        position: 'bottomleft',
-        steps: 1000,
-        drupalLeaflet: {
-          temporalStart: false,
-          temporalEnd: false
-        }
-      };
+    // Our default options.
+    options: {
+      position: 'bottomleft',
+      waitToUpdateMap: false,
+      waitToUpdateTimeline: true,
+      timelineViewSlices: 100,
+
+      // @TODO: We must remove this.
+      drupalLeaflet: {
+        temporalStart: false,
+        temporalEnd: false
+      }
+    },
+
+    initialize: function initialize(options) {
+      L.Util.setOptions(this, options);
       this.timelines = [];
       this.callbacks = [];
       this.doneCallbacks = [];
       this.rangeChangedCallbacks = [];
-      L.Util.setOptions(this, defaultOptions);
-      L.Util.setOptions(this, options);
+
+      // @TODO: do we need these?
       if (typeof options.start !== 'undefined') {
         this.start = options.start;
       }
@@ -55,10 +31,61 @@
         this.end = options.end;
       }
     },
-    updateTimelineWithData: function updateTimelineWithData() {
-      this.waitToUpdateTimeline = false;
-      this._visTimeline.setItems(this._visItems.get());
+
+    /**
+     * We've been added to a map, return a container div and add events.
+     *
+     * @param map
+     * @returns {div|*}
+     */
+    onAdd: function onAdd(map) {
+      this.map = map;
+      this._createDOM();
+
+      // Setup some events.
+      this.map.on('temporal.rebase', this._onTemporalRedraw, this);
+      this.map.on('temporal.redraw', this._onTemporalRedraw, this);
+
+      // @TODO: Ditch this.
+      this.setTime(this.start);
+      return this.container;
     },
+
+    onRemove: function onRemove() {
+      this.map.off('temporal.rebase', this._onTemporalBase, this);
+      this.map.off('temporal.redraw', this._onTemporalRedraw, this);
+    },
+
+    /**
+     * Rebase the timeline browser, or at least mark it as such.
+     *
+     * @private
+     */
+    _onTemporalRebase: function () {
+      // Plan of attack:
+      // 1. Fire an event asking for the maximal temporal bounds of the temporal layers on the map.
+      // 2. Set these to be the min and max of the vistimeline.
+      // 3. Alter the currently visible window of the vistimeline.
+      // 4. Trigger a redraw of the vistimeline.
+      this.map.fire('temporal.redraw');
+
+    },
+
+    /**
+     * Redraw the timeline browser, or at least mark it as such.
+     *
+     * @private
+     */
+    _onTemporalRedraw: function () {
+      // Plan of attack:
+      // 3. Get the current visible window of the vistimeline.
+      // 4. Break that into option.timelineViewSlices segments
+      // 5. Ask each temporal layer for how many events are in each slice.
+      // 6. Create an array of data of those items
+      // 7. Update the vistimeline with those items.
+
+    },
+
     /**
      * Create all of the DOM for the control.
      *
@@ -70,6 +97,7 @@
       this.container = container;
       this._makeSlider(container);
     },
+
     /**
      * Creates the range input
      *
@@ -131,6 +159,7 @@
         }
       });
     },
+
     _visTimelineChanged: function _visTimelineChanged(properties) {
       var time = Math.round(properties.time.getTime() / 1000);
       this.time = time;
@@ -140,6 +169,7 @@
         });
       }
     },
+
     _visTimelineChangedDone: function _visTimelineChangedDone(properties) {
       var time = Math.round(properties.time.getTime() / 1000);
       this.time = time;
@@ -149,6 +179,7 @@
         });
       }
     },
+
     _visTimelineRangedChanged: function _visTimelineRangedChanged(properties) {
       var start = Math.round(properties.start.getTime() / 1000);
       var end = Math.round(properties.end.getTime() / 1000);
@@ -158,6 +189,7 @@
         });
       }
     },
+
     _sliderChanged: function _sliderChanged(e) {
       var time = parseFloat(e.target.value, 10);
       this.time = time;
@@ -169,6 +201,7 @@
       this._updateDragTitle();
       this.map.fireEvent('temporalBrowserTimeChanged', {current: this.getTime()});
     },
+
     _updateDragTitle: function () {
       var offset = 365.25 * 86400 / 2;
       var low = this.time - offset;
@@ -176,6 +209,7 @@
       var format = 'D MMMM PPPP';
       this._visTimeline.setCustomTimeTitle('Displaying: ' + vis.moment.utc(low * 1000).format(format) + ' -  ' + vis.moment.utc(high * 1000).format(format), 'tdrag');
     },
+
     addItem: function addItem(min, max) {
       var obj = {
         start: min * 1000,
@@ -187,6 +221,7 @@
         this.updateTimelineWithData();
       }
     },
+
     addTimeline: function addTimeline(timeline, cb, dcb, rdcb) {
       var _this = this;
 
@@ -203,6 +238,7 @@
         this._recalculate();
       }
     },
+
     /**
      * Adjusts start/end/step size/etc. Should be called if any of those might
      * change (e.g. when adding a new layer).
@@ -212,7 +248,6 @@
     _recalculate: function _recalculate() {
       var manualStart = typeof this.options.start !== 'undefined';
       var manualEnd = typeof this.options.end !== 'undefined';
-      var duration = this.options.duration;
       var min = Infinity;
       var max = -Infinity;
       if (typeof this.options.drupalLeaflet.temporalStart !== 'undefined') {
@@ -238,9 +273,11 @@
         this.setTime(Math.round((min + max)/2));
       }
     },
+
     recalculate: function recalculate() {
       this._recalculate();
     },
+
     /**
      * Set the time displayed.
      *
@@ -252,9 +289,11 @@
         target: { value: time }
       });
     },
+
     setWindow: function setWindow(start, end) {
       this._visTimeline.setWindow(start * 1000, end * 1000, {animation: false});
     },
+
     setTimeAndWindow: function setTimeAndWindow(time, start, end) {
       if (time !== 0) {
         this.time = time;
@@ -277,6 +316,7 @@
       }
       this.map.fireEvent('temporalBrowserRangeChanged');
     },
+
     changeTime: function changeTime(time) {
       this.time = time;
       this._visTimeline.setCustomTime(1000 * time, 'tdrag');
@@ -293,9 +333,11 @@
       this._updateDragTitle();
       this.map.fireEvent('temporalBrowserTimeChanged', {current: this.getTime()});
     },
+
     getTime: function getTime() {
       return Math.round(this._visTimeline.getCustomTime('tdrag') / 1000);
     },
+
     getWindow: function getWindow() {
       var timewindow = this._visTimeline.getWindow();
       return {
@@ -303,24 +345,12 @@
         end:  Math.round(timewindow.end.getTime() / 1000)
       }
     },
-    onAdd: function onAdd(map) {
-      this.map = map;
-      this._createDOM();
-      this.setTime(this.start);
-      return this.container;
-    },
-    onRemove: function onRemove() {
-      if (this.options.enableKeyboardControls) {
-        this._removeKeyListeners();
-      }
-    }
-
 
   });
 
-  L.timeLineControl = function (timeline, start, end, timelist) {
-    return new L.TimeLineControl(timeline, start, end, timelist);
+  L.timeLineControl = function (options) {
+    return new L.TimeLineControl(options);
   };
 
 
-})(jQuery);
+})();
