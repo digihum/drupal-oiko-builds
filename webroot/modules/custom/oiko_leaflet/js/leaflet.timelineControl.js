@@ -207,6 +207,7 @@
         end: window.end.getTime() / 1000
       };
       this.map.fire('temporal.getCounts', {slice: slice, countsCallback: countsCallback});
+      // @TODO: If performance becomes an issue, then remove this 'true', and re-work the else case.
       if (true || count < this.options.timelineViewSlices) {
         // We can easily render the exact events, so get the start/end time of them all.
         allEventBounds = [];
