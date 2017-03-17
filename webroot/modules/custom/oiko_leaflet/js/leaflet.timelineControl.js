@@ -259,17 +259,15 @@
       for (var i = 0;i < visSlices.length;i++) {
         if (lastClass == visSlices[i].className) {
           // Expand the previous slice to this slices end.
-          visSlices[i - 1].end = visSlices[i].end
+          visSlices[i - 1].end = visSlices[i].end;
           // This is a duplicate slice and can go, and we will reprocess this i value.
-          visSlices[i].splice(i, 1);
+          visSlices.splice(i, 1);
           i--;
         }
         else {
           lastClass = visSlices[i].className;
         }
       }
-
-      console.log(visSlices.length);
 
       // 7. Update the vistimeline with those items.
       this._visTimeline.setItems(visSlices);
