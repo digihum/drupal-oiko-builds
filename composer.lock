@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f1c3cb0a29a20de2a212fc4804f140b",
+    "content-hash": "caeef9e216cb5f57d5674eb6b700b926",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -617,16 +617,16 @@
         },
         {
             "name": "cweagans/composer-patches",
-            "version": "dev-master",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cweagans/composer-patches.git",
-                "reference": "ee6a6d000fc775270d2508d300e2949408fdcf95"
+                "reference": "7cd5c6eb7e68b8f7436ce1a7b9fffa4418bf59c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/ee6a6d000fc775270d2508d300e2949408fdcf95",
-                "reference": "ee6a6d000fc775270d2508d300e2949408fdcf95",
+                "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/7cd5c6eb7e68b8f7436ce1a7b9fffa4418bf59c6",
+                "reference": "7cd5c6eb7e68b8f7436ce1a7b9fffa4418bf59c6",
                 "shasum": ""
             },
             "require": {
@@ -648,7 +648,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD"
+                "BSD-2-Clause"
             ],
             "authors": [
                 {
@@ -657,7 +657,7 @@
                 }
             ],
             "description": "Provides a way to patch Composer packages.",
-            "time": "2016-08-09 16:58:38"
+            "time": "2016-12-01T01:19:32+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -8265,7 +8265,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "cweagans/composer-patches": 20,
         "drupal/add_to_head": 20,
         "drupal/cm_config_tools": 20,
         "drupal/config_devel": 20,
