@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit81e83f08f0bec718e6250ab63a0d867c
+class ComposerStaticInit829ad3fbf64a6d773316e158c8f8923d
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -2904,6 +2904,8 @@ class ComposerStaticInit81e83f08f0bec718e6250ab63a0d867c
         'GuzzleHttp\\Psr7\\StreamWrapper' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/StreamWrapper.php',
         'GuzzleHttp\\Psr7\\UploadedFile' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/UploadedFile.php',
         'GuzzleHttp\\Psr7\\Uri' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/Uri.php',
+        'GuzzleHttp\\Psr7\\UriNormalizer' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/UriNormalizer.php',
+        'GuzzleHttp\\Psr7\\UriResolver' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/UriResolver.php',
         'GuzzleHttp\\RedirectMiddleware' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/RedirectMiddleware.php',
         'GuzzleHttp\\RequestOptions' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/RequestOptions.php',
         'GuzzleHttp\\RetryMiddleware' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/RetryMiddleware.php',
@@ -4260,6 +4262,7 @@ class ComposerStaticInit81e83f08f0bec718e6250ab63a0d867c
         'Symfony\\Component\\Routing\\Loader\\DirectoryLoader' => __DIR__ . '/..' . '/symfony/routing/Loader/DirectoryLoader.php',
         'Symfony\\Component\\Routing\\Loader\\ObjectRouteLoader' => __DIR__ . '/..' . '/symfony/routing/Loader/ObjectRouteLoader.php',
         'Symfony\\Component\\Routing\\Loader\\PhpFileLoader' => __DIR__ . '/..' . '/symfony/routing/Loader/PhpFileLoader.php',
+        'Symfony\\Component\\Routing\\Loader\\RecursiveCallbackFilterIterator' => __DIR__ . '/..' . '/symfony/routing/Loader/AnnotationDirectoryLoader.php',
         'Symfony\\Component\\Routing\\Loader\\XmlFileLoader' => __DIR__ . '/..' . '/symfony/routing/Loader/XmlFileLoader.php',
         'Symfony\\Component\\Routing\\Loader\\YamlFileLoader' => __DIR__ . '/..' . '/symfony/routing/Loader/YamlFileLoader.php',
         'Symfony\\Component\\Routing\\Matcher\\ApacheUrlMatcher' => __DIR__ . '/..' . '/symfony/routing/Matcher/ApacheUrlMatcher.php',
@@ -4633,6 +4636,7 @@ class ComposerStaticInit81e83f08f0bec718e6250ab63a0d867c
         'Twig_Cache_Null' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Cache/Null.php',
         'Twig_Compiler' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Compiler.php',
         'Twig_CompilerInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/CompilerInterface.php',
+        'Twig_ContainerRuntimeLoader' => __DIR__ . '/..' . '/twig/twig/lib/Twig/ContainerRuntimeLoader.php',
         'Twig_Environment' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Environment.php',
         'Twig_Error' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Error.php',
         'Twig_Error_Loader' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Error/Loader.php',
@@ -5080,11 +5084,11 @@ class ComposerStaticInit81e83f08f0bec718e6250ab63a0d867c
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit81e83f08f0bec718e6250ab63a0d867c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit81e83f08f0bec718e6250ab63a0d867c::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit81e83f08f0bec718e6250ab63a0d867c::$prefixesPsr0;
-            $loader->fallbackDirsPsr0 = ComposerStaticInit81e83f08f0bec718e6250ab63a0d867c::$fallbackDirsPsr0;
-            $loader->classMap = ComposerStaticInit81e83f08f0bec718e6250ab63a0d867c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit829ad3fbf64a6d773316e158c8f8923d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit829ad3fbf64a6d773316e158c8f8923d::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit829ad3fbf64a6d773316e158c8f8923d::$prefixesPsr0;
+            $loader->fallbackDirsPsr0 = ComposerStaticInit829ad3fbf64a6d773316e158c8f8923d::$fallbackDirsPsr0;
+            $loader->classMap = ComposerStaticInit829ad3fbf64a6d773316e158c8f8923d::$classMap;
 
         }, null, ClassLoader::class);
     }
