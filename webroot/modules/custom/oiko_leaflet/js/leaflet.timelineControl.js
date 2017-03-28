@@ -288,6 +288,7 @@
         stack: false,
         showCurrentTime: false,
         showMajorLabels: false,
+        height: 60,
         hiddenDates: [
           {start: '0000-01-01 00:00:00', end: '0001-01-01 00:00:00'}
         ],
