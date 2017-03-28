@@ -287,12 +287,14 @@
         width:  "100%",
         stack: false,
         showCurrentTime: false,
+        showMajorLabels: false,
         hiddenDates: [
           {start: '0000-01-01 00:00:00', end: '0001-01-01 00:00:00'}
         ],
         format: {
           minorLabels: {
-            year: 'PPPP'
+            year: 'PPPP',
+            month: 'MMM PPPP'
           },
           majorLabels: {
             weekday:    'MMMM PPPP',
