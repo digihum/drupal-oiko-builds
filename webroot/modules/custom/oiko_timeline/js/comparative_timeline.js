@@ -10,8 +10,8 @@ Drupal.behaviors.comparative_timeline = {
         Drupal.oiko.timeline = new Drupal.OikoComparativeTimeline($component, settings.oiko_timeline);
         $component.data('comparative_timeline', Drupal.oiko.timeline);
       }
+      Drupal.oiko.appModuleDoneLoading('comparative-timeline');
     });
-    Drupal.oiko.appModuleDoneLoading('comparative-timeline');
   }
 };
 
@@ -386,7 +386,9 @@ Drupal.behaviors.comparative_timeline = {
     }
     // And now add the timelines we want.
     for (var i in timelines) {
-      this.loadDataHandler(timelines[i]);
+      if (!this.isLoadingCheck(timelines[i])) {
+        this.loadDataHandler(timelines[i]);
+      }
     }
   };
 
@@ -433,6 +435,10 @@ Drupal.behaviors.comparative_timeline = {
   Drupal.OikoComparativeTimeline.prototype.nowLoading = function(id) {
     this.loadingItems[id] = true;
     this.evalLoadingState();
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.isLoadingCheck = function(id) {
+    return typeof this.loadingItems[id] !== 'undefined';
   };
 
   Drupal.OikoComparativeTimeline.prototype.doneLoading = function(id) {
