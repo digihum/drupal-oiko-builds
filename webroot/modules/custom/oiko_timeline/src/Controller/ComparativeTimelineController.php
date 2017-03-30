@@ -86,13 +86,14 @@ class ComparativeTimelineController extends ControllerBase {
    */
   protected function renderTimelineLogo(CidocEntity $cidoc_entity) {
     return $this->renderer->executeInRenderContext(new RenderContext(), function() use ($cidoc_entity) {
-      return render($cidoc_entity->timeline_logo->view([
+      $view = $cidoc_entity->timeline_logo->view([
         'label' => 'hidden',
         'type' => 'image',
         'settings' => [
           'image_style' => 'comparative_timeline_logo',
         ],
-      ]));
+      ]);
+      return render($view);
     });
   }
 
@@ -132,9 +133,10 @@ class ComparativeTimelineController extends ControllerBase {
         $entities[] = $events_uri;
         $data['events'][] = array(
           'type' => $event->bundle() == 'e4_period' ? 'period' : 'event',
+          'crm_type' => $event->bundle(),
           'uri' => $events_uri->getGeneratedUrl(),
           'id' => $event->id(),
-          'label' => $event->label(),
+          'label' => $event->getFriendlyLabel() . ': ' . $event->label(),
           'date_title' => $temporal['human'],
           'minmin' => $temporal['minmin'],
           'maxmax' => $temporal['maxmax'],

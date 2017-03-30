@@ -57,6 +57,20 @@ export const QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START = 'tbstart';
 export const QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END = 'tbend';
 
 /**
+ * The comparative timeline window start position.
+ *
+ * @type {string}
+ */
+export const QUERYSTRING_VARIABLE_TIMELINES_START = 'tlstart';
+
+/**
+ * The comparative timeline window end position.
+ *
+ * @type {string}
+ */
+export const QUERYSTRING_VARIABLE_TIMELINES_END = 'tlend';
+
+/**
  * The cidoc entity being displayed in the sidebar.
  *
  * @type {string}

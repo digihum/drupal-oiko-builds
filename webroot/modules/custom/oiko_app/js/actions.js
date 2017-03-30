@@ -23,6 +23,14 @@ export function setTimeBrowserState(current, start, end) {
   }
 }
 
+export const SET_TIMELINES_STATE = 'oiko/SET_TIMELINES_STATE';
+export function setTimelinesState(start, end) {
+  return { type: SET_TIMELINES_STATE,
+    start,
+    end
+  }
+}
+
 export const SET_VISUALISATION = 'oiko/SET_VISUALISATION';
 export function setVisualisation(view = 'map') {
   return { type: SET_VISUALISATION, view }

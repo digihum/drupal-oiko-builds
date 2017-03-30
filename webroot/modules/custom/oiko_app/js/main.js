@@ -1,6 +1,6 @@
 import {
   setMapState, setTimeBrowserState, addAppModule, appModuleDoneLoading,
-  setVisualisation, setComparativeTimelines
+  setVisualisation, setComparativeTimelines, setTimelinesState
 } from './actions';
 import { createOikoApp } from './store';
 import $ from './jquery';
@@ -73,9 +73,18 @@ const timelinesListener = () => {
   const { comparativeTimelines } = store.getState();
   const timeline = Drupal.oiko.timeline;
 
+
+  // Check to see if the timeslines displayed needs to change.
   const timelines = timeline.getTimelines();
   if (comparativeTimelines.length !== timelines.length || comparativeTimelines.every((v,i)=> v !== timelines[i])) {
     timeline.setTimelines(comparativeTimelines);
+  }
+
+  // Check to see if the visual range of the timeline needs to change.
+  const { timelinesState } = store.getState();
+  const window = Drupal.oiko.timeline.getVisibleTimeWindow();
+  if (timelinesState.start && timelinesState.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {
+    Drupal.oiko.timeline.setVisibleTimeWindow(timelinesState.start, timelinesState.end);
   }
 };
 
@@ -96,6 +105,15 @@ $(window).bind('oiko.loaded', function() {
 
   store.subscribe(timelinesListener);
   timelinesListener();
+
+  // Bind on the range changing on the comparative timeline.
+  $(window).on('oiko.timelineRangeChanged', (e) => {
+    const { timelinesState } = store.getState();
+    const window = Drupal.oiko.timeline.getVisibleTimeWindow();
+    if (window.start && window.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {
+      store.dispatch(setTimelinesState(window.start, window.end));
+    }
+  });
 });
 
 

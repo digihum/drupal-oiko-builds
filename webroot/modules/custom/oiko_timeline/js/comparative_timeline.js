@@ -324,7 +324,10 @@ Drupal.behaviors.comparative_timeline = {
       loadingItems: {},
       preselectedLinks: [],
       isLoading: false,
-      categories: []
+      categories: [],
+      crmTypes: [],
+      window: {},
+      rangeAdjusted: false
     };
 
     $.extend(this, defaults, element_settings);
@@ -398,6 +401,17 @@ Drupal.behaviors.comparative_timeline = {
     // Should we fire an event?
   };
 
+  Drupal.OikoComparativeTimeline.prototype.getCRMTypes = function () {
+    return this.categories;
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.setCRMTypes = function (types) {
+    this.crmTypes = types;
+    // Refresh our data view.
+    this._visDisplayedItems.refresh();
+    // Should we fire an event?
+  };
+
   Drupal.OikoComparativeTimeline.prototype.buildSearchBox = function () {
     return this.$addNewContainer.data('search_box', new Drupal.OikoComparativeTimelineSearch(this.$addNewContainer, {timeline: this}));
   };
@@ -442,7 +456,7 @@ Drupal.behaviors.comparative_timeline = {
     return this.isLoading;
   };
 
-  Drupal.OikoComparativeTimeline.prototype._filterItemsCallback = function(item) {
+  Drupal.OikoComparativeTimeline.prototype._filterItemsCategoriesCallback = function(item) {
     // If the list of categories to show is empty, show everything.
     if (this.categories.length === 0) {
       return true;
@@ -450,6 +464,20 @@ Drupal.behaviors.comparative_timeline = {
     else {
       return this.categories.indexOf(item.significance) > -1;
     }
+  };
+
+  Drupal.OikoComparativeTimeline.prototype._filterItemsCRMTypesCallback = function(item) {
+    // If the list of types to show is empty, show everything.
+    if (this.crmTypes.length === 0) {
+      return true;
+    }
+    else {
+      return this.crmTypes.indexOf(item.crmType) > -1;
+    }
+  };
+
+  Drupal.OikoComparativeTimeline.prototype._filterItemsCallback = function(item) {
+    return this._filterItemsCategoriesCallback(item) && this._filterItemsCRMTypesCallback(item);
   };
 
   Drupal.OikoComparativeTimeline.prototype.initialise = function () {
@@ -481,9 +509,17 @@ Drupal.behaviors.comparative_timeline = {
     this.buildSearchBox.call(this);
 
     // Hook events up.
-    this._visTimeline.on('select', function(properties) {
-      timeline.selectedTimelineItems.call(timeline, properties);
-    });
+    this._visTimeline
+      .on('select', function(properties) {
+        timeline.selectedTimelineItems.call(timeline, properties);
+      })
+      .on('rangechanged', $.proxy(function(e) {
+        this.window = {
+          start: Math.round(e.start.getTime() / 1000),
+          end: Math.round(e.end.getTime() / 1000)
+        };
+        $(window).trigger('oiko.timelineRangeChanged');
+      }, this));
     this.$timelineContainer.bind('click', function(e) {
       $target = $(e.target);
       if ($target.is('.js-comparative-timeline-remove-link')) {
@@ -500,6 +536,25 @@ Drupal.behaviors.comparative_timeline = {
       }});
       timeline._visTimeline.setSelection(selectedItems, {focus: selectedItems.length > 0});
     });
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.getVisibleTimeWindow = function() {
+    var w = this._visTimeline.getWindow();
+    this.window = {
+      start: Math.round(w.start.getTime() / 1000),
+      end: Math.round(w.end.getTime() / 1000)
+    };
+
+    return this.window;
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.setVisibleTimeWindow = function(start, end) {
+    this._visTimeline.setWindow(start * 1000, end * 1000);
+    this.window = {
+      start: start,
+      end: end
+    };
+    this.rangeAdjusted = true;
   };
 
   Drupal.OikoComparativeTimeline.prototype.removeGroupFromTimeline = function(groupId) {
@@ -562,7 +617,8 @@ Drupal.behaviors.comparative_timeline = {
           group: data.id,
           event: event.id,
           className: 'oiko-timeline-item--' + event.color,
-          significance: parseInt(event.significance, 10)
+          significance: parseInt(event.significance, 10),
+          crmType: event.crm_type
         });
 
         this._timelineMin = Math.min(this._timelineMin, (minmin - 86400 * 365 * 10));
@@ -607,7 +663,7 @@ Drupal.behaviors.comparative_timeline = {
       });
     }
 
-    if (moved) {
+    if (moved && !this.rangeAdjusted) {
       this._visTimeline.fit();
     }
   };

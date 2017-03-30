@@ -264,6 +264,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.setMapState = setMapState;
 exports.setTimeBrowserState = setTimeBrowserState;
+exports.setTimelinesState = setTimelinesState;
 exports.setVisualisation = setVisualisation;
 exports.addAppModule = addAppModule;
 exports.appModuleDoneLoading = appModuleDoneLoading;
@@ -289,6 +290,14 @@ var SET_TIME_BROWSER_STATE = exports.SET_TIME_BROWSER_STATE = 'oiko/SET_TIME_BRO
 function setTimeBrowserState(current, start, end) {
   return { type: SET_TIME_BROWSER_STATE,
     current: current,
+    start: start,
+    end: end
+  };
+}
+
+var SET_TIMELINES_STATE = exports.SET_TIMELINES_STATE = 'oiko/SET_TIMELINES_STATE';
+function setTimelinesState(start, end) {
+  return { type: SET_TIMELINES_STATE,
     start: start,
     end: end
   };
@@ -580,6 +589,20 @@ var QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START = exports.QUERYSTRING_VARIABLE_T
  * @type {string}
  */
 var QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END = exports.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END = 'tbend';
+
+/**
+ * The comparative timeline window start position.
+ *
+ * @type {string}
+ */
+var QUERYSTRING_VARIABLE_TIMELINES_START = exports.QUERYSTRING_VARIABLE_TIMELINES_START = 'tlstart';
+
+/**
+ * The comparative timeline window end position.
+ *
+ * @type {string}
+ */
+var QUERYSTRING_VARIABLE_TIMELINES_END = exports.QUERYSTRING_VARIABLE_TIMELINES_END = 'tlend';
 
 /**
  * The cidoc entity being displayed in the sidebar.
@@ -1598,6 +1621,34 @@ function timeBrowserState() {
   }
 }
 
+function timelinesState() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    start: 0,
+    end: 0
+  };
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actions.SET_TIMELINES_STATE:
+      return {
+        start: Number.parseInt(action.start, 10),
+        end: Number.parseInt(action.end, 10)
+      };
+
+    case _reduxHistory.UPDATE_LOCATION:
+      return {
+        start: Number.parseInt((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINES_START, state.start), 10),
+        end: Number.parseInt((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINES_END, state.end), 10)
+      };
+
+    default:
+      return {
+        start: state.start,
+        end: state.end
+      };
+  }
+}
+
 function visualisation() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'map';
   var action = arguments[1];
@@ -1696,7 +1747,7 @@ var initialState = {
  */
 function oikoLocation(locationReducerFunction) {
   return function () {
-    var _changeQueryString2, _changeQueryString3;
+    var _changeQueryString2, _changeQueryString3, _changeQueryString4;
 
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
     var action = arguments[1];
@@ -1713,6 +1764,9 @@ function oikoLocation(locationReducerFunction) {
 
       case _actions.SET_TIME_BROWSER_STATE:
         return (0, _querystringHelpers.changeQueryString)(new_state, (_changeQueryString3 = {}, _defineProperty(_changeQueryString3, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION, action.current), _defineProperty(_changeQueryString3, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START, action.start), _defineProperty(_changeQueryString3, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END, action.end), _changeQueryString3));
+
+      case _actions.SET_TIMELINES_STATE:
+        return (0, _querystringHelpers.changeQueryString)(new_state, (_changeQueryString4 = {}, _defineProperty(_changeQueryString4, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINES_START, action.start), _defineProperty(_changeQueryString4, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINES_END, action.end), _changeQueryString4));
 
       case _sidebar.RECEIVE_CIDOC_ENTITY:
         return (0, _querystringHelpers.changeQueryString)(new_state, _defineProperty({}, _querystringDefinitions.QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY, action.id), false);
@@ -1731,6 +1785,7 @@ var oikoAppReducers = (0, _redux.combineReducers)({
   visualisation: visualisation,
   mapState: mapState,
   timeBrowserState: timeBrowserState,
+  timelinesState: timelinesState,
   comparativeTimelines: comparativeTimelines,
   appModules: appModules,
   cidocEntity: _sidebar.cidocEntityReducer,
@@ -4318,11 +4373,22 @@ var timelinesListener = function timelinesListener() {
 
   var timeline = Drupal.oiko.timeline;
 
+  // Check to see if the timeslines displayed needs to change.
   var timelines = timeline.getTimelines();
   if (comparativeTimelines.length !== timelines.length || comparativeTimelines.every(function (v, i) {
     return v !== timelines[i];
   })) {
     timeline.setTimelines(comparativeTimelines);
+  }
+
+  // Check to see if the visual range of the timeline needs to change.
+
+  var _store$getState4 = store.getState(),
+      timelinesState = _store$getState4.timelinesState;
+
+  var window = Drupal.oiko.timeline.getVisibleTimeWindow();
+  if (timelinesState.start && timelinesState.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {
+    Drupal.oiko.timeline.setVisibleTimeWindow(timelinesState.start, timelinesState.end);
   }
 };
 
@@ -4334,8 +4400,8 @@ var timelinesListener = function timelinesListener() {
   visualisationSwitchListener();
 
   (0, _jquery2.default)(window).on('oiko.timelines_updated', function (e, timelines) {
-    var _store$getState4 = store.getState(),
-        comparativeTimelines = _store$getState4.comparativeTimelines;
+    var _store$getState5 = store.getState(),
+        comparativeTimelines = _store$getState5.comparativeTimelines;
 
     var timeline = Drupal.oiko.timeline;
     if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length || comparativeTimelines.every(function (v, i) {
@@ -4347,6 +4413,17 @@ var timelinesListener = function timelinesListener() {
 
   store.subscribe(timelinesListener);
   timelinesListener();
+
+  // Bind on the range changing on the comparative timeline.
+  (0, _jquery2.default)(window).on('oiko.timelineRangeChanged', function (e) {
+    var _store$getState6 = store.getState(),
+        timelinesState = _store$getState6.timelinesState;
+
+    var window = Drupal.oiko.timeline.getVisibleTimeWindow();
+    if (window.start && window.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {
+      store.dispatch((0, _actions.setTimelinesState)(window.start, window.end));
+    }
+  });
 });
 
 // Probably a better way to write this.

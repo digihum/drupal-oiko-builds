@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import { UPDATE_LOCATION, locationReducer } from './vendor/redux-history';
 
-import { SET_MAP_STATE, SET_TIME_BROWSER_STATE, SET_VISUALISATION, ADD_APP_MODULE, APP_MODULE_DONE_LOADING, APP_LOADING_BOOT, APP_LOADING_START, APP_LOADING_ADD_TO_DOM, SET_COMPARATIVE_TIMELINES } from './actions';
+import { SET_MAP_STATE, SET_TIME_BROWSER_STATE, SET_VISUALISATION, ADD_APP_MODULE, APP_MODULE_DONE_LOADING, APP_LOADING_BOOT, APP_LOADING_START, APP_LOADING_ADD_TO_DOM, SET_COMPARATIVE_TIMELINES, SET_TIMELINES_STATE } from './actions';
 import { REQUEST_CIDOC_ENTITY, RECEIVE_CIDOC_ENTITY, cidocEntityReducer } from './sidebar';
 
-import { QUERYSTRING_VARIABLE_VISUALISATION, QUERYSTRING_VARIABLE_MAP_ZOOM, QUERYSTRING_VARIABLE_MAP_CENTER_LAT, QUERYSTRING_VARIABLE_MAP_CENTER_LNG, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END, QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY, QUERYSTRING_VARIABLE_TIMELINE_ENTITIES } from './querystring-definitions';
+import { QUERYSTRING_VARIABLE_VISUALISATION, QUERYSTRING_VARIABLE_MAP_ZOOM, QUERYSTRING_VARIABLE_MAP_CENTER_LAT, QUERYSTRING_VARIABLE_MAP_CENTER_LNG, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END, QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY, QUERYSTRING_VARIABLE_TIMELINE_ENTITIES, QUERYSTRING_VARIABLE_TIMELINES_START, QUERYSTRING_VARIABLE_TIMELINES_END } from './querystring-definitions';
 
 import { changeQueryString, fetchQueryStringElements, fetchQueryStringElementsStructured, changeQueryStringStructured } from './plumbing/querystring-helpers';
 
@@ -60,6 +60,31 @@ function timeBrowserState(state = {
     default:
       return {
         current: state.current,
+        start: state.start,
+        end: state.end
+      };
+  }
+}
+
+function timelinesState(state = {
+                            start: 0,
+                            end: 0
+                          }, action) {
+  switch (action.type) {
+    case SET_TIMELINES_STATE:
+      return {
+        start: Number.parseInt(action.start, 10),
+        end: Number.parseInt(action.end, 10)
+      };
+
+    case UPDATE_LOCATION:
+      return {
+        start: Number.parseInt(fetchQueryStringElements(action.payload, QUERYSTRING_VARIABLE_TIMELINES_START, state.start), 10),
+        end: Number.parseInt(fetchQueryStringElements(action.payload, QUERYSTRING_VARIABLE_TIMELINES_END, state.end), 10)
+      };
+
+    default:
+      return {
         start: state.start,
         end: state.end
       };
@@ -165,6 +190,9 @@ function oikoLocation(locationReducerFunction) {
       case SET_TIME_BROWSER_STATE:
         return changeQueryString(new_state, {[QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION]: action.current, [QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START]: action.start, [QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END]: action.end});
 
+      case SET_TIMELINES_STATE:
+        return changeQueryString(new_state, {[QUERYSTRING_VARIABLE_TIMELINES_START]: action.start, [QUERYSTRING_VARIABLE_TIMELINES_END]: action.end});
+
       case RECEIVE_CIDOC_ENTITY:
         return changeQueryString(new_state, {[QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY]: action.id}, false);
 
@@ -182,6 +210,7 @@ const oikoAppReducers = combineReducers({
   visualisation,
   mapState,
   timeBrowserState,
+  timelinesState,
   comparativeTimelines,
   appModules,
   cidocEntity : cidocEntityReducer,
