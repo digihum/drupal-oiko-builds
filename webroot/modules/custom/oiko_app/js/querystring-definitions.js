@@ -62,3 +62,10 @@ export const QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END = 'tbend';
  * @type {string}
  */
 export const QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY = 'cidoc_entity_id';
+
+/**
+ * The timelines being displayed in comparative timline viewer.
+ *
+ * @type {string}
+ */
+export const QUERYSTRING_VARIABLE_TIMELINE_ENTITIES = 'timelines';

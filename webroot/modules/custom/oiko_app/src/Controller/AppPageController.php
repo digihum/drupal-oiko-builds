@@ -45,37 +45,9 @@ class AppPageController extends ControllerBase {
    */
   public function app() {
 
-    $content = array();
-
-    $content['app'] = array(
+    return [
       '#theme' => 'oiko_app',
-    );
-
-    return $content;
-
-    $data = [];
-
-    $map = leaflet_map_get_info('Ancient Terrain');
-    $map['sidebar'] = TRUE;
-    $map['pagestate'] = TRUE;
-    $map['timeline'] = TRUE;
-    $map['search'] = TRUE;
-    $map['empires'] = TRUE;
-    $map['clustering'] = TRUE;
-    $map['locate'] = TRUE;
-    $map['layerControl'] = TRUE;
-    $map['data-url'] = Url::fromRoute('oiko_leaflet.map_page_controller_allEntities')->toString();
-    $height = 'full';
-
-    $map = leaflet_render_map($map, $data, $height);
-
-    $map['#theme_wrappers']['container'] = [
-      '#attributes' => [
-        'class' => ['l-map-wrap'],
-      ],
     ];
-
-    return $map;
   }
 
 }

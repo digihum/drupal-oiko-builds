@@ -12,11 +12,37 @@ body {
   flex-direction: column;
 }
 
-.l-map-wrap {
+.oiko-app {
   flex-grow: 1;
   display: flex;
   flex-direction: row;
+  align-items: stretch;
 }
+
+.oiko-app--map {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.oiko-app--timeline {
+  flex-grow: 1;
+  width: 100%;
+}
+
+.oiko-app--sidebar {
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  align-items: stretch;
+  width: 400px;
+}
+
 
 // 'Main' layout
 // --------------

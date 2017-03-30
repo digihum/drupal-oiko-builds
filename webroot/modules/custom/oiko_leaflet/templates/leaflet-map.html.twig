@@ -17,13 +17,6 @@
  *
  */
 #}
-<div class="js-map-loader"></div>
-{% if map.sidebar %}
-    {{ sidebar }}
-    <div class="leaflet-map-container">
-        <div id="{{ map_id }}" style="min-width: 150px;{% if height %} height: {{ height }}{% endif %}" {% if not height %} class="leaflet-full-height"{% endif %}></div>
-    </div>
-{% else %}
-    <div id="{{ map_id }}" style="min-width: 150px;{% if height %} height: {{ height }}{% endif %}" {% if not height %} class="leaflet-full-height"{% endif %}></div>
-{% endif %}
+{#<div class="js-map-loader"></div>#}
+<div id="{{ map_id }}" style="min-width: 150px;{% if height %} height: {{ height }}{% endif %}" {% if not height %} class="leaflet-full-height"{% endif %}></div>
 

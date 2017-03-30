@@ -67,8 +67,7 @@
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */,
-/* 1 */
+/* 0 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -254,7 +253,350 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setMapState = setMapState;
+exports.setTimeBrowserState = setTimeBrowserState;
+exports.setVisualisation = setVisualisation;
+exports.addAppModule = addAppModule;
+exports.appModuleDoneLoading = appModuleDoneLoading;
+exports.appLoadingStart = appLoadingStart;
+exports.appLoadingAddToDOM = appLoadingAddToDOM;
+exports.setComparativeTimelines = setComparativeTimelines;
+/*
+ * Redux actions.
+ *
+ * These are the actions that can be dispatched on our state object.
+ */
+
+var SET_MAP_STATE = exports.SET_MAP_STATE = 'oiko/SET_MAP_STATE';
+function setMapState(level, lat, lng) {
+  return { type: SET_MAP_STATE,
+    level: level,
+    lat: parseFloat(lat).toFixed(2),
+    lng: parseFloat(lng).toFixed(2)
+  };
+}
+
+var SET_TIME_BROWSER_STATE = exports.SET_TIME_BROWSER_STATE = 'oiko/SET_TIME_BROWSER_STATE';
+function setTimeBrowserState(current, start, end) {
+  return { type: SET_TIME_BROWSER_STATE,
+    current: current,
+    start: start,
+    end: end
+  };
+}
+
+var SET_VISUALISATION = exports.SET_VISUALISATION = 'oiko/SET_VISUALISATION';
+function setVisualisation() {
+  var view = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'map';
+
+  return { type: SET_VISUALISATION, view: view };
+}
+
+var ADD_APP_MODULE = exports.ADD_APP_MODULE = 'oiko/ADD_APP_MODULE';
+function addAppModule(name) {
+  return { type: ADD_APP_MODULE, name: name };
+}
+
+var APP_MODULE_DONE_LOADING = exports.APP_MODULE_DONE_LOADING = 'oiko/APP_MODULE_DONE_LOADING';
+function appModuleDoneLoading(name) {
+  return { type: APP_MODULE_DONE_LOADING, name: name };
+}
+
+// This is the very initial state of the app.
+var APP_LOADING_BOOT = exports.APP_LOADING_BOOT = 0;
+
+var APP_LOADING_START = exports.APP_LOADING_START = 1;
+function appLoadingStart() {
+  return { type: APP_LOADING_START };
+}
+
+var APP_LOADING_ADD_TO_DOM = exports.APP_LOADING_ADD_TO_DOM = 2;
+function appLoadingAddToDOM() {
+  return { type: APP_LOADING_ADD_TO_DOM };
+}
+
+var SET_COMPARATIVE_TIMELINES = exports.SET_COMPARATIVE_TIMELINES = 'oiko/SET_COMPARATIVE_TIMELINES';
+function setComparativeTimelines(timelines) {
+  return { type: SET_COMPARATIVE_TIMELINES, timelines: timelines };
+}
+
+/***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.locationReducer = locationReducer;
+exports.updateLocation = updateLocation;
+exports.connectHistory = connectHistory;
+var UPDATE_LOCATION = exports.UPDATE_LOCATION = '@@history/UPDATE_LOCATION';
+
+var initialState = {
+
+  pathname: null,
+  search: null,
+  hash: null,
+  state: null,
+  action: null,
+  key: null
+
+};
+
+function locationReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
+
+
+  if (action.type === UPDATE_LOCATION) {
+    return Object.assign({}, state, action.payload);
+  }
+  return state;
+}
+
+function updateLocation(location) {
+  return {
+    type: UPDATE_LOCATION,
+    payload: location
+  };
+}
+
+function connectHistory(history, store) {
+
+  var currentKey = void 0;
+
+  function createUniqueKey(location) {
+    var key = history.createHref(location);
+    return key;
+  }
+
+  var unsubscribeHistory = history.listen(function (nextLocation) {
+    var _store$getState = store.getState(),
+        location = _store$getState.location;
+
+    var key = createUniqueKey(location);
+    currentKey = createUniqueKey(nextLocation);
+
+    if (key !== currentKey) {
+      store.dispatch(updateLocation(nextLocation));
+    }
+  });
+
+  var unsubscribeStore = store.subscribe(function () {
+    var _store$getState2 = store.getState(),
+        location = _store$getState2.location;
+
+    var key = createUniqueKey(location);
+
+    if (key && key !== currentKey) {
+      var method = location.action === 'REPLACE' ? 'replace' : 'push';
+      history[method](location);
+    }
+  });
+
+  return function unconnectHistory() {
+    unsubscribeHistory();
+    unsubscribeStore();
+  };
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var $ = jQuery;
+exports.default = $;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.changeQueryString = changeQueryString;
+exports.changeQueryStringStructured = changeQueryStringStructured;
+exports.fetchQueryStringElements = fetchQueryStringElements;
+exports.fetchQueryStringElementsStructured = fetchQueryStringElementsStructured;
+
+var _queryString = __webpack_require__(34);
+
+var _queryString2 = _interopRequireDefault(_queryString);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function changeQueryString(state) {
+  var changes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var replace = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+  var parsed = _queryString2.default.parse(state.search);
+  parsed = Object.assign({}, parsed, changes);
+  return Object.assign({}, state, { action: replace ? 'REPLACE' : 'PUSH', search: _queryString2.default.stringify(parsed) });
+}
+
+function changeQueryStringStructured(state) {
+  var structuredChanges = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var replace = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+  var changes = {};
+  var keys = Object.keys(structuredChanges);
+  for (var i in keys) {
+    var key = keys[i];
+    changes[key] = JSON.stringify(structuredChanges[key]);
+  }
+  return changeQueryString(state, changes, replace);
+}
+
+function fetchQueryStringElements(state, key) {
+  var _default = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+  var parsed = _queryString2.default.parse(state.search);
+  return typeof parsed[key] !== 'undefined' ? parsed[key] : _default;
+}
+
+function fetchQueryStringElementsStructured(state, key) {
+  var _default = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+  var element = fetchQueryStringElements(state, key);
+  if (element !== null) {
+    return JSON.parse(element);
+  } else {
+    return _default;
+  }
+}
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/*
+ * Portions of the query strings that are going to hold data.
+ *
+ * Each of these MUST be unique,
+ * Changing these will break ALL existing inbound links, DANGER!
+ *
+ * @TODO: Shorten all of these.
+ */
+
+/**
+ * The application view.
+ *
+ * @type {string}
+ */
+var QUERYSTRING_VARIABLE_VISUALISATION = exports.QUERYSTRING_VARIABLE_VISUALISATION = 'view';
+
+/**
+ * The map zoom level.
+ *
+ * @type {string}
+ */
+var QUERYSTRING_VARIABLE_MAP_ZOOM = exports.QUERYSTRING_VARIABLE_MAP_ZOOM = 'mapzoom';
+
+/**
+ * The map center latitude.
+ *
+ * @type {string}
+ */
+var QUERYSTRING_VARIABLE_MAP_CENTER_LAT = exports.QUERYSTRING_VARIABLE_MAP_CENTER_LAT = 'maplat';
+
+/**
+ * The map center longitude.
+ *
+ * @type {string}
+ */
+var QUERYSTRING_VARIABLE_MAP_CENTER_LNG = exports.QUERYSTRING_VARIABLE_MAP_CENTER_LNG = 'maplng';
+
+/**
+ * The timeline browser current position.
+ *
+ * @type {string}
+ */
+var QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION = exports.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION = 'tbcurrent';
+
+/**
+ * The timeline browser window start position.
+ *
+ * @type {string}
+ */
+var QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START = exports.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START = 'tbstart';
+
+/**
+ * The timeline browser window end position.
+ *
+ * @type {string}
+ */
+var QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END = exports.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END = 'tbend';
+
+/**
+ * The cidoc entity being displayed in the sidebar.
+ *
+ * @type {string}
+ */
+var QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY = exports.QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY = 'cidoc_entity_id';
+
+/**
+ * The timelines being displayed in comparative timline viewer.
+ *
+ * @type {string}
+ */
+var QUERYSTRING_VARIABLE_TIMELINE_ENTITIES = exports.QUERYSTRING_VARIABLE_TIMELINE_ENTITIES = 'timelines';
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -268,11 +610,11 @@ exports.fetchFetchCidocEntityIfNeeded = fetchFetchCidocEntityIfNeeded;
 exports.cidocEntityReducer = cidocEntityReducer;
 exports.connectSidebar = connectSidebar;
 
-var _reduxHistory = __webpack_require__(51);
+var _reduxHistory = __webpack_require__(2);
 
-var _querystringHelpers = __webpack_require__(10);
+var _querystringHelpers = __webpack_require__(5);
 
-var _querystringDefinitions = __webpack_require__(11);
+var _querystringDefinitions = __webpack_require__(6);
 
 /*
  * {
@@ -416,923 +758,7 @@ function connectSidebar($, store) {
 }
 
 /***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createStore__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__combineReducers__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__applyMiddleware__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__compose__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_warning__ = __webpack_require__(18);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "createStore", function() { return __WEBPACK_IMPORTED_MODULE_0__createStore__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "combineReducers", function() { return __WEBPACK_IMPORTED_MODULE_1__combineReducers__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "bindActionCreators", function() { return __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "applyMiddleware", function() { return __WEBPACK_IMPORTED_MODULE_3__applyMiddleware__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "compose", function() { return __WEBPACK_IMPORTED_MODULE_4__compose__["a"]; });
-
-
-
-
-
-
-
-/*
-* This is a dummy function to check if the function name has been altered by minification.
-* If the function has been minified and NODE_ENV !== 'production', warn the user.
-*/
-function isCrushed() {}
-
-if (process.env.NODE_ENV !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
-  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils_warning__["a" /* default */])('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
-}
-
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.setMapState = setMapState;
-exports.setTimeBrowserState = setTimeBrowserState;
-exports.setVisualisation = setVisualisation;
-exports.addAppModule = addAppModule;
-exports.appModuleDoneLoading = appModuleDoneLoading;
-exports.appLoadingStart = appLoadingStart;
-exports.appLoadingAddToDOM = appLoadingAddToDOM;
-/*
- * Redux actions.
- *
- * These are the actions that can be dispatched on our state object.
- */
-
-var SET_MAP_STATE = exports.SET_MAP_STATE = 'oiko/SET_MAP_STATE';
-function setMapState(level, lat, lng) {
-  return { type: SET_MAP_STATE,
-    level: level,
-    lat: parseFloat(lat).toFixed(2),
-    lng: parseFloat(lng).toFixed(2)
-  };
-}
-
-var SET_TIME_BROWSER_STATE = exports.SET_TIME_BROWSER_STATE = 'oiko/SET_TIME_BROWSER_STATE';
-function setTimeBrowserState(current, start, end) {
-  return { type: SET_TIME_BROWSER_STATE,
-    current: current,
-    start: start,
-    end: end
-  };
-}
-
-var SET_VISUALISATION = exports.SET_VISUALISATION = 'oiko/SET_VISUALISATION';
-function setVisualisation() {
-  var view = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'map';
-
-  return { type: SET_VISUALISATION, view: view };
-}
-
-var ADD_APP_MODULE = exports.ADD_APP_MODULE = 'oiko/ADD_APP_MODULE';
-function addAppModule(name) {
-  return { type: ADD_APP_MODULE, name: name };
-}
-
-var APP_MODULE_DONE_LOADING = exports.APP_MODULE_DONE_LOADING = 'oiko/APP_MODULE_DONE_LOADING';
-function appModuleDoneLoading(name) {
-  return { type: APP_MODULE_DONE_LOADING, name: name };
-}
-
-// This is the very initial state of the app.
-var APP_LOADING_BOOT = exports.APP_LOADING_BOOT = 0;
-
-var APP_LOADING_START = exports.APP_LOADING_START = 1;
-function appLoadingStart() {
-  return { type: APP_LOADING_START };
-}
-
-var APP_LOADING_ADD_TO_DOM = exports.APP_LOADING_ADD_TO_DOM = 2;
-function appLoadingAddToDOM() {
-  return { type: APP_LOADING_ADD_TO_DOM };
-}
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _redux = __webpack_require__(3);
-
-var _reduxHistory = __webpack_require__(51);
-
-var _actions = __webpack_require__(5);
-
-var _sidebar = __webpack_require__(2);
-
-var _querystringDefinitions = __webpack_require__(11);
-
-var _querystringHelpers = __webpack_require__(10);
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function mapState() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    level: 1,
-    lat: 0,
-    lng: 0
-  };
-  var action = arguments[1];
-
-  switch (action.type) {
-    case _actions.SET_MAP_STATE:
-      return {
-        level: Number.parseInt(action.level, 10),
-        lat: Number.parseFloat(action.lat).toFixed(2),
-        lng: Number.parseFloat(action.lng).toFixed(2)
-      };
-
-    case _reduxHistory.UPDATE_LOCATION:
-      return {
-        level: Number.parseInt((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_MAP_ZOOM, state.level), 10),
-        lat: Number.parseFloat((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_MAP_CENTER_LAT, state.lat)).toFixed(2),
-        lng: Number.parseFloat((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_MAP_CENTER_LNG, state.lng)).toFixed(2)
-      };
-
-    default:
-      return {
-        level: state.level,
-        lat: state.lat,
-        lng: state.lng
-      };
-  }
-}
-
-function timeBrowserState() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    current: 0,
-    start: 0,
-    end: 0
-  };
-  var action = arguments[1];
-
-  switch (action.type) {
-    case _actions.SET_TIME_BROWSER_STATE:
-      return {
-        current: Number.parseInt(action.current, 10),
-        start: Number.parseInt(action.start, 10),
-        end: Number.parseInt(action.end, 10)
-      };
-
-    case _reduxHistory.UPDATE_LOCATION:
-      return {
-        current: Number.parseInt((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION, state.current), 10),
-        start: Number.parseInt((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START, state.start), 10),
-        end: Number.parseInt((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END, state.end), 10)
-      };
-
-    default:
-      return {
-        current: state.current,
-        start: state.start,
-        end: state.end
-      };
-  }
-}
-
-function visualisation() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'map';
-  var action = arguments[1];
-
-  switch (action.type) {
-    case _actions.SET_VISUALISATION:
-      return action.view;
-
-    case _reduxHistory.UPDATE_LOCATION:
-      return (0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_VISUALISATION, state);
-
-    default:
-      return state;
-  }
-}
-
-function appLoading() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _actions.APP_LOADING_BOOT;
-  var action = arguments[1];
-
-  switch (action.type) {
-    case _actions.APP_LOADING_BOOT:
-    case _actions.APP_LOADING_START:
-    case _actions.APP_LOADING_ADD_TO_DOM:
-      return Math.max(state, action.type);
-
-    default:
-      return state;
-  }
-}
-
-/**
- * Reduce the app modules state slice.
- *
- * We keep track of modules that have registered and loaded.
- *
- * @param state
- * @param action
- * @returns {*}
- */
-function appModules() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var action = arguments[1];
-
-  switch (action.type) {
-    case _actions.ADD_APP_MODULE:
-      return Object.assign({}, state, _defineProperty({}, action.name, false));
-    case _actions.APP_MODULE_DONE_LOADING:
-      return Object.assign({}, state, _defineProperty({}, action.name, true));
-    default:
-      return state;
-  }
-}
-
-var initialState = {
-
-  pathname: null,
-  search: null,
-  hash: null,
-  state: null,
-  action: null,
-  key: null
-
-};
-
-function oikoLocation(locationReducerFunction) {
-  return function () {
-    var _changeQueryString2, _changeQueryString3;
-
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-    var action = arguments[1];
-
-    var new_state = locationReducerFunction(state, action);
-
-    // Update the query string appropriately.
-    switch (action.type) {
-      case _actions.SET_VISUALISATION:
-        return (0, _querystringHelpers.changeQueryString)(new_state, _defineProperty({}, _querystringDefinitions.QUERYSTRING_VARIABLE_VISUALISATION, action.view));
-
-      case _actions.SET_MAP_STATE:
-        return (0, _querystringHelpers.changeQueryString)(new_state, (_changeQueryString2 = {}, _defineProperty(_changeQueryString2, _querystringDefinitions.QUERYSTRING_VARIABLE_MAP_ZOOM, action.level), _defineProperty(_changeQueryString2, _querystringDefinitions.QUERYSTRING_VARIABLE_MAP_CENTER_LAT, action.lat), _defineProperty(_changeQueryString2, _querystringDefinitions.QUERYSTRING_VARIABLE_MAP_CENTER_LNG, action.lng), _changeQueryString2));
-
-      case _actions.SET_TIME_BROWSER_STATE:
-        return (0, _querystringHelpers.changeQueryString)(new_state, (_changeQueryString3 = {}, _defineProperty(_changeQueryString3, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION, action.current), _defineProperty(_changeQueryString3, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START, action.start), _defineProperty(_changeQueryString3, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END, action.end), _changeQueryString3));
-
-      case _sidebar.RECEIVE_CIDOC_ENTITY:
-        return (0, _querystringHelpers.changeQueryString)(new_state, _defineProperty({}, _querystringDefinitions.QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY, action.id), false);
-
-      default:
-        return new_state;
-    }
-  };
-}
-
-var oikoAppReducers = (0, _redux.combineReducers)({
-  appLoading: appLoading,
-  visualisation: visualisation,
-  mapState: mapState,
-  timeBrowserState: timeBrowserState,
-  appModules: appModules,
-  cidocEntity: _sidebar.cidocEntityReducer,
-  location: oikoLocation(_reduxHistory.locationReducer)
-});
-
-exports.default = oikoAppReducers;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _warning = __webpack_require__(19);
-
-var _warning2 = _interopRequireDefault(_warning);
-
-var _invariant = __webpack_require__(26);
-
-var _invariant2 = _interopRequireDefault(_invariant);
-
-var _LocationUtils = __webpack_require__(24);
-
-var _PathUtils = __webpack_require__(12);
-
-var _createTransitionManager = __webpack_require__(25);
-
-var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
-
-var _DOMUtils = __webpack_require__(23);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var PopStateEvent = 'popstate';
-var HashChangeEvent = 'hashchange';
-
-var getHistoryState = function getHistoryState() {
-  try {
-    return window.history.state || {};
-  } catch (e) {
-    // IE 11 sometimes throws when accessing window.history.state
-    // See https://github.com/ReactTraining/history/pull/289
-    return {};
-  }
-};
-
-/**
- * Creates a history object that uses the HTML5 history API including
- * pushState, replaceState, and the popstate event.
- */
-var createBrowserHistory = function createBrowserHistory() {
-  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  (0, _invariant2.default)(_DOMUtils.canUseDOM, 'Browser history needs a DOM');
-
-  var globalHistory = window.history;
-  var canUseHistory = (0, _DOMUtils.supportsHistory)();
-  var needsHashChangeListener = !(0, _DOMUtils.supportsPopStateOnHashChange)();
-
-  var _props$forceRefresh = props.forceRefresh,
-      forceRefresh = _props$forceRefresh === undefined ? false : _props$forceRefresh,
-      _props$getUserConfirm = props.getUserConfirmation,
-      getUserConfirmation = _props$getUserConfirm === undefined ? _DOMUtils.getConfirmation : _props$getUserConfirm,
-      _props$keyLength = props.keyLength,
-      keyLength = _props$keyLength === undefined ? 6 : _props$keyLength;
-
-  var basename = props.basename ? (0, _PathUtils.stripTrailingSlash)((0, _PathUtils.addLeadingSlash)(props.basename)) : '';
-
-  var getDOMLocation = function getDOMLocation(historyState) {
-    var _ref = historyState || {},
-        key = _ref.key,
-        state = _ref.state;
-
-    var _window$location = window.location,
-        pathname = _window$location.pathname,
-        search = _window$location.search,
-        hash = _window$location.hash;
-
-
-    var path = pathname + search + hash;
-
-    if (basename) path = (0, _PathUtils.stripPrefix)(path, basename);
-
-    return _extends({}, (0, _PathUtils.parsePath)(path), {
-      state: state,
-      key: key
-    });
-  };
-
-  var createKey = function createKey() {
-    return Math.random().toString(36).substr(2, keyLength);
-  };
-
-  var transitionManager = (0, _createTransitionManager2.default)();
-
-  var setState = function setState(nextState) {
-    _extends(history, nextState);
-
-    history.length = globalHistory.length;
-
-    transitionManager.notifyListeners(history.location, history.action);
-  };
-
-  var handlePopState = function handlePopState(event) {
-    // Ignore extraneous popstate events in WebKit.
-    if ((0, _DOMUtils.isExtraneousPopstateEvent)(event)) return;
-
-    handlePop(getDOMLocation(event.state));
-  };
-
-  var handleHashChange = function handleHashChange() {
-    handlePop(getDOMLocation(getHistoryState()));
-  };
-
-  var forceNextPop = false;
-
-  var handlePop = function handlePop(location) {
-    if (forceNextPop) {
-      forceNextPop = false;
-      setState();
-    } else {
-      var action = 'POP';
-
-      transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
-        if (ok) {
-          setState({ action: action, location: location });
-        } else {
-          revertPop(location);
-        }
-      });
-    }
-  };
-
-  var revertPop = function revertPop(fromLocation) {
-    var toLocation = history.location;
-
-    // TODO: We could probably make this more reliable by
-    // keeping a list of keys we've seen in sessionStorage.
-    // Instead, we just default to 0 for keys we don't know.
-
-    var toIndex = allKeys.indexOf(toLocation.key);
-
-    if (toIndex === -1) toIndex = 0;
-
-    var fromIndex = allKeys.indexOf(fromLocation.key);
-
-    if (fromIndex === -1) fromIndex = 0;
-
-    var delta = toIndex - fromIndex;
-
-    if (delta) {
-      forceNextPop = true;
-      go(delta);
-    }
-  };
-
-  var initialLocation = getDOMLocation(getHistoryState());
-  var allKeys = [initialLocation.key];
-
-  // Public interface
-
-  var createHref = function createHref(location) {
-    return basename + (0, _PathUtils.createPath)(location);
-  };
-
-  var push = function push(path, state) {
-    (0, _warning2.default)(!((typeof path === 'undefined' ? 'undefined' : _typeof(path)) === 'object' && path.state !== undefined && state !== undefined), 'You should avoid providing a 2nd state argument to push when the 1st ' + 'argument is a location-like object that already has state; it is ignored');
-
-    var action = 'PUSH';
-    var location = (0, _LocationUtils.createLocation)(path, state, createKey(), history.location);
-
-    transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
-      if (!ok) return;
-
-      var href = createHref(location);
-      var key = location.key,
-          state = location.state;
-
-
-      if (canUseHistory) {
-        globalHistory.pushState({ key: key, state: state }, null, href);
-
-        if (forceRefresh) {
-          window.location.href = href;
-        } else {
-          var prevIndex = allKeys.indexOf(history.location.key);
-          var nextKeys = allKeys.slice(0, prevIndex === -1 ? 0 : prevIndex + 1);
-
-          nextKeys.push(location.key);
-          allKeys = nextKeys;
-
-          setState({ action: action, location: location });
-        }
-      } else {
-        (0, _warning2.default)(state === undefined, 'Browser history cannot push state in browsers that do not support HTML5 history');
-
-        window.location.href = href;
-      }
-    });
-  };
-
-  var replace = function replace(path, state) {
-    (0, _warning2.default)(!((typeof path === 'undefined' ? 'undefined' : _typeof(path)) === 'object' && path.state !== undefined && state !== undefined), 'You should avoid providing a 2nd state argument to replace when the 1st ' + 'argument is a location-like object that already has state; it is ignored');
-
-    var action = 'REPLACE';
-    var location = (0, _LocationUtils.createLocation)(path, state, createKey(), history.location);
-
-    transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
-      if (!ok) return;
-
-      var href = createHref(location);
-      var key = location.key,
-          state = location.state;
-
-
-      if (canUseHistory) {
-        globalHistory.replaceState({ key: key, state: state }, null, href);
-
-        if (forceRefresh) {
-          window.location.replace(href);
-        } else {
-          var prevIndex = allKeys.indexOf(history.location.key);
-
-          if (prevIndex !== -1) allKeys[prevIndex] = location.key;
-
-          setState({ action: action, location: location });
-        }
-      } else {
-        (0, _warning2.default)(state === undefined, 'Browser history cannot replace state in browsers that do not support HTML5 history');
-
-        window.location.replace(href);
-      }
-    });
-  };
-
-  var go = function go(n) {
-    globalHistory.go(n);
-  };
-
-  var goBack = function goBack() {
-    return go(-1);
-  };
-
-  var goForward = function goForward() {
-    return go(1);
-  };
-
-  var listenerCount = 0;
-
-  var checkDOMListeners = function checkDOMListeners(delta) {
-    listenerCount += delta;
-
-    if (listenerCount === 1) {
-      (0, _DOMUtils.addEventListener)(window, PopStateEvent, handlePopState);
-
-      if (needsHashChangeListener) (0, _DOMUtils.addEventListener)(window, HashChangeEvent, handleHashChange);
-    } else if (listenerCount === 0) {
-      (0, _DOMUtils.removeEventListener)(window, PopStateEvent, handlePopState);
-
-      if (needsHashChangeListener) (0, _DOMUtils.removeEventListener)(window, HashChangeEvent, handleHashChange);
-    }
-  };
-
-  var isBlocked = false;
-
-  var block = function block() {
-    var prompt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-    var unblock = transitionManager.setPrompt(prompt);
-
-    if (!isBlocked) {
-      checkDOMListeners(1);
-      isBlocked = true;
-    }
-
-    return function () {
-      if (isBlocked) {
-        isBlocked = false;
-        checkDOMListeners(-1);
-      }
-
-      return unblock();
-    };
-  };
-
-  var listen = function listen(listener) {
-    var unlisten = transitionManager.appendListener(listener);
-    checkDOMListeners(1);
-
-    return function () {
-      checkDOMListeners(-1);
-      unlisten();
-    };
-  };
-
-  var history = {
-    length: globalHistory.length,
-    action: 'POP',
-    location: initialLocation,
-    createHref: createHref,
-    push: push,
-    replace: replace,
-    go: go,
-    goBack: goBack,
-    goForward: goForward,
-    block: block,
-    listen: listen
-  };
-
-  return history;
-};
-
-exports.default = createBrowserHistory;
-
-/***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _core = __webpack_require__(37);
-
-var _helpers = __webpack_require__(15);
-
-var _defaults = __webpack_require__(38);
-
-var _defaults2 = _interopRequireDefault(_defaults);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Creates logger with following options
- *
- * @namespace
- * @param {object} options - options for logger
- * @param {string | function | object} options.level - console[level]
- * @param {boolean} options.duration - print duration of each action?
- * @param {boolean} options.timestamp - print timestamp with each action?
- * @param {object} options.colors - custom colors
- * @param {object} options.logger - implementation of the `console` API
- * @param {boolean} options.logErrors - should errors in action execution be caught, logged, and re-thrown?
- * @param {boolean} options.collapsed - is group collapsed?
- * @param {boolean} options.predicate - condition which resolves logger behavior
- * @param {function} options.stateTransformer - transform state before print
- * @param {function} options.actionTransformer - transform action before print
- * @param {function} options.errorTransformer - transform error before print
- *
- * @returns {function} logger middleware
- */
-function createLogger() {
-  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  var loggerOptions = _extends({}, _defaults2.default, options);
-
-  var logger = loggerOptions.logger,
-      transformer = loggerOptions.transformer,
-      stateTransformer = loggerOptions.stateTransformer,
-      errorTransformer = loggerOptions.errorTransformer,
-      predicate = loggerOptions.predicate,
-      logErrors = loggerOptions.logErrors,
-      diffPredicate = loggerOptions.diffPredicate;
-
-  // Return if 'console' object is not defined
-
-  if (typeof logger === 'undefined') {
-    return function () {
-      return function (next) {
-        return function (action) {
-          return next(action);
-        };
-      };
-    };
-  }
-
-  if (transformer) {
-    console.error('Option \'transformer\' is deprecated, use \'stateTransformer\' instead!'); // eslint-disable-line no-console
-  }
-
-  // Detect if 'createLogger' was passed directly to 'applyMiddleware'.
-  if (options.getState && options.dispatch) {
-    // eslint-disable-next-line no-console
-    console.error('redux-logger not installed. Make sure to pass logger instance as middleware:\n\nimport createLogger from \'redux-logger\';\n\nconst logger = createLogger();\nconst store = createStore(\n  reducer,\n  applyMiddleware(logger)\n);');
-
-    return function () {
-      return function (next) {
-        return function (action) {
-          return next(action);
-        };
-      };
-    };
-  }
-
-  var logBuffer = [];
-
-  return function (_ref) {
-    var getState = _ref.getState;
-    return function (next) {
-      return function (action) {
-        // Exit early if predicate function returns 'false'
-        if (typeof predicate === 'function' && !predicate(getState, action)) {
-          return next(action);
-        }
-
-        var logEntry = {};
-        logBuffer.push(logEntry);
-
-        logEntry.started = _helpers.timer.now();
-        logEntry.startedTime = new Date();
-        logEntry.prevState = stateTransformer(getState());
-        logEntry.action = action;
-
-        var returnedValue = void 0;
-        if (logErrors) {
-          try {
-            returnedValue = next(action);
-          } catch (e) {
-            logEntry.error = errorTransformer(e);
-          }
-        } else {
-          returnedValue = next(action);
-        }
-
-        logEntry.took = _helpers.timer.now() - logEntry.started;
-        logEntry.nextState = stateTransformer(getState());
-
-        var diff = loggerOptions.diff && typeof diffPredicate === 'function' ? diffPredicate(getState, action) : loggerOptions.diff;
-
-        (0, _core.printBuffer)(logBuffer, _extends({}, loggerOptions, { diff: diff }));
-        logBuffer.length = 0;
-
-        if (logEntry.error) throw logEntry.error;
-        return returnedValue;
-      };
-    };
-  };
-}
-
-exports.default = createLogger;
-module.exports = exports['default'];
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-function createThunkMiddleware(extraArgument) {
-  return function (_ref) {
-    var dispatch = _ref.dispatch,
-        getState = _ref.getState;
-    return function (next) {
-      return function (action) {
-        if (typeof action === 'function') {
-          return action(dispatch, getState, extraArgument);
-        }
-
-        return next(action);
-      };
-    };
-  };
-}
-
-var thunk = createThunkMiddleware();
-thunk.withExtraArgument = createThunkMiddleware;
-
-exports['default'] = thunk;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.changeQueryString = changeQueryString;
-exports.fetchQueryStringElements = fetchQueryStringElements;
-
-var _queryString = __webpack_require__(36);
-
-var _queryString2 = _interopRequireDefault(_queryString);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function changeQueryString(state) {
-  var changes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var replace = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-
-  var parsed = _queryString2.default.parse(state.search);
-  parsed = Object.assign({}, parsed, changes);
-  return Object.assign({}, state, { action: replace ? 'REPLACE' : 'PUSH', search: _queryString2.default.stringify(parsed) });
-}
-
-function fetchQueryStringElements(state, key) {
-  var _default = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-  var parsed = _queryString2.default.parse(state.search);
-  return typeof parsed[key] !== 'undefined' ? parsed[key] : _default;
-}
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/*
- * Portions of the query strings that are going to hold data.
- *
- * Each of these MUST be unique,
- * Changing these will break ALL existing inbound links, DANGER!
- *
- * @TODO: Shorten all of these.
- */
-
-/**
- * The application view.
- *
- * @type {string}
- */
-var QUERYSTRING_VARIABLE_VISUALISATION = exports.QUERYSTRING_VARIABLE_VISUALISATION = 'view';
-
-/**
- * The map zoom level.
- *
- * @type {string}
- */
-var QUERYSTRING_VARIABLE_MAP_ZOOM = exports.QUERYSTRING_VARIABLE_MAP_ZOOM = 'mapzoom';
-
-/**
- * The map center latitude.
- *
- * @type {string}
- */
-var QUERYSTRING_VARIABLE_MAP_CENTER_LAT = exports.QUERYSTRING_VARIABLE_MAP_CENTER_LAT = 'maplat';
-
-/**
- * The map center longitude.
- *
- * @type {string}
- */
-var QUERYSTRING_VARIABLE_MAP_CENTER_LNG = exports.QUERYSTRING_VARIABLE_MAP_CENTER_LNG = 'maplng';
-
-/**
- * The timeline browser current position.
- *
- * @type {string}
- */
-var QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION = exports.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION = 'tbcurrent';
-
-/**
- * The timeline browser window start position.
- *
- * @type {string}
- */
-var QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START = exports.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START = 'tbstart';
-
-/**
- * The timeline browser window end position.
- *
- * @type {string}
- */
-var QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END = exports.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END = 'tbend';
-
-/**
- * The cidoc entity being displayed in the sidebar.
- *
- * @type {string}
- */
-var QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY = exports.QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY = 'cidoc_entity_id';
-
-/***/ }),
-/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1396,11 +822,11 @@ var createPath = exports.createPath = function createPath(location) {
 };
 
 /***/ }),
-/* 13 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(31);
 
 
 /** Built-in value references. */
@@ -1410,13 +836,13 @@ var Symbol = __WEBPACK_IMPORTED_MODULE_0__root_js__["a" /* default */].Symbol;
 
 
 /***/ }),
-/* 14 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getPrototype_js__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getPrototype_js__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__ = __webpack_require__(32);
 
 
 
@@ -1482,7 +908,7 @@ function isPlainObject(value) {
 
 
 /***/ }),
-/* 15 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1507,7 +933,7 @@ var formatTime = exports.formatTime = function formatTime(time) {
 var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ }),
-/* 16 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1548,11 +974,11 @@ function compose() {
 }
 
 /***/ }),
-/* 17 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_symbol_observable__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_symbol_observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_symbol_observable__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ActionTypes; });
@@ -1807,7 +1233,44 @@ function createStore(reducer, preloadedState, enhancer) {
 }
 
 /***/ }),
-/* 18 */
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createStore__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__combineReducers__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__applyMiddleware__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__compose__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_warning__ = __webpack_require__(15);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "createStore", function() { return __WEBPACK_IMPORTED_MODULE_0__createStore__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "combineReducers", function() { return __WEBPACK_IMPORTED_MODULE_1__combineReducers__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "bindActionCreators", function() { return __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "applyMiddleware", function() { return __WEBPACK_IMPORTED_MODULE_3__applyMiddleware__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "compose", function() { return __WEBPACK_IMPORTED_MODULE_4__compose__["a"]; });
+
+
+
+
+
+
+
+/*
+* This is a dummy function to check if the function name has been altered by minification.
+* If the function has been minified and NODE_ENV !== 'production', warn the user.
+*/
+function isCrushed() {}
+
+if (process.env.NODE_ENV !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
+  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils_warning__["a" /* default */])('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
+}
+
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1835,7 +1298,7 @@ function warning(message) {
 }
 
 /***/ }),
-/* 19 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1900,11 +1363,10 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 20 */,
-/* 21 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1918,33 +1380,33 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 exports.createOikoApp = createOikoApp;
 
-var _redux = __webpack_require__(3);
+var _redux = __webpack_require__(14);
 
-var _reducers = __webpack_require__(6);
+var _reducers = __webpack_require__(18);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
-var _createBrowserHistory = __webpack_require__(7);
+var _createBrowserHistory = __webpack_require__(22);
 
 var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
 
-var _reduxHistory = __webpack_require__(51);
+var _reduxHistory = __webpack_require__(2);
 
-var _reduxThunk = __webpack_require__(9);
+var _reduxThunk = __webpack_require__(39);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _reduxLogger = __webpack_require__(8);
+var _reduxLogger = __webpack_require__(38);
 
 var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-var _sidebar = __webpack_require__(2);
+var _sidebar = __webpack_require__(7);
 
-var _jquery = __webpack_require__(52);
+var _jquery = __webpack_require__(4);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _actions = __webpack_require__(5);
+var _actions = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2048,7 +1510,237 @@ var oikoApp = function () {
 }();
 
 /***/ }),
-/* 22 */
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = __webpack_require__(14);
+
+var _reduxHistory = __webpack_require__(2);
+
+var _actions = __webpack_require__(1);
+
+var _sidebar = __webpack_require__(7);
+
+var _querystringDefinitions = __webpack_require__(6);
+
+var _querystringHelpers = __webpack_require__(5);
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function mapState() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    level: 1,
+    lat: 0,
+    lng: 0
+  };
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actions.SET_MAP_STATE:
+      return {
+        level: Number.parseInt(action.level, 10),
+        lat: Number.parseFloat(action.lat).toFixed(2),
+        lng: Number.parseFloat(action.lng).toFixed(2)
+      };
+
+    case _reduxHistory.UPDATE_LOCATION:
+      return {
+        level: Number.parseInt((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_MAP_ZOOM, state.level), 10),
+        lat: Number.parseFloat((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_MAP_CENTER_LAT, state.lat)).toFixed(2),
+        lng: Number.parseFloat((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_MAP_CENTER_LNG, state.lng)).toFixed(2)
+      };
+
+    default:
+      return {
+        level: state.level,
+        lat: state.lat,
+        lng: state.lng
+      };
+  }
+}
+
+function timeBrowserState() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    current: 0,
+    start: 0,
+    end: 0
+  };
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actions.SET_TIME_BROWSER_STATE:
+      return {
+        current: Number.parseInt(action.current, 10),
+        start: Number.parseInt(action.start, 10),
+        end: Number.parseInt(action.end, 10)
+      };
+
+    case _reduxHistory.UPDATE_LOCATION:
+      return {
+        current: Number.parseInt((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION, state.current), 10),
+        start: Number.parseInt((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START, state.start), 10),
+        end: Number.parseInt((0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END, state.end), 10)
+      };
+
+    default:
+      return {
+        current: state.current,
+        start: state.start,
+        end: state.end
+      };
+  }
+}
+
+function visualisation() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'map';
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actions.SET_VISUALISATION:
+      return action.view;
+
+    case _reduxHistory.UPDATE_LOCATION:
+      return (0, _querystringHelpers.fetchQueryStringElements)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_VISUALISATION, state);
+
+    default:
+      return state;
+  }
+}
+
+function appLoading() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _actions.APP_LOADING_BOOT;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actions.APP_LOADING_BOOT:
+    case _actions.APP_LOADING_START:
+    case _actions.APP_LOADING_ADD_TO_DOM:
+      return Math.max(state, action.type);
+
+    default:
+      return state;
+  }
+}
+
+/**
+ * Reduce the app modules state slice.
+ *
+ * We keep track of modules that have registered and loaded.
+ *
+ * @param state
+ * @param action
+ * @returns {*}
+ */
+function appModules() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actions.ADD_APP_MODULE:
+      return Object.assign({}, state, _defineProperty({}, action.name, false));
+    case _actions.APP_MODULE_DONE_LOADING:
+      return Object.assign({}, state, _defineProperty({}, action.name, true));
+    default:
+      return state;
+  }
+}
+
+/**
+ * Reduce the state for the comparative timelines.
+ *
+ * @param state
+ * @param action
+ * @returns {*}
+ */
+function comparativeTimelines() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actions.SET_COMPARATIVE_TIMELINES:
+      return action.timelines;
+
+    case _reduxHistory.UPDATE_LOCATION:
+      return (0, _querystringHelpers.fetchQueryStringElementsStructured)(action.payload, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_ENTITIES, state);
+
+    default:
+      return state;
+  }
+}
+
+var initialState = {
+
+  pathname: null,
+  search: null,
+  hash: null,
+  state: null,
+  action: null,
+  key: null
+
+};
+
+/**
+ * Reduce the state of the location element.
+ *
+ * This is where we update the querystring with our values.
+ *
+ * @param locationReducerFunction
+ * @returns {function(*=, *=)}
+ */
+function oikoLocation(locationReducerFunction) {
+  return function () {
+    var _changeQueryString2, _changeQueryString3;
+
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
+
+    var new_state = locationReducerFunction(state, action);
+
+    // Update the query string appropriately.
+    switch (action.type) {
+      case _actions.SET_VISUALISATION:
+        return (0, _querystringHelpers.changeQueryString)(new_state, _defineProperty({}, _querystringDefinitions.QUERYSTRING_VARIABLE_VISUALISATION, action.view));
+
+      case _actions.SET_MAP_STATE:
+        return (0, _querystringHelpers.changeQueryString)(new_state, (_changeQueryString2 = {}, _defineProperty(_changeQueryString2, _querystringDefinitions.QUERYSTRING_VARIABLE_MAP_ZOOM, action.level), _defineProperty(_changeQueryString2, _querystringDefinitions.QUERYSTRING_VARIABLE_MAP_CENTER_LAT, action.lat), _defineProperty(_changeQueryString2, _querystringDefinitions.QUERYSTRING_VARIABLE_MAP_CENTER_LNG, action.lng), _changeQueryString2));
+
+      case _actions.SET_TIME_BROWSER_STATE:
+        return (0, _querystringHelpers.changeQueryString)(new_state, (_changeQueryString3 = {}, _defineProperty(_changeQueryString3, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION, action.current), _defineProperty(_changeQueryString3, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START, action.start), _defineProperty(_changeQueryString3, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END, action.end), _changeQueryString3));
+
+      case _sidebar.RECEIVE_CIDOC_ENTITY:
+        return (0, _querystringHelpers.changeQueryString)(new_state, _defineProperty({}, _querystringDefinitions.QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY, action.id), false);
+
+      case _actions.SET_COMPARATIVE_TIMELINES:
+        return (0, _querystringHelpers.changeQueryStringStructured)(new_state, _defineProperty({}, _querystringDefinitions.QUERYSTRING_VARIABLE_TIMELINE_ENTITIES, action.timelines), false);
+
+      default:
+        return new_state;
+    }
+  };
+}
+
+var oikoAppReducers = (0, _redux.combineReducers)({
+  appLoading: appLoading,
+  visualisation: visualisation,
+  mapState: mapState,
+  timeBrowserState: timeBrowserState,
+  comparativeTimelines: comparativeTimelines,
+  appModules: appModules,
+  cidocEntity: _sidebar.cidocEntityReducer,
+  location: oikoLocation(_reduxHistory.locationReducer)
+});
+
+exports.default = oikoAppReducers;
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2475,10 +2167,10 @@ var oikoApp = function () {
   return accumulateDiff;
 }));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 23 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2539,7 +2231,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 };
 
 /***/ }),
-/* 24 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2558,7 +2250,7 @@ var _valueEqual = __webpack_require__(48);
 
 var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
-var _PathUtils = __webpack_require__(12);
+var _PathUtils = __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2608,7 +2300,7 @@ var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a
 };
 
 /***/ }),
-/* 25 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2616,7 +2308,321 @@ var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a
 
 exports.__esModule = true;
 
-var _warning = __webpack_require__(19);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _warning = __webpack_require__(16);
+
+var _warning2 = _interopRequireDefault(_warning);
+
+var _invariant = __webpack_require__(24);
+
+var _invariant2 = _interopRequireDefault(_invariant);
+
+var _LocationUtils = __webpack_require__(21);
+
+var _PathUtils = __webpack_require__(8);
+
+var _createTransitionManager = __webpack_require__(23);
+
+var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
+
+var _DOMUtils = __webpack_require__(20);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PopStateEvent = 'popstate';
+var HashChangeEvent = 'hashchange';
+
+var getHistoryState = function getHistoryState() {
+  try {
+    return window.history.state || {};
+  } catch (e) {
+    // IE 11 sometimes throws when accessing window.history.state
+    // See https://github.com/ReactTraining/history/pull/289
+    return {};
+  }
+};
+
+/**
+ * Creates a history object that uses the HTML5 history API including
+ * pushState, replaceState, and the popstate event.
+ */
+var createBrowserHistory = function createBrowserHistory() {
+  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  (0, _invariant2.default)(_DOMUtils.canUseDOM, 'Browser history needs a DOM');
+
+  var globalHistory = window.history;
+  var canUseHistory = (0, _DOMUtils.supportsHistory)();
+  var needsHashChangeListener = !(0, _DOMUtils.supportsPopStateOnHashChange)();
+
+  var _props$forceRefresh = props.forceRefresh,
+      forceRefresh = _props$forceRefresh === undefined ? false : _props$forceRefresh,
+      _props$getUserConfirm = props.getUserConfirmation,
+      getUserConfirmation = _props$getUserConfirm === undefined ? _DOMUtils.getConfirmation : _props$getUserConfirm,
+      _props$keyLength = props.keyLength,
+      keyLength = _props$keyLength === undefined ? 6 : _props$keyLength;
+
+  var basename = props.basename ? (0, _PathUtils.stripTrailingSlash)((0, _PathUtils.addLeadingSlash)(props.basename)) : '';
+
+  var getDOMLocation = function getDOMLocation(historyState) {
+    var _ref = historyState || {},
+        key = _ref.key,
+        state = _ref.state;
+
+    var _window$location = window.location,
+        pathname = _window$location.pathname,
+        search = _window$location.search,
+        hash = _window$location.hash;
+
+
+    var path = pathname + search + hash;
+
+    if (basename) path = (0, _PathUtils.stripPrefix)(path, basename);
+
+    return _extends({}, (0, _PathUtils.parsePath)(path), {
+      state: state,
+      key: key
+    });
+  };
+
+  var createKey = function createKey() {
+    return Math.random().toString(36).substr(2, keyLength);
+  };
+
+  var transitionManager = (0, _createTransitionManager2.default)();
+
+  var setState = function setState(nextState) {
+    _extends(history, nextState);
+
+    history.length = globalHistory.length;
+
+    transitionManager.notifyListeners(history.location, history.action);
+  };
+
+  var handlePopState = function handlePopState(event) {
+    // Ignore extraneous popstate events in WebKit.
+    if ((0, _DOMUtils.isExtraneousPopstateEvent)(event)) return;
+
+    handlePop(getDOMLocation(event.state));
+  };
+
+  var handleHashChange = function handleHashChange() {
+    handlePop(getDOMLocation(getHistoryState()));
+  };
+
+  var forceNextPop = false;
+
+  var handlePop = function handlePop(location) {
+    if (forceNextPop) {
+      forceNextPop = false;
+      setState();
+    } else {
+      var action = 'POP';
+
+      transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
+        if (ok) {
+          setState({ action: action, location: location });
+        } else {
+          revertPop(location);
+        }
+      });
+    }
+  };
+
+  var revertPop = function revertPop(fromLocation) {
+    var toLocation = history.location;
+
+    // TODO: We could probably make this more reliable by
+    // keeping a list of keys we've seen in sessionStorage.
+    // Instead, we just default to 0 for keys we don't know.
+
+    var toIndex = allKeys.indexOf(toLocation.key);
+
+    if (toIndex === -1) toIndex = 0;
+
+    var fromIndex = allKeys.indexOf(fromLocation.key);
+
+    if (fromIndex === -1) fromIndex = 0;
+
+    var delta = toIndex - fromIndex;
+
+    if (delta) {
+      forceNextPop = true;
+      go(delta);
+    }
+  };
+
+  var initialLocation = getDOMLocation(getHistoryState());
+  var allKeys = [initialLocation.key];
+
+  // Public interface
+
+  var createHref = function createHref(location) {
+    return basename + (0, _PathUtils.createPath)(location);
+  };
+
+  var push = function push(path, state) {
+    (0, _warning2.default)(!((typeof path === 'undefined' ? 'undefined' : _typeof(path)) === 'object' && path.state !== undefined && state !== undefined), 'You should avoid providing a 2nd state argument to push when the 1st ' + 'argument is a location-like object that already has state; it is ignored');
+
+    var action = 'PUSH';
+    var location = (0, _LocationUtils.createLocation)(path, state, createKey(), history.location);
+
+    transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
+      if (!ok) return;
+
+      var href = createHref(location);
+      var key = location.key,
+          state = location.state;
+
+
+      if (canUseHistory) {
+        globalHistory.pushState({ key: key, state: state }, null, href);
+
+        if (forceRefresh) {
+          window.location.href = href;
+        } else {
+          var prevIndex = allKeys.indexOf(history.location.key);
+          var nextKeys = allKeys.slice(0, prevIndex === -1 ? 0 : prevIndex + 1);
+
+          nextKeys.push(location.key);
+          allKeys = nextKeys;
+
+          setState({ action: action, location: location });
+        }
+      } else {
+        (0, _warning2.default)(state === undefined, 'Browser history cannot push state in browsers that do not support HTML5 history');
+
+        window.location.href = href;
+      }
+    });
+  };
+
+  var replace = function replace(path, state) {
+    (0, _warning2.default)(!((typeof path === 'undefined' ? 'undefined' : _typeof(path)) === 'object' && path.state !== undefined && state !== undefined), 'You should avoid providing a 2nd state argument to replace when the 1st ' + 'argument is a location-like object that already has state; it is ignored');
+
+    var action = 'REPLACE';
+    var location = (0, _LocationUtils.createLocation)(path, state, createKey(), history.location);
+
+    transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
+      if (!ok) return;
+
+      var href = createHref(location);
+      var key = location.key,
+          state = location.state;
+
+
+      if (canUseHistory) {
+        globalHistory.replaceState({ key: key, state: state }, null, href);
+
+        if (forceRefresh) {
+          window.location.replace(href);
+        } else {
+          var prevIndex = allKeys.indexOf(history.location.key);
+
+          if (prevIndex !== -1) allKeys[prevIndex] = location.key;
+
+          setState({ action: action, location: location });
+        }
+      } else {
+        (0, _warning2.default)(state === undefined, 'Browser history cannot replace state in browsers that do not support HTML5 history');
+
+        window.location.replace(href);
+      }
+    });
+  };
+
+  var go = function go(n) {
+    globalHistory.go(n);
+  };
+
+  var goBack = function goBack() {
+    return go(-1);
+  };
+
+  var goForward = function goForward() {
+    return go(1);
+  };
+
+  var listenerCount = 0;
+
+  var checkDOMListeners = function checkDOMListeners(delta) {
+    listenerCount += delta;
+
+    if (listenerCount === 1) {
+      (0, _DOMUtils.addEventListener)(window, PopStateEvent, handlePopState);
+
+      if (needsHashChangeListener) (0, _DOMUtils.addEventListener)(window, HashChangeEvent, handleHashChange);
+    } else if (listenerCount === 0) {
+      (0, _DOMUtils.removeEventListener)(window, PopStateEvent, handlePopState);
+
+      if (needsHashChangeListener) (0, _DOMUtils.removeEventListener)(window, HashChangeEvent, handleHashChange);
+    }
+  };
+
+  var isBlocked = false;
+
+  var block = function block() {
+    var prompt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+    var unblock = transitionManager.setPrompt(prompt);
+
+    if (!isBlocked) {
+      checkDOMListeners(1);
+      isBlocked = true;
+    }
+
+    return function () {
+      if (isBlocked) {
+        isBlocked = false;
+        checkDOMListeners(-1);
+      }
+
+      return unblock();
+    };
+  };
+
+  var listen = function listen(listener) {
+    var unlisten = transitionManager.appendListener(listener);
+    checkDOMListeners(1);
+
+    return function () {
+      checkDOMListeners(-1);
+      unlisten();
+    };
+  };
+
+  var history = {
+    length: globalHistory.length,
+    action: 'POP',
+    location: initialLocation,
+    createHref: createHref,
+    push: push,
+    replace: replace,
+    go: go,
+    goBack: goBack,
+    goForward: goForward,
+    block: block,
+    listen: listen
+  };
+
+  return history;
+};
+
+exports.default = createBrowserHistory;
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _warning = __webpack_require__(16);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -2699,7 +2705,7 @@ var createTransitionManager = function createTransitionManager() {
 exports.default = createTransitionManager;
 
 /***/ }),
-/* 26 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2755,16 +2761,16 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 27 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getRawTag_js__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objectToString_js__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getRawTag_js__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objectToString_js__ = __webpack_require__(29);
 
 
 
@@ -2796,7 +2802,7 @@ function baseGetTag(value) {
 
 
 /***/ }),
-/* 28 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2805,14 +2811,14 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 
 /* harmony default export */ __webpack_exports__["a"] = freeGlobal;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
-/* 29 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__overArg_js__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__overArg_js__ = __webpack_require__(30);
 
 
 /** Built-in value references. */
@@ -2822,11 +2828,11 @@ var getPrototype = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__overArg_js
 
 
 /***/ }),
-/* 30 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(9);
 
 
 /** Used for built-in method references. */
@@ -2876,7 +2882,7 @@ function getRawTag(value) {
 
 
 /***/ }),
-/* 31 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2905,7 +2911,7 @@ function objectToString(value) {
 
 
 /***/ }),
-/* 32 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2927,11 +2933,11 @@ function overArg(func, transform) {
 
 
 /***/ }),
-/* 33 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__ = __webpack_require__(26);
 
 
 /** Detect free variable `self`. */
@@ -2944,7 +2950,7 @@ var root = __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__["a" /* default */] || fr
 
 
 /***/ }),
-/* 34 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2980,7 +2986,7 @@ function isObjectLike(value) {
 
 
 /***/ }),
-/* 35 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3070,13 +3076,13 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 36 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var strictUriEncode = __webpack_require__(44);
-var objectAssign = __webpack_require__(35);
+var objectAssign = __webpack_require__(33);
 
 function encoderForArrayFormat(opts) {
 	switch (opts.arrayFormat) {
@@ -3280,7 +3286,7 @@ exports.stringify = function (obj, opts) {
 
 
 /***/ }),
-/* 37 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3294,9 +3300,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.printBuffer = printBuffer;
 
-var _helpers = __webpack_require__(15);
+var _helpers = __webpack_require__(11);
 
-var _diff = __webpack_require__(39);
+var _diff = __webpack_require__(37);
 
 var _diff2 = _interopRequireDefault(_diff);
 
@@ -3423,7 +3429,7 @@ function printBuffer(buffer, options) {
 }
 
 /***/ }),
-/* 38 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3475,7 +3481,7 @@ exports.default = {
 module.exports = exports["default"];
 
 /***/ }),
-/* 39 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3486,7 +3492,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = diffLogger;
 
-var _deepDiff = __webpack_require__(22);
+var _deepDiff = __webpack_require__(19);
 
 var _deepDiff2 = _interopRequireDefault(_deepDiff);
 
@@ -3575,11 +3581,173 @@ function diffLogger(prevState, newState, logger, isCollapsed) {
 module.exports = exports['default'];
 
 /***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _core = __webpack_require__(35);
+
+var _helpers = __webpack_require__(11);
+
+var _defaults = __webpack_require__(36);
+
+var _defaults2 = _interopRequireDefault(_defaults);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Creates logger with following options
+ *
+ * @namespace
+ * @param {object} options - options for logger
+ * @param {string | function | object} options.level - console[level]
+ * @param {boolean} options.duration - print duration of each action?
+ * @param {boolean} options.timestamp - print timestamp with each action?
+ * @param {object} options.colors - custom colors
+ * @param {object} options.logger - implementation of the `console` API
+ * @param {boolean} options.logErrors - should errors in action execution be caught, logged, and re-thrown?
+ * @param {boolean} options.collapsed - is group collapsed?
+ * @param {boolean} options.predicate - condition which resolves logger behavior
+ * @param {function} options.stateTransformer - transform state before print
+ * @param {function} options.actionTransformer - transform action before print
+ * @param {function} options.errorTransformer - transform error before print
+ *
+ * @returns {function} logger middleware
+ */
+function createLogger() {
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  var loggerOptions = _extends({}, _defaults2.default, options);
+
+  var logger = loggerOptions.logger,
+      transformer = loggerOptions.transformer,
+      stateTransformer = loggerOptions.stateTransformer,
+      errorTransformer = loggerOptions.errorTransformer,
+      predicate = loggerOptions.predicate,
+      logErrors = loggerOptions.logErrors,
+      diffPredicate = loggerOptions.diffPredicate;
+
+  // Return if 'console' object is not defined
+
+  if (typeof logger === 'undefined') {
+    return function () {
+      return function (next) {
+        return function (action) {
+          return next(action);
+        };
+      };
+    };
+  }
+
+  if (transformer) {
+    console.error('Option \'transformer\' is deprecated, use \'stateTransformer\' instead!'); // eslint-disable-line no-console
+  }
+
+  // Detect if 'createLogger' was passed directly to 'applyMiddleware'.
+  if (options.getState && options.dispatch) {
+    // eslint-disable-next-line no-console
+    console.error('redux-logger not installed. Make sure to pass logger instance as middleware:\n\nimport createLogger from \'redux-logger\';\n\nconst logger = createLogger();\nconst store = createStore(\n  reducer,\n  applyMiddleware(logger)\n);');
+
+    return function () {
+      return function (next) {
+        return function (action) {
+          return next(action);
+        };
+      };
+    };
+  }
+
+  var logBuffer = [];
+
+  return function (_ref) {
+    var getState = _ref.getState;
+    return function (next) {
+      return function (action) {
+        // Exit early if predicate function returns 'false'
+        if (typeof predicate === 'function' && !predicate(getState, action)) {
+          return next(action);
+        }
+
+        var logEntry = {};
+        logBuffer.push(logEntry);
+
+        logEntry.started = _helpers.timer.now();
+        logEntry.startedTime = new Date();
+        logEntry.prevState = stateTransformer(getState());
+        logEntry.action = action;
+
+        var returnedValue = void 0;
+        if (logErrors) {
+          try {
+            returnedValue = next(action);
+          } catch (e) {
+            logEntry.error = errorTransformer(e);
+          }
+        } else {
+          returnedValue = next(action);
+        }
+
+        logEntry.took = _helpers.timer.now() - logEntry.started;
+        logEntry.nextState = stateTransformer(getState());
+
+        var diff = loggerOptions.diff && typeof diffPredicate === 'function' ? diffPredicate(getState, action) : loggerOptions.diff;
+
+        (0, _core.printBuffer)(logBuffer, _extends({}, loggerOptions, { diff: diff }));
+        logBuffer.length = 0;
+
+        if (logEntry.error) throw logEntry.error;
+        return returnedValue;
+      };
+    };
+  };
+}
+
+exports.default = createLogger;
+module.exports = exports['default'];
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+function createThunkMiddleware(extraArgument) {
+  return function (_ref) {
+    var dispatch = _ref.dispatch,
+        getState = _ref.getState;
+    return function (next) {
+      return function (action) {
+        if (typeof action === 'function') {
+          return action(dispatch, getState, extraArgument);
+        }
+
+        return next(action);
+      };
+    };
+  };
+}
+
+var thunk = createThunkMiddleware();
+thunk.withExtraArgument = createThunkMiddleware;
+
+exports['default'] = thunk;
+
+/***/ }),
 /* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__compose__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__compose__ = __webpack_require__(12);
 /* harmony export (immutable) */ __webpack_exports__["a"] = applyMiddleware;
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -3689,9 +3857,9 @@ function bindActionCreators(actionCreators, dispatch) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createStore__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_es_isPlainObject__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_warning__ = __webpack_require__(18);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createStore__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_es_isPlainObject__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_warning__ = __webpack_require__(15);
 /* harmony export (immutable) */ __webpack_exports__["a"] = combineReducers;
 
 
@@ -3822,7 +3990,7 @@ function combineReducers(reducers) {
     return hasChanged ? nextState : state;
   };
 }
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
 /* 43 */
@@ -3954,7 +4122,7 @@ if (typeof self !== 'undefined') {
 
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(49)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(49)(module)))
 
 /***/ }),
 /* 47 */
@@ -4070,11 +4238,11 @@ module.exports = function(module) {
 "use strict";
 
 
-var _actions = __webpack_require__(5);
+var _actions = __webpack_require__(1);
 
-var _store = __webpack_require__(21);
+var _store = __webpack_require__(17);
 
-var _jquery = __webpack_require__(52);
+var _jquery = __webpack_require__(4);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -4109,7 +4277,78 @@ Drupal.oiko.getAppState = function () {
 
 
 // @TODO: Move all of this elsewhere.
-//
+
+(0, _jquery2.default)(document).find('.oiko-app--toggle').bind('click', function (e) {
+  var _store$getState = store.getState(),
+      visualisation = _store$getState.visualisation;
+
+  store.dispatch((0, _actions.setVisualisation)(visualisation === 'map' ? 'timeline' : 'map'));
+  e.preventDefault();
+});
+
+var timelineDOM = (0, _jquery2.default)('.oiko-app--timeline');
+var mapDOM = (0, _jquery2.default)('.oiko-app--map');
+
+var visualisationSwitchListener = function visualisationSwitchListener() {
+  var _store$getState2 = store.getState(),
+      visualisation = _store$getState2.visualisation;
+
+  if (visualisation === 'map') {
+    // Hide the timeline.
+    timelineDOM.hide();
+    // Show the map.
+    mapDOM.show();
+    if (window.drupalLeaflet && window.drupalLeaflet.lMap) {
+      window.drupalLeaflet.lMap.invalidateSize();
+    }
+  } else {
+    // Show the timeline.
+    timelineDOM.show();
+    // Hide the map.
+    mapDOM.hide();
+    if (window.drupalLeaflet && window.drupalLeaflet.lMap) {
+      window.drupalLeaflet.lMap.invalidateSize();
+    }
+  }
+};
+
+var timelinesListener = function timelinesListener() {
+  var _store$getState3 = store.getState(),
+      comparativeTimelines = _store$getState3.comparativeTimelines;
+
+  var timeline = Drupal.oiko.timeline;
+
+  var timelines = timeline.getTimelines();
+  if (comparativeTimelines.length !== timelines.length || comparativeTimelines.every(function (v, i) {
+    return v !== timelines[i];
+  })) {
+    timeline.setTimelines(comparativeTimelines);
+  }
+};
+
+(0, _jquery2.default)(window).bind('oiko.loaded', function () {
+  (0, _jquery2.default)('.oiko-app--loader').hide();
+
+  // Bind to hide/show the correct visualisation.
+  store.subscribe(visualisationSwitchListener);
+  visualisationSwitchListener();
+
+  (0, _jquery2.default)(window).on('oiko.timelines_updated', function (e, timelines) {
+    var _store$getState4 = store.getState(),
+        comparativeTimelines = _store$getState4.comparativeTimelines;
+
+    var timeline = Drupal.oiko.timeline;
+    if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length || comparativeTimelines.every(function (v, i) {
+      return v !== timelines[i];
+    }))) {
+      store.dispatch((0, _actions.setComparativeTimelines)(timelines));
+    }
+  });
+
+  store.subscribe(timelinesListener);
+  timelinesListener();
+});
+
 // Probably a better way to write this.
 (0, _jquery2.default)(document).on('leaflet.map', function (e, mapDefinition, map, drupalLeaflet) {
   if (mapDefinition.hasOwnProperty('pagestate') && mapDefinition.pagestate) {
@@ -4204,102 +4443,6 @@ Drupal.oiko.getAppState = function () {
     }
   }
 });
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.locationReducer = locationReducer;
-exports.updateLocation = updateLocation;
-exports.connectHistory = connectHistory;
-var UPDATE_LOCATION = exports.UPDATE_LOCATION = '@@history/UPDATE_LOCATION';
-
-var initialState = {
-
-  pathname: null,
-  search: null,
-  hash: null,
-  state: null,
-  action: null,
-  key: null
-
-};
-
-function locationReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-  var action = arguments[1];
-
-
-  if (action.type === UPDATE_LOCATION) {
-    return Object.assign({}, state, action.payload);
-  }
-  return state;
-}
-
-function updateLocation(location) {
-  return {
-    type: UPDATE_LOCATION,
-    payload: location
-  };
-}
-
-function connectHistory(history, store) {
-
-  var currentKey = void 0;
-
-  function createUniqueKey(location) {
-    var key = history.createHref(location);
-    return key;
-  }
-
-  var unsubscribeHistory = history.listen(function (nextLocation) {
-    var _store$getState = store.getState(),
-        location = _store$getState.location;
-
-    var key = createUniqueKey(location);
-    currentKey = createUniqueKey(nextLocation);
-
-    if (key !== currentKey) {
-      store.dispatch(updateLocation(nextLocation));
-    }
-  });
-
-  var unsubscribeStore = store.subscribe(function () {
-    var _store$getState2 = store.getState(),
-        location = _store$getState2.location;
-
-    var key = createUniqueKey(location);
-
-    if (key && key !== currentKey) {
-      var method = location.action === 'REPLACE' ? 'replace' : 'push';
-      history[method](location);
-    }
-  });
-
-  return function unconnectHistory() {
-    unsubscribeHistory();
-    unsubscribeStore();
-  };
-}
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var $ = jQuery;
-exports.default = $;
 
 /***/ })
 /******/ ]);

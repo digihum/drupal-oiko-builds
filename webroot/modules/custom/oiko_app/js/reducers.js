@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
 import { UPDATE_LOCATION, locationReducer } from './vendor/redux-history';
 
-import { SET_MAP_STATE, SET_TIME_BROWSER_STATE, SET_VISUALISATION, ADD_APP_MODULE, APP_MODULE_DONE_LOADING, APP_LOADING_BOOT, APP_LOADING_START, APP_LOADING_ADD_TO_DOM } from './actions';
+import { SET_MAP_STATE, SET_TIME_BROWSER_STATE, SET_VISUALISATION, ADD_APP_MODULE, APP_MODULE_DONE_LOADING, APP_LOADING_BOOT, APP_LOADING_START, APP_LOADING_ADD_TO_DOM, SET_COMPARATIVE_TIMELINES } from './actions';
 import { REQUEST_CIDOC_ENTITY, RECEIVE_CIDOC_ENTITY, cidocEntityReducer } from './sidebar';
 
-import { QUERYSTRING_VARIABLE_VISUALISATION, QUERYSTRING_VARIABLE_MAP_ZOOM, QUERYSTRING_VARIABLE_MAP_CENTER_LAT, QUERYSTRING_VARIABLE_MAP_CENTER_LNG, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END, QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY } from './querystring-definitions';
+import { QUERYSTRING_VARIABLE_VISUALISATION, QUERYSTRING_VARIABLE_MAP_ZOOM, QUERYSTRING_VARIABLE_MAP_CENTER_LAT, QUERYSTRING_VARIABLE_MAP_CENTER_LNG, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START, QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END, QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY, QUERYSTRING_VARIABLE_TIMELINE_ENTITIES } from './querystring-definitions';
 
-import { changeQueryString, fetchQueryStringElements } from './plumbing/querystring-helpers';
+import { changeQueryString, fetchQueryStringElements, fetchQueryStringElementsStructured, changeQueryStringStructured } from './plumbing/querystring-helpers';
 
 function mapState(state = {
   level: 1,
@@ -111,6 +111,26 @@ function appModules(state = {}, action) {
   }
 }
 
+/**
+ * Reduce the state for the comparative timelines.
+ *
+ * @param state
+ * @param action
+ * @returns {*}
+ */
+function comparativeTimelines(state = [], action) {
+  switch (action.type) {
+    case SET_COMPARATIVE_TIMELINES:
+      return action.timelines;
+
+    case UPDATE_LOCATION:
+      return fetchQueryStringElementsStructured(action.payload, QUERYSTRING_VARIABLE_TIMELINE_ENTITIES, state);
+
+    default:
+      return state;
+  }
+}
+
 const initialState = {
 
   pathname: null,
@@ -122,6 +142,14 @@ const initialState = {
 
 };
 
+/**
+ * Reduce the state of the location element.
+ *
+ * This is where we update the querystring with our values.
+ *
+ * @param locationReducerFunction
+ * @returns {function(*=, *=)}
+ */
 function oikoLocation(locationReducerFunction) {
   return (state = initialState, action) => {
     const new_state = locationReducerFunction(state, action);
@@ -140,6 +168,9 @@ function oikoLocation(locationReducerFunction) {
       case RECEIVE_CIDOC_ENTITY:
         return changeQueryString(new_state, {[QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY]: action.id}, false);
 
+      case SET_COMPARATIVE_TIMELINES:
+        return changeQueryStringStructured(new_state, {[QUERYSTRING_VARIABLE_TIMELINE_ENTITIES]: action.timelines}, false);
+
       default:
         return new_state;
     }
@@ -151,6 +182,7 @@ const oikoAppReducers = combineReducers({
   visualisation,
   mapState,
   timeBrowserState,
+  comparativeTimelines,
   appModules,
   cidocEntity : cidocEntityReducer,
   location: oikoLocation(locationReducer)

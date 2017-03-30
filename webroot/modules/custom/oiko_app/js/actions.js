@@ -50,3 +50,8 @@ export const APP_LOADING_ADD_TO_DOM = 2;
 export function appLoadingAddToDOM() {
   return { type: APP_LOADING_ADD_TO_DOM }
 }
+
+export const SET_COMPARATIVE_TIMELINES = 'oiko/SET_COMPARATIVE_TIMELINES';
+export function setComparativeTimelines(timelines) {
+  return { type: SET_COMPARATIVE_TIMELINES, timelines }
+}

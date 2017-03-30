@@ -53,6 +53,8 @@ class EmpireController extends ControllerBase {
       ->exists('field_empire_outline')
       ->execute();
 
+    $loaded = [];
+
     if (!empty($results)) {
       $loaded = $storage->loadMultiple($results);
       /** @var CidocEntity $cidoc_entity */

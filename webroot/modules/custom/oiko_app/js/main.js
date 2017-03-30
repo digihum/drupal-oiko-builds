@@ -1,4 +1,7 @@
-import { setMapState,  setTimeBrowserState, addAppModule, appModuleDoneLoading } from './actions';
+import {
+  setMapState, setTimeBrowserState, addAppModule, appModuleDoneLoading,
+  setVisualisation, setComparativeTimelines
+} from './actions';
 import { createOikoApp } from './store';
 import $ from './jquery';
 
@@ -31,12 +34,79 @@ Drupal.oiko.getAppState = () => {
 
 
 // @TODO: Move all of this elsewhere.
-//
+
+$(document).find('.oiko-app--toggle').bind('click', function(e) {
+  const { visualisation } = store.getState();
+  store.dispatch(setVisualisation(visualisation === 'map' ? 'timeline' : 'map'));
+  e.preventDefault();
+});
+
+
+const timelineDOM = $('.oiko-app--timeline');
+const mapDOM = $('.oiko-app--map');
+
+const visualisationSwitchListener = () => {
+  const { visualisation } = store.getState();
+  if (visualisation === 'map') {
+    // Hide the timeline.
+    timelineDOM.hide();
+    // Show the map.
+    mapDOM.show();
+    if (window.drupalLeaflet && window.drupalLeaflet.lMap) {
+      window.drupalLeaflet.lMap.invalidateSize();
+    }
+  }
+  else {
+    // Show the timeline.
+    timelineDOM.show();
+    // Hide the map.
+    mapDOM.hide();
+    if (window.drupalLeaflet && window.drupalLeaflet.lMap) {
+      window.drupalLeaflet.lMap.invalidateSize();
+    }
+  }
+};
+
+
+
+const timelinesListener = () => {
+  const { comparativeTimelines } = store.getState();
+  const timeline = Drupal.oiko.timeline;
+
+  const timelines = timeline.getTimelines();
+  if (comparativeTimelines.length !== timelines.length || comparativeTimelines.every((v,i)=> v !== timelines[i])) {
+    timeline.setTimelines(comparativeTimelines);
+  }
+};
+
+$(window).bind('oiko.loaded', function() {
+  $('.oiko-app--loader').hide();
+
+  // Bind to hide/show the correct visualisation.
+  store.subscribe(visualisationSwitchListener);
+  visualisationSwitchListener();
+
+  $(window).on('oiko.timelines_updated', (e, timelines) => {
+    const { comparativeTimelines } = store.getState();
+    const timeline = Drupal.oiko.timeline;
+    if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length || comparativeTimelines.every((v,i)=> v !== timelines[i]))) {
+      store.dispatch(setComparativeTimelines(timelines));
+    }
+  });
+
+  store.subscribe(timelinesListener);
+  timelinesListener();
+});
+
+
+
+
+
 // Probably a better way to write this.
 $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
   if (mapDefinition.hasOwnProperty('pagestate') && mapDefinition.pagestate) {
 
-    window.drupalLeaflet  =drupalLeaflet;
+    window.drupalLeaflet = drupalLeaflet;
 
     const handleMapMove = (e) => {
       let center = map.getCenter();

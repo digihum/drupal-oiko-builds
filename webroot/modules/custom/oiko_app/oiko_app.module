@@ -1,4 +1,5 @@
 <?php
+use Drupal\Core\Url;
 
 
 /**
@@ -20,6 +21,25 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
   $variables['sidebar'] = [
     '#theme' => 'sidebar',
   ];
+
+  $map = leaflet_map_get_info('Ancient Terrain');
+  $map['sidebar'] = TRUE;
+  $map['pagestate'] = TRUE;
+  $map['timeline'] = TRUE;
+  $map['search'] = TRUE;
+  $map['empires'] = TRUE;
+  $map['clustering'] = TRUE;
+  $map['locate'] = TRUE;
+  $map['layerControl'] = TRUE;
+  $map['data-url'] = Url::fromRoute('oiko_leaflet.map_page_controller_allEntities')->toString();
+  $height = 'full';
+
+  $variables['map'] = leaflet_render_map($map, [], $height);
+
+  $variables['timeline'] = array(
+    '#theme' => 'comparative_timeline',
+  );
+
 
   $variables['js'] = [
     '#attached' => array(

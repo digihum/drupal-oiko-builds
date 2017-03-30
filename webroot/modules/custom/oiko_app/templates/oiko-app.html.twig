@@ -1,6 +1,13 @@
-<div class="js-oiko-app-loader l-map-wrap">
-    {{ sidebar }}
-    <div class="js-map-container"></div>
-    <div class="js-comparative-timeline-container"></div>
+<div class="js-oiko-app-loader oiko-app">
+    <div class="oiko-app--loader"></div>
+    <div class="oiko-app--timeline">
+        {{ timeline }}
+    </div>
+    <div class="oiko-app--sidebar">
+        {{ sidebar }}
+    </div>
+    <div class="oiko-app--map">
+        {{ map }}
+    </div>
 </div>
 {{ js }}

@@ -104,8 +104,9 @@
   display: block
 }
 
-.l-map-wrap {
+.oiko-app {
   .sidebar {
+    height: 100%;
     transition: width 500ms;
     &.collapsed {
       width: 40px;
@@ -114,7 +115,7 @@
 }
 
 @include to('s') {
-  .l-map-wrap {
+  .oiko-app {
     position: relative;
     padding-right: 40px;
 
@@ -150,34 +151,26 @@
 }
 
 @include from($layout-switch) {
-  .l-map-wrap {
+  .oiko-app {
     .sidebar {
-      order: 2;
+//      order: 2;
       position: relative;
       flex-direction: column;
-      width: 40%;
-      min-width: 320px;
-      transition: width 500ms;
-
-      @include from('xxl') {
-        width: 35%;
-      }
-
-      &.collapsed {
-        min-width: 0;
-      }
-
+//      width: 40%;
+//      min-width: 320px;
+//      transition: width 500ms;
+//
+//      @include from('xxl') {
+//        width: 35%;
+//      }
+//
+//      &.collapsed {
+//        min-width: 0;
+//      }
+//
       .sidebar-content {
         overflow: auto;
       }
-    }
-
-    .comparative-timeline-container,
-    .leaflet-map-container {
-      order: 1;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
     }
   }
 }
