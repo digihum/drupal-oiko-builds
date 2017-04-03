@@ -127,7 +127,7 @@ leaflet-textpath:
     js/vendor/leaflet.textpath.js: {}
   dependencies:
     - leaflet/leaflet
-  version: 1.1.1
+  version: 1.1.0-1
 
 intervalTree:
   js:
