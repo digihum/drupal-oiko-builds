@@ -5,7 +5,7 @@
   "main": "gulpfile.js",
   "dependencies": {
     "es6-promise": "^4.1.0",
-    "history": "^4.6.0",
+    "history": "^4.6.1",
     "query-string": "^4.3.2",
     "react-router-redux": "^4.0.8",
     "redux": "^3.6.0",

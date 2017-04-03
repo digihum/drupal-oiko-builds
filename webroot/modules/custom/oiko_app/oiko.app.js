@@ -471,6 +471,9 @@ exports.default = $;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 exports.changeQueryString = changeQueryString;
 exports.changeQueryStringStructured = changeQueryStringStructured;
 exports.fetchQueryStringElements = fetchQueryStringElements;
@@ -499,7 +502,12 @@ function changeQueryStringStructured(state) {
   var keys = Object.keys(structuredChanges);
   for (var i in keys) {
     var key = keys[i];
-    changes[key] = JSON.stringify(structuredChanges[key]);
+    // Special handling for a simple array.
+    if (isSimpleArrayOfStrings(structuredChanges[key])) {
+      changes[key] = 's' + structuredChanges[key].join(',');
+    } else {
+      changes[key] = JSON.stringify(structuredChanges[key]);
+    }
   }
   return changeQueryString(state, changes, replace);
 }
@@ -516,10 +524,36 @@ function fetchQueryStringElementsStructured(state, key) {
 
   var element = fetchQueryStringElements(state, key);
   if (element !== null) {
-    return JSON.parse(element);
+    if (element.charAt(0) === 's') {
+      // Special handling for a simple array.
+      return element.substring(1).split(',');
+    } else {
+      return JSON.parse(element);
+    }
   } else {
     return _default;
   }
+}
+
+/**
+ * Determine if the given varuable is an array of scalars.
+ *
+ * @param variable
+ * @returns {boolean}
+ */
+function isSimpleArrayOfStrings(variable) {
+  var scalars = false;
+  if (Array.isArray(variable)) {
+    scalars = true;
+    for (var i = 0; i < variable.length; i++) {
+      var type = _typeof(variable[i]);
+      if (type !== 'string' && type !== 'number') {
+        scalars = false;
+        break;
+      }
+    }
+  }
+  return scalars;
 }
 
 /***/ }),
@@ -809,7 +843,6 @@ var parsePath = exports.parsePath = function parsePath(path) {
   var search = '';
   var hash = '';
 
-  pathname = decodeURI(pathname);
   var hashIndex = pathname.indexOf('#');
   if (hashIndex !== -1) {
     hash = pathname.substr(hashIndex);
@@ -821,6 +854,8 @@ var parsePath = exports.parsePath = function parsePath(path) {
     search = pathname.substr(searchIndex);
     pathname = pathname.substr(0, searchIndex);
   }
+
+  pathname = decodeURI(pathname);
 
   return {
     pathname: pathname,
@@ -835,13 +870,13 @@ var createPath = exports.createPath = function createPath(location) {
       hash = location.hash;
 
 
-  var path = pathname || '/';
+  var path = encodeURI(pathname || '/');
 
   if (search && search !== '?') path += search.charAt(0) === '?' ? search : '?' + search;
 
   if (hash && hash !== '#') path += hash.charAt(0) === '#' ? hash : '#' + hash;
 
-  return encodeURI(path);
+  return path;
 };
 
 /***/ }),
@@ -4493,6 +4528,11 @@ var timelinesListener = function timelinesListener() {
       // Check to see if the range window of the timeline has changed.
       if (e.type == 'temporal.visibleWindowChanged' && (state.timeBrowserState.start != currentVisibleWindow.start || state.timeBrowserState.end != currentVisibleWindow.end)) {
         needsUpdate = true;
+      }
+
+      // Some simple validation, the current time needs to be within the time window.
+      if (currentTime > currentVisibleWindow.end || currentTime < currentVisibleWindow.start) {
+        needsUpdate = false;
       }
 
       if (needsUpdate) {

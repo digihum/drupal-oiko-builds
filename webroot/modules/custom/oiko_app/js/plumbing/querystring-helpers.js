@@ -11,7 +11,13 @@ export function changeQueryStringStructured(state, structuredChanges = {}, repla
   const keys = Object.keys(structuredChanges);
   for (let i in keys) {
     const key = keys[i];
-    changes[key] = JSON.stringify(structuredChanges[key]);
+    // Special handling for a simple array.
+    if (isSimpleArrayOfStrings(structuredChanges[key])) {
+      changes[key] = 's' + structuredChanges[key].join(',');
+    }
+    else {
+      changes[key] = JSON.stringify(structuredChanges[key]);
+    }
   }
   return changeQueryString(state, changes, replace);
 }
@@ -24,9 +30,36 @@ export function fetchQueryStringElements(state, key, _default = null) {
 export function fetchQueryStringElementsStructured(state, key, _default = null) {
   const element = fetchQueryStringElements(state, key);
   if (element !== null) {
-    return JSON.parse(element);
+    if (element.charAt(0) === 's') {
+      // Special handling for a simple array.
+      return element.substring(1).split(',');
+    }
+    else {
+      return JSON.parse(element);
+    }
   }
   else {
     return _default;
   }
+}
+
+/**
+ * Determine if the given varuable is an array of scalars.
+ *
+ * @param variable
+ * @returns {boolean}
+ */
+function isSimpleArrayOfStrings(variable) {
+  let scalars = false;
+  if (Array.isArray(variable)) {
+    scalars = true;
+    for (let i = 0;i < variable.length; i++) {
+      const type = typeof variable[i];
+      if (type !== 'string' && type !== 'number') {
+        scalars = false;
+        break;
+      }
+    }
+  }
+  return scalars;
 }

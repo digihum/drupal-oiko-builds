@@ -189,6 +189,11 @@ $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
         needsUpdate = true;
       }
 
+      // Some simple validation, the current time needs to be within the time window.
+      if (currentTime > currentVisibleWindow.end || currentTime < currentVisibleWindow.start) {
+        needsUpdate = false;
+      }
+
       if (needsUpdate) {
         store.dispatch(setTimeBrowserState(currentTime, currentVisibleWindow.start, currentVisibleWindow.end));
       }

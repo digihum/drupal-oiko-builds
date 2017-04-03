@@ -22,7 +22,10 @@
       this.window = {
         start: NaN,
         end: NaN
-      }
+      };
+
+      this.currentTimeAdjusted = false;
+      this.boundsAdjusted = false;
     },
 
     // @method addTo(map: Map): this
@@ -129,9 +132,13 @@
         if (!isNaN(this.window.start) && !isNaN(this.window.end)) {
           this._visTimeline.setWindow(this.window.start * 1000, this.window.end * 1000);
         }
+        else if (!this.boundsAdjusted) {
+          this._visTimeline.setWindow(bounds.min * 1000, bounds.max * 1000);
+          this.boundsAdjusted = true;
+        }
 
         // If we need to, move the current time marker.
-        if (isNaN(this._visTimeline.getCustomTime('tdrag').getTime())) {
+        if (!this.currentTimeAdjusted) {
           this.setTime((bounds.max + bounds.min) / 2);
         }
         
@@ -365,6 +372,7 @@
      * @param {Number} time The time to set
      */
     setTime: function (time) {
+      this.currentTimeAdjusted = true;
       this._visTimeline.setCustomTime(time * 1000, 'tdrag');
       this.map.fire('temporal.shift', {time: Math.round(time)});
       this.map.fire('temporal.shifted', {time: Math.round(time)});
@@ -372,18 +380,18 @@
     },
 
     setTimeAndWindow: function (time, start, end) {
-      if (time !== 0) {
+      if (!isNaN(time) && time !== 0) {
         this._visTimeline.setCustomTime(1000 * time, 'tdrag');
       }
 
-      if (!isNaN(start) && !isNaN(end)) {
+      if (!isNaN(start) && !isNaN(end) && start !== 0 && end !== 0) {
         this._visTimeline.setWindow(1000 * start, 1000 * end);
         this.window = {
           start: start,
           end: end
         };
       }
-      if (time !== 0) {
+      if (!isNaN(time) && time !== 0) {
         this._updateDragTitle();
         this.map.fire('temporal.shift', {time: Math.round(time)});
         this.map.fire('temporal.shifted', {time: Math.round(time)});
