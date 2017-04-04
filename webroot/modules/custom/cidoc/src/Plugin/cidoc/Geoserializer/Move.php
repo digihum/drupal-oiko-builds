@@ -21,7 +21,7 @@ class Move extends GeoserializerPluginBase {
     $from_points = [];
     $to_points = [];
 
-    $from_entities = $entity->getForwardReferences(['p27_moved_from']);
+    $from_entities = $entity->getForwardReferencedEntities(['p27_moved_from']);
     foreach ($from_entities as $place_entity) {
       $values = [];
       foreach ($place_entity->field_geodata->getValue() as $value) {
@@ -30,7 +30,7 @@ class Move extends GeoserializerPluginBase {
       $from_points = array_merge($from_points, leaflet_process_geofield($values));
     }
 
-    $to_entities = $entity->getForwardReferences(['p26_moved_to']);
+    $to_entities = $entity->getForwardReferencedEntities(['p26_moved_to']);
     foreach ($to_entities as $place_entity) {
       $values = [];
       foreach ($place_entity->field_geodata->getValue() as $value) {

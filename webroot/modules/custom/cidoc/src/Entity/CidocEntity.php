@@ -508,7 +508,8 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
    *   The array of temporal information.
    */
   public function getTemporalInformation() {
-    $time_spans = $this->getForwardReferences(['p4_has_time_span'], TRUE);
+    // @TODO: this should be cached so that upon loading the entity this information is pre-computed.
+    $time_spans = $this->getForwardReferencedEntities(['p4_has_time_span'], TRUE);
     foreach ($time_spans as $time_span) {
       $date_value = $time_span->field_date->getValue();
       if (!empty($date_value[0]['value'])) {
@@ -527,6 +528,7 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
    * Return an array of geospatial data for this entity.
    */
   public function getGeospatialData() {
+    // @TODO: this should be cached so that upon loading the entity this information is pre-computed.
     $data = [];
     // Get the geoserializer plugins for my bundle.
     $activeSerializers = $this->bundle->entity->getGeoserializers();
