@@ -22,7 +22,6 @@ use Drupal\user\UserInterface;
  *   label = @Translation("CIDOC entity"),
  *   bundle_label = @Translation("CIDOC entity class"),
  *   handlers = {
- *     "storage" = "Drupal\cidoc\CidocEntityStorage",
  *     "view_builder" = "Drupal\cidoc\CidocEntityViewBuilder",
  *     "list_builder" = "Drupal\cidoc\CidocEntityListBuilder",
  *     "views_data" = "Drupal\cidoc\Entity\CidocEntityViewsData",
@@ -542,6 +541,7 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
             'minmin' => $date_value[0]['minmin'],
             'maxmax' => $date_value[0]['maxmax'],
           ];
+          $this->addCacheableDependency($time_span);
           break;
         }
       }

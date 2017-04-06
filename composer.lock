@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "caeef9e216cb5f57d5674eb6b700b926",
+    "content-hash": "fa8ea6251c7febc8c80318ff7a12f33b",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1772,6 +1772,7 @@
             "extra": {
                 "patches_applied": {
                     "Prevent a notice from views_query_views_alter": "https://www.drupal.org/files/issues/2744069-5-views-in-queries.patch",
+                    "Use entity's cache tags for their entity cache entries": "https://www.drupal.org/files/issues/persistent-entity-cache-tags-2537588-10.patch",
                     "https://www.drupal.org/node/2705925#comment-11830537": "https://www.drupal.org/files/issues/imageitem_presave-2705925-35.patch"
                 }
             },
@@ -2584,7 +2585,7 @@
                 "composer/installers": "^1.0.21"
             },
             "type": "drupal-module",
-            "time": "2016-09-20 10:25:00"
+            "time": "2016-05-02 15:43:10"
         },
         {
             "name": "drupal/metatag",
