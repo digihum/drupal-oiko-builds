@@ -24,24 +24,20 @@ Drupal.oiko.getAppState = () => {
   return app.getStore().getState();
 };
 
-// $(() => {
-//   $('.js-oiko-app-loader').once('js-oiko-app-loader').each(() => {
-//     const $wrapper = $(this);
-//     app.addTo($wrapper);
-//     $wrapper.data('oikoApp', app);
-//   });
-// });
-
-
 // @TODO: Move all of this elsewhere.
 
 $(document).find('.js-oiko-app--toggle').bind('click', function(e) {
   const { visualisation } = store.getState();
-  store.dispatch(setVisualisation(visualisation === 'map' ? 'timeline' : 'map'));
+  $(window).trigger('set.oiko.visualisation', visualisation === 'map' ? 'timeline' : 'map');
   e.preventDefault();
   $(this).blur();
 });
 
+$(window).on('set.oiko.visualisation', (e, visualisation) => {
+  if (visualisation === 'map' || visualisation === 'timeline') {
+    store.dispatch(setVisualisation(visualisation));
+  }
+});
 
 const timelineDOM = $('.oiko-app--timeline');
 const mapDOM = $('.oiko-app--map');

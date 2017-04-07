@@ -17,6 +17,16 @@ modal-welcome:
     scripts/modal-welcome.js: {}
   dependencies:
     - oiko/global-styling
+    - oiko/visualization-switcher
+    - core/drupal
+    - core/jquery.once
+
+visualization-switcher:
+  version: 1.1
+  js:
+    scripts/visualization-switcher.js: {}
+  dependencies:
+    - oiko_app/app
     - core/drupal
     - core/jquery.once
 

@@ -37,10 +37,10 @@
         {{ content }}
     {% endblock %}
     <div class="button-group expanded">
-        <a class="button button--primary js-start-tour" href="#" data-tour="tour--timeline">Take the timeline tour</a>
-        <a class="button button--primary js-start-tour" href="#" data-tour="tour--map">Take the map tour</a>
+        <a class="button button-highlight js-start-tour js-switch-visualization" href="#" data-tour="tour--timeline" data-visualization="timeline">Take the timeline tour</a>
+        <a class="button button-highlight js-start-tour js-switch-visualization" href="#" data-tour="tour--map" data-visualization="map">Take the map tour</a>
     </div>
-    <a data-close href="#">Skip tour</a>
+    <div class="reveal--footer"><a data-close href="#">Skip tour</a></div>
     <button class="close-button" data-close aria-label="Close modal" type="button">
         <span aria-hidden="true">&times;</span>
     </button>

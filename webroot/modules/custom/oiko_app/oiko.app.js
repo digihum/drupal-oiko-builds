@@ -4357,24 +4357,21 @@ Drupal.oiko.getAppState = function () {
   return app.getStore().getState();
 };
 
-// $(() => {
-//   $('.js-oiko-app-loader').once('js-oiko-app-loader').each(() => {
-//     const $wrapper = $(this);
-//     app.addTo($wrapper);
-//     $wrapper.data('oikoApp', app);
-//   });
-// });
-
-
 // @TODO: Move all of this elsewhere.
 
 (0, _jquery2.default)(document).find('.js-oiko-app--toggle').bind('click', function (e) {
   var _store$getState = store.getState(),
       visualisation = _store$getState.visualisation;
 
-  store.dispatch((0, _actions.setVisualisation)(visualisation === 'map' ? 'timeline' : 'map'));
+  (0, _jquery2.default)(window).trigger('set.oiko.visualisation', visualisation === 'map' ? 'timeline' : 'map');
   e.preventDefault();
   (0, _jquery2.default)(this).blur();
+});
+
+(0, _jquery2.default)(window).on('set.oiko.visualisation', function (e, visualisation) {
+  if (visualisation === 'map' || visualisation === 'timeline') {
+    store.dispatch((0, _actions.setVisualisation)(visualisation));
+  }
 });
 
 var timelineDOM = (0, _jquery2.default)('.oiko-app--timeline');
