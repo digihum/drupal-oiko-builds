@@ -1,5 +1,5 @@
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - system.menu.footer
@@ -9,7 +9,7 @@ dependencies:
     - oiko
 id: oiko_footer
 theme: oiko
-region: footer_lower
+region: '-1'
 weight: -6
 provider: null
 plugin: 'system_menu_block:footer'

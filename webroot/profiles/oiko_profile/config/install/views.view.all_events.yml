@@ -69,8 +69,7 @@ display:
       style:
         type: oiko_leafet_map
         options:
-          grouping: {  }
-          id_field: id
+          uses_fields: false
           clustering: 1
           sidebar: 1
           search: 1

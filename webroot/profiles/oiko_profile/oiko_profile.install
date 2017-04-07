@@ -139,3 +139,17 @@ function oiko_profile_update_8114() {
 function oiko_profile_update_8115() {
   \Drupal::service('module_installer')->install(['eu_cookie_compliance']);
 }
+
+/**
+ * Enable the tour modules.
+ */
+function oiko_profile_update_8117() {
+  \Drupal::service('module_installer')->install(['oiko_app']);
+}
+
+/**
+ * Enable the tour modules.
+ */
+function oiko_profile_update_8116() {
+  \Drupal::service('module_installer')->install(['tour', 'tour_ui']);
+}

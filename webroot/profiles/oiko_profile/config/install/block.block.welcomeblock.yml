@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:modal_welcome:ebaaf389-0455-49d9-bf71-a735d484d253'
+  module:
+    - block_content
+    - system
+  theme:
+    - oiko
+id: welcomeblock
+theme: oiko
+region: content
+weight: -8
+provider: null
+plugin: 'block_content:ebaaf389-0455-49d9-bf71-a735d484d253'
+settings:
+  id: 'block_content:ebaaf389-0455-49d9-bf71-a735d484d253'
+  label: 'Welcome block'
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

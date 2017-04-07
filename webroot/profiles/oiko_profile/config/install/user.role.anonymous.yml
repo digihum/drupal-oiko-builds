@@ -11,3 +11,4 @@ permissions:
   - 'access comments'
   - 'view sharemessages'
   - 'display eu cookie compliance popup'
+  - 'access tour'
