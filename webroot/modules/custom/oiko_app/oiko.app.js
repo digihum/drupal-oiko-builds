@@ -4368,12 +4368,13 @@ Drupal.oiko.getAppState = function () {
 
 // @TODO: Move all of this elsewhere.
 
-(0, _jquery2.default)(document).find('.oiko-app--toggle').bind('click', function (e) {
+(0, _jquery2.default)(document).find('.js-oiko-app--toggle').bind('click', function (e) {
   var _store$getState = store.getState(),
       visualisation = _store$getState.visualisation;
 
   store.dispatch((0, _actions.setVisualisation)(visualisation === 'map' ? 'timeline' : 'map'));
   e.preventDefault();
+  (0, _jquery2.default)(this).blur();
 });
 
 var timelineDOM = (0, _jquery2.default)('.oiko-app--timeline');
@@ -4400,6 +4401,8 @@ var visualisationSwitchListener = function visualisationSwitchListener() {
       window.drupalLeaflet.lMap.invalidateSize();
     }
   }
+
+  (0, _jquery2.default)(document).find('.js-oiko-app--toggle').toggleClass('showing-map', visualisation === 'map').toggleClass('showing-timeline', visualisation !== 'map');
 };
 
 var timelinesListener = function timelinesListener() {

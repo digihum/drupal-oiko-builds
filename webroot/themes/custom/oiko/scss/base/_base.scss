@@ -216,6 +216,9 @@ th.checkbox {
 .button-highlight {
   border-color: palette(tan);
   background-color: palette(tan);
+  &:hover {
+    background-color: palette(white);
+  }
 }
 
 #{text-inputs()}, textarea {

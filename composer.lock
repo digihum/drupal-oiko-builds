@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "82c482eae3f7de567714c3da22a2a56a",
+    "content-hash": "8243a063f285c4da1ba66a15e6430724",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1777,7 +1777,8 @@
             "type": "drupal-core",
             "extra": {
                 "patches_applied": {
-                    "Prevent a notice from views_query_views_alter": "https://www.drupal.org/files/issues/2744069-5-views-in-queries.patch"
+                    "Prevent a notice from views_query_views_alter": "https://www.drupal.org/files/issues/2744069-5-views-in-queries.patch",
+                    "https://www.drupal.org/node/2705925#comment-11830537": "https://www.drupal.org/files/issues/imageitem_presave-2705925-35.patch"
                 }
             },
             "autoload": {

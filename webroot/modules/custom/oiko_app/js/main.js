@@ -35,10 +35,11 @@ Drupal.oiko.getAppState = () => {
 
 // @TODO: Move all of this elsewhere.
 
-$(document).find('.oiko-app--toggle').bind('click', function(e) {
+$(document).find('.js-oiko-app--toggle').bind('click', function(e) {
   const { visualisation } = store.getState();
   store.dispatch(setVisualisation(visualisation === 'map' ? 'timeline' : 'map'));
   e.preventDefault();
+  $(this).blur();
 });
 
 
@@ -65,6 +66,10 @@ const visualisationSwitchListener = () => {
       window.drupalLeaflet.lMap.invalidateSize();
     }
   }
+
+  $(document).find('.js-oiko-app--toggle')
+    .toggleClass('showing-map', visualisation === 'map')
+    .toggleClass('showing-timeline', visualisation !== 'map');
 };
 
 

@@ -43,14 +43,27 @@
  * @see html.html.twig
  */
 #}
-{% include directory ~ '/templates/layout/header.html.twig' %}
 <div id="main" role="main" class="clearfix l-main page--bare">
-    {{ page.primary_menu }}
-    {{ page.secondary_menu }}
-    {{ page.breadcrumb }}
-    {{ page.highlighted }}
-    {{ page.help }}
-    <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
-    {{ page.content }}
+    <div class="l-sidebar oiko-new-sidebar">
+        <div class="l-sidebar-upper">
+            {% include directory ~ '/templates/layout/header.html.twig' %}
+            {{ page.primary_menu }}
+            {{ page.secondary_menu }}
+            {{ page.sidebar_upper }}
+        </div>
+        <div class="l-sidebar-lower">
+            {{ page.sidebar_lower }}
+            {% include directory ~ '/templates/layout/footer.html.twig' %}
+        </div>
+    </div>
+    <div class="l-content-container">
+        <div class="l-class-content-header">
+            <div class="">Search box</div>
+            <div class="">User header</div>
+        </div>
+        <div class="l-main-content">
+          <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+          {{ page.content }}
+        </div>
+    </div>
 </div><!-- #main -->
-{% include directory ~ '/templates/layout/footer.html.twig' %}

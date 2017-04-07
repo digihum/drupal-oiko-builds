@@ -1,0 +1,16 @@
+// @TODO: Replace this will with different class name
+.oiko-new-sidebar {
+  background-color: palette(grey);
+  color: palette(white);
+
+  text-align: center;
+
+  .oiko-app--toggle {
+    text-decoration: none;
+  }
+
+  i.fa {
+    font-size: $sidebar-icon-font-size;
+    line-height: $sidebar-icon-line-height;
+  }
+}

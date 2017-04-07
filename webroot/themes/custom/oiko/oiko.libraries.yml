@@ -4,8 +4,21 @@ global-styling:
     theme:
       css/style.css: {}
       css/print.css: { media: print }
+  js:
+    scripts/vendor/foundation.min.js: {minified: true}
+    scripts/foundation.js: {}
   dependencies:
       - oiko/fonts
+      - core/drupal
+
+modal-welcome:
+  version: 1.1
+  js:
+    scripts/modal-welcome.js: {}
+  dependencies:
+    - oiko/global-styling
+    - core/drupal
+    - core/jquery.once
 
 fonts:
   license:

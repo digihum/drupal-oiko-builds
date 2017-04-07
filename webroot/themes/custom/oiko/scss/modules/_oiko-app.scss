@@ -21,3 +21,13 @@
     }
   }
 }
+
+.oiko-app--toggle {
+  &.showing-map .toggle-to-map {
+    display: none;
+  }
+
+  &.showing-timeline .toggle-to-timeline {
+    display: none;
+  }
+}
