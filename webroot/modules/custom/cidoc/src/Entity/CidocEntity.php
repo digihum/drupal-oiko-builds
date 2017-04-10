@@ -79,19 +79,6 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
   protected $temporal_information = NULL;
 
   /**
-   * Populate temporal and geospatial data ahead of caching.
-   */
-  public static function postLoad(EntityStorageInterface $storage, array &$entities) {
-    parent::postLoad($storage, $entities);
-
-    /** @var \Drupal\cidoc\Entity\CidocEntity $entity */
-    foreach ($entities as $entity) {
-      $entity->getTemporalInformation();
-      $entity->getGeospatialData();
-    }
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
