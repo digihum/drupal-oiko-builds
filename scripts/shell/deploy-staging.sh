@@ -7,7 +7,7 @@ SITES_DIR="default"
 
 # Create new directory to build site into.
 cd "/data/webroots/$DOMAIN/releases"
-BUILD_DIR=`mktemp -dt "deploy-XXXXXXXXXX" --tmpdir="/var/webroots/$DOMAIN/releases"`
+BUILD_DIR=`mktemp -dt "deploy-XXXXXXXXXX" --tmpdir="/data/webroots/$DOMAIN/releases"`
 chmod 755 "$BUILD_DIR"
 
 cd "$BUILD_DIR"
