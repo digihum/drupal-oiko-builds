@@ -18,6 +18,18 @@ function cidoc_entity_extra_field_info() {
 }
 
 /**
+ * Implements hook_ENTITY_TYPE_storage_load().
+ */
+function cidoc_cidoc_entity_storage_load($entities) {
+  // Populate temporal and geospatial data ahead of caching.
+  /** @var \Drupal\cidoc\Entity\CidocEntity $entity */
+  foreach ($entities as $entity) {
+    $entity->getTemporalInformation();
+    $entity->getGeospatialData();
+  }
+}
+
+/**
  * Implements hook_query_TAG_alter().
  *
  * CidocEntity::getReferences() uses the entity query to get properties

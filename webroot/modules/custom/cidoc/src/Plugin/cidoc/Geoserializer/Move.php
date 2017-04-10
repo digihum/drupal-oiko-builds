@@ -24,19 +24,25 @@ class Move extends GeoserializerPluginBase {
     $from_entities = $entity->getForwardReferences(['p27_moved_from']);
     foreach ($from_entities as $place_entity) {
       $values = [];
-      foreach ($place_entity->field_geodata->getValue() as $value) {
-        $values[] = $value['value'];
+      if ($place_entity->field_geodata->count()) {
+        $entity->addCacheableDependency($place_entity);
+        foreach ($place_entity->field_geodata->getValue() as $value) {
+          $values[] = $value['value'];
+        }
+        $from_points = array_merge($from_points, leaflet_process_geofield($values));
       }
-      $from_points = array_merge($from_points, leaflet_process_geofield($values));
     }
 
     $to_entities = $entity->getForwardReferences(['p26_moved_to']);
     foreach ($to_entities as $place_entity) {
       $values = [];
-      foreach ($place_entity->field_geodata->getValue() as $value) {
-        $values[] = $value['value'];
+      if ($place_entity->field_geodata->count()) {
+        $entity->addCacheableDependency($place_entity);
+        foreach ($place_entity->field_geodata->getValue() as $value) {
+          $values[] = $value['value'];
+        }
+        $to_points = array_merge($to_points, leaflet_process_geofield($values));
       }
-      $to_points = array_merge($to_points, leaflet_process_geofield($values));
     }
 
     $points = array_merge($points, $from_points);

@@ -3675,6 +3675,7 @@
         "extra": {
             "patches_applied": {
                 "Prevent a notice from views_query_views_alter": "https://www.drupal.org/files/issues/2744069-5-views-in-queries.patch",
+                "Use entity's cache tags for their entity cache entries": "https://www.drupal.org/files/issues/persistent-entity-cache-tags-2537588-10.patch",
                 "https://www.drupal.org/node/2705925#comment-11830537": "https://www.drupal.org/files/issues/imageitem_presave-2705925-35.patch"
             }
         },
@@ -5750,7 +5751,7 @@
         "require": {
             "composer/installers": "^1.0.21"
         },
-        "time": "2016-09-20 10:25:00",
+        "time": "2016-05-02 15:43:10",
         "type": "drupal-module",
         "installation-source": "source"
     },

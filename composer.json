@@ -218,6 +218,7 @@
         "patches": {
             "drupal/core": {
                 "Prevent a notice from views_query_views_alter": "https://www.drupal.org/files/issues/2744069-5-views-in-queries.patch",
+                "Use entity's cache tags for their entity cache entries": "https://www.drupal.org/files/issues/persistent-entity-cache-tags-2537588-10.patch",
                 "https://www.drupal.org/node/2705925#comment-11830537": "https://www.drupal.org/files/issues/imageitem_presave-2705925-35.patch"
             },
             "drupal/config_devel": {
