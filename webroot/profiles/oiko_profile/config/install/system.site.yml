@@ -1,0 +1,12 @@
+name: Oiko
+mail: info@oikoumene.org.uk
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /oiko_app/app
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+mail_notification: ''
