@@ -150,6 +150,13 @@ function oiko_profile_update_8117() {
 /**
  * Enable the tour modules.
  */
-function oiko_profile_update_8116() {
+function oiko_profile_update_8118() {
   \Drupal::service('module_installer')->install(['tour', 'tour_ui']);
+}
+
+/**
+ * Enable the Custom block module.
+ */
+function oiko_profile_update_8119() {
+  \Drupal::service('module_installer')->install(['block_content']);
 }
