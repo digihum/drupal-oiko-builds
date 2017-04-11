@@ -5756,7 +5756,7 @@
         "require": {
             "composer/installers": "^1.0.21"
         },
-        "time": "2016-05-02 15:43:10",
+        "time": "2016-09-20 10:25:00",
         "type": "drupal-module",
         "installation-source": "source"
     },

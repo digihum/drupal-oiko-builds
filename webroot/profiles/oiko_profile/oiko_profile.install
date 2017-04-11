@@ -160,3 +160,19 @@ function oiko_profile_update_8118() {
 function oiko_profile_update_8119() {
   \Drupal::service('module_installer')->install(['block_content']);
 }
+
+/**
+ * Enable the Custom block module.
+ */
+function oiko_profile_update_8120() {
+  $block = \Drupal\block_content\Entity\BlockContent::create([
+    'type' => 'modal_welcome',
+    'info' => 'modal_welcome',
+    'body' => [
+      'value' => '<p>Welcome to Oiko.</p><p>This will be the tour block.</p>',
+      'format' => 'basic_html',
+    ],
+    'uuid' => 'block-oiko-welcome_tour',
+  ]);
+  $block->save();
+}
