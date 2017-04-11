@@ -691,6 +691,7 @@ cm_config_tools:
     - block.block.welcomeblock
     - core.entity_form_display.block_content.modal_welcome.default
     - core.entity_view_display.block_content.modal_welcome.default
+    - block.block.mainnavigation
   delete:
     - views.view.appelations
     - views.view.appelations_real_names
