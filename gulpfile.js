@@ -58,7 +58,7 @@ gulp.task('watch:js', ['compile:js'], function (done) {
 gulp.task('watch', ['watch:sass', 'watch:js']);
 
 // Main compile task.
-gulp.task('compile', ['compile:sass']);
+gulp.task('compile', ['compile:sass', 'compile:js']);
 
 gulp.task('browsersync', ['watch'], function(){
   // Watch CSS and JS files
