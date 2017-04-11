@@ -183,3 +183,12 @@ function oiko_profile_update_8120() {
 function oiko_profile_update_8121() {
   \Drupal::service('module_installer')->install(['dynamic_page_cache']);
 }
+
+/**
+ * Tweak the site config.
+ */
+function oiko_profile_update_8122() {
+  $system_site = \Drupal::configFactory()->getEditable('system.site');
+  $system_site->set('page.front', '/oiko_app/app');
+  $system_site->save();
+}
