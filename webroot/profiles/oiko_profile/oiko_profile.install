@@ -176,3 +176,10 @@ function oiko_profile_update_8120() {
   ]);
   $block->save();
 }
+
+/**
+ * Enable the Dynamic page cache module.
+ */
+function oiko_profile_update_8121() {
+  \Drupal::service('module_installer')->install(['dynamic_page_cache']);
+}
