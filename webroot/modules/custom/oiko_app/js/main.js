@@ -39,34 +39,22 @@ $(window).on('set.oiko.visualisation', (e, visualisation) => {
   }
 });
 
-const timelineDOM = $('.oiko-app--timeline');
-const mapDOM = $('.oiko-app--map');
 
 const visualisationSwitchListener = () => {
   const { visualisation } = store.getState();
-  if (visualisation === 'map') {
-    // Hide the timeline.
-    timelineDOM.hide();
-    // Show the map.
-    mapDOM.show();
-    if (window.drupalLeaflet && window.drupalLeaflet.lMap) {
-      window.drupalLeaflet.lMap.invalidateSize();
-    }
-  }
-  else {
-    // Show the timeline.
-    timelineDOM.show();
-    // Hide the map.
-    mapDOM.hide();
-    if (window.drupalLeaflet && window.drupalLeaflet.lMap) {
-      window.drupalLeaflet.lMap.invalidateSize();
-    }
-  }
-
-  $(document).find('.js-oiko-app--toggle')
+  // Toggle a class on the body element to allow for sweeping changes.
+  $('body')
     .toggleClass('showing-map', visualisation === 'map')
     .toggleClass('showing-timeline', visualisation !== 'map');
+
+  $(window).trigger('resize.oiko.map_container');
 };
+
+$(window).on('resize.oiko.map_container', () => {
+  if (window.drupalLeaflet && window.drupalLeaflet.lMap) {
+    window.drupalLeaflet.lMap.invalidateSize();
+  }
+});
 
 
 

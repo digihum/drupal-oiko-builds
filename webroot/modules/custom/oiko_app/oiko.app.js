@@ -4374,33 +4374,22 @@ Drupal.oiko.getAppState = function () {
   }
 });
 
-var timelineDOM = (0, _jquery2.default)('.oiko-app--timeline');
-var mapDOM = (0, _jquery2.default)('.oiko-app--map');
-
 var visualisationSwitchListener = function visualisationSwitchListener() {
   var _store$getState2 = store.getState(),
       visualisation = _store$getState2.visualisation;
+  // Toggle a class on the body element to allow for sweeping changes.
 
-  if (visualisation === 'map') {
-    // Hide the timeline.
-    timelineDOM.hide();
-    // Show the map.
-    mapDOM.show();
-    if (window.drupalLeaflet && window.drupalLeaflet.lMap) {
-      window.drupalLeaflet.lMap.invalidateSize();
-    }
-  } else {
-    // Show the timeline.
-    timelineDOM.show();
-    // Hide the map.
-    mapDOM.hide();
-    if (window.drupalLeaflet && window.drupalLeaflet.lMap) {
-      window.drupalLeaflet.lMap.invalidateSize();
-    }
-  }
 
-  (0, _jquery2.default)(document).find('.js-oiko-app--toggle').toggleClass('showing-map', visualisation === 'map').toggleClass('showing-timeline', visualisation !== 'map');
+  (0, _jquery2.default)('body').toggleClass('showing-map', visualisation === 'map').toggleClass('showing-timeline', visualisation !== 'map');
+
+  (0, _jquery2.default)(window).trigger('resize.oiko.map_container');
 };
+
+(0, _jquery2.default)(window).on('resize.oiko.map_container', function () {
+  if (window.drupalLeaflet && window.drupalLeaflet.lMap) {
+    window.drupalLeaflet.lMap.invalidateSize();
+  }
+});
 
 var timelinesListener = function timelinesListener() {
   var _store$getState3 = store.getState(),

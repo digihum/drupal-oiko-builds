@@ -61,7 +61,22 @@ use Drupal\user\UserInterface;
  * )
  */
 class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
+
   use EntityChangedTrait;
+
+  /**
+   * Geospatial data for this entity.
+   *
+   * @var array
+   */
+  protected $geospatial_data = NULL;
+
+  /**
+   * Temporal information for this entity.
+   *
+   * @var array
+   */
+  protected $temporal_information = NULL;
 
   /**
    * {@inheritdoc}
@@ -508,36 +523,44 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
    *   The array of temporal information.
    */
   public function getTemporalInformation() {
-    // @TODO: this should be cached so that upon loading the entity this information is pre-computed.
-    $time_spans = $this->getForwardReferencedEntities(['p4_has_time_span'], TRUE);
-    foreach ($time_spans as $time_span) {
-      $date_value = $time_span->field_date->getValue();
-      if (!empty($date_value[0]['value'])) {
-        return [
-          'machine' => $date_value[0]['value'],
-          'human' => $date_value[0]['human_value'],
-          'minmin' => $date_value[0]['minmin'],
-          'maxmax' => $date_value[0]['maxmax'],
-        ];
+    if (!isset($this->temporal_information)) {
+      $this->temporal_information = [];
+      $time_spans = $this->getForwardReferences(['p4_has_time_span'], TRUE);
+      foreach ($time_spans as $time_span) {
+        $date_value = $time_span->field_date->getValue();
+        if (!empty($date_value[0]['value'])) {
+          $this->temporal_information = [
+            'machine' => $date_value[0]['value'],
+            'human' => $date_value[0]['human_value'],
+            'minmin' => $date_value[0]['minmin'],
+            'maxmax' => $date_value[0]['maxmax'],
+          ];
+          $this->addCacheableDependency($time_span);
+          break;
+        }
       }
     }
-    return [];
+
+    return $this->temporal_information;
   }
 
   /**
    * Return an array of geospatial data for this entity.
    */
   public function getGeospatialData() {
-    // @TODO: this should be cached so that upon loading the entity this information is pre-computed.
-    $data = [];
-    // Get the geoserializer plugins for my bundle.
-    $activeSerializers = $this->bundle->entity->getGeoserializers();
-    $plugin_manager = \Drupal::service('plugin.manager.cidoc.geoserializer');
-    foreach ($activeSerializers as $activeSerializer) {
-      $data = array_merge($data, $plugin_manager->createInstance($activeSerializer)->getGeospatialData($this));
+    if (!isset($this->geospatial_data)) {
+      $data = [];
+      // Get the geoserializer plugins for my bundle.
+      $activeSerializers = $this->bundle->entity->getGeoserializers();
+      $plugin_manager = \Drupal::service('plugin.manager.cidoc.geoserializer');
+      foreach ($activeSerializers as $activeSerializer) {
+        $data = array_merge($data, $plugin_manager->createInstance($activeSerializer)->getGeospatialData($this));
+      }
+
+      $this->geospatial_data = $data;
     }
 
-    return $data;
+    return $this->geospatial_data;
   }
 
   public function hasGeospatialData() {

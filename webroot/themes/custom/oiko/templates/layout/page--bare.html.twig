@@ -44,12 +44,17 @@
  */
 #}
 <div id="main" role="main" class="clearfix l-main page--bare">
-    <div class="l-sidebar oiko-new-sidebar">
+    <div class="l-sidebar oiko-sidebar">
         <div class="l-sidebar-upper">
             {% include directory ~ '/templates/layout/header.html.twig' %}
             {{ page.primary_menu }}
             {{ page.secondary_menu }}
             {{ page.sidebar_upper }}
+            <ul class="sidebar-tabs tabs vertical">
+                <li class="tabs-title"><a href="#" data-pane-id="main-menu">Main menu</a></li>
+                <li class="tabs-title"><a href="#" data-pane-id="legend">Legend</a></li>
+                <li class="tabs-title"><a href="#" data-pane-id="information">Information</a></li>
+            </ul>
         </div>
         <div class="l-sidebar-lower">
             {{ page.sidebar_lower }}
@@ -57,13 +62,14 @@
         </div>
     </div>
     <div class="l-content-container">
-        <div class="l-class-content-header">
-            <div class="">Search box</div>
-            <div class="">User header</div>
+        <div class="l-content-header">
+            <div class="l-content-header-search-box">Search box</div>
+            <div class="l-content-header-user">User header</div>
         </div>
         <div class="l-main-content">
-          <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
-          {{ page.content }}
+            <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+            {% include directory ~ '/templates/layout/sidebar-content.html.twig' %}
+            {{ page.content }}
         </div>
     </div>
 </div><!-- #main -->

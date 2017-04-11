@@ -8,34 +8,39 @@
    * @param element_settings
    * @constructor
    */
-  Drupal.Sidebar = function (element, element_settings) {
+  Drupal.Sidebar = function (menu_element, content_element, settings) {
     var sidebar = this;
     var defaults = {
-      position: 'left'
     };
 
-    $.extend(this, defaults, element_settings);
+    $.extend(this, defaults, settings);
 
-    this.$sidebar = $(element);
-    this.$sidebar.addClass('sidebar-' + this.position);
-    this.$sidebar.removeClass('js-sidebar-initial-load');
+    this.$sidebar_menu = $(menu_element);
+    this.$sidebar_menu.removeClass('js-sidebar-initial-load');
 
-    this.$tabs = this.$sidebar.find('ul.sidebar-tabs > li, .sidebar-tabs > ul > li');
-    this.$panes = this.$sidebar.find('div.sidebar-content > div.sidebar-pane');
+    this.$sidebar_content = $(content_element);
+    this.$sidebar_content.removeClass('js-sidebar-initial-load');
+
+    this.$tabs = this.$sidebar_menu.find('ul.sidebar-tabs > li');
+    this.$panes = this.$sidebar_content.children('div.sidebar-pane');
+
+    this.$body = $('body');
 
 
     this.$tabs.each(function() {
       var $tab = $(this);
       $tab.find('a').bind('click', function (e) {
         var $link = $(this);
+
         if ($link.data('paneId')) {
           e.preventDefault();
-          if ($tab.hasClass('active')) {
+          if ($tab.hasClass('is-active')) {
             sidebar.close();
           }
           else {
             sidebar.open($link.data('paneId'));
           }
+          $link.blur();
         }
       });
     });
@@ -51,22 +56,30 @@
 
     this.$panes.each(function () {
       var $pane = $(this);
-      $pane.toggleClass('active', $pane.data('paneId') == id);
+      $pane.toggleClass('is-active', $pane.data('paneId') == id);
     });
 
     this.$tabs.each(function () {
-      $(this).toggleClass('active', $(this).find('a').data('paneId') == id);
+      var $tab = $(this);
+      $tab.toggleClass('is-active', $tab.find('a').data('paneId') == id);
+      $tab.find('a').attr('aria-selected', $tab.find('a').data('paneId') == id ? 'true' : null);
     });
 
     // Make sure the sidebar is open.
-    this.$sidebar.removeClass('collapsed');
-
+    this.$body.addClass('sidebar-opened');
+    $(window).trigger('resize.oiko.map_container');
   };
 
   Drupal.Sidebar.prototype.close = function() {
-    this.$panes.removeClass('active');
-    this.$tabs.removeClass('active');
-    this.$sidebar.addClass('collapsed');
+    // Clean up the tabs.
+    this.$tabs.removeClass('is-active');
+    this.$tabs.find('a').attr('aria-selected', null);
+    // Clean up the panes.
+    this.$panes.removeClass('is-active');
+    // Clean up the body tag.
+    this.$body.removeClass('sidebar-opened');
+    // And inform Oiko that we've resized.
+    $(window).trigger('resize.oiko.map_container');
   };
 
 })(jQuery);

@@ -22,12 +22,25 @@
   }
 }
 
-.oiko-app--toggle {
-  &.showing-map .toggle-to-map {
+// Displaying the map, make appropriate changes.
+.showing-map {
+  .oiko-app--toggle .toggle-to-map {
+    display: none;
+  }
+  
+  .oiko-app--timeline {
+    display: none;
+  }
+}
+
+
+// Displaying the timeline, make appropriate changes.
+.showing-timeline {
+  .oiko-app--toggle .toggle-to-timeline {
     display: none;
   }
 
-  &.showing-timeline .toggle-to-timeline {
+  .oiko-app--map {
     display: none;
   }
 }

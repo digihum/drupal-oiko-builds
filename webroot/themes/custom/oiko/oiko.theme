@@ -62,6 +62,26 @@ function oiko_preprocess_node(&$variables) {
  *
  * @param array $variables
  *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - node: The node object.
+ *   - view_mode: View mode; e.g., 'full', 'teaser', etc.
+ */
+function oiko_preprocess_html(&$variables) {
+  // Set the default to just showing the map.
+  if ($view = \Drupal::request()->get('view')) {
+    $view = $view == 'map' ? 'map' : 'timeline';
+  }
+  else {
+    $view = 'map';
+  }
+  $variables['attributes']['class'][] = 'showing-' . $view;
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param array $variables
+ *   An associative array containing:
  *   - element: A render element representing the field.
  *   - attributes: A string containing the attributes for the wrapping div.
  *   - title_attributes: A string containing the attributes for the title.

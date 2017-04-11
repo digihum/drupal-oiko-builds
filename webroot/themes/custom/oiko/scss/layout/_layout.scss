@@ -32,7 +32,7 @@ body {
   flex-direction: column;
 }
 
-.l-class-content-header {
+.l-content-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -68,16 +68,65 @@ body {
   width: 100%;
 }
 
-.oiko-app--sidebar {
-  flex-grow: 0;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-content: stretch;
-  align-items: stretch;
-  width: 400px;
+.l-content-header-search-box {
+  // @todo: remove :)
+  background-color: lightskyblue;
 }
 
+.l-content-header-user {
+  // @todo: remove :)
+  background-color: lightgreen;
+}
+
+// Allow for switching the layout based on app state.
+.showing-map {
+
+  // We set the explicit orders here for clarity, these are the usual DOM source orderings.
+  .l-sidebar {
+    order: 1;
+  }
+  .l-content-container {
+    order: 2;
+  }
+
+  .l-sidebar-content {
+    order: 1;
+  }
+  .oiko-app {
+    order: 2;
+  }
+
+  .l-content-header-search-box {
+    order: 1;
+  }
+  .l-content-header-user {
+    order: 2;
+  }
+}
+
+.showing-timeline {
+  // Most of these orders are just the reversed orders from .showing-map.
+  .l-sidebar {
+    order: 2;
+  }
+  .l-content-container {
+    order: 1;
+  }
+
+  .l-sidebar-content {
+    order: 2;
+  }
+  .oiko-app {
+    order: 1;
+  }
+
+  .l-content-header-search-box {
+    order: 2;
+  }
+  .l-content-header-user {
+    order: 1;
+  }
+}
 
 // 'Main' layout
 // --------------

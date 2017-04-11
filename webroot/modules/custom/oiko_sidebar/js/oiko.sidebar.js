@@ -7,8 +7,11 @@
     attach: function(context, settings) {
 
       $(context).find('.oiko-sidebar').once('oiko_sidebar').each(function () {
-        Drupal.oiko.sidebar = new Drupal.Sidebar(this, {position: 'right'});
-        Drupal.oiko.sidebar.$sidebar.on('click', function(e) {
+        var $content = $(context).find('.sidebar-content');
+        if ($content.length) {
+          Drupal.oiko.sidebar = new Drupal.Sidebar(this, $content);
+        }
+        $content.on('click', function(e) {
           var $target = $(e.target);
           var id = $target.data('cidoc-id');
           if (id) {
@@ -38,10 +41,10 @@
   };
 
   Drupal.oiko.displayLoadingContentInLeafletSidebar = function(label) {
-    $('#leaflet-sidebar .sidebar-information-content-title').text(Drupal.t('Loading...'));
-    $('#leaflet-sidebar .sidebar-information-content-content').text(Drupal.t('Loading details...'));
-    $('#leaflet-sidebar .sidebar-discussion-content-content').text(Drupal.t('Loading discussions...'));
-    $('#leaflet-sidebar .sidebar-share-content-content').text(Drupal.t('Loading share links...'));
+    // $('#leaflet-sidebar .sidebar-information-content-title').text(Drupal.t('Loading...'));
+    // $('#leaflet-sidebar .sidebar-information-content-content').text(Drupal.t('Loading details...'));
+    // $('#leaflet-sidebar .sidebar-discussion-content-content').text(Drupal.t('Loading discussions...'));
+    // $('#leaflet-sidebar .sidebar-share-content-content').text(Drupal.t('Loading share links...'));
   };
 
   Drupal.oiko.displayContentInLeafletSidebar = function(id, donecb, errorcb) {

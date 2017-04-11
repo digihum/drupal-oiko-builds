@@ -19,3 +19,16 @@ $steps: 25;
 .tdrag > div {
   background-color: rgba(palette(tan), .15);
 }
+
+
+.leaflet-control-layers-expanded.leaflet-timeline-control {
+  padding: 6px 0 0;
+}
+
+.leaflet-control-layers-expanded.leaflet-timeline-control {
+  box-shadow: none;
+}
+
+.leaflet-timeline-control .vis-timeline {
+  border: none;
+}
