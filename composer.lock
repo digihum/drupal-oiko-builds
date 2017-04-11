@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa8ea6251c7febc8c80318ff7a12f33b",
+    "content-hash": "c4a3fe8d901e032c8adfdd613a89f014",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -2590,7 +2590,7 @@
                 "composer/installers": "^1.0.21"
             },
             "type": "drupal-module",
-            "time": "2016-05-02 15:43:10"
+            "time": "2016-09-20 10:25:00"
         },
         {
             "name": "drupal/metatag",
