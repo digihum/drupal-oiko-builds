@@ -41,8 +41,9 @@
   };
 
   Drupal.oiko.displayLoadingContentInLeafletSidebar = function(label) {
-    // $('#leaflet-sidebar .sidebar-information-content-title').text(Drupal.t('Loading...'));
-    // $('#leaflet-sidebar .sidebar-information-content-content').text(Drupal.t('Loading details...'));
+    // This is actually a cheeky way to ensure that we don't need to scroll to the top.
+    $('.sidebar-information-content-title').text(Drupal.t('Loading...'));
+    $('.sidebar-information-content-content').text(Drupal.t('Loading details...'));
     // $('#leaflet-sidebar .sidebar-discussion-content-content').text(Drupal.t('Loading discussions...'));
     // $('#leaflet-sidebar .sidebar-share-content-content').text(Drupal.t('Loading share links...'));
   };

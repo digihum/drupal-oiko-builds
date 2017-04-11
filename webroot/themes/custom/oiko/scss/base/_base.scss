@@ -274,3 +274,29 @@ select {
     }
   }
 }
+
+.tabs.vertical {
+  border: none;
+}
+
+
+.tabs .tabs-title a {
+  text-decoration: none;
+  &:hover {
+    color: palette(tan);
+    font-weight: bold;
+  }
+
+  &:focus,
+  &[aria-selected='true'] {
+    color: palette(tan);
+    font-weight: bold;
+  }
+}
+
+.tabs.vertical .tabs-title {
+  border-bottom: 1px solid $light-gray;
+  &:last-child {
+    border-bottom: none;
+  }
+}
