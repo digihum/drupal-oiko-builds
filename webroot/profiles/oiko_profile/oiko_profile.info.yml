@@ -4,6 +4,8 @@ description: Install profile for the Oiko
 core: 8.x
 
 dependencies:
+  - block_content
+  - oiko_app
   - google_analytics
   - eu_cookie_compliance
   - eva
@@ -105,6 +107,8 @@ cm_config_tools:
     - system.menu.admin
     - system.menu.main
     - system.menu.tools
+    - tour.tour.map
+    - tour.tour.timeline
   managed:
     - block.block.maplegendblock
     - block.block.oiko_account_menu
@@ -684,6 +688,9 @@ cm_config_tools:
     - views.view.p99_dissolved
     - views.view.p99_dissov_group
     - views.view.timeline
+    - block.block.welcomeblock
+    - core.entity_form_display.block_content.modal_welcome.default
+    - core.entity_view_display.block_content.modal_welcome.default
   delete:
     - views.view.appelations
     - views.view.appelations_real_names
@@ -717,4 +724,7 @@ cm_config_tools:
     - views.view.time_span_directly_linked_events
     - views.view.time_span_within_period
   implicit:
+    - block_content.type.modal_welcome
+    - field.field.block_content.modal_welcome.body
+    - field.storage.block_content.body
     - node.type.content_page

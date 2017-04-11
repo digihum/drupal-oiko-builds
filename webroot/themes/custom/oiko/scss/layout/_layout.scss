@@ -7,15 +7,125 @@ body {
 
 .l-main {
   flex-grow: 1;
-  overflow: auto;
+  display: flex;
+}
+
+.l-sidebar {
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.l-sidebar-upper {
+
+}
+
+.l-sidebar-lower {
+
+}
+
+
+.l-content-container {
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.l-map-wrap {
+.l-content-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-grow: 0;
+  height: 50px;
+}
+
+.l-main-content {
+  flex-grow: 1;
+  display: flex;
+  height: 100%;
+}
+
+.oiko-app {
+  height: 100%;
   flex-grow: 1;
   display: flex;
   flex-direction: row;
+  align-items: stretch;
+}
+
+.oiko-app--map {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.oiko-app--timeline {
+  flex-grow: 1;
+  width: 100%;
+}
+
+.l-content-header-search-box {
+  // @todo: remove :)
+  background-color: lightskyblue;
+}
+
+.l-content-header-user {
+  // @todo: remove :)
+  background-color: lightgreen;
+}
+
+// Allow for switching the layout based on app state.
+.showing-map {
+
+  // We set the explicit orders here for clarity, these are the usual DOM source orderings.
+  .l-sidebar {
+    order: 1;
+  }
+  .l-content-container {
+    order: 2;
+  }
+
+  .l-sidebar-content {
+    order: 1;
+  }
+  .oiko-app {
+    order: 2;
+  }
+
+  .l-content-header-search-box {
+    order: 1;
+  }
+  .l-content-header-user {
+    order: 2;
+  }
+}
+
+.showing-timeline {
+  // Most of these orders are just the reversed orders from .showing-map.
+  .l-sidebar {
+    order: 2;
+  }
+  .l-content-container {
+    order: 1;
+  }
+
+  .l-sidebar-content {
+    order: 2;
+  }
+  .oiko-app {
+    order: 1;
+  }
+
+  .l-content-header-search-box {
+    order: 2;
+  }
+  .l-content-header-user {
+    order: 1;
+  }
 }
 
 // 'Main' layout
@@ -33,46 +143,6 @@ body {
 
 .l-last {
   @include last();
-}
-
-// On smaller screens, we put everything in a single column.
-@include in-small-layout {
-  .l-main-content,
-  .l-sidebar-first,
-  .l-sidebar-second {
-    @include full();
-  }
-}
-
-// On larger screens, we go multi-column.
-@include in-large-layout {
-  .l-sidebar-first {
-    @include span(3);
-  }
-  .l-sidebar-second {
-    @include span(3);
-  }
-  .l-has-no-sidebars .l-main-content {
-    @include full();
-  }
-  .l-has-both-sidebars .l-main-content {
-    @include span(6);
-  }
-  .l-has-sidebar-first .l-main-content {
-    @include span(9);
-  }
-  .l-has-sidebar-second .l-main-content {
-    @include span(9);
-  }
-  .l-half {
-    @include span(6 of 12);
-  }
-  .l-col-7 {
-    @include span(7 of 12);
-  }
-  .l-col-5 {
-    @include span(5 of 12);
-  }
 }
 
 

@@ -1,0 +1,55 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_app
+id: map
+label: Map
+module: oiko_app
+routes:
+  -
+    route_name: oiko_app.app
+tips:
+  upper-sidebar:
+    id: upper-sidebar
+    plugin: text
+    label: 'Upper sidebar'
+    weight: -100
+    attributes:
+      data-class: l-sidebar-upper
+    body: 'The upper sidebar'
+    location: ''
+    next_label: ''
+    previous_label: ''
+  timeline-browser:
+    id: timeline-browser
+    plugin: text
+    label: 'Timeline Browser'
+    weight: -99
+    attributes:
+      data-class: leaflet-timeline-control
+    body: 'This is the timeline browser'
+    location: top
+    next_label: null
+    previous_label: null
+  modal-tip:
+    id: modal-tip
+    plugin: text
+    label: 'Modal Tip'
+    weight: -98
+    attributes: null
+    body: 'This is a modal tip'
+    location: top
+    next_label: null
+    previous_label: null
+  zoom-control:
+    id: zoom-control
+    plugin: text
+    label: 'Zoom control'
+    weight: -97
+    attributes:
+      data-class: leaflet-control-zoom
+    body: "This is the Zoom control for the map.\r\n\r\nAnd some <strong>Strongly worded HTML</strong>"
+    location: right
+    next_label: null
+    previous_label: null

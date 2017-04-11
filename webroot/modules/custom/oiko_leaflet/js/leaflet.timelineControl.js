@@ -1,40 +1,286 @@
-(function ($) {
+(function () {
   'use strict';
   L.TimeLineControl = L.Control.extend({
-    options: {
-      position: 'bottomleft'
-    },
-    initialize: function initialize() {
-      var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-      var defaultOptions = {
-        duration: 10000,
-        enableKeyboardControls: false,
-        enablePlayback: false,
-        formatOutput: function formatOutput(output) {
-          return '' + (output || '');
-        },
-        showTicks: false,
-        waitToUpdateMap: false,
-        position: 'bottomleft',
-        steps: 1000,
-        drupalLeaflet: {
-          temporalStart: false,
-          temporalEnd: false
-        }
-      };
-      this.timelines = [];
-      this.callbacks = [];
-      this.doneCallbacks = [];
-      L.Util.setOptions(this, defaultOptions);
-      L.Util.setOptions(this, options);
-      if (typeof options.start !== 'undefined') {
-        this.start = options.start;
-      }
-      if (typeof options.end !== 'undefined') {
-        this.end = options.end;
-      }
+    // Our default options.
+    options: {
+      position: 'bottomleft',
+      waitToUpdateMap: false,
+      waitToUpdateTimeline: true,
+      timelineViewSlices: 100,
+      numberOfClasses: 25,
+      temporalRangeWindow: 0
     },
+
+    initialize: function initialize(options) {
+      L.Util.setOptions(this, options);
+      this._maxOfCounts = 1;
+
+      this._onTemporalRebaseDebounced = this.debounce(this._onTemporalRebase, 50, false);
+      this._onTemporalRedrawDebounced = this.debounce(this._onTemporalRedraw, 10, false);
+
+      this.window = {
+        start: NaN,
+        end: NaN
+      };
+
+      this.currentTimeAdjusted = false;
+      this.boundsAdjusted = false;
+    },
+
+    // @method addTo(map: Map): this
+    // Adds the control to the given map.
+    addTo: function (map) {
+      this.remove();
+      this._map = map;
+
+      var container = this._container = this.onAdd(map);
+
+      // Add the timeline after the map container, not within it.
+      this._DOMinsertAfter(container, map._container);
+
+      return this;
+    },
+
+    // Helper to insert a DOM node after an existing one.
+    _DOMinsertAfter: function (newNode, referenceNode) {
+      referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    },
+
+    // Returns a function, that, as long as it continues to be invoked, will not
+    // be triggered. The function will be called after it stops being called for
+    // N milliseconds. If `immediate` is passed, trigger the function on the
+    // leading edge, instead of the trailing.
+    debounce: function (func, wait, immediate) {
+      var timeout;
+      return function() {
+        var context = this, args = arguments;
+        var later = function() {
+          timeout = null;
+          if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+      };
+    },
+
+    /**
+     * We've been added to a map, return a container div and add events.
+     *
+     * @param map
+     * @returns {div|*}
+     */
+    onAdd: function onAdd(map) {
+      this.map = map;
+      this._createDOM();
+
+      // Setup some events.
+      this.map.on('temporal.rebase', this._onTemporalRebaseDebounced, this);
+      this.map.on('temporal.redraw', this._onTemporalRedrawDebounced, this);
+
+      // Hook into the timeline.
+      this._visTimeline.on('rangechanged', L.Util.bind(this._onTemporalRedrawDebounced, this));
+      return this.container;
+    },
+
+    onRemove: function onRemove() {
+      this.map.off('temporal.rebase', this._onTemporalRebaseDebounced, this);
+      this.map.off('temporal.redraw', this._onTemporalRedrawDebounced, this);
+    },
+
+    /**
+     * Rebase the timeline browser.
+     *
+     * This should be called when items on the browser are changed.
+     *
+     * @private
+     */
+    _onTemporalRebase: function () {
+      var bounds = {
+        min: Infinity,
+        max: -Infinity
+      };
+      var boundsCallback = function(min, max) {
+        bounds.min = Math.min(bounds.min, min);
+        bounds.max = Math.max(bounds.max, max);
+      };
+
+      // 1. Fire an event asking for the maximal temporal bounds of the temporal layers on the map.
+      this.map.fire('temporal.getBounds', {boundsCallback: boundsCallback});
+
+      // If we got some valid bounds, then there's something to do.
+      if (bounds.min < bounds.max) {
+        // 2. Set these to be the min and max of the vistimeline.
+        this._visTimeline.setOptions({
+          min: bounds.min * 1000,
+          // start: bounds.min * 1000,
+          max: bounds.max * 1000,
+          // end: bounds.max * 1000
+        });
+
+        // 3. Alter the currently visible window of the vistimeline.
+        var window = this._visTimeline.getWindow();
+        if (window.start.getTime() < bounds.min * 1000) {
+          this._visTimeline.setWindow(bounds.min * 1000);
+        }
+        if (window.end.getTime() > bounds.max * 1000) {
+          this._visTimeline.setWindow(null, bounds.max * 1000);
+        }
+        // Preserve an existing window if one is set.
+        if (!isNaN(this.window.start) && !isNaN(this.window.end)) {
+          this._visTimeline.setWindow(this.window.start * 1000, this.window.end * 1000);
+        }
+        else if (!this.boundsAdjusted) {
+          this._visTimeline.setWindow(bounds.min * 1000, bounds.max * 1000);
+          this.boundsAdjusted = true;
+        }
+
+        // If we need to, move the current time marker.
+        if (!this.currentTimeAdjusted) {
+          this.setTime((bounds.max + bounds.min) / 2);
+        }
+        
+        // Get the global count of events per biggest slice, this will be used to scale all events.
+        var windowSize = bounds.max - bounds.min;
+
+        var windowSegmentSize = windowSize / this.options.timelineViewSlices;
+
+        var position = bounds.min;
+
+        var count = 0;
+        var countsCallback = function(items) {
+          count += items;
+        };
+
+        var slice;
+        this._maxOfCounts = 1;
+        while (position < bounds.max) {
+          slice = {
+            start: position,
+            end: position + windowSegmentSize,
+          };
+          count = 0;
+          this.map.fire('temporal.getCounts', {slice: slice, countsCallback: countsCallback});
+          this._maxOfCounts = Math.max(this._maxOfCounts, count);
+          position += windowSegmentSize;
+        }
+      }
+
+      // 4. Trigger a redraw of the vistimeline.
+      this.map.fire('temporal.redraw');
+    },
+
+    // Get the unique, sorted items of a numeric array.
+    _arrayUnique: function (a) {
+      return a.sort(function (a, b) {return a - b}).filter(function(item, pos, ary) {
+        return !pos || item != ary[pos - 1];
+      })
+    },
+
+    /**
+     * Redraw the timeline browser, or at least mark it as such.
+     *
+     * @private
+     */
+    _onTemporalRedraw: function () {
+      var count = 0;
+      var countsCallback = function(items) {
+        count += items;
+      };
+
+      var allEventBounds = [];
+      var startEndCallback = function(start, end) {
+        allEventBounds.push(start);
+        allEventBounds.push(end);
+      };
+
+      // Plan of attack:
+      // 3. Get the current visible window of the vistimeline.
+      var window = this._visTimeline.getWindow();
+      // 4. Break that into option.timelineViewSlices segments.
+      var windowSize = window.end.getTime() / 1000 - window.start.getTime() / 1000;
+      if (windowSize < 1) {
+        return;
+      }
+
+      var visSlices = [], slices = [], slice, visSlice;
+
+      // If there are < this.options.timelineViewSlices events in this window, use them as the segments.
+      count = 0;
+      slice = {
+        start: window.start.getTime() / 1000,
+        end: window.end.getTime() / 1000
+      };
+      this.map.fire('temporal.getCounts', {slice: slice, countsCallback: countsCallback});
+      // @TODO: If performance becomes an issue, then remove this 'true', and re-work the else case.
+      if (true || count < this.options.timelineViewSlices) {
+        // We can easily render the exact events, so get the start/end time of them all.
+        allEventBounds = [];
+        this.map.fire('temporal.getStartAndEnds', {slice: slice, startEndCallback: startEndCallback});
+        // Make unique and sort.
+        allEventBounds = this._arrayUnique(allEventBounds);
+        // Make slices for each entry in the array.
+        var last = false;
+        for (var i = 0;i < allEventBounds.length;i++) {
+          if (last) {
+            slices.push({
+              start: last,
+              end: allEventBounds[i]
+            });
+          }
+          last = allEventBounds[i];
+        }
+      }
+      else {
+        var position = window.start.getTime() / 1000;
+
+        var endTime = window.end.getTime() / 1000;
+        var windowSegmentSize = windowSize / this.options.timelineViewSlices;
+
+        // 5. Ask each temporal layer for how many events are in each slice.
+        while (position < endTime) {
+          slice = {
+            start: position,
+            end: position + windowSegmentSize
+          };
+          slices.push(slice);
+          position += windowSegmentSize;
+        }
+      }
+
+      for (var i = 0;i < slices.length;i++) {
+        count = 0;
+        this.map.fire('temporal.getCounts', {slice: slices[i], countsCallback: countsCallback});
+        visSlice = {
+          start: slices[i].start * 1000,
+          end: slices[i].end * 1000,
+          className: 'timeline-browser-item-count--' + Math.round(count / this._maxOfCounts * this.options.numberOfClasses),
+          type: 'background'
+        };
+        visSlices.push(visSlice);
+      }
+
+      // Dedupe the visSlices.
+      var lastClass;
+      for (var i = 0;i < visSlices.length;i++) {
+        if (lastClass == visSlices[i].className) {
+          // Expand the previous slice to this slices end.
+          visSlices[i - 1].end = visSlices[i].end;
+          // This is a duplicate slice and can go, and we will reprocess this i value.
+          visSlices.splice(i, 1);
+          i--;
+        }
+        else {
+          lastClass = visSlices[i].className;
+        }
+      }
+
+      // 7. Update the vistimeline with those items.
+      this._visTimeline.setItems(visSlices);
+    },
+
     /**
      * Create all of the DOM for the control.
      *
@@ -44,27 +290,19 @@
       var classes = ['leaflet-control-layers', 'leaflet-control-layers-expanded', 'leaflet-timeline-control'];
       var container = L.DomUtil.create('div', classes.join(' '));
       this.container = container;
-      this._makeSlider(container);
-    },
-    /**
-     * Creates the range input
-     *
-     * @private
-     * @param {HTMLElement} container The container to which to add the input
-     */
-    _makeSlider: function _makeSlider(container) {
-      var _this4 = this;
-
       var options = {
         width:  "100%",
         stack: false,
         showCurrentTime: false,
+        showMajorLabels: false,
+        height: 60,
         hiddenDates: [
           {start: '0000-01-01 00:00:00', end: '0001-01-01 00:00:00'}
         ],
         format: {
           minorLabels: {
-            year: 'PPPP'
+            year: 'PPPP',
+            month: 'MMM PPPP'
           },
           majorLabels: {
             weekday:    'MMMM PPPP',
@@ -76,165 +314,107 @@
       };
 
       // Create a Timeline
-      this._visItems = new vis.DataSet([]);
-      this._visTimeline = new vis.Timeline(container, this._visItems, options);
+      this._visTimeline = new vis.Timeline(container, [], options);
       var customDate = new Date();
       customDate = new Date(customDate.getFullYear(), customDate.getMonth(), customDate.getDate() + 1);
       this._visTimeline.addCustomTime(customDate, 'tdrag');
+
       // Set timeline time change event, so cursor is set after moving custom time (blue)
-      this._visTimeline.on('timechange', function(e) {
-        if (e.id === 'tdrag') {
-          _this4._visTimelineChanged(e);
-          _this4._updateDragTitle();
-        }
-      });
-      this._visTimeline.on('timechanged', function(e) {
-        if (e.id === 'tdrag') {
-          _this4._visTimelineChangedDone(e);
-          _this4._updateDragTitle();
-        }
-      });
+      this._visTimeline
+        .on('timechange', L.Util.bind(function(e) {
+          if (e.id === 'tdrag') {
+            this.map.fire('temporal.shift', {time: Math.round(e.time.getTime() / 1000)});
+            this._updateDragTitle();
+          }
+        }, this))
+        .on('timechanged', L.Util.bind(function(e) {
+          if (e.id === 'tdrag') {
+            this.map.fire('temporal.shifted', {time: Math.round(e.time.getTime() / 1000)});
+            this._updateDragTitle();
+          }
+        }, this))
+        .on('rangechanged', L.Util.bind(function(e) {
+          this.window = {
+            start: e.start.getTime() / 1000,
+            end: e.end.getTime() / 1000
+          };
+          this.map.fireEvent('temporal.visibleWindowChanged');
+        }, this))
+        .on('doubleClick', L.Util.bind(function(e) {
+          if (typeof e.time !== 'undefined') {
+            this._visTimeline.setCustomTime(e.time, 'tdrag');
+            this.map.fire('temporal.shift', {time: Math.round(e.time.getTime() / 1000)});
+            this.map.fire('temporal.shifted', {time: Math.round(e.time.getTime() / 1000)});
+            this._updateDragTitle();
+          }
+        }, this));
     },
-    _visTimelineChanged: function _visTimelineChanged(properties) {
-      var time = Math.round(properties.time.getTime() / 1000);
-      this.time = time;
-      if (!this.options.waitToUpdateMap || e.type === 'change') {
-        this.callbacks.forEach(function (cb) {
-          return cb(time);
-        });
-      }
-    },
-    _visTimelineChangedDone: function _visTimelineChangedDone(properties) {
-      var time = Math.round(properties.time.getTime() / 1000);
-      this.time = time;
-      if (!this.options.waitToUpdateMap || e.type === 'change') {
-        this.doneCallbacks.forEach(function (cb) {
-          return cb(time);
-        });
-      }
-    },
-    _sliderChanged: function _sliderChanged(e) {
-      var time = parseFloat(e.target.value, 10);
-      this.time = time;
-      if (!this.options.waitToUpdateMap || e.type === 'change') {
-        this.callbacks.forEach(function (cb) {
-          return cb(time);
-        });
-      }
-      this._updateDragTitle();
-    },
-    _updateDragTitle: function () {
-      var offset = 365.25 * 86400 / 2;
-      var low = this.time - offset;
-      var high = this.time + offset;
-      var format = 'D MMMM PPPP';
-      this._visTimeline.setCustomTimeTitle('Displaying: ' + vis.moment.utc(low * 1000).format(format) + ' -  ' + vis.moment.utc(high * 1000).format(format), 'tdrag');
-    },
-    addItem: function addItem(min, max) {
-      var obj = {
-        start: min * 1000,
-        end: max * 1000,
-        type: 'background'
-      };
-      this._visItems.add(obj);
-    },
-    addTimeline: function addTimeline(timeline, cb, dcb) {
-      var _this = this;
 
-      // this.pause();
-      var timelineCount = this.timelines.length;
+    _updateDragTitle: function (time) {
+      var thisTime = time ? time : this._visTimeline.getCustomTime('tdrag') / 1000;
+      var offset = this.options.temporalRangeWindow;
+      if (offset > 0) {
+        var low = thisTime - offset;
+        var high = thisTime + offset;
+        var format = 'D MMMM PPPP';
+        this._visTimeline.setCustomTimeTitle('Displaying: ' + vis.moment.utc(low * 1000).format(format) + ' -  ' + vis.moment.utc(high * 1000).format(format), 'tdrag');
+      }
+      else {
+        var current = thisTime;
+        var format = 'D MMMM PPPP';
+        this._visTimeline.setCustomTimeTitle('Displaying: ' + vis.moment.utc(current * 1000).format(format), 'tdrag');
+      }
+    },
 
-      if (_this.timelines.indexOf(timeline) === -1) {
-        _this.timelines.push(timeline);
-        _this.callbacks.push(cb);
-        _this.doneCallbacks.push(dcb);
-      }
-      if (this.timelines.length !== timelineCount) {
-        this._recalculate();
-      }
-    },
-    /**
-     * Adjusts start/end/step size/etc. Should be called if any of those might
-     * change (e.g. when adding a new layer).
-     *
-     * @private
-     */
-    _recalculate: function _recalculate() {
-      var manualStart = typeof this.options.start !== 'undefined';
-      var manualEnd = typeof this.options.end !== 'undefined';
-      var duration = this.options.duration;
-      var min = Infinity;
-      var max = -Infinity;
-      if (typeof this.options.drupalLeaflet.temporalStart !== 'undefined') {
-        min = this.options.drupalLeaflet.temporalStart;
-      }
-      if (typeof this.options.drupalLeaflet.temporalEnd !== 'undefined') {
-        max = this.options.drupalLeaflet.temporalEnd;
-      }
-      if (!manualStart) {
-        this.start = min;
-      }
-      if (!manualEnd) {
-        this.end = max;
-      }
-      if (min != Infinity && max != Infinity) {
-        this._visTimeline.setOptions({
-          start: 1000 * min,
-          min: 1000 * min,
-          end: 1000 * max,
-          max: 1000 * max
-        });
-        this._visTimeline.setCustomTime(500 * (min + max) , 'tdrag');
-        this.setTime(Math.round((min + max)/2));
-      }
-    },
-    recalculate: function recalculate() {
-      this._recalculate();
-    },
     /**
      * Set the time displayed.
      *
      * @param {Number} time The time to set
      */
-    setTime: function setTime(time) {
-      this._sliderChanged({
-        type: 'change',
-        target: { value: time }
-      });
-    },
-    changeTime: function changeTime(time) {
-      this.time = time;
-      this._visTimeline.setCustomTime(1000 * time, 'tdrag');
-      if (!this.options.waitToUpdateMap) {
-        this.callbacks.forEach(function (cb) {
-          return cb(time);
-        });
-      }
-      if (!this.options.waitToUpdateMap) {
-        this.doneCallbacks.forEach(function (cb) {
-          return cb(time);
-        });
-      }
+    setTime: function (time) {
+      this.currentTimeAdjusted = true;
+      this._visTimeline.setCustomTime(time * 1000, 'tdrag');
+      this.map.fire('temporal.shift', {time: Math.round(time)});
+      this.map.fire('temporal.shifted', {time: Math.round(time)});
       this._updateDragTitle();
     },
-    onAdd: function onAdd(map) {
-      this.map = map;
-      this._createDOM();
-      this.setTime(this.start);
-      return this.container;
-    },
-    onRemove: function onRemove() {
-      if (this.options.enableKeyboardControls) {
-        this._removeKeyListeners();
-      }
-    }
 
+    setTimeAndWindow: function (time, start, end) {
+      if (!isNaN(time) && time !== 0) {
+        this._visTimeline.setCustomTime(1000 * time, 'tdrag');
+      }
+
+      if (!isNaN(start) && !isNaN(end) && start !== 0 && end !== 0) {
+        this._visTimeline.setWindow(1000 * start, 1000 * end);
+        this.window = {
+          start: start,
+          end: end
+        };
+      }
+      if (!isNaN(time) && time !== 0) {
+        this._updateDragTitle();
+        this.map.fire('temporal.shift', {time: Math.round(time)});
+        this.map.fire('temporal.shifted', {time: Math.round(time)});
+      }
+    },
+
+    getTime: function () {
+      return Math.round(this._visTimeline.getCustomTime('tdrag') / 1000);
+    },
+
+    getWindow: function () {
+      var timewindow = this._visTimeline.getWindow();
+      return {
+        start: Math.round(timewindow.start.getTime() / 1000),
+        end:  Math.round(timewindow.end.getTime() / 1000)
+      }
+    },
 
   });
 
-  L.timeLineControl = function (timeline, start, end, timelist) {
-    return new L.TimeLineControl(timeline, start, end, timelist);
+  L.timeLineControl = function (options) {
+    return new L.TimeLineControl(options);
   };
 
 
-})(jQuery);
+})();

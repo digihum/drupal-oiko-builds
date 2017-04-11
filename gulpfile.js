@@ -40,7 +40,13 @@ gulp.task('watch:sass', ['watch:sass:oiko']);
 
 
 gulp.task('compile:js', function () {
-  // return gulp.src("**/*.js").pipe(sourcemaps.init()).pipe(browserSync.reload());
+  // For now, just copy a file out of the node modules folder.
+  var files = [
+    'node_modules/foundation-sites/dist/foundation.min.js'
+  ];
+  return gulp
+    .src(files)
+    .pipe(gulp.dest('webroot/themes/custom/oiko/scripts/vendor'));
 });
 
 gulp.task('watch:js', ['compile:js'], function (done) {
@@ -58,11 +64,17 @@ gulp.task('browsersync', ['watch'], function(){
   // Watch CSS and JS files
   var files = [
     'css/*css',
-    'js/*js'
+    'js/*js',
   ];
 
   //initialize browsersync
   browserSync.init(files);
 
-  gulp.watch('webroot/modules/**/*.js', ['watch:js']);
+  gulp.watch('webroot/**/*.js', ['watch:js']);
+  gulp.watch('webroot/**/*.twig', ['watch:twig']);
+});
+
+gulp.task('watch:twig', function (done) {
+  browserSync.reload();
+  done();
 });

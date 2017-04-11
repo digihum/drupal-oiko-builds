@@ -1,29 +1,13 @@
 .navigation-bar {
   background-color: palette(grey);
   color: #FFF;
-  padding-top: $global-padding;
-  padding-bottom: $global-padding;
+  padding: $global-padding;
+
+  line-height: 2em;
 
   a {
     text-decoration: none;
   }
   text-align: center;
-  border-bottom: 5px solid palette(tan);
-}
-
-.navigation-bar--center {
-
-  text-transform: uppercase;
-  display: inline-block;
-  background: url('../images/globe.png') no-repeat left center;
-  padding-left: 40px;
-  background-size: 28px;
-
-  @include from('m') {
-    padding-left: 45px;
-    background-size: 35px;
-  }
-
-
-
+  text-transform: lowercase;
 }

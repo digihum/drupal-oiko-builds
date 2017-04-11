@@ -7,6 +7,7 @@ popups:
     - core/jquery
     - core/modernizr
     - oiko_sidebar/sidebar
+    - oiko_sidebar/oikoApp
 
 mapstate:
   js:
@@ -14,7 +15,6 @@ mapstate:
   version: VERSION
   dependencies:
     - oiko_leaflet/temporal
-    - oiko_leaflet/leaflet-hash
 
 empires:
   js:
@@ -23,6 +23,7 @@ empires:
   dependencies:
     - oiko_leaflet/temporal
     - core/jquery
+    - oiko_app/app
 
 arrows:
   js:
@@ -91,6 +92,19 @@ temporal:
     - core/jquery
     - oiko_leaflet/cluster
     - oiko_leaflet/moment.lang.oiko
+    - oiko_sidebar/oikoApp
+    - oiko_leaflet/leaflet.temporal-layer-group
+    - oiko_app/app
+
+
+leaflet.temporal-layer-group:
+  js:
+    js/leaflet.temporal-layer-group-helper.js: {}
+  version: VERSION
+  dependencies:
+    - oiko_leaflet/intervalTree
+    - leaflet/leaflet
+
 
 moment.lang.oiko:
   js:
@@ -113,14 +127,7 @@ leaflet-textpath:
     js/vendor/leaflet.textpath.js: {}
   dependencies:
     - leaflet/leaflet
-  version: 1.1.0
-
-leaflet-hash:
-  js:
-    js/vendor/leaflet-hash.js: {}
-  dependencies:
-    - leaflet/leaflet
-  version: 0.2.1
+  version: 1.1.0-1
 
 intervalTree:
   js:
@@ -130,18 +137,21 @@ intervalTree:
 markercluster:
   js:
     js/vendor/leaflet.markercluster.js: {}
+    js/vendor/leaflet.markercluster.layersupport.js: {}
+    js/vendor/leaflet.featuregroup.subgroup.js: {}
   css:
     component:
       css/vendor/MarkerCluster.css: {}
       css/vendor/MarkerCluster.Default.css: {}
+  version: v1.0.3
 
 vis:
-  version: v4.17.0
+  version: v4.19.1-1
   js:
     js/vendor/vis.min.js: {}
   css:
     component:
-      css/vendor/vis.min.css: {}
+      js/vendor/vis.min.css: {}
 
 leaflet-locatecontrol:
   js:

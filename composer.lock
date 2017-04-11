@@ -8,11 +8,17 @@
     "packages": [
         {
             "name": "Leaflet/Leaflet",
-            "version": "0.7.7",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Leaflet/Leaflet.git",
-                "reference": "v0.7.7"
+                "reference": "v1.0.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Leaflet/Leaflet/archive/v1.0.3.zip",
+                "reference": "v1.0.3",
+                "shasum": null
             },
             "require": {
                 "composer/installers": "^1.0.21"
@@ -2513,8 +2519,7 @@
                 "reference": "a3274e4"
             },
             "require": {
-                "drupal/core": "~8.0",
-                "leaflet/leaflet": "^0.7.7"
+                "drupal/core": "~8.0"
             },
             "type": "drupal-module",
             "extra": {
@@ -7188,6 +7193,87 @@
                 "instantiate"
             ],
             "time": "2015-06-14T21:17:01+00:00"
+        },
+        {
+            "name": "drupal/purl",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/purl",
+                "reference": "9f244923f7926de606e2abad8d961a822cf725ec"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.x-dev",
+                    "datestamp": "1471893239"
+                },
+                "patches_applied": {
+                    "https://www.drupal.org/node/2793285": "https://www.drupal.org/files/issues/purl-install-innodb.patch"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Ian Ward",
+                    "homepage": "https://www.drupal.org/user/4736"
+                },
+                {
+                    "name": "Jose Reyero",
+                    "homepage": "https://www.drupal.org/user/4299"
+                },
+                {
+                    "name": "alex_b",
+                    "homepage": "https://www.drupal.org/user/53995"
+                },
+                {
+                    "name": "bblake",
+                    "homepage": "https://www.drupal.org/user/620248"
+                },
+                {
+                    "name": "bezhermoso",
+                    "homepage": "https://www.drupal.org/user/3206871"
+                },
+                {
+                    "name": "febbraro",
+                    "homepage": "https://www.drupal.org/user/43670"
+                },
+                {
+                    "name": "jmiccolis",
+                    "homepage": "https://www.drupal.org/user/31731"
+                },
+                {
+                    "name": "mpotter",
+                    "homepage": "https://www.drupal.org/user/616192"
+                },
+                {
+                    "name": "tobby",
+                    "homepage": "https://www.drupal.org/user/154797"
+                },
+                {
+                    "name": "tom friedhof",
+                    "homepage": "https://www.drupal.org/user/62769"
+                },
+                {
+                    "name": "yhahn",
+                    "homepage": "https://www.drupal.org/user/264833"
+                }
+            ],
+            "description": "Persistent URL",
+            "homepage": "https://www.drupal.org/project/purl",
+            "support": {
+                "source": "http://cgit.drupalcode.org/purl"
+            },
+            "time": "2016-05-27T18:27:16+00:00"
         },
         {
             "name": "fabpot/goutte",

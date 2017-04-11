@@ -11,22 +11,22 @@
       drupalLeaflet.hasSidebar = true;
 
       // Check to see if we need to open the sidebar immediately.
-      $(document).once('oiko_leaflet__popups').each(function () {
-        if (drupalSettings.hasOwnProperty('oiko_leaflet') && drupalSettings.oiko_leaflet.hasOwnProperty('popup') && drupalSettings.oiko_leaflet.popup) {
-          // We might need to wait for everything we need to be loaded.
-          $(window).bind('load', function() {
-            Drupal.oiko.openSidebar(drupalSettings.oiko_leaflet.popup.id, drupalSettings.oiko_leaflet.popup.label, false);
-          });
-        }
-        else {
-          // We need to open the sidebar on wide screens.
-          if (window.matchMedia('(min-width: 641px)').matches) {
-            $(window).bind('load', function() {
-              Drupal.oiko.openSidebarLegend();
-            });
-          }
-        }
-      });
+      // $(document).once('oiko_leaflet__popups').each(function () {
+      //   if (drupalSettings.hasOwnProperty('oiko_leaflet') && drupalSettings.oiko_leaflet.hasOwnProperty('popup') && drupalSettings.oiko_leaflet.popup) {
+      //     // We might need to wait for everything we need to be loaded.
+      //     $(window).bind('load', function() {
+      //       Drupal.oiko.openSidebar(drupalSettings.oiko_leaflet.popup.id, drupalSettings.oiko_leaflet.popup.label, false);
+      //     });
+      //   }
+      //   else {
+      //     // We need to open the sidebar on wide screens.
+      //     if (window.matchMedia('(min-width: 641px)').matches) {
+      //       $(window).bind('load', function() {
+      //         Drupal.oiko.openSidebarLegend();
+      //       });
+      //     }
+      //   }
+      // });
 
       map.addEventListener('searchItem', function(e) {
         var id = e.properties.id;
@@ -34,9 +34,12 @@
         Drupal.oiko.openSidebar(id, title, true);
       });
 
-      $(window).bind('oikoSidebarOpen', function(e, id) {
+      $(window).bind('oikoSidebarOpening', function(e, id) {
         if (featureCache.hasOwnProperty(id)) {
-          map.panInsideBounds(featureCache[id], {animate: false});
+          if (!map.getBounds().contains(featureCache[id])) {
+            map.panInsideBounds(featureCache[id]);
+          }
+
         }
       });
     }
@@ -55,12 +58,12 @@
       }
       else if (typeof lFeature.getLatLng !== 'undefined') {
         var center = lFeature.getLatLng();
-        featureCache[feature.id] = leafletLatLngToBounds(center, 1000 * 30);
+        featureCache[feature.id] = leafletLatLngToBounds(center, 1000);
       }
 
       // Add a click event that opens our marker in the sidebar.
       lFeature.on('click', function () {
-        Drupal.oiko.openSidebar(feature.id, feature.label, true);
+        Drupal.oiko.openSidebar(feature.id);
       });
     }
   });

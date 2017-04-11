@@ -34,6 +34,14 @@ interface CidocEntityInterface extends ContentEntityInterface, EntityChangedInte
   public function bundleLabel();
 
   /**
+   * Gets the friendly label of the CIDOC entity bundle (class).
+   *
+   * @return string
+   *   The CIDOC entity class friendly label.
+   */
+  public function getFriendlyLabel();
+
+  /**
    * Gets the CIDOC entity creation timestamp.
    *
    * @return int

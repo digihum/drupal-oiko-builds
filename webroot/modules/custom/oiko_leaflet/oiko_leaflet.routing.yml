@@ -30,3 +30,19 @@ oiko_leaflet.empire_controller_listall:
     _title: 'List All Empires'
   requirements:
     _permission: 'access content'
+
+oiko_leaflet.map_page_controller_baseMap:
+  path: '/oiko_leaflet/map'
+  defaults:
+    _controller: '\Drupal\oiko_leaflet\Controller\MapPageController::baseMap'
+    _title: 'Render a fully-featured map'
+  requirements:
+    _permission: 'view published cidoc entities'
+
+oiko_leaflet.map_page_controller_allEntities:
+  path: '/oiko_leaflet/map/entities.json'
+  defaults:
+    _controller: '\Drupal\oiko_leaflet\Controller\MapPageController::allEntitiesForMap'
+    _title: 'Fetch the entities for items on a map'
+  requirements:
+    _permission: 'view published cidoc entities'

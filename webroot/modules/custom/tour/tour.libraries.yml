@@ -1,0 +1,30 @@
+tour:
+  version: VERSION
+  js:
+    js/tour.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - core/backbone
+    - tour/jquery.joyride
+    - tour/tour-styling
+
+tour-styling:
+  version: VERSION
+  css:
+    component:
+      css/tour.module.css: { media: screen }
+
+jquery.joyride:
+  remote: https://github.com/zurb/joyride
+  version: "v2.1.0"
+  license:
+    name: MIT
+    url: https://github.com/zurb/joyride/blob/v2.1.0/README.markdown
+    gpl-compatible: true
+  js:
+    js/vendor/jquery.joyride-2.1.1.js: { }
+  dependencies:
+    - core/jquery
+    - core/jquery.cookie

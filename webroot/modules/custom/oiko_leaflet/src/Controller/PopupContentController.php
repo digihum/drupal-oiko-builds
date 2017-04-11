@@ -7,7 +7,6 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\oiko_leaflet\Ajax\GAEventCommand;
-use Drupal\oiko_leaflet\Ajax\HistoryPushCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityManager;
 
@@ -52,13 +51,9 @@ class PopupContentController extends ControllerBase {
     $content = $view_builder->view($cidoc_entity, 'popup');
 
     $response = new AjaxResponse();
+    // @TODO: This line is hideous, change it.
+    $response->addCommand(new HtmlCommand('.sidebar-information-content-title', '<span>' . $cidoc_entity->getFriendlyLabel() . ': ' . $cidoc_entity->label() . '</span>'));
     $response->addCommand(new HtmlCommand('.sidebar-information-content-content', $content));
-    $pushData = [
-      'type' => 'popup',
-      'id' => $cidoc_entity->id(),
-      'label' => $cidoc_entity->label(),
-    ];
-    $response->addCommand(new HistoryPushCommand($pushData, NULL, $cidoc_entity->toUrl()));
     // Add in the GA response too.
     $response->addCommand(new GAEventCommand('pageview', ['dimension1' => $cidoc_entity->getOwner()->id()]));
     return $response;
