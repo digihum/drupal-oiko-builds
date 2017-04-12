@@ -13,6 +13,7 @@ regions:
   highlighted: Highlighted
   help: Help
   content: Content
+  user_header: User header
   content_header: Content Header
   sidebar_upper: Sidebar - Upper
   sidebar_lower: Sidebar - Lower

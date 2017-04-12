@@ -1,5 +1,6 @@
 <?php
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\block\Entity\Block;
 
 /**
  * Implements theme_preprocess().
@@ -131,6 +132,14 @@ function oiko_preprocess_block(&$variables) {
  * Implements hook_theme_suggestions_HOOK_alter() for form templates.
  */
 function oiko_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  // Add a template suggestion for user header blocks.
+  if (!empty($variables['elements']['#id'])) {
+    $block = Block::load($variables['elements']['#id']);
+    if ($block->getRegion() == 'user_header') {
+      $suggestions[] = 'block__' . $block->getRegion();
+      $suggestions[] = 'block__' . $block->getRegion() . '__' . $variables['elements']['#id'];
+    }
+  }
   // Add a template suggestion for modal welcome blocks.
   if (isset($variables['elements']['#base_plugin_id']) && $variables['elements']['#base_plugin_id'] === 'block_content') {
     if (isset($variables['elements']['content']['#block_content']) && $variables['elements']['content']['#block_content']->bundle() === 'modal_welcome') {
