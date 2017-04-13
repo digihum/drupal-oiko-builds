@@ -48,10 +48,15 @@ class MapLegendBlock extends BlockBase {
             ];
             $renderer->addCacheableDependency($image, $term);
 
-            $list_items[] = $this->t('@image&nbsp;&nbsp;@name', [
-              '@name' => $term->label(),
-              '@image' => $renderer->render($image),
-            ]);
+            $list_items[] = [
+              '#markup' => $this->t('@image&nbsp;&nbsp;@name', [
+                '@name' => $term->label(),
+                '@image' => $renderer->render($image),
+              ]),
+              '#wrapper_attributes' => [
+                'data-legend-category' => $term->id(),
+              ],
+            ];
           }
         }
       }
@@ -61,9 +66,15 @@ class MapLegendBlock extends BlockBase {
       '#theme' => 'image',
       '#uri' => $icons['blue'],
     ];
-    $list_items[] = $this->t('@image&nbsp;&nbsp;Other', [
-      '@image' => $renderer->render($image),
-    ]);
+    $list_items[] = [
+      '#markup' => $this->t('@image&nbsp;&nbsp;@name', [
+        '@name' => t('Other'),
+        '@image' => $renderer->render($image),
+      ]),
+      '#wrapper_attributes' => [
+        'data-legend-category' => 0,
+      ],
+    ];
 
     if (!empty($list_items)) {
       $build['map_legend_block'] = array(
@@ -72,6 +83,12 @@ class MapLegendBlock extends BlockBase {
         '#attributes' => [
           'class' => [
             'map-legend-icons',
+            'js-map-legend-filterable-widget',
+          ],
+        ],
+        '#attached' => [
+          'library' => [
+            'oiko_leaflet/legendBlock',
           ],
         ],
       );

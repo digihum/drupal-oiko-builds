@@ -83,3 +83,10 @@ export const QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY = 'cidoc_entity_id';
  * @type {string}
  */
 export const QUERYSTRING_VARIABLE_TIMELINE_ENTITIES = 'timelines';
+
+/**
+ * The PHS categories being filtered.
+ *
+ * @type {string}
+ */
+export const QUERYSTRING_VARIABLE_PHS_CATEGORIES = 'categories';

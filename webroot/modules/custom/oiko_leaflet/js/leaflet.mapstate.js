@@ -30,26 +30,11 @@
           }
           else {
             lFeature = this.create_feature(feature);
-            if (lFeature != undefined) {
-              // if (!feature.hasOwnProperty('temporal')) {
-              //   //this.lMap.addLayer(lFeature);
-              // }
-
-              // if (feature.popup) {
-              //   lFeature.bindPopup(feature.popup);
-              // }
-            }
           }
 
           // Allow others to do something with the feature that was just added to the map
           $(document).trigger('leaflet.feature', [lFeature, feature, this]);
         }
-
-        // Fit bounds after adding features.
-        // But only if the the location hash doesn't contain anything valid.
-        // if (!hash.parseHash(location.hash)) {
-        //   this.fitbounds();
-        // }
 
         // Allow plugins to do things after features have been added.
         if (features.length) {

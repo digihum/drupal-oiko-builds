@@ -113,6 +113,11 @@ moment.lang.oiko:
   dependencies:
     - oiko_leaflet/vis
 
+legendBlock:
+  js:
+    js/legend-block.js: {}
+  version: VERSION
+
 # These are our external vendor libraries.
 
 leaflet-sleep:

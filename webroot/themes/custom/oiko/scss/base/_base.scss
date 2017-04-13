@@ -243,16 +243,6 @@ select {
   }
 }
 
-[type='checkbox'] {
-  border: 1px solid palette(black, dark);
-  height: $input-font-size;
-  width: $input-font-size;
-  -webkit-appearance: none;
-}
-[type='checkbox']:checked {
-  -webkit-appearance: checkbox;
-}
-
 .hide-in-small-layout {
   @include hide-in-small-layout;
 }

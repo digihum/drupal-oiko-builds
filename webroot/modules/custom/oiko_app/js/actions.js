@@ -63,3 +63,8 @@ export const SET_COMPARATIVE_TIMELINES = 'oiko/SET_COMPARATIVE_TIMELINES';
 export function setComparativeTimelines(timelines) {
   return { type: SET_COMPARATIVE_TIMELINES, timelines }
 }
+
+export const SET_PHS_CATEGORIES = 'oiko/SET_PHS_CATEGORIES';
+export function setPHSCategories(categories) {
+  return { type: SET_PHS_CATEGORIES, categories }
+}
