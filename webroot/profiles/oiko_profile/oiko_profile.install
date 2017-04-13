@@ -199,3 +199,10 @@ function oiko_profile_update_8122() {
 function oiko_profile_update_8123() {
   \Drupal::service('module_installer')->install(['menu_ui']);
 }
+
+/**
+ * Enable the Webform module.
+ */
+function oiko_profile_update_8124() {
+  \Drupal::service('module_installer')->install(['webform', 'webform_ui']);
+}

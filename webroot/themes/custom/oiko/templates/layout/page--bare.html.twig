@@ -67,6 +67,7 @@
         <div class="l-main-content">
             <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
             {% include directory ~ '/templates/layout/sidebar-content.html.twig' %}
+            {{ page.highlighted }}
             {{ page.content }}
         </div>
     </div>

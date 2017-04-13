@@ -4,6 +4,7 @@ description: Install profile for the Oiko
 core: 8.x
 
 dependencies:
+  - webform
   - block_content
   - oiko_app
   - google_analytics
@@ -110,6 +111,7 @@ cm_config_tools:
     - tour.tour.map
     - tour.tour.timeline
   managed:
+    - block.block.feedback
     - block.block.maplegendblock
     - block.block.oiko_account_menu
     - block.block.oiko_branding
@@ -692,6 +694,7 @@ cm_config_tools:
     - core.entity_form_display.block_content.modal_welcome.default
     - core.entity_view_display.block_content.modal_welcome.default
     - block.block.mainnavigation
+    - webform.webform.feedback
   delete:
     - views.view.appelations
     - views.view.appelations_real_names

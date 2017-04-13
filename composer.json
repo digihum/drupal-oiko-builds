@@ -153,6 +153,7 @@
         "drupal/sharemessage": "1.0-beta1",
         "drupal/squid_autocomplete": "1.0-alpha5",
         "drupal/twig_xdebug": "^1",
+        "drupal/webform": "^5.0@beta",
         "drush/drush": "~8.0",
         "oomphinc/composer-installers-extender": "dev-master",
         "wikimedia/composer-merge-plugin": "^1.3"

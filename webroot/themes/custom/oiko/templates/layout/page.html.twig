@@ -50,11 +50,11 @@
         {{ page.primary_menu }}
         {{ page.secondary_menu }}
         {{ page.breadcrumb }}
-        {{ page.highlighted }}
         {{ page.help }}
         </div>{# /.layout-content #}
         <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
         <div class="layout-content">
+            {{ page.highlighted }}
             {{ page.content }}
         </div>{# /.layout-content #}
     </div>

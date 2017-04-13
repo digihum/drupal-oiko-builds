@@ -28,12 +28,16 @@
 <li {{ attributes.addClass('icon-links__item')|without('id') }}>
     {{ title_prefix }}
     {% if label %}
-        <a{{ title_attributes.addClass(['icon-links__link', 'icon-send']).setAttribute('data-open', attributes.id ) }}>{{ label }}</a>
+        <a{{ title_attributes.addClass(['icon-links__link']).setAttribute('data-open', attributes.id ) }}>
+            <i class="fa fa-bullhorn"></i>
+            <span class="show-for-sr">{{ label }}</span>
+        </a>
     {% endif %}
     {{ title_suffix }}
-    <div id="{{ attributes.id }}" class="reveal" data-reveal>
-        {% block content %}
+    {% block content %}
+        <div id="{{ attributes.id }}" class="reveal" data-reveal>
+            <h2>{{ label }}</h2>
             {{ content }}
-        {% endblock %}
-    </div>
+        </div>
+    {% endblock %}
 </li>
