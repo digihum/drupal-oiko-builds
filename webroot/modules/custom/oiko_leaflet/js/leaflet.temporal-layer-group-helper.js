@@ -38,6 +38,20 @@ function extensions(parentClass) { return {
     return this;
   },
 
+  removeFrom: function removeFrom(map) {
+    if (this._map !== map) {
+      return this;
+    }
+
+    if (this.onRemove) {
+      this.onRemove(map);
+    }
+
+    this._map = null;
+
+    return this;
+  },
+
   onAdd: function onAdd(map) {
     this.map = map;
     this.map.on('temporal.shift', this._onTemporalChange, this);
@@ -64,7 +78,6 @@ function extensions(parentClass) { return {
     this._temporalLayers.push(layer);
     this._temporalTree.insert(layer.temporal.start, layer.temporal.end, layer);
 
-    // @TODO: Need to debounce this.
     this.map.fire('temporal.rebase');
   },
 
@@ -92,7 +105,6 @@ function extensions(parentClass) { return {
       this._temporalTree.insert(this._temporalLayers[i].temporal.start, this._temporalLayers[i].temporal.end, this._temporalLayers[i]);
     }
 
-    // @TODO: Need to debounce this.
     this.map.fire('temporal.rebase');
   },
 
@@ -107,7 +119,7 @@ function extensions(parentClass) { return {
     var features = [];
     if (this._temporalTree.size) {
       // Get the layers we should be showing.
-      if (this.options.temporalRangeWindow == 0) {
+      if (this.options.temporalRangeWindow === 0) {
         features = this._temporalTree.lookup(Math.ceil(e.time));
       }
       else {

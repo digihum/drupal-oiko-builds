@@ -1,9 +1,12 @@
 import {
   setMapState, setTimeBrowserState, addAppModule, appModuleDoneLoading,
-  setVisualisation, setComparativeTimelines, setTimelinesState
+  setVisualisation, setComparativeTimelines, setTimelinesState,
+  setPHSCategories
 } from './actions';
 import { createOikoApp } from './store';
 import $ from './jquery';
+import isEqual from 'is-equal'
+import watch from 'redux-watch'
 
 // Spin up a new instance of our OikoApp.
 const app = createOikoApp();
@@ -24,8 +27,12 @@ Drupal.oiko.getAppState = () => {
   return app.getStore().getState();
 };
 
-// @TODO: Move all of this elsewhere.
 
+
+// @TODO: START: Move all of this elsewhere.
+
+
+// Window Visualisation.
 $(document).find('.js-oiko-app--toggle').bind('click', function(e) {
   const { visualisation } = store.getState();
   $(window).trigger('set.oiko.visualisation', visualisation === 'map' ? 'timeline' : 'map');
@@ -57,6 +64,19 @@ $(window).on('resize.oiko.map_container', () => {
 });
 
 
+// PHS category filter.
+$(window).bind('set.oiko.categories', (e, categories, internal) => {
+  if (internal) {
+    store.dispatch(setPHSCategories(categories));
+  }
+});
+let PHSCategoryWatch = watch(store.getState, 'PHSCategories', isEqual);
+const PHSCategoryListener = (newVal) => {
+  $(window).trigger('set.oiko.categories', [newVal]);
+};
+
+
+// Timelines on the comparative timeline widget.
 
 const timelinesListener = () => {
   const { comparativeTimelines } = store.getState();
@@ -83,6 +103,11 @@ $(window).bind('oiko.loaded', function() {
   // Bind to hide/show the correct visualisation.
   store.subscribe(visualisationSwitchListener);
   visualisationSwitchListener();
+
+  // Bind the PHS category listener.
+  store.subscribe(PHSCategoryWatch(PHSCategoryListener));
+  const { PHSCategories } = store.getState();
+  PHSCategoryListener(PHSCategories, PHSCategories, 'PHSCategories');
 
   $(window).on('oiko.timelines_updated', (e, timelines) => {
     const { comparativeTimelines } = store.getState();
@@ -210,4 +235,5 @@ $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
   }
 });
 
+// @TODO: END: Move all of this elsewhere.
 

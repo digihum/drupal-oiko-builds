@@ -243,16 +243,6 @@ select {
   }
 }
 
-[type='checkbox'] {
-  border: 1px solid palette(black, dark);
-  height: $input-font-size;
-  width: $input-font-size;
-  -webkit-appearance: none;
-}
-[type='checkbox']:checked {
-  -webkit-appearance: checkbox;
-}
-
 .hide-in-small-layout {
   @include hide-in-small-layout;
 }
@@ -272,5 +262,31 @@ select {
         background-color: palette($color-name, $shade);
       }
     }
+  }
+}
+
+.tabs.vertical {
+  border: none;
+}
+
+
+.tabs .tabs-title a {
+  text-decoration: none;
+  &:hover {
+    color: palette(tan);
+    font-weight: bold;
+  }
+
+  &:focus,
+  &[aria-selected='true'] {
+    color: palette(tan);
+    font-weight: bold;
+  }
+}
+
+.tabs.vertical .tabs-title {
+  border-bottom: 1px solid $light-gray;
+  &:last-child {
+    border-bottom: none;
   }
 }

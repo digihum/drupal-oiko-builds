@@ -3,7 +3,62 @@
 
   Drupal.oiko.addAppModule('temporal');
 
+  var ensureTemporalLayerGroup = function(map, drupalLeaflet, id) {
+
+    if (typeof drupalLeaflet.temporalDisplayedLayerGroups[id] === 'undefined') {
+      // We have a target layer that we want to add our feature to.
+      drupalLeaflet.temporalDisplayedLayerGroups[id] = L.featureGroup.subGroup(drupalLeaflet.mainLayer);
+      drupalLeaflet.temporalDisplayedLayerGroups[id].addTo(map);
+      // And then we have a TemporalLayerHelper that will add a remove layers to our layer group above.
+      drupalLeaflet.temporalDisplayedLayerHelpers[id] = L.temporalLayerHelper(drupalLeaflet.temporalDisplayedLayerGroups[id], {temporalRangeWindow: drupalLeaflet.timeSelectionWindowSize});
+      drupalLeaflet.temporalDisplayedLayerHelpers[id].addTo(map);
+    }
+
+    // We want our features added to the layer helpers.
+    return drupalLeaflet.temporalDisplayedLayerHelpers[id];
+  };
+
+  /**
+   * Handle the categories that the oiko App wants to display changing.
+   *
+   * We need to add and remove layers from the map as needed.
+   *
+   * @param categories
+   *   The list of category IDs to display, or if empty, display all categories.
+   */
+  var handleCatergoryChange = function(map, layers, categories) {
+    // Make sure categories are numeric.
+    var numericCategories = [];
+    for (var i = 0;i < categories.length;i++) {
+      numericCategories.push(parseInt(categories[i], 10));
+    }
+
+    if (numericCategories.length === 0) {
+      // Display all the feature groups.
+      for (i in layers) {
+        layers[i].addTo(map);
+      }
+    }
+    else {
+      var iNumeric;
+      // Walk the feature groups and hide/display as needed.
+      for (i in layers) {
+        iNumeric = parseInt(i, 10);
+        if (numericCategories.indexOf(iNumeric) > -1) {
+          // This is displayed, ensure it is.
+          layers[i].addTo(map);
+        }
+        else {
+          // This category should be hidden.
+          layers[i].removeFrom(map);
+        }
+      }
+    }
+  };
+
   $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
+
+    window.globalDrupalLeaflet = drupalLeaflet;
 
     if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
 
@@ -15,13 +70,13 @@
       });
       drupalLeaflet.timelineControl.addTo(map);
 
-      // We have a target layer that we want to add our feature to.
-      drupalLeaflet.temporalDisplayedLayerGroup = L.featureGroup.subGroup(drupalLeaflet.mainLayer);
-      drupalLeaflet.temporalDisplayedLayerGroup.addTo(map);
-      // And then we have a TemporalLayerHelper that will add a remove layers to our layer group above.
-      drupalLeaflet.temporalDisplayedLayerHelper = L.temporalLayerHelper(drupalLeaflet.temporalDisplayedLayerGroup, {temporalRangeWindow: drupalLeaflet.timeSelectionWindowSize});
-      drupalLeaflet.temporalDisplayedLayerHelper.addTo(map);
+      drupalLeaflet.temporalDisplayedLayerGroups = drupalLeaflet.temporalDisplayedLayerGroups || {};
+      drupalLeaflet.temporalDisplayedLayerHelpers = drupalLeaflet.temporalDisplayedLayerHelpers || {};
 
+      $(window).bind('set.oiko.categories', function(e, categories) {
+        handleCatergoryChange(map, drupalLeaflet.temporalDisplayedLayerGroups, categories);
+        handleCatergoryChange(map, drupalLeaflet.temporalDisplayedLayerHelpers, categories);
+      });
 
       $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
         if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
@@ -32,7 +87,7 @@
             };
           }
           // Add this feature to the temporal layer group.
-          drupalLeaflet.temporalDisplayedLayerHelper.addLayer(lFeature, feature);
+          ensureTemporalLayerGroup(map, drupalLeaflet, feature.significance_id ? feature.significance_id : 0).addLayer(lFeature, feature);
         }
       });
 

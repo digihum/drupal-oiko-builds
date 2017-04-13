@@ -192,3 +192,10 @@ function oiko_profile_update_8122() {
   $system_site->set('page.front', '/oiko_app/app');
   $system_site->save();
 }
+
+/**
+ * Enable the Custom Menu Links module.
+ */
+function oiko_profile_update_8123() {
+  \Drupal::service('module_installer')->install(['menu_ui']);
+}
