@@ -37,5 +37,5 @@ fonts:
       url: http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web
   css:
     theme:
-      //fonts.googleapis.com/css?family=Alegreya+Sans:300,300i&subset=latin-ext:
+      //fonts.googleapis.com/css?family=Gilda+Display|Roboto&subset=latin-ext:
         type: external

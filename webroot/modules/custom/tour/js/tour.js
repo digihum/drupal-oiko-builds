@@ -390,7 +390,8 @@
           $tour.joyride({
             autoStart: true,
             postRideCallback: function () { that.model.set('isActive', false); },
-            postExposeCallback: function () { setTimeout(function() { $(window).trigger('resize'); }, 1); },
+            // This creates an infinite loop, ideally it would not!
+            postExposeCallback: function () { setTimeout(function() { $(window).trigger('resize'); }, 250); },
             modal: true,
             expose: true,
             // HTML segments for tip layout.

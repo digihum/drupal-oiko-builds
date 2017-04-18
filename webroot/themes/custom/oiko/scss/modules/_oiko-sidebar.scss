@@ -1,6 +1,6 @@
 // @TODO: Replace this will with different class name
 .oiko-sidebar {
-  background-color: palette(grey);
+  background-color: palette(oikoblue);
   color: palette(white);
 
   text-align: center;
@@ -12,6 +12,13 @@
   i.fa {
     font-size: $sidebar-icon-font-size;
     line-height: $sidebar-icon-line-height;
+  }
+
+  a {
+    &:hover,
+    &:focus {
+      color: palette(black);
+    }
   }
 }
 
@@ -31,13 +38,13 @@
 
     &:focus,
     &[aria-selected='true'] {
-      background: palette(tan);
-      color: palette(white);
+      background: palette(oikocream);
+      color: palette(black);
     }
 
     &:hover {
       background: $tab-item-background-hover;
-      color: palette(tan);
+      color: palette(oikocream);
     }
   }
 }

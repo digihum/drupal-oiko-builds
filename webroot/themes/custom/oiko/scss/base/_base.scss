@@ -209,18 +209,18 @@ th.checkbox {
   vertical-align: -webkit-baseline-middle;
   transition: border-color 0.25s ease-out, background-color 0.25s ease-out, color 0.25s ease-out;
   &:hover {
-    background-color: palette(tan);
-    border-color: palette(tan);
+    background-color: palette(oikotan);
+    border-color: palette(oikotan);
   }
 }
 .button-highlight {
-  border-color: palette(tan);
-  background-color: palette(tan);
+  border-color: palette(oikotan);
+  background-color: palette(oikotan);
   color: palette(white);
   &:hover, &:focus {
-    border-color: palette(tan);
+    border-color: palette(oikotan);
     background-color: transparent;
-    color: palette(tan);
+    color: palette(oikotan);
   }
 }
 
@@ -273,13 +273,13 @@ select {
 .tabs .tabs-title a {
   text-decoration: none;
   &:hover {
-    color: palette(tan);
+    color: palette(oikotan);
     font-weight: bold;
   }
 
   &:focus,
   &[aria-selected='true'] {
-    color: palette(tan);
+    color: palette(oikotan);
     font-weight: bold;
   }
 }

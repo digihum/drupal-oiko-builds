@@ -11,7 +11,7 @@
 
 .joyride-tip-guide {
   background-color: palette(white);
-  z-index: 10000;
+  z-index: 10002;
   width: 350px;
 }
 
@@ -70,11 +70,11 @@
   max-width: 50%;
   margin: 0;
   color: palette(white);
-  border-color: palette(tan);
-  background-color: palette(tan);
+  border-color: palette(oikotan);
+  background-color: palette(oikotan);
   &:hover {
     background-color: palette(white);
-    color: palette(tan);
+    color: palette(oikotan);
   }
 }
 
@@ -86,7 +86,7 @@
   background-color: palette(white);
   &:hover {
     background-color: palette(white);
-    color: palette(tan);
+    color: palette(oikotan);
   }
 }
 
@@ -110,7 +110,7 @@
 
   &:hover,
   &:focus {
-    color: palette(tan);
+    color: palette(oikotan);
     text-decoration: none;
   }
 }
@@ -133,7 +133,7 @@
   height: 100%;
   width: 100%;
   background: rgba(black, 0.7);
-  z-index: 1000;
+  z-index: 10000;
   display: none;
   top: 0;
   left: 0;
@@ -141,15 +141,15 @@
 }
 
 .joyride-expose-wrapper {
-  background-color: #ffffff;
+  background-color: rgba(#ffffff, 0.3);
   position: absolute;
-  z-index: 1002;
+  z-index: 10001;
 }
 
 .joyride-expose-cover {
   background: transparent;
   position: absolute;
-  z-index: 10000;
+  z-index: 10002;
   top: 0px;
   left: 0px;
 }

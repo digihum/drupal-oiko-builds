@@ -7,7 +7,7 @@
       position: 'bottomleft',
       waitToUpdateMap: false,
       waitToUpdateTimeline: true,
-      timelineViewSlices: 100,
+      timelineViewSlices: 200,
       numberOfClasses: 25,
       temporalRangeWindow: 0
     },
@@ -16,8 +16,8 @@
       L.Util.setOptions(this, options);
       this._maxOfCounts = 1;
 
-      this._onTemporalRebaseDebounced = this.debounce(this._onTemporalRebase, 50, false);
-      this._onTemporalRedrawDebounced = this.debounce(this._onTemporalRedraw, 10, false);
+      this._onTemporalRebaseDebounced = this.debounce(this._onTemporalRebase, 100, false);
+      this._onTemporalRedrawDebounced = this.debounce(this._onTemporalRedraw, 100, false);
 
       this.window = {
         start: NaN,
@@ -26,6 +26,8 @@
 
       this.currentTimeAdjusted = false;
       this.boundsAdjusted = false;
+
+      this._segmentTree = new IntervalTree();
     },
 
     // @method addTo(map: Map): this
@@ -102,6 +104,8 @@
      *
      * This should be called when items on the browser are changed.
      *
+     * We recompute all segments that may contain elements, dedupe and store them in an interval tree for retrieval by the rebase event handler.
+     *
      * @private
      */
     _onTemporalRebase: function () {
@@ -114,8 +118,24 @@
         bounds.max = Math.max(bounds.max, max);
       };
 
+      var count = 0, maxOfCounts = 0;
+      var countsCallback = function(items) {
+        count += items;
+      };
+
+      var allEventBounds = [];
+      var startEndCallback = function(start, end) {
+        allEventBounds.push(start - 1);
+        allEventBounds.push(start);
+        allEventBounds.push(end);
+        allEventBounds.push(end + 1);
+      };
+
       // 1. Fire an event asking for the maximal temporal bounds of the temporal layers on the map.
       this.map.fire('temporal.getBounds', {boundsCallback: boundsCallback});
+
+      // Get a new blank interval tree for our segments to live in.
+      this._segmentTree = new IntervalTree();
 
       // If we got some valid bounds, then there's something to do.
       if (bounds.min < bounds.max) {
@@ -148,30 +168,82 @@
         if (!this.currentTimeAdjusted) {
           this.setTime((bounds.max + bounds.min) / 2);
         }
-        
+
         // Get the global count of events per biggest slice, this will be used to scale all events.
-        var windowSize = bounds.max - bounds.min;
-
-        var windowSegmentSize = windowSize / this.options.timelineViewSlices;
-
-        var position = bounds.min;
-
-        var count = 0;
-        var countsCallback = function(items) {
-          count += items;
-        };
-
-        var slice;
         this._maxOfCounts = 1;
-        while (position < bounds.max) {
-          slice = {
-            start: position,
-            end: position + windowSegmentSize,
-          };
+
+        allEventBounds = [bounds.min, bounds.max];
+
+        var visSlices = [], slices = [], slice, visSlice;
+
+        slice = {
+          start: bounds.min,
+          end: bounds.max
+        };
+        // Get all of the start and end points of events into our allEventBounds array.
+        this.map.fire('temporal.getStartAndEnds', {slice: slice, startEndCallback: startEndCallback});
+        allEventBounds = this._arrayUnique(allEventBounds);
+        // Make slices for each entry in the array.
+        var last = false;
+        for (var i = 0; i < allEventBounds.length; i++) {
+          if (last) {
+            slices.push({
+              start: last,
+              end: allEventBounds[i]
+            });
+          }
+          last = allEventBounds[i];
+        }
+
+        // Fire a temporal.getCounts event for each slice and record the number of items in that slice.
+        for (var i = 0;i < slices.length;i++) {
           count = 0;
-          this.map.fire('temporal.getCounts', {slice: slice, countsCallback: countsCallback});
-          this._maxOfCounts = Math.max(this._maxOfCounts, count);
-          position += windowSegmentSize;
+          this.map.fire('temporal.getCounts', {slice: slices[i], countsCallback: countsCallback});
+          // If this is an empty slice, then we don't care about rendering it.
+          if (count) {
+            maxOfCounts = Math.max(maxOfCounts, count);
+            visSlice = {
+              start: slices[i].start * 1000,
+              end: slices[i].end * 1000,
+              _count: count,
+            };
+            visSlices.push(visSlice);
+          }
+        }
+
+        // Compute the classes on each visSlice.
+        for (var i = 0;i < visSlices.length;i++) {
+          visSlices[i]._adjustedCount = Math.round(visSlices[i]._count / maxOfCounts * this.options.numberOfClasses);
+        }
+
+        // Dedupe the visSlices.
+        var lastClass, lastEnd;
+        for (var i = 0;i < visSlices.length;i++) {
+          // Group slices within nearly a day of each other if they have the same className.
+          if (lastClass === visSlices[i]._adjustedCount && (visSlices[i].start - lastEnd) <= 86401000) {
+            // Expand the previous slice to this slices end.
+            visSlices[i - 1].end = visSlices[i].end;
+            // This is a duplicate slice and can go, and we will reprocess this i value.
+            visSlices.splice(i, 1);
+            i--;
+          }
+          else {
+            lastClass = visSlices[i]._adjustedCount;
+            lastEnd = visSlices[i].end;
+          }
+        }
+
+        // Because we're going to insert into an unbalanced tree we will do better if our array isn't sorted, so randomise.
+        this._shuffleArray(visSlices);
+
+        // Add the correct classname to the visSlices.
+        if (visSlices.length) {
+          for (var i = 0;i < visSlices.length;i++) {
+            visSlices[i].type = 'background';
+
+            // Index the visSlices into to IntervalTree for drawing.
+            this._segmentTree.insert(visSlices[i].start, visSlices[i].end, visSlices[i]);
+          }
         }
       }
 
@@ -180,102 +252,147 @@
     },
 
     // Get the unique, sorted items of a numeric array.
-    _arrayUnique: function (a) {
+    _arrayUnique: function _arrayUnique(a) {
       return a.sort(function (a, b) {return a - b}).filter(function(item, pos, ary) {
         return !pos || item != ary[pos - 1];
       })
     },
 
     /**
-     * Redraw the timeline browser, or at least mark it as such.
+     * Randomize array element order in-place.
+     * Using Durstenfeld shuffle algorithm.
+     */
+    _shuffleArray: function _shuffleArray(array) {
+      for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+      }
+      return array;
+    },
+
+    /**
+     * Redraw the timeline browser.
      *
      * @private
      */
     _onTemporalRedraw: function () {
-      var count = 0;
-      var countsCallback = function(items) {
-        count += items;
-      };
-
-      var allEventBounds = [];
-      var startEndCallback = function(start, end) {
-        allEventBounds.push(start);
-        allEventBounds.push(end);
-      };
-
-      // Plan of attack:
-      // 3. Get the current visible window of the vistimeline.
+      // Get the current visible window of the vistimeline.
       var window = this._visTimeline.getWindow();
-      // 4. Break that into option.timelineViewSlices segments.
-      var windowSize = window.end.getTime() / 1000 - window.start.getTime() / 1000;
+      var start = window.start.getTime();
+      var end = window.end.getTime();
+      var windowSize = end / 1000 - start / 1000;
       if (windowSize < 1) {
         return;
       }
 
-      var visSlices = [], slices = [], slice, visSlice;
+      var visSlices = [];
 
-      slice = {
-        start: window.start.getTime() / 1000,
-        end: window.end.getTime() / 1000
-      };
-
-      // We can easily render the exact events, so get the start/end time of them all.
-      allEventBounds = [window.start.getTime() / 1000, window.end.getTime() / 1000];
-      this.map.fire('temporal.getStartAndEnds', {slice: slice, startEndCallback: startEndCallback});
-      // For each of those start and ends, add a +/- one second.
-      var allEventBoundsJitter = [];
-      for (var i = 0;i < allEventBounds.length;i++) {
-        allEventBoundsJitter.push(allEventBounds[i], allEventBounds[i] - 1, allEventBounds[i] + 1);
-      }
-      // Make unique and sort.
-      allEventBoundsJitter = this._arrayUnique(allEventBoundsJitter);
-      // Make slices for each entry in the array.
-      var last = false;
-      for (var i = 0;i < allEventBoundsJitter.length;i++) {
-        if (last) {
-          slices.push({
-            start: last,
-            end: allEventBoundsJitter[i]
-          });
-        }
-        last = allEventBoundsJitter[i];
+      // Get the slices from the interval tree.
+      if (this._segmentTree.size) {
+        visSlices = this._segmentTree.overlap(start, end);
       }
 
-      for (var i = 0;i < slices.length;i++) {
-        count = 0;
-        this.map.fire('temporal.getCounts', {slice: slices[i], countsCallback: countsCallback});
-        // If this is an empty slice, then we don't care about rendering it.
-        if (count) {
-          visSlice = {
-            start: slices[i].start * 1000,
-            end: slices[i].end * 1000,
-            className: 'timeline-browser-item-count--' + Math.round(count / this._maxOfCounts * this.options.numberOfClasses),
-            type: 'background'
-          };
-          visSlices.push(visSlice);
-        }
+      // For rendering we want the slices to be in 'order'.
+      visSlices.sort(function(a, b) {
+        // Compare starts first, unless equal, then ends.
+        return a.start - b.start ? a.start - b.start : a.end - b.end;
+      });
+
+      // If we need to, reduce the number of items on the timeline.
+      if (visSlices.length > this.options.timelineViewSlices) {
+        visSlices = this._combineSimilarSlices(visSlices, this.options.timelineViewSlices);
       }
 
-      // Dedupe the visSlices.
-      var lastClass, lastEnd;
-      for (var i = 0;i < visSlices.length;i++) {
-        if (lastClass === visSlices[i].className && lastEnd === visSlices[i].start) {
-          // Expand the previous slice to this slices end.
-          visSlices[i - 1].end = visSlices[i].end;
-          // This is a duplicate slice and can go, and we will reprocess this i value.
-          visSlices.splice(i, 1);
-          i--;
-        }
-        else {
-          lastClass = visSlices[i].className;
-          lastEnd = visSlices[i].end;
-        }
+      for (var i = 0; i < visSlices.length; i++) {
+        visSlices[i].className = 'timeline-browser-item-count--' + visSlices[i]._adjustedCount;
       }
 
-      // @TODO: Improve performance by reducing the number of visSlices here.
-
-      // 7. Update the vistimeline with those items.
+      // Update the vistimeline with those items.
       this._visTimeline.setItems(visSlices);
+    },
+
+    /**
+     * Reduce the number of slices given by combining adjacent slices with similar counts.
+     *
+     * @param slices
+     *   An array of slices to reduce the number of by combining.
+     * @param targetNumberOfSlices
+     *   The target number of slices to return.
+     *
+     * @returns {Array}
+     * @private
+     */
+    _combineSimilarSlices: function _combineSimilarSlices(slices, targetNumberOfSlices) {
+
+      // This is how nearby the slices can be to be combined, we gradually increase by powers of 2.
+      var closenessTimeFactor = -1;
+      var closenessCountFactor = -1;
+      var iterations = -1;
+
+
+
+      var i, j, closeness, closenessCount, lastEnd, lastCount, candidates, firstSliceSize, secondSliceSize;
+      // Keep running until we've met our target.
+      while (slices.length > targetNumberOfSlices) {
+        closenessTimeFactor++;
+        closenessCountFactor++;
+        iterations++;
+
+        closeness = 86400 * 1000 * Math.pow(2, closenessTimeFactor);
+        closenessCount = closenessCountFactor;
+        candidates = [];
+        for (i = 0;i < slices.length;i++) {
+          // Group slices within nearly a day of each other if they have the same className.
+          if (i && ((slices[i].start - lastEnd) <= closeness) && (Math.abs(lastCount - slices[i]._adjustedCount) < closenessCount)) {
+            // This slice is a candidate for combining.
+            candidates.push({
+              i: i,
+              width: slices[i].end - slices[i].start
+            });
+          }
+          lastEnd = slices[i].end;
+          lastCount = slices[i]._adjustedCount;
+        }
+
+        if (candidates.length) {
+          // We have some candidates for grouping, sort them from smallest to biggest.
+          candidates.sort(function (a, b) {
+            return a.width - b.width;
+          });
+
+          // Trim the candidates array if we need to.
+          candidates.length = Math.min(candidates.length, slices.length - targetNumberOfSlices);
+
+          // Re-sort to be in 'reverse' i order.
+          candidates.sort(function (a, b) {
+            return b.i - a.i;
+          });
+
+          // Combine the first candidate with it's 'previous' segment.
+          for (i = 0;i < candidates.length;i++) {
+            j = candidates[i].i;
+            // Average the counts.
+            firstSliceSize = slices[j - 1].end - slices[j - 1].start;
+            secondSliceSize = slices[j].end - slices[j].start;
+            slices[j - 1]._adjustedCount = Math.round((firstSliceSize * slices[j - 1]._adjustedCount + secondSliceSize * slices[j]._adjustedCount) / (firstSliceSize + secondSliceSize));
+
+            // Set the end of the first slice to be the end of the second.
+            slices[j - 1].end = slices[j].end;
+
+            // Remove the jth slice.
+            slices.splice(j, 1);
+          }
+        }
+
+        // Avoid infinite loops.
+        if (iterations > 20) {
+          break;
+        }
+      }
+
+      return slices;
     },
 
     /**

@@ -248,6 +248,9 @@
             },
             "drupal/eva": {
                 "EVA can display on unselected bundle": "https://www.drupal.org/files/issues/eva-2856350-display-mode-still-rendered-12.patch"
+            },
+            "drupal/honeypot": {
+                "Fix honeypot webform integration": "https://www.drupal.org/files/issues/honeypot-webform-integration-2870691-2.patch"
             }
         }
     },

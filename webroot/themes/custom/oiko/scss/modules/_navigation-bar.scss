@@ -1,5 +1,5 @@
 .navigation-bar {
-  background-color: palette(grey);
+  background-color: palette(oikoblue);
   color: #FFF;
   padding: $global-padding;
 
@@ -10,4 +10,16 @@
   }
   text-align: center;
   text-transform: lowercase;
+}
+
+.site-slogan {
+  text-align: center;
+  line-height: 24px;
+  .first {
+    font-size: 36px;
+  }
+  .second {
+    font-size: 24px;
+  }
+
 }

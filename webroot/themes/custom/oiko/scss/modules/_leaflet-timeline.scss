@@ -1,7 +1,7 @@
 $steps: 25;
 @for $i from 0 through $steps {
   .vis-item.vis-background.timeline-browser-item-count--#{$i} {
-    background-color:  scale-color(darken(palette(tan), 33%), $lightness: 15 + (($steps - $i) / $steps * 85));
+    background-color:  scale-color(darken(palette(oikotan), 33%), $lightness: 15 + (($steps - $i) / $steps * 85));
     border: none;
   }
 }
@@ -12,21 +12,19 @@ $steps: 25;
 }
 
 .vis-item {
-  background-color: rgba(palette(tan), .5);
-  border-color: rgba(palette(tan), 1);
+  background-color: rgba(palette(oikotan), .5);
+  border-color: rgba(palette(oikotan), 1);
 }
 
 .tdrag > div {
-  background-color: rgba(palette(tan), .15);
+  background-color: rgba(palette(oikotan), .15);
 }
 
 
 .leaflet-control-layers-expanded.leaflet-timeline-control {
   padding: 6px 0 0;
-}
-
-.leaflet-control-layers-expanded.leaflet-timeline-control {
   box-shadow: none;
+  background-color: palette(oikocream);
 }
 
 .leaflet-timeline-control .vis-timeline {

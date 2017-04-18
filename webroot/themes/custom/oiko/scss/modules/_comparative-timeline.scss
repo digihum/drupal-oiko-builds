@@ -22,7 +22,7 @@
 
   // Styling of the actual timeline at the bottom.
   .vis-panel.vis-bottom {
-    background-color: rgba(palette(tan), .2);
+    background-color: rgba(palette(oikotan), .2);
   }
 
   // Styling of the different classifications of items.
@@ -75,6 +75,6 @@
 }
 
 .comparative-timeline--preselect-link {
-  @include pill(palette(tan));
+  @include pill(palette(oikotan));
 }
 

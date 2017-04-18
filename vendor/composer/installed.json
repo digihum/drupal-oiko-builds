@@ -5686,7 +5686,7 @@
         "dist": {
             "type": "zip",
             "url": "https://ftp.drupal.org/files/projects/honeypot-8.x-1.24.zip",
-            "reference": null,
+            "reference": "8.x-1.24",
             "shasum": "f17d22e80a2b7226e4ee444900de0b933881ee40"
         },
         "require": {
@@ -5700,6 +5700,9 @@
             "drupal": {
                 "version": "8.x-1.24",
                 "datestamp": "1490277183"
+            },
+            "patches_applied": {
+                "Fix honeypot webform integration": "https://www.drupal.org/files/issues/honeypot-webform-integration-2870691-2.patch"
             }
         },
         "installation-source": "dist",

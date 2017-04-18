@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e537e4f9fc4d97281fe4aa0136d2ac57",
+    "content-hash": "a0369f96fa99b4685b674438e278aba8",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -2521,7 +2521,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/honeypot-8.x-1.24.zip",
-                "reference": null,
+                "reference": "8.x-1.24",
                 "shasum": "f17d22e80a2b7226e4ee444900de0b933881ee40"
             },
             "require": {
@@ -2535,6 +2535,9 @@
                 "drupal": {
                     "version": "8.x-1.24",
                     "datestamp": "1490277183"
+                },
+                "patches_applied": {
+                    "Fix honeypot webform integration": "https://www.drupal.org/files/issues/honeypot-webform-integration-2870691-2.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -7398,7 +7401,8 @@
             "homepage": "https://www.drupal.org/project/purl",
             "support": {
                 "source": "http://cgit.drupalcode.org/purl"
-            }
+            },
+            "time": "2016-05-27 18:27:16"
         },
         {
             "name": "fabpot/goutte",

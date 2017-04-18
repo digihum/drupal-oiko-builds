@@ -18,9 +18,6 @@ $palettes: (
                 base: #3D3D3D,
                 light: #F4F4F4,
         ),
-        tan : (
-                base: #FE734A,
-        ),
         blue : (
                 base: #4798D0,
         ),
@@ -54,6 +51,21 @@ $palettes: (
         satin: (
                 base: #D4C5C4,
         ),
+        oikoblue: (
+                base: #607987,
+        ),
+        oikogreen: (
+                base: #82AEB1,
+        ),
+        oikotan : (
+                base: #DD6E42,
+        ),
+        oikocream: (
+                base: #F3F0EB,
+        ),
+        oikogrey: (
+                base: #97A7B3,
+        )
 );
 
 // Global foundation settings
@@ -70,15 +82,15 @@ $foundation-palette: (
         warning: #ffae00,
         alert: #ec5840,
 );
-$light-gray: palette(grey, light);
+$light-gray: palette(oikogrey);
 $medium-gray: palette(grey);
 $dark-gray: palette(grey, dark);
 $black: palette(black);
 $white: palette(white);
-$body-background: palette(white);
+$body-background: palette(oikocream);
 $body-font-color: palette(black, dark);
-$body-font-family: 'Alegreya Sans', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
-$small-copy-font-family: Arial, sans-serif;
+$body-font-family: 'Gilda Display', serif;
+$small-copy-font-family: 'Roboto', sans-serif;
 $body-antialiased: true;
 $global-margin: rem-calc(15);
 $global-padding: rem-calc(15);
@@ -196,7 +208,7 @@ $code-background: $light-gray;
 $code-border: 1px solid $medium-gray;
 $code-padding: rem-calc(2 5 1);
 $anchor-color: inherit;
-$anchor-color-hover: palette(tan);
+$anchor-color-hover: palette(oikotan);
 $anchor-text-decoration: underline;
 $anchor-text-decoration-hover: underline;
 $hr-width: $global-width;
@@ -225,7 +237,7 @@ $abbr-underline: 1px dotted $black;
 $breadcrumbs-margin: $global-margin 0;
 $breadcrumbs-item-font-size: rem-calc(14);
 $breadcrumbs-item-color: palette(rust);
-$breadcrumbs-item-color-current: palette(tan);
+$breadcrumbs-item-color-current: palette(oikotan);
 $breadcrumbs-item-slash: false;
 $tab-item-font-size: rem-calc(14);
 $tab-item-background-hover: $light-gray;
