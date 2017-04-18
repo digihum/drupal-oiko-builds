@@ -214,7 +214,7 @@
         // Dedupe the visSlices.
         var lastCount, lastEnd;
         for (var i = 0;i < visSlices.length;i++) {
-          if (lastCount === visSlices[i]._count && lastEnd === visSlices[i].start) {
+          if (lastCount === visSlices[i]._count && (visSlices[i].start - lastEnd) <= 86400) {
             // Expand the previous slice to this slices end.
             visSlices[i - 1].end = visSlices[i].end;
             // This is a duplicate slice and can go, and we will reprocess this i value.
@@ -228,7 +228,7 @@
         }
 
         // Because we're going to insert into an unbalanced tree we will do better if our array isn't sorted, so randomise.
-        _shuffleArray(visSlices);
+        this._shuffleArray(visSlices);
 
         // Add the correct classname to the visSlices.
         if (visSlices.length) {
@@ -285,9 +285,15 @@
       var visSlices = [];
 
       // Get the slices from the interval tree.
-      if (this._temporalTree.size) {
-        visSlices = this._segmentTree.overlap(start, end)
+      if (this._segmentTree.size) {
+        visSlices = this._segmentTree.overlap(start, end);
       }
+
+      // For rendering we want the slices to be in 'order'.
+      visSlices.sort(function(a, b) {
+        // Compare starts first, unless equal, then ends.
+        return a.start - b.start ? a.start - b.start : a.end - b.end;
+      });
 
       // If we need to, reduce the number of items on the timeline.
       if (visSlices.length > this.options.timelineViewSlices) {
