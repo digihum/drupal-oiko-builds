@@ -7,7 +7,7 @@
       position: 'bottomleft',
       waitToUpdateMap: false,
       waitToUpdateTimeline: true,
-      timelineViewSlices: 100,
+      timelineViewSlices: 200,
       numberOfClasses: 25,
       temporalRangeWindow: 0
     },
@@ -16,8 +16,8 @@
       L.Util.setOptions(this, options);
       this._maxOfCounts = 1;
 
-      this._onTemporalRebaseDebounced = this.debounce(this._onTemporalRebase, 50, false);
-      this._onTemporalRedrawDebounced = this.debounce(this._onTemporalRedraw, 10, false);
+      this._onTemporalRebaseDebounced = this.debounce(this._onTemporalRebase, 100, false);
+      this._onTemporalRedrawDebounced = this.debounce(this._onTemporalRedraw, 100, false);
 
       this.window = {
         start: NaN,
@@ -211,10 +211,16 @@
           }
         }
 
-        // Dedupe the visSlices.
-        var lastCount, lastEnd;
+        // Compute the classes on each visSlice.
         for (var i = 0;i < visSlices.length;i++) {
-          if (lastCount === visSlices[i]._count && (visSlices[i].start - lastEnd) <= 86400) {
+          visSlices[i]._adjustedCount = Math.round(visSlices[i]._count / maxOfCounts * this.options.numberOfClasses);
+        }
+
+        // Dedupe the visSlices.
+        var lastClass, lastEnd;
+        for (var i = 0;i < visSlices.length;i++) {
+          // Group slices within nearly a day of each other if they have the same className.
+          if (lastClass === visSlices[i]._adjustedCount && (visSlices[i].start - lastEnd) <= 86401000) {
             // Expand the previous slice to this slices end.
             visSlices[i - 1].end = visSlices[i].end;
             // This is a duplicate slice and can go, and we will reprocess this i value.
@@ -222,7 +228,7 @@
             i--;
           }
           else {
-            lastCount = visSlices[i]._count;
+            lastClass = visSlices[i]._adjustedCount;
             lastEnd = visSlices[i].end;
           }
         }
@@ -234,7 +240,6 @@
         if (visSlices.length) {
           for (var i = 0;i < visSlices.length;i++) {
             visSlices[i].type = 'background';
-            visSlices[i].className = 'timeline-browser-item-count--' + Math.round(visSlices[i]._count / maxOfCounts * this.options.numberOfClasses)
 
             // Index the visSlices into to IntervalTree for drawing.
             this._segmentTree.insert(visSlices[i].start, visSlices[i].end, visSlices[i]);
@@ -300,6 +305,9 @@
         visSlices = this._combineSimilarSlices(visSlices, this.options.timelineViewSlices);
       }
 
+      for (var i = 0; i < visSlices.length; i++) {
+        visSlices[i].className = 'timeline-browser-item-count--' + visSlices[i]._adjustedCount;
+      }
 
       // Update the vistimeline with those items.
       this._visTimeline.setItems(visSlices);
@@ -318,13 +326,72 @@
      */
     _combineSimilarSlices: function _combineSimilarSlices(slices, targetNumberOfSlices) {
 
+      // This is how nearby the slices can be to be combined, we gradually increase by powers of 2.
+      var closenessTimeFactor = -1;
+      var closenessCountFactor = -1;
+      var iterations = -1;
 
-      // @TODO: Implement something like.
-      // 0. Find intervals that have neighbours.
-      // 1. Build a list of the smallest intervals.
-      // 2. Loop over those and find intervals next to them with 'similar' counts.
-      // 3. If we have a match, then combine the intervals, and take the average of the new count of the two intervals.
-      // 4.
+
+
+      var i, j, closeness, closenessCount, lastEnd, lastCount, candidates, firstSliceSize, secondSliceSize;
+      // Keep running until we've met our target.
+      while (slices.length > targetNumberOfSlices) {
+        closenessTimeFactor++;
+        closenessCountFactor++;
+        iterations++;
+
+        closeness = 86400 * 1000 * Math.pow(2, closenessTimeFactor);
+        closenessCount = closenessCountFactor;
+        candidates = [];
+        for (i = 0;i < slices.length;i++) {
+          // Group slices within nearly a day of each other if they have the same className.
+          if (i && ((slices[i].start - lastEnd) <= closeness) && (Math.abs(lastCount - slices[i]._adjustedCount) < closenessCount)) {
+            // This slice is a candidate for combining.
+            candidates.push({
+              i: i,
+              width: slices[i].end - slices[i].start
+            });
+          }
+          lastEnd = slices[i].end;
+          lastCount = slices[i]._adjustedCount;
+        }
+
+        if (candidates.length) {
+          // We have some candidates for grouping, sort them from smallest to biggest.
+          candidates.sort(function (a, b) {
+            return a.width - b.width;
+          });
+
+          // Trim the candidates array if we need to.
+          candidates.length = Math.min(candidates.length, slices.length - targetNumberOfSlices);
+
+          // Re-sort to be in 'reverse' i order.
+          candidates.sort(function (a, b) {
+            return b.i - a.i;
+          });
+
+          // Combine the first candidate with it's 'previous' segment.
+          for (i = 0;i < candidates.length;i++) {
+            j = candidates[i].i;
+            // Average the counts.
+            firstSliceSize = slices[j - 1].end - slices[j - 1].start;
+            secondSliceSize = slices[j].end - slices[j].start;
+            slices[j - 1]._adjustedCount = Math.round((firstSliceSize * slices[j - 1]._adjustedCount + secondSliceSize * slices[j]._adjustedCount) / (firstSliceSize + secondSliceSize));
+
+            // Set the end of the first slice to be the end of the second.
+            slices[j - 1].end = slices[j].end;
+
+            // Remove the jth slice.
+            slices.splice(j, 1);
+          }
+        }
+
+        // Avoid infinite loops.
+        if (iterations > 20) {
+          break;
+        }
+      }
+
       return slices;
     },
 
