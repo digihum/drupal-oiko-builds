@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "802a6db1ac5b4eee6b13cd07e59a0692",
+    "content-hash": "e537e4f9fc4d97281fe4aa0136d2ac57",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -2511,6 +2511,58 @@
             }
         },
         {
+            "name": "drupal/honeypot",
+            "version": "1.24.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/honeypot",
+                "reference": "8.x-1.24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/honeypot-8.x-1.24.zip",
+                "reference": null,
+                "shasum": "f17d22e80a2b7226e4ee444900de0b933881ee40"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.24",
+                    "datestamp": "1490277183"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Jeff Geerling",
+                    "homepage": "https://www.drupal.org/user/389011",
+                    "email": "geerlingguy@mac.com"
+                }
+            ],
+            "description": "Mitigates spam form submissions using the honeypot method.",
+            "homepage": "https://www.drupal.org/project/honeypot",
+            "keywords": [
+                "deterrent",
+                "form",
+                "honeypot",
+                "honeytrap",
+                "php",
+                "spam"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/honeypot"
+            }
+        },
+        {
             "name": "drupal/leaflet",
             "version": "dev-1.x",
             "source": {
@@ -3103,7 +3155,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/webform-8.x-5.0-beta11.zip",
-                "reference": null,
+                "reference": "8.x-5.0-beta11",
                 "shasum": "76030da33a7067429bb44278925d44ecd47b23da"
             },
             "require": {
@@ -4190,12 +4242,12 @@
             "version": "1.0.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/padraic/file_get_contents.git",
+                "url": "https://github.com/humbug/file_get_contents.git",
                 "reference": "66797199019d0cb4529cb8d29c6f0b4c5085b53a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/file_get_contents/zipball/66797199019d0cb4529cb8d29c6f0b4c5085b53a",
+                "url": "https://api.github.com/repos/humbug/file_get_contents/zipball/66797199019d0cb4529cb8d29c6f0b4c5085b53a",
                 "reference": "66797199019d0cb4529cb8d29c6f0b4c5085b53a",
                 "shasum": ""
             },
@@ -4247,12 +4299,12 @@
             "version": "1.0.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/padraic/phar-updater.git",
+                "url": "https://github.com/humbug/phar-updater.git",
                 "reference": "c17eeb3887dc4269d1b4837dc875d39e9f8149a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/phar-updater/zipball/c17eeb3887dc4269d1b4837dc875d39e9f8149a8",
+                "url": "https://api.github.com/repos/humbug/phar-updater/zipball/c17eeb3887dc4269d1b4837dc875d39e9f8149a8",
                 "reference": "c17eeb3887dc4269d1b4837dc875d39e9f8149a8",
                 "shasum": ""
             },
@@ -7290,9 +7342,6 @@
                 "drupal": {
                     "version": "8.x-1.x-dev",
                     "datestamp": "1471893239"
-                },
-                "patches_applied": {
-                    "https://www.drupal.org/node/2793285": "https://www.drupal.org/files/issues/purl-install-innodb.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -7349,8 +7398,7 @@
             "homepage": "https://www.drupal.org/project/purl",
             "support": {
                 "source": "http://cgit.drupalcode.org/purl"
-            },
-            "time": "2016-05-27T18:27:16+00:00"
+            }
         },
         {
             "name": "fabpot/goutte",

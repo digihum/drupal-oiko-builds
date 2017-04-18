@@ -206,3 +206,10 @@ function oiko_profile_update_8123() {
 function oiko_profile_update_8124() {
   \Drupal::service('module_installer')->install(['webform', 'webform_ui']);
 }
+
+/**
+ * Enable the honeypot module.
+ */
+function oiko_profile_update_8125() {
+  \Drupal::service('module_installer')->install(['honeypot']);
+}

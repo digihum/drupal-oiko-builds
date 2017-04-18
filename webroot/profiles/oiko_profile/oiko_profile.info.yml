@@ -4,6 +4,7 @@ description: Install profile for the Oiko
 core: 8.x
 
 dependencies:
+  - honeypot
   - webform
   - block_content
   - oiko_app
@@ -637,6 +638,7 @@ cm_config_tools:
     - filter.format.basic_html
     - filter.format.restricted_html
     - google_analytics.settings
+    - honeypot.settings
     - image.style.comparative_timeline_logo
     - node.settings
     - node.type.forum
