@@ -363,6 +363,8 @@ Drupal.behaviors.comparative_timeline = {
         $(this.preselectedLinks[i]).show();
       }
     }
+
+    $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
   };
 
   Drupal.OikoComparativeTimeline.prototype.selectedTimelineItems = function (properties) {

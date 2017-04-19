@@ -52,6 +52,36 @@
 
 .comparative-timeline__inner {
   flex-grow: 1;
+
+  .vis-time-axis.vis-foreground {
+    border-bottom: 2px solid palette(black);
+    z-index: 2;
+
+    $dot-size: 6px;
+    &:before {
+      content: "";
+      position: absolute;
+      bottom: -$dot-size;
+      left: -$dot-size;
+      height: 0;
+      width: 0;
+      border: $dot-size solid palette(black);
+      border-radius: $dot-size;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -$dot-size;
+      right: -$dot-size;
+      height: 0;
+      width: 0;
+      border: $dot-size solid palette(black);
+      border-radius: $dot-size;
+    }
+  }
+  .vis-panel.vis-center {
+    border-top: none;
+  }
 }
 
 .comparative-timeline__header {
