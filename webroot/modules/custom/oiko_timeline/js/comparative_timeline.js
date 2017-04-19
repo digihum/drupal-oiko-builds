@@ -53,6 +53,7 @@ Drupal.behaviors.comparative_timeline = {
     this.$timelineContainer = this.$outerContainer.find('.js-comparative-timeline');
     this.$overviewContainer = this.$outerContainer.find('.js-comparative-timeline-overview');
     this.$addNewContainer = this.$outerContainer.find('.js-comparative-timeline-add-new');
+    this.$preselectionsContainer = this.$outerContainer.find('.js-comparative-timeline-preselections');
     this.$ajaxLoader = this.$outerContainer.find('.js-loading-graphic');
     this._timelineOptions = {
       align: 'auto',
@@ -133,7 +134,7 @@ Drupal.behaviors.comparative_timeline = {
     }
     // And now add the timelines we want.
     for (var i in timelines) {
-      if (!this.isLoadingCheck(timelines[i])) {
+      if (timelines[i] && !this.isLoadingCheck(timelines[i])) {
         this.loadDataHandler(timelines[i]);
       }
     }
@@ -208,6 +209,7 @@ Drupal.behaviors.comparative_timeline = {
     }
     this.$ajaxLoader.toggleClass('js-loading-graphic--comparative-timeline-working', items);
     this.isLoading = items;
+    this.$preselectionsContainer.toggle(this.getTimelines().length < 2);
   };
 
   Drupal.OikoComparativeTimeline.prototype.isLoadingItems = function() {
@@ -273,12 +275,12 @@ Drupal.behaviors.comparative_timeline = {
       var defaultOptionTitle, defaultOptionId;
       for (defaultOptionId in timeline.defaultOptions) {
         defaultOptionTitle = timeline.defaultOptions[defaultOptionId];
-        var $link = $('<a href="#">').text(defaultOptionTitle).data('groupId', defaultOptionId).addClass('comparative-timeline--preselect-link').click(function(e) {
+        var $link = $('<a href="#">').html(defaultOptionTitle).data('groupId', defaultOptionId).addClass('comparative-timeline--preselect-link').click(function(e) {
           e.preventDefault();
           timeline.loadDataHandler.call(timeline, $(this).data('groupId'));
           $(this).hide();
         });
-        this.$addNewContainer.append($link);
+        this.$preselectionsContainer.find('.js-items').append($link);
         this.preselectedLinks.push($link);
       }
     }
@@ -364,6 +366,8 @@ Drupal.behaviors.comparative_timeline = {
       }
     }
 
+    // Show/hide the preselections as needed.
+    this.$preselectionsContainer.toggle(this.getTimelines().length < 2);
     $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
   };
 
@@ -436,6 +440,7 @@ Drupal.behaviors.comparative_timeline = {
 
     this._visTimeline.setOptions({ orientation: {axis: 'top'} });
 
+    this.$preselectionsContainer.toggle(this.getTimelines().length < 2);
     $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
   };
 

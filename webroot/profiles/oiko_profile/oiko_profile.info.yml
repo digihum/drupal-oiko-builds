@@ -114,6 +114,7 @@ cm_config_tools:
     - tour.tour.timeline
   managed:
     - block.block.feedback
+    - block.block.mainnavigation
     - block.block.maplegendblock
     - block.block.oiko_account_menu
     - block.block.oiko_branding
@@ -131,6 +132,7 @@ cm_config_tools:
     - block.block.oiko_tools
     - block.block.sharemessage
     - block.block.sharemessage_2
+    - block.block.welcomeblock
     - cidoc.cidoc_entity_bundle.e12_production
     - cidoc.cidoc_entity_bundle.e21_person
     - cidoc.cidoc_entity_bundle.e22_man_made_object
@@ -201,6 +203,7 @@ cm_config_tools:
     - core.date_format.long
     - core.date_format.medium
     - core.date_format.short
+    - core.entity_form_display.block_content.modal_welcome.default
     - core.entity_form_display.cidoc_entity.e12_production.default
     - core.entity_form_display.cidoc_entity.e21_person.default
     - core.entity_form_display.cidoc_entity.e22_man_made_object.default
@@ -329,6 +332,7 @@ cm_config_tools:
     - core.entity_form_display.taxonomy_term.forums.default
     - core.entity_form_mode.cidoc_reference.domain
     - core.entity_form_mode.cidoc_reference.range
+    - core.entity_view_display.block_content.modal_welcome.default
     - core.entity_view_display.cidoc_entity.e12_production.default
     - core.entity_view_display.cidoc_entity.e12_production.popup
     - core.entity_view_display.cidoc_entity.e12_production.preview
@@ -388,6 +392,7 @@ cm_config_tools:
     - core.entity_view_display.cidoc_entity.e74_group.popup
     - core.entity_view_display.cidoc_entity.e74_group.preview
     - core.entity_view_display.cidoc_entity.e74_group.summary
+    - core.entity_view_display.cidoc_entity.e74_group.timeline_preselection
     - core.entity_view_display.cidoc_entity.e7_activity.default
     - core.entity_view_display.cidoc_entity.e7_activity.popup
     - core.entity_view_display.cidoc_entity.e7_activity.preview
@@ -525,6 +530,7 @@ cm_config_tools:
     - core.entity_view_mode.cidoc_entity.search_index
     - core.entity_view_mode.cidoc_entity.summary
     - core.entity_view_mode.cidoc_entity.summary_without_map
+    - core.entity_view_mode.cidoc_entity.timeline_preselection
     - core.entity_view_mode.cidoc_entity.token
     - core.entity_view_mode.cidoc_reference.domain
     - core.entity_view_mode.cidoc_reference.range
@@ -694,10 +700,6 @@ cm_config_tools:
     - views.view.p99_dissolved
     - views.view.p99_dissov_group
     - views.view.timeline
-    - block.block.welcomeblock
-    - core.entity_form_display.block_content.modal_welcome.default
-    - core.entity_view_display.block_content.modal_welcome.default
-    - block.block.mainnavigation
     - webform.webform.feedback
   delete:
     - views.view.appelations
@@ -735,4 +737,5 @@ cm_config_tools:
     - block_content.type.modal_welcome
     - field.field.block_content.modal_welcome.body
     - field.storage.block_content.body
+    - image.style.thumbnail
     - node.type.content_page

@@ -85,7 +85,6 @@
 }
 
 .comparative-timeline__header {
-  //background-color: palette(oikocream);
   position: relative;
   flex-grow: 0;
   flex-shrink: 0;
@@ -151,7 +150,24 @@
   cursor: pointer;
 }
 
+.comparative-timeline-preselections-wrapper .header {
+  text-align: center;
+  margin: $global-margin;
+}
+.comparative-timeline-preselections {
+  display: flex;
+  justify-content: center;
+}
+
 .comparative-timeline--preselect-link {
-  @include pill(palette(oikotan));
+  width: 200px;
+  padding: $global-padding;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+
+  .timeline-logo {
+    margin-bottom: $global-margin;
+  }
 }
 
