@@ -25,7 +25,7 @@
  * @see template_preprocess_block()
  */
 #}
-<li {{ attributes.addClass('icon-links__item')|without('id') }}>
+<li class="icon-links__item">
     {{ title_prefix }}
     {% if label %}
         <a{{ title_attributes.addClass(['icon-links__link']).setAttribute('data-open', attributes.id ) }}>
@@ -34,10 +34,10 @@
         </a>
     {% endif %}
     {{ title_suffix }}
-    {% block content %}
-        <div id="{{ attributes.id }}" class="reveal" data-reveal>
+    <div {{ attributes.addClass('reveal').setAttribute('data-reveal', true) }}>
+        {% block content %}
             <h2>{{ label }}</h2>
             {{ content }}
-        </div>
-    {% endblock %}
+        {% endblock %}
+    </div>
 </li>
