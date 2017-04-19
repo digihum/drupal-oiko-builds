@@ -15,5 +15,16 @@
 {% if content %}
     <ul{{ attributes.addClass(['l-content-header-user', 'icon-links']) }}>
         {{ content }}
+        {% if logged_in %}
+            <li><a href="{{ path('user.page') }}" class="icon-links__link">
+                <i class="fa fa-user-circle"></i>
+                <span class="show-for-sr">{{ "View my account" }}</span>
+            </a></li>
+        {% else %}
+            <li><a href="{{ path('user.login') }}" class="icon-links__link">
+                <i class="fa fa-user-circle"></i>
+                <span class="show-for-sr">{{ "Login/Register" }}</span>
+            </a></li>
+        {% endif %}
     </ul>
 {% endif %}
