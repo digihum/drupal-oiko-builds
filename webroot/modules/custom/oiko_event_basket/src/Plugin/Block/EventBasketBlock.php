@@ -18,9 +18,30 @@ class EventBasketBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    return array(
-      '#markup' => $this->t('2 lists will appear here'),
-    );
+    return [
+      [
+        '#type' => 'container',
+        '#attributes' => array(
+          'class' => ['js-event-basket']
+        ),
+        '#attached' => array(
+          'library' => array(
+            'oiko_event_basket/event-basket',
+          ),
+        ),
+      ],
+      [
+        '#type' => 'container',
+        '#attributes' => array(
+          'class' => ['js-event-history']
+        ),
+        '#attached' => array(
+          'library' => array(
+            'oiko_event_basket/event-history',
+          ),
+        ),
+      ],
+    ];
   }
 
 }

@@ -12,6 +12,11 @@ global-styling:
       - oiko/fonts
       - core/drupal
 
+localforage-js:
+  version: 2.0.3
+  js:
+    scripts/vendor/localforage.nopromises.min.js: {minified: true}
+
 modal-welcome:
   version: 1.1
   js:

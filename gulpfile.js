@@ -42,7 +42,8 @@ gulp.task('watch:sass', ['watch:sass:oiko']);
 gulp.task('compile:js', function () {
   // For now, just copy a file out of the node modules folder.
   var files = [
-    'node_modules/foundation-sites/dist/foundation.min.js'
+    'node_modules/foundation-sites/dist/foundation.min.js',
+    'node_modules/localforage/dist/localforage.nopromises.min.js'
   ];
   return gulp
     .src(files)

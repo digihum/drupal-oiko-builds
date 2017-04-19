@@ -31,6 +31,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "imports-loader": "^0.7.1",
     "is-equal": "^1.5.5",
+    "localforage": "^1.5.0",
     "node-libs-browser": "^2.0.0",
     "redux-watch": "^1.1.1",
     "susy": "^2.2.12",
