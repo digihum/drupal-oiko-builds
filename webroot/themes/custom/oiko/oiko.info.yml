@@ -16,6 +16,7 @@ regions:
   help: Help
   content: Content
   user_header: User header
+  search_header: Search header
   content_header: Content Header
   sidebar_upper: Sidebar - Upper
   sidebar_lower: Sidebar - Lower

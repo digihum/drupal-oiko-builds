@@ -37,7 +37,7 @@ body {
   flex-direction: row;
   justify-content: space-between;
   flex-grow: 0;
-  height: 50px;
+  height: $content-header-height;
 }
 
 .l-main-content {
@@ -68,11 +68,6 @@ body {
   width: 100%;
 }
 
-.l-content-header-search-box {
-  // @todo: remove :)
-  background-color: lightskyblue;
-}
-
 .l-content-header-user {
 }
 
@@ -94,7 +89,7 @@ body {
     order: 2;
   }
 
-  .l-content-header-search-box {
+  .l-content-header-search {
     order: 1;
   }
   .l-content-header-user {
@@ -118,7 +113,7 @@ body {
     order: 1;
   }
 
-  .l-content-header-search-box {
+  .l-content-header-search {
     order: 2;
   }
   .l-content-header-user {

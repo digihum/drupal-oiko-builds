@@ -11,6 +11,10 @@ function oiko_app_theme($existing, $type, $theme, $path) {
       'variables' => array(
       ),
     ),
+    'main_cidoc_search' => array(
+      'variables' => array(
+      ),
+    ),
   );
 }
 

@@ -12,8 +12,8 @@
 .icon-links__link {
   display: inline-block;
   text-align: center;
-  line-height: 50px;
-  width: 50px;
+  line-height: $content-header-height;
+  width: $content-header-height;
   i.fa {
     font-size: 25px;
     vertical-align: middle;

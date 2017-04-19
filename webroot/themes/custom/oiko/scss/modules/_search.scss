@@ -1,0 +1,33 @@
+.l-content-header-search {
+  line-height: $content-header-height;
+  flex-grow: 1;
+}
+
+.main-search-wrapper {
+  height: 100%;
+  width: 100%;
+  max-width: 450px;
+  position: relative;
+  display: inline-block;
+  margin: 0 $global-margin;
+}
+
+.main-search-box {
+  width: 100%;
+  height: 100%;
+  padding: 6px;
+  margin: 0;
+}
+
+.main-search-submit {
+  font-family: 'FontAwesome';
+  width: 29px;
+  bottom: 0;
+  font-size: 12px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  border: 0;
+  background: none;
+}

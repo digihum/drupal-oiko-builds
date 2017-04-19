@@ -116,6 +116,7 @@ cm_config_tools:
     - block.block.feedback
     - block.block.mainnavigation
     - block.block.maplegendblock
+    - block.block.maincidocsearch
     - block.block.oiko_account_menu
     - block.block.oiko_branding
     - block.block.oiko_breadcrumbs
