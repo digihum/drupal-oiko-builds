@@ -213,3 +213,10 @@ function oiko_profile_update_8124() {
 function oiko_profile_update_8125() {
   \Drupal::service('module_installer')->install(['honeypot']);
 }
+
+/**
+ * Enable the event basket module.
+ */
+function oiko_profile_update_8126() {
+  \Drupal::service('module_installer')->install(['oiko_event_basket']);
+}

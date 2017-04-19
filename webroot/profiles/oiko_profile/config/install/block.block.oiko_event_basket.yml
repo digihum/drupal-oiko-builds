@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_event_basket
+  theme:
+    - oiko
+id: oiko_event_basket
+theme: oiko
+region: user_header
+weight: 0
+provider: null
+plugin: event_basket
+settings:
+  id: event_basket
+  label: 'My events'
+  provider: oiko_event_basket
+  label_display: visible
+visibility: {  }

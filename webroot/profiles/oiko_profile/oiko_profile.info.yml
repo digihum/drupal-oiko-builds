@@ -4,6 +4,7 @@ description: Install profile for the Oiko
 core: 8.x
 
 dependencies:
+  - oiko_event_basket
   - honeypot
   - webform
   - block_content
@@ -118,6 +119,7 @@ cm_config_tools:
     - block.block.oiko_branding
     - block.block.oiko_breadcrumbs
     - block.block.oiko_content
+    - block.block.oiko_event_basket
     - block.block.oiko_footer
     - block.block.oiko_help
     - block.block.oiko_local_actions

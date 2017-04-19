@@ -2,7 +2,7 @@
   list-style-type: none;
   margin: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .icon-links__item {
@@ -18,4 +18,18 @@
     font-size: 25px;
     vertical-align: middle;
   }
+  &:hover,
+  &.hover {
+    background: palette(oikoblue);
+    color: palette(oikocream);
+  }
+}
+
+.icon-links__dropdown {
+  top: initial !important;
+  left: initial !important;
+  right: 0 !important;
+  z-index: 10000;
+  border: none;
+  border-top: 5px solid palette(oikoblue);
 }
