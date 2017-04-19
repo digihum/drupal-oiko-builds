@@ -1,5 +1,9 @@
 .comparative-timeline-container {
-  background-color: palette(grey, light);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: palette(oikocream);
+  height: 100%;
 
   .vis-item {
     height: 14px;
@@ -18,11 +22,6 @@
   .vis-labelset .vis-label .vis-inner {
     min-height: 150px;
     max-width: 160px;
-  }
-
-  // Styling of the actual timeline at the bottom.
-  .vis-panel.vis-bottom {
-    background-color: rgba(palette(oikotan), .2);
   }
 
   // Styling of the different classifications of items.
@@ -51,9 +50,15 @@
   }
 }
 
+.comparative-timeline__inner {
+  flex-grow: 1;
+}
+
 .comparative-timeline__header {
-  background-color: palette(white);
+  //background-color: palette(oikocream);
   position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
 
   .leaflet-searchBox {
     height: $sidebar-header-height;
@@ -64,6 +69,48 @@
     top: ($sidebar-header-height - $ajax-loading-graphic-size) / 2;
     right: ($sidebar-header-height - $ajax-loading-graphic-size) / 2 + 5px;
   }
+}
+
+.comparative-timeline__footer {
+  min-height: 25px;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  .vis-item.vis-background {
+    background-color:  rgba(palette(oikotan), 0.1);
+    border: none;
+
+    // Style the current window bar
+    &.currentWindow {
+      background-color: transparent;
+      border-bottom: 3px solid palette(black);
+      z-index: 2;
+
+      $dot-size: 6px;
+      &:before {
+        content: "";
+        position: absolute;
+        bottom: -$dot-size;
+        left: -$dot-size;
+        height: 0;
+        width: 0;
+        border: $dot-size solid palette(black);
+        border-radius: $dot-size;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: -$dot-size;
+        right: -$dot-size;
+        height: 0;
+        width: 0;
+        border: $dot-size solid palette(black);
+        border-radius: $dot-size;
+      }
+    }
+  }
+
+
 }
 
 .js-loading-graphic--comparative-timeline-working {

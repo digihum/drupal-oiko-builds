@@ -33,290 +33,6 @@ Drupal.behaviors.comparative_timeline = {
     return $(this);
   };
 
-  Drupal.OikoComparativeTimelineSearch = function ($outerContainer, element_settings) {
-    var instance = this;
-    var defaults = {
-      results: [],
-      resultCount: 0,
-      collapseOnBlur: true,
-      options: {
-        placeholderMessage: "Search",
-        searchButtonTitle: "Search",
-        clearButtonTitle: "Clear",
-        notFoundMessage: "not found.",
-        notFoundHint: "Make sure your search criteria is correct and try again."
-      },
-      init : function (container) {
-        var element = $(container);
-        var $searchBox = $('<input class="leaflet-searchBox" placeholder="' + this.options.placeholderMessage + '"/>');
-        element.append($searchBox);
-        var $searchButton = $('<input class="leaflet-searchButton" type="submit" value="" title="' + this.options.searchButtonTitle + '"/>');
-        element.append($searchButton);
-        element.append('<span class="leaflet-divider"></span>');
-        var $clearButton = $('<input class="leaflet-clearButton" type="submit"  value="" title="' + this.options.clearButtonTitle + '">');
-        element.append($clearButton);
-
-        instance.$resultsDiv = $("<div class='leaflet-result'><div>");
-        element.append(instance.$resultsDiv);
-
-
-        $searchBox.delayKeyup(function (event) {
-          switch (event.keyCode) {
-            case 13: // enter
-              if (instance.activeResult !== -1) {
-                instance.searchResultSelected.call(instance, instance.activeResult);
-              }
-              else {
-                instance.searchButtonClick.call(instance);
-              }
-              break;
-            case 38: // up arrow
-              instance.prevResult.call(instance);
-              break;
-            case 40: // down arrow
-              instance.nextResult.call(instance);
-              break;
-            case 37: //left arrow, Do Nothing
-            case 39: //right arrow, Do Nothing
-              break;
-            default:
-              if ($searchBox.val().length > 0) {
-                instance.getValuesAsGeoJson.call(instance);
-              }
-              else {
-                instance.clearButtonClick.call(instance);
-              }
-              break;
-          }
-        }, 300);
-
-        $searchBox.focus(function () {
-          if (instance.$resultsDiv.length) {
-            instance.$resultsDiv[0].style.display = "block";
-          }
-        });
-
-        $searchBox.blur(function () {
-          if (instance.$resultsDiv.length) {
-            if (instance.collapseOnBlur) {
-              instance.$resultsDiv[0].style.display = "none";
-            }
-            else {
-              instance.collapseOnBlur = true;
-
-              window.setTimeout(function ()
-              {
-                instance.$searchBox.focus();
-              }, 0);
-            }
-          }
-
-        });
-
-        $searchButton.click(function () {
-          instance.searchButtonClick.call(instance);
-        });
-
-        $clearButton.click(function () {
-          instance.clearButtonClick.call(instance);
-        });
-
-        this.$searchBox = $searchBox;
-        this.$searchButton = $searchButton;
-        this.$clearButton = $clearButton;
-
-        return container;
-      },
-      searchButtonClick: function() {
-        this.$searchBox.focus();
-      },
-      clearButtonClick: function () {
-        this.$searchBox.val('');
-        this.lastSearch = "";
-        this.resultCount = 0;
-        this.results = [];
-        this.activeResult = -1;
-        this.$resultsDiv.empty();
-        this.$searchBox.focus();
-      },
-      nextResult: function() {
-        if (this.resultCount > 0) {
-          this.$resultsDiv.find('.leaflet-result-list-item').removeClass('mouseover');
-          if (this.activeResult !== -1) {
-            this.$resultsDiv.find('.leaflet-result-list-item').removeClass('active');
-          }
-
-          if (this.activeResult < this.resultCount - 1) {
-            this.activeResult++;
-            this.$resultsDiv.find(".leaflet-result-list-item[data-index='" + this.activeResult + "']").addClass('active');
-          }
-          else {
-            this.activeResult = -1;
-          }
-
-          this.fillSearchBox.call(this);
-        }
-      },
-      prevResult: function() {
-        if (this.resultCount > 0) {
-          this.$resultsDiv.find('.leaflet-result-list-item').removeClass('mouseover');
-          if (this.activeResult !== -1) {
-            this.$resultsDiv.find('.leaflet-result-list-item').removeClass('active');
-          }
-
-          if (this.activeResult === -1) {
-            this.activeResult = this.resultCount - 1;
-            this.$resultsDiv.find(".leaflet-result-list-item[data-index='" + this.activeResult + "']").addClass('active');
-          }
-          else if (this.activeResult === 0) {
-            this.activeResult--;
-          }
-          else {
-            this.activeResult--;
-            this.$resultsDiv.find(".leaflet-result-list-item[data-index='" + this.activeResult + "']").addClass('active');
-          }
-
-          this.fillSearchBox.call(this);
-        }
-      },
-      processNoRecordsFoundOrError: function() {
-        this.resultCount = 0;
-        this.results = [];
-        this.activeResult = -1;
-        this.$resultsDiv.empty();
-
-        this.$resultsDiv.append("<i>" + this.lastSearch + " " + this.options.notFoundMessage + " <p><small>" + this.options.notFoundHint + "</small></i>");
-      },
-      getValuesAsGeoJson: function () {
-
-        var instance = this;
-
-        this.activeResult = -1;
-        this.lastSearch = this.$searchBox.val();
-
-        if (this.lastSearch === "") {
-          return;
-        }
-
-        $.ajax({
-          url: Drupal.url('search/timeline-crm-entities/' + this.lastSearch),
-          type: 'GET',
-          dataType: 'json',
-          success: function (json) {
-            instance.results = [];
-            // Populate the instance.results;
-            for (var i in json) {
-              if (json.hasOwnProperty(i)) {
-                var result = json[i];
-                instance.results[instance.results.length] = {
-                  properties: {
-                    title: result.name,
-                    description: result.bundle,
-                    id: result.id
-                  }
-                };
-              }
-            }
-            instance.resultCount = instance.results.length;
-            if (instance.resultCount) {
-              instance.createDropDown.call(instance);
-            }
-            else {
-              instance.processNoRecordsFoundOrError.call(instance);
-            }
-          },
-          error: function () {
-            instance.processNoRecordsFoundOrError.call(instance);
-          }
-        });
-      },
-      createDropDown: function createDropDown() {
-        var instance = this;
-        var parent = this.$searchBox.parent();
-
-        instance.$resultsDiv.empty();
-        var $resultsList = $("<ul class='leaflet-result-list'></ul>");
-        instance.$resultsDiv.append($resultsList);
-
-        for (var i = 0; i < this.results.length; i++) {
-          var html = "<li class='leaflet-result-list-item' data-index='" + i + "'>";
-          html += "<span class='content'>";
-          html += "<font size='2' color='#333' class='title'>" + this.results[i].properties.title + "</font><font size='1' color='#8c8c8c'> " + this.results[i].properties.description + "<font></span></li>";
-
-          var $resultItem = $(html);
-
-          $resultsList.append($resultItem);
-
-          $resultItem.mouseenter(function () {
-            instance.listElementMouseEnter.call(instance, this);
-          });
-
-          $resultItem.mouseleave(function () {
-            instance.listElementMouseLeave.call(instance, this);
-          });
-
-          $resultItem.mousedown(function () {
-            instance.listElementMouseDown.call(instance, this);
-          });
-        }
-      },
-      listElementMouseEnter: function (listElement) {
-
-        var $listElement = $(listElement);
-
-        var index = parseInt($listElement.data('index'), 10);
-
-        if (index !== this.activeResult) {
-          $listElement.addClass('mouseover');
-        }
-      },
-      listElementMouseLeave: function (listElement) {
-        var $listElement = $(listElement);
-        var index = parseInt($listElement.data('index'), 10);
-
-        if (index !== this.activeResult) {
-          $listElement.removeClass('mouseover');
-        }
-      },
-      listElementMouseDown: function (listElement) {
-        var $listElement = $(listElement);
-        var index = parseInt($listElement.data('index'), 10);
-
-        if (index !== this.activeResult) {
-          if (this.activeResult !== -1) {
-            this.$resultsDiv.find('.leaflet-result-list-item').removeClass('active');
-          }
-
-          $listElement.removeClass('mouseover');
-          $listElement.addClass('active');
-
-          this.activeResult = index;
-          this.fillSearchBox.call(this);
-
-          this.searchResultSelected.call(this, this.activeResult);
-        }
-      },
-      fillSearchBox: function () {
-        if (this.activeResult === -1) {
-          this.$searchBox.val(this.lastSearch);
-        }
-        else {
-          this.$searchBox.val(this.results[this.activeResult].properties.title);
-        }
-      },
-      searchResultSelected: function(index) {
-        this.$searchBox.blur();
-        this.timeline.searchBoxSelectHandler.call(this.timeline, this.results[index]);
-
-      }
-    };
-
-    $.extend(this, defaults, element_settings);
-
-    this.$outerContainer = this.init.call(this, $outerContainer);
-
-    return this;
-  };
 
   Drupal.OikoComparativeTimeline = function ($outerContainer, element_settings) {
     var timeline = this;
@@ -335,6 +51,7 @@ Drupal.behaviors.comparative_timeline = {
     this.$outerContainer = $outerContainer;
 
     this.$timelineContainer = this.$outerContainer.find('.js-comparative-timeline');
+    this.$overviewContainer = this.$outerContainer.find('.js-comparative-timeline-overview');
     this.$addNewContainer = this.$outerContainer.find('.js-comparative-timeline-add-new');
     this.$ajaxLoader = this.$outerContainer.find('.js-loading-graphic');
     this._timelineOptions = {
@@ -347,7 +64,7 @@ Drupal.behaviors.comparative_timeline = {
         }
       },
       orientation: {
-        axis: 'bottom',
+        axis: 'top',
         item: 'top'
       },
       selectable : true,
@@ -356,7 +73,35 @@ Drupal.behaviors.comparative_timeline = {
       ],
       format: {
         minorLabels: {
-          year: 'PPPP'
+          year: 'PPPP',
+          month: 'MMM PPPP'
+        },
+        majorLabels: {
+          weekday:    'MMMM PPPP',
+          day:        'MMMM PPPP',
+          month: 'PPPP'
+        }
+      },
+      showMajorLabels: false,
+      moment: vis.moment.utc,
+      zoomMax: 1000 * 86400 * 365.25 * 100,
+      zoomMin: 1000 * 86400 * 365.25
+    };
+
+    // Settings for the overview timeline.
+    this._overviewOptions = {
+      width:  "100%",
+      stack: false,
+      showCurrentTime: false,
+      showMajorLabels: false,
+      height: 60,
+      hiddenDates: [
+        {start: '0000-01-01 00:00:00', end: '0001-01-01 00:00:00'}
+      ],
+      format: {
+        minorLabels: {
+          year: 'PPPP',
+          month: 'MMM PPPP'
         },
         majorLabels: {
           weekday:    'MMMM PPPP',
@@ -365,9 +110,11 @@ Drupal.behaviors.comparative_timeline = {
         }
       },
       moment: vis.moment.utc,
-      zoomMax: 1000 * 86400 * 365.25 * 100,
-      zoomMin: 1000 * 86400 * 365.25
+      moveable: false,
+      zoomable: false,
+      selectable: false
     };
+
     this._timelineMin = Infinity;
     this._timelineMax = -Infinity;
 
@@ -467,6 +214,10 @@ Drupal.behaviors.comparative_timeline = {
     return this.isLoading;
   };
 
+  Drupal.OikoComparativeTimeline.prototype._filterItemsTimeWindowCallback = function(item) {
+    return item.id === 'window-slider';
+  };
+
   Drupal.OikoComparativeTimeline.prototype._filterItemsCategoriesCallback = function(item) {
     // If the list of categories to show is empty, show everything.
     if (this.categories.length === 0) {
@@ -488,18 +239,34 @@ Drupal.behaviors.comparative_timeline = {
   };
 
   Drupal.OikoComparativeTimeline.prototype._filterItemsCallback = function(item) {
-    return this._filterItemsCategoriesCallback(item) && this._filterItemsCRMTypesCallback(item);
+    return this._filterItemsTimeWindowCallback(item) || (this._filterItemsCategoriesCallback(item) && this._filterItemsCRMTypesCallback(item));
   };
 
   Drupal.OikoComparativeTimeline.prototype.initialise = function () {
     var timeline = this;
     // Construct the vis timeline datasets.
     this._visItems = new vis.DataSet({});
+    // Add the item that we'll use to show what we're browsing.
     this._visDisplayedItems = new vis.DataView(this._visItems, {
-      filter: $.proxy(timeline._filterItemsCallback, timeline),
+      filter: $.proxy(this._filterItemsCallback, this)
+    });
+
+    this._visOverviewItems = new vis.DataView(this._visDisplayedItems, {
+      fields: {
+        id: 'id',
+        start: 'start',
+        end: 'end',
+        _summaryType: 'type',
+        _summaryClass: 'className'
+      }
     });
     this._visGroups = new vis.DataSet({});
     this._visTimeline = new vis.Timeline(this.$timelineContainer.get(0), this._visDisplayedItems, this._visGroups, this._timelineOptions);
+    // Setting this with the options array didn't work, so set it again here.
+    this._visTimeline.setOptions({ orientation: {axis: this._timelineOptions.orientation.axis} });
+    // Add another timeline that's the summary of our timelines.
+    this._visTimelineOverview = new vis.Timeline(this.$overviewContainer.get(0), this._visOverviewItems, this._overviewOptions);
+
 
     // Add the preselected options.
     if (timeline.hasOwnProperty('defaultOptions')) {
@@ -524,7 +291,11 @@ Drupal.behaviors.comparative_timeline = {
       .on('select', function(properties) {
         timeline.selectedTimelineItems.call(timeline, properties);
       })
+      .on('rangechange', $.proxy(function(e) {
+        this.updateCurrentWindowItem();
+      }, this))
       .on('rangechanged', $.proxy(function(e) {
+        this.updateCurrentWindowItem();
         this.window = {
           start: Math.round(e.start.getTime() / 1000),
           end: Math.round(e.end.getTime() / 1000)
@@ -622,17 +393,24 @@ Drupal.behaviors.comparative_timeline = {
         var minmin = parseInt(event.minmin, 10);
         var maxmax = parseInt(event.maxmax, 10);
         newEvents.push({
+          // Timeline information.
           id: groupId + '-' + event.id,
-          type: event.type == 'period' ? 'background' : 'range',
+          type: 'range',
           content: event.label + ' ' + event.date_title,
           title: event.label,
           start: minmin * 1000,
           end: maxmax * 1000,
           group: data.id,
+
+          // CRM information for filtering and displaying etc.
           event: event.id,
           className: 'oiko-timeline-item--' + event.color,
           significance: parseInt(event.significance, 10),
-          crmType: event.crm_type
+          crmType: event.crm_type,
+
+          // Information for our summary timeline.
+          _summaryType: 'background',
+          _summaryClass: ''
         });
 
         this._timelineMin = Math.min(this._timelineMin, (minmin - 86400 * 365 * 10));
@@ -645,6 +423,7 @@ Drupal.behaviors.comparative_timeline = {
     this._visDisplayedItems.refresh();
 
     this.updateTimelineBounds();
+    this.updateCurrentWindowItem();
 
     // If this is one of the pre-built links, put it back.
     for (var i in this.preselectedLinks) {
@@ -653,7 +432,25 @@ Drupal.behaviors.comparative_timeline = {
       }
     }
 
+    this._visTimeline.setOptions({ orientation: {axis: 'top'} });
+
     $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.updateCurrentWindowItem = function() {
+    var timeWindow = this._visTimeline.getWindow();
+    // Ensure that we have a browser window element.
+    this._visItems.update({
+      // Timeline information.
+      id: 'window-slider',
+      type: 'range',
+      start: timeWindow.start,
+      end: timeWindow.end,
+
+      // Information for our summary timeline.
+      _summaryType: 'background',
+      _summaryClass: 'currentWindow'
+    });
   };
 
   Drupal.OikoComparativeTimeline.prototype.updateTimelineBounds = function() {
@@ -662,11 +459,19 @@ Drupal.behaviors.comparative_timeline = {
       this._visTimeline.setOptions({
         min: this._timelineMin * 1000
       });
+      this._visTimelineOverview.setOptions({
+        min: this._timelineMin * 1000,
+        start: this._timelineMin * 1000
+      });
       moved = true;
     }
     if (this._timelineMax != -Infinity) {
       this._visTimeline.setOptions({
         max: this._timelineMax * 1000
+      });
+      this._visTimelineOverview.setOptions({
+        max: this._timelineMax * 1000,
+        end: this._timelineMax * 1000
       });
       moved = true;
     }
@@ -675,10 +480,14 @@ Drupal.behaviors.comparative_timeline = {
       this._visTimeline.setOptions({
         zoomMax: (this._timelineMax - this._timelineMin) * 1000
       });
+      this._visTimelineOverview.setOptions({
+        zoomMax: (this._timelineMax - this._timelineMin) * 1000
+      });
     }
 
     if (moved && !this.rangeAdjusted) {
       this._visTimeline.fit();
+      this._visTimelineOverview.fit();
     }
   };
 
