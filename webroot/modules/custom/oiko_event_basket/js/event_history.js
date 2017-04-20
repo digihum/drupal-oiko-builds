@@ -8,17 +8,28 @@
   });
 
   var redraw_history = function() {
-    var events = {};
+    var events = [];
     event_history.iterate(function(value, key, iterationNumber) {
-      events[key] = value;
-    }).then(function() {
-      $('.js-event-history').html(Drupal.theme('eventHistory', events));
+      events.push(value);
+    })
+    .then(function() {
+      return events.sort(function(a, b) {
+        return b.timestamp - a.timestamp;
+      }).splice(0, 5);
+    })
+    .then(function(processed_events) {
+      $('.js-event-history').html(Drupal.theme('eventHistory', processed_events));
     });
   };
 
   Drupal.oiko.eventHistory = {
     add: function(id, title) {
-      event_history.setItem(id, title).then(redraw_history);
+      var item = {
+        id: id,
+        title: title,
+        timestamp: new Date().getTime()
+      };
+      event_history.setItem(id, item).then(redraw_history);
     },
     remove: function(id) {
       event_history.removeItem(id).then(redraw_history);
@@ -34,7 +45,7 @@
   Drupal.theme.eventHistory = function (events) {
     var output = '<h4>My journey</h4><ul>';
     $.each(events, function(key, val) {
-      output += '<li data-event-id="' + key + '">' + val + '<button class="js-event-history-close"><span aria-hidden="true">&times;</span></button></li>'
+      output += '<li data-event-id="' + val.id + '">' + val.title + '<button class="js-event-history-close"><span aria-hidden="true">&times;</span></button></li>'
     });
     return output + '</ul>';
   };
