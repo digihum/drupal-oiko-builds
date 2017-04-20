@@ -34,7 +34,7 @@ module.exports = {
     plugins: [
         // Avoid publishing files when compilation fails
         new webpack.NoErrorsPlugin(),
-        // new webpack.optimize.UglifyJsPlugin({sourceMap: true}),
+        new webpack.optimize.UglifyJsPlugin({sourceMap: true}),
         new webpack.ProvidePlugin({
             Promise: 'imports-loader?this=>global!exports-loader?global.Promise!es6-promise',
         })
