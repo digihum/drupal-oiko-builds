@@ -1,4 +1,5 @@
 (function ($) {
+  "use strict";
 
 Drupal.oiko.addAppModule('comparative-timeline');
 
@@ -14,24 +15,6 @@ Drupal.behaviors.comparative_timeline = {
     });
   }
 };
-
-  // Debounced keyup.
-  $.fn.delayKeyup = function (callback, ms) {
-    var timer = 0;
-    $(this).keyup(function (event) {
-
-      if (event.keyCode !== 13 && event.keyCode !== 38 && event.keyCode !== 40) {
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-          callback(event);
-        }, ms);
-      }
-      else {
-        callback(event);
-      }
-    });
-    return $(this);
-  };
 
 
   Drupal.OikoComparativeTimeline = function ($outerContainer, element_settings) {
@@ -167,14 +150,6 @@ Drupal.behaviors.comparative_timeline = {
     // Should we fire an event?
   };
 
-  Drupal.OikoComparativeTimeline.prototype.buildSearchBox = function () {
-    return this.$addNewContainer.data('search_box', new Drupal.OikoComparativeTimelineSearch(this.$addNewContainer, {timeline: this}));
-  };
-
-  Drupal.OikoComparativeTimeline.prototype.searchBoxSelectHandler = function (item) {
-    this.loadDataHandler.call(this, item.properties.id);
-  };
-
   Drupal.OikoComparativeTimeline.prototype.loadDataHandler = function (groupID) {
     var timeline = this;
     var url = '/comparative-timeline/data/' + groupID;
@@ -285,9 +260,6 @@ Drupal.behaviors.comparative_timeline = {
       }
     }
 
-    // Add the comparision select box.
-    this.buildSearchBox.call(this);
-
     // Hook events up.
     this._visTimeline
       .on('select', function(properties) {
@@ -305,7 +277,7 @@ Drupal.behaviors.comparative_timeline = {
         $(window).trigger('oiko.timelineRangeChanged');
       }, this));
     this.$timelineContainer.bind('click', function(e) {
-      $target = $(e.target);
+      var $target = $(e.target);
       if ($target.is('.js-comparative-timeline-remove-link')) {
         // We need to remove this group.
         if ($target.data('groupId')) {
@@ -322,6 +294,9 @@ Drupal.behaviors.comparative_timeline = {
     });
     $(window).bind('set.oiko.categories', function(e, categories) {
       timeline.setCategories(categories);
+    });
+    $(window).bind('selected.timeline.searchitem', function (e, id) {
+      timeline.loadDataHandler.call(timeline, parseInt(id, 10));
     });
   };
 

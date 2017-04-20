@@ -116,6 +116,9 @@ function oiko_preprocess_block(&$variables) {
   if ($variables['plugin_id'] === 'local_tasks_block') {
     $variables['attributes']['class'][] = 'tabs-wrapper';
   }
+  if ($variables['plugin_id'] === 'main_cidoc_search') {
+    $variables['attributes']['class'][] = 'main-search-outer-wrapper';
+  }
   if (isset($variables['base_plugin_id']) && $variables['base_plugin_id'] === 'block_content') {
     if (isset($variables['content']['#block_content']) && $variables['content']['#block_content']->bundle() === 'modal_welcome') {
       $variables['attributes']['class'][] = 'reveal';

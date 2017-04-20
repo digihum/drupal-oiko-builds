@@ -102,6 +102,15 @@ class Cidoc extends ProcessorPluginBase {
           'hidden' => FALSE,
         );
         $properties['cidoc_child_events'] = new ProcessorProperty($definition);
+
+        $definition = array(
+          'label' => $this->t('Has geospatial data'),
+          'description' => $this->t('True if the entity has associate geospatial data, i.e. it will be rendered on a map.'),
+          'type' => 'boolean',
+          'processor_id' => $this->getPluginId(),
+          'hidden' => FALSE,
+        );
+        $properties['cidoc_has_geodata'] = new ProcessorProperty($definition);
       }
     }
 
@@ -113,13 +122,13 @@ class Cidoc extends ProcessorPluginBase {
    */
   public function addFieldValues(ItemInterface $item) {
 
-    // Only run for node and comment items.
+    // Only run for cidoc items.
     $entity_type_id = $item->getDatasource()->getEntityTypeId();
     if (!in_array($entity_type_id, array('cidoc_entity'))) {
       return;
     }
 
-    // Get the node object.
+    // Get the cidoc wrapper.
     $entity_wrapper = $item->getOriginalObject();
     if (!$entity_wrapper) {
       // Apparently we were active for a wrong item.
@@ -133,6 +142,12 @@ class Cidoc extends ProcessorPluginBase {
       ->filterForPropertyPath($item->getFields(), $item->getDatasourceId(), 'cidoc_child_events');
     foreach ($fields as $field) {
       $field->addValue(count($entity->getChildEventEntities()));
+    }
+
+    $fields = $this->getFieldsHelper()
+      ->filterForPropertyPath($item->getFields(), $item->getDatasourceId(), 'cidoc_has_geodata');
+    foreach ($fields as $field) {
+      $field->addValue($entity->hasGeospatialData());
     }
   }
 

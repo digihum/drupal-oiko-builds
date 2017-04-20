@@ -5467,14 +5467,17 @@ Drupal.oiko.getAppState = function () {
 });
 
 (0, _jquery2.default)(window).on('set.oiko.visualisation', function (e, visualisation) {
-  if (visualisation === 'map' || visualisation === 'timeline') {
+  var _store$getState2 = store.getState(),
+      currentVisualisation = _store$getState2.currentVisualisation;
+
+  if (visualisation === 'map' || visualisation === 'timeline' && currentVisualisation !== visualisation) {
     store.dispatch((0, _actions.setVisualisation)(visualisation));
   }
 });
 
 var visualisationSwitchListener = function visualisationSwitchListener() {
-  var _store$getState2 = store.getState(),
-      visualisation = _store$getState2.visualisation;
+  var _store$getState3 = store.getState(),
+      visualisation = _store$getState3.visualisation;
   // Toggle a class on the body element to allow for sweeping changes.
 
 
@@ -5482,6 +5485,14 @@ var visualisationSwitchListener = function visualisationSwitchListener() {
 
   (0, _jquery2.default)(window).trigger('resize.oiko.map_container');
 };
+
+// Announce the visualisation state on page load.
+(0, _jquery2.default)(window).bind('load', function () {
+  var _store$getState4 = store.getState(),
+      visualisation = _store$getState4.visualisation;
+
+  (0, _jquery2.default)(window).trigger('set.oiko.visualisation', visualisation);
+});
 
 (0, _jquery2.default)(window).on('resize.oiko.map_container', function () {
   if (window.drupalLeaflet && window.drupalLeaflet.lMap) {
@@ -5503,8 +5514,8 @@ var PHSCategoryListener = function PHSCategoryListener(newVal) {
 // Timelines on the comparative timeline widget.
 
 var timelinesListener = function timelinesListener() {
-  var _store$getState3 = store.getState(),
-      comparativeTimelines = _store$getState3.comparativeTimelines;
+  var _store$getState5 = store.getState(),
+      comparativeTimelines = _store$getState5.comparativeTimelines;
 
   var timeline = Drupal.oiko.timeline;
 
@@ -5518,8 +5529,8 @@ var timelinesListener = function timelinesListener() {
 
   // Check to see if the visual range of the timeline needs to change.
 
-  var _store$getState4 = store.getState(),
-      timelinesState = _store$getState4.timelinesState;
+  var _store$getState6 = store.getState(),
+      timelinesState = _store$getState6.timelinesState;
 
   var window = Drupal.oiko.timeline.getVisibleTimeWindow();
   if (timelinesState.start && timelinesState.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {
@@ -5537,14 +5548,14 @@ var timelinesListener = function timelinesListener() {
   // Bind the PHS category listener.
   store.subscribe(PHSCategoryWatch(PHSCategoryListener));
 
-  var _store$getState5 = store.getState(),
-      PHSCategories = _store$getState5.PHSCategories;
+  var _store$getState7 = store.getState(),
+      PHSCategories = _store$getState7.PHSCategories;
 
   PHSCategoryListener(PHSCategories, PHSCategories, 'PHSCategories');
 
   (0, _jquery2.default)(window).on('oiko.timelines_updated', function (e, timelines) {
-    var _store$getState6 = store.getState(),
-        comparativeTimelines = _store$getState6.comparativeTimelines;
+    var _store$getState8 = store.getState(),
+        comparativeTimelines = _store$getState8.comparativeTimelines;
 
     var timeline = Drupal.oiko.timeline;
     if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length || comparativeTimelines.every(function (v, i) {
@@ -5559,8 +5570,8 @@ var timelinesListener = function timelinesListener() {
 
   // Bind on the range changing on the comparative timeline.
   (0, _jquery2.default)(window).on('oiko.timelineRangeChanged', function (e) {
-    var _store$getState7 = store.getState(),
-        timelinesState = _store$getState7.timelinesState;
+    var _store$getState9 = store.getState(),
+        timelinesState = _store$getState9.timelinesState;
 
     var window = Drupal.oiko.timeline.getVisibleTimeWindow();
     if (window.start && window.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {

@@ -10,28 +10,9 @@
     if (mapDefinition.sidebar && Drupal.oiko.hasOwnProperty('sidebar')) {
       drupalLeaflet.hasSidebar = true;
 
-      // Check to see if we need to open the sidebar immediately.
-      // $(document).once('oiko_leaflet__popups').each(function () {
-      //   if (drupalSettings.hasOwnProperty('oiko_leaflet') && drupalSettings.oiko_leaflet.hasOwnProperty('popup') && drupalSettings.oiko_leaflet.popup) {
-      //     // We might need to wait for everything we need to be loaded.
-      //     $(window).bind('load', function() {
-      //       Drupal.oiko.openSidebar(drupalSettings.oiko_leaflet.popup.id, drupalSettings.oiko_leaflet.popup.label, false);
-      //     });
-      //   }
-      //   else {
-      //     // We need to open the sidebar on wide screens.
-      //     if (window.matchMedia('(min-width: 641px)').matches) {
-      //       $(window).bind('load', function() {
-      //         Drupal.oiko.openSidebarLegend();
-      //       });
-      //     }
-      //   }
-      // });
-
-      map.addEventListener('searchItem', function(e) {
-        var id = e.properties.id;
-        var title = e.properties.title;
-        Drupal.oiko.openSidebar(id, title, true);
+      $(window).bind('selected.map.searchitem selected.timeline.searchitem', function (e, id) {
+        var id = parseInt(id, 10);
+        Drupal.oiko.openSidebar(id);
       });
 
       $(window).bind('oikoSidebarOpening', function(e, id) {
@@ -39,7 +20,6 @@
           if (!map.getBounds().contains(featureCache[id])) {
             map.panInsideBounds(featureCache[id]);
           }
-
         }
       });
     }

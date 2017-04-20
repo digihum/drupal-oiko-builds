@@ -80,7 +80,15 @@
 }
 
 @mixin pill($color) {
-  background-color: rgba($color, .25);
-  margin: 0.5em;
-  padding: 0.25em 0.5em ;
+  font-size: $small-font-size;
+  background-color: $color;
+  color: pick-visible-color($color, $body-font-color, $white);
+  margin: 0.5em 0.25em;
+  padding: 0.25em 0.5em;
 }
+
+@mixin category-pill($color) {
+  @include pill($color);
+  margin-left: 0;
+}
+

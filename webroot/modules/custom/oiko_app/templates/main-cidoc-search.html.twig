@@ -1,4 +1,13 @@
-<div class="main-search-wrapper">
-    <input class="main-search-box" type="text" placeholder="Search events" />
-    <input class="main-search-submit" type="submit" value="">
+<div class="main-search-wrapper js-main-search-wrapper">
+    <input class="main-search-box js-input" type="text" placeholder="Search events" data-toggle-focus="main-search-dropdown" />
+    <input class="main-search-submit js-submit" type="submit" value="">
+    <div id="main-search-dropdown" class="main-search__dropdown dropdown-pane" data-dropdown="true" data-toggler="is-open">
+        {#@TODO: Allow changing this text somewhere. From the block plugin?#}
+        <div class="main-search__no-search-text is-hidden js-no-search-text">You can search for people, places and events.</div>
+        {#@TODO: Allow changing this text somewhere. From the block plugin?#}
+        <div class="main-search__no-results-text is-hidden js-no-results-text">No results found.</div>
+        {#@TODO: Allow changing this text somewhere. From the block plugin?#}
+        <div class="main-search__no-results-text is-hidden js-loading-results-text">Searching through known space and time...</div>
+        <ul class="main-search__results-listing is-hidden js-results-listing"></ul>
+    </div>
 </div>

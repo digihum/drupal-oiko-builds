@@ -20,6 +20,11 @@ class MainSearchBlock extends BlockBase {
   public function build() {
     return array(
       '#theme' => 'main_cidoc_search',
+      '#attached' => [
+        'library' =>  array(
+          'oiko_app/mainsearch',
+        ),
+      ]
     );
   }
 

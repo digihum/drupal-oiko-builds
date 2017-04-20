@@ -41,7 +41,8 @@ $(document).find('.js-oiko-app--toggle').bind('click', function(e) {
 });
 
 $(window).on('set.oiko.visualisation', (e, visualisation) => {
-  if (visualisation === 'map' || visualisation === 'timeline') {
+  const { currentVisualisation } = store.getState();
+  if (visualisation === 'map' || visualisation === 'timeline' && currentVisualisation !== visualisation) {
     store.dispatch(setVisualisation(visualisation));
   }
 });
@@ -56,6 +57,12 @@ const visualisationSwitchListener = () => {
 
   $(window).trigger('resize.oiko.map_container');
 };
+
+// Announce the visualisation state on page load.
+$(window).bind('load', () => {
+  const { visualisation } = store.getState();
+  $(window).trigger('set.oiko.visualisation', visualisation);
+});
 
 $(window).on('resize.oiko.map_container', () => {
   if (window.drupalLeaflet && window.drupalLeaflet.lMap) {

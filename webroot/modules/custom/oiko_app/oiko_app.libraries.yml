@@ -6,3 +6,11 @@ app:
   dependencies:
     - core/domready
     - core/drupalSettings
+
+mainsearch:
+  js:
+    scripts/main-search.widget.js: { }
+  version: '1.0.0'
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

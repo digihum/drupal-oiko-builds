@@ -88,16 +88,6 @@
   position: relative;
   flex-grow: 0;
   flex-shrink: 0;
-
-  .leaflet-searchBox {
-    height: $sidebar-header-height;
-  }
-
-  .loading-graphic {
-    position: absolute;
-    top: ($sidebar-header-height - $ajax-loading-graphic-size) / 2;
-    right: ($sidebar-header-height - $ajax-loading-graphic-size) / 2 + 5px;
-  }
 }
 
 .comparative-timeline__footer {
@@ -143,7 +133,7 @@
 }
 
 .js-loading-graphic--comparative-timeline-working {
-  display: inline !important;
+  display: block !important;
 }
 
 .js-comparative-timeline-remove-link {

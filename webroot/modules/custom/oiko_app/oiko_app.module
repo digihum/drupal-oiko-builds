@@ -50,9 +50,6 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
       'library' =>  array(
         'oiko_app/app'
       ),
-      'drupalSettings' => [
-
-      ],
     ),
   ];
 }

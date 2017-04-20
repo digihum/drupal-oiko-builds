@@ -120,12 +120,14 @@
 
         // Build up a lovely map of Drupal feature id to a timestamp.
         $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
+          var id;
           if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search || drupalLeaflet.map_definition.hasOwnProperty('sidebar') && drupalLeaflet.map_definition.sidebar) {
             if (feature.hasOwnProperty('id') && feature.id) {
+              var id = parseInt(feature.id, 10);
               if (feature.hasOwnProperty('temporal')) {
                 featureCache[feature.id] = {
                   min: parseInt(feature.temporal.minmin, 10),
-                  max: parseInt(feature.temporal.maxmax, 10),
+                  max: parseInt(feature.temporal.maxmax, 10)
                 };
               }
             }
@@ -133,8 +135,7 @@
         });
 
         // Listen for the searchItem event on the map, used when someone selects an item for searching.
-        map.addEventListener('searchItem', function (e) {
-          var id = e.properties.id;
+        $(window).bind('selected.map.searchitem', function (e, id) {
           if (featureCache.hasOwnProperty(id)) {
             if (featureCache[id].hasOwnProperty('min') && featureCache[id].hasOwnProperty('max')) {
               drupalLeaflet.changeTimeToNearestWindow.call(drupalLeaflet, featureCache[id].min, featureCache[id].max);
@@ -144,6 +145,7 @@
 
         // Listen for the sidebar being opened, and ensure that our time is correct.
         $(window).bind('oikoSidebarOpening', function(e, id) {
+          var id = parseInt(id, 10);
           if (featureCache.hasOwnProperty(id)) {
             if (featureCache[id].hasOwnProperty('min') && featureCache[id].hasOwnProperty('max')) {
               drupalLeaflet.changeTimeToNearestWindow.call(drupalLeaflet, featureCache[id].min, featureCache[id].max);

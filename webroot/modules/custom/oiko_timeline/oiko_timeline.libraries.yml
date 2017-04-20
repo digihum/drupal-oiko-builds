@@ -1,6 +1,5 @@
 comparative_timeline:
   js:
-    js/comparative_timeline.search.js: {}
     js/comparative_timeline.js: {}
   css:
     component:
