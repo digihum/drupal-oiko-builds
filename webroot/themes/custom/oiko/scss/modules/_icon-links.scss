@@ -26,10 +26,24 @@
 }
 
 .icon-links__dropdown {
-  top: initial !important;
-  left: initial !important;
-  right: 0 !important;
+  top: $content-header-height !important;
+  bottom: 0;
   z-index: 10000;
+
+  .showing-timeline & {
+    left: 0 !important;
+    right: initial !important;
+  }
+
+  .showing-map & {
+    right: 0 !important;
+    left: initial !important;
+  }
+
+  padding: 25px;
+  width: 40%;
   border: none;
   border-top: 5px solid palette(oikoblue);
+
 }
+

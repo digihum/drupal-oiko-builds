@@ -8,6 +8,7 @@ body {
 .l-main {
   flex-grow: 1;
   display: flex;
+  position: relative;
 }
 
 .l-sidebar {
@@ -37,6 +38,7 @@ body {
   flex-direction: row;
   justify-content: space-between;
   flex-grow: 0;
+  flex-shrink: 0;
   height: $content-header-height;
 }
 

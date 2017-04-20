@@ -32,7 +32,7 @@
    *   A string representing a DOM fragment.
    */
   Drupal.theme.eventBasket = function (events) {
-    var output = '<h4>My added events</h4><ul>';
+    var output = '<ul>';
     $.each(events, function(key, val) {
       output += '<li data-event-id="' + key + '">' + val + '<button class="js-event-basket-close"><span aria-hidden="true">&times;</span></button></li>'
     });

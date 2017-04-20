@@ -43,7 +43,7 @@
    *   A string representing a DOM fragment.
    */
   Drupal.theme.eventHistory = function (events) {
-    var output = '<h4>My journey</h4><ul>';
+    var output = '<ul>';
     $.each(events, function(key, val) {
       output += '<li data-event-id="' + val.id + '">' + val.title + '<button class="js-event-history-close"><span aria-hidden="true">&times;</span></button></li>'
     });
