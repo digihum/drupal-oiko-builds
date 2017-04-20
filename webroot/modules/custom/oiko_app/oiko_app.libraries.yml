@@ -1,7 +1,7 @@
 # This is the main stateful OikoApp, this pops things into the URL etc.
 app:
   js:
-    oiko.app.js: { }
+    dist/oiko.app.js: { }
   version: '1.0.0'
   dependencies:
     - core/domready

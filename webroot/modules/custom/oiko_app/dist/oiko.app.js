@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 68);
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -485,7 +485,7 @@ exports.changeQueryStringStructured = changeQueryStringStructured;
 exports.fetchQueryStringElements = fetchQueryStringElements;
 exports.fetchQueryStringElementsStructured = fetchQueryStringElementsStructured;
 
-var _queryString = __webpack_require__(52);
+var _queryString = __webpack_require__(53);
 
 var _queryString2 = _interopRequireDefault(_queryString);
 
@@ -831,7 +831,7 @@ function connectSidebar($, store) {
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var bind = __webpack_require__(26);
+var bind = __webpack_require__(27);
 
 module.exports = bind.call(Function.call, Object.prototype.hasOwnProperty);
 
@@ -986,13 +986,13 @@ if (hasSymbols) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(49);
 
 
 /** Built-in value references. */
 var Symbol = __WEBPACK_IMPORTED_MODULE_0__root_js__["a" /* default */].Symbol;
 
-/* harmony default export */ __webpack_exports__["a"] = Symbol;
+/* harmony default export */ __webpack_exports__["a"] = (Symbol);
 
 
 /***/ }),
@@ -1000,9 +1000,9 @@ var Symbol = __WEBPACK_IMPORTED_MODULE_0__root_js__["a" /* default */].Symbol;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getPrototype_js__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getPrototype_js__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__ = __webpack_require__(50);
 
 
 
@@ -1064,7 +1064,7 @@ function isPlainObject(value) {
     funcToString.call(Ctor) == objectCtorString;
 }
 
-/* harmony default export */ __webpack_exports__["a"] = isPlainObject;
+/* harmony default export */ __webpack_exports__["a"] = (isPlainObject);
 
 
 /***/ }),
@@ -1139,7 +1139,7 @@ function compose() {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_symbol_observable__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_symbol_observable__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_symbol_observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_symbol_observable__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ActionTypes; });
 /* harmony export (immutable) */ __webpack_exports__["a"] = createStore;
@@ -1399,9 +1399,9 @@ function createStore(reducer, preloadedState, enhancer) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createStore__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__combineReducers__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__applyMiddleware__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__combineReducers__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__applyMiddleware__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__compose__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_warning__ = __webpack_require__(18);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "createStore", function() { return __WEBPACK_IMPORTED_MODULE_0__createStore__["a"]; });
@@ -1542,21 +1542,21 @@ exports.createOikoApp = createOikoApp;
 
 var _redux = __webpack_require__(17);
 
-var _reducers = __webpack_require__(23);
+var _reducers = __webpack_require__(24);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
-var _createBrowserHistory = __webpack_require__(29);
+var _createBrowserHistory = __webpack_require__(30);
 
 var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
 
 var _reduxHistory = __webpack_require__(2);
 
-var _reduxThunk = __webpack_require__(57);
+var _reduxThunk = __webpack_require__(58);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _reduxLogger = __webpack_require__(56);
+var _reduxLogger = __webpack_require__(57);
 
 var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
@@ -1676,7 +1676,7 @@ var oikoApp = function () {
 "use strict";
 
 
-var whyNotEqual = __webpack_require__(37);
+var whyNotEqual = __webpack_require__(38);
 
 module.exports = function isEqual(value, other) {
 	return whyNotEqual(value, other) === '';
@@ -1689,7 +1689,7 @@ module.exports = function isEqual(value, other) {
 
 "use strict";
 
-var getValue = __webpack_require__(51).get
+var getValue = __webpack_require__(52).get
 
 function defaultCompare (a, b) {
   return a === b
@@ -1715,6 +1715,279 @@ module.exports = watch
 
 /***/ }),
 /* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _actions = __webpack_require__(1);
+
+var _store = __webpack_require__(20);
+
+var _jquery = __webpack_require__(4);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _isEqual = __webpack_require__(21);
+
+var _isEqual2 = _interopRequireDefault(_isEqual);
+
+var _reduxWatch = __webpack_require__(22);
+
+var _reduxWatch2 = _interopRequireDefault(_reduxWatch);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Spin up a new instance of our OikoApp.
+var app = (0, _store.createOikoApp)();
+
+var store = app.getStore();
+
+Drupal.oiko = Drupal.oiko || {};
+
+Drupal.oiko.addAppModule = function (moduleName) {
+  return app.getStore().dispatch((0, _actions.addAppModule)(moduleName));
+};
+
+Drupal.oiko.appModuleDoneLoading = function (moduleName) {
+  return app.getStore().dispatch((0, _actions.appModuleDoneLoading)(moduleName));
+};
+
+Drupal.oiko.getAppState = function () {
+  return app.getStore().getState();
+};
+
+// @TODO: START: Move all of this elsewhere.
+
+
+// Window Visualisation.
+(0, _jquery2.default)(document).find('.js-oiko-app--toggle').bind('click', function (e) {
+  var _store$getState = store.getState(),
+      visualisation = _store$getState.visualisation;
+
+  (0, _jquery2.default)(window).trigger('set.oiko.visualisation', visualisation === 'map' ? 'timeline' : 'map');
+  e.preventDefault();
+  (0, _jquery2.default)(this).blur();
+});
+
+(0, _jquery2.default)(window).on('set.oiko.visualisation', function (e, visualisation) {
+  var _store$getState2 = store.getState(),
+      currentVisualisation = _store$getState2.currentVisualisation;
+
+  if (visualisation === 'map' || visualisation === 'timeline' && currentVisualisation !== visualisation) {
+    store.dispatch((0, _actions.setVisualisation)(visualisation));
+  }
+});
+
+var visualisationSwitchListener = function visualisationSwitchListener() {
+  var _store$getState3 = store.getState(),
+      visualisation = _store$getState3.visualisation;
+  // Toggle a class on the body element to allow for sweeping changes.
+
+
+  (0, _jquery2.default)('body').toggleClass('showing-map', visualisation === 'map').toggleClass('showing-timeline', visualisation !== 'map');
+
+  (0, _jquery2.default)(window).trigger('resize.oiko.map_container');
+};
+
+// Announce the visualisation state on page load.
+(0, _jquery2.default)(window).bind('load', function () {
+  var _store$getState4 = store.getState(),
+      visualisation = _store$getState4.visualisation;
+
+  (0, _jquery2.default)(window).trigger('set.oiko.visualisation', visualisation);
+});
+
+(0, _jquery2.default)(window).on('resize.oiko.map_container', function () {
+  if (window.drupalLeaflet && window.drupalLeaflet.lMap) {
+    window.drupalLeaflet.lMap.invalidateSize();
+  }
+});
+
+// PHS category filter.
+(0, _jquery2.default)(window).bind('set.oiko.categories', function (e, categories, internal) {
+  if (internal) {
+    store.dispatch((0, _actions.setPHSCategories)(categories));
+  }
+});
+var PHSCategoryWatch = (0, _reduxWatch2.default)(store.getState, 'PHSCategories', _isEqual2.default);
+var PHSCategoryListener = function PHSCategoryListener(newVal) {
+  (0, _jquery2.default)(window).trigger('set.oiko.categories', [newVal]);
+};
+
+// Timelines on the comparative timeline widget.
+
+var timelinesListener = function timelinesListener() {
+  var _store$getState5 = store.getState(),
+      comparativeTimelines = _store$getState5.comparativeTimelines;
+
+  var timeline = Drupal.oiko.timeline;
+
+  // Check to see if the timeslines displayed needs to change.
+  var timelines = timeline.getTimelines();
+  if (comparativeTimelines.length !== timelines.length || comparativeTimelines.every(function (v, i) {
+    return v !== timelines[i];
+  })) {
+    timeline.setTimelines(comparativeTimelines);
+  }
+
+  // Check to see if the visual range of the timeline needs to change.
+
+  var _store$getState6 = store.getState(),
+      timelinesState = _store$getState6.timelinesState;
+
+  var window = Drupal.oiko.timeline.getVisibleTimeWindow();
+  if (timelinesState.start && timelinesState.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {
+    Drupal.oiko.timeline.setVisibleTimeWindow(timelinesState.start, timelinesState.end);
+  }
+};
+
+(0, _jquery2.default)(window).bind('oiko.loaded', function () {
+  (0, _jquery2.default)('.oiko-app--loader').hide();
+
+  // Bind to hide/show the correct visualisation.
+  store.subscribe(visualisationSwitchListener);
+  visualisationSwitchListener();
+
+  // Bind the PHS category listener.
+  store.subscribe(PHSCategoryWatch(PHSCategoryListener));
+
+  var _store$getState7 = store.getState(),
+      PHSCategories = _store$getState7.PHSCategories;
+
+  PHSCategoryListener(PHSCategories, PHSCategories, 'PHSCategories');
+
+  (0, _jquery2.default)(window).on('oiko.timelines_updated', function (e, timelines) {
+    var _store$getState8 = store.getState(),
+        comparativeTimelines = _store$getState8.comparativeTimelines;
+
+    var timeline = Drupal.oiko.timeline;
+    if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length || comparativeTimelines.every(function (v, i) {
+      return v !== timelines[i];
+    }))) {
+      store.dispatch((0, _actions.setComparativeTimelines)(timelines));
+    }
+  });
+
+  store.subscribe(timelinesListener);
+  timelinesListener();
+
+  // Bind on the range changing on the comparative timeline.
+  (0, _jquery2.default)(window).on('oiko.timelineRangeChanged', function (e) {
+    var _store$getState9 = store.getState(),
+        timelinesState = _store$getState9.timelinesState;
+
+    var window = Drupal.oiko.timeline.getVisibleTimeWindow();
+    if (window.start && window.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {
+      store.dispatch((0, _actions.setTimelinesState)(window.start, window.end));
+    }
+  });
+});
+
+// Probably a better way to write this.
+(0, _jquery2.default)(document).on('leaflet.map', function (e, mapDefinition, map, drupalLeaflet) {
+  if (mapDefinition.hasOwnProperty('pagestate') && mapDefinition.pagestate) {
+
+    window.drupalLeaflet = drupalLeaflet;
+
+    var handleMapMove = function handleMapMove(e) {
+      var center = map.getCenter();
+      var changedNeeded = false;
+      var state = store.getState();
+      if (e.type === 'zoomend' && map.getZoom() != state.mapState.level) {
+        changedNeeded = true;
+      }
+      if (e.type === 'moveend' && (state.mapState.lat != center.lat.toFixed(2) || state.mapState.lng != center.lng.toFixed(2))) {
+        changedNeeded = true;
+      }
+
+      if (changedNeeded) {
+        store.dispatch((0, _actions.setMapState)(map.getZoom(), center.lat, center.lng));
+      }
+    };
+
+    var handleMapStoreStateChange = function handleMapStoreStateChange() {
+      var state = store.getState();
+      var changedNeeded = false;
+
+      // If the zoom level of the map is different, change it.
+      if (map.getZoom() != state.mapState.level) {
+        changedNeeded = true;
+      }
+
+      var center = map.getCenter();
+      if (!Number.isNaN(state.mapState.lat) && !Number.isNaN(state.mapState.lng)) {
+        var mLat = Number.parseFloat(center.lat).toFixed(2);
+        var mLng = Number.parseFloat(center.lng).toFixed(2);
+        if (mLat != state.mapState.lat || mLng != state.mapState.lng) {
+          changedNeeded = true;
+        }
+      }
+
+      if (changedNeeded) {
+        map.setView({ lat: state.mapState.lat, lng: state.mapState.lng }, state.mapState.level, { animate: true });
+      }
+    };
+
+    (0, _jquery2.default)(window).on('oiko.loaded', function () {
+      handleMapStoreStateChange();
+      // Set up a two way sync of the map zoom and position when needed.
+      map.on('zoomend moveend', handleMapMove);
+      // Sync from the state store into the map.
+      store.subscribe(handleMapStoreStateChange);
+    });
+
+    var handleMapTemporalShift = function handleMapTemporalShift(e) {
+      var needsUpdate = false;
+      var state = store.getState();
+      var currentTime = drupalLeaflet.timelineControl.getTime();
+      var currentVisibleWindow = drupalLeaflet.timelineControl.getWindow();
+
+      // Check to see if the current time was just moved.
+      if (e.type == 'temporal.shifted' && currentTime != state.timeBrowserState.current) {
+        needsUpdate = true;
+      }
+
+      // Check to see if the range window of the timeline has changed.
+      if (e.type == 'temporal.visibleWindowChanged' && (state.timeBrowserState.start != currentVisibleWindow.start || state.timeBrowserState.end != currentVisibleWindow.end)) {
+        needsUpdate = true;
+      }
+
+      // Some simple validation, the current time needs to be within the time window.
+      if (currentTime > currentVisibleWindow.end || currentTime < currentVisibleWindow.start) {
+        needsUpdate = false;
+      }
+
+      if (needsUpdate) {
+        store.dispatch((0, _actions.setTimeBrowserState)(currentTime, currentVisibleWindow.start, currentVisibleWindow.end));
+      }
+    };
+
+    var handleMapTemporalStoreStateChange = function handleMapTemporalStoreStateChange() {
+      var state = store.getState();
+      var currentTime = drupalLeaflet.timelineControl.getTime();
+      var currentWindow = drupalLeaflet.timelineControl.getWindow();
+
+      var needsUpdate = state.timeBrowserState.current != currentTime || state.timeBrowserState.start != currentWindow.start || state.timeBrowserState.end != currentWindow.end;
+
+      if (needsUpdate) {
+        drupalLeaflet.timelineControl.setTimeAndWindow(state.timeBrowserState.current, state.timeBrowserState.start, state.timeBrowserState.end);
+      }
+    };
+    if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
+      (0, _jquery2.default)(window).on('oiko.loaded', function () {
+        handleMapTemporalStoreStateChange();
+        map.on('temporal.shifted temporal.visibleWindowChanged', handleMapTemporalShift);
+        store.subscribe(handleMapTemporalStoreStateChange);
+      });
+    }
+  }
+});
+
+// @TODO: END: Move all of this elsewhere.
+
+/***/ }),
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1996,7 +2269,7 @@ var oikoAppReducers = (0, _redux.combineReducers)({
 exports.default = oikoAppReducers;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2426,7 +2699,7 @@ exports.default = oikoAppReducers;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
@@ -2480,16 +2753,16 @@ module.exports = function bind(that) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var implementation = __webpack_require__(25);
+var implementation = __webpack_require__(26);
 
 module.exports = Function.prototype.bind || implementation;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2550,7 +2823,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 };
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2561,11 +2834,11 @@ exports.locationsAreEqual = exports.createLocation = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _resolvePathname = __webpack_require__(61);
+var _resolvePathname = __webpack_require__(62);
 
 var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
 
-var _valueEqual = __webpack_require__(66);
+var _valueEqual = __webpack_require__(67);
 
 var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
@@ -2619,7 +2892,7 @@ var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a
 };
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2635,19 +2908,19 @@ var _warning = __webpack_require__(19);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _invariant = __webpack_require__(31);
+var _invariant = __webpack_require__(32);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _LocationUtils = __webpack_require__(28);
+var _LocationUtils = __webpack_require__(29);
 
 var _PathUtils = __webpack_require__(9);
 
-var _createTransitionManager = __webpack_require__(30);
+var _createTransitionManager = __webpack_require__(31);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(27);
+var _DOMUtils = __webpack_require__(28);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2933,7 +3206,7 @@ var createBrowserHistory = function createBrowserHistory() {
 exports.default = createBrowserHistory;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3024,7 +3297,7 @@ var createTransitionManager = function createTransitionManager() {
 exports.default = createTransitionManager;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3083,7 +3356,7 @@ module.exports = invariant;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3105,7 +3378,7 @@ module.exports = function isArrowFunction(fn) {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3133,7 +3406,7 @@ module.exports = function isBoolean(value) {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3160,7 +3433,7 @@ module.exports = function isDateObject(value) {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3192,7 +3465,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3216,7 +3489,7 @@ module.exports = function getSymbolIterator() {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3226,13 +3499,13 @@ var ObjectPrototype = Object.prototype;
 var toStr = ObjectPrototype.toString;
 var booleanValue = Boolean.prototype.valueOf;
 var has = __webpack_require__(8);
-var isArrowFunction = __webpack_require__(32);
-var isBoolean = __webpack_require__(33);
-var isDate = __webpack_require__(34);
-var isGenerator = __webpack_require__(38);
-var isNumber = __webpack_require__(39);
-var isRegex = __webpack_require__(40);
-var isString = __webpack_require__(41);
+var isArrowFunction = __webpack_require__(33);
+var isBoolean = __webpack_require__(34);
+var isDate = __webpack_require__(35);
+var isGenerator = __webpack_require__(39);
+var isNumber = __webpack_require__(40);
+var isRegex = __webpack_require__(41);
+var isString = __webpack_require__(42);
 var isSymbol = __webpack_require__(11);
 var isCallable = __webpack_require__(10);
 
@@ -3242,9 +3515,9 @@ var namedFoo = function foo() {};
 var functionsHaveNames = namedFoo.name === 'foo';
 
 var symbolValue = typeof Symbol === 'function' ? Symbol.prototype.valueOf : null;
-var symbolIterator = __webpack_require__(36)();
+var symbolIterator = __webpack_require__(37)();
 
-var collectionsForEach = __webpack_require__(35)();
+var collectionsForEach = __webpack_require__(36)();
 
 var getPrototypeOf = Object.getPrototypeOf;
 if (!getPrototypeOf) {
@@ -3516,7 +3789,7 @@ module.exports = function whyNotEqual(value, other) {
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3555,7 +3828,7 @@ module.exports = function isGeneratorFunction(fn) {
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3582,7 +3855,7 @@ module.exports = function isNumberObject(value) {
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3628,7 +3901,7 @@ module.exports = function isRegex(value) {
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3655,13 +3928,13 @@ module.exports = function isString(value) {
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getRawTag_js__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objectToString_js__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getRawTag_js__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objectToString_js__ = __webpack_require__(47);
 
 
 
@@ -3689,37 +3962,37 @@ function baseGetTag(value) {
     : __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__objectToString_js__["a" /* default */])(value);
 }
 
-/* harmony default export */ __webpack_exports__["a"] = baseGetTag;
+/* harmony default export */ __webpack_exports__["a"] = (baseGetTag);
 
-
-/***/ }),
-/* 43 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-
-/* harmony default export */ __webpack_exports__["a"] = freeGlobal;
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
 /* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__overArg_js__ = __webpack_require__(47);
+/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+
+/* harmony default export */ __webpack_exports__["a"] = (freeGlobal);
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+
+/***/ }),
+/* 45 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__overArg_js__ = __webpack_require__(48);
 
 
 /** Built-in value references. */
 var getPrototype = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__overArg_js__["a" /* default */])(Object.getPrototypeOf, Object);
 
-/* harmony default export */ __webpack_exports__["a"] = getPrototype;
+/* harmony default export */ __webpack_exports__["a"] = (getPrototype);
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3769,11 +4042,11 @@ function getRawTag(value) {
   return result;
 }
 
-/* harmony default export */ __webpack_exports__["a"] = getRawTag;
+/* harmony default export */ __webpack_exports__["a"] = (getRawTag);
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3798,11 +4071,11 @@ function objectToString(value) {
   return nativeObjectToString.call(value);
 }
 
-/* harmony default export */ __webpack_exports__["a"] = objectToString;
+/* harmony default export */ __webpack_exports__["a"] = (objectToString);
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3820,15 +4093,15 @@ function overArg(func, transform) {
   };
 }
 
-/* harmony default export */ __webpack_exports__["a"] = overArg;
+/* harmony default export */ __webpack_exports__["a"] = (overArg);
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__ = __webpack_require__(44);
 
 
 /** Detect free variable `self`. */
@@ -3837,11 +4110,11 @@ var freeSelf = typeof self == 'object' && self && self.Object === Object && self
 /** Used as a reference to the global object. */
 var root = __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__["a" /* default */] || freeSelf || Function('return this')();
 
-/* harmony default export */ __webpack_exports__["a"] = root;
+/* harmony default export */ __webpack_exports__["a"] = (root);
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3873,16 +4146,23 @@ function isObjectLike(value) {
   return value != null && typeof value == 'object';
 }
 
-/* harmony default export */ __webpack_exports__["a"] = isObjectLike;
+/* harmony default export */ __webpack_exports__["a"] = (isObjectLike);
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
 
 /* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
@@ -3903,7 +4183,7 @@ function shouldUseNative() {
 		// Detect buggy property enumeration order in older V8 versions.
 
 		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
 		test1[5] = 'de';
 		if (Object.getOwnPropertyNames(test1)[0] === '5') {
 			return false;
@@ -3932,7 +4212,7 @@ function shouldUseNative() {
 		}
 
 		return true;
-	} catch (e) {
+	} catch (err) {
 		// We don't expect any of the above to throw, but better to be safe.
 		return false;
 	}
@@ -3952,8 +4232,8 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 			}
 		}
 
-		if (Object.getOwnPropertySymbols) {
-			symbols = Object.getOwnPropertySymbols(from);
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
 			for (var i = 0; i < symbols.length; i++) {
 				if (propIsEnumerable.call(from, symbols[i])) {
 					to[symbols[i]] = from[symbols[i]];
@@ -3967,7 +4247,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory){
@@ -4254,13 +4534,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var strictUriEncode = __webpack_require__(62);
-var objectAssign = __webpack_require__(50);
+var strictUriEncode = __webpack_require__(63);
+var objectAssign = __webpack_require__(51);
 
 function encoderForArrayFormat(opts) {
 	switch (opts.arrayFormat) {
@@ -4325,11 +4605,13 @@ function parserForArrayFormat(opts) {
 		case 'bracket':
 			return function (key, value, accumulator) {
 				result = /(\[\])$/.exec(key);
-
 				key = key.replace(/\[\]$/, '');
 
-				if (!result || accumulator[key] === undefined) {
+				if (!result) {
 					accumulator[key] = value;
+					return;
+				} else if (accumulator[key] === undefined) {
+					accumulator[key] = [value];
 					return;
 				}
 
@@ -4464,7 +4746,7 @@ exports.stringify = function (obj, opts) {
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4480,7 +4762,7 @@ exports.printBuffer = printBuffer;
 
 var _helpers = __webpack_require__(14);
 
-var _diff = __webpack_require__(55);
+var _diff = __webpack_require__(56);
 
 var _diff2 = _interopRequireDefault(_diff);
 
@@ -4517,9 +4799,9 @@ function defaultTitleFormatter(options) {
   return function (action, time, took) {
     var parts = ['action'];
 
-    if (timestamp) parts.push('@ ' + time);
-    parts.push(String(action.type));
-    if (duration) parts.push('(in ' + took.toFixed(2) + ' ms)');
+    parts.push('%c' + String(action.type));
+    if (timestamp) parts.push('%c@ ' + time);
+    if (duration) parts.push('%c(in ' + took.toFixed(2) + ' ms)');
 
     return parts.join(' ');
   };
@@ -4559,15 +4841,19 @@ function printBuffer(buffer, options) {
     }, action, logEntry) : collapsed;
 
     var formattedTime = (0, _helpers.formatTime)(startedTime);
-    var titleCSS = colors.title ? 'color: ' + colors.title(formattedAction) + ';' : null;
+    var titleCSS = colors.title ? 'color: ' + colors.title(formattedAction) + ';' : '';
+    var headerCSS = ['color: gray; font-weight: lighter;'];
+    headerCSS.push(titleCSS);
+    if (options.timestamp) headerCSS.push('color: gray; font-weight: lighter;');
+    if (options.duration) headerCSS.push('color: gray; font-weight: lighter;');
     var title = titleFormatter(formattedAction, formattedTime, took);
 
     // Render
     try {
       if (isCollapsed) {
-        if (colors.title) logger.groupCollapsed('%c ' + title, titleCSS);else logger.groupCollapsed(title);
+        if (colors.title) logger.groupCollapsed.apply(logger, ['%c ' + title].concat(headerCSS));else logger.groupCollapsed(title);
       } else {
-        if (colors.title) logger.group('%c ' + title, titleCSS);else logger.group(title);
+        if (colors.title) logger.group.apply(logger, ['%c ' + title].concat(headerCSS));else logger.group(title);
       }
     } catch (e) {
       logger.log(title);
@@ -4583,11 +4869,11 @@ function printBuffer(buffer, options) {
     }
 
     if (actionLevel) {
-      if (colors.action) logger[actionLevel]('%c action', 'color: ' + colors.action(formattedAction) + '; font-weight: bold', formattedAction);else logger[actionLevel]('action', formattedAction);
+      if (colors.action) logger[actionLevel]('%c action    ', 'color: ' + colors.action(formattedAction) + '; font-weight: bold', formattedAction);else logger[actionLevel]('action    ', formattedAction);
     }
 
     if (error && errorLevel) {
-      if (colors.error) logger[errorLevel]('%c error', 'color: ' + colors.error(error, prevState) + '; font-weight: bold', error);else logger[errorLevel]('error', error);
+      if (colors.error) logger[errorLevel]('%c error     ', 'color: ' + colors.error(error, prevState) + '; font-weight: bold;', error);else logger[errorLevel]('error     ', error);
     }
 
     if (nextStateLevel) {
@@ -4607,7 +4893,7 @@ function printBuffer(buffer, options) {
 }
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4659,7 +4945,7 @@ exports.default = {
 module.exports = exports["default"];
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4670,7 +4956,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = diffLogger;
 
-var _deepDiff = __webpack_require__(24);
+var _deepDiff = __webpack_require__(25);
 
 var _deepDiff2 = _interopRequireDefault(_deepDiff);
 
@@ -4759,7 +5045,7 @@ function diffLogger(prevState, newState, logger, isCollapsed) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4768,14 +5054,15 @@ module.exports = exports['default'];
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.logger = exports.defaults = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _core = __webpack_require__(53);
+var _core = __webpack_require__(54);
 
 var _helpers = __webpack_require__(14);
 
-var _defaults = __webpack_require__(54);
+var _defaults = __webpack_require__(55);
 
 var _defaults2 = _interopRequireDefault(_defaults);
 
@@ -4832,7 +5119,7 @@ function createLogger() {
   // Detect if 'createLogger' was passed directly to 'applyMiddleware'.
   if (options.getState && options.dispatch) {
     // eslint-disable-next-line no-console
-    console.error('redux-logger not installed. Make sure to pass logger instance as middleware:\n\nimport createLogger from \'redux-logger\';\n\nconst logger = createLogger();\nconst store = createStore(\n  reducer,\n  applyMiddleware(logger)\n);');
+    console.error('[redux-logger] redux-logger not installed. Make sure to pass logger instance as middleware:\n\n// Logger with default options\nimport { logger } from \'redux-logger\'\nconst store = createStore(\n  reducer,\n  applyMiddleware(logger)\n)\n\n\n// Or you can create your own logger with custom options http://bit.ly/redux-logger-options\nimport createLogger from \'redux-logger\'\n\nconst logger = createLogger({\n  // ...options\n});\n\nconst store = createStore(\n  reducer,\n  applyMiddleware(logger)\n)\n');
 
     return function () {
       return function (next) {
@@ -4888,11 +5175,16 @@ function createLogger() {
   };
 }
 
+var defaultLogger = createLogger();
+
+exports.defaults = _defaults2.default;
+exports.logger = defaultLogger;
 exports.default = createLogger;
 module.exports = exports['default'];
 
+
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4921,7 +5213,7 @@ thunk.withExtraArgument = createThunkMiddleware;
 exports['default'] = thunk;
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4977,7 +5269,7 @@ function applyMiddleware() {
 }
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5031,7 +5323,7 @@ function bindActionCreators(actionCreators, dispatch) {
 }
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5171,7 +5463,7 @@ function combineReducers(reducers) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5247,7 +5539,7 @@ var resolvePathname = function resolvePathname(to) {
 module.exports = resolvePathname;
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5260,14 +5552,14 @@ module.exports = function (str) {
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(64);
+module.exports = __webpack_require__(65);
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5277,7 +5569,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ponyfill = __webpack_require__(65);
+var _ponyfill = __webpack_require__(66);
 
 var _ponyfill2 = _interopRequireDefault(_ponyfill);
 
@@ -5300,10 +5592,10 @@ if (typeof self !== 'undefined') {
 
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(67)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(68)(module)))
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5332,7 +5624,7 @@ function symbolObservablePonyfill(root) {
 };
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5382,7 +5674,7 @@ var valueEqual = function valueEqual(a, b) {
 exports.default = valueEqual;
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -5408,279 +5700,6 @@ module.exports = function(module) {
 	return module;
 };
 
-
-/***/ }),
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _actions = __webpack_require__(1);
-
-var _store = __webpack_require__(20);
-
-var _jquery = __webpack_require__(4);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _isEqual = __webpack_require__(21);
-
-var _isEqual2 = _interopRequireDefault(_isEqual);
-
-var _reduxWatch = __webpack_require__(22);
-
-var _reduxWatch2 = _interopRequireDefault(_reduxWatch);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// Spin up a new instance of our OikoApp.
-var app = (0, _store.createOikoApp)();
-
-var store = app.getStore();
-
-Drupal.oiko = Drupal.oiko || {};
-
-Drupal.oiko.addAppModule = function (moduleName) {
-  return app.getStore().dispatch((0, _actions.addAppModule)(moduleName));
-};
-
-Drupal.oiko.appModuleDoneLoading = function (moduleName) {
-  return app.getStore().dispatch((0, _actions.appModuleDoneLoading)(moduleName));
-};
-
-Drupal.oiko.getAppState = function () {
-  return app.getStore().getState();
-};
-
-// @TODO: START: Move all of this elsewhere.
-
-
-// Window Visualisation.
-(0, _jquery2.default)(document).find('.js-oiko-app--toggle').bind('click', function (e) {
-  var _store$getState = store.getState(),
-      visualisation = _store$getState.visualisation;
-
-  (0, _jquery2.default)(window).trigger('set.oiko.visualisation', visualisation === 'map' ? 'timeline' : 'map');
-  e.preventDefault();
-  (0, _jquery2.default)(this).blur();
-});
-
-(0, _jquery2.default)(window).on('set.oiko.visualisation', function (e, visualisation) {
-  var _store$getState2 = store.getState(),
-      currentVisualisation = _store$getState2.currentVisualisation;
-
-  if (visualisation === 'map' || visualisation === 'timeline' && currentVisualisation !== visualisation) {
-    store.dispatch((0, _actions.setVisualisation)(visualisation));
-  }
-});
-
-var visualisationSwitchListener = function visualisationSwitchListener() {
-  var _store$getState3 = store.getState(),
-      visualisation = _store$getState3.visualisation;
-  // Toggle a class on the body element to allow for sweeping changes.
-
-
-  (0, _jquery2.default)('body').toggleClass('showing-map', visualisation === 'map').toggleClass('showing-timeline', visualisation !== 'map');
-
-  (0, _jquery2.default)(window).trigger('resize.oiko.map_container');
-};
-
-// Announce the visualisation state on page load.
-(0, _jquery2.default)(window).bind('load', function () {
-  var _store$getState4 = store.getState(),
-      visualisation = _store$getState4.visualisation;
-
-  (0, _jquery2.default)(window).trigger('set.oiko.visualisation', visualisation);
-});
-
-(0, _jquery2.default)(window).on('resize.oiko.map_container', function () {
-  if (window.drupalLeaflet && window.drupalLeaflet.lMap) {
-    window.drupalLeaflet.lMap.invalidateSize();
-  }
-});
-
-// PHS category filter.
-(0, _jquery2.default)(window).bind('set.oiko.categories', function (e, categories, internal) {
-  if (internal) {
-    store.dispatch((0, _actions.setPHSCategories)(categories));
-  }
-});
-var PHSCategoryWatch = (0, _reduxWatch2.default)(store.getState, 'PHSCategories', _isEqual2.default);
-var PHSCategoryListener = function PHSCategoryListener(newVal) {
-  (0, _jquery2.default)(window).trigger('set.oiko.categories', [newVal]);
-};
-
-// Timelines on the comparative timeline widget.
-
-var timelinesListener = function timelinesListener() {
-  var _store$getState5 = store.getState(),
-      comparativeTimelines = _store$getState5.comparativeTimelines;
-
-  var timeline = Drupal.oiko.timeline;
-
-  // Check to see if the timeslines displayed needs to change.
-  var timelines = timeline.getTimelines();
-  if (comparativeTimelines.length !== timelines.length || comparativeTimelines.every(function (v, i) {
-    return v !== timelines[i];
-  })) {
-    timeline.setTimelines(comparativeTimelines);
-  }
-
-  // Check to see if the visual range of the timeline needs to change.
-
-  var _store$getState6 = store.getState(),
-      timelinesState = _store$getState6.timelinesState;
-
-  var window = Drupal.oiko.timeline.getVisibleTimeWindow();
-  if (timelinesState.start && timelinesState.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {
-    Drupal.oiko.timeline.setVisibleTimeWindow(timelinesState.start, timelinesState.end);
-  }
-};
-
-(0, _jquery2.default)(window).bind('oiko.loaded', function () {
-  (0, _jquery2.default)('.oiko-app--loader').hide();
-
-  // Bind to hide/show the correct visualisation.
-  store.subscribe(visualisationSwitchListener);
-  visualisationSwitchListener();
-
-  // Bind the PHS category listener.
-  store.subscribe(PHSCategoryWatch(PHSCategoryListener));
-
-  var _store$getState7 = store.getState(),
-      PHSCategories = _store$getState7.PHSCategories;
-
-  PHSCategoryListener(PHSCategories, PHSCategories, 'PHSCategories');
-
-  (0, _jquery2.default)(window).on('oiko.timelines_updated', function (e, timelines) {
-    var _store$getState8 = store.getState(),
-        comparativeTimelines = _store$getState8.comparativeTimelines;
-
-    var timeline = Drupal.oiko.timeline;
-    if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length || comparativeTimelines.every(function (v, i) {
-      return v !== timelines[i];
-    }))) {
-      store.dispatch((0, _actions.setComparativeTimelines)(timelines));
-    }
-  });
-
-  store.subscribe(timelinesListener);
-  timelinesListener();
-
-  // Bind on the range changing on the comparative timeline.
-  (0, _jquery2.default)(window).on('oiko.timelineRangeChanged', function (e) {
-    var _store$getState9 = store.getState(),
-        timelinesState = _store$getState9.timelinesState;
-
-    var window = Drupal.oiko.timeline.getVisibleTimeWindow();
-    if (window.start && window.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {
-      store.dispatch((0, _actions.setTimelinesState)(window.start, window.end));
-    }
-  });
-});
-
-// Probably a better way to write this.
-(0, _jquery2.default)(document).on('leaflet.map', function (e, mapDefinition, map, drupalLeaflet) {
-  if (mapDefinition.hasOwnProperty('pagestate') && mapDefinition.pagestate) {
-
-    window.drupalLeaflet = drupalLeaflet;
-
-    var handleMapMove = function handleMapMove(e) {
-      var center = map.getCenter();
-      var changedNeeded = false;
-      var state = store.getState();
-      if (e.type === 'zoomend' && map.getZoom() != state.mapState.level) {
-        changedNeeded = true;
-      }
-      if (e.type === 'moveend' && (state.mapState.lat != center.lat.toFixed(2) || state.mapState.lng != center.lng.toFixed(2))) {
-        changedNeeded = true;
-      }
-
-      if (changedNeeded) {
-        store.dispatch((0, _actions.setMapState)(map.getZoom(), center.lat, center.lng));
-      }
-    };
-
-    var handleMapStoreStateChange = function handleMapStoreStateChange() {
-      var state = store.getState();
-      var changedNeeded = false;
-
-      // If the zoom level of the map is different, change it.
-      if (map.getZoom() != state.mapState.level) {
-        changedNeeded = true;
-      }
-
-      var center = map.getCenter();
-      if (!Number.isNaN(state.mapState.lat) && !Number.isNaN(state.mapState.lng)) {
-        var mLat = Number.parseFloat(center.lat).toFixed(2);
-        var mLng = Number.parseFloat(center.lng).toFixed(2);
-        if (mLat != state.mapState.lat || mLng != state.mapState.lng) {
-          changedNeeded = true;
-        }
-      }
-
-      if (changedNeeded) {
-        map.setView({ lat: state.mapState.lat, lng: state.mapState.lng }, state.mapState.level, { animate: true });
-      }
-    };
-
-    (0, _jquery2.default)(window).on('oiko.loaded', function () {
-      handleMapStoreStateChange();
-      // Set up a two way sync of the map zoom and position when needed.
-      map.on('zoomend moveend', handleMapMove);
-      // Sync from the state store into the map.
-      store.subscribe(handleMapStoreStateChange);
-    });
-
-    var handleMapTemporalShift = function handleMapTemporalShift(e) {
-      var needsUpdate = false;
-      var state = store.getState();
-      var currentTime = drupalLeaflet.timelineControl.getTime();
-      var currentVisibleWindow = drupalLeaflet.timelineControl.getWindow();
-
-      // Check to see if the current time was just moved.
-      if (e.type == 'temporal.shifted' && currentTime != state.timeBrowserState.current) {
-        needsUpdate = true;
-      }
-
-      // Check to see if the range window of the timeline has changed.
-      if (e.type == 'temporal.visibleWindowChanged' && (state.timeBrowserState.start != currentVisibleWindow.start || state.timeBrowserState.end != currentVisibleWindow.end)) {
-        needsUpdate = true;
-      }
-
-      // Some simple validation, the current time needs to be within the time window.
-      if (currentTime > currentVisibleWindow.end || currentTime < currentVisibleWindow.start) {
-        needsUpdate = false;
-      }
-
-      if (needsUpdate) {
-        store.dispatch((0, _actions.setTimeBrowserState)(currentTime, currentVisibleWindow.start, currentVisibleWindow.end));
-      }
-    };
-
-    var handleMapTemporalStoreStateChange = function handleMapTemporalStoreStateChange() {
-      var state = store.getState();
-      var currentTime = drupalLeaflet.timelineControl.getTime();
-      var currentWindow = drupalLeaflet.timelineControl.getWindow();
-
-      var needsUpdate = state.timeBrowserState.current != currentTime || state.timeBrowserState.start != currentWindow.start || state.timeBrowserState.end != currentWindow.end;
-
-      if (needsUpdate) {
-        drupalLeaflet.timelineControl.setTimeAndWindow(state.timeBrowserState.current, state.timeBrowserState.start, state.timeBrowserState.end);
-      }
-    };
-    if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
-      (0, _jquery2.default)(window).on('oiko.loaded', function () {
-        handleMapTemporalStoreStateChange();
-        map.on('temporal.shifted temporal.visibleWindowChanged', handleMapTemporalShift);
-        store.subscribe(handleMapTemporalStoreStateChange);
-      });
-    }
-  }
-});
-
-// @TODO: END: Move all of this elsewhere.
 
 /***/ })
 /******/ ]);

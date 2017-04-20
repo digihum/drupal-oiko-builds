@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
     entry: './webroot/modules/custom/oiko_app/js/main.js',
     output: {
-        path: path.join(__dirname, 'webroot/modules/custom/oiko_app'),
+        path: path.join(__dirname, 'webroot/modules/custom/oiko_app/dist'),
         filename: 'oiko.app.js'
     },
     module: {
@@ -34,7 +34,7 @@ module.exports = {
     plugins: [
         // Avoid publishing files when compilation fails
         new webpack.NoErrorsPlugin(),
-        // new webpack.optimize.UglifyJsPlugin([]),
+        // new webpack.optimize.UglifyJsPlugin({sourceMap: true}),
         new webpack.ProvidePlugin({
             Promise: 'imports-loader?this=>global!exports-loader?global.Promise!es6-promise',
         })
