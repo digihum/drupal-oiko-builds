@@ -265,6 +265,22 @@
   };
 
 
+  // Debounced keyup.
+  $.fn.delayKeyup = function (callback, ms) {
+    var timer = 0;
+    $(this).keyup(function (event) {
 
+      if (event.keyCode !== 13 && event.keyCode !== 38 && event.keyCode !== 40) {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          callback(event);
+        }, ms);
+      }
+      else {
+        callback(event);
+      }
+    });
+    return $(this);
+  };
 
 })(jQuery);
