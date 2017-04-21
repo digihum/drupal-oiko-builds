@@ -181,7 +181,12 @@ function oiko_preprocess_cidoc_entity(array &$variables) {
   if ($variables['elements']['#view_mode'] == 'inline_field') {
     $variables['attributes']['class'][] = 'cidoc-entity--inline';
   }
-
+  if (isset($variables['content']['cidoc_admin_links'])) {
+    $variables['content']['cidoc_admin_links']['#attributes']['class'][] = 'button-group';
+    foreach ($variables['content']['cidoc_admin_links']['#items'] as $index => $v) {
+      $variables['content']['cidoc_admin_links']['#items'][$index]['#attributes']['class'][] = 'button';
+    }
+  }
 }
 
 /**

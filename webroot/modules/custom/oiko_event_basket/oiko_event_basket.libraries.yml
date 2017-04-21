@@ -4,6 +4,15 @@ event-basket:
     js/event_basket.js: {}
   dependencies:
     - oiko/localforage-js
+    - core/jquery.once
+
+event-basket.link:
+  version: 1.x
+  js:
+    js/event_basket.link.js: {}
+  dependencies:
+    - oiko/event-basket
+    - core/jquery.once
 
 event-history:
   version: 1.x
@@ -11,3 +20,4 @@ event-history:
     js/event_history.js: {}
   dependencies:
     - oiko/localforage-js
+    - core/jquery.once

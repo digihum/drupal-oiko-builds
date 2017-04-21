@@ -17,8 +17,11 @@
   };
 
   Drupal.oiko.eventBasket = {
-    add: function(id, title) {
-      event_basket.setItem(id, title).then(redraw_basket);
+    add: function(id, title, delay) {
+      $('.js-event-basket-dropdown').foundation('open');
+      setTimeout(function() {
+        event_basket.setItem(id, title).then(redraw_basket);
+      }, delay ? delay : 300);
     },
     remove: function(id) {
       event_basket.removeItem(id).then(redraw_basket);

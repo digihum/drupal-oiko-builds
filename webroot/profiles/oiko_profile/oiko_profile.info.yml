@@ -703,6 +703,7 @@ cm_config_tools:
     - views.view.timeline
     - webform.webform.feedback
     - core.entity_view_display.taxonomy_term.event_types.primary_historical_significance_pill
+    - core.entity_view_display.cidoc_entity.e52_time_span.temporal_summary
   delete:
     - views.view.appelations
     - views.view.appelations_real_names
@@ -737,6 +738,7 @@ cm_config_tools:
     - views.view.time_span_within_period
   implicit:
     - block_content.type.modal_welcome
+    - core.entity_view_mode.cidoc_entity.temporal_summary
     - core.entity_view_mode.taxonomy_term.primary_historical_significance_pill
     - field.field.block_content.modal_welcome.body
     - field.storage.block_content.body

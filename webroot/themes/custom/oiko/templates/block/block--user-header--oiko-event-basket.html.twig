@@ -34,7 +34,7 @@
         </a>
     {% endif %}
     {{ title_suffix }}
-    <div {{ attributes.addClass(['icon-links__dropdown', 'dropdown-pane']).setAttribute('data-dropdown', true) }} >
+    <div {{ attributes.addClass(['icon-links__dropdown', 'dropdown-pane', 'js-event-basket-dropdown']).setAttribute('data-dropdown', true) }} >
         {% block content %}
             {{ content }}
         {% endblock %}
