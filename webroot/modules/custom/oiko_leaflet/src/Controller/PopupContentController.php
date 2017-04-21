@@ -52,7 +52,6 @@ class PopupContentController extends ControllerBase {
 
     $response = new AjaxResponse();
     // @TODO: This line is hideous, change it.
-    $response->addCommand(new HtmlCommand('.sidebar-information-content-title', '<span>' . $cidoc_entity->getFriendlyLabel() . ': ' . $cidoc_entity->label() . '</span>'));
     $response->addCommand(new HtmlCommand('.sidebar-information-content-content', $content));
     // Add in the GA response too.
     $response->addCommand(new GAEventCommand('pageview', ['dimension1' => $cidoc_entity->getOwner()->id()]));

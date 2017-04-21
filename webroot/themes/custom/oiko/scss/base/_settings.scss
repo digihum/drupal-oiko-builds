@@ -184,9 +184,9 @@ $header-sizes: (
                 'h6': 14,
         ),
         m: (
-                'h1': 38,
-                'h2': 38,
-                'h3': 25,
+                'h1': 30,
+                'h2': 28,
+                'h3': 20,
                 'h4': 19,
                 'h5': 19,
                 'h6': 19,
@@ -239,8 +239,6 @@ $breadcrumbs-item-font-size: rem-calc(14);
 $breadcrumbs-item-color: palette(rust);
 $breadcrumbs-item-color-current: palette(oikotan);
 $breadcrumbs-item-slash: false;
-$tab-item-font-size: rem-calc(14);
-$tab-item-background-hover: $light-gray;
 $sidebar-header-height: 40px;
 $ajax-loading-graphic-size: 32px;
 $sidebar-icon-font-size: rem-calc(30);
@@ -275,3 +273,14 @@ $button-sizes: (
         default: rem-calc(14),
         large: 1.25rem,
 );
+
+// Tabs
+// ------------------
+$tab-item-font-size: rem-calc(20);
+$tab-background: transparent;
+$tab-background-active: transparent;
+$tab-item-background-hover: transparent;
+$tab-active-color: palette(oikogrey);
+$tab-item-padding: 0.5rem 1.5rem;
+$tab-content-border: none;
+$tab-content-padding: 0;

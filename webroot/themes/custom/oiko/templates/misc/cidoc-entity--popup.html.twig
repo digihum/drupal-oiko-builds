@@ -1,0 +1,46 @@
+{#
+/**
+ * @file cidoc_entity.html.twig
+ * Default theme implementation to present CIDOC entity data.
+ *
+ * This template is used when viewing CIDOC entity pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_cidoc_entity()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('cidoc_entity') }}>
+    {% if content.name %}
+      <h1>{{- content.name -}}</h1>
+    {% endif %}
+
+    {% if content.significance %}
+        {{- content.significance -}}
+    {% endif %}
+
+    <ul class="tabs" data-tabs id="cidoc-popup-tabs">
+        <li class="tabs-title is-active"><a href="#info" aria-selected="true">Info</a></li>
+        <li class="tabs-title"><a href="#discuss">Discuss</a></li>
+        <li class="tabs-title"><a href="#share">Share</a></li>
+    </ul>
+    <div class="tabs-content" data-tabs-content="cidoc-popup-tabs">
+        <div class="tabs-panel is-active" id="info">
+  {% if content %}
+      {{- content|without('name', 'significance') -}}
+  {% endif %}
+        </div>
+        <div class="tabs-panel" id="discuss">
+            <p>Suspendisse dictum feugiat nisl ut dapibus.  Vivamus hendrerit arcu sed erat molestie vehicula. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.  Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor.</p>
+        </div>
+        <div class="tabs-panel" id="share">
+            <p>Suspendisse dictum feugiat nisl ut dapibus.  Vivamus hendrerit arcu sed erat molestie vehicula. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.  Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor.</p>
+        </div>
+    </div>
+
+</div>
