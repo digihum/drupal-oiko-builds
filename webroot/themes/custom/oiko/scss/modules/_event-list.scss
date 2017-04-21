@@ -1,0 +1,29 @@
+.event-list {
+  margin: 0 0 30px;
+  @include clearfix;
+}
+
+.event-list__title {
+
+}
+
+.event-list__list {
+  list-style: none;
+  margin: 0 0 30px;
+}
+
+.event-list__item {
+  border-bottom: 1px solid palette(oikoblue);
+  display: flex;
+  padding: 5px 0;
+}
+
+.event-list__remove {
+  margin-left: auto;
+  font-size: 1.5em;
+  padding: 0 10px;
+}
+
+.event-list__cta {
+  float: right;
+}

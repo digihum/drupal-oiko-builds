@@ -35,9 +35,9 @@
    *   A string representing a DOM fragment.
    */
   Drupal.theme.eventBasket = function (events) {
-    var output = '<ul>';
+    var output = '<ul class="event-list__list">';
     $.each(events, function(key, val) {
-      output += '<li data-event-id="' + key + '">' + val + '<button class="js-event-basket-close"><span aria-hidden="true">&times;</span></button></li>'
+      output += '<li class="event-list__item" data-event-id="' + key + '">' + val + '<button class="js-event-basket-close event-list__remove"><span aria-hidden="true">&times;</span></button></li>'
     });
     return output + '</ul>';
   };
