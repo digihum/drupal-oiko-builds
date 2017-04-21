@@ -33,12 +33,20 @@ arrows:
     - oiko_leaflet/leaflet-textpath
     - core/jquery
 
+zoomControl:
+  js:
+    js/leaflet.zoomControl.js: {}
+  version: VERSION
+  dependencies:
+    - core/jquery
+
 locate:
   js:
     js/leaflet.locate.js: {}
   version: VERSION
   dependencies:
     - oiko_leaflet/leaflet-locatecontrol
+    - oiko_leaflet/zoomControl
     - core/jquery
 
 loading:

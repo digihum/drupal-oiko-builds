@@ -114,9 +114,9 @@ cm_config_tools:
     - tour.tour.timeline
   managed:
     - block.block.feedback
+    - block.block.maincidocsearch
     - block.block.mainnavigation
     - block.block.maplegendblock
-    - block.block.maincidocsearch
     - block.block.oiko_account_menu
     - block.block.oiko_branding
     - block.block.oiko_breadcrumbs
@@ -353,6 +353,7 @@ cm_config_tools:
     - core.entity_view_display.cidoc_entity.e52_time_span.default
     - core.entity_view_display.cidoc_entity.e52_time_span.popup
     - core.entity_view_display.cidoc_entity.e52_time_span.preview
+    - core.entity_view_display.cidoc_entity.e52_time_span.temporal_summary
     - core.entity_view_display.cidoc_entity.e53_place.default
     - core.entity_view_display.cidoc_entity.e53_place.popup
     - core.entity_view_display.cidoc_entity.e53_place.preview
@@ -524,6 +525,7 @@ cm_config_tools:
     - core.entity_view_display.paragraph.uri.default
     - core.entity_view_display.taxonomy_term.empire.default
     - core.entity_view_display.taxonomy_term.event_types.default
+    - core.entity_view_display.taxonomy_term.event_types.primary_historical_significance_pill
     - core.entity_view_display.taxonomy_term.forums.default
     - core.entity_view_mode.cidoc_entity.inline_field
     - core.entity_view_mode.cidoc_entity.popup
@@ -702,8 +704,6 @@ cm_config_tools:
     - views.view.p99_dissov_group
     - views.view.timeline
     - webform.webform.feedback
-    - core.entity_view_display.taxonomy_term.event_types.primary_historical_significance_pill
-    - core.entity_view_display.cidoc_entity.e52_time_span.temporal_summary
   delete:
     - views.view.appelations
     - views.view.appelations_real_names

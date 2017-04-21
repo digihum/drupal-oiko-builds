@@ -34,7 +34,9 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
   $map['empires'] = TRUE;
   $map['clustering'] = TRUE;
   $map['locate'] = TRUE;
-  $map['layerControl'] = TRUE;
+  $map['settings']['layerControl'] = FALSE;
+  $map['settings']['zoomControl'] = FALSE;
+  $map['zoomControl'] = 'bottomright';
   $map['data-url'] = Url::fromRoute('oiko_leaflet.map_page_controller_allEntities')->toString();
   $height = 'full';
 
