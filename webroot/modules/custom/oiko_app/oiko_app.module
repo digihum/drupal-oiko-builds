@@ -55,3 +55,40 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
     ),
   ];
 }
+
+/**
+ * Implements hook_toolbar().
+ */
+function oiko_app_toolbar() {
+  $items = [];
+  $items['welcome_modal'] = [
+    '#cache' => [
+      'contexts' => [
+        'user.permissions',
+      ],
+    ],
+  ];
+
+  if (!\Drupal::currentUser()->hasPermission('reshow welcome modal')) {
+    return $items;
+  }
+
+  $items['welcome_modal'] += array(
+    '#type' => 'toolbar_item',
+    'tab' => array(
+      '#type' => 'html_tag',
+      '#tag' => 'button',
+      '#value' => t('Welcome modal'),
+      '#attributes' => array(
+        'class' => array('toolbar-icon', 'toolbar-icon-system-admin-content'),
+        'aria-pressed' => 'false',
+      ),
+    ),
+    '#wrapper_attributes' => array(
+      'class' => array('tour-toolbar-tab'),
+      'data-open' => 'block-welcomeblock',
+    ),
+  );
+
+  return $items;
+}

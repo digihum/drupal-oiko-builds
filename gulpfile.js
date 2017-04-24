@@ -83,5 +83,6 @@ gulp.task('browsersync', ['compile:js', 'compile:webpack'], function(){
   gulp.watch(['webroot/themes/custom/**/*.js', 'webroot/modules/custom/**/*.js', '!webroot/modules/custom/oiko_app/js/**/*.js'], ['watch:js']);
   gulp.watch('webroot/modules/custom/oiko_app/js/**/*.js', ['compile:webpack']);
   gulp.watch(['webroot/themes/custom/**/*.twig', 'webroot/modules/custom/**/*.twig'], ['watch:twig']);
+  gulp.watch(['.drush-cache-rebuild'], ['watch:twig']);
   gulp.watch('webroot/themes/custom/**/*.scss', ['compile:sass']);
 });

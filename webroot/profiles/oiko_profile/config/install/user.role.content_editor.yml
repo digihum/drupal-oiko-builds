@@ -29,3 +29,4 @@ permissions:
   23: 'edit any content_page content'
   24: 'edit own content_page content'
   25: 'view content_page revisions'
+  26: 'reshow welcome modal'
