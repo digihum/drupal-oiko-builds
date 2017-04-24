@@ -12,7 +12,7 @@
   'use strict';
 
   var defaults = {
-      'version'              : '2.1.1',
+      'version'              : '2.1.2',
       'tipLocation'          : 'bottom',  // 'top' or 'bottom' in relation to parent
       'nubPosition'          : 'auto',    // override on a per tooltip bases
       'nubOffset'            : false,     // specify exact offset to control exact nub position (false = get position from stylesheet (22px))
@@ -78,8 +78,8 @@
             settings.attempts = 0;
 
             settings.tipLocationPatterns = {
-              top: ['bottom'],
-              bottom: [], // bottom should not need to be repositioned
+              top: ['bottom', 'left', 'right'],
+              bottom: ['left', 'right', 'top'],
               left: ['right', 'top', 'bottom'],
               right: ['left', 'top', 'bottom']
             };
@@ -314,7 +314,7 @@
             }
 
             // scroll if not modal
-            if (!/body/i.test(settings.$target.selector) && settings.scroll) {
+            if (!/body/i.test(settings.$target.selector) && (settings.scroll || settings.tipSettings.scroll)) {
               methods.scroll_to();
             }
 
@@ -518,6 +518,12 @@
             var
               topAdjustment = settings.tipSettings.tipAdjustmentY ? parseInt(settings.tipSettings.tipAdjustmentY) : 0,
               leftAdjustment = settings.tipSettings.tipAdjustmentX ? parseInt(settings.tipSettings.tipAdjustmentX) : 0;
+
+          // adjust the tip position if it is position:fixed
+          if (settings.$next_tip.css('position') == 'fixed') {
+            topAdjustment -= $(window).scrollTop();
+            leftAdjustment -= $(window).scrollLeft();
+          }
 
             if (methods.bottom()) {
               settings.$next_tip.css({
