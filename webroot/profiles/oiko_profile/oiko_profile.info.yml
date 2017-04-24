@@ -337,59 +337,75 @@ cm_config_tools:
     - core.entity_view_display.cidoc_entity.e12_production.default
     - core.entity_view_display.cidoc_entity.e12_production.popup
     - core.entity_view_display.cidoc_entity.e12_production.preview
+    - core.entity_view_display.cidoc_entity.e12_production.timeline_preselection
     - core.entity_view_display.cidoc_entity.e21_person.default
     - core.entity_view_display.cidoc_entity.e21_person.popup
     - core.entity_view_display.cidoc_entity.e21_person.preview
+    - core.entity_view_display.cidoc_entity.e21_person.timeline_preselection
     - core.entity_view_display.cidoc_entity.e22_man_made_object.default
     - core.entity_view_display.cidoc_entity.e22_man_made_object.popup
     - core.entity_view_display.cidoc_entity.e22_man_made_object.preview
+    - core.entity_view_display.cidoc_entity.e22_man_made_object.timeline_preselection
     - core.entity_view_display.cidoc_entity.e42_identifier.popup
     - core.entity_view_display.cidoc_entity.e42_identifier.preview
+    - core.entity_view_display.cidoc_entity.e42_identifier.timeline_preselection
     - core.entity_view_display.cidoc_entity.e49_time_appellation.popup
     - core.entity_view_display.cidoc_entity.e49_time_appellation.preview
+    - core.entity_view_display.cidoc_entity.e49_time_appellation.timeline_preselection
     - core.entity_view_display.cidoc_entity.e4_period.default
     - core.entity_view_display.cidoc_entity.e4_period.popup
     - core.entity_view_display.cidoc_entity.e4_period.preview
+    - core.entity_view_display.cidoc_entity.e4_period.timeline_preselection
     - core.entity_view_display.cidoc_entity.e52_time_span.default
     - core.entity_view_display.cidoc_entity.e52_time_span.popup
     - core.entity_view_display.cidoc_entity.e52_time_span.preview
     - core.entity_view_display.cidoc_entity.e52_time_span.temporal_summary
+    - core.entity_view_display.cidoc_entity.e52_time_span.timeline_preselection
     - core.entity_view_display.cidoc_entity.e53_place.default
     - core.entity_view_display.cidoc_entity.e53_place.popup
     - core.entity_view_display.cidoc_entity.e53_place.preview
+    - core.entity_view_display.cidoc_entity.e53_place.timeline_preselection
     - core.entity_view_display.cidoc_entity.e54_dimension.popup
     - core.entity_view_display.cidoc_entity.e54_dimension.preview
+    - core.entity_view_display.cidoc_entity.e54_dimension.timeline_preselection
     - core.entity_view_display.cidoc_entity.e58_measurement_unit.popup
     - core.entity_view_display.cidoc_entity.e58_measurement_unit.preview
+    - core.entity_view_display.cidoc_entity.e58_measurement_unit.timeline_preselection
     - core.entity_view_display.cidoc_entity.e5_event.default
     - core.entity_view_display.cidoc_entity.e5_event.popup
     - core.entity_view_display.cidoc_entity.e5_event.preview
     - core.entity_view_display.cidoc_entity.e5_event.summary_without_map
+    - core.entity_view_display.cidoc_entity.e5_event.timeline_preselection
     - core.entity_view_display.cidoc_entity.e66_formation.default
     - core.entity_view_display.cidoc_entity.e66_formation.popup
     - core.entity_view_display.cidoc_entity.e66_formation.preview
     - core.entity_view_display.cidoc_entity.e66_formation.summary
+    - core.entity_view_display.cidoc_entity.e66_formation.timeline_preselection
     - core.entity_view_display.cidoc_entity.e67_birth.default
     - core.entity_view_display.cidoc_entity.e67_birth.inline_field
     - core.entity_view_display.cidoc_entity.e67_birth.popup
     - core.entity_view_display.cidoc_entity.e67_birth.preview
     - core.entity_view_display.cidoc_entity.e67_birth.summary
     - core.entity_view_display.cidoc_entity.e67_birth.summary_without_map
+    - core.entity_view_display.cidoc_entity.e67_birth.timeline_preselection
     - core.entity_view_display.cidoc_entity.e68_dissolution.default
     - core.entity_view_display.cidoc_entity.e68_dissolution.popup
     - core.entity_view_display.cidoc_entity.e68_dissolution.preview
     - core.entity_view_display.cidoc_entity.e68_dissolution.summary
     - core.entity_view_display.cidoc_entity.e68_dissolution.summary_without_map
+    - core.entity_view_display.cidoc_entity.e68_dissolution.timeline_preselection
     - core.entity_view_display.cidoc_entity.e69_death.default
     - core.entity_view_display.cidoc_entity.e69_death.inline_field
     - core.entity_view_display.cidoc_entity.e69_death.popup
     - core.entity_view_display.cidoc_entity.e69_death.preview
     - core.entity_view_display.cidoc_entity.e69_death.summary
     - core.entity_view_display.cidoc_entity.e69_death.summary_without_map
+    - core.entity_view_display.cidoc_entity.e69_death.timeline_preselection
     - core.entity_view_display.cidoc_entity.e6_destruction.default
     - core.entity_view_display.cidoc_entity.e6_destruction.popup
     - core.entity_view_display.cidoc_entity.e6_destruction.preview
     - core.entity_view_display.cidoc_entity.e6_destruction.summary_without_map
+    - core.entity_view_display.cidoc_entity.e6_destruction.timeline_preselection
     - core.entity_view_display.cidoc_entity.e74_group.default
     - core.entity_view_display.cidoc_entity.e74_group.popup
     - core.entity_view_display.cidoc_entity.e74_group.preview
@@ -399,27 +415,33 @@ cm_config_tools:
     - core.entity_view_display.cidoc_entity.e7_activity.popup
     - core.entity_view_display.cidoc_entity.e7_activity.preview
     - core.entity_view_display.cidoc_entity.e7_activity.summary_without_map
+    - core.entity_view_display.cidoc_entity.e7_activity.timeline_preselection
     - core.entity_view_display.cidoc_entity.e82_actor_appellation.popup
     - core.entity_view_display.cidoc_entity.e82_actor_appellation.preview
+    - core.entity_view_display.cidoc_entity.e82_actor_appellation.timeline_preselection
     - core.entity_view_display.cidoc_entity.e9_move.default
     - core.entity_view_display.cidoc_entity.e9_move.popup
     - core.entity_view_display.cidoc_entity.e9_move.preview
     - core.entity_view_display.cidoc_entity.e9_move.summary
     - core.entity_view_display.cidoc_entity.e9_move.summary_without_map
+    - core.entity_view_display.cidoc_entity.e9_move.timeline_preselection
     - core.entity_view_display.cidoc_entity.o1_killing.default
     - core.entity_view_display.cidoc_entity.o1_killing.inline_field
     - core.entity_view_display.cidoc_entity.o1_killing.popup
     - core.entity_view_display.cidoc_entity.o1_killing.preview
     - core.entity_view_display.cidoc_entity.o1_killing.summary
     - core.entity_view_display.cidoc_entity.o1_killing.summary_without_map
+    - core.entity_view_display.cidoc_entity.o1_killing.timeline_preselection
     - core.entity_view_display.cidoc_entity.o2_active_dissolution.default
     - core.entity_view_display.cidoc_entity.o2_active_dissolution.popup
     - core.entity_view_display.cidoc_entity.o2_active_dissolution.preview
     - core.entity_view_display.cidoc_entity.o2_active_dissolution.summary_without_map
+    - core.entity_view_display.cidoc_entity.o2_active_dissolution.timeline_preselection
     - core.entity_view_display.cidoc_entity.o3_active_destruction.default
     - core.entity_view_display.cidoc_entity.o3_active_destruction.popup
     - core.entity_view_display.cidoc_entity.o3_active_destruction.preview
     - core.entity_view_display.cidoc_entity.o3_active_destruction.summary_without_map
+    - core.entity_view_display.cidoc_entity.o3_active_destruction.timeline_preselection
     - core.entity_view_display.cidoc_reference.p100_was_death_of.default
     - core.entity_view_display.cidoc_reference.p100_was_death_of.domain
     - core.entity_view_display.cidoc_reference.p100_was_death_of.range
