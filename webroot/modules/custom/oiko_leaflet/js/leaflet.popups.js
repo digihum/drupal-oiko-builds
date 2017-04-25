@@ -27,9 +27,14 @@
 
   $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
     if (drupalLeaflet.hasSidebar) {
-      // Remove the popup.
+      // Remove the popup and add it back as a tooltip.
       if (typeof lFeature.unbindPopup !== 'undefined') {
         lFeature.unbindPopup();
+      }
+      if (feature.popup) {
+        // If this is a point, then we want the tooltip to not move around.
+        var sticky = feature.type !== 'point';
+        lFeature.bindTooltip(feature.popup, {direction: 'bottom', opacity: 1, sticky: sticky});
       }
 
       // Store away the bounds of the feature.

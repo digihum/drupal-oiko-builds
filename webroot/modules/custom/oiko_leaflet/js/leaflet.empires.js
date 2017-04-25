@@ -52,6 +52,7 @@
             }
           }
           lFeature.setStyle(styleOptions);
+          lFeature.bindTooltip(empire.label, {direction: 'bottom', sticky: true, opacity: 1});
           drupalLeaflet.empires.empiresLayerHelper.addLayer(lFeature);
         });
         Drupal.oiko.appModuleDoneLoading('empire-data');
