@@ -86,13 +86,35 @@ class ComparativeTimelineController extends ControllerBase {
    */
   protected function renderTimelineLogo(CidocEntity $cidoc_entity) {
     return $this->renderer->executeInRenderContext(new RenderContext(), function() use ($cidoc_entity) {
-      $view = $cidoc_entity->timeline_logo->view([
+      $view['logo'] = $cidoc_entity->timeline_logo->view([
         'label' => 'hidden',
         'type' => 'image',
         'settings' => [
           'image_style' => 'comparative_timeline_logo',
         ],
+        'weight' => 10,
       ]);
+      $view['subtitle'] = [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => 'subtitle',
+        ],
+      ];
+      $view['subtitle']['significance'] = $cidoc_entity->significance->view([
+        'label' => 'visually_hidden',
+        'type' => 'entity_reference_entity_view',
+        'settings' => [
+          'view_mode' => 'primary_historical_significance_pill',
+          'link' => FALSE,
+        ],
+        'weight' => 2,
+      ]);
+      $view_builder_entity = \Drupal::entityTypeManager()->getViewBuilder('cidoc_entity');
+      if ($spans = $cidoc_entity->getForwardReferencedEntities(['p4_has_time_span'])) {
+        $view['subtitle']['cidoc_temporal_summary'] = $view_builder_entity->viewMultiple($spans, 'temporal_summary');
+        $view['subtitle']['cidoc_temporal_summary']['weight'] = 1;
+      }
+
       return render($view);
     });
   }
