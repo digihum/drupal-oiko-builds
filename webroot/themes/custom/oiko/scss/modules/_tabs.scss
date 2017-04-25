@@ -9,6 +9,8 @@
 .tabs .tabs-title a {
   text-decoration: none;
 
+  border-bottom: 3px solid transparent;
+
   &:focus,
   &[aria-selected='true'] {
     color: $body-font-color;

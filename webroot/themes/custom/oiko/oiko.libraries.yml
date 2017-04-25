@@ -42,5 +42,8 @@ fonts:
       url: http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web
   css:
     theme:
+      //maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css:
+        external: true
       //fonts.googleapis.com/css?family=Gilda+Display|Roboto&subset=latin-ext:
         type: external
+

@@ -21,3 +21,4 @@ event-history:
   dependencies:
     - oiko/localforage-js
     - core/jquery.once
+    - core/drupal.ajax
