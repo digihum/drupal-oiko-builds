@@ -305,7 +305,10 @@ Drupal.behaviors.comparative_timeline = {
           start: Math.round(e.start.getTime() / 1000),
           end: Math.round(e.end.getTime() / 1000)
         };
-        $(window).trigger('oiko.timelineRangeChanged');
+        // Execute this in the 'next tick'.
+        setTimeout(function() {
+          $(window).trigger('oiko.timelineRangeChanged');
+        }, 1);
       }, this));
     this.$timelineContainer.bind('click', function(e) {
       var $target = $(e.target);
