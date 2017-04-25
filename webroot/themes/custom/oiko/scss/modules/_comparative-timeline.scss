@@ -6,7 +6,7 @@
   height: 100%;
 
   .vis-item {
-    height: 14px;
+    height: 16px;
     cursor: pointer;
     font-family: $small-copy-font-family;
     .vis-item-overflow {
@@ -52,36 +52,6 @@
 
 .comparative-timeline__inner {
   flex-grow: 1;
-
-  .vis-time-axis.vis-foreground {
-    border-bottom: 2px solid palette(black);
-    z-index: 2;
-
-    $dot-size: 6px;
-    &:before {
-      content: "";
-      position: absolute;
-      bottom: -$dot-size;
-      left: -$dot-size;
-      height: 0;
-      width: 0;
-      border: $dot-size solid palette(black);
-      border-radius: $dot-size;
-    }
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: -$dot-size;
-      right: -$dot-size;
-      height: 0;
-      width: 0;
-      border: $dot-size solid palette(black);
-      border-radius: $dot-size;
-    }
-  }
-  .vis-panel.vis-center {
-    border-top: none;
-  }
 }
 
 .comparative-timeline__header {
@@ -95,37 +65,25 @@
   flex-grow: 0;
   flex-shrink: 0;
 
+  .vis-timeline {
+    border: none;
+    box-shadow: none;
+  }
+
   .vis-item.vis-background {
     background-color:  rgba(palette(oikotan), 0.1);
     border: none;
+  }
 
-    // Style the current window bar
-    &.currentWindow {
-      background-color: transparent;
-      border-bottom: 3px solid palette(black);
-      z-index: 2;
+  // Style the current window bar
+  .currentWindow {
+    border: none;
+    background-color: rgba(palette(oikogrey), 0.5);
+    height: 40px;
 
-      $dot-size: 6px;
-      &:before {
-        content: "";
-        position: absolute;
-        bottom: -$dot-size;
-        left: -$dot-size;
-        height: 0;
-        width: 0;
-        border: $dot-size solid palette(black);
-        border-radius: $dot-size;
-      }
-      &:after {
-        content: "";
-        position: absolute;
-        bottom: -$dot-size;
-        right: -$dot-size;
-        height: 0;
-        width: 0;
-        border: $dot-size solid palette(black);
-        border-radius: $dot-size;
-      }
+    .vis-drag-left,
+    .vis-drag-right {
+      background-color: palette(oikogrey);
     }
   }
 

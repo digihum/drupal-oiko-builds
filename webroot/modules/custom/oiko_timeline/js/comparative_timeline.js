@@ -3,6 +3,8 @@
 
 Drupal.oiko.addAppModule('comparative-timeline');
 
+var WINDOW_SLIDER_ID = 'window-slider';
+
 Drupal.behaviors.comparative_timeline = {
   attach: function(context, settings) {
     $(context).find('.js-comparative-timeline-container').once('comparative_timeline').each(function() {
@@ -79,6 +81,10 @@ Drupal.behaviors.comparative_timeline = {
       showCurrentTime: false,
       showMajorLabels: false,
       height: 60,
+      maxHeight: 60,
+      margin: {
+        axis: 0,
+      },
       hiddenDates: [
         {start: '0000-01-01 00:00:00', end: '0001-01-01 00:00:00'}
       ],
@@ -96,7 +102,32 @@ Drupal.behaviors.comparative_timeline = {
       moment: vis.moment.utc,
       moveable: false,
       zoomable: false,
-      selectable: false
+      selectable: true,
+      snap: null,
+      editable: {
+        add: false,         // add new items by double tapping
+        updateTime: true,  // drag items horizontally
+        updateGroup: false, // drag items from one group to another
+        remove: false,       // delete an item by tapping the delete button top right
+        overrideItems: false  // allow these options to override item.editable
+      },
+      onMoving: function (item, callback) {
+        if (item.id === WINDOW_SLIDER_ID) {
+          // Make sure we can't drag outside the bounds.
+          var window = timeline._visTimelineOverview.getWindow();
+          if (item.start < window.start) {
+            item.start = window.start;
+          }
+          else if (item.end > window.end) {
+            item.end = window.end;
+          }
+          else {
+            // Move the upper timeline to this timeline window.
+            timeline._visTimeline.setWindow(item.start, item.end, {animation: false});
+            callback(item); // send back adjusted item
+          }
+        }
+      }
     };
 
     this._timelineMin = Infinity;
@@ -192,7 +223,7 @@ Drupal.behaviors.comparative_timeline = {
   };
 
   Drupal.OikoComparativeTimeline.prototype._filterItemsTimeWindowCallback = function(item) {
-    return item.id === 'window-slider';
+    return item.id === WINDOW_SLIDER_ID;
   };
 
   Drupal.OikoComparativeTimeline.prototype._filterItemsCategoriesCallback = function(item) {
@@ -285,6 +316,18 @@ Drupal.behaviors.comparative_timeline = {
         }
       }
     });
+    this._visTimelineOverview
+      .on('doubleClick', function(event) {
+        if (event.time) {
+          // Move our window to be centered on this time.
+          timeline._visTimeline.moveTo(event.time, {animation: false});
+        }
+      })
+      .on('select', function(e) {
+        if (e.items.indexOf(WINDOW_SLIDER_ID) === -1) {
+          timeline._visTimelineOverview.setSelection(WINDOW_SLIDER_ID);
+        }
+      });
     $(window).bind('oikoSidebarOpen', function(e, id) {
       // Find the selected item in our items, and select it.
       var selectedItems = timeline._visItems.getIds({filter: function(item) {
@@ -320,6 +363,7 @@ Drupal.behaviors.comparative_timeline = {
   };
 
   Drupal.OikoComparativeTimeline.prototype.removeGroupFromTimeline = function(groupId) {
+    var timeline = this;
     // Find the items to remove.
     var ids = this._visItems.getIds({
       filter: function(item) {
@@ -333,6 +377,19 @@ Drupal.behaviors.comparative_timeline = {
 
     // Refresh our data view.
     this._visDisplayedItems.refresh();
+
+    // Re-compute the min and max for our display.
+    this._timelineMin = Infinity;
+    this._timelineMax = -Infinity;
+    this._visItems.forEach(function(item) {
+      if (item.id !== WINDOW_SLIDER_ID) {
+        timeline._timelineMin = Math.min(timeline._timelineMin, ((item.start / 1000) - 86400 * 365 * 10));
+        timeline._timelineMax = Math.max(timeline._timelineMax, ((item.end / 1000) + 86400 * 365 * 10));
+      }
+    });
+
+    this.updateTimelineBounds();
+    this.updateCurrentWindowItem();
 
     // If this is one of the pre-built links, put it back.
     for (var i in this.preselectedLinks) {
@@ -406,7 +463,7 @@ Drupal.behaviors.comparative_timeline = {
     this.updateTimelineBounds();
     this.updateCurrentWindowItem();
 
-    // If this is one of the pre-built links, put it back.
+    // If this is one of the pre-built links, hide it.
     for (var i in this.preselectedLinks) {
       if ($(this.preselectedLinks[i]).data('groupId') == groupId) {
         $(this.preselectedLinks[i]).hide();
@@ -424,15 +481,21 @@ Drupal.behaviors.comparative_timeline = {
     // Ensure that we have a browser window element.
     this._visItems.update({
       // Timeline information.
-      id: 'window-slider',
+      id: WINDOW_SLIDER_ID,
       type: 'range',
       start: timeWindow.start,
       end: timeWindow.end,
 
       // Information for our summary timeline.
-      _summaryType: 'background',
+      _summaryType: 'range',
       _summaryClass: 'currentWindow'
     });
+    
+    // Ensure that the current window item is selected in the overview.
+    var selections = this._visTimelineOverview.getSelection();
+    if (selections.indexOf(WINDOW_SLIDER_ID) === -1) {
+      this._visTimelineOverview.setSelection(WINDOW_SLIDER_ID);
+    }
   };
 
   Drupal.OikoComparativeTimeline.prototype.updateTimelineBounds = function() {
@@ -468,9 +531,12 @@ Drupal.behaviors.comparative_timeline = {
     }
 
     if (moved && !this.rangeAdjusted) {
-      this._visTimeline.fit();
-      this._visTimelineOverview.fit();
+      this._visTimeline.fit({animation: false});
+      this._visTimelineOverview.fit({animation: false});
     }
+
+    this._visTimeline.redraw();
+    this._visTimelineOverview.redraw();
   };
 
 })(jQuery);
