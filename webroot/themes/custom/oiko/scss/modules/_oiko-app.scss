@@ -8,7 +8,7 @@
     right: 0;
     left: 0;
     z-index: 10000;
-    background-color: rgba(palette(grey, light), 0.8);
+    background-color: rgba(palette(oikogrey), 0.5);
 
     &::after {
       content: "Firing up the history engines...";
@@ -17,7 +17,7 @@
       right: 0;
       text-align: center;
       position: absolute;
-      font-size: 3em;
+      font-size: 2.5em;
     }
   }
 }
