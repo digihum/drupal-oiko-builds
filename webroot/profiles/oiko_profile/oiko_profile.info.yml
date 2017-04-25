@@ -329,8 +329,10 @@ cm_config_tools:
     - core.entity_form_display.node.forum.default
     - core.entity_form_display.paragraph.book.default
     - core.entity_form_display.paragraph.uri.default
+    - core.entity_form_display.taxonomy_term.empire.default
     - core.entity_form_display.taxonomy_term.event_types.default
     - core.entity_form_display.taxonomy_term.forums.default
+    - core.entity_form_display.taxonomy_term.source_books.default
     - core.entity_form_mode.cidoc_reference.domain
     - core.entity_form_mode.cidoc_reference.range
     - core.entity_view_display.block_content.modal_welcome.default
@@ -549,6 +551,7 @@ cm_config_tools:
     - core.entity_view_display.taxonomy_term.event_types.default
     - core.entity_view_display.taxonomy_term.event_types.primary_historical_significance_pill
     - core.entity_view_display.taxonomy_term.forums.default
+    - core.entity_view_display.taxonomy_term.source_books.default
     - core.entity_view_mode.cidoc_entity.inline_field
     - core.entity_view_mode.cidoc_entity.popup
     - core.entity_view_mode.cidoc_entity.preview
@@ -649,6 +652,7 @@ cm_config_tools:
     - field.field.taxonomy_term.event_types.field_icon_color
     - field.field.taxonomy_term.event_types.field_single_color
     - field.field.taxonomy_term.forums.forum_container
+    - field.field.taxonomy_term.source_books.field_source_type
     - field.storage.cidoc_entity.field_date
     - field.storage.cidoc_entity.field_empire_outline
     - field.storage.cidoc_entity.field_geodata
@@ -702,6 +706,7 @@ cm_config_tools:
     - user.role.content_editor
     - user.role.forum_user
     - views.view.all_events
+    - views.view.bibliography
     - views.view.cidoc_entities
     - views.view.crm_entity_search
     - views.view.discussions_listing
@@ -729,6 +734,7 @@ cm_config_tools:
   delete:
     - views.view.appelations
     - views.view.appelations_real_names
+    - views.view.bibl
     - views.view.duplicate_of_p134_continues
     - views.view.duplicate_of_p15_influenced
     - views.view.duplicate_of_p15_was_influenced_by
@@ -764,5 +770,6 @@ cm_config_tools:
     - core.entity_view_mode.taxonomy_term.primary_historical_significance_pill
     - field.field.block_content.modal_welcome.body
     - field.storage.block_content.body
+    - field.storage.taxonomy_term.field_source_type
     - image.style.thumbnail
     - node.type.content_page
