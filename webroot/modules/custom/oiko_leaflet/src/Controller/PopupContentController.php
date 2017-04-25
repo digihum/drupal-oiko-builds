@@ -6,6 +6,7 @@ use Drupal\cidoc\CidocEntityInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\oiko_leaflet\Ajax\EventHistoryAddCommand;
 use Drupal\oiko_leaflet\Ajax\GAEventCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityManager;
@@ -55,6 +56,8 @@ class PopupContentController extends ControllerBase {
     $response->addCommand(new HtmlCommand('.sidebar-information-content-content', $content));
     // Add in the GA response too.
     $response->addCommand(new GAEventCommand('pageview', ['dimension1' => $cidoc_entity->getOwner()->id()]));
+    $response->addCommand(new EventHistoryAddCommand($cidoc_entity->id(), $cidoc_entity->label()));
+
     return $response;
 
   }
