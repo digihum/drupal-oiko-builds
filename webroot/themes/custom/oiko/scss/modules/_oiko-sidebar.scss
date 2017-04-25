@@ -43,8 +43,20 @@
     }
 
     &:hover {
-      background: $tab-item-background-hover;
-      color: palette(oikocream);
+      background-color: palette(oikogrey);
+      color: palette(white);
+    }
+
+    &.disabled {
+      color: palette(oikogrey);
+      cursor: not-allowed;
+
+      &:focus,
+      &[aria-selected='true'],
+      &:hover {
+        background: transparent;
+        color: palette(oikogrey);
+      }
     }
   }
 }

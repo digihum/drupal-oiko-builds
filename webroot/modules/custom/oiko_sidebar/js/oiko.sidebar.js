@@ -42,7 +42,7 @@
 
   Drupal.oiko.displayLoadingContentInLeafletSidebar = function(label) {
     // This is actually a cheeky way to ensure that we don't need to scroll to the top.
-    $('.sidebar-information-content-content').text(Drupal.t('Loading details...'));
+    $('.sidebar-information-content-content').text(Drupal.t('Trawling through time and space for your information...'));
   };
 
   Drupal.oiko.displayContentInLeafletSidebar = function(id, donecb, errorcb) {

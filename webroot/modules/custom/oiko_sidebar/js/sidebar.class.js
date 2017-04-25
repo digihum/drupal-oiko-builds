@@ -31,17 +31,16 @@
       var $tab = $(this);
       $tab.find('a').bind('click', function (e) {
         var $link = $(this);
-
-        if ($link.data('paneId')) {
-          e.preventDefault();
+        if ($link.data('paneId') && !$link.hasClass('disabled')) {
           if ($tab.hasClass('is-active')) {
             sidebar.close();
           }
           else {
             sidebar.open($link.data('paneId'));
           }
-          $link.blur();
         }
+        $link.blur();
+        e.preventDefault();
       });
     });
 
@@ -56,13 +55,16 @@
 
     this.$panes.each(function () {
       var $pane = $(this);
-      $pane.toggleClass('is-active', $pane.data('paneId') == id);
+      $pane.toggleClass('is-active', $pane.data('paneId') === id);
     });
 
     this.$tabs.each(function () {
       var $tab = $(this);
-      $tab.toggleClass('is-active', $tab.find('a').data('paneId') == id);
-      $tab.find('a').attr('aria-selected', $tab.find('a').data('paneId') == id ? 'true' : null);
+      $tab.toggleClass('is-active', $tab.find('a').data('paneId') === id);
+      $tab.find('a').attr('aria-selected', $tab.find('a').data('paneId') === id ? 'true' : null);
+      if ($tab.find('a').data('paneId') === id) {
+        $tab.find('a').removeClass('disabled');
+      }
     });
 
     // Make sure the sidebar is open.
