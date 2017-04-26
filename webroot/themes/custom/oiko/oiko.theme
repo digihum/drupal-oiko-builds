@@ -138,6 +138,14 @@ function oiko_preprocess_block(&$variables) {
   if ($variables['plugin_id'] === 'main_cidoc_search') {
     $variables['attributes']['class'][] = 'main-search-outer-wrapper';
   }
+  if ($variables['plugin_id'] === 'event_basket') {
+    // These were causing bugs.
+    unset($variables['title_suffix']['contextual_links']);
+  }
+  if ($variables['plugin_id'] === 'webform_block') {
+    // These were causing bugs.
+    unset($variables['title_suffix']['contextual_links']);
+  }
   if (isset($variables['base_plugin_id']) && $variables['base_plugin_id'] === 'block_content') {
     if (isset($variables['content']['#block_content']) && $variables['content']['#block_content']->bundle() === 'modal_welcome') {
       $variables['attributes']['class'][] = 'reveal';
