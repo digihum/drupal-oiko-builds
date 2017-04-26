@@ -195,7 +195,7 @@ function oiko_preprocess_cidoc_entity(array &$variables) {
 function oiko_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   $match = \Drupal::routeMatch();
   if ($match->getRouteName() == 'entity.cidoc_entity.canonical') {
-//    array_unshift($suggestions, 'page__bare');
+    array_unshift($suggestions, 'page__bare');
   }
   if (\Drupal::service('path.matcher')->isFrontPage()) {
     array_unshift($suggestions, 'page__bare');

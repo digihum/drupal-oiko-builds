@@ -6,6 +6,7 @@ use Drupal\cidoc\Entity\CidocProperty;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityViewBuilder;
 use Drupal\Core\Url;
+use Drupal\oiko_app\Controller\AppPageController;
 use Drupal\oiko_timeline\Controller\ComparativeTimelineController;
 use Drupal\views\Views;
 
@@ -124,31 +125,16 @@ class CidocEntityViewBuilder extends EntityViewBuilder {
 
   public function viewMultiple(array $entities = array(), $view_mode = 'full', $langcode = NULL) {
     if ($view_mode == 'full') {
+      // @TODO: this should be implemented elsewhere.
       $build = [];
       foreach ($entities as $entity) {
         $request = \Drupal::request();
-        if ($request->get('type', 'map') == 'timeline') {
-          $timeline_controller = ComparativeTimelineController::create(\Drupal::getContainer());
-          $build[$entity->id()] = $timeline_controller->basePage();
-        }
-        else {
-          $view_name = 'all_events';
-          $display_name = 'embed_1';
-
-          // Check that the view is valid and the display still exists.
-          $view = Views::getView($view_name);
-          if (!$view || !$view->access($display_name)) {
-            drupal_set_message(t('The reference view %view_name cannot be found.', array('%view_name' => $view_name)), 'warning');
-            break;
-          }
-          $build[$entity->id()] = $view->render($display_name);
-          if (isset($build[$entity->id()]['#attached'])) {
-            $build[$entity->id()]['#attached']['drupalSettings']['oiko_leaflet']['popup'] = [
-              'id' => $entity->id(),
-              'label' => $entity->label(),
-            ];
-          }
-        }
+        $app_controller = AppPageController::create(\Drupal::getContainer());
+        $build[$entity->id()] = $app_controller->app();
+        $build[$entity->id()]['#attached']['drupalSettings']['oiko_leaflet']['popup'] = [
+          'id' => $entity->id(),
+          'label' => $entity->label(),
+        ];
       }
 
       return $build;

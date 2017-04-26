@@ -15,11 +15,21 @@
         Drupal.oiko.openSidebar(id);
       });
 
-      $(window).bind('oikoSidebarOpening', function(e, id) {
+      $(window).bind('oikoSidebarOpening', function (e, id) {
         if (featureCache.hasOwnProperty(id)) {
           if (!map.getBounds().contains(featureCache[id])) {
             map.panInsideBounds(featureCache[id]);
           }
+        }
+      });
+
+      // Check to see if we need to open the sidebar immediately.
+      $(document).once('oiko_leaflet__popups').each(function () {
+        if (drupalSettings.hasOwnProperty('oiko_leaflet') && drupalSettings.oiko_leaflet.hasOwnProperty('popup') && drupalSettings.oiko_leaflet.popup) {
+          // We might need to wait for everything we need to be loaded.
+          $(window).bind('load', function () {
+            Drupal.oiko.openSidebar(drupalSettings.oiko_leaflet.popup.id);
+          });
         }
       });
     }

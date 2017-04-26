@@ -5,6 +5,7 @@ namespace Drupal\oiko_leaflet\Controller;
 use Drupal\cidoc\CidocEntityInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Ajax\SettingsCommand;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\oiko_leaflet\Ajax\EventHistoryAddCommand;
 use Drupal\oiko_leaflet\Ajax\GAEventCommand;
@@ -52,11 +53,24 @@ class PopupContentController extends ControllerBase {
     $content = $view_builder->view($cidoc_entity, 'popup');
 
     $response = new AjaxResponse();
-    // @TODO: This line is hideous, change it.
     $response->addCommand(new HtmlCommand('.sidebar-information-content-content', $content));
     // Add in the GA response too.
     $response->addCommand(new GAEventCommand('pageview', ['dimension1' => $cidoc_entity->getOwner()->id()]));
+    // Add a response for our event history block.
     $response->addCommand(new EventHistoryAddCommand($cidoc_entity->id(), $cidoc_entity->label()));
+
+    // Send the URL and label of the CIDOC entity to the client in case we need it there.
+    $settings = [
+      'oiko_app' => [
+        'lookups' => [
+          $cidoc_entity->id() => [
+            'url' => $cidoc_entity->toUrl()->toString(),
+            'label' => $cidoc_entity->label(),
+          ],
+        ],
+      ],
+    ];
+    $response->addCommand(new SettingsCommand($settings, TRUE), TRUE);
 
     return $response;
 
