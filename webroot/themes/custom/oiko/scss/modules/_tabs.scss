@@ -33,12 +33,12 @@
   > a {
     padding: 1.25rem 1.5rem;
     &:hover {
-      border-bottom: none;
+      border-bottom-color: transparent;
     }
 
     &:focus,
     &[aria-selected='true'] {
-      border-bottom: none;
+      border-bottom-color: transparent;
     }
   }
 }
