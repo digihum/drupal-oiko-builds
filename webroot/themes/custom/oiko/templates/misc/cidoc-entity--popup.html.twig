@@ -43,8 +43,8 @@
       {{- content|without('name', 'significance', 'cidoc_temporal_summary', 'event_basket_link') -}}
   {% endif %}
         </div>
-        <div class="tabs-panel" id="discuss">
-            <p>Suspendisse dictum feugiat nisl ut dapibus.  Vivamus hendrerit arcu sed erat molestie vehicula. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.  Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor.</p>
+        <div class="tabs-panel js-ajax-load-content-within-here-wrapper" id="discuss">
+            {{  discussion_panel }}
         </div>
         <div class="tabs-panel" id="share">
             {{ share_panel }}

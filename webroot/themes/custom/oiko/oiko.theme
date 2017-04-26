@@ -4,6 +4,7 @@ use Drupal\Core\Block\MessagesBlockPluginInterface;
 use Drupal\Core\Block\TitleBlockPluginInterface;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\block\Entity\Block;
+use Drupal\views\Views;
 
 /**
  * Implements theme_preprocess().
@@ -199,6 +200,11 @@ function oiko_preprocess_cidoc_entity(array &$variables) {
     }
   }
   if ($variables['elements']['#view_mode'] === 'popup') {
+    // Add the discussions view to the popup.
+    $view = Views::getView('discussions_listing');
+    $view->setArguments([$variables['elements']['#cidoc_entity']->id()]);
+    $variables['discussion_panel'] = $view->render();
+
     // Add the sidebar share region to the popup.
     $build = [
       '#cache' => [
