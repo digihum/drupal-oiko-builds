@@ -705,7 +705,6 @@ cm_config_tools:
     - user.role.authenticated
     - user.role.content_editor
     - user.role.forum_user
-    - views.view.all_events
     - views.view.bibliography
     - views.view.cidoc_entities
     - views.view.crm_entity_search
@@ -732,6 +731,7 @@ cm_config_tools:
     - views.view.timeline
     - webform.webform.feedback
   delete:
+    - views.view.all_events
     - views.view.appelations
     - views.view.appelations_real_names
     - views.view.bibl
