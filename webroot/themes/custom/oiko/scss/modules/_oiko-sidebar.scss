@@ -87,8 +87,13 @@
 
   .sidebar-pane {
     display: none;
+    position: relative;
     &.is-active {
       display: block;
+    }
+    .loading-graphic {
+      position: absolute;
+      left: calc(50% - #{$ajax-loading-graphic-size/2 + 20px});
     }
   }
 }
