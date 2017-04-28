@@ -84,7 +84,7 @@
         var $this = $(this);
         $this.iFrameResize({
           log: false,
-          heightCalculationMethod: 'lowestElement',
+          heightCalculationMethod: 'taggedElement',
           messageCallback: Drupal.oiko.iframeMessageCallback($this)
         });
       });
@@ -102,6 +102,15 @@
           case 'scrolltop':
             // Scroll the container to the right place.
             $sidebar.scrollTop(0);
+            break;
+
+          case 'cidoc_link':
+            if (typeof message.id !== 'undefined') {
+              // Fire an event to open the sidebar.
+              if (Drupal.oiko.openSidebar) {
+                Drupal.oiko.openSidebar(message.id);
+              }
+            }
             break;
 
           case 'messages':

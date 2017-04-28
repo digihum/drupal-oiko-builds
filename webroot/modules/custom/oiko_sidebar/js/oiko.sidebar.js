@@ -10,16 +10,16 @@
         var $content = $(context).find('.sidebar-content');
         if ($content.length) {
           Drupal.oiko.sidebar = new Drupal.Sidebar(this, $content);
+          $content.on('click', function(e) {
+            var $target = $(e.target);
+            var id = $target.data('cidoc-id');
+            if (id) {
+              e.preventDefault();
+              // Fall back to using the link text as the new sidebar title.
+              Drupal.oiko.openSidebar(id);
+            }
+          });
         }
-        $content.on('click', function(e) {
-          var $target = $(e.target);
-          var id = $target.data('cidoc-id');
-          if (id) {
-            e.preventDefault();
-            // Fall back to using the link text as the new sidebar title.
-            Drupal.oiko.openSidebar(id);
-          }
-        });
       });
     }
   };
