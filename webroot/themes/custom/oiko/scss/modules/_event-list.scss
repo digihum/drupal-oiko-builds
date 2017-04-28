@@ -16,6 +16,10 @@
   border-bottom: 1px solid palette(oikoblue);
   display: flex;
   padding: 5px 0;
+
+  &:last-child {
+    border: none;
+  }
 }
 
 .event-list__remove {
