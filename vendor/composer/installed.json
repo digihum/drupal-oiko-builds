@@ -3778,7 +3778,7 @@
             },
             "drupal": {
                 "version": "8.x-1.18",
-                "datestamp": "1491487683"
+                "datestamp": "1480614184"
             }
         },
         "installation-source": "dist",
@@ -3883,8 +3883,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.3+1-dev",
-                "datestamp": "1490380984"
+                "version": "8.x-1.x-dev",
+                "datestamp": "1484769783"
             }
         },
         "installation-source": "source",
@@ -4021,8 +4021,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0+1-dev",
-                "datestamp": "1490230684"
+                "version": "8.x-1.0-rc1+8-dev",
+                "datestamp": "1466497439"
             },
             "patches_applied": {
                 "Add drush command to list dependencies": "https://www.drupal.org/files/issues/config_devel-drush_config_list-2319193-10.patch",
@@ -5754,7 +5754,7 @@
         "require": {
             "composer/installers": "^1.0.21"
         },
-        "time": "2016-05-02 15:43:10",
+        "time": "2016-09-20 10:25:00",
         "type": "drupal-module",
         "installation-source": "source"
     },
@@ -5923,10 +5923,6 @@
                 "name": "Mike Ryan",
                 "homepage": "https://www.drupal.org/u/mikeryan",
                 "role": "Maintainer"
-            },
-            {
-                "name": "mikeryan",
-                "homepage": "https://www.drupal.org/user/4420"
             }
         ],
         "description": "Enhancements to core migration support.",
@@ -6069,7 +6065,7 @@
             },
             "drupal": {
                 "version": "8.x-1.0",
-                "datestamp": "1487331784"
+                "datestamp": "1469726249"
             }
         },
         "installation-source": "dist",
@@ -6085,10 +6081,6 @@
             {
                 "name": "Frans",
                 "homepage": "https://www.drupal.org/user/514222"
-            },
-            {
-                "name": "Primsi",
-                "homepage": "https://www.drupal.org/user/282629"
             },
             {
                 "name": "jeroen.b",
@@ -7307,6 +7299,7 @@
         "require": {
             "drupal/core": "*"
         },
+        "time": "2017-03-17 01:22:49",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {

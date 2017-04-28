@@ -12,6 +12,24 @@ global-styling:
       - oiko/fonts
       - core/drupal
       - oiko_sidebar/sidebar
+      - oiko/iframeResizer.contentWindow
+
+iframeResizer:
+  version: 3.5.14
+  js:
+    scripts/vendor/iframeResizer.min.js: {minified: true}
+
+iframeResizer.contentWindow:
+  version: 3.5.14
+  js:
+    scripts/vendor/iframeResizer.contentWindow.min.js: {minified: true}
+
+iframepage:
+  version: 1.0
+  js:
+    scripts/iframe.contentWindow.js: { weight: -10 }
+  dependencies:
+    - core/jquery.once
 
 localforage-js:
   version: 2.0.3

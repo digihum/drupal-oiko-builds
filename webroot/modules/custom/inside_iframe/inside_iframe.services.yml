@@ -1,0 +1,6 @@
+services:
+  inside_iframe.subscriber:
+    class: Drupal\inside_iframe\EventSubscriber\InsideIframeSubscriber
+    tags:
+      - { name: event_subscriber }
+

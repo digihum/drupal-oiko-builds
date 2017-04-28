@@ -76,6 +76,47 @@
         [latlng.lat - latAccuracy, latlng.lng - lngAccuracy],
         [latlng.lat + latAccuracy, latlng.lng + lngAccuracy]);
     }
+  };
+
+  Drupal.behaviors.oiko_iframe_container = {
+    attach: function(context) {
+      $('.discussion-iframe', context).once('oiko_iframe_container').each(function() {
+        var $this = $(this);
+        $this.iFrameResize({
+          log: false,
+          heightCalculationMethod: 'lowestElement',
+          messageCallback: Drupal.oiko.iframeMessageCallback($this)
+        });
+      });
+    }
+  };
+
+
+  Drupal.oiko.iframeMessageCallback = function (container) {
+    var $sidebar = $(container).closest('.sidebar-content');
+    return function(e) {
+      var iframe = e.iframe;
+      var message = e.message;
+      if (typeof message.type !== 'undefined') {
+        switch (message.type) {
+          case 'scrolltop':
+            // Scroll the container to the right place.
+            $sidebar.scrollTop(0);
+            break;
+
+          case 'messages':
+            if (typeof message.messages !== 'undefined') {
+              // Remove previous messages
+              $('#highlighted-child').remove();
+              var $highlighted = $('<div>').addClass('reveal js-highlighted-reveal').attr('data-reveal', 'true').attr('id', 'highlighted-child');
+              $('body').append($highlighted);
+              $highlighted.append(message.messages);
+              Drupal.attachBehaviors($highlighted.parent().get(0));
+            }
+            break;
+        }
+      }
+    };
   }
 
 })(jQuery);

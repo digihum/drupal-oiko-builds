@@ -8,6 +8,7 @@ popups:
     - core/modernizr
     - oiko_sidebar/sidebar
     - oiko_sidebar/oikoApp
+    - oiko/iframeResizer
 
 mapstate:
   js:

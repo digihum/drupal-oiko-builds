@@ -1,6 +1,6 @@
 @import "../base/global";
 
-body {
+body.layout-flex {
   display: flex;
   flex-direction: column;
 }
@@ -17,15 +17,6 @@ body {
   flex-direction: column;
   justify-content: space-between;
 }
-
-.l-sidebar-upper {
-
-}
-
-.l-sidebar-lower {
-
-}
-
 
 .l-content-container {
   flex: 1;
