@@ -1,9 +1,26 @@
+.oiko-app--timeline {
+  //overflow-y: scroll;
+  display: flex;
+}
+
 .comparative-timeline-container {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  flex-grow: 1;
   background-color: palette(oikocream);
-  height: 100%;
+
+  .subtitle {
+    @each $size, $headers in $header-sizes {
+      @include from($size) {
+        @each $header, $font-size in $headers {
+          @if $header == 'h5' {
+            font-size: rem-calc($font-size, map-get($base-font-sizes, $size));
+          }
+        }
+      }
+    }
+  }
 
   .vis-item {
     height: 16px;
@@ -52,6 +69,8 @@
 
 .comparative-timeline__inner {
   flex-grow: 1;
+  min-height: 0;
+  overflow-y: scroll;
 }
 
 .comparative-timeline__header {
@@ -98,24 +117,41 @@
   cursor: pointer;
 }
 
+
 .comparative-timeline-preselections-wrapper .header {
   text-align: center;
   margin: $global-margin;
 }
 .comparative-timeline-preselections {
   display: flex;
-  justify-content: center;
+  //justify-content: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  .smaller {
+    font-size: 80%;
+  }
 }
 
 .comparative-timeline--preselect-link {
+  background-color: darken(palette(oikocream), 10%);
   width: 200px;
   padding: $global-padding;
   text-align: center;
   display: block;
   text-decoration: none;
+  margin: 0 $global-margin/2 $global-margin;
 
   .timeline-logo {
     margin-bottom: $global-margin;
+  }
+
+  &:hover {
+    .button {
+      background-color: palette(oikotan);
+      border-color: palette(oikotan);
+    }
+
   }
 }
 

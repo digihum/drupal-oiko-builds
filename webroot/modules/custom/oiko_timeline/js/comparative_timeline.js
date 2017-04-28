@@ -215,7 +215,7 @@ Drupal.behaviors.comparative_timeline = {
     }
     this.$ajaxLoader.toggleClass('js-loading-graphic--comparative-timeline-working', items);
     this.isLoading = items;
-    this.$preselectionsContainer.toggle(this.getTimelines().length < 2);
+    this.updateTheDOM();
   };
 
   Drupal.OikoComparativeTimeline.prototype.isLoadingItems = function() {
@@ -344,6 +344,9 @@ Drupal.behaviors.comparative_timeline = {
     $(window).bind('selected.timeline.searchitem', function (e, id) {
       timeline.loadDataHandler.call(timeline, parseInt(id, 10));
     });
+
+    // Now that we're all loaded up, update the DOM.
+    this.updateTheDOM();
   };
 
   Drupal.OikoComparativeTimeline.prototype.getVisibleTimeWindow = function() {
@@ -402,7 +405,7 @@ Drupal.behaviors.comparative_timeline = {
     }
 
     // Show/hide the preselections as needed.
-    this.$preselectionsContainer.toggle(this.getTimelines().length < 2);
+    this.updateTheDOM();
     $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
   };
 
@@ -475,7 +478,7 @@ Drupal.behaviors.comparative_timeline = {
 
     this._visTimeline.setOptions({ orientation: {axis: 'top'} });
 
-    this.$preselectionsContainer.toggle(this.getTimelines().length < 2);
+    this.updateTheDOM();
     $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
   };
 
@@ -540,6 +543,22 @@ Drupal.behaviors.comparative_timeline = {
 
     this._visTimeline.redraw();
     this._visTimelineOverview.redraw();
+  };
+
+  /**
+   * Update the DOM to match our state.
+   *
+   * The idea is that this function should be idempotent.
+   */
+  Drupal.OikoComparativeTimeline.prototype.updateTheDOM = function() {
+    // Hide or show the overview container depending on the number of timelines we have.
+    this.$overviewContainer.toggle(this.getTimelines().length > 0);
+
+    // Hide or show the overview container depending on the number of timelines we have.
+    this.$timelineContainer.toggle(this.getTimelines().length > 0);
+
+    // Hide preseleections if you have more than one item in the timeline.
+    this.$preselectionsContainer.toggle(this.getTimelines().length < 2);
   };
 
 })(jQuery);

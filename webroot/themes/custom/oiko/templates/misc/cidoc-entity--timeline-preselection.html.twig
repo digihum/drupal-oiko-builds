@@ -22,8 +22,10 @@
     {% if content.name %}
         <h3>{{- content.name -}}</h3>
     {% endif %}
-  {% if content %}
-    {{- content|without('name', 'timeline_logo') -}}
-  {% endif %}
+    <div class="smaller">
+      {% if content %}
+        {{- content|without('name', 'timeline_logo') -}}
+      {% endif %}
+    </div>
   <a href="#" class="button">Load timeline</a>
 </div>

@@ -46,7 +46,7 @@
   @each $size, $headers in $header-sizes {
     @include from($size) {
       @each $header, $font-size in $headers {
-        @if $font-size = 'h2' {
+        @if $header == 'h4' {
           font-size: rem-calc($font-size, map-get($base-font-sizes, $size));
         }
       }
