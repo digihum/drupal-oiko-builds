@@ -23,3 +23,33 @@
   }
 
 }
+
+// Mobile
+.navigation-bar--mobile {
+  padding-bottom: 0;
+  .site-slogan {
+    float: left;
+  }
+  .navigation-bar--tabs {
+    float: right;
+    margin: 0;
+    .tabs-title {
+      > a {
+        padding: 0.5rem 1rem 28px 1rem;
+        border: none;
+        &:hover,
+        &:focus,
+        &[aria-selected='true'] {
+          border: none;
+        }
+      }
+    }
+  }
+}
+
+.navigation-bar--mobile-reveal {
+  .icon-links {
+    justify-content: center;
+    color: palette(black);
+  }
+}

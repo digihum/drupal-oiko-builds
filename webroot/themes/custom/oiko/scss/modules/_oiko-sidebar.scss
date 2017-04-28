@@ -67,8 +67,10 @@
   .sidebar-opened & {
     display: block;
   }
-
-  width: 33%;
+  width: 100%;
+  @include from('m') {
+    width: 33%;
+  }
   flex-grow: 0;
   flex-shrink: 0;
 
@@ -77,12 +79,20 @@
 
   padding: 20px;
 
-  .showing-map & {
-    border-right: 2px solid palette(oikoblue);
+  @include from('m') {
+    .showing-map & {
+      border-right: 2px solid palette(oikoblue);
+    }
+
+    .showing-timeline & {
+      border-left: 2px solid palette(oikoblue);
+    }
   }
 
-  .showing-timeline & {
-    border-left: 2px solid palette(oikoblue);
+  @include to('s') {
+    padding: 0;
+    overflow: visible;
+    background: palette(oikocream);
   }
 
   .sidebar-pane {

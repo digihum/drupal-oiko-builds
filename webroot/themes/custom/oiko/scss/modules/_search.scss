@@ -16,6 +16,11 @@
   display: inline-block;
   margin: 0 $global-margin;
   text-align: left;
+  @include to('s') {
+    margin: 0;
+    padding: $global-margin;
+    max-width: none;
+  }
 }
 
 .main-search-box {
@@ -36,6 +41,9 @@
   cursor: pointer;
   border: 0;
   background: none;
+  @include to('s') {
+    right: 16px;
+  }
 }
 
 .main-search__dropdown {
@@ -47,6 +55,11 @@
   border-top: 5px solid palette(oikoblue);
   width: 100%;
   max-width: 450px;
+  @include to('s') {
+    position: inherit;
+    width: auto;
+    max-width: none;
+  }
 }
 
 .main-search__results-listing {

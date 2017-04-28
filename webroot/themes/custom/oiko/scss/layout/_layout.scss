@@ -9,6 +9,9 @@ body.layout-flex {
   flex-grow: 1;
   display: flex;
   position: relative;
+  @include to('s'){
+    flex-direction: column;
+  }
 }
 
 .l-sidebar {
@@ -142,4 +145,14 @@ body.layout-flex {
   @include in-large-layout {
     display: flex;
   }
+}
+
+// Responsive
+// --------------------
+.desktop-only {
+  @include hide-in-small-layout;
+}
+
+.mobile-only {
+  @include hide-in-large-layout;
 }

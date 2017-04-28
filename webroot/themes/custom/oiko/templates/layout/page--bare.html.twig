@@ -44,7 +44,10 @@
  */
 #}
 <div id="main" role="main" class="clearfix l-main page--bare">
-    <div class="l-sidebar oiko-sidebar">
+    <div class="oiko-sidebar mobile-only">
+        {% include directory ~ '/templates/layout/header--mobile.html.twig' %}
+    </div>
+    <div class="l-sidebar oiko-sidebar desktop-only">
         <div class="l-sidebar-upper">
             {% include directory ~ '/templates/layout/header.html.twig' %}
             {{ page.sidebar_upper }}
@@ -60,7 +63,7 @@
         </div>
     </div>
     <div class="l-content-container">
-        <div class="l-content-header">
+        <div class="l-content-header desktop-only">
             {{ page.search_header }}
             {{ page.user_header }}
         </div>
