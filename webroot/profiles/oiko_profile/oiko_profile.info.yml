@@ -4,6 +4,7 @@ description: Install profile for the Oiko
 core: 8.x
 
 dependencies:
+  - oiko_forum
   - oiko_event_basket
   - honeypot
   - webform
@@ -131,6 +132,7 @@ cm_config_tools:
     - block.block.oiko_page_title
     - block.block.oiko_powered
     - block.block.oiko_tools
+    - block.block.discussionnotificationsblock
     - block.block.sharemessage
     - block.block.sharemessage_2
     - block.block.welcomeblock
@@ -730,6 +732,7 @@ cm_config_tools:
     - views.view.p99_dissov_group
     - views.view.timeline
     - webform.webform.feedback
+    - views.view.my_discussions
   delete:
     - views.view.all_events
     - views.view.appelations

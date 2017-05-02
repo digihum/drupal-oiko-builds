@@ -2,20 +2,18 @@ langcode: en
 status: true
 dependencies:
   module:
-    - webform
+    - oiko_forum
   theme:
     - oiko
-id: feedback
+id: discussionnotificationsblock
 theme: oiko
 region: user_header
-weight: -11
+weight: -10
 provider: null
-plugin: webform_block
+plugin: discussion_notifcations
 settings:
-  id: webform_block
-  label: Feedback
-  provider: webform
+  id: discussion_notifcations
+  label: Discussions
+  provider: oiko_forum
   label_display: visible
-  webform_id: feedback
-  default_data: ''
 visibility: {  }

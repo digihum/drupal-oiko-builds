@@ -168,6 +168,10 @@ function oiko_preprocess_block(&$variables) {
     // These were causing bugs.
     unset($variables['title_suffix']['contextual_links']);
   }
+  if ($variables['plugin_id'] === 'discussion_notifcations') {
+    // These were causing bugs.
+    unset($variables['title_suffix']['contextual_links']);
+  }
   if (isset($variables['base_plugin_id']) && $variables['base_plugin_id'] === 'block_content') {
     if (isset($variables['content']['#block_content']) && $variables['content']['#block_content']->bundle() === 'modal_welcome') {
       $variables['attributes']['class'][] = 'reveal';
@@ -231,9 +235,6 @@ function oiko_preprocess_cidoc_entity(array &$variables) {
   }
   if ($variables['elements']['#view_mode'] === 'popup') {
     // Add the discussions view to the popup.
-    $view = Views::getView('discussions_listing');
-    $view->setArguments([]);
-//    $variables['discussion_panel'] = $view->render();
 
     $variables['discussion_panel'] = [
       '#type' => 'html_tag',
