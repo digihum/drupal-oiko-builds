@@ -15,14 +15,12 @@
 <div class="navigation-bar--mobile-reveal sidebar-content">
     <div class="sidebar-pane" data-pane-id="search">
         <div class="l-content-header-search--mobile" data-pane-id="information">
-            {# @TODO - Add in the search without affecting the desktop search #}
-            Search box
-            {#{ page.search_header }#}
+            {{ page.mobile_search_header }}
         </div>
     </div>
     <div class="sidebar-pane" data-pane-id="user">
         <div class="l-content-header-user--mobile">
-            {{ page.user_header }}
+            {{ page.mobile_user_header }}
         </div>
     </div>
 </div>

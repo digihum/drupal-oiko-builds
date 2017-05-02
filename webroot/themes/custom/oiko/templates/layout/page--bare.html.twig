@@ -44,9 +44,9 @@
  */
 #}
 <div id="main" role="main" class="clearfix l-main page--bare">
-    {#<div class="oiko-sidebar mobile-only">#}
-        {#{% include directory ~ '/templates/layout/header--mobile.html.twig' %}#}
-    {#</div>#}
+    <div class="oiko-sidebar mobile-only">
+        {% include directory ~ '/templates/layout/header--mobile.html.twig' %}
+    </div>
     <div class="l-sidebar oiko-sidebar desktop-only">
         <div class="l-sidebar-upper">
             {% include directory ~ '/templates/layout/header.html.twig' %}
