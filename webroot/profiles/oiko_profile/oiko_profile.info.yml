@@ -114,6 +114,7 @@ cm_config_tools:
   managed:
     - block.block.discussionnotificationsblock
     - block.block.userloggedoutheaderblock
+    - block.block.userloggedinheaderblock
     - block.block.discussionnotificationsblock_mobile
     - block.block.feedback
     - block.block.feedback_mobile

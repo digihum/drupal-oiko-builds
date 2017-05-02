@@ -4,6 +4,7 @@ use Drupal\Core\Block\MessagesBlockPluginInterface;
 use Drupal\Core\Block\TitleBlockPluginInterface;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\block\Entity\Block;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Url;
 use Drupal\views\Views;
 
@@ -160,18 +161,18 @@ function oiko_preprocess_block(&$variables) {
   if ($variables['plugin_id'] === 'main_cidoc_search') {
     $variables['attributes']['class'][] = 'main-search-outer-wrapper';
   }
-  if ($variables['plugin_id'] === 'event_basket') {
-    // These were causing bugs.
+  // Contextual link s on these were causing JS bugs.
+  $js_bugs = [
+    'event_basket',
+    'webform_block',
+    'discussion_notifcations',
+    'user_logged_in',
+    'user_logged_out',
+  ];
+  if (in_array($variables['plugin_id'], $js_bugs, TRUE)) {
     unset($variables['title_suffix']['contextual_links']);
   }
-  if ($variables['plugin_id'] === 'webform_block') {
-    // These were causing bugs.
-    unset($variables['title_suffix']['contextual_links']);
-  }
-  if ($variables['plugin_id'] === 'discussion_notifcations') {
-    // These were causing bugs.
-    unset($variables['title_suffix']['contextual_links']);
-  }
+
   if (isset($variables['base_plugin_id']) && $variables['base_plugin_id'] === 'block_content') {
     if (isset($variables['content']['#block_content']) && $variables['content']['#block_content']->bundle() === 'modal_welcome') {
       $variables['attributes']['class'][] = 'reveal';
