@@ -44,7 +44,7 @@ class UserLoggedIn extends BlockBase {
     unset($parsed['query'][FormBuilderInterface::AJAX_FORM_REQUEST], $parsed['query'][MainContentViewSubscriber::WRAPPER_FORMAT]);
     $path = $parsed['path'] . ($parsed['query'] ? ('?' . UrlHelper::buildQuery($parsed['query'])) : '');
 
-    $final_path = Url::fromUri($final_route, [], ['query' => ['destination' => $path]]);
+    $final_path = Url::fromUri($final_route, ['query' => ['destination' => $path]]);
 
     return [
       '#type' => 'markup',
