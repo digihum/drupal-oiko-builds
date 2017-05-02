@@ -20,11 +20,6 @@
                 <i class="fa fa-user-circle"></i>
                 <span class="show-for-sr">{{ "View my account" }}</span>
             </a></li>
-        {% else %}
-            <li class="desktop-only"><a href="{{ path('user.login') }}" class="icon-links__link">
-                <i class="fa fa-user-circle"></i>
-                <span class="show-for-sr">{{ "Login/Register" }}</span>
-            </a></li>
         {% endif %}
     </ul>
 {% endif %}
