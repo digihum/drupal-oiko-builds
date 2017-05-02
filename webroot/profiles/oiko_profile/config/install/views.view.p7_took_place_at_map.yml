@@ -444,29 +444,17 @@ display:
       style:
         type: oiko_leafet_map
         options:
-          grouping:
-            -
-              field: ''
-              rendered: 1
-              rendered_strip: 0
-            -
-              field: ''
-              rendered: 1
-              rendered_strip: 0
-            -
-              field: ''
-              rendered: 1
-              rendered_strip: 0
-            -
-              field: ''
-              rendered: 1
-              rendered_strip: 0
-          id_field: id
-          clustering: 1
+          uses_fields: 0
+          pan: 0
+          zoom: 0
+          zoom_controls: bottomleft
+          max_zoom: '6'
+          clustering: 0
           sidebar: 0
           search: 0
           timeline: 0
           pagestate: 0
+          empty_map: 0
           empires: 0
           map: 'Ancient Terrain'
           full_height: 0
@@ -670,30 +658,6 @@ display:
           entity_field: name
           plugin_id: field
       display_description: ''
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-      tags:
-        - 'config:field.storage.cidoc_entity.field_geodata'
-  leaflet_attachment_1:
-    display_plugin: leaflet_attachment
-    id: leaflet_attachment_1
-    display_title: 'Leaflet Attachment'
-    position: 1
-    display_options:
-      display_extenders: {  }
-      row:
-        type: leaflet_marker
-        options:
-          data_source: field_geodata
-          name_field: name
-          description_field: name
-          view_mode: search_result
-      displays:
-        default: default
     cache_metadata:
       max-age: -1
       contexts:

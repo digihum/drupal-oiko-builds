@@ -1,0 +1,5 @@
+name: 'Oiko - Event Basket'
+type: module
+description: Allows users to build up a list of events
+core: 8.x
+package: Oiko

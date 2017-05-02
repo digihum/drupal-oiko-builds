@@ -15,19 +15,35 @@ abstract class GeoserializerPluginBase extends PluginBase implements Geoserializ
 
   protected function addCommonPointValues(array $point, CidocEntityInterface $entity) {
     $point['label'] = $entity->getName();
-    $point['popup'] = $this->t('@entity_type: @link', array(
-      '@entity_type' => $entity->bundleLabel(),
-      '@link' => $entity->toLink($entity->getName())->toString(),
-    ));
     $point['id'] = $entity->id();
 
-    // Convert cultural significance to color.
-    if (($significance = $entity->significance->entity) && ($color = $significance->field_icon_color->getValue()[0]['value'])) {
-      $point['color'] = $color;
+    if ($significance = $entity->significance->entity) {
+      $entity->addCacheableDependency($significance);
+      $point['significance_id'] = $significance->id();
+      $point['significance'] = $significance->label();
+      // Convert cultural significance to color.
+      if ($color = $significance->field_icon_color->getValue()[0]['value']) {
+        $point['color'] = $color;
+      }
+      else {
+        $point['color'] = 'blue';
+      }
+      $point['popup'] = $this->t('<div class="category-label category-label--@color">@category</div> <em>@entity_type</em>: @label', array(
+        '@category' => $point['significance'],
+        '@entity_type' => $entity->getFriendlyLabel(),
+        '@label' => $entity->getName(),
+        '@color' => $point['color'],
+      ));
     }
     else {
-      $point['color'] = 'blue';
+      $point['popup'] = $this->t('<em>@entity_type</em>: @label', array(
+        '@entity_type' => $entity->getFriendlyLabel(),
+        '@label' => $entity->getName(),
+      ));
     }
+
+
+
     return $point;
   }
 

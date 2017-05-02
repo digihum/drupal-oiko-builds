@@ -1,5 +1,5 @@
 .footer {
-  background-color: palette(grey);
+  background-color: palette(oikoblue);
   color: #FFF;
   padding-top: $global-padding;
   padding-bottom: $global-padding;
@@ -10,29 +10,8 @@
 }
 
 .footer--lower {
-  background-color: palette(black, light);
+  background-color: palette(oikoblue);
   padding: 10px 0;
   font-size: 12px;
-  @include to('l') {
-    text-align: center;
-  }
-}
-
-@include to('l') {
-  .footer--lower__copyright {
-    margin-bottom: 10px;
-  }
-}
-
-@include from('l') {
-  .footer--lower__copyright {
-    margin-left: gutter();
-    float: left;
-  }
-
-  .footer--lower__menu {
-    margin-right: gutter();
-    float: right;
-  }
-
+  text-align: center;
 }

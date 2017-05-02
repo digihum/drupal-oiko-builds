@@ -1,142 +1,118 @@
 (function ($) {
   'use strict';
+
+  Drupal.oiko.addAppModule('temporal');
+
+  var ensureTemporalLayerGroup = function(map, drupalLeaflet, id) {
+
+    if (typeof drupalLeaflet.temporalDisplayedLayerGroups[id] === 'undefined') {
+      // We have a target layer that we want to add our feature to.
+      drupalLeaflet.temporalDisplayedLayerGroups[id] = L.featureGroup.subGroup(drupalLeaflet.mainLayer);
+      drupalLeaflet.temporalDisplayedLayerGroups[id].addTo(map);
+      // And then we have a TemporalLayerHelper that will add a remove layers to our layer group above.
+      drupalLeaflet.temporalDisplayedLayerHelpers[id] = L.temporalLayerHelper(drupalLeaflet.temporalDisplayedLayerGroups[id], {temporalRangeWindow: drupalLeaflet.timeSelectionWindowSize});
+      drupalLeaflet.temporalDisplayedLayerHelpers[id].addTo(map);
+    }
+
+    // We want our features added to the layer helpers.
+    return drupalLeaflet.temporalDisplayedLayerHelpers[id];
+  };
+
+  /**
+   * Handle the categories that the oiko App wants to display changing.
+   *
+   * We need to add and remove layers from the map as needed.
+   *
+   * @param categories
+   *   The list of category IDs to display, or if empty, display all categories.
+   */
+  var handleCatergoryChange = function(map, layers, categories) {
+    // Make sure categories are numeric.
+    var numericCategories = [];
+    for (var i = 0;i < categories.length;i++) {
+      numericCategories.push(parseInt(categories[i], 10));
+    }
+
+    if (numericCategories.length === 0) {
+      // Display all the feature groups.
+      for (i in layers) {
+        layers[i].addTo(map);
+      }
+    }
+    else {
+      var iNumeric;
+      // Walk the feature groups and hide/display as needed.
+      for (i in layers) {
+        iNumeric = parseInt(i, 10);
+        if (numericCategories.indexOf(iNumeric) > -1) {
+          // This is displayed, ensure it is.
+          layers[i].addTo(map);
+        }
+        else {
+          // This category should be hidden.
+          layers[i].removeFrom(map);
+        }
+      }
+    }
+  };
+
   $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
+
+    window.globalDrupalLeaflet = drupalLeaflet;
 
     if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
 
-      // Temporal stuff, we want a layer group to keep track of Leaflet features
-      // with temporal data.
-      drupalLeaflet.temporalDisplayedLayerGroup = L.layerGroup();
+      drupalLeaflet.timeSelectionWindowSize = 365.25 * 86400 / 2;
 
-      // Instantiate an IntervalTree to make searching for what to hide/show easier.
-      drupalLeaflet.temporalTree = new IntervalTree();
-      drupalLeaflet.temporalStart = Infinity;
-      drupalLeaflet.temporalEnd = -Infinity;
-
-      drupalLeaflet.drawOnSetTime = true;
-
-      drupalLeaflet.changeTime = function (time) {
-        time = typeof time === 'number' ? time : new Date(time).getTime();
-        this.timelineControl.changeTime(time);
-      };
-
-      drupalLeaflet.updateTime = function (time) {
-        this.time = typeof time === 'number' ? time : new Date(time).getTime();
-        if (this.drawOnSetTime) {
-          this.updateTemporalLayersTrigger();
-        }
-      };
-
-      drupalLeaflet.timelineControlDoneChanged = function (time) {
-        // Fire an event so that anyone can respond.
-        $(document).trigger('temporalShifted', [this]);
-        // And fire an event on the map.
-        map.fire('temporalShifted', this);
-      };
-
-      drupalLeaflet.getTime = function () {
-        return this.time;
-      };
-
+      // Add a timeline control to the map.
       drupalLeaflet.timelineControl = new L.TimeLineControl({
-        formatOutput: function (date) {
-          return new Date(date).toString();
-        },
-        drupalLeaflet: drupalLeaflet
+        temporalRangeWindow: drupalLeaflet.timeSelectionWindowSize
       });
+      drupalLeaflet.timelineControl.addTo(map);
 
-      // Add an extra div, and plonk the timeline widget in it.
-      drupalLeaflet.timelineControl._map = map;
-      drupalLeaflet.timelineContainerDiv = drupalLeaflet.timelineControl.onAdd(map);
-      $(drupalLeaflet.container).after(drupalLeaflet.timelineContainerDiv);
-      $(drupalLeaflet.timelineContainerDiv).hide();
-      drupalLeaflet.timelineControl.addTimeline(drupalLeaflet.temporalTree, $.proxy(drupalLeaflet.updateTime, drupalLeaflet), $.proxy(drupalLeaflet.timelineControlDoneChanged, drupalLeaflet));
+      drupalLeaflet.temporalDisplayedLayerGroups = drupalLeaflet.temporalDisplayedLayerGroups || {};
+      drupalLeaflet.temporalDisplayedLayerHelpers = drupalLeaflet.temporalDisplayedLayerHelpers || {};
 
-
-      drupalLeaflet.updateTemporalLayersTrigger = function () {
-        // Fire an event so that anyone can respond.
-        $(document).trigger('temporalShift', [this]);
-        // And fire an event on the map.
-        map.fire('temporalShift', this);
-      };
-
-      drupalLeaflet.recalculateTemporalBounds = function (min, max) {
-        drupalLeaflet.temporalStart = Math.min(drupalLeaflet.temporalStart, min);
-        drupalLeaflet.temporalEnd = Math.max(drupalLeaflet.temporalEnd, max);
-      };
-
-      drupalLeaflet.updateTemporalLayers = function () {
-        var self = this;
-
-        // Show half a year either side of our selection.
-        var offset = 365.25 * 86400 / 2;
-        // These are the features we want on our map.
-        var features = self.temporalTree.overlap(Math.floor(self.time - offset), Math.ceil(self.time + offset));
-
-        var found, layer;
-
-        // Loop through the existing features on our map.
-        for (var i = 0; i < self.temporalDisplayedLayerGroup.getLayers().length; i++) {
-          found = false;
-          layer = self.temporalDisplayedLayerGroup.getLayers()[i];
-          // Search for this layer in our set of features we do want.
-          for (var j = 0; j < features.length; j++) {
-            if (features[j] === layer) {
-              found = true;
-              features.splice(j, 1);
-              break;
-            }
-          }
-          if (!found) {
-            // We didn't find this layer, so remove it and decrement i, so we process this i again.
-            i--;
-            self.mainLayer.removeLayer(layer);
-            self.temporalDisplayedLayerGroup.removeLayer(layer);
-          }
-        }
-
-        features.forEach(function (feature) {
-          self.mainLayer.addLayer(feature);
-          self.temporalDisplayedLayerGroup.addLayer(feature);
-        });
-      };
-
-      $(document).on('temporalShift', function (e, dl) {
-        if (dl.map_definition.hasOwnProperty('search') && dl.map_definition.search) {
-          $.proxy(drupalLeaflet.updateTemporalLayers, dl)();
-        }
+      $(window).bind('set.oiko.categories', function(e, categories) {
+        handleCatergoryChange(map, drupalLeaflet.temporalDisplayedLayerGroups, categories);
+        handleCatergoryChange(map, drupalLeaflet.temporalDisplayedLayerHelpers, categories);
       });
 
       $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
         if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
           if (feature.hasOwnProperty('temporal')) {
-            // Add this feature to our special LayerGroup of currently displayed features.
-            drupalLeaflet.temporalDisplayedLayerGroup.addLayer(lFeature);
-
-            // And also add this feature to our IntervalTree, which is the record
-            // for everything that could be displayed.
-            var min = parseInt(feature.temporal.minmin, 10);
-            var max = parseInt(feature.temporal.maxmax, 10);
-            drupalLeaflet.temporalTree.insert(min, max, lFeature);
-            drupalLeaflet.recalculateTemporalBounds(min, max);
-            drupalLeaflet.timelineControl.addItem(min, max);
+            lFeature.temporal = {
+              start: parseInt(feature.temporal.minmin, 10),
+              end: parseInt(feature.temporal.maxmax, 10)
+            };
           }
+          // Add this feature to the temporal layer group.
+          ensureTemporalLayerGroup(map, drupalLeaflet, feature.significance_id ? feature.significance_id : 0).addLayer(lFeature, feature);
         }
       });
 
       $(document).on('leaflet.features', function(e, initial, drupalLeaflet) {
         if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
-          var previousTime = drupalLeaflet.getTime();
-          drupalLeaflet.timelineControl.recalculate();
-          if (previousTime) {
-            drupalLeaflet.changeTime(previousTime);
-          }
-          if (drupalLeaflet.temporalDisplayedLayerGroup.getLayers().length > 1) {
-            $(drupalLeaflet.timelineContainerDiv).show();
-          }
+          Drupal.oiko.appModuleDoneLoading('temporal');
         }
       });
 
+      // @TODO: move this to the TimelineControl.
+      drupalLeaflet.changeTimeToNearestWindow = function (window_start, window_end) {
+        var windowsize = drupalLeaflet.timeSelectionWindowSize;
+        var time = this.timelineControl.getTime();
+        var min = Math.floor(time - windowsize);
+        var max = Math.ceil(time + windowsize);
+        // If we're not overlapping, change the time by the smallest amount.
+        if (!(window_start <= max && window_end >= min)) {
+          if (window_start > max) {
+            this.timelineControl.setTime(window_start - windowsize + 1);
+          }
+          else {
+            this.timelineControl.setTime(window_end + windowsize - 1);
+          }
+        }
+      };
 
       // Search support.
       if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search || drupalLeaflet.map_definition.hasOwnProperty('sidebar') && drupalLeaflet.map_definition.sidebar) {
@@ -144,13 +120,14 @@
 
         // Build up a lovely map of Drupal feature id to a timestamp.
         $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
+          var id;
           if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search || drupalLeaflet.map_definition.hasOwnProperty('sidebar') && drupalLeaflet.map_definition.sidebar) {
             if (feature.hasOwnProperty('id') && feature.id) {
+              var id = parseInt(feature.id, 10);
               if (feature.hasOwnProperty('temporal')) {
-                var min = parseInt(feature.temporal.minmin, 10);
-                var max = parseInt(feature.temporal.maxmax, 10);
                 featureCache[feature.id] = {
-                  time: Math.round((min + max) * 0.5)
+                  min: parseInt(feature.temporal.minmin, 10),
+                  max: parseInt(feature.temporal.maxmax, 10)
                 };
               }
             }
@@ -158,25 +135,28 @@
         });
 
         // Listen for the searchItem event on the map, used when someone selects an item for searching.
-        map.addEventListener('searchItem', function (e) {
-          var id = e.properties.id;
+        $(window).bind('selected.map.searchitem', function (e, id) {
           if (featureCache.hasOwnProperty(id)) {
-            if (featureCache[id].hasOwnProperty('time')) {
-              drupalLeaflet.changeTime.call(drupalLeaflet, featureCache[id].time);
+            if (featureCache[id].hasOwnProperty('min') && featureCache[id].hasOwnProperty('max')) {
+              drupalLeaflet.changeTimeToNearestWindow.call(drupalLeaflet, featureCache[id].min, featureCache[id].max);
             }
           }
         });
 
         // Listen for the sidebar being opened, and ensure that our time is correct.
-        $(window).bind('oikoSidebarOpen', function(e, id) {
+        $(window).bind('oikoSidebarOpening', function(e, id) {
+          var id = parseInt(id, 10);
           if (featureCache.hasOwnProperty(id)) {
-            if (featureCache[id].hasOwnProperty('time')) {
-              drupalLeaflet.changeTime.call(drupalLeaflet, featureCache[id].time);
+            if (featureCache[id].hasOwnProperty('min') && featureCache[id].hasOwnProperty('max')) {
+              drupalLeaflet.changeTimeToNearestWindow.call(drupalLeaflet, featureCache[id].min, featureCache[id].max);
             }
           }
         });
 
       }
+    }
+    else {
+      Drupal.oiko.appModuleDoneLoading('temporal');
     }
   });
 

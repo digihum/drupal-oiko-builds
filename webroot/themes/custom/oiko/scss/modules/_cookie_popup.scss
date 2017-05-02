@@ -1,0 +1,25 @@
+#sliding-popup .popup-content #popup-text {
+  margin-top: 39px;
+}
+#sliding-popup .popup-content #popup-buttons {
+  margin: 15px 0 30px 0;
+}
+
+#sliding-popup .popup-content #popup-buttons button {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  font-family: inherit;
+  text-shadow: none;
+  background: inherit;
+  background-color: palette(oikotan);
+  color: #FFF;
+  padding: 0.85em 1em;
+  border: 2px solid  palette(oikotan);
+}
+
+#sliding-popup .popup-content #popup-buttons button:hover {
+  background: none;
+  background-color: transparent;
+}

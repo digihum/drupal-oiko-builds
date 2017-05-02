@@ -1,5 +1,11 @@
 <?php
+use Drupal\Core\Block\MainContentBlockPluginInterface;
+use Drupal\Core\Block\MessagesBlockPluginInterface;
+use Drupal\Core\Block\TitleBlockPluginInterface;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\block\Entity\Block;
+use Drupal\Core\Url;
+use Drupal\views\Views;
 
 /**
  * Implements theme_preprocess().
@@ -57,6 +63,62 @@ function oiko_preprocess_node(&$variables) {
   }
 }
 
+function oiko_preprocess_taxonomy_term(&$variables) {
+  /** @var \Drupal\taxonomy\TermInterface $term */
+  $term = $variables['term'];
+  $view_mode = $variables['view_mode'];
+
+  if ($view_mode == 'primary_historical_significance_pill') {
+    $variables['attributes']['class'][] = 'category-label';
+    if ($color = $term->field_icon_color->getValue()[0]['value']) {
+      $variables['attributes']['class'][] = 'category-label--' . $color;
+    }
+    else {
+      $variables['attributes']['class'][] = 'category-label--blue';
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - node: The node object.
+ *   - view_mode: View mode; e.g., 'full', 'teaser', etc.
+ */
+function oiko_preprocess_page(&$variables) {
+  if (\Drupal::request()->get('display') === 'iframe') {
+    $variables['page']['content']['#attached']['library'][] = 'oiko/iframepage';
+    $variables['page']['highlighted']['#attributes']['class'][] = 'js-no-process';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - node: The node object.
+ *   - view_mode: View mode; e.g., 'full', 'teaser', etc.
+ */
+function oiko_preprocess_html(&$variables) {
+  // Set the default to just showing the map.
+  if ($view = \Drupal::request()->get('view')) {
+    $view = $view == 'map' ? 'map' : 'timeline';
+  }
+  else {
+    $view = 'map';
+  }
+  $variables['attributes']['class'][] = 'showing-' . $view;
+
+  if (\Drupal::request()->get('display') !== 'iframe') {
+    $variables['attributes']['class'][] = 'layout-flex';
+  }
+}
+
 /**
  * Implements hook_preprocess_HOOK().
  *
@@ -95,6 +157,47 @@ function oiko_preprocess_block(&$variables) {
   if ($variables['plugin_id'] === 'local_tasks_block') {
     $variables['attributes']['class'][] = 'tabs-wrapper';
   }
+  if ($variables['plugin_id'] === 'main_cidoc_search') {
+    $variables['attributes']['class'][] = 'main-search-outer-wrapper';
+  }
+  if ($variables['plugin_id'] === 'event_basket') {
+    // These were causing bugs.
+    unset($variables['title_suffix']['contextual_links']);
+  }
+  if ($variables['plugin_id'] === 'webform_block') {
+    // These were causing bugs.
+    unset($variables['title_suffix']['contextual_links']);
+  }
+  if (isset($variables['base_plugin_id']) && $variables['base_plugin_id'] === 'block_content') {
+    if (isset($variables['content']['#block_content']) && $variables['content']['#block_content']->bundle() === 'modal_welcome') {
+      $variables['attributes']['class'][] = 'reveal';
+      $variables['attributes']['data-reveal'] = '';
+      // Add the JavaScript to auto-pop.
+      $variables['attributes']['class'][] = 'js-modal-welcome';
+      $variables['content']['#attached']['library'][] = 'oiko/modal-welcome';
+      $variables['content']['#attached']['library'][] = 'tour/tour';
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for form templates.
+ */
+function oiko_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  // Add a template suggestion for user header blocks.
+  if (!empty($variables['elements']['#id'])) {
+    $block = Block::load($variables['elements']['#id']);
+    if ($block->getRegion() == 'user_header') {
+      $suggestions[] = 'block__' . $block->getRegion();
+      $suggestions[] = 'block__' . $block->getRegion() . '__' . $variables['elements']['#id'];
+    }
+  }
+  // Add a template suggestion for modal welcome blocks.
+  if (isset($variables['elements']['#base_plugin_id']) && $variables['elements']['#base_plugin_id'] === 'block_content') {
+    if (isset($variables['elements']['content']['#block_content']) && $variables['elements']['content']['#block_content']->bundle() === 'modal_welcome') {
+      array_unshift($suggestions, 'block__modal');
+    }
+  }
 }
 
 /**
@@ -111,7 +214,74 @@ function oiko_preprocess_cidoc_entity(array &$variables) {
   if ($variables['elements']['#view_mode'] == 'inline_field') {
     $variables['attributes']['class'][] = 'cidoc-entity--inline';
   }
+  if (isset($variables['content']['cidoc_admin_links'])) {
+    $variables['content']['cidoc_admin_links']['#attributes']['class'][] = 'button-group';
+    foreach ($variables['content']['cidoc_admin_links']['#items'] as $index => $v) {
+      $variables['content']['cidoc_admin_links']['#items'][$index]['#attributes']['class'][] = 'button';
+    }
+  }
+  if ($variables['elements']['#view_mode'] === 'popup') {
+    // Add the discussions view to the popup.
+    $view = Views::getView('discussions_listing');
+    $view->setArguments([]);
+//    $variables['discussion_panel'] = $view->render();
 
+    $variables['discussion_panel'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'iframe',
+      '#attributes' => [
+        'src' => Url::fromUri('internal:/iframe/discussions/' . $variables['elements']['#cidoc_entity']->id(), ['query' => ['display' => 'iframe']])->toString(),
+        'frameborder' => 0,
+        'class' => [
+          'discussion-iframe',
+        ],
+//        'scrolling' => 'no',
+      ],
+    ];
+
+    // Add the sidebar share region to the popup.
+    $build = [
+      '#cache' => [
+        'tags' => \Drupal::service('entity.manager')
+          ->getDefinition('block')
+          ->getListCacheTags(),
+      ],
+    ];
+    $blockViewBuilder = \Drupal::service('entity.manager')
+      ->getViewBuilder('block');
+    // Load all region content assigned via blocks.
+    $cacheable_metadata_list = [];
+    $regions = \Drupal::service('block.repository')
+      ->getVisibleBlocksPerRegion($cacheable_metadata_list);
+    if (isset($regions['sidebar_share'])) {
+      foreach ($regions['sidebar_share'] as $key => $block) {
+        $block_plugin = $block->getPlugin();
+        if ($block_plugin instanceof MainContentBlockPluginInterface) {
+          continue;
+        }
+        elseif ($block_plugin instanceof TitleBlockPluginInterface) {
+          continue;
+        }
+        elseif ($block_plugin instanceof MessagesBlockPluginInterface) {
+          continue;
+        }
+        $build[$key] = $blockViewBuilder->view($block);
+      }
+    }
+    $merged_cacheable_metadata = CacheableMetadata::createFromRenderArray($build);
+    foreach ($cacheable_metadata_list as $cacheable_metadata) {
+      $merged_cacheable_metadata = $merged_cacheable_metadata->merge($cacheable_metadata);
+    }
+    $merged_cacheable_metadata->applyTo($build);
+
+    $share_links = [
+      'title' => [
+        '#markup' => '<p>Use the buttons below to share a link straight to this point in history!</p>',
+      ],
+      'block' => $build,
+    ];
+    $variables['share_panel'] = $share_links;
+  }
 }
 
 /**
@@ -122,8 +292,18 @@ function oiko_theme_suggestions_page_alter(array &$suggestions, array $variables
   if ($match->getRouteName() == 'entity.cidoc_entity.canonical') {
     array_unshift($suggestions, 'page__bare');
   }
-  if ($match->getRouteName() == 'oiko_timeline.comparative_timeline_controller_basePage') {
+  if (\Drupal::service('path.matcher')->isFrontPage()) {
     array_unshift($suggestions, 'page__bare');
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for form templates.
+ */
+function oiko_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables) {
+  if (isset($variables['elements']['#view_mode'])) {
+    $suggestions[] = 'taxonomy_term__' . $variables['elements']['#view_mode'];
+    $suggestions[] = $suggestions[0] . '__' . $variables['elements']['#view_mode'];
   }
 }
 

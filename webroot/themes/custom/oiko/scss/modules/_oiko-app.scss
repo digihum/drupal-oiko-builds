@@ -1,0 +1,52 @@
+.oiko-app {
+  position: relative;
+
+  & >.oiko-app--loader {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 10000;
+    background-color: rgba(palette(oikogrey), 0.5);
+
+    &::after {
+      content: "Firing up the history engines...";
+      top: 48%;
+      left: 0;
+      right: 0;
+      text-align: center;
+      position: absolute;
+      font-size: 2.5em;
+    }
+  }
+}
+
+// Displaying the map, make appropriate changes.
+.showing-map {
+  .oiko-app--toggle .toggle-to-map {
+    display: none;
+  }
+  
+  .oiko-app--timeline {
+    display: none;
+  }
+}
+
+
+// Displaying the timeline, make appropriate changes.
+.showing-timeline {
+  .oiko-app--toggle .toggle-to-timeline {
+    display: none;
+  }
+
+  .oiko-app--map {
+    display: none;
+  }
+}
+
+.page--scroll {
+  .oiko-app--toggle {
+    display: none;
+  }
+}

@@ -12,3 +12,5 @@ permissions:
   - 'access comments'
   - 'view sharemessages'
   - 'display eu cookie compliance popup'
+  - 'use browsersync'
+  - 'access tour'

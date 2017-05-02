@@ -1,3 +1,44 @@
-.tabs-title {
-  text-transform: uppercase;
+.tabs.vertical {
+  border: none;
+}
+
+.tabs {
+  margin-bottom: $global-margin;
+}
+
+.tabs .tabs-title a {
+  text-decoration: none;
+
+  border-bottom: 3px solid transparent;
+
+  &:focus,
+  &[aria-selected='true'] {
+    color: $body-font-color;
+    border-bottom: 3px solid palette(oikogrey);
+  }
+
+  &:hover {
+    color: $body-font-color;
+    border-bottom: 3px solid palette(oikogreen);
+  }
+}
+
+.tabs.vertical .tabs-title {
+  border-bottom: 1px solid $light-gray;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  > a {
+    padding: 1.25rem 1.5rem;
+    &:hover {
+      border-bottom-color: transparent;
+    }
+
+    &:focus,
+    &[aria-selected='true'] {
+      border-bottom-color: transparent;
+    }
+  }
 }

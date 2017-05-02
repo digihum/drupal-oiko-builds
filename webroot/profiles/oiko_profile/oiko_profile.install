@@ -139,3 +139,84 @@ function oiko_profile_update_8114() {
 function oiko_profile_update_8115() {
   \Drupal::service('module_installer')->install(['eu_cookie_compliance']);
 }
+
+/**
+ * Enable the tour modules.
+ */
+function oiko_profile_update_8117() {
+  \Drupal::service('module_installer')->install(['oiko_app']);
+}
+
+/**
+ * Enable the tour modules.
+ */
+function oiko_profile_update_8118() {
+  \Drupal::service('module_installer')->install(['tour', 'tour_ui']);
+}
+
+/**
+ * Enable the Custom block module.
+ */
+function oiko_profile_update_8119() {
+  \Drupal::service('module_installer')->install(['block_content']);
+}
+
+/**
+ * Enable the Custom block module.
+ */
+function oiko_profile_update_8120() {
+  $block = \Drupal\block_content\Entity\BlockContent::create([
+    'type' => 'modal_welcome',
+    'info' => 'modal_welcome',
+    'body' => [
+      'value' => '<p>Welcome to Oiko.</p><p>This will be the tour block.</p>',
+      'format' => 'basic_html',
+    ],
+    'uuid' => 'block-oiko-welcome_tour',
+  ]);
+  $block->save();
+}
+
+/**
+ * Enable the Dynamic page cache module.
+ */
+function oiko_profile_update_8121() {
+  \Drupal::service('module_installer')->install(['dynamic_page_cache']);
+}
+
+/**
+ * Tweak the site config.
+ */
+function oiko_profile_update_8122() {
+  $system_site = \Drupal::configFactory()->getEditable('system.site');
+  $system_site->set('page.front', '/oiko_app/app');
+  $system_site->save();
+}
+
+/**
+ * Enable the Custom Menu Links module.
+ */
+function oiko_profile_update_8123() {
+  \Drupal::service('module_installer')->install(['menu_ui']);
+}
+
+/**
+ * Enable the Webform module.
+ */
+function oiko_profile_update_8124() {
+  \Drupal::service('module_installer')->install(['webform', 'webform_ui']);
+}
+
+/**
+ * Enable the honeypot module.
+ */
+function oiko_profile_update_8125() {
+  \Drupal::service('module_installer')->install(['honeypot']);
+}
+
+/**
+ * Enable the event basket module.
+ */
+function oiko_profile_update_8126() {
+  \Drupal::service('module_installer')->install(['oiko_event_basket']);
+}

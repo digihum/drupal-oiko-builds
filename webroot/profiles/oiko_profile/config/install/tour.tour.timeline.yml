@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_app
+id: timeline
+label: Timeline
+module: oiko_app
+routes:
+  -
+    route_name: oiko_app.app
+tips:
+  first-tip:
+    id: first-tip
+    plugin: text
+    label: 'First tip'
+    weight: -100
+    attributes: {  }
+    body: 'THis is the first tip of the tour'
+    location: ''
+    next_label: ''
+    previous_label: ''

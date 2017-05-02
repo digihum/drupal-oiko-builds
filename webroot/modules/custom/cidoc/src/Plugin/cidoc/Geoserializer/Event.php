@@ -19,13 +19,16 @@ class Event extends GeoserializerPluginBase {
     $points = [];
     // Try and fetch the geodata from the related places.
 
-    $place_entities = $entity->getForwardReferences(['p7_took_place_at']);
+    $place_entities = $entity->getForwardReferencedEntities(['p7_took_place_at']);
     foreach ($place_entities as $place_entity) {
       $values = [];
-      foreach ($place_entity->field_geodata->getValue() as $value) {
-        $values[] = $value['value'];
+      if ($place_entity->field_geodata->count()) {
+        $entity->addCacheableDependency($place_entity);
+        foreach ($place_entity->field_geodata->getValue() as $value) {
+          $values[] = $value['value'];
+        }
+        $points = array_merge($points, leaflet_process_geofield($values));
       }
-      $points = array_merge($points, leaflet_process_geofield($values));
     }
 
     // Add labels to the points.

@@ -10,33 +10,26 @@
     if (mapDefinition.sidebar && Drupal.oiko.hasOwnProperty('sidebar')) {
       drupalLeaflet.hasSidebar = true;
 
-      // Check to see if we need to open the sidebar immediately.
-      $(document).once('oiko_leaflet__popups').each(function () {
-        if (drupalSettings.hasOwnProperty('oiko_leaflet') && drupalSettings.oiko_leaflet.hasOwnProperty('popup') && drupalSettings.oiko_leaflet.popup) {
-          // We might need to wait for everything we need to be loaded.
-          $(window).bind('load', function() {
-            Drupal.oiko.openSidebar(drupalSettings.oiko_leaflet.popup.id, drupalSettings.oiko_leaflet.popup.label, false);
-          });
-        }
-        else {
-          // We need to open the sidebar on wide screens.
-          if (window.matchMedia('(min-width: 641px)').matches) {
-            $(window).bind('load', function() {
-              Drupal.oiko.openSidebarLegend();
-            });
+      $(window).bind('selected.map.searchitem selected.timeline.searchitem', function (e, id) {
+        var id = parseInt(id, 10);
+        Drupal.oiko.openSidebar(id);
+      });
+
+      $(window).bind('oikoSidebarOpening', function (e, id) {
+        if (featureCache.hasOwnProperty(id)) {
+          if (!map.getBounds().contains(featureCache[id])) {
+            map.panInsideBounds(featureCache[id]);
           }
         }
       });
 
-      map.addEventListener('searchItem', function(e) {
-        var id = e.properties.id;
-        var title = e.properties.title;
-        Drupal.oiko.openSidebar(id, title, true);
-      });
-
-      $(window).bind('oikoSidebarOpen', function(e, id) {
-        if (featureCache.hasOwnProperty(id)) {
-          map.panInsideBounds(featureCache[id], {animate: false});
+      // Check to see if we need to open the sidebar immediately.
+      $(document).once('oiko_leaflet__popups').each(function () {
+        if (drupalSettings.hasOwnProperty('oiko_leaflet') && drupalSettings.oiko_leaflet.hasOwnProperty('popup') && drupalSettings.oiko_leaflet.popup) {
+          // We might need to wait for everything we need to be loaded.
+          $(window).bind('load', function () {
+            Drupal.oiko.openSidebar(drupalSettings.oiko_leaflet.popup.id);
+          });
         }
       });
     }
@@ -44,9 +37,14 @@
 
   $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
     if (drupalLeaflet.hasSidebar) {
-      // Remove the popup.
+      // Remove the popup and add it back as a tooltip.
       if (typeof lFeature.unbindPopup !== 'undefined') {
         lFeature.unbindPopup();
+      }
+      if (feature.popup) {
+        // If this is a point, then we want the tooltip to not move around.
+        var sticky = feature.type !== 'point';
+        lFeature.bindTooltip(feature.popup, {direction: 'bottom', opacity: 1, sticky: sticky});
       }
 
       // Store away the bounds of the feature.
@@ -55,12 +53,12 @@
       }
       else if (typeof lFeature.getLatLng !== 'undefined') {
         var center = lFeature.getLatLng();
-        featureCache[feature.id] = leafletLatLngToBounds(center, 1000 * 30);
+        featureCache[feature.id] = leafletLatLngToBounds(center, 1000);
       }
 
       // Add a click event that opens our marker in the sidebar.
       lFeature.on('click', function () {
-        Drupal.oiko.openSidebar(feature.id, feature.label, true);
+        Drupal.oiko.openSidebar(feature.id);
       });
     }
   });
@@ -78,6 +76,56 @@
         [latlng.lat - latAccuracy, latlng.lng - lngAccuracy],
         [latlng.lat + latAccuracy, latlng.lng + lngAccuracy]);
     }
+  };
+
+  Drupal.behaviors.oiko_iframe_container = {
+    attach: function(context) {
+      $('.discussion-iframe', context).once('oiko_iframe_container').each(function() {
+        var $this = $(this);
+        $this.iFrameResize({
+          log: false,
+          heightCalculationMethod: 'taggedElement',
+          messageCallback: Drupal.oiko.iframeMessageCallback($this)
+        });
+      });
+    }
+  };
+
+
+  Drupal.oiko.iframeMessageCallback = function (container) {
+    var $sidebar = $(container).closest('.sidebar-content');
+    return function(e) {
+      var iframe = e.iframe;
+      var message = e.message;
+      if (typeof message.type !== 'undefined') {
+        switch (message.type) {
+          case 'scrolltop':
+            // Scroll the container to the right place.
+            $sidebar.scrollTop(0);
+            break;
+
+          case 'cidoc_link':
+            if (typeof message.id !== 'undefined') {
+              // Fire an event to open the sidebar.
+              if (Drupal.oiko.openSidebar) {
+                Drupal.oiko.openSidebar(message.id);
+              }
+            }
+            break;
+
+          case 'messages':
+            if (typeof message.messages !== 'undefined') {
+              // Remove previous messages
+              $('#highlighted-child').remove();
+              var $highlighted = $('<div>').addClass('reveal js-highlighted-reveal').attr('data-reveal', 'true').attr('id', 'highlighted-child');
+              $('body').append($highlighted);
+              $highlighted.append(message.messages);
+              Drupal.attachBehaviors($highlighted.parent().get(0));
+            }
+            break;
+        }
+      }
+    };
   }
 
 })(jQuery);

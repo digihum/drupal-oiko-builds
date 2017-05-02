@@ -1,0 +1,6 @@
+oiko_app.app:
+  path: '/oiko_app/app'
+  defaults:
+    _controller: '\Drupal\oiko_app\Controller\AppPageController::app'
+  requirements:
+    _permission: 'view published cidoc entities'

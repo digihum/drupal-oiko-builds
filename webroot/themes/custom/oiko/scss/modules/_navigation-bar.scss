@@ -1,29 +1,55 @@
 .navigation-bar {
-  background-color: palette(grey);
+  background-color: palette(oikoblue);
   color: #FFF;
-  padding-top: $global-padding;
-  padding-bottom: $global-padding;
+  padding: $global-padding;
+
+  line-height: 2em;
 
   a {
     text-decoration: none;
   }
   text-align: center;
-  border-bottom: 5px solid palette(tan);
+  text-transform: lowercase;
 }
 
-.navigation-bar--center {
-
-  text-transform: uppercase;
-  display: inline-block;
-  background: url('../images/globe.png') no-repeat left center;
-  padding-left: 40px;
-  background-size: 28px;
-
-  @include from('m') {
-    padding-left: 45px;
-    background-size: 35px;
+.site-slogan {
+  text-align: center;
+  line-height: 24px;
+  .first {
+    font-size: 36px;
+  }
+  .second {
+    font-size: 24px;
   }
 
+}
 
+// Mobile
+.navigation-bar--mobile {
+  padding-bottom: 0;
+  .site-slogan {
+    float: left;
+  }
+  .navigation-bar--tabs {
+    float: right;
+    margin: 0;
+    .tabs-title {
+      > a {
+        padding: 0.5rem 1rem 28px 1rem;
+        border: none;
+        &:hover,
+        &:focus,
+        &[aria-selected='true'] {
+          border: none;
+        }
+      }
+    }
+  }
+}
 
+.navigation-bar--mobile-reveal {
+  .icon-links {
+    justify-content: center;
+    color: palette(black);
+  }
 }

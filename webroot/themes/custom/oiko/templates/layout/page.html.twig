@@ -43,21 +43,45 @@
  * @see html.html.twig
  */
 #}
-{% include directory ~ '/templates/layout/header.html.twig' %}
-<div id="main" role="main" class="clearfix l-main-content">
-    <div class="l-content-grid-container">
-        <div class="layout-content">
-        {{ page.primary_menu }}
-        {{ page.secondary_menu }}
-        {{ page.breadcrumb }}
-        {{ page.highlighted }}
-        {{ page.help }}
-        </div>{# /.layout-content #}
-        <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
-        <div class="layout-content">
-            {{ page.content }}
-        </div>{# /.layout-content #}
+<div id="main" role="main" class="clearfix l-main page--scroll">
+    <div class="l-sidebar oiko-sidebar">
+        <div class="l-sidebar-upper">
+            {% include directory ~ '/templates/layout/header.html.twig' %}
+            {{ page.sidebar_upper }}
+            <ul class="sidebar-tabs tabs vertical">
+                <li class="tabs-title"><a href="#" data-pane-id="main-menu"><i class="fa fa-bars" title="Main menu"></i></a></li>
+                <li class="tabs-title"><a href="#" data-pane-id="legend" class="js-legend-tab-link disabled"><i class="fa fa-filter" title="Legend"></i></a></li>
+                <li class="tabs-title"><a href="#" data-pane-id="information" class="disabled"><i class="fa fa-map-marker" title="Information"></i></a></li>
+            </ul>
+        </div>
+        <div class="l-sidebar-lower">
+            {{ page.sidebar_lower }}
+            {% include directory ~ '/templates/layout/footer.html.twig' %}
+        </div>
+    </div>
+    <div class="l-content-container">
+        <div class="l-content-header">
+            <div></div>
+            {{ page.user_header }}
+        </div>
+        <div class="l-main-content">
+            <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+            {% include directory ~ '/templates/layout/sidebar-content.html.twig' %}
+
+            <div class="oiko-app">
+                <div class="page-scroll-container">
+                    <main role="main" class="l-content-grid-container">
+                        <div class="l-full">
+                            {{ page.breadcrumb }}
+
+                            {{ page.highlighted }}
+
+                            <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+                            {{ page.content }}
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
     </div>
 </div><!-- #main -->
-{% include directory ~ '/templates/layout/footer.html.twig' %}
-
