@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_app
+  theme:
+    - oiko
+id: maincidocsearchmobile
+theme: oiko
+region: mobile_search_header
+weight: 0
+provider: null
+plugin: main_cidoc_search
+settings:
+  id: main_cidoc_search
+  label: 'Main cidoc search'
+  provider: oiko_app
+  label_display: '0'
+  placeholder_map: null
+  no_search_map: null
+  placeholder_timeline: null
+  no_search_timeline: null
+  no_results_text: 'No results found.'
+  searching_text: 'Searching through known space and time...'
+visibility: {  }

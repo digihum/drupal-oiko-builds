@@ -114,8 +114,12 @@ cm_config_tools:
     - tour.tour.map
     - tour.tour.timeline
   managed:
+    - block.block.discussionnotificationsblock
+    - block.block.discussionnotificationsblock_mobile
     - block.block.feedback
+    - block.block.feedback_mobile
     - block.block.maincidocsearch
+    - block.block.maincidocsearchmobile
     - block.block.mainnavigation
     - block.block.maplegendblock
     - block.block.oiko_account_menu
@@ -123,6 +127,7 @@ cm_config_tools:
     - block.block.oiko_breadcrumbs
     - block.block.oiko_content
     - block.block.oiko_event_basket
+    - block.block.oiko_event_basket_mobile
     - block.block.oiko_footer
     - block.block.oiko_help
     - block.block.oiko_local_actions
@@ -132,7 +137,6 @@ cm_config_tools:
     - block.block.oiko_page_title
     - block.block.oiko_powered
     - block.block.oiko_tools
-    - block.block.discussionnotificationsblock
     - block.block.sharemessage
     - block.block.sharemessage_2
     - block.block.welcomeblock
@@ -717,6 +721,7 @@ cm_config_tools:
     - views.view.important_events
     - views.view.important_people
     - views.view.map_of_places_people_went
+    - views.view.my_discussions
     - views.view.p108_produced_object
     - views.view.p11_has_participant
     - views.view.p12_occurred_in_the_presence_of
@@ -732,7 +737,6 @@ cm_config_tools:
     - views.view.p99_dissov_group
     - views.view.timeline
     - webform.webform.feedback
-    - views.view.my_discussions
   delete:
     - views.view.all_events
     - views.view.appelations
