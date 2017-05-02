@@ -111,8 +111,6 @@ cm_config_tools:
     - system.menu.admin
     - system.menu.main
     - system.menu.tools
-    - tour.tour.map
-    - tour.tour.timeline
   managed:
     - block.block.discussionnotificationsblock
     - block.block.discussionnotificationsblock_mobile
@@ -707,6 +705,8 @@ cm_config_tools:
     - taxonomy.vocabulary.mode
     - taxonomy.vocabulary.role
     - taxonomy.vocabulary.source_books
+    - tour.tour.map
+    - tour.tour.timeline
     - user.role.anonymous
     - user.role.authenticated
     - user.role.content_editor

@@ -16,10 +16,10 @@ settings:
   label: 'Main cidoc search'
   provider: oiko_app
   label_display: '0'
-  placeholder_map: null
-  no_search_map: null
-  placeholder_timeline: null
-  no_search_timeline: null
+  placeholder_map: 'Search events'
+  no_search_map: 'Search for events, people, groups, places or objects e.g. ''The battle of Milvian Bridge'' or ''the Xiongnu''.'
+  placeholder_timeline: 'Search groups and people'
+  no_search_timeline: 'Search for communities, empires or groups to compare on your timeline e.g. ''The Roman Empire'' or ''the Han''.'
   no_results_text: 'No results found.'
   searching_text: 'Searching through known space and time...'
 visibility: {  }
