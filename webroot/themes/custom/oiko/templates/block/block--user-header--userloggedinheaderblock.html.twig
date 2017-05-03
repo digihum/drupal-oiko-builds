@@ -29,7 +29,7 @@
     {{ title_prefix }}
     {% if label %}
         <a{{ title_attributes.addClass(['icon-links__link']).setAttribute('data-toggle', attributes.id ) }}>
-            <i class="fa fa-user-circle"></i>
+            <span class="user-header--profile-icon">{{  content.profile_pic }}</span>
             <span class="show-for-sr">{{ label }}</span>
         </a>
     {% endif %}
@@ -38,7 +38,7 @@
         <h3>{{ label }}</h3>
 
         {% block content %}
-            {{ content }}
+            {{ content|without('profile_pic') }}
         {% endblock %}
     </div>
 </li>

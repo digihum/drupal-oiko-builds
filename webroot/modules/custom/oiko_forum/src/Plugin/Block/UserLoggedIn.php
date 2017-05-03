@@ -70,8 +70,18 @@ class UserLoggedIn extends BlockBase {
     if (\Drupal::currentUser()->isAuthenticated()) {
 
       $profile_form = \Drupal::entityManager()->getFormObject('user', 'default');
-      $entity = \Drupal::entityTypeManager()->getStorage('user')->load(\Drupal::currentUser()->id());
-      $profile_form->setEntity($entity);
+      $account = \Drupal::entityTypeManager()->getStorage('user')->load(\Drupal::currentUser()->id());
+      $profile_form->setEntity($account);
+
+      // Need to
+      $block['profile_pic'] = $account->user_picture->view([
+        'type' => 'image',
+        'settings' => [
+          'image_style' => 'thumbnail',
+          'image_link' => FALSE,
+        ],
+        'label' => 'hidden',
+      ]);
 
       $block['profile_form'] = \Drupal::formBuilder()->getForm($profile_form);
       // Instead of setting an actual action URL, we set the placeholder, which
