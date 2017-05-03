@@ -39,6 +39,8 @@ function oiko_leaflet_library_info_alter(array &$libraries, $module) {
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/locate';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/zoomControl';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/loading';
+    $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/leaflet.pattern';
+
   }
 
   if ($module === 'oiko_leaflet' && isset($libraries['icons'])) {
