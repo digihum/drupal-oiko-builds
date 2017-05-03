@@ -41,6 +41,14 @@
         &:focus,
         &[aria-selected='true'] {
           border: none;
+          background: none;
+        }
+        &:not(.oiko-app--toggle) {
+          &:hover,
+          &[aria-selected='true'] {
+            background: palette(oikocream);
+            color: palette(black);
+          }
         }
       }
     }
