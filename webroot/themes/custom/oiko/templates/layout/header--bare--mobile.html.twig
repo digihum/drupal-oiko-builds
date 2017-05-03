@@ -2,18 +2,23 @@
     <div class="navigation-bar--center site-slogan heading-style-h1"><a href="/"><span class="first">Oiko</span><br><span class="second">.world</span></a></div>
     <ul class="navigation-bar--tabs sidebar-tabs tabs horizontal">
         <li class="tabs-title"><a href="#" data-pane-id="main-menu"><i class="fa fa-bars" title="Main menu"></i></a></li>
-        <li class="tabs-title"><a href="#" data-pane-id="legend" class="disabled"><i class="fa fa-filter" title="Legend"></i></a></li>
+        <li class="tabs-title"><a href="#" data-pane-id="legend"><i class="fa fa-filter" title="Legend"></i></a></li>
         <li class="tabs-title"><a href="#" data-pane-id="information" class="disabled"><i class="fa fa-map-marker" title="Information"></i></a></li>
-        <li class="tabs-title"><a href="#" data-pane-id="search" class="disabled"><i class="fa fa-search" title="Search"></i></a></li>
+        <li class="tabs-title"><a href="#" data-pane-id="search" ><i class="fa fa-search" title="Search"></i></a></li>
         {% if logged_in %}
             <li class="tabs-title"><a href="#" data-pane-id="user"><i class="fa fa-user-circle" title="User"></i></a></li>
         {% else %}
             <li class="tabs-title"><a href="#" data-pane-id="user"><i class="fa fa-user-circle" title="User"></i></a></li>
         {% endif %}
-        <li class="tabs-title"><a href="#" class="disabled"><i class="fa fa-map-o" title="Map"></i></a></li>
+        <li class="tabs-title"><a href="#" class="js-oiko-app--toggle oiko-app--toggle"><span class="toggle-to-map"><i class="fa fa-map-o"></i></span><span class="toggle-to-timeline"><i class="fa fa-tasks"></i></span></a></li>
     </ul>
 </header>
 <div class="navigation-bar--mobile-reveal sidebar-content">
+    <div class="sidebar-pane" data-pane-id="search">
+        <div class="l-content-header-search--mobile" data-pane-id="information">
+            {{ page.mobile_search_header }}
+        </div>
+    </div>
     <div class="sidebar-pane" data-pane-id="user">
         <div class="l-content-header-user--mobile">
             {{ page.mobile_user_header }}
