@@ -12,6 +12,9 @@
   i.fa {
     font-size: $sidebar-icon-font-size;
     line-height: $sidebar-icon-line-height;
+    @include to('s') {
+      font-size: $sidebar-icon-font-size - 0.2rem;
+    }
   }
 
   a {
