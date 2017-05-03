@@ -45,7 +45,7 @@
   padding: 25px;
   width: 40%;
   @include to('s') {
-    width: 100%;
+    width: 100% !important;
   }
   border: none;
   border-top: 5px solid palette(oikoblue);

@@ -101,6 +101,11 @@
   .sidebar-pane {
     display: none;
     position: relative;
+    @include to('s') {
+      &.with-padding {
+        padding: 20px;
+      }
+    }
     &.is-active {
       display: block;
     }
