@@ -204,6 +204,9 @@ function oiko_theme_suggestions_block_alter(array &$suggestions, array $variable
     if ($variables['elements']['#id'] == 'oiko_event_basket_mobile') {
       array_unshift($suggestions, 'block__user_header__oiko_event_basket');
     }
+    if ($variables['elements']['#id'] == 'discussionnotificationsblock_mobile') {
+      array_unshift($suggestions, 'block__user_header__discussionnotificationsblock');
+    }
 
   }
   // Add a template suggestion for modal welcome blocks.
