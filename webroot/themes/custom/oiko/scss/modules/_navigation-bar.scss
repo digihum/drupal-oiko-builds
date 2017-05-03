@@ -44,7 +44,6 @@
           background: none;
         }
         &:not(.oiko-app--toggle) {
-          &:hover,
           &[aria-selected='true'] {
             background: palette(oikocream);
             color: palette(black);
