@@ -29,10 +29,10 @@
         title: title,
         timestamp: new Date().getTime()
       };
-      event_history.setItem(id, item).then(redraw_history);
+      event_history.setItem('' + id, item).then(redraw_history);
     },
     remove: function(id) {
-      event_history.removeItem(id).then(redraw_history);
+      event_history.removeItem('' + id).then(redraw_history);
     }
   };
 

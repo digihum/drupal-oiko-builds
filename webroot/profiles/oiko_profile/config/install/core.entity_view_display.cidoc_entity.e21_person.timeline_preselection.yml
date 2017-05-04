@@ -13,6 +13,10 @@ targetEntityType: cidoc_entity
 bundle: e21_person
 mode: timeline_preselection
 content:
+  'cidoc_properties:range:p143_joined':
+    weight: 21
+  'cidoc_properties:range:p145_separated':
+    weight: 21
   cidoc_temporal_summary:
     weight: 1
     settings: {  }

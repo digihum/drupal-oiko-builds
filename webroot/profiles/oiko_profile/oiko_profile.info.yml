@@ -140,7 +140,6 @@ cm_config_tools:
     - block.block.oiko_powered
     - block.block.oiko_tools
     - block.block.sharemessage
-    - block.block.sharemessage_2
     - block.block.userloggedinheaderblock
     - block.block.userloggedoutheaderblock
     - block.block.welcomeblock
@@ -749,7 +748,9 @@ cm_config_tools:
     - views.view.p99_dissov_group
     - views.view.timeline
     - webform.webform.feedback
+    - core.entity_view_display.user.user.compact
   delete:
+    - block.block.sharemessage_2
     - views.view.all_events
     - views.view.appelations
     - views.view.appelations_real_names
@@ -787,6 +788,7 @@ cm_config_tools:
     - block_content.type.modal_welcome
     - core.entity_view_mode.cidoc_entity.temporal_summary
     - core.entity_view_mode.taxonomy_term.primary_historical_significance_pill
+    - core.entity_view_mode.user.compact
     - field.field.block_content.modal_welcome.body
     - field.storage.block_content.body
     - field.storage.taxonomy_term.field_source_type
