@@ -29,14 +29,17 @@
         title: title,
         timestamp: new Date().getTime()
       };
-      $('.js-event-basket-dropdown').foundation('open');
+      // For some reason opening the dropdown in the same event loop closed, it, so do so with a delay.
+      setTimeout(function() {
+        $('.js-event-basket-dropdown:visible').foundation('open');
+      }, 1);
       // Add the item with a small delay so it's more obvious what has happened.
       setTimeout(function() {
-        event_basket.setItem(id, item).then(redraw_basket);
+        event_basket.setItem('' + id, item).then(redraw_basket);
       }, delay ? delay : 300);
     },
     remove: function(id) {
-      event_basket.removeItem(id).then(redraw_basket);
+      event_basket.removeItem('' + id).then(redraw_basket);
     }
   };
 
