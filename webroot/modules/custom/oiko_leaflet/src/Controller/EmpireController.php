@@ -5,8 +5,11 @@ namespace Drupal\oiko_leaflet\Controller;
 use Drupal\cidoc\Entity\CidocEntity;
 use Drupal\Core\Cache\CacheableJsonResponse;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Lock\LockBackendInterface;
+use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityTypeManager;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class EmpireController.
@@ -23,10 +26,18 @@ class EmpireController extends ControllerBase {
   protected $entity_type_manager;
 
   /**
+   * The lock system.
+   *
+   * @var \Drupal\Core\Lock\LockBackendInterface
+   */
+  protected $lock;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeManager $entity_type_manager) {
+  public function __construct(EntityTypeManager $entity_type_manager, LockBackendInterface $lock) {
     $this->entity_type_manager = $entity_type_manager;
+    $this->lock = $lock;
   }
 
   /**
@@ -34,7 +45,8 @@ class EmpireController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('lock')
     );
   }
 
@@ -45,44 +57,57 @@ class EmpireController extends ControllerBase {
    *   Return Hello string.
    */
   public function listAll() {
-    $data = array();
-    $storage = $this->entity_type_manager->getStorage('cidoc_entity');
-    $query = $storage->getQuery();
-    $results = $query
-      ->condition('bundle', 'e4_period')
-      ->exists('field_empire_outline')
-      ->execute();
+    // Add some lovely locking.
+    $lock_name = 'EmpireController::listAll';
+    if ($this->lock->acquire($lock_name, 180)) {
 
-    $loaded = [];
+      $data = array();
+      $storage = $this->entity_type_manager->getStorage('cidoc_entity');
+      $query = $storage->getQuery();
+      $results = $query
+        ->condition('bundle', 'e4_period')
+        ->exists('field_empire_outline')
+        ->execute();
 
-    if (!empty($results)) {
-      $loaded = $storage->loadMultiple($results);
-      /** @var CidocEntity $cidoc_entity */
-      foreach ($loaded as $cidoc_entity) {
-        $geodata = $cidoc_entity->getGeospatialData();
-        // Mix in the field values of the actual empire.
-        $empire = $cidoc_entity->field_empire_outline->entity;
-        foreach ($geodata as &$item) {
-          if (isset($item['temporal'])) {
-            $item['empire_data'] = array(
-              'label' => $empire->label(),
-              'id' => $empire->id(),
-              'color' => $empire->field_single_color->color,
-              'opacity' => $empire->field_single_color->opacity,
-            );
-            $data[] = $item;
+      $loaded = [];
+
+      if (!empty($results)) {
+        $loaded = $storage->loadMultiple($results);
+        /** @var CidocEntity $cidoc_entity */
+        foreach ($loaded as $cidoc_entity) {
+          $geodata = $cidoc_entity->getGeospatialData();
+          // Mix in the field values of the actual empire.
+          $empire = $cidoc_entity->field_empire_outline->entity;
+          foreach ($geodata as &$item) {
+            if (isset($item['temporal'])) {
+              $item['empire_data'] = array(
+                'label' => $empire->label(),
+                'id' => $empire->id(),
+                'color' => $empire->field_single_color->color,
+                'opacity' => $empire->field_single_color->opacity,
+              );
+              $data[] = $item;
+            }
           }
         }
       }
-    }
 
-    $response = new CacheableJsonResponse($data);
-    foreach ($loaded as $entity) {
-      $response->addCacheableDependency($entity);
+      $response = new CacheableJsonResponse($data);
+      foreach ($loaded as $entity) {
+        $response->addCacheableDependency($entity);
+      }
+      $definition = $this->entity_type_manager->getDefinition('cidoc_entity');
+      $response->getCacheableMetadata()
+        ->addCacheTags($definition->getListCacheTags());
+      
+      $this->lock->release($lock_name);
+      return $response;
     }
-    $definition = $this->entity_type_manager->getDefinition('cidoc_entity');
-    $response->getCacheableMetadata()->addCacheTags($definition->getListCacheTags());
-    return $response;
+    else {
+      // Get the browser to retry in a bit.
+      $this->lock->wait($lock_name, 10);
+      return new RedirectResponse(Url::fromRoute('oiko_leaflet.empire_controller_listall')->toString(), 307);
+    }
   }
 
 }
