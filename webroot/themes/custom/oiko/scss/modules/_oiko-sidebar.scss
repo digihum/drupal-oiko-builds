@@ -124,7 +124,7 @@
       display: block;
     }
     .loading-graphic {
-      position: absolute;
+      position: relative;
       left: calc(50% - #{$ajax-loading-graphic-size/2 + 20px});
     }
   }
