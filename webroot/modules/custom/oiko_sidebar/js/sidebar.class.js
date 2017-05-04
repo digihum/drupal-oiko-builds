@@ -65,6 +65,10 @@
       if ($tab.find('a').data('paneId') === id) {
         $tab.find('a').removeClass('disabled');
       }
+      // Super hacky way to get the mobile toggle to work.
+      // @TODO: re-do this when it's not the day before a big showcase.
+      $('.navigation-bar--mobile a[data-pane-id="' + id + '"]').removeClass('disabled').attr('aria-selected', 'true');
+      $('.navigation-bar--mobile a[data-pane-id="' + id + '"]').parent('li').addClass('is-active');
     });
 
     // Make sure the sidebar is open.
