@@ -2,29 +2,28 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.user.compact
     - field.field.user.user.avatars_avatar_generator
     - field.field.user.user.avatars_user_picture
     - field.field.user.user.user_picture
+    - image.style.thumbnail
   module:
     - image
     - user
-id: user.user.default
+id: user.user.compact
 targetEntityType: user
 bundle: user
-mode: default
+mode: compact
 content:
-  member_for:
-    weight: 5
-    settings: {  }
-    third_party_settings: {  }
   user_picture:
     type: image
     weight: 0
     label: hidden
     settings:
-      image_style: ''
-      image_link: content
+      image_style: thumbnail
+      image_link: ''
     third_party_settings: {  }
 hidden:
   avatars_avatar_generator: true
   avatars_user_picture: true
+  member_for: true

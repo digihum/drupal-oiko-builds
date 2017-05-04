@@ -40,10 +40,10 @@ function oiko_preprocess_comment(&$variables) {
   if ($variables['commented_entity']->getEntityTypeId() == 'node') {
     if ($variables['commented_entity']->bundle() == 'forum') {
       $variables['attributes']['class'][] = 'forum-comment';
-      $variables['content_attributes']['class'][] = 'forum-comment-content';
-      $variables['user_picture'] = '';
+      $variables['content_attributes']['class'][] = 'forum-comment-content callout';
+//      $variables['user_picture'] = '';
       $variables['submitted'] = [
-        '#markup' => t('Submitted by @username', ['@username' => $variables['author']]) . '<br />' . $variables['created']
+        '#markup' => t('@username', ['@username' => $variables['author']]) . '<br />' . $variables['created']
       ];
     }
   }
@@ -60,7 +60,23 @@ function oiko_preprocess_comment(&$variables) {
  */
 function oiko_preprocess_node(&$variables) {
   if ($variables['node']->bundle() == 'forum') {
-    $variables['author_picture'] = '';
+    $variables['#attributes']['class'][] = 'forum--post';
+    $variables['content']['comment_forum']['#attributes']['class'][] = 'forum--comments';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - node: The node object.
+ *   - view_mode: View mode; e.g., 'full', 'teaser', etc.
+ */
+function oiko_preprocess_user(&$variables) {
+  if ($variables['elements']['#view_mode'] === 'compact') {
+    $variables['attributes']['class'][] = 'forum--author-picture';
   }
 }
 
@@ -136,11 +152,13 @@ function oiko_preprocess_field(&$variables) {
       if ($node = $variables['element']['#object']) {
         if ($node->bundle() == 'forum') {
           $variables['attributes']['class'][] = 'forum-topic-content';
+          $variables['attributes']['class'][] = 'callout';
         }
       }
     }
   }
   if ($variables['field_name'] == 'field_crm_entities' && $variables['element']['#bundle'] == 'forum' && $variables['element']['#view_mode'] == 'full') {
+    $variables['attributes']['class'][] = 'callout';
     $variables['attributes']['class'][] = 'forum-related-to';
   }
 }

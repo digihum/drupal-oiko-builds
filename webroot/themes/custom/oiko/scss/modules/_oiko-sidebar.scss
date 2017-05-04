@@ -66,7 +66,7 @@
 
 .sidebar-content {
   display: none;
-
+  position: relative;
   .sidebar-opened & {
     display: block;
   }
@@ -101,16 +101,30 @@
   .sidebar-pane {
     display: none;
     position: relative;
+    .close-button {
+      right: -12px;
+      top: -20px;
+      @include to('s') {
+        position: relative;
+        right: 10px;
+        top: 0;
+        text-align: right;
+      }
+    }
     @include to('s') {
       &.with-padding {
         padding: 20px;
+        .close-button {
+          right: -10px;
+          top: -20px;
+        }
       }
     }
     &.is-active {
       display: block;
     }
     .loading-graphic {
-      position: absolute;
+      position: relative;
       left: calc(50% - #{$ajax-loading-graphic-size/2 + 20px});
     }
   }

@@ -5,9 +5,10 @@
     readyCallback: function() {
       $(function() {
         // Unless we have a fragment on our URL, scroll to the top.
-        if (location.hash === '#' || location.hash === '') {
+        // @TODO: this wasn't working reliably, and our iFrame was getting stuck, unable to scroll.
+        // if (location.hash === '#' || location.hash === '') {
           parentIFrame.sendMessage({type: 'scrolltop'});
-        }
+        // }
       });
 
       // Extract the messages if there are any.
@@ -38,21 +39,26 @@
 
         // Ensure other links keep the iframe styling.
         var href = $(this).attr('href');
-        if (typeof href !== 'undefined' && (href.indexOf('http') != 0 && href.indexOf('https') != 0)) {
-          // Split off the fragment if there is one.
-          var fragment = '';
-          if (href.indexOf('#') !== -1) {
-            fragment = href.substring(href.indexOf('#'));
-            href = href.substring(0, href.indexOf('#'));
+        var target = $(this).attr('target');
+
+        // Only play with links that don't have an explicit target set.
+        if (typeof target === 'undefined') {
+          if (typeof href !== 'undefined' && (href.indexOf('http') != 0 && href.indexOf('https') != 0)) {
+            // Split off the fragment if there is one.
+            var fragment = '';
+            if (href.indexOf('#') !== -1) {
+              fragment = href.substring(href.indexOf('#'));
+              href = href.substring(0, href.indexOf('#'));
+            }
+            href += (href.indexOf('?') > -1 ? '&' : '?') + 'display=iframe';
+            if (fragment.length !== 0) {
+              href += fragment;
+            }
+            $(this).attr('href', href);
           }
-          href += (href.indexOf('?') > -1 ? '&' : '?') + 'display=iframe';
-          if (fragment.length !== 0) {
-            href += fragment;
+          else {
+            $(this).attr('target', '_top');
           }
-          $(this).attr('href', href);
-        }
-        else {
-          $(this).attr('target', '_top');
         }
       });
 

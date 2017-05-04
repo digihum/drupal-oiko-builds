@@ -127,12 +127,25 @@ function oiko_leaflet_form_node_forum_form_alter(&$form, \Drupal\Core\Form\FormS
   if (is_numeric($cidoc_entity_id)) {
     $cidoc_entity = \Drupal::entityTypeManager()->getStorage('cidoc_entity')->load($cidoc_entity_id);
     $form['field_crm_entities']['widget'][0]['target_id']['#default_value'] = $cidoc_entity;
+    $form['field_crm_entities']['#access'] = FALSE;
+
+    // Put this item into the data discussions forum if we need to.
+    if (count($form['taxonomy_forums']['widget']['#options']) > 2) {
+      foreach ($form['taxonomy_forums']['widget']['#options'] as $i => $option) {
+        if ($i !== '_none' && $i !== 109) {
+          unset($form['taxonomy_forums']['widget']['#options'][$i]);
+        }
+      }
+    }
   }
+
   // If there's only one option, preselect it for convenience.
-  if (count($form['taxonomy_forums']['widget']['#options']) == 2) {
+  if (count($form['taxonomy_forums']['widget']['#options']) <= 2) {
     $options = $form['taxonomy_forums']['widget']['#options'];
     unset($options['_none']);
     $form['taxonomy_forums']['widget']['#default_value'] = key($options);
+    // And hide.
+    $form['taxonomy_forums']['#access'] = FALSE;
   }
   // Remove the preview button. It doesn't make sense here.
   $form['actions']['preview']['#access'] = FALSE;
