@@ -126,6 +126,14 @@ content:
     weight: 21
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:range:p143_joined':
+    weight: 21
+  'cidoc_properties:range:p144_joined_with':
+    weight: 21
+  'cidoc_properties:range:p145_separated':
+    weight: 21
+  'cidoc_properties:range:p146_separated_from':
+    weight: 21
   'cidoc_properties:range:p95_has_formed':
     weight: 21
     settings: {  }

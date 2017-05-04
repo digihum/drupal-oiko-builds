@@ -1,103 +1,49 @@
-.forum {
-  border-bottom: 1px solid $light-gray;
-  margin: 1em 0;
-  width: 100%;
 
-  th {
-    background-color: $black;
-    border-bottom: 3px solid palette(oikotan);
-    color: $white;
-    padding: 1em;
-  }
-
-  td {
-    padding: 0.5em;
-  }
-
-  th, td {
-    border-left: 1px solid $white;
-    border-right: 1px solid $white;
-  }
-
-  .odd td {
-    border-color: $light-gray;
-  }
-
-  .even td {
-    background-color: $light-gray;
-  }
-
-  .indent {
-    margin-left: 1.5em;
-  }
-
-  #block-sharemessage-2 {
-    float: right;
-  }
-}
-
-.forum-node {
-  padding: 1em 0;
-
-  & > footer {
-    padding: 0 1em;
-  }
-
-  footer {
-    float: none;
-    padding: 0;
-    width: 100%;
-    a {
-      float: right;
-    }
-  }
-
-  .forum-topic-content {
-    padding: 0 1em;
-  }
-}
-
-.forum-related-to {
-  margin-bottom: 30px;
-  border: 3px solid palette(satin, base);
-  padding: 15px;
-}
-
-.forum-comment {
-  background-color: $light-gray;
-  margin-bottom: 1em;
-  padding: 1em;
-}
-
-@include from('m') {
-  .forum-node {
-    & > footer {
-      float: left;
-      width: 15em;
-      a {
-        float: none;
-      }
-    }
-
-    .forum-topic-content {
-      overflow: hidden;
-      padding-left: 0;
-    }
-  }
-
-  .forum-comment {
-    footer {
-      float: left;
-      padding-right: 1em;
-      width: 10em;
-    }
-
-    .forum-comment-content {
-      overflow: hidden;
-    }
-  }
+.forum--author-picture img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
 }
 
 .sidebar-content .forum {
   border: none;
+}
+
+.page--iframe .forum-post .forum-related-to {
+  display: none
+}
+
+.forum--footer {
+  display: flex;
+  margin-bottom: 0;
+  border-bottom: 0;
+
+  article {
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-right: $global-margin;
+  }
+
+  > div {
+    flex-grow: 1;
+  }
+}
+
+.forum--content ul.links {
+  margin-left: -$global-margin;
+  margin-right: -$global-margin;
+  padding: $global-margin;
+  margin-bottom: 0;
+  margin-top: $global-margin;
+  padding-bottom: 0;
+  border-top: $callout-border;
+}
+
+
+.forum-post article {
+  margin-bottom: $global-margin;
+
+  &.forum--author-picture {
+    margin-bottom: 0;
+  }
 }

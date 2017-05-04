@@ -219,6 +219,10 @@ content:
     weight: 21
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:range:p143_joined':
+    weight: 21
+  'cidoc_properties:range:p145_separated':
+    weight: 21
   'cidoc_properties:range:p14_carried_out_by':
     weight: 21
     settings: {  }
@@ -336,6 +340,7 @@ content:
 hidden:
   cidoc_admin_links: true
   cidoc_properties: true
+  cidoc_temporal_summary: true
   citation: true
   content: true
   internal_name: true

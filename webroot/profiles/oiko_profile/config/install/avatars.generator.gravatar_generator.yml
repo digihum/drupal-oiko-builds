@@ -9,4 +9,4 @@ weight: -8
 plugin: gravatar_generator
 provider: null
 settings:
-  type: identicon
+  type: monsterid

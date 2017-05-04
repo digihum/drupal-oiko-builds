@@ -16,6 +16,10 @@ content:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:range:p143_joined':
+    weight: 21
+  'cidoc_properties:range:p145_separated':
+    weight: 21
   citation:
     type: entity_reference_revisions_entity_view
     weight: 5
@@ -86,6 +90,7 @@ hidden:
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true
   'cidoc_properties:range:p9_consists_of': true
+  cidoc_temporal_summary: true
   duplicate_of_p134_continues_entity_view_1: true
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true

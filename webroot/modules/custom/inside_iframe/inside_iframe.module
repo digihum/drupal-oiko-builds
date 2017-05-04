@@ -25,17 +25,22 @@ function inside_iframe_preprocess_html(&$variables) {
   }
 }
 
-///**
-// * Implements hook_preprocess_HOOK().
-// *
-// * @param array $variables
-// *   An associative array containing:
-// *   - elements: An array of elements to display in view mode.
-// *   - node: The node object.
-// *   - view_mode: View mode; e.g., 'full', 'teaser', etc.
-// */
-//function inside_iframe_preprocess_page(&$variables) {
-//  if (\Drupal::request()->get('display') === 'iframe') {
-//
-//  }
-//}
+/**
+ * Implements hook_page_attachments().
+ */
+function inside_iframe_page_attachments(&$page) {
+  $page['#cache']['contexts'][] = 'url.query_args:display';
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function inside_iframe_page_attachments_alter(array &$attachments) {
+  if (\Drupal::request()->get('display') === 'iframe') {
+    // Conditionally remove an asset.
+    if (in_array('eu_cookie_compliance/eu_cookie_compliance', $attachments['#attached']['library'])) {
+      $index = array_search('eu_cookie_compliance/eu_cookie_compliance', $attachments['#attached']['library']);
+      unset($attachments['#attached']['library'][$index]);
+    }
+  }
+}
