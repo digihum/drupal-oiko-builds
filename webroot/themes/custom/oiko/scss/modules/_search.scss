@@ -16,9 +16,9 @@
   display: inline-block;
   margin: 0 $global-margin;
   text-align: left;
+  color: palette(black);
   @include to('s') {
     margin: 0;
-    padding: $global-margin;
     max-width: none;
   }
 }
@@ -42,7 +42,15 @@
   border: 0;
   background: none;
   @include to('s') {
-    right: 16px;
+    right: 4px;
+    top: 9px;
+    bottom: initial;
+  }
+}
+
+@include to('s') {
+  .main-search__no-results-text {
+    padding: 3px 6px;
   }
 }
 
@@ -70,6 +78,9 @@
   li {
     border-bottom: 1px solid palette(oikogrey);
     padding: 3px 0;
+    @include to('s') {
+      padding: 3px 6px;
+    }
 
     &:last-child {
       border-bottom: none;
