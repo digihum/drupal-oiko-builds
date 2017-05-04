@@ -83,6 +83,12 @@ class UserLoggedIn extends BlockBase {
         'label' => 'hidden',
       ]);
 
+      $block['logout_link'] = [
+        '#type' => 'link',
+        '#title' => $this->t('Log out'),
+        '#url' => Url::fromRoute('user.logout'),
+      ];
+
       $block['profile_form'] = \Drupal::formBuilder()->getForm($profile_form);
       // Instead of setting an actual action URL, we set the placeholder, which
       // will be replaced at the very last moment. This ensures forms with
