@@ -35,12 +35,19 @@
     margin: 0;
     .tabs-title {
       > a {
-        padding: 0.5rem 1rem 28px 1rem;
+        padding: 0.5rem 0.6rem 28px 0.6rem;
         border: none;
         &:hover,
         &:focus,
         &[aria-selected='true'] {
           border: none;
+          background: none;
+        }
+        &:not(.oiko-app--toggle) {
+          &[aria-selected='true'] {
+            background: palette(oikocream);
+            color: palette(black);
+          }
         }
       }
     }

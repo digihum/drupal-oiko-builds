@@ -148,6 +148,11 @@ intervalTree:
     js/vendor/intervalTree.js: {}
   version: 0.3.2
 
+leaflet.pattern:
+  js:
+    js/vendor/leaflet.pattern.js: {minified: true}
+  version: d543c9f
+
 markercluster:
   js:
     js/vendor/leaflet.markercluster.js: {}

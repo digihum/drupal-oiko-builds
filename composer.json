@@ -124,6 +124,7 @@
         "drupal-composer/drupal-scaffold": "^1.3.1",
         "drupal/add_to_head": "dev-8.x-1.x",
         "drupal/admin_toolbar": "^1.14",
+        "drupal/avatars": "^1.0@beta",
         "drupal/browsersync": "1.0-beta1",
         "drupal/cm_config_tools": "dev-1.x",
         "drupal/color_field": "2.0-rc1",
@@ -245,9 +246,6 @@
             },
             "drupal/field_group": {
                 "HTML in titles": "https://www.drupal.org/files/issues/field_group-2822299-html-group-labels_0.patch"
-            },
-            "drupal/eva": {
-                "EVA can display on unselected bundle": "https://www.drupal.org/files/issues/eva-2856350-display-mode-still-rendered-12.patch"
             },
             "drupal/honeypot": {
                 "Fix honeypot webform integration": "https://www.drupal.org/files/issues/honeypot-webform-integration-2870691-2.patch"

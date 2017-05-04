@@ -90,10 +90,10 @@ class MainSearchBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function blockSubmit($form, FormStateInterface $form_state) {
-    $this->configuration['placeholder_map'] = $form_state->getValue('placeholder_map');
-    $this->configuration['no_search_map'] = $form_state->getValue('no_search_map');
-    $this->configuration['placeholder_timeline'] = $form_state->getValue('placeholder_timeline');
-    $this->configuration['no_search_timeline'] = $form_state->getValue('no_search_timeline');
+    $this->configuration['placeholder_map'] = $form_state->getValue(['map', 'placeholder_map']);
+    $this->configuration['no_search_map'] = $form_state->getValue(['map', 'no_search_map']);
+    $this->configuration['placeholder_timeline'] = $form_state->getValue(['timeline', 'placeholder_timeline']);
+    $this->configuration['no_search_timeline'] = $form_state->getValue(['timeline','no_search_timeline']);
     $this->configuration['no_results_text'] = $form_state->getValue('no_results_text');
     $this->configuration['searching_text'] = $form_state->getValue('searching_text');
   }

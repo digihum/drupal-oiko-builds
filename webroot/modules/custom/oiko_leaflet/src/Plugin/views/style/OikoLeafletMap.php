@@ -289,6 +289,11 @@ class OikoLeafletMap extends StylePluginBase {
         $map['settings']['maxZoom'] = min($this->options['max_zoom'], $map['settings']['maxZoom']);
       }
 
+      // Disable tap events if dragging and zooming are disabled.
+      if (!$this->options['pan'] && !$this->options['zoom']) {
+        $map['settings']['tap'] = FALSE;
+      }
+
       return leaflet_render_map($map, $data, $height);
     }
     else {

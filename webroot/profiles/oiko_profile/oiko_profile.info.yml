@@ -4,6 +4,8 @@ description: Install profile for the Oiko
 core: 8.x
 
 dependencies:
+  - avatars_gravatar
+  - oiko_forum
   - oiko_event_basket
   - honeypot
   - webform
@@ -110,11 +112,16 @@ cm_config_tools:
     - system.menu.admin
     - system.menu.main
     - system.menu.tools
-    - tour.tour.map
-    - tour.tour.timeline
   managed:
+    - avatars.generator.gravatar
+    - avatars.generator.gravatar_generator
+    - avatars.generator.user_upload
+    - block.block.discussionnotificationsblock
+    - block.block.discussionnotificationsblock_mobile
     - block.block.feedback
+    - block.block.feedback_mobile
     - block.block.maincidocsearch
+    - block.block.maincidocsearchmobile
     - block.block.mainnavigation
     - block.block.maplegendblock
     - block.block.oiko_account_menu
@@ -122,6 +129,7 @@ cm_config_tools:
     - block.block.oiko_breadcrumbs
     - block.block.oiko_content
     - block.block.oiko_event_basket
+    - block.block.oiko_event_basket_mobile
     - block.block.oiko_footer
     - block.block.oiko_help
     - block.block.oiko_local_actions
@@ -133,6 +141,8 @@ cm_config_tools:
     - block.block.oiko_tools
     - block.block.sharemessage
     - block.block.sharemessage_2
+    - block.block.userloggedinheaderblock
+    - block.block.userloggedoutheaderblock
     - block.block.welcomeblock
     - cidoc.cidoc_entity_bundle.e12_production
     - cidoc.cidoc_entity_bundle.e21_person
@@ -333,8 +343,10 @@ cm_config_tools:
     - core.entity_form_display.taxonomy_term.event_types.default
     - core.entity_form_display.taxonomy_term.forums.default
     - core.entity_form_display.taxonomy_term.source_books.default
+    - core.entity_form_display.user.user.default
     - core.entity_form_mode.cidoc_reference.domain
     - core.entity_form_mode.cidoc_reference.range
+    - core.entity_form_mode.user.register
     - core.entity_view_display.block_content.modal_welcome.default
     - core.entity_view_display.cidoc_entity.e12_production.default
     - core.entity_view_display.cidoc_entity.e12_production.popup
@@ -552,6 +564,7 @@ cm_config_tools:
     - core.entity_view_display.taxonomy_term.event_types.primary_historical_significance_pill
     - core.entity_view_display.taxonomy_term.forums.default
     - core.entity_view_display.taxonomy_term.source_books.default
+    - core.entity_view_display.user.user.default
     - core.entity_view_mode.cidoc_entity.inline_field
     - core.entity_view_mode.cidoc_entity.popup
     - core.entity_view_mode.cidoc_entity.preview
@@ -653,6 +666,9 @@ cm_config_tools:
     - field.field.taxonomy_term.event_types.field_single_color
     - field.field.taxonomy_term.forums.forum_container
     - field.field.taxonomy_term.source_books.field_source_type
+    - field.field.user.user.avatars_avatar_generator
+    - field.field.user.user.avatars_user_picture
+    - field.field.user.user.user_picture
     - field.storage.cidoc_entity.field_date
     - field.storage.cidoc_entity.field_empire_outline
     - field.storage.cidoc_entity.field_geodata
@@ -701,6 +717,8 @@ cm_config_tools:
     - taxonomy.vocabulary.mode
     - taxonomy.vocabulary.role
     - taxonomy.vocabulary.source_books
+    - tour.tour.map
+    - tour.tour.timeline
     - user.role.anonymous
     - user.role.authenticated
     - user.role.content_editor
@@ -715,6 +733,7 @@ cm_config_tools:
     - views.view.important_events
     - views.view.important_people
     - views.view.map_of_places_people_went
+    - views.view.my_discussions
     - views.view.p108_produced_object
     - views.view.p11_has_participant
     - views.view.p12_occurred_in_the_presence_of
@@ -771,5 +790,8 @@ cm_config_tools:
     - field.field.block_content.modal_welcome.body
     - field.storage.block_content.body
     - field.storage.taxonomy_term.field_source_type
+    - field.storage.user.avatars_avatar_generator
+    - field.storage.user.avatars_user_picture
+    - field.storage.user.user_picture
     - image.style.thumbnail
     - node.type.content_page

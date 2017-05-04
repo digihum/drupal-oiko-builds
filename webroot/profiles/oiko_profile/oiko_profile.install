@@ -220,3 +220,24 @@ function oiko_profile_update_8125() {
 function oiko_profile_update_8126() {
   \Drupal::service('module_installer')->install(['oiko_event_basket']);
 }
+
+/**
+ * Enable the oiko forum module.
+ */
+function oiko_profile_update_8127() {
+  \Drupal::service('module_installer')->install(['oiko_forum']);
+}
+
+/**
+ * Enable the avatars_gravatar module.
+ */
+function oiko_profile_update_8128() {
+  \Drupal::service('module_installer')->install(['avatars_gravatar']);
+}
+
+/**
+ * Enable the inside_iframe module.
+ */
+function oiko_profile_update_8129() {
+  \Drupal::service('module_installer')->install(['inside_iframe']);
+}

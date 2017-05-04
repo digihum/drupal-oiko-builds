@@ -105,6 +105,9 @@ body.layout-flex {
 
   .l-sidebar-content {
     order: 2;
+    @include to('s') {
+      order: 1;
+    }
   }
   .oiko-app {
     order: 1;

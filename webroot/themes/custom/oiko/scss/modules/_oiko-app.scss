@@ -31,6 +31,10 @@
   .oiko-app--timeline {
     display: none;
   }
+
+  .hide-on-map {
+    display: none;
+  }
 }
 
 
@@ -41,6 +45,10 @@
   }
 
   .oiko-app--map {
+    display: none;
+  }
+
+  .hide-on-timeline {
     display: none;
   }
 }

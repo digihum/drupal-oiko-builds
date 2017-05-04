@@ -190,11 +190,6 @@ function _eva_clear_detached($remove_one = null, $remove_all = FALSE) {
       $config = $cf->getEditable($id);
       $config_data = $config->get();
       foreach ($eva_info as $eva) {
-        if (empty($eva['bundles'])) {
-          // special case, applies to every bundle in entity
-          // so skip the detachment check
-          continue;
-        }
         $eva_field_name = $eva['name'] . '_' . $eva['display'];
         // eva should be considered for removal if one of these is true:
         //  - all evas should be removed (i.e., when module is uninstalled)

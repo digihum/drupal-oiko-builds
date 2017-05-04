@@ -27,7 +27,9 @@
 
 .icon-links__dropdown {
   top: $content-header-height !important;
-  bottom: 0;
+  @include from('m') {
+    bottom: 0;
+  }
   z-index: 10000;
 
   .showing-timeline & {
@@ -43,7 +45,7 @@
   padding: 25px;
   width: 40%;
   @include to('s') {
-    width: 100%;
+    width: 100% !important;
   }
   border: none;
   border-top: 5px solid palette(oikoblue);
