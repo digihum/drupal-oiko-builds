@@ -32,6 +32,9 @@
 
   > a {
     padding: 1.25rem 1.5rem;
+    @include at('m') {
+      padding: 0.5rem 1.5rem;
+    }
     &:hover {
       border-bottom-color: transparent;
     }

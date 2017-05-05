@@ -71,7 +71,10 @@
     display: block;
   }
   width: 100%;
-  @include from('m') {
+  @include at('m') {
+    width: 60%;
+  }
+  @include from('l') {
     width: 33%;
   }
   flex-grow: 0;
