@@ -18,4 +18,3 @@ permissions:
   - 'avatars avatar_generator user gravatar_generator'
   - 'avatars avatar_generator user user_upload'
   - 'access user profiles'
-  - 'view published cidoc entities'

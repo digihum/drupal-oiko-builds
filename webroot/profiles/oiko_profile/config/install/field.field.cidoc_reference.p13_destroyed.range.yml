@@ -24,7 +24,7 @@ settings:
       field: name
       direction: ASC
     target_bundles:
-      e21_person: e21_person
       e22_man_made_object: e22_man_made_object
-    auto_create_bundle: e21_person
+      e21_person: e21_person
+    auto_create_bundle: e22_man_made_object
 field_type: entity_reference

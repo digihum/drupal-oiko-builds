@@ -1,0 +1,8 @@
+.leaflet-result-list-item {
+	cursor: pointer
+}
+
+.leaflet-searchBox {
+	font-size: larger;
+	color: #333;
+}

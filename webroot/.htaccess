@@ -122,8 +122,6 @@ AddEncoding gzip svgz
   # uncomment the following line:
   # RewriteBase /
 
-  # RewriteRule ^server-status - [L,NC] 
-
   # Redirect common PHP files to their new locations.
   RewriteCond %{REQUEST_URI} ^(.*)?/(install.php) [OR]
   RewriteCond %{REQUEST_URI} ^(.*)?/(rebuild.php)
@@ -189,9 +187,3 @@ AddEncoding gzip svgz
   # Disable Proxy header, since it's an attack vector.
   RequestHeader unset Proxy
 </IfModule>
-
-
-AuthType Basic
-AuthName "Oikoumene is protected until launch"
-AuthUserFile /data/www/.htpasswd
-Require valid-user
