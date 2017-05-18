@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e74_group
+    - cidoc.cidoc_property.p146_separated_from
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.p146_separated_from.range
+field_name: range
+entity_type: cidoc_reference
+bundle: p146_separated_from
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e74_group: e74_group
+    auto_create_bundle: e74_group
+field_type: entity_reference

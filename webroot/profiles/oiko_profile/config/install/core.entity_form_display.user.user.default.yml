@@ -39,6 +39,8 @@ content:
     weight: 5
     settings: {  }
     third_party_settings: {  }
+  timezone:
+    weight: 6
 hidden:
   avatars_avatar_generator: true
   user_picture: true

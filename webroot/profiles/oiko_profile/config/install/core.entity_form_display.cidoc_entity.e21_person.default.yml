@@ -3,9 +3,12 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e21_person
+    - image.style.thumbnail
   module:
     - field_group
+    - image
     - paragraphs
+    - path
 third_party_settings:
   field_group:
     group_main:
@@ -54,6 +57,7 @@ third_party_settings:
       children:
         - group_appellations
         - group_birth_and_death
+        - group_joining_leaving
       parent_name: group_main_deets
       weight: 5
       label: 'Main details'
@@ -89,6 +93,21 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+    group_joining_leaving:
+      children:
+        - 'cidoc_properties:domain:p143_joined'
+        - 'cidoc_properties:domain:p145_separated'
+        - 'cidoc_properties:range:p107_has_current_or_former_membe'
+      parent_name: group_main_details
+      weight: 7
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: Joining/Leaving
 id: cidoc_entity.e21_person.default
 targetEntityType: cidoc_entity
 bundle: e21_person
@@ -98,18 +117,34 @@ content:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:p143_joined':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p145_separated':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p100_was_death_of':
     weight: 1
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p107_has_current_or_former_membe':
-    weight: 21
+    weight: 23
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p143_joined':
-    weight: 21
-  'cidoc_properties:range:p145_separated':
-    weight: 21
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p144_joined_with':
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p146_separated_from':
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p98_brought_into_life':
     weight: 0
     settings: {  }
@@ -144,7 +179,7 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 30
+    weight: 4
     settings: {  }
     third_party_settings: {  }
   significance:
@@ -154,14 +189,14 @@ content:
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 10
+    weight: 2
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 10
+    weight: 3
     settings:
       display_label: true
     third_party_settings: {  }
@@ -171,6 +206,7 @@ hidden:
   'cidoc_properties:range:p11_had_participant': true
   'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p13_destroyed': true
+  'cidoc_properties:range:p145_separated': true
   'cidoc_properties:range:p14_carried_out_by': true
   'cidoc_properties:range:p15_was_influenced_by': true
   'cidoc_properties:range:p16_used_specific_object': true
