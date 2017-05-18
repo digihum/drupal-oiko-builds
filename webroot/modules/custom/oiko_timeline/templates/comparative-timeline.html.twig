@@ -1,10 +1,16 @@
-<div class="l-map-wrap">
-    {{ sidebar }}
-    <div class="comparative-timeline-container js-comparative-timeline-container">
-        <div class="js-comparative-timeline-add-new comparative-timeline__header">
-            <span class="loading-graphic js-loading-graphic"></span>
-        </div>
+<div class="comparative-timeline-container js-comparative-timeline-container">
+    <div class="js-comparative-timeline-add-new comparative-timeline__header">
+        <span class="loading-graphic js-loading-graphic">Finding related events and people...</span>
+    </div>
+    <div class="comparative-timeline__inner">
         <div class="js-comparative-timeline"></div>
+        <div class="js-comparative-timeline-preselections comparative-timeline-preselections-wrapper">
+
+            <h3 class="header">Populate the comparision tool with these favourites:</h3>
+            <div class="js-items comparative-timeline-preselections"></div>
+        </div>
+    </div>
+    <div class="comparative-timeline__footer js-comparative-timeline-overview">
     </div>
 </div>
 {{ js }}

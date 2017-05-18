@@ -1,0 +1,138 @@
+// @TODO: Replace this will with different class name
+.oiko-sidebar {
+  background-color: palette(oikoblue);
+  color: palette(white);
+
+  text-align: center;
+
+  .oiko-app--toggle {
+    text-decoration: none;
+  }
+
+  i.fa {
+    font-size: $sidebar-icon-font-size;
+    line-height: $sidebar-icon-line-height;
+    @include to('s') {
+      font-size: $sidebar-icon-font-size - 0.2rem;
+    }
+  }
+
+  a {
+    &:hover,
+    &:focus {
+      color: palette(black);
+    }
+  }
+}
+
+.sidebar-tabs {
+
+  &.tabs {
+    border: none;
+    background: none;
+  }
+
+  a {
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .tabs-title > a {
+
+    &:focus,
+    &[aria-selected='true'] {
+      background: palette(oikocream);
+      color: palette(black);
+    }
+
+    &:hover {
+      background-color: palette(oikogrey);
+      color: palette(white);
+    }
+
+    &.disabled {
+      color: palette(oikogrey);
+      cursor: not-allowed;
+
+      &:focus,
+      &[aria-selected='true'],
+      &:hover {
+        background: transparent;
+        color: palette(oikogrey);
+      }
+    }
+  }
+}
+
+.sidebar-content {
+  display: none;
+  position: relative;
+  .sidebar-opened & {
+    display: block;
+  }
+  width: 100%;
+  @include to('s') {
+    position: absolute;
+    z-index: 10000;
+  }
+  @include at('m') {
+    width: 60%;
+  }
+  @include from('l') {
+    width: 33%;
+  }
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  padding: 20px;
+
+  @include from('m') {
+    .showing-map & {
+      border-right: 2px solid palette(oikoblue);
+    }
+
+    .showing-timeline & {
+      border-left: 2px solid palette(oikoblue);
+    }
+  }
+
+  @include to('s') {
+    padding: 0;
+    overflow: visible;
+    background: palette(oikocream);
+  }
+
+  .sidebar-pane {
+    display: none;
+    position: relative;
+    .close-button {
+      right: -12px;
+      top: -20px;
+      @include to('s') {
+        position: relative;
+        right: 10px;
+        top: 0;
+        text-align: right;
+      }
+    }
+    @include to('s') {
+      &.with-padding {
+        padding: 20px;
+        .close-button {
+          right: -10px;
+          top: -20px;
+        }
+      }
+    }
+    &.is-active {
+      display: block;
+    }
+    .loading-graphic {
+      position: relative;
+      left: calc(50% - #{$ajax-loading-graphic-size/2 + 20px});
+    }
+  }
+}

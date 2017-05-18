@@ -4,6 +4,7 @@ dependencies: {  }
 crm_entity: e7_activity
 id: e7_activity
 label: 'E7 Activity'
+friendly_label: Activity
 weight: -23
 group: main
 description: "<p>This class comprises actions intentionally carried out by instances of E39 Actor that result in\r\nchanges of state in the cultural, social, or physical systems documented.</p>\r\n\r\n<p>This notion includes complex, composite and long-lasting actions such as the building of a\r\nsettlement or a war, as well as simple, short-lived actions such as the opening of a door.</p>\r\n"

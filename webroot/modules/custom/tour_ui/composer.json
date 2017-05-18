@@ -1,0 +1,14 @@
+{
+  "name": "wkse/tour_ui",
+  "type": "drupal-module",
+  "description": "A UI for the drupal core module Tour",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://gitlab.wklive.net/wk-public/tour_ui",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://gitlab.wklive.net/wk-public/tour_ui/issues",
+    "source": "https://gitlab.wklive.net/wk-public/tour_ui/tree/8.x-1.x"
+  },
+  "require": { }
+}

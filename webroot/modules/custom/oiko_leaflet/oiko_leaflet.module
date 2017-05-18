@@ -23,7 +23,7 @@ function oiko_leaflet_library_info_alter(array &$libraries, $module) {
           '/libraries/Leaflet/dist/leaflet.css' => array(),
         ),
       ),
-      'version' => '0.7.7',
+      'version' => 'v1.0.3',
       'license' => $libraries['leaflet'],
     );
 
@@ -37,7 +37,10 @@ function oiko_leaflet_library_info_alter(array &$libraries, $module) {
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/search';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/mapstate';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/locate';
+    $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/zoomControl';
     $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/loading';
+    $libraries['leaflet-drupal']['dependencies'][] = 'oiko_leaflet/leaflet.pattern';
+
   }
 
   if ($module === 'oiko_leaflet' && isset($libraries['icons'])) {
@@ -124,12 +127,25 @@ function oiko_leaflet_form_node_forum_form_alter(&$form, \Drupal\Core\Form\FormS
   if (is_numeric($cidoc_entity_id)) {
     $cidoc_entity = \Drupal::entityTypeManager()->getStorage('cidoc_entity')->load($cidoc_entity_id);
     $form['field_crm_entities']['widget'][0]['target_id']['#default_value'] = $cidoc_entity;
+    $form['field_crm_entities']['#access'] = FALSE;
+
+    // Put this item into the data discussions forum if we need to.
+    if (count($form['taxonomy_forums']['widget']['#options']) > 2) {
+      foreach ($form['taxonomy_forums']['widget']['#options'] as $i => $option) {
+        if ($i !== '_none' && $i !== 109) {
+          unset($form['taxonomy_forums']['widget']['#options'][$i]);
+        }
+      }
+    }
   }
+
   // If there's only one option, preselect it for convenience.
-  if (count($form['taxonomy_forums']['widget']['#options']) == 2) {
+  if (count($form['taxonomy_forums']['widget']['#options']) <= 2) {
     $options = $form['taxonomy_forums']['widget']['#options'];
     unset($options['_none']);
     $form['taxonomy_forums']['widget']['#default_value'] = key($options);
+    // And hide.
+    $form['taxonomy_forums']['#access'] = FALSE;
   }
   // Remove the preview button. It doesn't make sense here.
   $form['actions']['preview']['#access'] = FALSE;
@@ -160,3 +176,33 @@ function oiko_leaflet_entity_extra_field_info() {
 function oiko_leaflet_entity_view_alter(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display) {
   return \Drupal::service('oiko_leaflet.hook_implementations')->entity_view_alter($build, $entity, $display);
 }
+
+//function oiko_leaflet_add_to_displays() {
+//  $entity_type = 'cidoc_entity';
+//  $bundles = entity_get_bundles($entity_type);
+//  foreach ($bundles as $bundle => $bundle_info) {
+//    $display = entity_get_display($entity_type, $bundle, 'popup');
+//    // We need to ensure there's a field group.
+//    $display->setThirdPartySetting('field_group', 'group_map', [
+//      'children' => ['map_link'],
+//      'parent_name' => '',
+//      'weight' => 20,
+//      'format_type' => 'html_element',
+//      'label' => '<span class="fa fa-map">&nbsp;&nbsp;</span>Map',
+//      'format_settings' => [
+//        'element' => 'div',
+//        'show_label' => true,
+//        'label_element' => 'h3',
+//        'attributes' => '',
+//        'effect' => 'none',
+//        'speed' => 'fast',
+//        'id' => '',
+//        'classes' => '',
+//      ],
+//    ]);
+//    $display->setComponent('map_link');
+//    $display->save();
+//  }
+//
+//
+//}

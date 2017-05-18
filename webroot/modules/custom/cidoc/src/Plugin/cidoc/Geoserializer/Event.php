@@ -19,7 +19,7 @@ class Event extends GeoserializerPluginBase {
     $points = [];
     // Try and fetch the geodata from the related places.
 
-    $place_entities = $entity->getForwardReferences(['p7_took_place_at']);
+    $place_entities = $entity->getForwardReferencedEntities(['p7_took_place_at']);
     foreach ($place_entities as $place_entity) {
       $values = [];
       if ($place_entity->field_geodata->count()) {

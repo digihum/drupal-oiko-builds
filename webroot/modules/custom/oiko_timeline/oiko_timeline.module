@@ -18,22 +18,23 @@ function oiko_timeline_theme($existing, $type, $theme, $path) {
  * Implements hook_preprocess_comparative_timeline().
  */
 function oiko_timeline_preprocess_comparative_timeline(&$variables, $hook) {
-  $variables['sidebar'] = [
-    '#theme' => 'sidebar',
-  ];
 
   $cidoc_entity_query = \Drupal::service('entity.query')
     ->get('cidoc_entity')
     ->condition('timeline_preselect_option', TRUE)
-    ->condition('status', TRUE);
+    ->condition('status', TRUE)
+    ->sort('name');
 
   $place_ids = $cidoc_entity_query->execute();
   $ids = $place_ids;
   $loaded = \Drupal::service('entity_type.manager')->getStorage('cidoc_entity')->loadMultiple($ids);
   $links = [];
 
+  $view_builder = \Drupal::service('entity_type.manager')->getViewBuilder('cidoc_entity');
+
   foreach ($loaded as $entity) {
-    $links[$entity->id()] = $entity->label();
+    $rendered = $view_builder->view($entity, 'timeline_preselection');
+    $links[$entity->id()] = render($rendered);
   }
 
   // Work out what items to show in the initial select.

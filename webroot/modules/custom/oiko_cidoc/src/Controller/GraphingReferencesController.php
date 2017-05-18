@@ -2,6 +2,7 @@
 
 namespace Drupal\oiko_cidoc\Controller;
 
+use Drupal\Core\Cache\CacheableJsonResponse;
 use Drupal\Core\Config\Entity\Query\QueryFactory;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -50,9 +51,10 @@ class GraphingReferencesController extends ControllerBase {
 
     // Try to get all references.
     $entity_storage = $this->entity_type_manager->getStorage('cidoc_reference');
+    $entities = $entity_storage->loadMultiple();
 
-    /** @var Drupal\cidoc\Entity\CidocReference $reference */
-    foreach ($entity_storage->loadMultiple() as $reference) {
+    /** @var \Drupal\cidoc\Entity\CidocReference $reference */
+    foreach ($entities as $reference) {
       $references[] = [
         'domain' => $reference->domain->getValue()[0]['target_id'],
         'property' => $reference->getPropertyLabel(),
@@ -60,7 +62,13 @@ class GraphingReferencesController extends ControllerBase {
        ];
     }
 
-    return new JsonResponse($references);
+    $response = new CacheableJsonResponse($references);
+    foreach ($entities as $entity) {
+      $response->addCacheableDependency($entity);
+    }
+    $definition = $this->entity_type_manager->getDefinition('cidoc_reference');
+    $response->getCacheableMetadata()->addCacheTags($definition->getListCacheTags());
+    return $response;
   }
 
 }

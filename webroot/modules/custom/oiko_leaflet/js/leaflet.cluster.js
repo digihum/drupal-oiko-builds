@@ -6,7 +6,8 @@
     if (mapDefinition.hasOwnProperty('clustering') && mapDefinition.clustering) {
       drupalLeaflet.clusterer = L.markerClusterGroup({
         // Make the radius of the clusters quite small.
-        maxClusterRadius: 40
+        maxClusterRadius: 10,
+
       });
       map.addLayer(drupalLeaflet.clusterer);
 
@@ -17,11 +18,6 @@
       // Set the lMap to be the main layer.
       drupalLeaflet.mainLayer = drupalLeaflet.lMap;
     }
-  });
-
-  $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
-    drupalLeaflet.lMap.removeLayer(lFeature);
-    drupalLeaflet.mainLayer.addLayer(lFeature);
   });
 
 })(jQuery);

@@ -186,6 +186,7 @@ class Eva extends DisplayPluginBase {
   }
 
   public function validateOptionsForm(&$form, FormStateInterface $form_state) {
+    parent::validateOptionsForm($form, $form_state);
     switch ($form_state->get('section')) {
       case 'entity_type':
         if (empty($form_state->getValue('entity_type'))) {
@@ -201,6 +202,14 @@ class Eva extends DisplayPluginBase {
       $errors[] = $this->t('Display "@display" must be attached to an entity.', array('@display' => $this->display['display_title']));
     }
     return $errors;
+  }
+
+  public function remove() {
+    // clean up display configs before the display disappears
+    $longname = $this->view->storage->get('id') . '_' . $this->display['id'];
+    _eva_clear_detached($longname);
+
+    parent::remove();
   }
 
   public function submitOptionsForm(&$form, FormStateInterface $form_state) {
