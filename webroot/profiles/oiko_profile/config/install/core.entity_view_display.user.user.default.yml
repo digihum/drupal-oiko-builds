@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.user.user.avatars_avatar_generator
     - field.field.user.user.avatars_user_picture
+    - field.field.user.user.field_contact_preference
     - field.field.user.user.field_terms_and_privacy
     - field.field.user.user.user_picture
   module:
@@ -29,4 +30,5 @@ content:
 hidden:
   avatars_avatar_generator: true
   avatars_user_picture: true
+  field_contact_preference: true
   field_terms_and_privacy: true
