@@ -4,7 +4,10 @@ dependencies: {  }
 crm_entity: e86_leaving
 id: e86_leaving
 label: 'E86 Leaving'
+<<<<<<< staging
 friendly_label: 'Leaving'
+=======
+>>>>>>> production
 weight: 0
 group: auxiliary
 description: "<p>This class comprises the activities that result in an instance of E39 Actor to be disassociated\nfrom an instance of E74 Group. This class does not imply initiative by either party.\nTypical scenarios include the termination of membership in a social organisation, ending the\nemployment at a company, divorce, and the end of tenure of somebody in an official position.</p>\n"

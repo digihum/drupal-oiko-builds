@@ -130,7 +130,23 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p107_has_current_or_former_membe':
-    weight: 23
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p143_joined':
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p144_joined_with':
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p145_separated':
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p146_separated_from':
+    weight: 4
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p143_joined':

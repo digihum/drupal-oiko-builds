@@ -13,7 +13,8 @@ dependencies:
 third_party_settings:
   field_group:
     group_temporal:
-      children: {  }
+      children:
+        - 'cidoc_properties:domain:p4_has_time_span'
       parent_name: group_tabset
       weight: 8
       label: When
@@ -42,7 +43,8 @@ third_party_settings:
         id: ''
         classes: ''
     group_where:
-      children: {  }
+      children:
+        - 'cidoc_properties:domain:p7_took_place_at'
       parent_name: group_tabset
       weight: 9
       label: Where
@@ -67,7 +69,9 @@ third_party_settings:
         id: ''
         required_fields: true
     group_who:
-      children: {  }
+      children:
+        - 'cidoc_properties:domain:p143_joined'
+        - 'cidoc_properties:domain:p14_carried_out_by'
       parent_name: group_tabset
       weight: 6
       label: People
@@ -80,7 +84,11 @@ third_party_settings:
         id: ''
         classes: ''
     group_influence:
-      children: {  }
+      children:
+        - 'cidoc_properties:domain:p15_was_influenced_by'
+        - 'cidoc_properties:range:p15_was_influenced_by'
+        - 'cidoc_properties:domain:p17_was_motivated_by'
+        - 'cidoc_properties:range:p17_was_motivated_by'
       parent_name: group_other
       weight: 9
       label: 'Influence and motivation'
@@ -105,7 +113,9 @@ third_party_settings:
         classes: ''
         id: ''
     group_what:
-      children: {  }
+      children:
+        - 'cidoc_properties:domain:p16_used_specific_object'
+        - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
       parent_name: group_tabset
       weight: 10
       label: Things
@@ -117,7 +127,13 @@ third_party_settings:
         id: ''
         required_fields: true
     group_geo_temp:
-      children: {  }
+      children:
+        - 'cidoc_properties:domain:p9_consists_of'
+        - 'cidoc_properties:range:p9_consists_of'
+        - 'cidoc_properties:domain:p10_falls_within'
+        - 'cidoc_properties:range:p10_falls_within'
+        - 'cidoc_properties:domain:p132_overlaps_with'
+        - 'cidoc_properties:domain:p133_is_separated_from'
       parent_name: group_other
       weight: 10
       label: 'Geo-temporal relationships'
@@ -172,7 +188,9 @@ third_party_settings:
         id: ''
         required_fields: true
     group_sequence:
-      children: {  }
+      children:
+        - 'cidoc_properties:domain:p134_continued'
+        - 'cidoc_properties:range:p134_continued'
       parent_name: group_other
       weight: 8
       label: Sequence
@@ -186,7 +204,7 @@ third_party_settings:
     group_groups:
       children:
         - 'cidoc_properties:domain:p144_joined_with'
-        - 'cidoc_properties:range:p143_joined'
+        - 'cidoc_properties:domain:p11_had_participant'
       parent_name: group_tabset
       weight: 7
       format_type: tab
