@@ -18,7 +18,10 @@
       $(window).bind('oikoSidebarOpening', function (e, id) {
         if (featureCache.hasOwnProperty(id)) {
           if (!map.getBounds().contains(featureCache[id])) {
-            map.panInsideBounds(featureCache[id]);
+            // Check to see if the map is visible.
+            if ($(map.getContainer()).is(':visible')) {
+              map.panInsideBounds(featureCache[id]);
+            }
           }
         }
       });

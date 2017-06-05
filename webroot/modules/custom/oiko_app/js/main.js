@@ -178,7 +178,7 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
           }
         }
 
-        if (changedNeeded) {
+        if (changedNeeded && state.visualisation === 'map') {
           map.setView({
             lat: state.mapState.lat,
             lng: state.mapState.lng
