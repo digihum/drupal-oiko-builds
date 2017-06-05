@@ -19,6 +19,8 @@ enabled_entities:
   - e69_death
   - e74_group
   - e82_actor_appellation
+  - e85_joining
+  - e86_leaving
   - o1_killing
   - o2_active_dissolution
   - o3_active_destruction
@@ -57,3 +59,7 @@ enabled_properties:
   - p132_overlaps_with
   - p133_is_separated_from
   - p134_continued
+  - p143_joined
+  - p144_joined_with
+  - p145_separated
+  - p146_separated_from

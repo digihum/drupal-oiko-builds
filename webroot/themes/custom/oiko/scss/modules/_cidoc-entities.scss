@@ -22,3 +22,38 @@
     }
   }
 }
+
+.subtitle {
+  display: flex;
+  align-items: center;
+  margin-bottom: $global-margin;
+  color: palette(oikoblue);
+
+  > div {
+    padding-right: $global-padding;
+    flex-grow: 0;
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  > .last {
+    flex-grow: 1;
+    text-align: right;
+  }
+
+  @each $size, $headers in $header-sizes {
+    @include from($size) {
+      @each $header, $font-size in $headers {
+        @if $header == 'h4' {
+          font-size: rem-calc($font-size, map-get($base-font-sizes, $size));
+        }
+      }
+    }
+  }
+}
+
+.add-event-basket-link {
+  font-size: 35px;
+}

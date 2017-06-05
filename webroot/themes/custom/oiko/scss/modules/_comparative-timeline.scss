@@ -1,8 +1,29 @@
+.oiko-app--timeline {
+  //overflow-y: scroll;
+  display: flex;
+}
+
 .comparative-timeline-container {
-  background-color: palette(grey, light);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-grow: 1;
+  background-color: palette(oikocream);
+
+  .subtitle {
+    @each $size, $headers in $header-sizes {
+      @include from($size) {
+        @each $header, $font-size in $headers {
+          @if $header == 'h5' {
+            font-size: rem-calc($font-size, map-get($base-font-sizes, $size));
+          }
+        }
+      }
+    }
+  }
 
   .vis-item {
-    height: 14px;
+    height: 16px;
     cursor: pointer;
     font-family: $small-copy-font-family;
     .vis-item-overflow {
@@ -18,11 +39,6 @@
   .vis-labelset .vis-label .vis-inner {
     min-height: 150px;
     max-width: 160px;
-  }
-
-  // Styling of the actual timeline at the bottom.
-  .vis-panel.vis-bottom {
-    background-color: rgba(palette(tan), .2);
   }
 
   // Styling of the different classifications of items.
@@ -51,30 +67,91 @@
   }
 }
 
+.comparative-timeline__inner {
+  flex-grow: 1;
+  min-height: 0;
+  overflow-y: scroll;
+}
+
 .comparative-timeline__header {
-  background-color: palette(white);
   position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
 
-  .leaflet-searchBox {
-    height: $sidebar-header-height;
+.comparative-timeline__footer {
+  min-height: 25px;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  .vis-timeline {
+    border: none;
+    box-shadow: none;
   }
 
-  .loading-graphic {
-    position: absolute;
-    top: ($sidebar-header-height - $ajax-loading-graphic-size) / 2;
-    right: ($sidebar-header-height - $ajax-loading-graphic-size) / 2 + 5px;
+  .vis-item.vis-background {
+    background-color:  rgba(palette(oikotan), 0.1);
+    border: none;
   }
+
+  // Style the current window bar
+  .currentWindow {
+    border: none;
+    background-color: rgba(palette(oikogrey), 0.5);
+    height: 40px;
+
+    .vis-drag-left,
+    .vis-drag-right {
+      background-color: palette(oikogrey);
+    }
+  }
+
+
 }
 
 .js-loading-graphic--comparative-timeline-working {
-  display: inline !important;
+  display: block !important;
 }
 
 .js-comparative-timeline-remove-link {
   cursor: pointer;
 }
 
+
+.comparative-timeline-preselections-wrapper .header {
+  text-align: center;
+  margin: $global-margin;
+}
+.comparative-timeline-preselections {
+  display: flex;
+  //justify-content: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  .smaller {
+    font-size: 80%;
+  }
+}
+
 .comparative-timeline--preselect-link {
-  @include pill(palette(tan));
+  background-color: darken(palette(oikocream), 10%);
+  width: 200px;
+  padding: $global-padding;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+  margin: 0 $global-margin/2 $global-margin;
+
+  .timeline-logo {
+    margin-bottom: $global-margin;
+  }
+
+  &:hover {
+    .button {
+      background-color: palette(oikotan);
+      border-color: palette(oikotan);
+    }
+
+  }
 }
 

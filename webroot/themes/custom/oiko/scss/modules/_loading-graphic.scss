@@ -2,7 +2,12 @@
 .loading-graphic {
   background-image: url('../images/ajax-loader.gif');
   background-repeat: no-repeat;
-  height: $ajax-loading-graphic-size;
-  width: $ajax-loading-graphic-size;
+  padding-left: $ajax-loading-graphic-size + 20px;
+  margin: $global-margin/2 $global-margin;
+  min-height: $ajax-loading-graphic-size;
+  line-height: $ajax-loading-graphic-size;
   display: none;
+  &.show {
+    display: block;
+  }
 }

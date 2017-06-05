@@ -206,6 +206,27 @@
         "description": "Composer plugin to merge multiple composer.json files"
     },
     {
+        "name": "Leaflet/Leaflet",
+        "version": "1.0.3",
+        "version_normalized": "1.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Leaflet/Leaflet.git",
+            "reference": "v1.0.3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/Leaflet/Leaflet/archive/v1.0.3.zip",
+            "reference": "v1.0.3",
+            "shasum": null
+        },
+        "require": {
+            "composer/installers": "^1.0.21"
+        },
+        "type": "drupal-library",
+        "installation-source": "dist"
+    },
+    {
         "name": "Leaflet/Leaflet.draw",
         "version": "0.3.0",
         "version_normalized": "0.3.0.0",
@@ -3518,17 +3539,17 @@
     },
     {
         "name": "drupal/core",
-        "version": "8.2.7",
-        "version_normalized": "8.2.7.0",
+        "version": "8.2.8",
+        "version_normalized": "8.2.8.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/drupal-composer/drupal-core.git",
-            "reference": "5d3fb8a93514f23198ac6848b2679ef1026d2326"
+            "url": "https://github.com/drupal/core.git",
+            "reference": "373da78477b659102afa56cb6fba4247c7c395ed"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/drupal-composer/drupal-core/zipball/5d3fb8a93514f23198ac6848b2679ef1026d2326",
-            "reference": "5d3fb8a93514f23198ac6848b2679ef1026d2326",
+            "url": "https://api.github.com/repos/drupal/core/zipball/373da78477b659102afa56cb6fba4247c7c395ed",
+            "reference": "373da78477b659102afa56cb6fba4247c7c395ed",
             "shasum": ""
         },
         "require": {
@@ -3670,7 +3691,7 @@
             "phpunit/phpunit": ">=4.8.28 <5",
             "symfony/css-selector": "~2.8"
         },
-        "time": "2017-03-15 20:19:51",
+        "time": "2017-04-19 16:45:52",
         "type": "drupal-core",
         "extra": {
             "patches_applied": {
@@ -3795,6 +3816,102 @@
         }
     },
     {
+        "name": "drupal/unlimited_number",
+        "version": "1.0.0-beta2",
+        "version_normalized": "1.0.0.0-beta2",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/unlimited_number",
+            "reference": "8.x-1.0-beta2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/unlimited_number-8.x-1.0-beta2.zip",
+            "reference": "8.x-1.0-beta2",
+            "shasum": "2976624472cfaa55591d3d4b6bbed8e0d1b9dcf9"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-beta2",
+                "datestamp": "1483409343"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Daniel Phin",
+                "homepage": "http://danielph.in",
+                "email": "pro@danielph.in",
+                "role": "Maintainer"
+            }
+        ],
+        "description": "Provides a render element and a widget for number fields.",
+        "homepage": "http://drupal.org/project/unlimited_number",
+        "support": {
+            "source": "https://github.com/dpi/unlimited_number",
+            "issues": "https://github.com/dpi/unlimited_number/issues"
+        }
+    },
+    {
+        "name": "drupal/avatars",
+        "version": "1.0.0-beta5",
+        "version_normalized": "1.0.0.0-beta5",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/avatars",
+            "reference": "8.x-1.0-beta5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/avatars-8.x-1.0-beta5.zip",
+            "reference": "8.x-1.0-beta5",
+            "shasum": "52a5b072161a830fbe71971dae5de7a54cd96c94"
+        },
+        "require": {
+            "drupal/core": "*",
+            "drupal/unlimited_number": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-beta5",
+                "datestamp": "1471615439"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Daniel Phin",
+                "homepage": "http://danielph.in",
+                "email": "pro@danielph.in",
+                "role": "Maintainer"
+            }
+        ],
+        "description": "Provides a selection of generated avatars for users.",
+        "homepage": "http://drupal.org/project/avatars",
+        "support": {
+            "source": "http://cgit.drupalcode.org/avatars"
+        }
+    },
+    {
         "name": "drupal/browsersync",
         "version": "1.0.0-beta1",
         "version_normalized": "1.0.0.0-beta1",
@@ -3894,13 +4011,13 @@
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/cm_config_tools",
-            "reference": "b1967c154c8c8fd62a0c5e6f285391cb8ead4cc0"
+            "reference": "af80d2a2b3d7e82eb83ece9ec6b7b285363d4882"
         },
         "require": {
             "drupal/config_update": "*",
             "drupal/core": "*"
         },
-        "time": "2017-03-07 10:40:20",
+        "time": "2017-04-11 14:45:16",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
@@ -3908,7 +4025,7 @@
             },
             "drupal": {
                 "version": "8.x-1.x-dev",
-                "datestamp": "1486461783"
+                "datestamp": "1488883384"
             }
         },
         "installation-source": "source",
@@ -4371,12 +4488,12 @@
         "version_normalized": "1.0.4.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/padraic/file_get_contents.git",
+            "url": "https://github.com/humbug/file_get_contents.git",
             "reference": "66797199019d0cb4529cb8d29c6f0b4c5085b53a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/padraic/file_get_contents/zipball/66797199019d0cb4529cb8d29c6f0b4c5085b53a",
+            "url": "https://api.github.com/repos/humbug/file_get_contents/zipball/66797199019d0cb4529cb8d29c6f0b4c5085b53a",
             "reference": "66797199019d0cb4529cb8d29c6f0b4c5085b53a",
             "shasum": ""
         },
@@ -4430,12 +4547,12 @@
         "version_normalized": "1.0.3.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/padraic/phar-updater.git",
+            "url": "https://github.com/humbug/phar-updater.git",
             "reference": "c17eeb3887dc4269d1b4837dc875d39e9f8149a8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/padraic/phar-updater/zipball/c17eeb3887dc4269d1b4837dc875d39e9f8149a8",
+            "url": "https://api.github.com/repos/humbug/phar-updater/zipball/c17eeb3887dc4269d1b4837dc875d39e9f8149a8",
             "reference": "c17eeb3887dc4269d1b4837dc875d39e9f8149a8",
             "shasum": ""
         },
@@ -4865,7 +4982,7 @@
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/devel",
-            "reference": "a492f4b150f190bdc62ac3fc9018da82fe1305d5"
+            "reference": "fbafbd4d1cd04f577294e793c350a8edb68e491a"
         },
         "require": {
             "drupal/core": "~8.0"
@@ -4873,15 +4990,15 @@
         "suggest": {
             "symfony/var-dumper": "Pretty print complex values better with var-dumper available"
         },
-        "time": "2017-01-19 08:35:20",
+        "time": "2017-04-10 08:04:17",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0-beta1+25-dev",
-                "datestamp": "1484815082"
+                "version": "8.x-1.0-rc1+4-dev",
+                "datestamp": "1490381283"
             }
         },
         "installation-source": "source",
@@ -5033,23 +5150,20 @@
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/eva",
-            "reference": "8709be144304b1349f98a6c6049b244f3e947c5b"
+            "reference": "66a6412d468e7620d62999b41f59cdc9223e17e5"
         },
         "require": {
             "drupal/core": "*"
         },
-        "time": "2017-01-17 01:51:39",
+        "time": "2017-03-17 01:22:49",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0-rc1+4-dev",
-                "datestamp": "1484617988"
-            },
-            "patches_applied": {
-                "EVA can display on unselected bundle": "https://www.drupal.org/files/issues/eva-2856350-display-mode-still-rendered-12.patch"
+                "version": "8.x-1.1-rc1+4-dev",
+                "datestamp": "1489714085"
             }
         },
         "installation-source": "source",
@@ -5654,19 +5768,61 @@
         }
     },
     {
-        "name": "Leaflet/Leaflet",
-        "version": "0.7.7",
-        "version_normalized": "0.7.7.0",
+        "name": "drupal/honeypot",
+        "version": "1.24.0",
+        "version_normalized": "1.24.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/Leaflet/Leaflet.git",
-            "reference": "v0.7.7"
+            "url": "https://git.drupal.org/project/honeypot",
+            "reference": "8.x-1.24"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/honeypot-8.x-1.24.zip",
+            "reference": "8.x-1.24",
+            "shasum": "f17d22e80a2b7226e4ee444900de0b933881ee40"
         },
         "require": {
-            "composer/installers": "^1.0.21"
+            "drupal/core": "~8.0"
         },
-        "type": "drupal-library",
-        "installation-source": "source"
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.24",
+                "datestamp": "1490277183"
+            },
+            "patches_applied": {
+                "Fix honeypot webform integration": "https://www.drupal.org/files/issues/honeypot-webform-integration-2870691-2.patch"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Jeff Geerling",
+                "homepage": "https://www.drupal.org/user/389011",
+                "email": "geerlingguy@mac.com"
+            }
+        ],
+        "description": "Mitigates spam form submissions using the honeypot method.",
+        "homepage": "https://www.drupal.org/project/honeypot",
+        "keywords": [
+            "deterrent",
+            "form",
+            "honeypot",
+            "honeytrap",
+            "php",
+            "spam"
+        ],
+        "support": {
+            "source": "http://cgit.drupalcode.org/honeypot"
+        }
     },
     {
         "name": "drupal/leaflet",
@@ -5678,8 +5834,7 @@
             "reference": "a3274e4"
         },
         "require": {
-            "drupal/core": "~8.0",
-            "leaflet/leaflet": "^0.7.7"
+            "drupal/core": "~8.0"
         },
         "time": "2016-04-04 21:22:53",
         "type": "drupal-module",
@@ -5751,7 +5906,7 @@
         "require": {
             "composer/installers": "^1.0.21"
         },
-        "time": "2016-05-02 15:43:10",
+        "time": "2016-09-20 10:25:00",
         "type": "drupal-module",
         "installation-source": "source"
     },
@@ -6367,6 +6522,85 @@
         "homepage": "https://www.drupal.org/project/twig_xdebug",
         "support": {
             "source": "http://cgit.drupalcode.org/twig_xdebug"
+        }
+    },
+    {
+        "name": "drupal/webform",
+        "version": "5.0.0-beta11",
+        "version_normalized": "5.0.0.0-beta11",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/webform",
+            "reference": "8.x-5.0-beta11"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/webform-8.x-5.0-beta11.zip",
+            "reference": "8.x-5.0-beta11",
+            "shasum": "76030da33a7067429bb44278925d44ecd47b23da"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-5.x": "5.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-5.0-beta11",
+                "datestamp": "1491471183"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Jacob Rockowitz (jrockowitz)",
+                "homepage": "https://www.drupal.org/u/jrockowitz",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Liam Morland",
+                "homepage": "https://www.drupal.org/user/493050"
+            },
+            {
+                "name": "fenstrat",
+                "homepage": "https://www.drupal.org/user/362649"
+            },
+            {
+                "name": "jrockowitz",
+                "homepage": "https://www.drupal.org/user/371407"
+            },
+            {
+                "name": "podarok",
+                "homepage": "https://www.drupal.org/user/116002"
+            },
+            {
+                "name": "quicksketch",
+                "homepage": "https://www.drupal.org/user/35821"
+            },
+            {
+                "name": "sanchiz",
+                "homepage": "https://www.drupal.org/user/1671246"
+            },
+            {
+                "name": "tedbow",
+                "homepage": "https://www.drupal.org/user/240860"
+            },
+            {
+                "name": "torotil",
+                "homepage": "https://www.drupal.org/user/865256"
+            }
+        ],
+        "description": "Enables the creation of webforms and questionnaires.",
+        "homepage": "https://drupal.org/project/webform",
+        "support": {
+            "source": "http://cgit.drupalcode.org/webform",
+            "issues": "https://drupal.org/project/issues/webform"
         }
     },
     {

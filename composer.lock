@@ -4,15 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa8ea6251c7febc8c80318ff7a12f33b",
+    "content-hash": "e1afe7a8308b14e39344a5550086e13b",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
-            "version": "0.7.7",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Leaflet/Leaflet.git",
-                "reference": "v0.7.7"
+                "reference": "v1.0.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Leaflet/Leaflet/archive/v1.0.3.zip",
+                "reference": "v1.0.3",
+                "shasum": null
             },
             "require": {
                 "composer/installers": "^1.0.21"
@@ -1226,6 +1232,52 @@
             }
         },
         {
+            "name": "drupal/avatars",
+            "version": "1.0.0-beta5",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/avatars",
+                "reference": "8.x-1.0-beta5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/avatars-8.x-1.0-beta5.zip",
+                "reference": "8.x-1.0-beta5",
+                "shasum": "52a5b072161a830fbe71971dae5de7a54cd96c94"
+            },
+            "require": {
+                "drupal/core": "*",
+                "drupal/unlimited_number": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-beta5",
+                    "datestamp": "1471615439"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Phin",
+                    "homepage": "http://danielph.in",
+                    "email": "pro@danielph.in",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Provides a selection of generated avatars for users.",
+            "homepage": "http://drupal.org/project/avatars",
+            "support": {
+                "source": "http://cgit.drupalcode.org/avatars"
+            }
+        },
+        {
             "name": "drupal/browsersync",
             "version": "1.0.0-beta1",
             "source": {
@@ -1278,7 +1330,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/cm_config_tools",
-                "reference": "b1967c154c8c8fd62a0c5e6f285391cb8ead4cc0"
+                "reference": "af80d2a2b3d7e82eb83ece9ec6b7b285363d4882"
             },
             "require": {
                 "drupal/config_update": "*",
@@ -1291,7 +1343,7 @@
                 },
                 "drupal": {
                     "version": "8.x-1.x-dev",
-                    "datestamp": "1486461783"
+                    "datestamp": "1488883384"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -1317,7 +1369,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/cm_config_tools"
             },
-            "time": "2017-03-07 10:40:20"
+            "time": "2017-04-11 14:45:16"
         },
         {
             "name": "drupal/color_field",
@@ -1617,16 +1669,16 @@
         },
         {
             "name": "drupal/core",
-            "version": "8.2.7",
+            "version": "8.2.8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/drupal-composer/drupal-core.git",
-                "reference": "5d3fb8a93514f23198ac6848b2679ef1026d2326"
+                "url": "https://github.com/drupal/core.git",
+                "reference": "373da78477b659102afa56cb6fba4247c7c395ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal-composer/drupal-core/zipball/5d3fb8a93514f23198ac6848b2679ef1026d2326",
-                "reference": "5d3fb8a93514f23198ac6848b2679ef1026d2326",
+                "url": "https://api.github.com/repos/drupal/core/zipball/373da78477b659102afa56cb6fba4247c7c395ed",
+                "reference": "373da78477b659102afa56cb6fba4247c7c395ed",
                 "shasum": ""
             },
             "require": {
@@ -1797,7 +1849,7 @@
                 "GPL-2.0+"
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
-            "time": "2017-03-15T20:19:51+00:00"
+            "time": "2017-04-19T16:45:52+00:00"
         },
         {
             "name": "drupal/csv_serialization",
@@ -1928,7 +1980,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/devel",
-                "reference": "a492f4b150f190bdc62ac3fc9018da82fe1305d5"
+                "reference": "fbafbd4d1cd04f577294e793c350a8edb68e491a"
             },
             "require": {
                 "drupal/core": "~8.0"
@@ -1942,8 +1994,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-beta1+25-dev",
-                    "datestamp": "1484815082"
+                    "version": "8.x-1.0-rc1+4-dev",
+                    "datestamp": "1490381283"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2005,7 +2057,7 @@
                 "issues": "http://drupal.org/project/devel",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
             },
-            "time": "2017-01-19 08:35:20"
+            "time": "2017-04-10 08:04:17"
         },
         {
             "name": "drupal/entity_reference_revisions",
@@ -2123,7 +2175,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/eva",
-                "reference": "8709be144304b1349f98a6c6049b244f3e947c5b"
+                "reference": "66a6412d468e7620d62999b41f59cdc9223e17e5"
             },
             "require": {
                 "drupal/core": "*"
@@ -2134,11 +2186,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-rc1+4-dev",
-                    "datestamp": "1484617988"
-                },
-                "patches_applied": {
-                    "EVA can display on unselected bundle": "https://www.drupal.org/files/issues/eva-2856350-display-mode-still-rendered-12.patch"
+                    "version": "8.x-1.1-rc1+4-dev",
+                    "datestamp": "1489714085"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2172,7 +2221,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/eva"
             },
-            "time": "2017-01-17 01:51:39"
+            "time": "2017-03-17 01:22:49"
         },
         {
             "name": "drupal/field_group",
@@ -2505,6 +2554,61 @@
             }
         },
         {
+            "name": "drupal/honeypot",
+            "version": "1.24.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/honeypot",
+                "reference": "8.x-1.24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/honeypot-8.x-1.24.zip",
+                "reference": "8.x-1.24",
+                "shasum": "f17d22e80a2b7226e4ee444900de0b933881ee40"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.24",
+                    "datestamp": "1490277183"
+                },
+                "patches_applied": {
+                    "Fix honeypot webform integration": "https://www.drupal.org/files/issues/honeypot-webform-integration-2870691-2.patch"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Jeff Geerling",
+                    "homepage": "https://www.drupal.org/user/389011",
+                    "email": "geerlingguy@mac.com"
+                }
+            ],
+            "description": "Mitigates spam form submissions using the honeypot method.",
+            "homepage": "https://www.drupal.org/project/honeypot",
+            "keywords": [
+                "deterrent",
+                "form",
+                "honeypot",
+                "honeytrap",
+                "php",
+                "spam"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/honeypot"
+            }
+        },
+        {
             "name": "drupal/leaflet",
             "version": "dev-1.x",
             "source": {
@@ -2513,8 +2617,7 @@
                 "reference": "a3274e4"
             },
             "require": {
-                "drupal/core": "~8.0",
-                "leaflet/leaflet": "^0.7.7"
+                "drupal/core": "~8.0"
             },
             "type": "drupal-module",
             "extra": {
@@ -2585,7 +2688,7 @@
                 "composer/installers": "^1.0.21"
             },
             "type": "drupal-module",
-            "time": "2016-05-02 15:43:10"
+            "time": "2016-09-20 10:25:00"
         },
         {
             "name": "drupal/metatag",
@@ -3085,6 +3188,129 @@
             "homepage": "https://www.drupal.org/project/twig_xdebug",
             "support": {
                 "source": "http://cgit.drupalcode.org/twig_xdebug"
+            }
+        },
+        {
+            "name": "drupal/unlimited_number",
+            "version": "1.0.0-beta2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/unlimited_number",
+                "reference": "8.x-1.0-beta2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/unlimited_number-8.x-1.0-beta2.zip",
+                "reference": "8.x-1.0-beta2",
+                "shasum": "2976624472cfaa55591d3d4b6bbed8e0d1b9dcf9"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-beta2",
+                    "datestamp": "1483409343"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Phin",
+                    "homepage": "http://danielph.in",
+                    "email": "pro@danielph.in",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Provides a render element and a widget for number fields.",
+            "homepage": "http://drupal.org/project/unlimited_number",
+            "support": {
+                "source": "https://github.com/dpi/unlimited_number",
+                "issues": "https://github.com/dpi/unlimited_number/issues"
+            }
+        },
+        {
+            "name": "drupal/webform",
+            "version": "5.0.0-beta11",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/webform",
+                "reference": "8.x-5.0-beta11"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/webform-8.x-5.0-beta11.zip",
+                "reference": "8.x-5.0-beta11",
+                "shasum": "76030da33a7067429bb44278925d44ecd47b23da"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-5.x": "5.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-5.0-beta11",
+                    "datestamp": "1491471183"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Jacob Rockowitz (jrockowitz)",
+                    "homepage": "https://www.drupal.org/u/jrockowitz",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Liam Morland",
+                    "homepage": "https://www.drupal.org/user/493050"
+                },
+                {
+                    "name": "fenstrat",
+                    "homepage": "https://www.drupal.org/user/362649"
+                },
+                {
+                    "name": "jrockowitz",
+                    "homepage": "https://www.drupal.org/user/371407"
+                },
+                {
+                    "name": "podarok",
+                    "homepage": "https://www.drupal.org/user/116002"
+                },
+                {
+                    "name": "quicksketch",
+                    "homepage": "https://www.drupal.org/user/35821"
+                },
+                {
+                    "name": "sanchiz",
+                    "homepage": "https://www.drupal.org/user/1671246"
+                },
+                {
+                    "name": "tedbow",
+                    "homepage": "https://www.drupal.org/user/240860"
+                },
+                {
+                    "name": "torotil",
+                    "homepage": "https://www.drupal.org/user/865256"
+                }
+            ],
+            "description": "Enables the creation of webforms and questionnaires.",
+            "homepage": "https://drupal.org/project/webform",
+            "support": {
+                "source": "http://cgit.drupalcode.org/webform",
+                "issues": "https://drupal.org/project/issues/webform"
             }
         },
         {
@@ -4108,12 +4334,12 @@
             "version": "1.0.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/padraic/file_get_contents.git",
+                "url": "https://github.com/humbug/file_get_contents.git",
                 "reference": "66797199019d0cb4529cb8d29c6f0b4c5085b53a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/file_get_contents/zipball/66797199019d0cb4529cb8d29c6f0b4c5085b53a",
+                "url": "https://api.github.com/repos/humbug/file_get_contents/zipball/66797199019d0cb4529cb8d29c6f0b4c5085b53a",
                 "reference": "66797199019d0cb4529cb8d29c6f0b4c5085b53a",
                 "shasum": ""
             },
@@ -4165,12 +4391,12 @@
             "version": "1.0.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/padraic/phar-updater.git",
+                "url": "https://github.com/humbug/phar-updater.git",
                 "reference": "c17eeb3887dc4269d1b4837dc875d39e9f8149a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/phar-updater/zipball/c17eeb3887dc4269d1b4837dc875d39e9f8149a8",
+                "url": "https://api.github.com/repos/humbug/phar-updater/zipball/c17eeb3887dc4269d1b4837dc875d39e9f8149a8",
                 "reference": "c17eeb3887dc4269d1b4837dc875d39e9f8149a8",
                 "shasum": ""
             },
@@ -7190,6 +7416,155 @@
             "time": "2015-06-14T21:17:01+00:00"
         },
         {
+            "name": "drupal/purl",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/purl",
+                "reference": "9f244923f7926de606e2abad8d961a822cf725ec"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.x-dev",
+                    "datestamp": "1471893239"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Ian Ward",
+                    "homepage": "https://www.drupal.org/user/4736"
+                },
+                {
+                    "name": "Jose Reyero",
+                    "homepage": "https://www.drupal.org/user/4299"
+                },
+                {
+                    "name": "alex_b",
+                    "homepage": "https://www.drupal.org/user/53995"
+                },
+                {
+                    "name": "bblake",
+                    "homepage": "https://www.drupal.org/user/620248"
+                },
+                {
+                    "name": "bezhermoso",
+                    "homepage": "https://www.drupal.org/user/3206871"
+                },
+                {
+                    "name": "febbraro",
+                    "homepage": "https://www.drupal.org/user/43670"
+                },
+                {
+                    "name": "jmiccolis",
+                    "homepage": "https://www.drupal.org/user/31731"
+                },
+                {
+                    "name": "mpotter",
+                    "homepage": "https://www.drupal.org/user/616192"
+                },
+                {
+                    "name": "tobby",
+                    "homepage": "https://www.drupal.org/user/154797"
+                },
+                {
+                    "name": "tom friedhof",
+                    "homepage": "https://www.drupal.org/user/62769"
+                },
+                {
+                    "name": "yhahn",
+                    "homepage": "https://www.drupal.org/user/264833"
+                }
+            ],
+            "description": "Persistent URL",
+            "homepage": "https://www.drupal.org/project/purl",
+            "support": {
+                "source": "http://cgit.drupalcode.org/purl"
+            },
+            "time": "2016-05-27 18:27:16"
+        },
+        {
+            "name": "drupal/stage_file_proxy",
+            "version": "1.0.0-alpha2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/stage_file_proxy",
+                "reference": "8.x-1.0-alpha2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/stage_file_proxy-8.x-1.0-alpha2.zip",
+                "reference": null,
+                "shasum": "e80ff02d173c8571d7b7005258bed110a62b7884"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-alpha2",
+                    "datestamp": "1491359584"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "BarisW",
+                    "homepage": "https://www.drupal.org/user/107229"
+                },
+                {
+                    "name": "axel.rutz",
+                    "homepage": "https://www.drupal.org/user/229048"
+                },
+                {
+                    "name": "greggles",
+                    "homepage": "https://www.drupal.org/user/36762"
+                },
+                {
+                    "name": "markdorison",
+                    "homepage": "https://www.drupal.org/user/346106"
+                },
+                {
+                    "name": "moshe weitzman",
+                    "homepage": "https://www.drupal.org/user/23"
+                },
+                {
+                    "name": "msonnabaum",
+                    "homepage": "https://www.drupal.org/user/75278"
+                },
+                {
+                    "name": "netaustin",
+                    "homepage": "https://www.drupal.org/user/199298"
+                },
+                {
+                    "name": "robwilmshurst",
+                    "homepage": "https://www.drupal.org/user/144488"
+                }
+            ],
+            "description": "Provides stage_file_proxy module.",
+            "homepage": "https://www.drupal.org/project/stage_file_proxy",
+            "support": {
+                "source": "http://cgit.drupalcode.org/stage_file_proxy"
+            }
+        },
+        {
             "name": "fabpot/goutte",
             "version": "v3.2.1",
             "source": {
@@ -8267,6 +8642,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/add_to_head": 20,
+        "drupal/avatars": 10,
         "drupal/cm_config_tools": 20,
         "drupal/config_devel": 20,
         "drupal/config_update": 20,
@@ -8276,7 +8652,9 @@
         "drupal/leaflet_widget": 20,
         "drupal/paragraphs": 5,
         "drupal/pathauto": 20,
+        "drupal/webform": 10,
         "oomphinc/composer-installers-extender": 20,
+        "drupal/stage_file_proxy": 15,
         "jcalderonzumba/gastonjs": 20
     },
     "prefer-stable": true,

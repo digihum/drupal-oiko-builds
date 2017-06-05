@@ -21,7 +21,7 @@ class Move extends GeoserializerPluginBase {
     $from_points = [];
     $to_points = [];
 
-    $from_entities = $entity->getForwardReferences(['p27_moved_from']);
+    $from_entities = $entity->getForwardReferencedEntities(['p27_moved_from']);
     foreach ($from_entities as $place_entity) {
       $values = [];
       if ($place_entity->field_geodata->count()) {
@@ -33,7 +33,7 @@ class Move extends GeoserializerPluginBase {
       }
     }
 
-    $to_entities = $entity->getForwardReferences(['p26_moved_to']);
+    $to_entities = $entity->getForwardReferencedEntities(['p26_moved_to']);
     foreach ($to_entities as $place_entity) {
       $values = [];
       if ($place_entity->field_geodata->count()) {

@@ -70,7 +70,7 @@
  *   in different view modes.
  */
 #}
-<article{{ attributes.addClass('forum-node') }}>
+<article{{ attributes.addClass('forum-post', 'clearfix') }}>
 
   {{ title_prefix }}
   {% if not page %}
@@ -81,9 +81,10 @@
   {{ title_suffix }}
 
   {% if display_submitted %}
-    <footer>
+    <footer class="callout forum--footer">
+      {{ author_picture }}
       <div{{ author_attributes }}>
-        {% trans %}Submitted by {{ author_name }}{% endtrans %}
+        {{ author_name }}
         <br />
         {{ date }}
         {{ metadata }}

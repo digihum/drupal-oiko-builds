@@ -1,0 +1,2 @@
+const $ = jQuery;
+export default $;
