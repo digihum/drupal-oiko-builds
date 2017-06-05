@@ -85,7 +85,8 @@
   flex-shrink: 0;
 
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 
   padding: 20px;
 
