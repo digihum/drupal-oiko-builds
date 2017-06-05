@@ -110,6 +110,11 @@ function oiko_preprocess_page(&$variables) {
     $variables['page']['content']['#attached']['library'][] = 'oiko/iframepage';
     $variables['page']['highlighted']['#attributes']['class'][] = 'js-no-process';
   }
+  $match = \Drupal::routeMatch();
+  if ($match->getRouteName() != 'entity.cidoc_entity.canonical' && !\Drupal::service('path.matcher')->isFrontPage()) {
+    // This isn't our app page, so add a library to help to get back to there!
+    $variables['page']['content']['#attached']['library'][] = 'oiko/oiko-redirector';
+  }
 }
 
 /**
