@@ -58,7 +58,7 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
     $(window).trigger('resize.oiko.map_container');
   };
 
-// Announce the visualisation state on page load.
+  // Announce the visualisation state on page load.
   $(window).bind('load', () => {
     const {visualisation} = store.getState();
     $(window).trigger('set.oiko.visualisation', visualisation);
@@ -70,6 +70,9 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
     }
   });
 
+  $(window).on('orientationchange', () => {
+    $(window).trigger('resize.oiko.map_container');
+  });
 
 // PHS category filter.
   $(window).bind('set.oiko.categories', (e, categories, internal) => {
