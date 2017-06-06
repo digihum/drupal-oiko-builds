@@ -60,9 +60,20 @@
       }
 
       // Add a click event that opens our marker in the sidebar.
-      lFeature.on('click', function () {
-        Drupal.oiko.openSidebar(feature.id);
-      });
+      if (L.Browser.touch) {
+        lFeature.on('preclick', function (e) {
+          // A second click should open the popup.
+          if (lFeature.isTooltipOpen()) {
+            Drupal.oiko.openSidebar(feature.id);
+          }
+        });
+
+      }
+      else {
+        lFeature.on('click', function (e) {
+          Drupal.oiko.openSidebar(feature.id);
+        });
+      }
     }
   });
 
