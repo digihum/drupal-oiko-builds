@@ -250,6 +250,9 @@
             },
             "drupal/honeypot": {
                 "Fix honeypot webform integration": "https://www.drupal.org/files/issues/honeypot-webform-integration-2870691-2.patch"
+            },
+            "drupal/eu_cookie_compliance": {
+                "Fix UI of consent on click: https://www.drupal.org/node/2811003": "https://www.drupal.org/files/issues/eu_cookie_compliance_consent_by_clicking-2811003-4.patch"
             }
         }
     },
