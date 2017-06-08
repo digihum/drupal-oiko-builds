@@ -136,21 +136,37 @@ Drupal.behaviors.comparative_timeline = {
     this.initialise.call(this);
   };
 
-  Drupal.OikoComparativeTimeline.prototype.getTimelines = function () {
-    return this._visGroups.getIds();
+  Drupal.OikoComparativeTimeline.prototype.getTimelines = function (includeLoading) {
+    if (typeof includeLoading === 'undefined') {
+      includeLoading = true;
+    }
+    if (includeLoading) {
+      var visGroups = this._visGroups.getIds();
+      var loadingItems = this.getLoadingIds();
+      return loadingItems.concat(visGroups);
+    }
+    else {
+      return this._visGroups.getIds();
+    }
   };
 
   Drupal.OikoComparativeTimeline.prototype.setTimelines = function (timelines) {
+    console.log('set timelines to', timelines);
+    if (!timelines.length) {debugger};
     // Remove all existing timelines.
-    var oldTimelines = this.getTimelines();
-    for (var i in oldTimelines) {
-      this.removeGroupFromTimeline(oldTimelines[i]);
-    }
+    this.removeGroupsFromTimeline(this.getTimelines(), false);
+
     // And now add the timelines we want.
     for (var i in timelines) {
       if (timelines[i] && !this.isLoadingCheck(timelines[i])) {
         this.loadDataHandler(timelines[i]);
       }
+    }
+
+    if (timelines.length) {
+      // Show/hide the preselections as needed.
+      this.updateTheDOM();
+      $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
     }
   };
 
@@ -184,15 +200,15 @@ Drupal.behaviors.comparative_timeline = {
   Drupal.OikoComparativeTimeline.prototype.loadDataHandler = function (groupID) {
     var timeline = this;
     var url = '/comparative-timeline/data/' + groupID;
-    this.nowLoading(groupID);
-    $.get(url, function(data) {
+    var request = $.get(url, function(data) {
       timeline.doneLoading.call(timeline, groupID);
       timeline.addDataToTimeline.call(timeline, data);
     });
+    this.nowLoading(groupID, request);
   };
 
-  Drupal.OikoComparativeTimeline.prototype.nowLoading = function(id) {
-    this.loadingItems[id] = true;
+  Drupal.OikoComparativeTimeline.prototype.nowLoading = function(id, request) {
+    this.loadingItems[id] = request;
     this.evalLoadingState();
   };
 
@@ -203,6 +219,19 @@ Drupal.behaviors.comparative_timeline = {
   Drupal.OikoComparativeTimeline.prototype.doneLoading = function(id) {
     delete this.loadingItems[id];
     this.evalLoadingState();
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.abortLoading = function(id) {
+    if (this.loadingItems[id]) {
+      console.log('aborting ', id);
+      this.loadingItems[id].abort();
+      delete this.loadingItems[id];
+    }
+    this.evalLoadingState();
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.getLoadingIds = function() {
+    return Object.keys(this.loadingItems);
   };
 
   Drupal.OikoComparativeTimeline.prototype.evalLoadingState = function() {
@@ -368,8 +397,18 @@ Drupal.behaviors.comparative_timeline = {
     this.rangeAdjusted = true;
   };
 
-  Drupal.OikoComparativeTimeline.prototype.removeGroupFromTimeline = function(groupId) {
+  Drupal.OikoComparativeTimeline.prototype.removeGroupFromTimeline = function(groupId, fireEvents) {
+    if (typeof fireEvents === 'undefined') {
+      fireEvents = true;
+    }
+
     var timeline = this;
+
+    // If we're loading this group, then abort that Ajax request.
+    if (this.isLoadingCheck(groupId)) {
+      this.abortLoading(groupId);
+    }
+
     // Find the items to remove.
     var ids = this._visItems.getIds({
       filter: function(item) {
@@ -404,9 +443,29 @@ Drupal.behaviors.comparative_timeline = {
       }
     }
 
-    // Show/hide the preselections as needed.
-    this.updateTheDOM();
-    $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
+    if (fireEvents) {
+      // Show/hide the preselections as needed.
+      this.updateTheDOM();
+      $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
+    }
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.removeGroupsFromTimeline = function(groups, fireEvents) {
+    if (typeof fireEvents === 'undefined') {
+      fireEvents = true;
+    }
+
+    if (groups.length) {
+      for (var i in groups) {
+        this.removeGroupFromTimeline(groups[i], false);
+      }
+
+      if (fireEvents) {
+        // Show/hide the preselections as needed.
+        this.updateTheDOM();
+        $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
+      }
+    }
   };
 
   Drupal.OikoComparativeTimeline.prototype.selectedTimelineItems = function (properties) {

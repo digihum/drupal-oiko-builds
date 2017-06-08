@@ -95,7 +95,9 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
 
     // Check to see if the timeslines displayed needs to change.
     const timelines = timeline.getTimelines();
-    if (comparativeTimelines.length !== timelines.length || comparativeTimelines.every((v, i) => v !== timelines[i])) {
+    if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length ||
+      // Non-empty, with different values.
+      (comparativeTimelines.length > 0 && comparativeTimelines.every((v, i) => v !== timelines[i])))) {
       timeline.setTimelines(comparativeTimelines);
     }
 
