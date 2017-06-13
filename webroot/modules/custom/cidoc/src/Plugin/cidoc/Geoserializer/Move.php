@@ -29,7 +29,11 @@ class Move extends GeoserializerPluginBase {
         foreach ($place_entity->field_geodata->getValue() as $value) {
           $values[] = $value['value'];
         }
-        $from_points = array_merge($from_points, leaflet_process_geofield($values));
+        $new_points = leaflet_process_geofield($values);
+        foreach ($new_points as $k => $v) {
+          $new_points[$k]['location'] = $place_entity->label();
+        }
+        $from_points = array_merge($from_points, $new_points);
       }
     }
 
@@ -41,7 +45,11 @@ class Move extends GeoserializerPluginBase {
         foreach ($place_entity->field_geodata->getValue() as $value) {
           $values[] = $value['value'];
         }
-        $to_points = array_merge($to_points, leaflet_process_geofield($values));
+        $new_points = leaflet_process_geofield($values);
+        foreach ($new_points as $k => $v) {
+          $new_points[$k]['location'] = $place_entity->label();
+        }
+        $to_points = array_merge($to_points, $new_points);
       }
     }
 
@@ -57,6 +65,7 @@ class Move extends GeoserializerPluginBase {
             $points[] = array(
               'type' => 'linestring',
               'directional' => TRUE,
+              'location' => $this->t('@from to @to', array('@from' => $from_point['location'], '@to' => $to_point['location'])),
               'points' => array(
                 array(
                   'lat' => $from_point['lat'],

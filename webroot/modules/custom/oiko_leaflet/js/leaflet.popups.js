@@ -47,7 +47,14 @@
       if (feature.popup) {
         // If this is a point, then we want the tooltip to not move around.
         var sticky = feature.type !== 'point';
-        lFeature.bindTooltip(feature.popup, {direction: 'bottom', opacity: 1, sticky: sticky});
+        var tooltipText = feature.popup;
+        if (feature.location) {
+          tooltipText = '<div class="leaflet-tooltip--location">' + feature.location + '</div><div class="leaflet-tooltip--popup">' + tooltipText + '</div>';
+        }
+        if (L.Browser.mobile) {
+          tooltipText = tooltipText + '<div class="leaflet-tooltip--cta">Tap for more information</div>';
+        }
+        lFeature.bindTooltip(tooltipText, {direction: 'bottom', opacity: 1, sticky: sticky, permanent: false});
       }
 
       // Store away the bounds of the feature.
