@@ -1,4 +1,5 @@
 <?php
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Block\MainContentBlockPluginInterface;
 use Drupal\Core\Block\MessagesBlockPluginInterface;
 use Drupal\Core\Block\TitleBlockPluginInterface;
@@ -114,6 +115,24 @@ function oiko_preprocess_page(&$variables) {
   if ($match->getRouteName() != 'entity.cidoc_entity.canonical' && !\Drupal::service('path.matcher')->isFrontPage()) {
     // This isn't our app page, so add a library to help to get back to there!
     $variables['page']['content']['#attached']['library'][] = 'oiko/oiko-redirector';
+  }
+  else {
+    // Get a nice entity to use as a demo.
+    $cidoc_entity_query = \Drupal::service('entity.query')
+      ->get('cidoc_entity')
+      ->condition('timeline_preselect_option', TRUE)
+      ->condition('status', TRUE)
+      ->sort('name');
+
+    $place_ids = $cidoc_entity_query->execute();
+    $id = array_rand($place_ids, 1);
+    $loaded = \Drupal::service('entity_type.manager')->getStorage('cidoc_entity')->loadMultiple([$place_ids[$id]]);
+
+    $view_builder = \Drupal::service('entity_type.manager')->getViewBuilder('cidoc_entity');
+
+    foreach ($loaded as $entity) {
+      $variables['page']['sidebardemo'] = $view_builder->view($entity, 'popup');
+    }
   }
 }
 
@@ -261,6 +280,9 @@ function oiko_preprocess_cidoc_entity(array &$variables) {
     }
   }
   if ($variables['elements']['#view_mode'] === 'popup') {
+    // Create a valid HTML ID for the tabs and make sure it is unique.
+    $variables['tabs_id'] = Html::getUniqueId('cidoc-popup-tabs');
+
     // Add the discussions view to the popup.
 
     $variables['discussion_panel'] = [

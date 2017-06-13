@@ -151,7 +151,6 @@ Drupal.behaviors.comparative_timeline = {
   };
 
   Drupal.OikoComparativeTimeline.prototype.setTimelines = function (timelines) {
-    console.log('set timelines to', timelines);
     if (!timelines.length) {debugger};
     // Remove all existing timelines.
     this.removeGroupsFromTimeline(this.getTimelines(), false);
@@ -223,7 +222,6 @@ Drupal.behaviors.comparative_timeline = {
 
   Drupal.OikoComparativeTimeline.prototype.abortLoading = function(id) {
     if (this.loadingItems[id]) {
-      console.log('aborting ', id);
       this.loadingItems[id].abort();
       delete this.loadingItems[id];
     }

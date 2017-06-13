@@ -55,6 +55,7 @@ tips:
     location: left
     next_label: null
     previous_label: null
+    information_bar: 1
   4-4-map-view:
     id: 4-4-map-view
     plugin: text
