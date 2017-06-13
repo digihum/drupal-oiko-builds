@@ -4,8 +4,37 @@ global-styling:
     theme:
       css/style.css: {}
       css/print.css: { media: print }
+  js:
+    scripts/vendor/foundation.min.js: {minified: true}
+    scripts/foundation.js: {}
+    scripts/highlighted-reveal.js: {}
   dependencies:
       - oiko/fonts
+      - core/drupal
+
+localforage-js:
+  version: 2.0.3
+  js:
+    scripts/vendor/localforage.nopromises.min.js: {minified: true}
+
+modal-welcome:
+  version: 1.1
+  js:
+    scripts/modal-welcome.js: {}
+  dependencies:
+    - oiko/global-styling
+    - oiko/visualization-switcher
+    - core/drupal
+    - core/jquery.once
+
+visualization-switcher:
+  version: 1.1
+  js:
+    scripts/visualization-switcher.js: {}
+  dependencies:
+    - oiko_app/app
+    - core/drupal
+    - core/jquery.once
 
 fonts:
   license:
@@ -13,5 +42,5 @@ fonts:
       url: http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web
   css:
     theme:
-      //fonts.googleapis.com/css?family=Alegreya+Sans:300,300i&subset=latin-ext:
+      //fonts.googleapis.com/css?family=Gilda+Display|Roboto&subset=latin-ext:
         type: external

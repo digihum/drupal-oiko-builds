@@ -1,0 +1,24 @@
+// Styling of the different classifications of items.
+.category-label--blue {
+  @include category-pill(palette(blue));
+}
+
+.category-label--green {
+  @include category-pill(palette(green));
+}
+
+.category-label--purple {
+  @include category-pill(palette(purple));
+}
+
+.category-label--red {
+  @include category-pill(palette(red));
+}
+
+.category-label--turquoise {
+  @include category-pill(palette(turquoise));
+}
+
+.category-label--yellow {
+  @include category-pill(palette(yellow));
+}

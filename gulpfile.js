@@ -40,7 +40,14 @@ gulp.task('watch:sass', ['watch:sass:oiko']);
 
 
 gulp.task('compile:js', function () {
-  // return gulp.src("**/*.js").pipe(sourcemaps.init()).pipe(browserSync.reload());
+  // For now, just copy a file out of the node modules folder.
+  var files = [
+    'node_modules/foundation-sites/dist/foundation.min.js',
+    'node_modules/localforage/dist/localforage.nopromises.min.js'
+  ];
+  return gulp
+    .src(files)
+    .pipe(gulp.dest('webroot/themes/custom/oiko/scripts/vendor'));
 });
 
 gulp.task('watch:js', ['compile:js'], function (done) {
@@ -52,17 +59,23 @@ gulp.task('watch:js', ['compile:js'], function (done) {
 gulp.task('watch', ['watch:sass', 'watch:js']);
 
 // Main compile task.
-gulp.task('compile', ['compile:sass']);
+gulp.task('compile', ['compile:sass', 'compile:js']);
 
 gulp.task('browsersync', ['watch'], function(){
   // Watch CSS and JS files
   var files = [
     'css/*css',
-    'js/*js'
+    'js/*js',
   ];
 
   //initialize browsersync
   browserSync.init(files);
 
-  gulp.watch('webroot/modules/**/*.js', ['watch:js']);
+  gulp.watch('webroot/**/*.js', ['watch:js']);
+  gulp.watch('webroot/**/*.twig', ['watch:twig']);
+});
+
+gulp.task('watch:twig', function (done) {
+  browserSync.reload();
+  done();
 });

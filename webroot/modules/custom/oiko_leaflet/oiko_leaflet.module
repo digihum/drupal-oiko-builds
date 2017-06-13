@@ -23,7 +23,7 @@ function oiko_leaflet_library_info_alter(array &$libraries, $module) {
           '/libraries/Leaflet/dist/leaflet.css' => array(),
         ),
       ),
-      'version' => '0.7.7',
+      'version' => 'v1.0.3',
       'license' => $libraries['leaflet'],
     );
 
@@ -160,3 +160,33 @@ function oiko_leaflet_entity_extra_field_info() {
 function oiko_leaflet_entity_view_alter(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display) {
   return \Drupal::service('oiko_leaflet.hook_implementations')->entity_view_alter($build, $entity, $display);
 }
+
+//function oiko_leaflet_add_to_displays() {
+//  $entity_type = 'cidoc_entity';
+//  $bundles = entity_get_bundles($entity_type);
+//  foreach ($bundles as $bundle => $bundle_info) {
+//    $display = entity_get_display($entity_type, $bundle, 'popup');
+//    // We need to ensure there's a field group.
+//    $display->setThirdPartySetting('field_group', 'group_map', [
+//      'children' => ['map_link'],
+//      'parent_name' => '',
+//      'weight' => 20,
+//      'format_type' => 'html_element',
+//      'label' => '<span class="fa fa-map">&nbsp;&nbsp;</span>Map',
+//      'format_settings' => [
+//        'element' => 'div',
+//        'show_label' => true,
+//        'label_element' => 'h3',
+//        'attributes' => '',
+//        'effect' => 'none',
+//        'speed' => 'fast',
+//        'id' => '',
+//        'classes' => '',
+//      ],
+//    ]);
+//    $display->setComponent('map_link');
+//    $display->save();
+//  }
+//
+//
+//}

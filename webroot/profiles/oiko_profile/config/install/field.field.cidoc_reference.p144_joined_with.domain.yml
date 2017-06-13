@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e85_joining
+    - cidoc.cidoc_property.p144_joined_with
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.p144_joined_with.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: p144_joined_with
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e85_joining: e85_joining
+    auto_create_bundle: e85_joining
+field_type: entity_reference

@@ -1,5 +1,9 @@
 .comparative-timeline-container {
-  background-color: palette(grey, light);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: palette(oikocream);
+  height: 100%;
 
   .vis-item {
     height: 14px;
@@ -18,11 +22,6 @@
   .vis-labelset .vis-label .vis-inner {
     min-height: 150px;
     max-width: 160px;
-  }
-
-  // Styling of the actual timeline at the bottom.
-  .vis-panel.vis-bottom {
-    background-color: rgba(palette(tan), .2);
   }
 
   // Styling of the different classifications of items.
@@ -51,30 +50,114 @@
   }
 }
 
-.comparative-timeline__header {
-  background-color: palette(white);
-  position: relative;
+.comparative-timeline__inner {
+  flex-grow: 1;
 
-  .leaflet-searchBox {
-    height: $sidebar-header-height;
+  .vis-time-axis.vis-foreground {
+    border-bottom: 2px solid palette(black);
+    z-index: 2;
+
+    $dot-size: 6px;
+    &:before {
+      content: "";
+      position: absolute;
+      bottom: -$dot-size;
+      left: -$dot-size;
+      height: 0;
+      width: 0;
+      border: $dot-size solid palette(black);
+      border-radius: $dot-size;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -$dot-size;
+      right: -$dot-size;
+      height: 0;
+      width: 0;
+      border: $dot-size solid palette(black);
+      border-radius: $dot-size;
+    }
   }
-
-  .loading-graphic {
-    position: absolute;
-    top: ($sidebar-header-height - $ajax-loading-graphic-size) / 2;
-    right: ($sidebar-header-height - $ajax-loading-graphic-size) / 2 + 5px;
+  .vis-panel.vis-center {
+    border-top: none;
   }
 }
 
+.comparative-timeline__header {
+  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.comparative-timeline__footer {
+  min-height: 25px;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  .vis-item.vis-background {
+    background-color:  rgba(palette(oikotan), 0.1);
+    border: none;
+
+    // Style the current window bar
+    &.currentWindow {
+      background-color: transparent;
+      border-bottom: 3px solid palette(black);
+      z-index: 2;
+
+      $dot-size: 6px;
+      &:before {
+        content: "";
+        position: absolute;
+        bottom: -$dot-size;
+        left: -$dot-size;
+        height: 0;
+        width: 0;
+        border: $dot-size solid palette(black);
+        border-radius: $dot-size;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: -$dot-size;
+        right: -$dot-size;
+        height: 0;
+        width: 0;
+        border: $dot-size solid palette(black);
+        border-radius: $dot-size;
+      }
+    }
+  }
+
+
+}
+
 .js-loading-graphic--comparative-timeline-working {
-  display: inline !important;
+  display: block !important;
 }
 
 .js-comparative-timeline-remove-link {
   cursor: pointer;
 }
 
+.comparative-timeline-preselections-wrapper .header {
+  text-align: center;
+  margin: $global-margin;
+}
+.comparative-timeline-preselections {
+  display: flex;
+  justify-content: center;
+}
+
 .comparative-timeline--preselect-link {
-  @include pill(palette(tan));
+  width: 200px;
+  padding: $global-padding;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+
+  .timeline-logo {
+    margin-bottom: $global-margin;
+  }
 }
 

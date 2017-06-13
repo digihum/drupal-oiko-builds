@@ -122,15 +122,16 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        id: ''
-        classes: ''
+        label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Known as'
         element: div
         show_label: true
         label_element: h3
         attributes: ''
         effect: none
         speed: fast
-      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Also known as'
+        id: ''
+        classes: ''
+      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Known as'
     group_map:
       children:
         - map_link

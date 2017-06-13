@@ -4,6 +4,11 @@ description: Install profile for the Oiko
 core: 8.x
 
 dependencies:
+  - oiko_event_basket
+  - honeypot
+  - webform
+  - block_content
+  - oiko_app
   - google_analytics
   - eu_cookie_compliance
   - eva
@@ -105,12 +110,18 @@ cm_config_tools:
     - system.menu.admin
     - system.menu.main
     - system.menu.tools
+    - tour.tour.map
+    - tour.tour.timeline
   managed:
+    - block.block.feedback
+    - block.block.mainnavigation
     - block.block.maplegendblock
+    - block.block.maincidocsearch
     - block.block.oiko_account_menu
     - block.block.oiko_branding
     - block.block.oiko_breadcrumbs
     - block.block.oiko_content
+    - block.block.oiko_event_basket
     - block.block.oiko_footer
     - block.block.oiko_help
     - block.block.oiko_local_actions
@@ -122,6 +133,7 @@ cm_config_tools:
     - block.block.oiko_tools
     - block.block.sharemessage
     - block.block.sharemessage_2
+    - block.block.welcomeblock
     - cidoc.cidoc_entity_bundle.e12_production
     - cidoc.cidoc_entity_bundle.e21_person
     - cidoc.cidoc_entity_bundle.e22_man_made_object
@@ -192,6 +204,7 @@ cm_config_tools:
     - core.date_format.long
     - core.date_format.medium
     - core.date_format.short
+    - core.entity_form_display.block_content.modal_welcome.default
     - core.entity_form_display.cidoc_entity.e12_production.default
     - core.entity_form_display.cidoc_entity.e21_person.default
     - core.entity_form_display.cidoc_entity.e22_man_made_object.default
@@ -320,6 +333,7 @@ cm_config_tools:
     - core.entity_form_display.taxonomy_term.forums.default
     - core.entity_form_mode.cidoc_reference.domain
     - core.entity_form_mode.cidoc_reference.range
+    - core.entity_view_display.block_content.modal_welcome.default
     - core.entity_view_display.cidoc_entity.e12_production.default
     - core.entity_view_display.cidoc_entity.e12_production.popup
     - core.entity_view_display.cidoc_entity.e12_production.preview
@@ -379,6 +393,7 @@ cm_config_tools:
     - core.entity_view_display.cidoc_entity.e74_group.popup
     - core.entity_view_display.cidoc_entity.e74_group.preview
     - core.entity_view_display.cidoc_entity.e74_group.summary
+    - core.entity_view_display.cidoc_entity.e74_group.timeline_preselection
     - core.entity_view_display.cidoc_entity.e7_activity.default
     - core.entity_view_display.cidoc_entity.e7_activity.popup
     - core.entity_view_display.cidoc_entity.e7_activity.preview
@@ -516,6 +531,7 @@ cm_config_tools:
     - core.entity_view_mode.cidoc_entity.search_index
     - core.entity_view_mode.cidoc_entity.summary
     - core.entity_view_mode.cidoc_entity.summary_without_map
+    - core.entity_view_mode.cidoc_entity.timeline_preselection
     - core.entity_view_mode.cidoc_entity.token
     - core.entity_view_mode.cidoc_reference.domain
     - core.entity_view_mode.cidoc_reference.range
@@ -631,6 +647,7 @@ cm_config_tools:
     - filter.format.basic_html
     - filter.format.restricted_html
     - google_analytics.settings
+    - honeypot.settings
     - image.style.comparative_timeline_logo
     - node.settings
     - node.type.forum
@@ -684,6 +701,50 @@ cm_config_tools:
     - views.view.p99_dissolved
     - views.view.p99_dissov_group
     - views.view.timeline
+    - cidoc.cidoc_entity_bundle.e85_joining
+    - cidoc.cidoc_entity_bundle.e86_leaving
+    - field.field.cidoc_reference.p143_joined.domain
+    - field.field.cidoc_reference.p143_joined.range
+    - field.field.cidoc_reference.p144_joined_with.domain
+    - field.field.cidoc_reference.p144_joined_with.range
+    - field.field.cidoc_reference.p145_separated.domain
+    - field.field.cidoc_reference.p145_separated.range
+    - field.field.cidoc_reference.p146_separated_from.domain
+    - field.field.cidoc_reference.p146_separated_from.range
+    - core.entity_form_display.cidoc_entity.e85_joining.default
+    - core.entity_form_display.cidoc_entity.e86_leaving.default
+    - core.entity_form_display.cidoc_reference.p143_joined.default
+    - core.entity_form_display.cidoc_reference.p143_joined.domain
+    - core.entity_form_display.cidoc_reference.p143_joined.range
+    - core.entity_form_display.cidoc_reference.p144_joined_with.default
+    - core.entity_form_display.cidoc_reference.p144_joined_with.domain
+    - core.entity_form_display.cidoc_reference.p144_joined_with.range
+    - core.entity_form_display.cidoc_reference.p145_separated.default
+    - core.entity_form_display.cidoc_reference.p145_separated.domain
+    - core.entity_form_display.cidoc_reference.p145_separated.range
+    - core.entity_form_display.cidoc_reference.p146_separated_from.default
+    - core.entity_form_display.cidoc_reference.p146_separated_from.domain
+    - core.entity_form_display.cidoc_reference.p146_separated_from.range
+    - cidoc.cidoc_property.p143_joined
+    - cidoc.cidoc_property.p144_joined_with
+    - cidoc.cidoc_property.p145_separated
+    - cidoc.cidoc_property.p146_separated_from
+    - core.entity_view_display.cidoc_reference.p143_joined.default
+    - core.entity_view_display.cidoc_reference.p143_joined.domain
+    - core.entity_view_display.cidoc_reference.p143_joined.range
+    - core.entity_view_display.cidoc_reference.p144_joined_with.default
+    - core.entity_view_display.cidoc_reference.p144_joined_with.domain
+    - core.entity_view_display.cidoc_reference.p144_joined_with.range
+    - core.entity_view_display.cidoc_reference.p145_separated.default
+    - core.entity_view_display.cidoc_reference.p145_separated.domain
+    - core.entity_view_display.cidoc_reference.p145_separated.range
+    - core.entity_view_display.cidoc_reference.p146_separated_from.default
+    - core.entity_view_display.cidoc_reference.p146_separated_from.domain
+    - core.entity_view_display.cidoc_reference.p146_separated_from.range
+    - block.block.welcomeblock
+    - core.entity_form_display.block_content.modal_welcome.default
+    - core.entity_view_display.block_content.modal_welcome.default
+    - webform.webform.feedback
   delete:
     - views.view.appelations
     - views.view.appelations_real_names
@@ -710,6 +771,9 @@ cm_config_tools:
     - views.view.p9_
     - views.view.p9_forms_part_of
     - views.view.people
+    - views.view.places_people_went
+    - views.view.time_span_directly_linked_events
+    - views.view.time_span_within_period
     - views.view.person_death
     - views.view.person_killed
     - views.view.person_parents
@@ -717,4 +781,8 @@ cm_config_tools:
     - views.view.time_span_directly_linked_events
     - views.view.time_span_within_period
   implicit:
+    - block_content.type.modal_welcome
+    - field.field.block_content.modal_welcome.body
+    - field.storage.block_content.body
+    - image.style.thumbnail
     - node.type.content_page

@@ -53,6 +53,8 @@ class EmpireController extends ControllerBase {
       ->exists('field_empire_outline')
       ->execute();
 
+    $loaded = [];
+
     if (!empty($results)) {
       $loaded = $storage->loadMultiple($results);
       /** @var CidocEntity $cidoc_entity */
@@ -74,7 +76,13 @@ class EmpireController extends ControllerBase {
       }
     }
 
-    return new CacheableJsonResponse($data);
+    $response = new CacheableJsonResponse($data);
+    foreach ($loaded as $entity) {
+      $response->addCacheableDependency($entity);
+    }
+    $definition = $this->entity_type_manager->getDefinition('cidoc_entity');
+    $response->getCacheableMetadata()->addCacheTags($definition->getListCacheTags());
+    return $response;
   }
 
 }

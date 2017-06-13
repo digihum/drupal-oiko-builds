@@ -209,13 +209,19 @@ th.checkbox {
   vertical-align: -webkit-baseline-middle;
   transition: border-color 0.25s ease-out, background-color 0.25s ease-out, color 0.25s ease-out;
   &:hover {
-    background-color: palette(tan);
-    border-color: palette(tan);
+    background-color: palette(oikotan);
+    border-color: palette(oikotan);
   }
 }
 .button-highlight {
-  border-color: palette(tan);
-  background-color: palette(tan);
+  border-color: palette(oikotan);
+  background-color: palette(oikotan);
+  color: palette(white);
+  &:hover, &:focus {
+    border-color: palette(oikotan);
+    background-color: transparent;
+    color: palette(oikotan);
+  }
 }
 
 #{text-inputs()}, textarea {
@@ -237,16 +243,6 @@ select {
   }
 }
 
-[type='checkbox'] {
-  border: 1px solid palette(black, dark);
-  height: $input-font-size;
-  width: $input-font-size;
-  -webkit-appearance: none;
-}
-[type='checkbox']:checked {
-  -webkit-appearance: checkbox;
-}
-
 .hide-in-small-layout {
   @include hide-in-small-layout;
 }
@@ -266,5 +262,31 @@ select {
         background-color: palette($color-name, $shade);
       }
     }
+  }
+}
+
+.tabs.vertical {
+  border: none;
+}
+
+
+.tabs .tabs-title a {
+  text-decoration: none;
+  &:hover {
+    color: palette(oikotan);
+    font-weight: bold;
+  }
+
+  &:focus,
+  &[aria-selected='true'] {
+    color: palette(oikotan);
+    font-weight: bold;
+  }
+}
+
+.tabs.vertical .tabs-title {
+  border-bottom: 1px solid $light-gray;
+  &:last-child {
+    border-bottom: none;
   }
 }

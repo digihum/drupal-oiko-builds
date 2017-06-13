@@ -21,13 +21,19 @@ abstract class GeoserializerPluginBase extends PluginBase implements Geoserializ
     ));
     $point['id'] = $entity->id();
 
-    // Convert cultural significance to color.
-    if (($significance = $entity->significance->entity) && ($color = $significance->field_icon_color->getValue()[0]['value'])) {
-      $point['color'] = $color;
+    if ($significance = $entity->significance->entity) {
+      $entity->addCacheableDependency($significance);
+      $point['significance_id'] = $significance->id();
+      $point['significance'] = $significance->label();
+      // Convert cultural significance to color.
+      if ($color = $significance->field_icon_color->getValue()[0]['value']) {
+        $point['color'] = $color;
+      }
+      else {
+        $point['color'] = 'blue';
+      }
     }
-    else {
-      $point['color'] = 'blue';
-    }
+
     return $point;
   }
 

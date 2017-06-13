@@ -18,9 +18,6 @@ $palettes: (
                 base: #3D3D3D,
                 light: #F4F4F4,
         ),
-        tan : (
-                base: #FE734A,
-        ),
         blue : (
                 base: #4798D0,
         ),
@@ -54,6 +51,21 @@ $palettes: (
         satin: (
                 base: #D4C5C4,
         ),
+        oikoblue: (
+                base: #607987,
+        ),
+        oikogreen: (
+                base: #82AEB1,
+        ),
+        oikotan : (
+                base: #DD6E42,
+        ),
+        oikocream: (
+                base: #F3F0EB,
+        ),
+        oikogrey: (
+                base: #97A7B3,
+        )
 );
 
 // Global foundation settings
@@ -70,15 +82,15 @@ $foundation-palette: (
         warning: #ffae00,
         alert: #ec5840,
 );
-$light-gray: palette(grey, light);
+$light-gray: palette(oikogrey);
 $medium-gray: palette(grey);
 $dark-gray: palette(grey, dark);
 $black: palette(black);
-$white: palette(white);
-$body-background: palette(white);
+$white: palette(oikocream);
+$body-background: palette(oikocream);
 $body-font-color: palette(black, dark);
-$body-font-family: 'Alegreya Sans', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
-$small-copy-font-family: Arial, sans-serif;
+$body-font-family: 'Gilda Display', serif;
+$small-copy-font-family: 'Roboto', sans-serif;
 $body-antialiased: true;
 $global-margin: rem-calc(15);
 $global-padding: rem-calc(15);
@@ -152,15 +164,6 @@ $susy: (
 // Base Typography
 // ------------------
 
-// I went through the PSD's and visually compared pt font sizes with in-browser
-// px sizes, and came up with the following 'best matches'
-// 36pt -> 38px
-// 24pt -> 25px
-// 18pt -> 19px
-// 16pt -> 17px
-// 14pt -> 14px
-// 12pt -> 12px
-
 $header-font-family: $body-font-family;
 $header-font-weight: $global-weight-normal;
 $header-font-style: normal;
@@ -168,7 +171,7 @@ $font-family-monospace: Consolas, 'Liberation Mono', Courier, monospace;
 // We're changing base font size on mobile, so we need a custom map so we can do
 // appropriate rem-calcs per breakpoint.
 $base-font-sizes: (
-        xs: 12px,
+        xs: $global-font-size,
         m: $global-font-size,
 );
 $header-sizes: (
@@ -193,7 +196,7 @@ $header-color: inherit;
 $header-lineheight: 1.4;
 $header-margin-bottom: 0.5rem;
 $header-text-rendering: optimizeLegibility;
-$small-font-size: 80%;
+$small-font-size: 70%;
 $header-small-font-color: $medium-gray;
 $paragraph-lineheight: 1.6;
 $paragraph-margin-bottom: 1rem;
@@ -205,7 +208,7 @@ $code-background: $light-gray;
 $code-border: 1px solid $medium-gray;
 $code-padding: rem-calc(2 5 1);
 $anchor-color: inherit;
-$anchor-color-hover: palette(tan);
+$anchor-color-hover: palette(oikotan);
 $anchor-text-decoration: underline;
 $anchor-text-decoration-hover: underline;
 $hr-width: $global-width;
@@ -234,12 +237,21 @@ $abbr-underline: 1px dotted $black;
 $breadcrumbs-margin: $global-margin 0;
 $breadcrumbs-item-font-size: rem-calc(14);
 $breadcrumbs-item-color: palette(rust);
-$breadcrumbs-item-color-current: palette(tan);
+$breadcrumbs-item-color-current: palette(oikotan);
 $breadcrumbs-item-slash: false;
 $tab-item-font-size: rem-calc(14);
 $tab-item-background-hover: $light-gray;
 $sidebar-header-height: 40px;
 $ajax-loading-graphic-size: 32px;
+$sidebar-icon-font-size: rem-calc(30);
+$sidebar-icon-line-height: rem-calc(30);
+$content-header-height: 70px;
+
+// Reveal
+// ---------
+$reveal-border: none;
+$reveal-zindex: 10000;
+$reveal-overlay-background: rgba(black, 0.7);
 
 // Forms
 // ---------
@@ -256,7 +268,7 @@ $input-placeholder-color: palette(grey, mid-dark);
 $close-button-size: 50px;
 $button-fill: hollow;
 $button-color: $black;
-$button-padding: 0.85em 3em;
+$button-padding: 0.85em 1em;
 $button-sizes: (
         tiny: 0.6rem,
         small: 0.75rem,
