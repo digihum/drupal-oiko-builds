@@ -163,6 +163,7 @@
     "require-dev": {
         "behat/mink": "~1.6",
         "behat/mink-goutte-driver": "~1.2",
+        "drupal/stage_file_proxy": "^1.0@alpha",
         "jcalderonzumba/gastonjs": "^1.1@dev",
         "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
         "mikey179/vfsStream": "~1.2",
@@ -249,6 +250,9 @@
             },
             "drupal/honeypot": {
                 "Fix honeypot webform integration": "https://www.drupal.org/files/issues/honeypot-webform-integration-2870691-2.patch"
+            },
+            "drupal/eu_cookie_compliance": {
+                "Fix UI of consent on click: https://www.drupal.org/node/2811003": "https://www.drupal.org/files/issues/eu_cookie_compliance_consent_by_clicking-2811003-4.patch"
             }
         }
     },

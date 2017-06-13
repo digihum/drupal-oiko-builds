@@ -58,7 +58,7 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
     $(window).trigger('resize.oiko.map_container');
   };
 
-// Announce the visualisation state on page load.
+  // Announce the visualisation state on page load.
   $(window).bind('load', () => {
     const {visualisation} = store.getState();
     $(window).trigger('set.oiko.visualisation', visualisation);
@@ -70,6 +70,9 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
     }
   });
 
+  $(window).on('orientationchange', () => {
+    $(window).trigger('resize.oiko.map_container');
+  });
 
 // PHS category filter.
   $(window).bind('set.oiko.categories', (e, categories, internal) => {
@@ -92,7 +95,9 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
 
     // Check to see if the timeslines displayed needs to change.
     const timelines = timeline.getTimelines();
-    if (comparativeTimelines.length !== timelines.length || comparativeTimelines.every((v, i) => v !== timelines[i])) {
+    if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length ||
+      // Non-empty, with different values.
+      (comparativeTimelines.length > 0 && comparativeTimelines.every((v, i) => v !== timelines[i])))) {
       timeline.setTimelines(comparativeTimelines);
     }
 
@@ -178,7 +183,7 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
           }
         }
 
-        if (changedNeeded) {
+        if (changedNeeded && state.visualisation === 'map') {
           map.setView({
             lat: state.mapState.lat,
             lng: state.mapState.lng

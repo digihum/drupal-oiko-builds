@@ -18,7 +18,10 @@
       $(window).bind('oikoSidebarOpening', function (e, id) {
         if (featureCache.hasOwnProperty(id)) {
           if (!map.getBounds().contains(featureCache[id])) {
-            map.panInsideBounds(featureCache[id]);
+            // Check to see if the map is visible.
+            if ($(map.getContainer()).is(':visible')) {
+              map.panInsideBounds(featureCache[id]);
+            }
           }
         }
       });
@@ -44,7 +47,14 @@
       if (feature.popup) {
         // If this is a point, then we want the tooltip to not move around.
         var sticky = feature.type !== 'point';
-        lFeature.bindTooltip(feature.popup, {direction: 'bottom', opacity: 1, sticky: sticky});
+        var tooltipText = feature.popup;
+        if (feature.location) {
+          tooltipText = '<div class="leaflet-tooltip--location">' + feature.location + '</div><div class="leaflet-tooltip--popup">' + tooltipText + '</div>';
+        }
+        if (L.Browser.mobile) {
+          tooltipText = tooltipText + '<div class="leaflet-tooltip--cta">Tap for more information</div>';
+        }
+        lFeature.bindTooltip(tooltipText, {direction: 'bottom', opacity: 1, sticky: sticky, permanent: false});
       }
 
       // Store away the bounds of the feature.
@@ -57,9 +67,20 @@
       }
 
       // Add a click event that opens our marker in the sidebar.
-      lFeature.on('click', function () {
-        Drupal.oiko.openSidebar(feature.id);
-      });
+      if (L.Browser.touch) {
+        lFeature.on('preclick', function (e) {
+          // A second click should open the popup.
+          if (lFeature.isTooltipOpen()) {
+            Drupal.oiko.openSidebar(feature.id);
+          }
+        });
+
+      }
+      else {
+        lFeature.on('click', function (e) {
+          Drupal.oiko.openSidebar(feature.id);
+        });
+      }
     }
   });
 

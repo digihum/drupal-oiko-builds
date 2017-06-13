@@ -1,8 +1,28 @@
+#sliding-popup .popup-content {
+  display: flex;
+  align-items: center;
+  max-width: $max-width;
+}
+
 #sliding-popup .popup-content #popup-text {
-  margin-top: 39px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  margin: 0 10px;
+  float: none;
+  max-width: none;
 }
 #sliding-popup .popup-content #popup-buttons {
-  margin: 15px 0 30px 0;
+  margin: 0;
+  flex-grow: 1;
+  flex-shrink: 0;
+  text-align: right;
+  @include to('s') {
+    flex-shrink: 1;
+    text-align: center;
+  }
+  float: none;
+  max-width: none;
+
 }
 
 #sliding-popup .popup-content #popup-buttons button {
@@ -15,8 +35,12 @@
   background: inherit;
   background-color: palette(oikotan);
   color: #FFF;
-  padding: 0.85em 1em;
+  padding: 0.8em 1em;
   border: 2px solid  palette(oikotan);
+  margin-top: 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 #sliding-popup .popup-content #popup-buttons button:hover {
