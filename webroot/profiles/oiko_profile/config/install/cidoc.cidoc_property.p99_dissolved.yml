@@ -8,10 +8,10 @@ reverse_label: 'P99 was dissolved by'
 friendly_label: Dissolved
 reverse_friendly_label: 'Was dissolved by'
 domain_bundles:
-  e68_dissolution: e68_dissolution
-  o2_active_dissolution: o2_active_dissolution
+  - e68_dissolution
+  - o2_active_dissolution
 range_bundles:
-  e74_group: e74_group
+  - e74_group
 editability:
   domain: true
   range: true

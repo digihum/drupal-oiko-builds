@@ -5,13 +5,13 @@ id: p145_separated
 label: 'P145 separated'
 bidirectional: false
 reverse_label: 'P145 left by'
-friendly_label: 'separated'
+friendly_label: separated
 reverse_friendly_label: 'left by'
 domain_bundles:
-  e21_person: e21_person
+  - e86_leaving
 range_bundles:
-  e21_person: e21_person
-  e86_leaving: e86_leaving
+  1: e21_person
+  2: e74_group
 editability:
   domain: true
   range: true

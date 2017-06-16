@@ -5,12 +5,12 @@ id: p146_separated_from
 label: 'P146 separated from'
 bidirectional: false
 reverse_label: 'P146 lost member by'
-friendly_label:  'separated from'
+friendly_label: 'separated from'
 reverse_friendly_label: 'lost member by'
 domain_bundles:
-  e86_leaving: e86_leaving
+  - e86_leaving
 range_bundles:
-  e74_group: e74_group
+  - e74_group
 editability:
   domain: true
   range: true
