@@ -103,9 +103,10 @@
     attach: function(context) {
       $('.discussion-iframe', context).once('oiko_iframe_container').each(function() {
         var $this = $(this);
+        var isOldIE = (navigator.userAgent.indexOf("MSIE") !== -1); // Detect IE10 and below
         $this.iFrameResize({
           log: false,
-          heightCalculationMethod: 'taggedElement',
+          heightCalculationMethod: isOldIE ? 'max' : 'lowestElement',
           messageCallback: Drupal.oiko.iframeMessageCallback($this)
         });
       });
