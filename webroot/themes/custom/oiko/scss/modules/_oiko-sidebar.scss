@@ -71,18 +71,26 @@
     display: block;
   }
   width: 100%;
-  @include from('m') {
+  @include to('s') {
+    position: absolute;
+    z-index: 10000;
+  }
+  @include at('m') {
+    width: 50%;
+  }
+  @include from('l') {
     width: 33%;
   }
   flex-grow: 0;
   flex-shrink: 0;
 
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 
   padding: 20px;
 
-  @include from('m') {
+  @media screen and (orientation: landscape) {
     .showing-map & {
       border-right: 2px solid palette(oikoblue);
     }
@@ -111,6 +119,7 @@
         text-align: right;
       }
     }
+
     @include to('s') {
       &.with-padding {
         padding: 20px;
@@ -126,6 +135,34 @@
     .loading-graphic {
       position: relative;
       left: calc(50% - #{$ajax-loading-graphic-size/2 + 20px});
+    }
+  }
+}
+
+// Do weird things on a portrait screen.
+@include from('m') {
+  @media screen and (orientation: portrait) {
+
+    .l-main-content {
+      flex-direction: column;
+    }
+
+    .l-sidebar-content {
+      flex-grow: 1;
+      width: 100%;
+      flex-basis: 1px;
+      border-top: 2px solid palette(oikoblue);
+      border-bottom: 2px solid palette(oikoblue);
+      padding: 20px 20px 20px;
+      .showing-timeline & {
+        order: 1;
+      }
+    }
+
+    .oiko-app {
+      flex-grow: 1;
+      width: 100%;
+      flex-basis: 1px;
     }
   }
 }

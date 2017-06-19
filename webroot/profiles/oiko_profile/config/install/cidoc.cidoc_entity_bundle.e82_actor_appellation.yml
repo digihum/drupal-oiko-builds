@@ -7,8 +7,8 @@ label: 'E82 Actor Appellation'
 friendly_label: 'Actor Appellation'
 weight: 25
 group: auxiliary
-description: "<p>This class comprises any sort of name, number, code or symbol characteristically used to\r\nidentify an E39 Actor.</p>\r\n\r\n<p>An E39 Actor will typically have more than one E82 Actor Appellation, and instances of E82\r\nActor Appellation in turn may have alternative representations. The distinction between\r\ncorporate and personal names, which is particularly important in library applications, should\r\nbe made by explicitly linking the E82 Actor Appellation to an instance of either E21 Person or\r\nE74 Group/E40 Legal Body. If this is not possible, the distinction can be made through the use\r\nof the P2 has type mechanism.</p>\r\n"
-examples: "<ul>\r\n<li>“John Doe”</li>\r\n<li>“Doe, J”</li>\r\n<li>“the U.S. Social Security Number 246-14-2304”</li>\r\n<li>“the Artist Formerly Known as Prince”</li>\r\n<li>“the Master of the Flemish Madonna”</li>\r\n<li>“Raphael’s Workshop”</li>\r\n<li>“the Brontë Sisters”</li>\r\n<li>“ICOM”</li>\r\n<li>“International Council of Museums”</li>\r\n</ul>\r\n"
+description: "<p>This class comprises any sort of name, number, code or symbol characteristically used to\nidentify an E39 Actor.</p>\n\n<p>An E39 Actor will typically have more than one E82 Actor Appellation, and instances of E82\nActor Appellation in turn may have alternative representations. The distinction between\ncorporate and personal names, which is particularly important in library applications, should\nbe made by explicitly linking the E82 Actor Appellation to an instance of either E21 Person or\nE74 Group/E40 Legal Body. If this is not possible, the distinction can be made through the use\nof the P2 has type mechanism.</p>\n"
+examples: "<ul>\n<li>“John Doe”</li>\n<li>“Doe, J”</li>\n<li>“the U.S. Social Security Number 246-14-2304”</li>\n<li>“the Artist Formerly Known as Prince”</li>\n<li>“the Master of the Flemish Madonna”</li>\n<li>“Raphael’s Workshop”</li>\n<li>“the Brontë Sisters”</li>\n<li>“ICOM”</li>\n<li>“International Council of Museums”</li>\n</ul>\n"
 geoserializers:
   event: '0'
   move: '0'

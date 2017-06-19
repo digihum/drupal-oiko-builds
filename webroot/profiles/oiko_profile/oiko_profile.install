@@ -241,3 +241,10 @@ function oiko_profile_update_8128() {
 function oiko_profile_update_8129() {
   \Drupal::service('module_installer')->install(['inside_iframe']);
 }
+
+/**
+ * Install r4032login module module.
+ */
+function oiko_profile_update_8130() {
+  \Drupal::service('module_installer')->install(['r4032login']);
+}

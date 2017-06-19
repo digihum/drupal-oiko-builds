@@ -7,8 +7,8 @@ label: 'E49 Time Appellation'
 friendly_label: 'Time Appellation'
 weight: 24
 group: auxiliary
-description: "<p>This class comprises all forms of names or codes, such as historical periods, and dates, which\r\nare characteristically used to refer to a specific E52 Time-Span.</p>\r\n\r\n<p>The instances of E49 Time Appellation may vary in their degree of precision, and they may be\r\nrelative to other time frames, “Before Christ” for example. Instances of E52 Time-Span are\r\noften defined by reference to a cultural period or an event e.g. ‘the duration of the Ming\r\nDynasty’.</p>\r\n"
-examples: "<ul>\r\n<li>“Meiji” [Japanese term for a specific time-span]</li>\r\n<li>“1st half of the XX century”</li>\r\n<li>“Quaternary”</li>\r\n<li>“1215 Hegira” [a date in the Islamic calendar]</li>\r\n<li>“Last century”</li>\r\n</ul>\r\n"
+description: "<p>This class comprises all forms of names or codes, such as historical periods, and dates, which\nare characteristically used to refer to a specific E52 Time-Span.</p>\n\n<p>The instances of E49 Time Appellation may vary in their degree of precision, and they may be\nrelative to other time frames, “Before Christ” for example. Instances of E52 Time-Span are\noften defined by reference to a cultural period or an event e.g. ‘the duration of the Ming\nDynasty’.</p>\n"
+examples: "<ul>\n<li>“Meiji” [Japanese term for a specific time-span]</li>\n<li>“1st half of the XX century”</li>\n<li>“Quaternary”</li>\n<li>“1215 Hegira” [a date in the Islamic calendar]</li>\n<li>“Last century”</li>\n</ul>\n"
 geoserializers:
   event: '0'
   move: '0'

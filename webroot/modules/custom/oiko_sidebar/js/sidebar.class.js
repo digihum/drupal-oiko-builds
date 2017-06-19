@@ -51,6 +51,19 @@
 
   };
 
+  Drupal.Sidebar.prototype.current = function() {
+    var active;
+
+    this.$panes.each(function () {
+      var $pane = $(this);
+      if ($pane.hasClass('is-active')) {
+        active = $pane.data('paneId');
+      }
+    });
+
+    return active;
+  };
+
   Drupal.Sidebar.prototype.open = function(id) {
 
     this.$panes.each(function () {

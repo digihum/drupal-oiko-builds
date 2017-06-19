@@ -55,6 +55,13 @@ class TipPluginText extends TipPluginBase implements ContainerFactoryPluginInter
   protected $previous_label;
 
   /**
+   * Determine if this step should show the information bar.
+   *
+   * @var bool
+   */
+  protected $information_bar;
+
+  /**
    * Constructs a \Drupal\tour\Plugin\tour\tip\TipPluginText object.
    *
    * @param array $configuration
@@ -142,6 +149,9 @@ class TipPluginText extends TipPluginBase implements ContainerFactoryPluginInter
     }
     $attributes['data-next-text'] = $this->getNextLabel();
     $attributes['data-previous-text'] = $this->getPreviousLabel();
+    if ($info_bar = $this->get('information_bar')) {
+      $attributes['data-information-bar'] = 'visible';
+    }
     return $attributes;
   }
 

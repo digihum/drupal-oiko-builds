@@ -5,10 +5,12 @@ id: p144_joined_with
 label: 'P144 joined with'
 bidirectional: false
 reverse_label: 'P144 gained member by'
+friendly_label: 'joined with'
+reverse_friendly_label: 'gained member by'
 domain_bundles:
-  e85_joining: e85_joining
+  - e85_joining
 range_bundles:
-  e74_group: e74_group
+  - e74_group
 editability:
   domain: true
   range: true

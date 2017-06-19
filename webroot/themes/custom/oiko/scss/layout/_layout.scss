@@ -9,6 +9,8 @@ body.layout-flex {
   flex-grow: 1;
   display: flex;
   position: relative;
+  // Required for Firefox flexbox to allow scrolling within.
+  overflow: hidden;
   @include to('s'){
     flex-direction: column;
   }
@@ -39,6 +41,8 @@ body.layout-flex {
 .l-main-content {
   flex-grow: 1;
   display: flex;
+  // Required for Firefox flexbox to allow scrolling within.
+  overflow: hidden;
   @include to('s') {
     flex-direction: column;
   }

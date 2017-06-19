@@ -100,9 +100,9 @@ class EuCookieComplianceConfigForm extends ConfigFormBase {
 
     $form['eu_cookie_compliance']['popup_clicking_confirmation'] = array(
       '#type' => 'checkbox',
-      '#title' => $this->t('Consent by clicking'),
+      '#title' => $this->t('Do not consent by clicking'),
       '#default_value' => $config->get('popup_clicking_confirmation'),
-      '#description' => $this->t('By default by clicking any link on the website the visitor accepts the cookie policy. Uncheck this box if you do not require this functionality. You may want to edit the pop-up message below accordingly.'),
+      '#description' => $this->t('By default by clicking any link on the website the visitor accepts the cookie policy. Check this box if you do not require this functionality. You may want to edit the pop-up message below accordingly.'),
     );
 
     $form['eu_cookie_compliance']['popup_position'] = array(

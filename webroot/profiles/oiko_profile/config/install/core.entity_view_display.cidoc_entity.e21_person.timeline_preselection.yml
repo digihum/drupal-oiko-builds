@@ -15,8 +15,6 @@ mode: timeline_preselection
 content:
   'cidoc_properties:range:p143_joined':
     weight: 21
-  'cidoc_properties:range:p145_separated':
-    weight: 21
   cidoc_temporal_summary:
     weight: 1
     settings: {  }
@@ -47,6 +45,8 @@ hidden:
   cidoc_admin_links: true
   cidoc_properties: true
   'cidoc_properties:domain:p131_is_identified_by': true
+  'cidoc_properties:domain:p143_joined': true
+  'cidoc_properties:domain:p145_separated': true
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:range:p100_was_death_of': true
@@ -54,6 +54,7 @@ hidden:
   'cidoc_properties:range:p11_had_participant': true
   'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p13_destroyed': true
+  'cidoc_properties:range:p145_separated': true
   'cidoc_properties:range:p14_carried_out_by': true
   'cidoc_properties:range:p15_was_influenced_by': true
   'cidoc_properties:range:p16_used_specific_object': true

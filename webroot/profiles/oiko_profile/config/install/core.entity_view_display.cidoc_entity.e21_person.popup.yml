@@ -10,8 +10,7 @@ dependencies:
 third_party_settings:
   field_group:
     group_activities_and_places:
-      children:
-        - map_of_places_people_went_entity_view_1
+      children: {  }
       parent_name: ''
       weight: 8
       label: '<span class="fa fa-calendar">&nbsp;&nbsp;</span>Key activities and places'
@@ -104,6 +103,8 @@ third_party_settings:
         - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
         - 'cidoc_properties:range:p13_destroyed'
         - 'cidoc_properties:range:p16_used_specific_object'
+        - 'cidoc_properties:domain:p145_separated'
+        - 'cidoc_properties:domain:p143_joined'
       parent_name: ''
       weight: 9
       format_type: html_element
@@ -121,6 +122,7 @@ third_party_settings:
     group_groups:
       children:
         - 'cidoc_properties:range:p107_has_current_or_former_membe'
+        - 'cidoc_properties:range:p145_separated'
       parent_name: ''
       weight: 11
       format_type: html_element
@@ -146,6 +148,14 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:p131_is_identified_by':
     weight: 1
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p143_joined':
+    weight: 18
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p145_separated':
+    weight: 17
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p1_is_identified_by':
@@ -175,7 +185,9 @@ content:
   'cidoc_properties:range:p143_joined':
     weight: 21
   'cidoc_properties:range:p145_separated':
-    weight: 21
+    weight: 15
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p14_carried_out_by':
     weight: 12
     settings: {  }

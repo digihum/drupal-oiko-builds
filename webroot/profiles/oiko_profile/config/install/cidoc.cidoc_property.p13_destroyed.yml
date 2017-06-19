@@ -8,11 +8,11 @@ reverse_label: 'P13 was destroyed by'
 friendly_label: Destroyed
 reverse_friendly_label: 'Was destroyed by'
 domain_bundles:
-  e6_destruction: e6_destruction
-  o3_active_destruction: o3_active_destruction
+  - e6_destruction
+  - o3_active_destruction
 range_bundles:
-  e21_person: e21_person
-  e22_man_made_object: e22_man_made_object
+  5: e22_man_made_object
+  9: e21_person
 editability:
   domain: true
   range: true

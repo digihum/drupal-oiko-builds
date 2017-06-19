@@ -4,6 +4,7 @@ description: Install profile for the Oiko
 core: 8.x
 
 dependencies:
+  - r4032login
   - avatars_gravatar
   - oiko_forum
   - oiko_event_basket
@@ -698,6 +699,7 @@ cm_config_tools:
     - paragraphs.paragraphs_type.uri
     - pathauto.pattern.cidoc_entity
     - pathauto.pattern.content_page
+    - r4032login.settings
     - rdf.mapping.node.forum
     - rdf.mapping.taxonomy_term.forums
     - search_api.index.crm_entities
@@ -836,10 +838,14 @@ cm_config_tools:
     - core.entity_view_mode.taxonomy_term.primary_historical_significance_pill
     - core.entity_view_mode.user.compact
     - field.field.block_content.modal_welcome.body
+    - field.field.user.user.field_contact_preference
+    - field.field.user.user.field_terms_and_privacy
     - field.storage.block_content.body
     - field.storage.taxonomy_term.field_source_type
     - field.storage.user.avatars_avatar_generator
     - field.storage.user.avatars_user_picture
+    - field.storage.user.field_contact_preference
+    - field.storage.user.field_terms_and_privacy
     - field.storage.user.user_picture
     - image.style.thumbnail
     - node.type.content_page

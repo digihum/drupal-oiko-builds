@@ -140,16 +140,20 @@ handlers:
     weight: 1
     settings:
       states:
-        - completed
-      to_mail: default
+        completed: completed
+        draft: '0'
+        converted: '0'
+        updated: '0'
+        deleted: '0'
+      to_mail: oiko.world@warwick.ac.uk
       to_options: {  }
       cc_mail: ''
       cc_options: {  }
       bcc_mail: ''
       bcc_options: {  }
-      from_mail: '[webform_submission:values:email:raw]'
+      from_mail: submissions@oiko.world
       from_options: {  }
-      from_name: '[webform_submission:values:name:value]'
+      from_name: default
       subject: '[webform_submission:values:subject:value]'
       body: '[webform_submission:values:message:value]'
       excluded_elements: {  }

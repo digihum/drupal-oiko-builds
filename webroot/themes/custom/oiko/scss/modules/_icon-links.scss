@@ -12,6 +12,7 @@
 .icon-links__link {
   display: inline-block;
   text-align: center;
+  position: relative;
   line-height: $content-header-height;
   width: $content-header-height;
   i.fa {

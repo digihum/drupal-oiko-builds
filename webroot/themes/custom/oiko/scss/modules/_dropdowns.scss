@@ -1,5 +1,6 @@
 .dropdown-pane {
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 
   @include from('m') {
     .showing-map & {

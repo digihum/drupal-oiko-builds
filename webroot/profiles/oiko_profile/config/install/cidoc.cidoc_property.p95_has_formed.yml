@@ -8,9 +8,9 @@ reverse_label: 'P95 was formed by'
 friendly_label: 'Has formed'
 reverse_friendly_label: 'Was formed by'
 domain_bundles:
-  e66_formation: e66_formation
+  - e66_formation
 range_bundles:
-  e74_group: e74_group
+  - e74_group
 editability:
   domain: true
   range: true

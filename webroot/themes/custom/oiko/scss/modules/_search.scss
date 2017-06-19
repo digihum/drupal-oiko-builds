@@ -21,6 +21,9 @@
     margin: 0;
     max-width: none;
   }
+  @include at('m') {
+    max-width: 315px;
+  }
 }
 
 .main-search-box {

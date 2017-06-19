@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_entity_bundle.e85_joining
     - cidoc.cidoc_property.p143_joined
     - field.storage.cidoc_reference.domain
 id: cidoc_reference.p143_joined.domain
@@ -23,6 +23,6 @@ settings:
       field: name
       direction: ASC
     target_bundles:
-      e21_person: e21_person
-    auto_create_bundle: e21_person
+      e85_joining: e85_joining
+    auto_create_bundle: e85_joining
 field_type: entity_reference

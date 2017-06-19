@@ -66,7 +66,7 @@
             fillOpacity: 1.0
           };
           lFeature.setStyle(styleOptions);
-          lFeature.bindTooltip(empire.label, {direction: 'bottom', sticky: true, opacity: 1});
+          lFeature.bindTooltip('<div class="leaflet-tooltip--location">' + empire.label + '</div>', {direction: 'bottom', sticky: true, opacity: 1});
           drupalLeaflet.empires.empiresLayerHelper.addLayer(lFeature);
         });
         Drupal.oiko.appModuleDoneLoading('empire-data');

@@ -8,9 +8,9 @@ reverse_label: 'P97 was father for'
 friendly_label: 'By father'
 reverse_friendly_label: 'Was father for'
 domain_bundles:
-  e67_birth: e67_birth
+  - e67_birth
 range_bundles:
-  e21_person: e21_person
+  - e21_person
 editability:
   domain: true
   range: true

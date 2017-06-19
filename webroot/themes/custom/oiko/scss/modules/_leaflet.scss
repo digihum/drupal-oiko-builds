@@ -4,3 +4,16 @@
 .leaflet-top {
   //z-index: 200;
 }
+
+.leaflet-tooltip {
+  text-align: center;
+}
+
+.leaflet-tooltip--location {
+  font-size: 0.95em;
+  font-weight: bold;
+}
+
+.leaflet-tooltip--popup {
+  font-size: 1.1em;
+}

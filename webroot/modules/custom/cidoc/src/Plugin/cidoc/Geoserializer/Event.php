@@ -27,7 +27,11 @@ class Event extends GeoserializerPluginBase {
         foreach ($place_entity->field_geodata->getValue() as $value) {
           $values[] = $value['value'];
         }
-        $points = array_merge($points, leaflet_process_geofield($values));
+        $new_points = leaflet_process_geofield($values);
+        foreach ($new_points as $k => $v) {
+          $new_points[$k]['location'] = $place_entity->label();
+        }
+        $points = array_merge($points, $new_points);
       }
     }
 
