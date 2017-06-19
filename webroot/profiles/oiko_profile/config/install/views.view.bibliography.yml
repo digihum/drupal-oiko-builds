@@ -146,8 +146,8 @@ display:
           label: ''
           exclude: true
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: '{{ field_source_type }}s'
             make_link: false
             path: ''
             absolute: false
@@ -273,6 +273,7 @@ display:
         type: normal
         title: Bibliography
         menu_name: main
+        weight: -49
     cache_metadata:
       max-age: -1
       contexts:
