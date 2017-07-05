@@ -31,10 +31,10 @@ tips:
     attributes:
       data-class: sidebar-tabs
     body: "<p><i class=\"fa fa-bars fa-2x\" title=\"Icon for Main menu\"></i> Read more about the Oiko.world project, the data entry process and the technical specifications, as well as T&Cs. You can also replay tours at any time from the main menu.</p>\r\n<p><i class=\"fa fa-filter fa-2x\" title=\"Legend\"></i> See the different kinds of data available in Oiko.world, filter what you want to see, as well as catch up on recent discussions about entries</p>\r\n<p><i class=\"fa fa-map-marker fa-2x\" title=\"Information\"></i> See the full information for each entry in your timelines, as well as bookmark entries for later comparison.</p>"
-    location: ''
-    next_label: ''
-    previous_label: ''
-    information_bar: 0
+    location: null
+    next_label: null
+    previous_label: null
+    information_bar: null
   3-4-activity:
     id: 3-4-activity
     plugin: text
@@ -62,10 +62,10 @@ tips:
   4-4-map-view:
     id: 4-4-map-view
     plugin: text
-    label: '5/5 Map view'
+    label: '5/5 Map'
     weight: -96
     attributes:
-      data-class: l-sidebar-lower
+      data-id: footer
     body: "Don't forget - the timeline view is only the half of Oiko.world!\r\n\r\n<p><i class=\"fa fa-map-o fa-2x\"></i> Press this button to see the ancient world through a different lens in the Map view."
     location: top
     next_label: null
