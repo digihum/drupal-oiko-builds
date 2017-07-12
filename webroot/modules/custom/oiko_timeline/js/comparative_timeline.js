@@ -395,12 +395,26 @@ Drupal.behaviors.comparative_timeline = {
     this.rangeAdjusted = true;
   };
 
+  /**
+   * Recompute the displayed min and max for our timeline items.
+   */
+  Drupal.OikoComparativeTimeline.prototype.recomputeMinMaxOfItems = function() {
+    var timeline = this;
+    this._timelineMin = Infinity;
+    this._timelineMax = -Infinity;
+    this._visItems.forEach(function(item) {
+      if (item.id !== WINDOW_SLIDER_ID) {
+        timeline._timelineMin = Math.min(timeline._timelineMin, ((item.start / 1000) - 86400 * 365 * 10));
+        timeline._timelineMax = Math.max(timeline._timelineMax, ((item.end / 1000) + 86400 * 365 * 10));
+      }
+    });
+
+  };
+
   Drupal.OikoComparativeTimeline.prototype.removeGroupFromTimeline = function(groupId, fireEvents) {
     if (typeof fireEvents === 'undefined') {
       fireEvents = true;
     }
-
-    var timeline = this;
 
     // If we're loading this group, then abort that Ajax request.
     if (this.isLoadingCheck(groupId)) {
@@ -421,16 +435,7 @@ Drupal.behaviors.comparative_timeline = {
     // Refresh our data view.
     this._visDisplayedItems.refresh();
 
-    // Re-compute the min and max for our display.
-    this._timelineMin = Infinity;
-    this._timelineMax = -Infinity;
-    this._visItems.forEach(function(item) {
-      if (item.id !== WINDOW_SLIDER_ID) {
-        timeline._timelineMin = Math.min(timeline._timelineMin, ((item.start / 1000) - 86400 * 365 * 10));
-        timeline._timelineMax = Math.max(timeline._timelineMax, ((item.end / 1000) + 86400 * 365 * 10));
-      }
-    });
-
+    this.recomputeMinMaxOfItems();
     this.updateTimelineBounds();
     this.updateCurrentWindowItem();
 
@@ -513,12 +518,11 @@ Drupal.behaviors.comparative_timeline = {
           _summaryType: 'background',
           _summaryClass: ''
         });
-
-        this._timelineMin = Math.min(this._timelineMin, (minmin - 86400 * 365 * 10));
-        this._timelineMax = Math.max(this._timelineMax, (maxmax + 86400 * 365 * 10));
       }
       this._visItems.add(newEvents);
     }
+
+    this.recomputeMinMaxOfItems();
 
     // Refresh our data view.
     this._visDisplayedItems.refresh();
@@ -537,27 +541,37 @@ Drupal.behaviors.comparative_timeline = {
 
     this.updateTheDOM();
     $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
+    this.updateTimelineBounds();
+    this.updateCurrentWindowItem();
   };
 
   Drupal.OikoComparativeTimeline.prototype.updateCurrentWindowItem = function() {
-    var timeWindow = this._visTimeline.getWindow();
-    // Ensure that we have a browser window element.
-    this._visItems.update({
-      // Timeline information.
-      id: WINDOW_SLIDER_ID,
-      type: 'range',
-      start: timeWindow.start,
-      end: timeWindow.end,
+    if (this.getTimelines().length > 0) {
+      var timeWindow = this._visTimeline.getWindow();
+      // Ensure that we have a browser window element.
+      this._visItems.update({
+        // Timeline information.
+        id: WINDOW_SLIDER_ID,
+        type: 'range',
+        start: timeWindow.start,
+        end: timeWindow.end,
 
-      // Information for our summary timeline.
-      _summaryType: 'range',
-      _summaryClass: 'currentWindow'
-    });
-    
-    // Ensure that the current window item is selected in the overview.
-    var selections = this._visTimelineOverview.getSelection();
-    if (selections.indexOf(WINDOW_SLIDER_ID) === -1) {
-      this._visTimelineOverview.setSelection(WINDOW_SLIDER_ID);
+        // Flag to force an update.
+        __random: Math.random(),
+
+        // Information for our summary timeline.
+        _summaryType: 'range',
+        _summaryClass: 'currentWindow'
+      });
+
+      // Ensure that the current window item is selected in the overview.
+      var selections = this._visTimelineOverview.getSelection();
+      if (selections.indexOf(WINDOW_SLIDER_ID) === -1) {
+        this._visTimelineOverview.setSelection(WINDOW_SLIDER_ID);
+      }
+    }
+    else {
+      this._visItems.remove(WINDOW_SLIDER_ID);
     }
   };
 
@@ -594,8 +608,10 @@ Drupal.behaviors.comparative_timeline = {
     }
 
     if (moved && !this.rangeAdjusted) {
-      this._visTimeline.fit({animation: false});
-      this._visTimelineOverview.fit({animation: false});
+      this._visTimeline.setWindow(this._timelineMin * 1000, this._timelineMax * 1000, {animation: false});
+    }
+    if (moved) {
+      this._visTimelineOverview.setWindow(this._timelineMin * 1000, this._timelineMax * 1000, {animation: false});
     }
 
     this._visTimeline.redraw();
