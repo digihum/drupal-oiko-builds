@@ -81,6 +81,7 @@
   li {
     border-bottom: 1px solid palette(oikogrey);
     padding: 3px 0;
+    cursor: pointer;
     @include to('s') {
       padding: 3px 6px;
     }
