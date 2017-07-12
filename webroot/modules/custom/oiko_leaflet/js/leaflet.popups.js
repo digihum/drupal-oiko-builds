@@ -54,7 +54,11 @@
         if (L.Browser.mobile) {
           tooltipText = tooltipText + '<div class="leaflet-tooltip--cta">Tap for more information</div>';
         }
-        lFeature.bindTooltip(tooltipText, {direction: 'bottom', opacity: 1, sticky: sticky, permanent: false});
+        lFeature.bindTooltip(tooltipText, {direction: 'bottom', opacity: 1, sticky: sticky, permanent: false, interactive: true});
+        var tooltip = lFeature.getTooltip();
+        tooltip.on('click', function (e) {
+          Drupal.oiko.openSidebar(feature.id);
+        });
       }
 
       // Store away the bounds of the feature.
