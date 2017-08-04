@@ -54,11 +54,70 @@
         if (L.Browser.mobile) {
           tooltipText = tooltipText + '<div class="leaflet-tooltip--cta">Tap for more information</div>';
         }
-        lFeature.bindTooltip(tooltipText, {direction: 'bottom', opacity: 1, sticky: sticky, permanent: false, interactive: true});
+        lFeature.bindTooltip(tooltipText, {direction: 'bottom', opacity: 1, sticky: sticky, permanent: false, interactive: true, _oiko: {popup: feature.popup, location: feature.location ? feature.location : false}});
         var tooltip = lFeature.getTooltip();
         tooltip.on('click', function (e) {
           Drupal.oiko.openSidebar(feature.id);
         });
+        if (feature.type !== 'point') {
+          lFeature.on('tooltipopen mousemove', function (e) {
+            if (e.type === 'tooltipopen') {
+              var target = e.target;
+              var tooltip = e.tooltip;
+              var latLng = tooltip.getLatLng();
+            }
+            else {
+              var target = e.target;
+              var latLng = e.latlng, containerPoint, layerPoint;
+              if (e.originalEvent) {
+                containerPoint = drupalLeaflet.lMap.mouseEventToContainerPoint(e.originalEvent);
+                layerPoint = drupalLeaflet.lMap.containerPointToLayerPoint(containerPoint);
+                latLng = drupalLeaflet.lMap.layerPointToLatLng(layerPoint);
+              }
+            }
+            // Attempt to locate layers at this point.
+            var intersectingLayers = [];
+            drupalLeaflet.lMap.eachLayer(function(layer) {
+              var ll = [latLng.lat, latLng.lng];
+              if (layer.getBounds && layer.getBounds().isValid() && (layer.getBounds().contains(ll))) {
+                intersectingLayers.push(layer);
+              }
+            });
+
+            // Build up new tooltip content to display.
+            var tooltipContent = {'__none__': []};
+
+            var thisTooltip;
+            for (var i = 0; i < intersectingLayers.length; i++) {
+              if ((thisTooltip = intersectingLayers[i].getTooltip()) && thisTooltip.options && thisTooltip.options._oiko) {
+                if (thisTooltip.options._oiko.location) {
+                  tooltipContent[thisTooltip.options._oiko.location] = tooltipContent[thisTooltip.options._oiko.location] || [];
+                  tooltipContent[thisTooltip.options._oiko.location].push(thisTooltip.options._oiko.popup);
+                }
+                else {
+                  tooltipContent['__none__'] = tooltipContent['__none__'] || [];
+                  tooltipContent['__none__'].push(thisTooltip.options._oiko.popup);
+                }
+              }
+            }
+
+            var tooltipString = '';
+            // Add the no location events to the top.
+            if (tooltipContent['__none__'].length) {
+              tooltipString += '<ul><li>' + tooltipContent['__none__'].join("</li><li>") + '</li></ul>';
+            }
+            // Now add in all other events with locations.
+            for (var i in tooltipContent) {
+              if (i !== '__none__') {
+                tooltipString += '<div class="leaflet-tooltip--location">' + i + '</div><div class="leaflet-tooltip--popup"><ul><li>' + tooltipContent[i].join("</li><li>") + '</li></ul></div>';
+              }
+            }
+            if (L.Browser.mobile) {
+              tooltipString += '<div class="leaflet-tooltip--cta">Tap for more information</div>';
+            }
+            target.setTooltipContent(tooltipString);
+          });
+        }
       }
 
       // Store away the bounds of the feature.
