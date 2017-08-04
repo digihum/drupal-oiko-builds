@@ -64,6 +64,16 @@
   }
 }
 
+@include to('s') {
+  .l-main-content {
+    overflow-y: scroll;
+  }
+
+  .sidebar-opened .oiko-app {
+    display: none;
+  }
+}
+
 .sidebar-content {
   display: none;
   position: relative;
@@ -72,7 +82,6 @@
   }
   width: 100%;
   @include to('s') {
-    position: absolute;
     z-index: 10000;
   }
   @include at('m') {

@@ -165,7 +165,7 @@ markercluster:
   version: v1.0.3
 
 vis:
-  version: v4.19.1-1
+  version: v4.19.1-4
   js:
     js/vendor/vis.min.js: {}
   css:
