@@ -6,7 +6,7 @@
       var uriClass = 'js-oiko-pleiades-uri-source';
       var geodataClass = 'js-oiko-pleiades-geodata-target';
       var messageClass = 'js-oiko-pleiades-message';
-      var re = /^http:\/\/pleiades\.stoa\.org\/places\/(\d+)$/i;
+      var re = /^https?:\/\/pleiades\.stoa\.org\/places\/(\d+)$/i;
       $(context).find('.' + wrapperClass).once(wrapperClass).each(function() {
         var $wrapper = $(this);
         // Find the source and target.

@@ -20,4 +20,5 @@ content:
 hidden:
   citation: true
   property: true
+  range: true
   user_id: true

@@ -1,18 +1,19 @@
-uuid: 78195b35-5b13-4e72-bdfd-8abb39e5c584
 langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.taxonomy_term.field_source_type
     - system.menu.main
     - taxonomy.vocabulary.source_books
   module:
+    - options
     - paragraphs
     - taxonomy
     - user
-id: bibl
+id: bibliography
 label: Bibliography
 module: views
-description: 'A full bibliography for Oikoumene'
+description: ''
 tag: ''
 base_table: taxonomy_term_field_data
 base_field: tid
@@ -27,7 +28,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'view published cidoc entities'
+          perm: 'access content'
       cache:
         type: tag
         options: {  }
@@ -52,10 +53,20 @@ display:
       pager:
         type: none
         options:
-          items_per_page: 0
           offset: 0
       style:
-        type: default
+        type: html_list
+        options:
+          grouping:
+            -
+              field: field_source_type
+              rendered: true
+              rendered_strip: false
+          row_class: ''
+          default_row_class: true
+          type: ul
+          wrapper_class: item-list
+          class: ''
       row:
         type: fields
       fields:
@@ -99,7 +110,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -110,10 +121,9 @@ display:
           click_sort_column: value
           type: string
           settings:
-            link_to_entity: true
+            link_to_entity: false
           group_column: value
-          group_columns:
-            entity_id: entity_id
+          group_columns: {  }
           group_rows: true
           delta_limit: 0
           delta_offset: 0
@@ -126,18 +136,18 @@ display:
           entity_type: taxonomy_term
           entity_field: name
           plugin_id: term_name
-        field_pages:
-          id: field_pages
-          table: paragraph__field_pages
-          field: field_pages
-          relationship: reverse__paragraph__field_book
-          group_type: count
+        field_source_type:
+          id: field_source_type
+          table: taxonomy_term__field_source_type
+          field: field_source_type
+          relationship: none
+          group_type: group
           admin_label: ''
           label: ''
-          exclude: false
+          exclude: true
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: '{{ field_source_type }}s'
             make_link: false
             path: ''
             absolute: false
@@ -158,7 +168,7 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: true
+            strip_tags: false
             trim: false
             preserve_tags: ''
             html: false
@@ -169,15 +179,14 @@ display:
           element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: false
+          element_default_classes: true
           empty: ''
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
+          type: list_default
+          settings: {  }
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -199,7 +208,33 @@ display:
           entity_type: taxonomy_term
           entity_field: vid
           plugin_id: bundle
-      sorts: {  }
+      sorts:
+        field_source_type_value:
+          id: field_source_type_value
+          table: taxonomy_term__field_source_type
+          field: field_source_type_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          plugin_id: standard
+        name:
+          id: name
+          table: taxonomy_term_field_data
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: taxonomy_term
+          entity_field: name
+          plugin_id: standard
       title: Bibliography
       header: {  }
       footer: {  }
@@ -211,8 +246,8 @@ display:
           field: reverse__paragraph__field_book
           relationship: none
           group_type: group
-          admin_label: 'Related paragraph'
-          required: false
+          admin_label: field_book
+          required: true
           entity_type: taxonomy_term
           plugin_id: entity_reverse
       arguments: {  }
@@ -224,23 +259,26 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - user.permissions
-      tags: {  }
-  page_1:
+      tags:
+        - 'config:field.storage.taxonomy_term.field_source_type'
+  global_listing:
     display_plugin: page
-    id: page_1
+    id: global_listing
     display_title: Page
     position: 1
     display_options:
       display_extenders: {  }
-      path: bibl
+      path: bibliography
       menu:
         type: normal
         title: Bibliography
         menu_name: main
+        weight: -49
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.storage.taxonomy_term.field_source_type'

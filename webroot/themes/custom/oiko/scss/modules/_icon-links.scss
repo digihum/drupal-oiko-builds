@@ -12,6 +12,7 @@
 .icon-links__link {
   display: inline-block;
   text-align: center;
+  position: relative;
   line-height: $content-header-height;
   width: $content-header-height;
   i.fa {
@@ -26,10 +27,29 @@
 }
 
 .icon-links__dropdown {
-  top: initial !important;
-  left: initial !important;
-  right: 0 !important;
+  top: $content-header-height !important;
+  @include from('m') {
+    bottom: 0;
+  }
   z-index: 10000;
+
+  .showing-timeline & {
+    left: 0 !important;
+    right: initial !important;
+  }
+
+  .showing-map & {
+    right: 0 !important;
+    left: initial !important;
+  }
+
+  padding: 25px;
+  width: 40%;
+  @include to('s') {
+    width: 100% !important;
+  }
   border: none;
   border-top: 5px solid palette(oikoblue);
+
 }
+

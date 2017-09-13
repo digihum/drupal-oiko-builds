@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0369f96fa99b4685b674438e278aba8",
+    "content-hash": "b9527bcd4a292eb1026ccfd7922a00ed",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1169,7 +1169,7 @@
             ],
             "description": "Allows arbitrary insertion of code into the head of specific pages",
             "homepage": "https://www.drupal.org/project/add_to_head",
-            "time": "2016-02-22 14:21:54"
+            "time": "2016-02-22T14:21:54+00:00"
         },
         {
             "name": "drupal/admin_toolbar",
@@ -1232,6 +1232,52 @@
             }
         },
         {
+            "name": "drupal/avatars",
+            "version": "1.0.0-beta5",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/avatars",
+                "reference": "8.x-1.0-beta5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/avatars-8.x-1.0-beta5.zip",
+                "reference": "8.x-1.0-beta5",
+                "shasum": "52a5b072161a830fbe71971dae5de7a54cd96c94"
+            },
+            "require": {
+                "drupal/core": "*",
+                "drupal/unlimited_number": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-beta5",
+                    "datestamp": "1471615439"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Phin",
+                    "homepage": "http://danielph.in",
+                    "email": "pro@danielph.in",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Provides a selection of generated avatars for users.",
+            "homepage": "http://drupal.org/project/avatars",
+            "support": {
+                "source": "http://cgit.drupalcode.org/avatars"
+            }
+        },
+        {
             "name": "drupal/browsersync",
             "version": "1.0.0-beta1",
             "source": {
@@ -1284,7 +1330,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/cm_config_tools",
-                "reference": "b1967c154c8c8fd62a0c5e6f285391cb8ead4cc0"
+                "reference": "af80d2a2b3d7e82eb83ece9ec6b7b285363d4882"
             },
             "require": {
                 "drupal/config_update": "*",
@@ -1297,7 +1343,7 @@
                 },
                 "drupal": {
                     "version": "8.x-1.x-dev",
-                    "datestamp": "1486461783"
+                    "datestamp": "1488883384"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -1323,7 +1369,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/cm_config_tools"
             },
-            "time": "2017-03-07 10:40:20"
+            "time": "2017-04-11T14:45:16+00:00"
         },
         {
             "name": "drupal/color_field",
@@ -1429,7 +1475,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/config_devel"
             },
-            "time": "2016-06-21 08:20:33"
+            "time": "2016-06-21T08:20:33+00:00"
         },
         {
             "name": "drupal/config_readonly",
@@ -1534,7 +1580,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/config_update"
             },
-            "time": "2016-08-31 19:41:53"
+            "time": "2016-08-31T19:41:53+00:00"
         },
         {
             "name": "drupal/console",
@@ -1623,16 +1669,16 @@
         },
         {
             "name": "drupal/core",
-            "version": "8.2.7",
+            "version": "8.2.8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/drupal-composer/drupal-core.git",
-                "reference": "5d3fb8a93514f23198ac6848b2679ef1026d2326"
+                "url": "https://github.com/drupal/core.git",
+                "reference": "373da78477b659102afa56cb6fba4247c7c395ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal-composer/drupal-core/zipball/5d3fb8a93514f23198ac6848b2679ef1026d2326",
-                "reference": "5d3fb8a93514f23198ac6848b2679ef1026d2326",
+                "url": "https://api.github.com/repos/drupal/core/zipball/373da78477b659102afa56cb6fba4247c7c395ed",
+                "reference": "373da78477b659102afa56cb6fba4247c7c395ed",
                 "shasum": ""
             },
             "require": {
@@ -1803,7 +1849,7 @@
                 "GPL-2.0+"
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
-            "time": "2017-03-15T20:19:51+00:00"
+            "time": "2017-04-19T16:45:52+00:00"
         },
         {
             "name": "drupal/csv_serialization",
@@ -1934,7 +1980,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/devel",
-                "reference": "a492f4b150f190bdc62ac3fc9018da82fe1305d5"
+                "reference": "fbafbd4d1cd04f577294e793c350a8edb68e491a"
             },
             "require": {
                 "drupal/core": "~8.0"
@@ -1948,8 +1994,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-beta1+25-dev",
-                    "datestamp": "1484815082"
+                    "version": "8.x-1.0-rc1+4-dev",
+                    "datestamp": "1490381283"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2011,7 +2057,7 @@
                 "issues": "http://drupal.org/project/devel",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
             },
-            "time": "2017-01-19 08:35:20"
+            "time": "2017-04-10T08:04:17+00:00"
         },
         {
             "name": "drupal/entity_reference_revisions",
@@ -2069,6 +2115,9 @@
                 "drupal": {
                     "version": "8.x-1.0-beta7",
                     "datestamp": "1471263146"
+                },
+                "patches_applied": {
+                    "Fix UI of consent on click: https://www.drupal.org/node/2811003": "https://www.drupal.org/files/issues/eu_cookie_compliance_consent_by_clicking-2811003-4.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2129,7 +2178,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/eva",
-                "reference": "8709be144304b1349f98a6c6049b244f3e947c5b"
+                "reference": "66a6412d468e7620d62999b41f59cdc9223e17e5"
             },
             "require": {
                 "drupal/core": "*"
@@ -2140,11 +2189,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-rc1+4-dev",
-                    "datestamp": "1484617988"
-                },
-                "patches_applied": {
-                    "EVA can display on unselected bundle": "https://www.drupal.org/files/issues/eva-2856350-display-mode-still-rendered-12.patch"
+                    "version": "8.x-1.1-rc1+4-dev",
+                    "datestamp": "1489714085"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2178,7 +2224,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/eva"
             },
-            "time": "2017-01-17 01:51:39"
+            "time": "2017-03-17T01:22:49+00:00"
         },
         {
             "name": "drupal/field_group",
@@ -2631,7 +2677,7 @@
                 "source": "http://cgit.drupalcode.org/leaflet",
                 "issues": "https://www.drupal.org/project/issues/leaflet"
             },
-            "time": "2016-04-04 21:22:53"
+            "time": "2016-04-04T21:22:53+00:00"
         },
         {
             "name": "drupal/leaflet_widget",
@@ -2645,7 +2691,7 @@
                 "composer/installers": "^1.0.21"
             },
             "type": "drupal-module",
-            "time": "2016-09-20 10:25:00"
+            "time": "2016-05-02T15:43:10+00:00"
         },
         {
             "name": "drupal/metatag",
@@ -2881,17 +2927,134 @@
         },
         {
             "name": "drupal/pathauto",
-            "version": "dev-8.x-1.x",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://git.drupal.org/project/pathauto.git",
-                "reference": "05a0bc51694b70efb697b3c8b175f2884bff7b34"
+                "url": "https://git.drupal.org/project/pathauto",
+                "reference": "8.x-1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/pathauto-8.x-1.0.zip",
+                "reference": "8.x-1.0",
+                "shasum": "4c82a5689a18421c8c73fcc8be7b333bb21ae02a"
             },
             "require": {
-                "composer/installers": "^1.0.21"
+                "drupal/core": "*",
+                "drupal/ctools": "*",
+                "drupal/token": "*"
             },
             "type": "drupal-module",
-            "time": "2016-08-07 10:52:55"
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0",
+                    "datestamp": "1493468044",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Berdir",
+                    "homepage": "https://www.drupal.org/user/214652"
+                },
+                {
+                    "name": "Dave Reid",
+                    "homepage": "https://www.drupal.org/user/53892"
+                },
+                {
+                    "name": "Freso",
+                    "homepage": "https://www.drupal.org/user/27504"
+                },
+                {
+                    "name": "greggles",
+                    "homepage": "https://www.drupal.org/user/36762"
+                }
+            ],
+            "description": "Provides a mechanism for modules to automatically generate aliases for the content they manage.",
+            "homepage": "https://www.drupal.org/project/pathauto",
+            "support": {
+                "source": "http://cgit.drupalcode.org/pathauto"
+            }
+        },
+        {
+            "name": "drupal/r4032login",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/r4032login",
+                "reference": "391f10d69b9b8c466a2fddac2a6b99f1289e7781"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.x-dev",
+                    "datestamp": "1486245484"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Bevan",
+                    "homepage": "https://www.drupal.org/user/49989"
+                },
+                {
+                    "name": "RobLoach",
+                    "homepage": "https://www.drupal.org/user/61114"
+                },
+                {
+                    "name": "Sk8erPeter",
+                    "homepage": "https://www.drupal.org/user/1441344"
+                },
+                {
+                    "name": "bdone",
+                    "homepage": "https://www.drupal.org/user/687670"
+                },
+                {
+                    "name": "deekayen",
+                    "homepage": "https://www.drupal.org/user/972"
+                },
+                {
+                    "name": "lotyrin",
+                    "homepage": "https://www.drupal.org/user/216580"
+                },
+                {
+                    "name": "mikesmullin",
+                    "homepage": "https://www.drupal.org/user/108440"
+                },
+                {
+                    "name": "pwolanin",
+                    "homepage": "https://www.drupal.org/user/49851"
+                },
+                {
+                    "name": "shrop",
+                    "homepage": "https://www.drupal.org/user/14767"
+                }
+            ],
+            "description": "Redirect anonymous users from 403 Access Denied pages to the /user/login page.",
+            "homepage": "https://www.drupal.org/project/r4032login",
+            "support": {
+                "source": "http://cgit.drupalcode.org/r4032login"
+            },
+            "time": "2017-02-08T04:20:19+00:00"
         },
         {
             "name": "drupal/search_api",
@@ -3145,6 +3308,52 @@
             "homepage": "https://www.drupal.org/project/twig_xdebug",
             "support": {
                 "source": "http://cgit.drupalcode.org/twig_xdebug"
+            }
+        },
+        {
+            "name": "drupal/unlimited_number",
+            "version": "1.0.0-beta2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/unlimited_number",
+                "reference": "8.x-1.0-beta2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/unlimited_number-8.x-1.0-beta2.zip",
+                "reference": "8.x-1.0-beta2",
+                "shasum": "2976624472cfaa55591d3d4b6bbed8e0d1b9dcf9"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-beta2",
+                    "datestamp": "1483409343"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Phin",
+                    "homepage": "http://danielph.in",
+                    "email": "pro@danielph.in",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Provides a render element and a widget for number fields.",
+            "homepage": "http://drupal.org/project/unlimited_number",
+            "support": {
+                "source": "https://github.com/dpi/unlimited_number",
+                "issues": "https://github.com/dpi/unlimited_number/issues"
             }
         },
         {
@@ -4238,7 +4447,7 @@
             ],
             "description": "Extend the composer/installers plugin to accept any arbitrary package type.",
             "homepage": "http://www.oomphinc.com/",
-            "time": "2016-07-05 15:00:34"
+            "time": "2016-07-05T15:00:34+00:00"
         },
         {
             "name": "padraic/humbug_get_contents",
@@ -4698,7 +4907,7 @@
             ],
             "description": "GeoPHP is a open-source native PHP library for doing geometry operations. It is written entirely in PHP and can therefore run on shared hosts. It can read and write a wide variety of formats: WKT (including EWKT), WKB (including EWKB), GeoJSON, KML, GPX, GeoRSS). It works with all Simple-Feature geometries (Point, LineString, Polygon, GeometryCollection etc.) and can be used to get centroids, bounding-boxes, area, and a wide variety of other useful information.",
             "homepage": "https://github.com/phayes/geoPHP",
-            "time": "2016-03-04 05:42:29"
+            "time": "2016-03-04T05:42:29+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -6846,12 +7055,12 @@
             "version": "v3.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/geocoder-php/Geocoder.git",
+                "url": "https://github.com/geocoder-php/php-common.git",
                 "reference": "ccc178e2984c0af24881faa0ffe515f20e5e8c23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/Geocoder/zipball/ccc178e2984c0af24881faa0ffe515f20e5e8c23",
+                "url": "https://api.github.com/repos/geocoder-php/php-common/zipball/ccc178e2984c0af24881faa0ffe515f20e5e8c23",
                 "reference": "ccc178e2984c0af24881faa0ffe515f20e5e8c23",
                 "shasum": ""
             },
@@ -7402,7 +7611,78 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/purl"
             },
-            "time": "2016-05-27 18:27:16"
+            "time": "2016-05-27T18:27:16+00:00"
+        },
+        {
+            "name": "drupal/stage_file_proxy",
+            "version": "1.0.0-alpha2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/stage_file_proxy",
+                "reference": "8.x-1.0-alpha2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/stage_file_proxy-8.x-1.0-alpha2.zip",
+                "reference": null,
+                "shasum": "e80ff02d173c8571d7b7005258bed110a62b7884"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-alpha2",
+                    "datestamp": "1491359584"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "BarisW",
+                    "homepage": "https://www.drupal.org/user/107229"
+                },
+                {
+                    "name": "axel.rutz",
+                    "homepage": "https://www.drupal.org/user/229048"
+                },
+                {
+                    "name": "greggles",
+                    "homepage": "https://www.drupal.org/user/36762"
+                },
+                {
+                    "name": "markdorison",
+                    "homepage": "https://www.drupal.org/user/346106"
+                },
+                {
+                    "name": "moshe weitzman",
+                    "homepage": "https://www.drupal.org/user/23"
+                },
+                {
+                    "name": "msonnabaum",
+                    "homepage": "https://www.drupal.org/user/75278"
+                },
+                {
+                    "name": "netaustin",
+                    "homepage": "https://www.drupal.org/user/199298"
+                },
+                {
+                    "name": "robwilmshurst",
+                    "homepage": "https://www.drupal.org/user/144488"
+                }
+            ],
+            "description": "Provides stage_file_proxy module.",
+            "homepage": "https://www.drupal.org/project/stage_file_proxy",
+            "support": {
+                "source": "http://cgit.drupalcode.org/stage_file_proxy"
+            }
         },
         {
             "name": "fabpot/goutte",
@@ -8482,6 +8762,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/add_to_head": 20,
+        "drupal/avatars": 10,
         "drupal/cm_config_tools": 20,
         "drupal/config_devel": 20,
         "drupal/config_update": 20,
@@ -8490,9 +8771,10 @@
         "drupal/leaflet": 20,
         "drupal/leaflet_widget": 20,
         "drupal/paragraphs": 5,
-        "drupal/pathauto": 20,
+        "drupal/r4032login": 20,
         "drupal/webform": 10,
         "oomphinc/composer-installers-extender": 20,
+        "drupal/stage_file_proxy": 15,
         "jcalderonzumba/gastonjs": 20
     },
     "prefer-stable": true,

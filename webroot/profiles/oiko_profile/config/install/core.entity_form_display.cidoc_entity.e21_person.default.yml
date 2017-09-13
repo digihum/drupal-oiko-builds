@@ -95,8 +95,8 @@ third_party_settings:
         required_fields: true
     group_joining_leaving:
       children:
-        - 'cidoc_properties:range:p143_joined'
-        - 'cidoc_properties:range:p145_separated'
+        - 'cidoc_properties:domain:p143_joined'
+        - 'cidoc_properties:domain:p145_separated'
         - 'cidoc_properties:range:p107_has_current_or_former_membe'
       parent_name: group_main_details
       weight: 7
@@ -149,6 +149,18 @@ content:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:range:p143_joined':
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p144_joined_with':
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p146_separated_from':
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p98_brought_into_life':
     weight: 0
     settings: {  }
@@ -183,7 +195,7 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 30
+    weight: 4
     settings: {  }
     third_party_settings: {  }
   significance:
@@ -193,14 +205,14 @@ content:
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 10
+    weight: 2
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 10
+    weight: 3
     settings:
       display_label: true
     third_party_settings: {  }
@@ -210,6 +222,7 @@ hidden:
   'cidoc_properties:range:p11_had_participant': true
   'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p13_destroyed': true
+  'cidoc_properties:range:p145_separated': true
   'cidoc_properties:range:p14_carried_out_by': true
   'cidoc_properties:range:p15_was_influenced_by': true
   'cidoc_properties:range:p16_used_specific_object': true

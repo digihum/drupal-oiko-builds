@@ -14,3 +14,8 @@ permissions:
   - 'display eu cookie compliance popup'
   - 'use browsersync'
   - 'access tour'
+  - 'avatars avatar_generator user gravatar'
+  - 'avatars avatar_generator user gravatar_generator'
+  - 'avatars avatar_generator user user_upload'
+  - 'access user profiles'
+  - 'view published cidoc entities'

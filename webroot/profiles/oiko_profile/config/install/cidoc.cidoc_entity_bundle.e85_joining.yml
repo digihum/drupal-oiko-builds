@@ -4,6 +4,7 @@ dependencies: {  }
 crm_entity: e85_joining
 id: e85_joining
 label: 'E85 Joining'
+friendly_label: 'Joining'
 weight: 0
 group: auxiliary
 description: "<p>This class comprises the activities that result in an instance of E39 Actor becoming a member\nof an instance of E74 Group. This class does not imply initiative by either party.</p>\n\n<p>Typical scenarios include becoming a member of a social organisation, becoming employee of\na company, marriage, the adoption of a child by a family and the inauguration of somebody\ninto an official position.</p>\n"

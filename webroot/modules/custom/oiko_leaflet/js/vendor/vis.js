@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 4.19.1-SNAPSHOT
- * @date    2017-04-03
+ * @date    2017-08-03
  *
  * @license
  * Copyright (C) 2011-2017 Almende B.V, http://almende.com
@@ -19634,7 +19634,7 @@ return /******/ (function(modules) { // webpackBootstrap
    *                                    function is 'easeInOutQuad'.
    *                              {Boolean} [byUser=false]
    *                              {Event}  event  Mouse event
-   *                              {Function} a callback funtion to be executed at the end of this function 
+   *                              {Function} a callback funtion to be executed at the end of this function
    *
    */
   
@@ -20121,6 +20121,8 @@ return /******/ (function(modules) { // webpackBootstrap
     this.props.touch.center = null;
     this.scaleOffset = 0;
     this.deltaDifference = 0;
+    // Disable the browser default handling of this event.
+    util.preventDefault(event);
   };
   
   /**
@@ -20131,6 +20133,9 @@ return /******/ (function(modules) { // webpackBootstrap
   Range.prototype._onPinch = function (event) {
     // only allow zooming when configured as zoomable and moveable
     if (!(this.options.zoomable && this.options.moveable)) return;
+  
+    // Disable the browser default handling of this event.
+    util.preventDefault(event);
   
     this.props.touch.allowDragging = false;
   

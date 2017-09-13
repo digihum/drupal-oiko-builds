@@ -16,7 +16,7 @@ provider: null
 plugin: 'block_content:block-oiko-welcome_tour'
 settings:
   id: 'block_content:block-oiko-welcome_tour'
-  label: 'Welcome block'
+  label: Welcome
   provider: block_content
   label_display: visible
   status: true
@@ -25,6 +25,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: '<front>'
+    pages: "<front>\r\n/cidoc-entity/*"
     negate: false
     context_mapping: {  }

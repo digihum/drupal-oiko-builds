@@ -9,7 +9,6 @@ dependencies:
     - image
     - paragraphs
     - path
-    - text
 third_party_settings:
   field_group:
     group_main:
@@ -31,7 +30,6 @@ third_party_settings:
         - internal_name
         - citation
         - significance
-        - content
         - group_main_details
       parent_name: group_main
       weight: 4
@@ -62,7 +60,7 @@ third_party_settings:
         - group_people
         - group_group_heirachy
       parent_name: group_main_deets
-      weight: 6
+      weight: 5
       label: 'Main details'
       format_type: tabs
       format_settings:
@@ -172,13 +170,6 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
-  content:
-    type: text_textarea
-    weight: 5
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
   internal_name:
     type: string_textfield
     weight: 2
@@ -233,4 +224,5 @@ hidden:
   'cidoc_properties:range:p96_by_mother': true
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true
+  content: true
   user_id: true

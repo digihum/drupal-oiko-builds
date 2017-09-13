@@ -12,6 +12,9 @@
   i.fa {
     font-size: $sidebar-icon-font-size;
     line-height: $sidebar-icon-line-height;
+    @include to('s') {
+      font-size: $sidebar-icon-font-size - 0.2rem;
+    }
   }
 
   a {
@@ -43,32 +46,132 @@
     }
 
     &:hover {
-      background: $tab-item-background-hover;
-      color: palette(oikocream);
+      background-color: palette(oikogrey);
+      color: palette(white);
     }
+
+    &.disabled {
+      color: palette(oikogrey);
+      cursor: not-allowed;
+
+      &:focus,
+      &[aria-selected='true'],
+      &:hover {
+        background: transparent;
+        color: palette(oikogrey);
+      }
+    }
+  }
+}
+
+@include to('s') {
+  .l-main-content {
+    overflow-y: scroll;
+  }
+
+  .sidebar-opened .oiko-app {
+    display: none;
   }
 }
 
 .sidebar-content {
   display: none;
-
+  position: relative;
   .sidebar-opened & {
     display: block;
   }
-
-  width: 33%;
+  width: 100%;
+  @include to('s') {
+    z-index: 10000;
+  }
+  @include at('m') {
+    width: 50%;
+  }
+  @include from('l') {
+    width: 33%;
+  }
   flex-grow: 0;
   flex-shrink: 0;
 
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 
   padding: 20px;
 
+  @media screen and (orientation: landscape) {
+    .showing-map & {
+      border-right: 2px solid palette(oikoblue);
+    }
+
+    .showing-timeline & {
+      border-left: 2px solid palette(oikoblue);
+    }
+  }
+
+  @include to('s') {
+    padding: 0;
+    overflow: visible;
+    background: palette(oikocream);
+  }
+
   .sidebar-pane {
     display: none;
+    position: relative;
+    .close-button {
+      right: -12px;
+      top: -20px;
+      @include to('s') {
+        position: relative;
+        right: 10px;
+        top: 0;
+        text-align: right;
+      }
+    }
+
+    @include to('s') {
+      &.with-padding {
+        padding: 20px;
+        .close-button {
+          right: -10px;
+          top: -20px;
+        }
+      }
+    }
     &.is-active {
       display: block;
+    }
+    .loading-graphic {
+      position: relative;
+      left: calc(50% - #{$ajax-loading-graphic-size/2 + 20px});
+    }
+  }
+}
+
+// Do weird things on a portrait screen.
+@include from('m') {
+  @media screen and (orientation: portrait) {
+
+    .l-main-content {
+      flex-direction: column;
+    }
+
+    .l-sidebar-content {
+      flex-grow: 1;
+      width: 100%;
+      flex-basis: 1px;
+      border-top: 2px solid palette(oikoblue);
+      border-bottom: 2px solid palette(oikoblue);
+      padding: 20px 20px 20px;
+      .showing-timeline & {
+        order: 1;
+      }
+    }
+
+    .oiko-app {
+      flex-grow: 1;
+      width: 100%;
+      flex-basis: 1px;
     }
   }
 }

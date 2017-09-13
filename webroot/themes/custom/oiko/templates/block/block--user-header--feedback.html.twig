@@ -35,6 +35,9 @@
     {% endif %}
     {{ title_suffix }}
     <div {{ attributes.addClass('reveal').setAttribute('data-reveal', true) }}>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
         {% block content %}
             <h2>{{ label }}</h2>
             {{ content }}

@@ -5,10 +5,13 @@ id: p143_joined
 label: 'P143 joined'
 bidirectional: false
 reverse_label: 'P143 was joined by'
+friendly_label: joined
+reverse_friendly_label: 'was joined by'
 domain_bundles:
-  e21_person: e21_person
+  - e85_joining
 range_bundles:
-  e85_joining: e85_joining
+  1: e21_person
+  2: e74_group
 editability:
   domain: true
   range: true

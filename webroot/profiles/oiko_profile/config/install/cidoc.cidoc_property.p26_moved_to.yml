@@ -8,9 +8,9 @@ reverse_label: 'P26 was destination of'
 friendly_label: 'Moved to'
 reverse_friendly_label: 'Was destination of'
 domain_bundles:
-  e9_move: e9_move
+  - e9_move
 range_bundles:
-  e53_place: e53_place
+  - e53_place
 editability:
   domain: true
   range: true

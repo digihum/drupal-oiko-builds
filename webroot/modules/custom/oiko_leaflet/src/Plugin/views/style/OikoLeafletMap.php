@@ -98,6 +98,50 @@ class OikoLeafletMap extends StylePluginBase {
       );
     }
 
+    // Pan
+    $form['pan'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Allow panning'),
+      '#default_value' => $this->options['pan'],
+    );
+
+    // Zoom
+    $form['zoom'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Allow zoom'),
+      '#default_value' => $this->options['zoom'],
+    );
+
+    // Zoom Controls
+    $form['zoom_controls'] = array(
+      '#type' => 'select',
+      '#title' => $this->t('Zoom controls'),
+      '#options' => [
+        '' => $this->t('Hidden'),
+        'topleft' => $this->t('Top left'),
+        'topright' => $this->t('Top right'),
+        'bottomleft' => $this->t('Bottom left'),
+        'bottomright' => $this->t('Bottom right'),
+      ],
+      '#default_value' => $this->options['zoom_controls'],
+      '#states' => array(
+        'visible' => array(
+          ':input[name="style_options[zoom]"]' => array(
+            'checked' => TRUE,
+          ),
+        ),
+      ),
+    );
+
+    // Zoom override
+    $form['max_zoom'] = array(
+      '#type' => 'number',
+      '#min' => 0,
+      '#step' => 1,
+      '#title' => $this->t('Maximum zoom override, use 0 to not override'),
+      '#default_value' => $this->options['max_zoom'],
+    );
+
     // Clustering
     $form['clustering'] = array(
       '#type' => 'checkbox',
@@ -225,6 +269,31 @@ class OikoLeafletMap extends StylePluginBase {
       $map['clustering'] = $this->options['clustering'];
       $map['locate'] = $this->options['locate'];
       $height = $this->options['full_height'] ? 'full' : $this->options['height'] . 'px';
+      // We always add our zoomControl later.
+      $map['settings']['zoomControl'] = FALSE;
+      $map['settings']['dragging'] = (bool) $this->options['pan'];
+      // Allow disabling zoom.
+      if (!$this->options['zoom']) {
+        $map['settings']['boxZoom'] = FALSE;
+        $map['settings']['doubleClickZoom'] = FALSE;
+        $map['settings']['scrollWheelZoom'] = FALSE;
+        $map['settings']['keyboard'] = FALSE;
+        $map['settings']['touchZoom'] = FALSE;
+        $map['zoomControl'] = FALSE;
+      }
+      else {
+        $map['zoomControl'] = $this->options['zoom_controls'];
+      }
+
+      if ($this->options['max_zoom']) {
+        $map['settings']['maxZoom'] = min($this->options['max_zoom'], $map['settings']['maxZoom']);
+      }
+
+      // Disable tap events if dragging and zooming are disabled.
+      if (!$this->options['pan'] && !$this->options['zoom']) {
+        $map['settings']['tap'] = FALSE;
+      }
+
       return leaflet_render_map($map, $data, $height);
     }
     else {
@@ -273,6 +342,10 @@ class OikoLeafletMap extends StylePluginBase {
     $options['height'] = array('default' => '400');
     $options['full_height'] = array('default' => FALSE);
     $options['clustering'] = array('default' => TRUE);
+    $options['max_zoom'] = array('default' => 0);
+    $options['zoom'] = array('default' => TRUE);
+    $options['pan'] = array('default' => TRUE);
+    $options['zoom_controls'] = array('default' => 'topleft');
     $options['search'] = array('default' => FALSE);
     $options['locate'] = array('default' => FALSE);
     return $options;

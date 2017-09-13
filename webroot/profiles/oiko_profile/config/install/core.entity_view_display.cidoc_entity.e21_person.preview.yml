@@ -16,6 +16,8 @@ content:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:range:p143_joined':
+    weight: 21
   citation:
     type: entity_reference_revisions_entity_view
     weight: 5
@@ -61,6 +63,8 @@ hidden:
   'cidoc_properties:domain:p132_overlaps_with': true
   'cidoc_properties:domain:p133_is_separated_from': true
   'cidoc_properties:domain:p134_continued': true
+  'cidoc_properties:domain:p143_joined': true
+  'cidoc_properties:domain:p145_separated': true
   'cidoc_properties:domain:p14_carried_out_by': true
   'cidoc_properties:domain:p15_was_influenced_by': true
   'cidoc_properties:domain:p16_used_specific_object': true
@@ -77,6 +81,7 @@ hidden:
   'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p134_continued': true
   'cidoc_properties:range:p13_destroyed': true
+  'cidoc_properties:range:p145_separated': true
   'cidoc_properties:range:p14_carried_out_by': true
   'cidoc_properties:range:p15_was_influenced_by': true
   'cidoc_properties:range:p16_used_specific_object': true
@@ -86,6 +91,7 @@ hidden:
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true
   'cidoc_properties:range:p9_consists_of': true
+  cidoc_temporal_summary: true
   duplicate_of_p134_continues_entity_view_1: true
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
