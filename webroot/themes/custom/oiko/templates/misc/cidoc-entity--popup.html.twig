@@ -20,23 +20,28 @@
       <h1>{{- content.name -}}</h1>
     {% endif %}
 
-    <div class="subtitle">
-        {% if content.cidoc_temporal_summary %}
-            {{- content.cidoc_temporal_summary -}}
-        {% endif %}
-        {% if content.significance %}
-            {{- content.significance -}}
-        {% endif %}
-        <div class="last">
-            {{- content.event_basket_link -}}
-        </div>
+    <div id="{{ tabs_id_outer }}">
+
+	    <div class="subtitle">
+		{% if content.cidoc_temporal_summary %}
+		    {{- content.cidoc_temporal_summary -}}
+		{% endif %}
+		{% if content.significance %}
+		    {{- content.significance -}}
+		{% endif %}
+		<div class="last">
+		    {{- content.event_basket_link -}}
+		</div>
+	    </div>
+
+	    <ul class="tabs" data-tabs id="{{ tabs_id }}">
+		<li class="tabs-title is-active"><a href="#info" aria-selected="true">Info</a></li>
+		<li class="tabs-title"><a href="#discuss">Discuss</a></li>
+		<li class="tabs-title"><a href="#share">Share</a></li>
+	    </ul>
+
     </div>
 
-    <ul class="tabs" data-tabs id="{{ tabs_id }}">
-        <li class="tabs-title is-active"><a href="#info" aria-selected="true">Info</a></li>
-        <li class="tabs-title"><a href="#discuss">Discuss</a></li>
-        <li class="tabs-title"><a href="#share">Share</a></li>
-    </ul>
     <div class="tabs-content" data-tabs-content="{{ tabs_id }}">
         <div class="tabs-panel is-active" id="info">
   {% if content %}
