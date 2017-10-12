@@ -283,7 +283,7 @@ function oiko_preprocess_cidoc_entity(array &$variables) {
     // Create a valid HTML ID for the tabs and make sure it is unique.
     $variables['tabs_id'] = Html::getUniqueId('cidoc-popup-tabs');
     $variables['tabs_id_outer'] = Html::getUniqueId('cidoc-popup-tabs-outer');
-    
+
     // Add the discussions view to the popup.
 
     $variables['discussion_panel'] = [
