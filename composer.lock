@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6fc669baf4ba4d4d45c412139c520e11",
+    "content-hash": "b9527bcd4a292eb1026ccfd7922a00ed",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1169,7 +1169,7 @@
             ],
             "description": "Allows arbitrary insertion of code into the head of specific pages",
             "homepage": "https://www.drupal.org/project/add_to_head",
-            "time": "2016-02-22 14:21:54"
+            "time": "2016-02-22T14:21:54+00:00"
         },
         {
             "name": "drupal/admin_toolbar",
@@ -1369,7 +1369,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/cm_config_tools"
             },
-            "time": "2017-04-11 14:45:16"
+            "time": "2017-04-11T14:45:16+00:00"
         },
         {
             "name": "drupal/color_field",
@@ -1475,7 +1475,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/config_devel"
             },
-            "time": "2016-06-21 08:20:33"
+            "time": "2016-06-21T08:20:33+00:00"
         },
         {
             "name": "drupal/config_readonly",
@@ -1580,7 +1580,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/config_update"
             },
-            "time": "2016-08-31 19:41:53"
+            "time": "2016-08-31T19:41:53+00:00"
         },
         {
             "name": "drupal/console",
@@ -2057,7 +2057,7 @@
                 "issues": "http://drupal.org/project/devel",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
             },
-            "time": "2017-04-10 08:04:17"
+            "time": "2017-04-10T08:04:17+00:00"
         },
         {
             "name": "drupal/entity_reference_revisions",
@@ -2224,7 +2224,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/eva"
             },
-            "time": "2017-03-17 01:22:49"
+            "time": "2017-03-17T01:22:49+00:00"
         },
         {
             "name": "drupal/field_group",
@@ -2677,7 +2677,7 @@
                 "source": "http://cgit.drupalcode.org/leaflet",
                 "issues": "https://www.drupal.org/project/issues/leaflet"
             },
-            "time": "2016-04-04 21:22:53"
+            "time": "2016-04-04T21:22:53+00:00"
         },
         {
             "name": "drupal/leaflet_widget",
@@ -2691,7 +2691,7 @@
                 "composer/installers": "^1.0.21"
             },
             "type": "drupal-module",
-            "time": "2016-09-20 10:25:00"
+            "time": "2016-05-02T15:43:10+00:00"
         },
         {
             "name": "drupal/metatag",
@@ -2927,17 +2927,64 @@
         },
         {
             "name": "drupal/pathauto",
-            "version": "dev-8.x-1.x",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://git.drupal.org/project/pathauto.git",
-                "reference": "05a0bc51694b70efb697b3c8b175f2884bff7b34"
+                "url": "https://git.drupal.org/project/pathauto",
+                "reference": "8.x-1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/pathauto-8.x-1.0.zip",
+                "reference": "8.x-1.0",
+                "shasum": "4c82a5689a18421c8c73fcc8be7b333bb21ae02a"
             },
             "require": {
-                "composer/installers": "^1.0.21"
+                "drupal/core": "*",
+                "drupal/ctools": "*",
+                "drupal/token": "*"
             },
             "type": "drupal-module",
-            "time": "2016-08-07 10:52:55"
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0",
+                    "datestamp": "1493468044",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Berdir",
+                    "homepage": "https://www.drupal.org/user/214652"
+                },
+                {
+                    "name": "Dave Reid",
+                    "homepage": "https://www.drupal.org/user/53892"
+                },
+                {
+                    "name": "Freso",
+                    "homepage": "https://www.drupal.org/user/27504"
+                },
+                {
+                    "name": "greggles",
+                    "homepage": "https://www.drupal.org/user/36762"
+                }
+            ],
+            "description": "Provides a mechanism for modules to automatically generate aliases for the content they manage.",
+            "homepage": "https://www.drupal.org/project/pathauto",
+            "support": {
+                "source": "http://cgit.drupalcode.org/pathauto"
+            }
         },
         {
             "name": "drupal/r4032login",
@@ -3007,7 +3054,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/r4032login"
             },
-            "time": "2017-02-08 04:20:19"
+            "time": "2017-02-08T04:20:19+00:00"
         },
         {
             "name": "drupal/search_api",
@@ -4400,7 +4447,7 @@
             ],
             "description": "Extend the composer/installers plugin to accept any arbitrary package type.",
             "homepage": "http://www.oomphinc.com/",
-            "time": "2016-07-05 15:00:34"
+            "time": "2016-07-05T15:00:34+00:00"
         },
         {
             "name": "padraic/humbug_get_contents",
@@ -4860,7 +4907,7 @@
             ],
             "description": "GeoPHP is a open-source native PHP library for doing geometry operations. It is written entirely in PHP and can therefore run on shared hosts. It can read and write a wide variety of formats: WKT (including EWKT), WKB (including EWKB), GeoJSON, KML, GPX, GeoRSS). It works with all Simple-Feature geometries (Point, LineString, Polygon, GeometryCollection etc.) and can be used to get centroids, bounding-boxes, area, and a wide variety of other useful information.",
             "homepage": "https://github.com/phayes/geoPHP",
-            "time": "2016-03-04 05:42:29"
+            "time": "2016-03-04T05:42:29+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -7008,12 +7055,12 @@
             "version": "v3.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/geocoder-php/Geocoder.git",
+                "url": "https://github.com/geocoder-php/php-common.git",
                 "reference": "ccc178e2984c0af24881faa0ffe515f20e5e8c23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/Geocoder/zipball/ccc178e2984c0af24881faa0ffe515f20e5e8c23",
+                "url": "https://api.github.com/repos/geocoder-php/php-common/zipball/ccc178e2984c0af24881faa0ffe515f20e5e8c23",
                 "reference": "ccc178e2984c0af24881faa0ffe515f20e5e8c23",
                 "shasum": ""
             },
@@ -7564,7 +7611,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/purl"
             },
-            "time": "2016-05-27 18:27:16"
+            "time": "2016-05-27T18:27:16+00:00"
         },
         {
             "name": "drupal/stage_file_proxy",
@@ -8724,7 +8771,6 @@
         "drupal/leaflet": 20,
         "drupal/leaflet_widget": 20,
         "drupal/paragraphs": 5,
-        "drupal/pathauto": 20,
         "drupal/r4032login": 20,
         "drupal/webform": 10,
         "oomphinc/composer-installers-extender": 20,

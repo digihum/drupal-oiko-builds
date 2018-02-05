@@ -31,10 +31,10 @@ tips:
     attributes:
       data-class: sidebar-tabs
     body: "<p><i class=\"fa fa-bars fa-2x\" title=\"Icon for Main menu\"></i> Read more about the Oiko.world project, the data entry process and the technical specifications, as well as T&Cs. You can also replay tours at any time from the main menu.</p>\r\n<p><i class=\"fa fa-filter fa-2x\" title=\"Legend\"></i> See the different kinds of data available in Oiko.world, filter what you want to see, as well as catch up on recent discussions about entries</p>\r\n<p><i class=\"fa fa-map-marker fa-2x\" title=\"Information\"></i> See the full information for each entry, as well as bookmark entries for later comparison. </p>\r\n"
-    location: ''
-    next_label: ''
-    previous_label: ''
-    information_bar: 0
+    location: null
+    next_label: null
+    previous_label: null
+    information_bar: null
   3-4-activity-panel:
     id: 3-4-activity-panel
     plugin: text
@@ -53,7 +53,7 @@ tips:
     label: '4/5 Information'
     weight: -97
     attributes:
-      data-id: cidoc-popup-tabs
+      data-id: cidoc-popup-tabs-outer
     body: "<p><i class=\"fa fa-map-marker fa-2x\"></i> Click on the Info icon when something on the map is selected for information about this entry.</p>\r\n<p><strong>Info</strong>\r\nSee information relating to the selected item.</p>\r\n<p>\r\n<strong>Discuss</strong>\r\nRead and contribute to the discussion about the selected item.</p>\r\n<p><strong>Share</strong>\r\nShare a link to the selected item on social media.</p>\r\n\r\n<p><i class=\"fa fa-plus-circle fa-2x\"></i> Click on this to add this item to your Added Events</p>"
     location: right
     next_label: null
