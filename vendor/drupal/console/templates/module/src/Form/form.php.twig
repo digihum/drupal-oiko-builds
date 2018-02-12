@@ -19,12 +19,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 {% block class_declaration %}
 /**
  * Class {{ class_name }}.
- *
- * @package Drupal\{{module_name}}\Form
  */
 class {{ class_name }} extends FormBase {% endblock %}
 {% block class_construct %}
 {% if services is not empty %}
+  /**
+   * Constructs a new {{ class_name }} object.
+   */
   public function __construct(
     {{ servicesAsParameters(services)|join(',\n    ') }}
   ) {
@@ -60,14 +61,14 @@ class {{ class_name }} extends FormBase {% endblock %}
   public function buildForm(array $form, FormStateInterface $form_state) {
 {% for input in inputs %}
 {% if input.fieldset|length %}
-    $form['{{ input.fieldset }}']['{{ input.name }}'] = array(
+    $form['{{ input.fieldset }}']['{{ input.name }}'] = [
 {% else %}
-    $form['{{ input.name }}'] = array(
+    $form['{{ input.name }}'] = [
 {% endif %}
       '#type' => '{{ input.type }}',
-      '#title' => $this->t('{{ input.label }}'),
+      '#title' => $this->t('{{ input.label|e }}'),
 {% if input.description|length %}
-      '#description' => $this->t('{{ input.description }}'),
+      '#description' => $this->t('{{ input.description|e }}'),
 {% endif %}
 {% if input.options|length %}
       '#options' => {{ input.options }},
@@ -78,8 +79,12 @@ class {{ class_name }} extends FormBase {% endblock %}
 {% if input.size|length %}
       '#size' => {{ input.size }},
 {% endif %}
-    );
+    ];
 {% endfor %}
+    $form['submit'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Submit'),
+    ];
 
     return $form;
   }
@@ -87,7 +92,18 @@ class {{ class_name }} extends FormBase {% endblock %}
   /**
    * {@inheritdoc}
    */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    parent::validateForm($form, $form_state);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    // Display result.
+    foreach ($form_state->getValues() as $key => $value) {
+      drupal_set_message($key . ': ' . $value);
+    }
 
   }
 {% endblock %}

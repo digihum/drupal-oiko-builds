@@ -12,14 +12,41 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Process\PhpExecutableFinder;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Command;
+use Drupal\Console\Core\Style\DrupalStyle;
+use \Drupal\Console\Core\Utils\ConfigurationManager;
 
 /**
  * Class ServerCommand
+ *
  * @package Drupal\Console\Command
  */
 class ServerCommand extends Command
 {
+    /**
+     * @var string
+     */
+    protected $appRoot;
+
+    /**
+     * @var ConfigurationManager
+     */
+    protected $configurationManager;
+
+    /**
+     * ServerCommand constructor.
+     *
+     * @param $appRoot
+     * @param $configurationManager
+     */
+    public function __construct($appRoot, $configurationManager)
+    {
+        $this->appRoot = $appRoot;
+        $this->configurationManager = $configurationManager;
+
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -33,7 +60,7 @@ class ServerCommand extends Command
                 InputArgument::OPTIONAL,
                 $this->trans('commands.server.arguments.address'),
                 '127.0.0.1:8088'
-            );
+            )->setAliases(['serve']);
     }
 
     /**
@@ -42,34 +69,21 @@ class ServerCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
-        $learning = $input->hasOption('learning')?$input->getOption('learning'):false;
-
-        $address = $input->getArgument('address');
-        if (false === strpos($address, ':')) {
-            $address = sprintf(
-                '%s:8088',
-                $address
-            );
-        }
+        $address = $this->validatePort($input->getArgument('address'));
 
         $finder = new PhpExecutableFinder();
         if (false === $binary = $finder->find()) {
             $io->error($this->trans('commands.server.errors.binary'));
-            return;
+            return 1;
         }
 
-        $router = $this->getRouterPath();
-        $cli = sprintf(
-            '%s %s %s %s',
-            $binary,
-            '-S',
-            $address,
-            $router
-        );
+        $router = $this->configurationManager
+            ->getVendorCoreDirectory() . 'router.php';
 
-        if ($learning) {
-            $io->commentBlock($cli);
-        }
+        $processBuilder = new ProcessBuilder([$binary, '-S', $address, $router]);
+        $processBuilder->setTimeout(null);
+        $processBuilder->setWorkingDirectory($this->appRoot);
+        $process = $processBuilder->getProcess();
 
         $io->success(
             sprintf(
@@ -78,40 +92,61 @@ class ServerCommand extends Command
             )
         );
 
-        $processBuilder = new ProcessBuilder(explode(' ', $cli));
-        $process = $processBuilder->getProcess();
-        $process->setWorkingDirectory($this->getDrupalHelper()->getRoot());
-        $process->setTty('true');
-        $process->run();
+        $io->commentBlock(
+            sprintf(
+                $this->trans('commands.server.messages.listening'),
+                'http://'.$address
+            )
+        );
+
+        if ($io->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+            $callback = [$this, 'outputCallback'];
+        } else {
+            $callback = null;
+        }
+
+        // Use the process helper to copy process output to console output.
+        $this->getHelper('process')->run($output, $process, null, $callback);
 
         if (!$process->isSuccessful()) {
             $io->error($process->getErrorOutput());
+            return 1;
         }
+
+        return 0;
     }
 
     /**
-     * @return null|string
+     * @param string $address
+     * @return string
      */
-    private function getRouterPath()
+    private function validatePort($address)
     {
-        $router = sprintf(
-            '%s/.console/router.php',
-            $this->getApplication()->getConfig()->getUserHomeDir()
-        );
-
-        if (file_exists($router)) {
-            return $router;
+        if (false === strpos($address, ':')) {
+            $host = $address;
+            $port = '8088';
+        } else {
+            $host = explode(':', $address)[0];
+            $port = explode(':', $address)[1];
         }
 
-        $router = sprintf(
-            '%s/config/dist/router.php',
-            $this->getApplication()->getDirectoryRoot()
-        );
+        if (fsockopen($host, $port)) {
+            $port = rand(8888, 9999);
+            $address = sprintf(
+                '%s:%s',
+                $host,
+                $port
+            );
 
-        if (file_exists($router)) {
-            return $router;
+            $address = $this->validatePort($address);
         }
 
-        return null;
+        return $address;
+    }
+
+    public function outputCallback($type, $buffer)
+    {
+        // TODO: seems like $type is Process::ERR always
+        echo $buffer;
     }
 }

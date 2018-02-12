@@ -20,7 +20,7 @@ class MapPageController extends ControllerBase {
   /**
    * Drupal\Core\Entity\EntityTypeManager definition.
    *
-   * @var Drupal\Core\Entity\EntityTypeManager
+   * @var \Drupal\Core\Entity\EntityTypeManager
    */
   protected $entity_type_manager;
 

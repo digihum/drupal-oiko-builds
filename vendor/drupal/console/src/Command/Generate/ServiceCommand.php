@@ -7,21 +7,80 @@
 
 namespace Drupal\Console\Command\Generate;
 
+use Drupal\Console\Utils\Validator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Command\ServicesTrait;
-use Drupal\Console\Command\ModuleTrait;
+use Drupal\Console\Command\Shared\ServicesTrait;
+use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Generator\ServiceGenerator;
-use Drupal\Console\Command\ConfirmationTrait;
-use Drupal\Console\Command\GeneratorCommand;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Command\Shared\ConfirmationTrait;
+use Drupal\Console\Core\Command\ContainerAwareCommand;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Extension\Manager;
+use Drupal\Console\Core\Utils\ChainQueue;
+use Drupal\Console\Core\Utils\StringConverter;
 
-class ServiceCommand extends GeneratorCommand
+/**
+ * Class ServiceCommand
+ *
+ * @package Drupal\Console\Command\Generate
+ */
+class ServiceCommand extends ContainerAwareCommand
 {
     use ServicesTrait;
     use ModuleTrait;
     use ConfirmationTrait;
+
+    /**
+     * @var Manager
+     */
+    protected $extensionManager;
+
+    /**
+     * @var ServiceGenerator
+     */
+    protected $generator;
+
+    /**
+     * @var StringConverter
+     */
+    protected $stringConverter;
+
+    /**
+     * @var Validator
+     */
+    protected $validator;
+
+    /**
+     * @var ChainQueue
+     */
+    protected $chainQueue;
+
+    /**
+     * ServiceCommand constructor.
+     *
+     * @param Manager          $extensionManager
+     * @param ServiceGenerator $generator
+     * @param StringConverter  $stringConverter
+     * @param Validator        $validator
+     * @param ChainQueue       $chainQueue
+     */
+    public function __construct(
+        Manager $extensionManager,
+        ServiceGenerator $generator,
+        StringConverter $stringConverter,
+        Validator $validator,
+        ChainQueue $chainQueue
+    ) {
+        $this->extensionManager = $extensionManager;
+        $this->generator = $generator;
+        $this->stringConverter = $stringConverter;
+        $this->validator = $validator;
+        $this->chainQueue = $chainQueue;
+        parent::__construct();
+    }
+
 
     /**
      * {@inheritdoc}
@@ -42,7 +101,7 @@ class ServiceCommand extends GeneratorCommand
                 'name',
                 null,
                 InputOption::VALUE_REQUIRED,
-                $this->trans('commands.generate.service.options.name')
+                $this->trans('commands.generate.service.options.service-name')
             )
             ->addOption(
                 'class',
@@ -52,16 +111,29 @@ class ServiceCommand extends GeneratorCommand
             )
             ->addOption(
                 'interface',
-                false,
+                null,
                 InputOption::VALUE_NONE,
-                $this->trans('commands.common.service.options.interface')
+                $this->trans('commands.generate.service.options.interface')
+            )
+            ->addOption(
+                'interface-name',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                $this->trans('commands.generate.service.options.interface-name')
             )
             ->addOption(
                 'services',
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.common.options.services')
-            );
+            )
+            ->addOption(
+                'path-service',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                $this->trans('commands.generate.service.options.path-service')
+            )
+            ->setAliases(['gs']);
     }
 
     /**
@@ -71,25 +143,37 @@ class ServiceCommand extends GeneratorCommand
     {
         $io = new DrupalStyle($input, $output);
 
-        // @see use Drupal\Console\Command\ConfirmationTrait::confirmGeneration
-        if (!$this->confirmGeneration($io)) {
-            return;
+        // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
+        if (!$this->confirmGeneration($io, $input)) {
+            return 1;
         }
 
         $module = $input->getOption('module');
         $name = $input->getOption('name');
-        $class = $input->getOption('class');
+        $class = $this->validator->validateClassName($input->getOption('class'));
         $interface = $input->getOption('interface');
+        $interface_name = $input->getOption('interface-name');
         $services = $input->getOption('services');
+        $path_service = $input->getOption('path-service');
 
-        // @see Drupal\Console\Command\ServicesTrait::buildServices
+        $available_services = $this->container->getServiceIds();
+
+        if (in_array($name, array_values($available_services))) {
+            throw new \Exception(
+                sprintf(
+                    $this->trans('commands.generate.service.messages.service-already-taken'),
+                    $module
+                )
+            );
+        }
+
+        // @see Drupal\Console\Command\Shared\ServicesTrait::buildServices
         $build_services = $this->buildServices($services);
+        $this->generator->generate($module, $name, $class, $interface, $interface_name, $build_services, $path_service);
 
-        $this
-            ->getGenerator()
-            ->generate($module, $name, $class, $interface, $build_services);
+        $this->chainQueue->addCommand('cache:rebuild', ['cache' => 'all']);
 
-        $this->getChain()->addCommand('cache:rebuild', ['cache' => 'all']);
+        return 0;
     }
 
     /**
@@ -100,14 +184,9 @@ class ServiceCommand extends GeneratorCommand
         $io = new DrupalStyle($input, $output);
 
         // --module option
-        $module = $input->getOption('module');
-        if (!$module) {
-            // @see Drupal\Console\Command\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($output);
-            $input->setOption('module', $module);
-        }
+        $module = $this->getModuleOption();
 
-        // --name option
+        //--name option
         $name = $input->getOption('name');
         if (!$name) {
             $name = $io->ask(
@@ -122,7 +201,10 @@ class ServiceCommand extends GeneratorCommand
         if (!$class) {
             $class = $io->ask(
                 $this->trans('commands.generate.service.questions.class'),
-                'DefaultService'
+                'DefaultService',
+                function ($class) {
+                    return $this->validator->validateClassName($class);
+                }
             );
             $input->setOption('class', $class);
         }
@@ -137,17 +219,31 @@ class ServiceCommand extends GeneratorCommand
             $input->setOption('interface', $interface);
         }
 
+        // --interface_name option
+        $interface_name = $input->getOption('interface-name');
+        if ($interface && !$interface_name) {
+            $interface_name = $io->askEmpty(
+                $this->trans('commands.generate.service.questions.interface-name')
+            );
+            $input->setOption('interface-name', $interface_name);
+        }
+
         // --services option
         $services = $input->getOption('services');
         if (!$services) {
-            // @see Drupal\Console\Command\ServicesTrait::servicesQuestion
-            $services = $this->servicesQuestion($output);
+            // @see Drupal\Console\Command\Shared\ServicesTrait::servicesQuestion
+            $services = $this->servicesQuestion($io);
             $input->setOption('services', $services);
         }
-    }
 
-    protected function createGenerator()
-    {
-        return new ServiceGenerator();
+        // --path_service option
+        $path_service = $input->getOption('path-service');
+        if (!$path_service) {
+            $path_service = $io->ask(
+                $this->trans('commands.generate.service.questions.path-service'),
+                '/modules/custom/' . $module . '/src/'
+            );
+            $input->setOption('path-service', $path_service);
+        }
     }
 }

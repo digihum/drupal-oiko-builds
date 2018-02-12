@@ -33,14 +33,14 @@ class RouterListenerTest extends TestCase
     public function testPort($defaultHttpPort, $defaultHttpsPort, $uri, $expectedHttpPort, $expectedHttpsPort)
     {
         $urlMatcher = $this->getMockBuilder('Symfony\Component\Routing\Matcher\UrlMatcherInterface')
-                             ->disableOriginalConstructor()
-                             ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
         $context = new RequestContext();
         $context->setHttpPort($defaultHttpPort);
         $context->setHttpsPort($defaultHttpsPort);
         $urlMatcher->expects($this->any())
-                     ->method('getContext')
-                     ->will($this->returnValue($context));
+            ->method('getContext')
+            ->will($this->returnValue($context));
 
         $listener = new RouterListener($urlMatcher, $this->requestStack);
         $event = $this->createGetResponseEventForUri($uri);
@@ -129,17 +129,17 @@ class RouterListenerTest extends TestCase
     /**
      * @dataProvider getLoggingParameterData
      */
-    public function testLoggingParameter($parameter, $log)
+    public function testLoggingParameter($parameter, $log, $parameters)
     {
         $requestMatcher = $this->getMockBuilder('Symfony\Component\Routing\Matcher\RequestMatcherInterface')->getMock();
         $requestMatcher->expects($this->once())
-          ->method('matchRequest')
-          ->will($this->returnValue($parameter));
+            ->method('matchRequest')
+            ->will($this->returnValue($parameter));
 
         $logger = $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
         $logger->expects($this->once())
-          ->method('info')
-          ->with($this->equalTo($log));
+            ->method('info')
+            ->with($this->equalTo($log), $this->equalTo($parameters));
 
         $kernel = $this->getMockBuilder('Symfony\Component\HttpKernel\HttpKernelInterface')->getMock();
         $request = Request::create('http://localhost/');
@@ -151,8 +151,8 @@ class RouterListenerTest extends TestCase
     public function getLoggingParameterData()
     {
         return array(
-            array(array('_route' => 'foo'), 'Matched route "foo".'),
-            array(array(), 'Matched route "n/a".'),
+            array(array('_route' => 'foo'), 'Matched route "{route}".', array('route' => 'foo', 'route_parameters' => array('_route' => 'foo'), 'request_uri' => 'http://localhost/', 'method' => 'GET')),
+            array(array(), 'Matched route "{route}".', array('route' => 'n/a', 'route_parameters' => array(), 'request_uri' => 'http://localhost/', 'method' => 'GET')),
         );
     }
 }
