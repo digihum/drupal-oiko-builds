@@ -4,15 +4,25 @@
   Drupal.oiko.addAppModule('marker-data');
   Drupal.oiko.addAppModule('empire-data');
 
+  var loadedFeatures = [];
+  var dataLoadCallback = function (data) {
+    loadedFeatures = loadedFeatures.concat(data.features);
+    // Check for a more property, and reload if we need to.
+    if (typeof data.more !== 'undefined') {
+      $.get(data.more).done(dataLoadCallback);
+    }
+    else {
+      // Load all of those features.
+      drupalLeaflet.add_features(loadedFeatures);
+      Drupal.oiko.appModuleDoneLoading('marker-data');
+    }
+  };
+
   $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
 
     // @TODO: Move this code, it does NOT belong here!
     if (mapDefinition.hasOwnProperty('data-url') && mapDefinition['data-url']) {
-      var get = $.get(mapDefinition['data-url']);
-      get.done(function (data) {
-        drupalLeaflet.add_features(data);
-        Drupal.oiko.appModuleDoneLoading('marker-data');
-      });
+      $.get(mapDefinition['data-url']).done(dataLoadCallback);
     }
     else {
       // There's nothing to load, so we're done here.
