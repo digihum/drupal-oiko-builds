@@ -4,6 +4,7 @@
  * Install tasks for oiko_profile
  */
 
+
 /**
  * Compute all E52 timespam timestamps.
  */
@@ -247,4 +248,23 @@ function oiko_profile_update_8129() {
  */
 function oiko_profile_update_8130() {
   \Drupal::service('module_installer')->install(['r4032login']);
+}
+
+/**
+ * Delete a view that was invalid.
+ */
+function oiko_profile_update_8131() {
+  if ($view = \Drupal\views\Views::getView('times')) {
+    $view->storage->delete();
+  }
+}
+
+/**
+ * Disable search API immmediate indexing.
+ */
+function oiko_profile_update_8132() {
+  if ($index = \Drupal\search_api\Entity\Index::load('crm_entities')) {
+    $index->setOption('index_directly', FALSE);
+    $index->save();
+  }
 }

@@ -225,7 +225,8 @@
         },
         "patches": {
             "drupal/core": {
-                "Use entity's cache tags for their entity cache entries": "https://www.drupal.org/files/issues/persistent-entity-cache-tags-2537588-10.patch"
+                "Use entity's cache tags for their entity cache entries": "https://www.drupal.org/files/issues/persistent-entity-cache-tags-2537588-10.patch",
+                "https://www.drupal.org/project/drupal/issues/2919157#comment-12321518": "https://www.drupal.org/files/issues/2919157-11.patch"
             },
             "drupal/config_devel": {
                 "Add drush command to list dependencies": "https://www.drupal.org/files/issues/config_devel-drush_config_list-2319193-10.patch",

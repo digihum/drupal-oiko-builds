@@ -6,6 +6,7 @@ use ComputerMinds\CIDOC_CRM\FactoryException;
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\RevisionableEntityBundleInterface;
 use Drupal\field\Entity\FieldConfig;
 
 /**
@@ -55,7 +56,7 @@ use Drupal\field\Entity\FieldConfig;
  *   }
  * )
  */
-class CidocEntityBundle extends ConfigEntityBundleBase {
+class CidocEntityBundle extends ConfigEntityBundleBase implements RevisionableEntityBundleInterface {
   /**
    * The CIDOC entity bundle (class) ID.
    *
@@ -283,4 +284,10 @@ class CidocEntityBundle extends ConfigEntityBundleBase {
 
     parent::postSave($storage, $update);
   }
+
+  public function shouldCreateNewRevision() {
+    return TRUE;
+  }
+
+
 }

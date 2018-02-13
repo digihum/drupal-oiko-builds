@@ -291,7 +291,9 @@ class SqlContentEntityStorageSchemaConverter {
         // Set the 'revision_translation_affected' flag to TRUE to match the
         // previous API return value: if the field was not defined the value
         // returned was always TRUE.
-        $entity->set($revision_translation_affected_key, TRUE);
+        if ($original_entity_type->hasKey('revision_translation_affected')) {
+          $entity->set($revision_translation_affected_key, TRUE);
+        }
 
         // Treat the entity as new in order to make the storage do an INSERT
         // rather than an UPDATE.

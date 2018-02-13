@@ -21,6 +21,7 @@ class OikoCitationHookImplementations {
       $fields['citation'] = BaseFieldDefinition::create('entity_reference_revisions')
         ->setLabel(t('General citations'))
         ->setTranslatable(FALSE)
+        ->setRevisionable(TRUE)
         ->setRequired(FALSE)
         ->setSetting('target_type', 'paragraph')
         ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)

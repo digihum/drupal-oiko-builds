@@ -3663,7 +3663,8 @@
         "type": "drupal-core",
         "extra": {
             "patches_applied": {
-                "Use entity's cache tags for their entity cache entries": "https://www.drupal.org/files/issues/persistent-entity-cache-tags-2537588-10.patch"
+                "Use entity's cache tags for their entity cache entries": "https://www.drupal.org/files/issues/persistent-entity-cache-tags-2537588-10.patch",
+                "https://www.drupal.org/project/drupal/issues/2919157#comment-12321518": "https://www.drupal.org/files/issues/2919157-11.patch"
             }
         },
         "installation-source": "dist",
