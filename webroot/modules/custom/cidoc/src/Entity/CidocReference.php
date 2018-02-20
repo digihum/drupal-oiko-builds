@@ -4,7 +4,7 @@ namespace Drupal\cidoc\Entity;
 
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\Core\Entity\ContentEntityBase;
+use Drupal\Core\Entity\EditorialContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\cidoc\CidocReferenceInterface;
@@ -44,14 +44,23 @@ use Drupal\user\UserInterface;
  *     },
  *   },
  *   base_table = "cidoc_reference",
+ *   revision_table = "cidoc_reference_revision",
+ *   revision_data_table = "cidoc_reference_field_revision",
+ *   revision_metadata_keys = {
+ *     "revision_user" = "revision_user_id",
+ *     "revision_created" = "revision_created",
+ *     "revision_log_message" = "revision_log_message",
+ *   },
  *   admin_permission = "administer cidoc entities",
  *   entity_keys = {
  *     "id" = "id",
+ *     "revision" = "revision_id",
  *     "bundle" = "property",
  *     "label" = "id",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
  *     "langcode" = "langcode",
+ *     "published" = "status",
  *   },
  *   links = {
  *     "canonical" = "/cidoc-reference/{cidoc_reference}",
@@ -64,7 +73,7 @@ use Drupal\user\UserInterface;
  *   field_ui_base_route = "entity.cidoc_property.edit_form"
  * )
  */
-class CidocReference extends ContentEntityBase implements CidocReferenceInterface {
+class CidocReference extends EditorialContentEntityBase implements CidocReferenceInterface {
 
   use EntityChangedTrait;
   use StringTranslationTrait;
@@ -101,6 +110,9 @@ class CidocReference extends ContentEntityBase implements CidocReferenceInterfac
    */
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     parent::postSave($storage, $update);
+
+    // Temporarily skip this.
+    return;
 
     // Maintain reverse references.
     if ($this->getReverseable()) {
@@ -280,6 +292,8 @@ class CidocReference extends ContentEntityBase implements CidocReferenceInterfac
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
+    $fields = parent::baseFieldDefinitions($entity_type);
+
     $fields['id'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('ID'))
       ->setDescription(t('The ID of the CIDOC reference.'))
@@ -314,7 +328,7 @@ class CidocReference extends ContentEntityBase implements CidocReferenceInterfac
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['langcode'] = BaseFieldDefinition::create('language')
+    $fields['langcode']
       ->setLabel(t('Language code'))
       ->setDescription(t('The language code for the CIDOC reference entity.'))
       ->setDisplayOptions('form', array(
@@ -329,45 +343,8 @@ class CidocReference extends ContentEntityBase implements CidocReferenceInterfac
 
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
+      ->setRevisionable(TRUE)
       ->setDescription(t('The time that the entity was last edited.'));
-
-    // @TODO: This should not really be part of the CIDOC module.
-    // Add the citations field.
-    $fields['citation'] = BaseFieldDefinition::create('entity_reference_revisions')
-      ->setLabel(t('Citations'))
-      ->setTranslatable(FALSE)
-      ->setRequired(FALSE)
-      ->setSetting('target_type', 'paragraph')
-      ->setDescription('')
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
-      ->setSetting('handler', 'default:paragraph')
-      ->setSetting('handler_settings', array(
-        'target_bundles' => array(
-          'book' => 'book',
-          'uri' => 'uri',
-        ),
-        'target_bundles_drag_drop' => array(
-          'book' => array(
-            'enabled' => TRUE,
-            'weight' => -5,
-          ),
-          'uri' => array(
-            'enabled' => TRUE,
-            'weight' => -4,
-          ),
-        ),
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'entity_reference_citations',
-        'weight' => 1,
-        'settings' => array(
-          'title' => 'Citation',
-          'title_plural' => 'Citations',
-          'edit_mode' => 'preview',
-        ),
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }
