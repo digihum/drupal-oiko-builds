@@ -111,11 +111,8 @@ class CidocReference extends EditorialContentEntityBase implements CidocReferenc
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     parent::postSave($storage, $update);
 
-    // Temporarily skip this.
-    return;
-
     // Maintain reverse references.
-    if ($this->getReverseable()) {
+    if ($this->getReverseable() && \Drupal::state()->get('cidoc.maintain_reverse_relationships', 1)) {
       $fields = $update ? $this->original->getFields(FALSE) : $this->getFields(FALSE);
 
       // Remove fields that need to be different, or are just correct to be

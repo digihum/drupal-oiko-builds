@@ -183,14 +183,14 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
    * {@inheritdoc}
    */
   public function isPublished() {
-    return (bool) $this->getEntityKey('published');
+    return (bool) $this->getEntityKey('status');
   }
 
   /**
    * {@inheritdoc}
    */
   public function setPublished($published = NULL) {
-    $this->set('published', $published ? NODE_PUBLISHED : NODE_NOT_PUBLISHED);
+    $this->set('status', $published ? NODE_PUBLISHED : NODE_NOT_PUBLISHED);
     return $this;
   }
 

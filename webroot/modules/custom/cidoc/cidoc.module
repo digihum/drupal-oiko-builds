@@ -22,10 +22,12 @@ function cidoc_entity_extra_field_info() {
  */
 function cidoc_cidoc_entity_storage_load($entities) {
   // Populate temporal and geospatial data ahead of caching.
-  /** @var \Drupal\cidoc\Entity\CidocEntity $entity */
-  foreach ($entities as $entity) {
-    $entity->getTemporalInformation();
-    $entity->getGeospatialData();
+  if (\Drupal::state()->get('cidoc.populate_temporal_date_for_cache', 1)) {
+    /** @var \Drupal\cidoc\Entity\CidocEntity $entity */
+    foreach ($entities as $entity) {
+      $entity->getTemporalInformation();
+      $entity->getGeospatialData();
+    }
   }
 }
 
