@@ -6292,25 +6292,25 @@
     },
     {
         "name": "phayes/geophp",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "1.2",
+        "version_normalized": "1.2.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/phayes/geoPHP.git",
-            "reference": "685562416ec6d22b9b3927e02ca0ddacf84ca646"
+            "reference": "015404e85b602e0df1f91441f8db0f9e98f7e567"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phayes/geoPHP/zipball/685562416ec6d22b9b3927e02ca0ddacf84ca646",
-            "reference": "685562416ec6d22b9b3927e02ca0ddacf84ca646",
+            "url": "https://api.github.com/repos/phayes/geoPHP/zipball/015404e85b602e0df1f91441f8db0f9e98f7e567",
+            "reference": "015404e85b602e0df1f91441f8db0f9e98f7e567",
             "shasum": ""
         },
         "require-dev": {
             "phpunit/phpunit": "4.1.*"
         },
-        "time": "2016-03-04 05:42:29",
+        "time": "2014-12-02 06:11:22",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "classmap": [
                 "geoPHP.inc"
@@ -6330,22 +6330,22 @@
     },
     {
         "name": "drupal/geofield",
-        "version": "1.0.0-alpha2",
-        "version_normalized": "1.0.0.0-alpha2",
+        "version": "1.0.0-beta3",
+        "version_normalized": "1.0.0.0-beta3",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/geofield",
-            "reference": "8.x-1.0-alpha2"
+            "reference": "8.x-1.0-beta3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/geofield-8.x-1.0-alpha2.zip",
-            "reference": "8.x-1.0-alpha2",
-            "shasum": "312100e9f087c6b178eb971c6a8a70919edff7f0"
+            "url": "https://ftp.drupal.org/files/projects/geofield-8.x-1.0-beta3.zip",
+            "reference": "8.x-1.0-beta3",
+            "shasum": "712f3a005e5fac02791d314ac87fda4e449af6fe"
         },
         "require": {
             "drupal/core": "~8.0",
-            "phayes/geophp": "dev-master"
+            "phayes/geophp": "^1.2"
         },
         "type": "drupal-module",
         "extra": {
@@ -6353,8 +6353,12 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0-alpha2",
-                "datestamp": "1464201846"
+                "version": "8.x-1.0-beta3",
+                "datestamp": "1519775884",
+                "security-coverage": {
+                    "status": "not-covered",
+                    "message": "Beta releases are not covered by Drupal security advisories."
+                }
             }
         },
         "installation-source": "dist",
@@ -6374,24 +6378,17 @@
                 "role": "Maintainer"
             },
             {
-                "name": "chachasikes",
-                "homepage": "https://www.drupal.org/user/50674"
+                "name": "Italo Mairo",
+                "homepage": "https://www.drupal.org/u/itamair",
+                "role": "Maintainer"
             },
             {
                 "name": "davidseth",
                 "homepage": "https://www.drupal.org/user/254857"
             },
             {
-                "name": "dtarc",
-                "homepage": "https://www.drupal.org/user/114087"
-            },
-            {
-                "name": "jherencia",
-                "homepage": "https://www.drupal.org/user/360690"
-            },
-            {
-                "name": "nikhiltri",
-                "homepage": "https://www.drupal.org/user/270223"
+                "name": "itamair",
+                "homepage": "https://www.drupal.org/user/1179076"
             },
             {
                 "name": "phayes",

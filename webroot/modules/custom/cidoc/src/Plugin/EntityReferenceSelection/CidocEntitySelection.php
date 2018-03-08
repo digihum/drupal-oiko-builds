@@ -130,7 +130,7 @@ class CidocEntitySelection extends DefaultSelection {
       /** @var \Drupal\cidoc\Entity\CidocEntity $entity */
       $bundle = $entity->bundle();
       if ($this->isSearchForActor() && $bundle == 'e82_actor_appellation') {
-        // We want to load and process all actors/groups referenced by this appelation.
+        // We want to load and process all actors/groups referenced by this appellation.
         // We need to get any actors using this appellation.
         $references = $entity->getReferences('p131_is_identified_by', TRUE);
         if (isset($references['p131_is_identified_by'])) {

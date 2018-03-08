@@ -14,6 +14,7 @@ use Drupal\Core\Access\AccessResult;
  * @see \Drupal\cidoc\Entity\CidocReference.
  */
 class CidocEntityAccessControlHandler extends EntityAccessControlHandler {
+
   /**
    * {@inheritdoc}
    */
@@ -23,23 +24,41 @@ class CidocEntityAccessControlHandler extends EntityAccessControlHandler {
         if ($entity->getEntityTypeId() === 'cidoc_property') {
           return AccessResult::allowed();
         }
-        // Intentially fall through.
+        // Intentionally fall through.
       case 'view':
         // CIDOC references have no published method or property.
         if ($entity->getEntityTypeId() === 'cidoc_entity' && !$entity->isPublished()) {
-          return AccessResult::allowedIfHasPermission($account, 'view unpublished cidoc entities');
+          return $this->checkGlobalPermissionOrOwnPermission('view unpublished cidoc entities', 'view own unpublished cidoc entities', $account, $entity);
         }
-        return AccessResult::allowedIfHasPermission($account, 'view published cidoc entities');
+        return AccessResult::allowedIfHasPermission($account, 'view published cidoc entities')->addCacheableDependency($entity);
 
       case 'update':
-        return AccessResult::allowedIfHasPermission($account, 'edit cidoc entities');
+        return $this->checkGlobalPermissionOrOwnPermission('edit cidoc entities', 'edit own cidoc entities', $account, $entity);
 
       case 'delete':
-        return AccessResult::allowedIfHasPermission($account, 'delete cidoc entities');
+        return $this->checkGlobalPermissionOrOwnPermission('delete cidoc entities', 'delete own cidoc entities', $account, $entity);
     }
 
     // Unknown operation, no opinion.
     return AccessResult::neutral();
+  }
+
+  /**
+   * Return an access result based on two permission + if this our entity.
+   *
+   * @param $global_permission
+   * @param $own_permission
+   * @param \Drupal\Core\Session\AccountInterface $account
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *
+   * @return \Drupal\Core\Access\AccessResultAllowed|\Drupal\Core\Access\AccessResultForbidden|\Drupal\Core\Access\AccessResultNeutral|static
+   */
+  protected function checkGlobalPermissionOrOwnPermission($global_permission, $own_permission, AccountInterface $account, EntityInterface $entity) {
+    $global_access = AccessResult::allowedIfHasPermission($account, $global_permission);
+    $own_access = AccessResult::allowedIfHasPermission($account, $own_permission);
+    $access_own_entity = AccessResult::allowedIf($account->id() == $entity->getOwnerId())->addCacheableDependency($entity);
+
+    return $global_access->orIf($own_access->andIf($access_own_entity));
   }
 
   /**

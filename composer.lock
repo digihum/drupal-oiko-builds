@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7f86c740d700000392cc2db27753b47",
+    "content-hash": "53100d648114e0ee6c36ead53561546a",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -2237,7 +2237,8 @@
             "type": "drupal-core",
             "extra": {
                 "patches_applied": {
-                    "Use entity's cache tags for their entity cache entries": "https://www.drupal.org/files/issues/persistent-entity-cache-tags-2537588-10.patch"
+                    "Use entity's cache tags for their entity cache entries": "https://www.drupal.org/files/issues/persistent-entity-cache-tags-2537588-10.patch",
+                    "https://www.drupal.org/project/drupal/issues/2919157#comment-12321518": "https://www.drupal.org/files/issues/2919157-11.patch"
                 }
             },
             "autoload": {
@@ -2834,21 +2835,21 @@
         },
         {
             "name": "drupal/geofield",
-            "version": "1.0.0-alpha2",
+            "version": "1.0.0-beta3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/geofield",
-                "reference": "8.x-1.0-alpha2"
+                "reference": "8.x-1.0-beta3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/geofield-8.x-1.0-alpha2.zip",
-                "reference": "8.x-1.0-alpha2",
-                "shasum": "312100e9f087c6b178eb971c6a8a70919edff7f0"
+                "url": "https://ftp.drupal.org/files/projects/geofield-8.x-1.0-beta3.zip",
+                "reference": "8.x-1.0-beta3",
+                "shasum": "712f3a005e5fac02791d314ac87fda4e449af6fe"
             },
             "require": {
                 "drupal/core": "~8.0",
-                "phayes/geophp": "dev-master"
+                "phayes/geophp": "^1.2"
             },
             "type": "drupal-module",
             "extra": {
@@ -2856,8 +2857,12 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-alpha2",
-                    "datestamp": "1464201846"
+                    "version": "8.x-1.0-beta3",
+                    "datestamp": "1519775884",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Beta releases are not covered by Drupal security advisories."
+                    }
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2876,24 +2881,17 @@
                     "role": "Maintainer"
                 },
                 {
-                    "name": "chachasikes",
-                    "homepage": "https://www.drupal.org/user/50674"
+                    "name": "Italo Mairo",
+                    "homepage": "https://www.drupal.org/u/itamair",
+                    "role": "Maintainer"
                 },
                 {
                     "name": "davidseth",
                     "homepage": "https://www.drupal.org/user/254857"
                 },
                 {
-                    "name": "dtarc",
-                    "homepage": "https://www.drupal.org/user/114087"
-                },
-                {
-                    "name": "jherencia",
-                    "homepage": "https://www.drupal.org/user/360690"
-                },
-                {
-                    "name": "nikhiltri",
-                    "homepage": "https://www.drupal.org/user/270223"
+                    "name": "itamair",
+                    "homepage": "https://www.drupal.org/user/1179076"
                 },
                 {
                     "name": "phayes",
@@ -5143,16 +5141,16 @@
         },
         {
             "name": "phayes/geophp",
-            "version": "dev-master",
+            "version": "1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phayes/geoPHP.git",
-                "reference": "685562416ec6d22b9b3927e02ca0ddacf84ca646"
+                "reference": "015404e85b602e0df1f91441f8db0f9e98f7e567"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phayes/geoPHP/zipball/685562416ec6d22b9b3927e02ca0ddacf84ca646",
-                "reference": "685562416ec6d22b9b3927e02ca0ddacf84ca646",
+                "url": "https://api.github.com/repos/phayes/geoPHP/zipball/015404e85b602e0df1f91441f8db0f9e98f7e567",
+                "reference": "015404e85b602e0df1f91441f8db0f9e98f7e567",
                 "shasum": ""
             },
             "require-dev": {
@@ -5175,7 +5173,7 @@
             ],
             "description": "GeoPHP is a open-source native PHP library for doing geometry operations. It is written entirely in PHP and can therefore run on shared hosts. It can read and write a wide variety of formats: WKT (including EWKT), WKB (including EWKB), GeoJSON, KML, GPX, GeoRSS). It works with all Simple-Feature geometries (Point, LineString, Polygon, GeometryCollection etc.) and can be used to get centroids, bounding-boxes, area, and a wide variety of other useful information.",
             "homepage": "https://github.com/phayes/geoPHP",
-            "time": "2016-03-04T05:42:29+00:00"
+            "time": "2014-12-02T06:11:22+00:00"
         },
         {
             "name": "psr/cache",

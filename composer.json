@@ -141,7 +141,7 @@
         "drupal/field_group": "1.0-rc6",
         "drupal/geocoder": "2.0-alpha4",
         "drupal/geocoder_autocomplete": "1.0-alpha1",
-        "drupal/geofield": "1.0-alpha2",
+        "drupal/geofield": "1.0-beta3",
         "drupal/google_analytics": "^2.1",
         "drupal/honeypot": "^1.24",
         "drupal/leaflet": "1.x-dev#a3274e4",

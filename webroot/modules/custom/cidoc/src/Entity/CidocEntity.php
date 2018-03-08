@@ -95,6 +95,7 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
     parent::preCreate($storage_controller, $values);
     $values += array(
       'user_id' => \Drupal::currentUser()->id(),
+      'status' => \Drupal::currentUser()->hasPermission('add cidoc entities as published'),
     );
   }
 
@@ -297,6 +298,16 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
       ->setLabel(t('Content populated'))
       ->setDescription(t('A boolean indicating whether the CIDOC entity has been populated.'))
       ->setDefaultValue(FALSE);
+
+    $fields['status']
+      ->setDisplayOptions('form', [
+        'type' => 'boolean_checkbox',
+        'settings' => [
+          'display_label' => TRUE,
+        ],
+        'weight' => 120,
+      ])
+      ->setDisplayConfigurable('form', TRUE);
 
     return $fields;
   }
