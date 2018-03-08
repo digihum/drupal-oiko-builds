@@ -28,11 +28,11 @@
 <li class="icon-links__item">
     {{ title_prefix }}
         <a{{ title_attributes.addClass(['icon-links__link']).setAttribute('data-toggle', attributes.id ) }}>
-            <i class="fa fa-bookmark-o"></i>
+            <i class="fa fa-pencil"></i>
             {% if label %}<span class="show-for-sr">{{ label }}</span>{% endif %}
         </a>
     {{ title_suffix }}
-    <div {{ attributes.addClass(['icon-links__dropdown', 'dropdown-pane', 'js-event-basket-dropdown']).setAttribute('data-dropdown', true).setAttribute('data-close-on-click', 'true') }} >
+    <div {{ attributes.addClass(['icon-links__dropdown', 'dropdown-pane']).setAttribute('data-dropdown', true).setAttribute('data-close-on-click', 'true') }} >
         {% block content %}
             {{ content }}
         {% endblock %}

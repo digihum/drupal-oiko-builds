@@ -129,6 +129,7 @@ cm_config_tools:
     - block.block.oiko_branding
     - block.block.oiko_breadcrumbs
     - block.block.oiko_content
+    - block.block.oiko_editor_tools
     - block.block.oiko_event_basket
     - block.block.oiko_event_basket_mobile
     - block.block.oiko_footer
@@ -143,7 +144,6 @@ cm_config_tools:
     - block.block.sharemessage
     - block.block.userloggedinheaderblock
     - block.block.userloggedoutheaderblock
-    - block.block.welcomeblock
     - block.block.welcomeblock
     - cidoc.cidoc_entity_bundle.e12_production
     - cidoc.cidoc_entity_bundle.e21_person
@@ -775,6 +775,7 @@ cm_config_tools:
     - views.view.discussions_listing
     - views.view.e67_birth_parents
     - views.view.e9_move_map
+    - views.view.editor_tools_recent_edits
     - views.view.graphing_all_entities
     - views.view.important_events
     - views.view.important_people

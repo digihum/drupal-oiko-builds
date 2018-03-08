@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_cidoc
+  theme:
+    - oiko
+id: oiko_editor_tools
+theme: oiko
+region: user_header
+weight: 0
+provider: null
+plugin: editor_tools
+settings:
+  id: editor_tools
+  label: 'Editor Tools'
+  provider: oiko_cidoc
+  label_display: visible
+visibility: {  }
