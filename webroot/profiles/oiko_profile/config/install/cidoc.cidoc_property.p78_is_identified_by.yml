@@ -8,9 +8,9 @@ reverse_label: 'P78 identifies'
 friendly_label: 'Is identified by'
 reverse_friendly_label: Identifies
 domain_bundles:
-  e52_time_span: e52_time_span
+  - e52_time_span
 range_bundles:
-  e49_time_appellation: e49_time_appellation
+  - e49_time_appellation
 editability:
   domain: true
   range: true

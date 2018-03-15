@@ -10,20 +10,59 @@ namespace Drupal\Console\Command\Theme;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Command\ContainerAwareCommand;
+use Drupal\Console\Core\Command\Command;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Config\UnmetDependenciesException;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Utils\ChainQueue;
 
-class UninstallCommand extends ContainerAwareCommand
+class UninstallCommand extends Command
 {
-    protected $moduleInstaller;
+    /**
+     * @var ConfigFactory
+     */
+    protected $configFactory;
+
+    /**
+     * @var ThemeHandler
+     */
+    protected $themeHandler;
+
+    /**
+     * @var ChainQueue
+     */
+    protected $chainQueue;
+
+    /**
+     * DebugCommand constructor.
+     *
+     * @param ConfigFactory $configFactory
+     * @param ThemeHandler  $themeHandler
+     * @param ChainQueue    $chainQueue
+     */
+    public function __construct(
+        ConfigFactoryInterface $configFactory,
+        ThemeHandlerInterface $themeHandler,
+        ChainQueue $chainQueue
+    ) {
+        $this->configFactory = $configFactory;
+        $this->themeHandler = $themeHandler;
+        $this->chainQueue = $chainQueue;
+        parent::__construct();
+    }
 
     protected function configure()
     {
         $this
             ->setName('theme:uninstall')
             ->setDescription($this->trans('commands.theme.uninstall.description'))
-            ->addArgument('theme', InputArgument::IS_ARRAY, $this->trans('commands.theme.uninstall.options.module'));
+            ->addArgument(
+                'theme',
+                InputArgument::IS_ARRAY,
+                $this->trans('commands.theme.uninstall.options.theme')
+            )
+            ->setAliases(['thu']);
     }
 
     /**
@@ -38,7 +77,7 @@ class UninstallCommand extends ContainerAwareCommand
         if (!$theme) {
             $theme_list = [];
 
-            $themes = $this->getThemeHandler()->rebuildThemeData();
+            $themes = $this->themeHandler->rebuildThemeData();
 
             foreach ($themes as $theme_id => $theme) {
                 if (!empty($theme->info['hidden'])) {
@@ -56,7 +95,9 @@ class UninstallCommand extends ContainerAwareCommand
             while (true) {
                 $theme_name = $io->choiceNoList(
                     $this->trans('commands.theme.uninstall.questions.theme'),
-                    array_keys($theme_list)
+                    array_keys($theme_list),
+                    null,
+                    true
                 );
 
                 if (empty($theme_name)) {
@@ -78,14 +119,12 @@ class UninstallCommand extends ContainerAwareCommand
     {
         $io = new DrupalStyle($input, $output);
 
-        $configFactory = $this->getConfigFactory();
-        $config = $configFactory->getEditable('system.theme');
+        $config = $this->configFactory->getEditable('system.theme');
 
-        $themeHandler = $this->getThemeHandler();
-        $themeHandler->refreshInfo();
+        $this->themeHandler->refreshInfo();
         $theme = $input->getArgument('theme');
 
-        $themes  = $themeHandler->rebuildThemeData();
+        $themes  = $this->themeHandler->rebuildThemeData();
         $themesAvailable = [];
         $themesUninstalled = [];
         $themesUnavailable = [];
@@ -111,7 +150,7 @@ class UninstallCommand extends ContainerAwareCommand
                             )
                         );
 
-                        return;
+                        return 1;
                     }
 
                     if ($themeKey === $config->get('admin')) {
@@ -121,11 +160,11 @@ class UninstallCommand extends ContainerAwareCommand
                                 implode(',', $themesAvailable)
                             )
                         );
-                        return;
+                        return 1;
                     }
                 }
 
-                $themeHandler->uninstall($theme);
+                $this->themeHandler->uninstall($theme);
 
                 if (count($themesAvailable) > 1) {
                     $io->info(
@@ -150,6 +189,8 @@ class UninstallCommand extends ContainerAwareCommand
                     )
                 );
                 drupal_set_message($e->getTranslatedMessage($this->getStringTranslation(), $theme), 'error');
+
+                return 1;
             }
         } elseif (empty($themesAvailable) && count($themesUninstalled) > 0) {
             if (count($themesUninstalled) > 1) {
@@ -186,6 +227,8 @@ class UninstallCommand extends ContainerAwareCommand
         }
 
         // Run cache rebuild to see changes in Web UI
-        $this->getChain()->addCommand('cache:rebuild', ['cache' => 'all']);
+        $this->chainQueue->addCommand('cache:rebuild', ['cache' => 'all']);
+
+        return 0;
     }
 }

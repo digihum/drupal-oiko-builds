@@ -11,15 +11,48 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Command\ContainerAwareCommand;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Command;
+use Drupal\Console\Annotations\DrupalCommand;
+use Drupal\Console\Utils\Create\TermData;
+use Drupal\Console\Utils\DrupalApi;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class TermsCommand
+ *
  * @package Drupal\Console\Command\Generate
+ *
+ * @DrupalCommand(
+ *     extension = "taxonomy",
+ *     extensionType = "module"
+ * )
  */
-class TermsCommand extends ContainerAwareCommand
+class TermsCommand extends Command
 {
+    /**
+     * @var DrupalApi
+     */
+    protected $drupalApi;
+    /**
+     * @var TermData
+     */
+    protected $createTermData;
+
+    /**
+     * TermsCommand constructor.
+     *
+     * @param DrupalApi $drupalApi
+     * @param TermData  $createTermData
+     */
+    public function __construct(
+        DrupalApi $drupalApi,
+        TermData $createTermData
+    ) {
+        $this->drupalApi = $drupalApi;
+        $this->createTermData = $createTermData;
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -44,7 +77,7 @@ class TermsCommand extends ContainerAwareCommand
                 null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.create.terms.options.name-words')
-            );
+            )->setAliases(['crt']);
     }
 
     /**
@@ -56,7 +89,7 @@ class TermsCommand extends ContainerAwareCommand
 
         $vocabularies = $input->getArgument('vocabularies');
         if (!$vocabularies) {
-            $vocabularies = $this->getDrupalApi()->getVocabularies();
+            $vocabularies = $this->drupalApi->getVocabularies();
             $vids = $io->choice(
                 $this->trans('commands.create.terms.questions.vocabularies'),
                 array_values($vocabularies),
@@ -106,20 +139,19 @@ class TermsCommand extends ContainerAwareCommand
         $nameWords = $input->getOption('name-words')?:5;
 
         if (!$vocabularies) {
-            $vocabularies = array_keys($this->getDrupalApi()->getVocabularies());
+            $vocabularies = array_keys($this->drupalApi->getVocabularies());
         }
 
-        $createTerms = $this->getDrupalApi()->getCreateTerms();
-        $terms = $createTerms->createTerm(
+        $terms = $this->createTermData->create(
             $vocabularies,
             $limit,
             $nameWords
         );
 
         $tableHeader = [
-          $this->trans('commands.create.terms.messages.term-id'),
-          $this->trans('commands.create.terms.messages.vocabulary'),
-          $this->trans('commands.create.terms.messages.name'),
+            $this->trans('commands.create.terms.messages.term-id'),
+            $this->trans('commands.create.terms.messages.vocabulary'),
+            $this->trans('commands.create.terms.messages.name'),
         ];
 
         $io->table($tableHeader, $terms['success']);
@@ -130,5 +162,7 @@ class TermsCommand extends ContainerAwareCommand
                 $limit
             )
         );
+
+        return 0;
     }
 }

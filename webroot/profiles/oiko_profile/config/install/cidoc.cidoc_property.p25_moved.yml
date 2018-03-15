@@ -8,10 +8,10 @@ reverse_label: 'P25 moved by'
 friendly_label: Moved
 reverse_friendly_label: 'Moved by'
 domain_bundles:
-  e9_move: e9_move
+  - e9_move
 range_bundles:
-  e21_person: e21_person
-  e22_man_made_object: e22_man_made_object
+  2: e22_man_made_object
+  3: e21_person
 editability:
   domain: true
   range: true

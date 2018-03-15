@@ -4,7 +4,6 @@
  * Each of these MUST be unique,
  * Changing these will break ALL existing inbound links, DANGER!
  *
- * @TODO: Shorten all of these.
  */
 
 /**
@@ -19,74 +18,74 @@ export const QUERYSTRING_VARIABLE_VISUALISATION = 'view';
  *
  * @type {string}
  */
-export const QUERYSTRING_VARIABLE_MAP_ZOOM = 'mapzoom';
+export const QUERYSTRING_VARIABLE_MAP_ZOOM = 'mz';
 
 /**
  * The map center latitude.
  *
  * @type {string}
  */
-export const QUERYSTRING_VARIABLE_MAP_CENTER_LAT = 'maplat';
+export const QUERYSTRING_VARIABLE_MAP_CENTER_LAT = 'mlat';
 
 /**
  * The map center longitude.
  *
  * @type {string}
  */
-export const QUERYSTRING_VARIABLE_MAP_CENTER_LNG = 'maplng';
+export const QUERYSTRING_VARIABLE_MAP_CENTER_LNG = 'mlng';
 
 /**
  * The timeline browser current position.
  *
  * @type {string}
  */
-export const QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION = 'tbcurrent';
+export const QUERYSTRING_VARIABLE_TIMELINE_BROWSER_POSITION = 'tbc';
 
 /**
  * The timeline browser window start position.
  *
  * @type {string}
  */
-export const QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START = 'tbstart';
+export const QUERYSTRING_VARIABLE_TIMELINE_BROWSER_START = 'tbs';
 
 /**
  * The timeline browser window end position.
  *
  * @type {string}
  */
-export const QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END = 'tbend';
+export const QUERYSTRING_VARIABLE_TIMELINE_BROWSER_END = 'tbe';
 
 /**
  * The comparative timeline window start position.
  *
  * @type {string}
  */
-export const QUERYSTRING_VARIABLE_TIMELINES_START = 'tlstart';
+export const QUERYSTRING_VARIABLE_TIMELINES_START = 'tls';
 
 /**
  * The comparative timeline window end position.
  *
  * @type {string}
  */
-export const QUERYSTRING_VARIABLE_TIMELINES_END = 'tlend';
+export const QUERYSTRING_VARIABLE_TIMELINES_END = 'tle';
 
 /**
  * The cidoc entity being displayed in the sidebar.
  *
  * @type {string}
  */
-export const QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY = 'cidoc_entity_id';
+export const QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY = 'id';
 
 /**
  * The timelines being displayed in comparative timline viewer.
  *
  * @type {string}
  */
-export const QUERYSTRING_VARIABLE_TIMELINE_ENTITIES = 'timelines';
+export const QUERYSTRING_VARIABLE_TIMELINE_ENTITIES = 'lin';
 
 /**
  * The PHS categories being filtered.
  *
  * @type {string}
  */
-export const QUERYSTRING_VARIABLE_PHS_CATEGORIES = 'categories';
+export const QUERYSTRING_VARIABLE_PHS_CATEGORIES = 'cat';

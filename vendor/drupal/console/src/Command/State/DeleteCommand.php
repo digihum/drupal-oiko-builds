@@ -9,11 +9,38 @@ namespace Drupal\Console\Command\State;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Command\ContainerAwareCommand;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Command;
+use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
+use Drupal\Core\State\StateInterface;
+use Drupal\Console\Core\Style\DrupalStyle;
 
-class DeleteCommand extends ContainerAwareCommand
+class DeleteCommand extends Command
 {
+    /**
+     * @var StateInterface
+     */
+    protected $state;
+
+    /**
+     * @var KeyValueFactoryInterface
+     */
+    protected $keyValue;
+
+    /**
+     * DeleteCommand constructor.
+     *
+     * @param StateInterface           $state
+     * @param KeyValueFactoryInterface $keyValue
+     */
+    public function __construct(
+        StateInterface $state,
+        KeyValueFactoryInterface $keyValue
+    ) {
+        $this->state = $state;
+        $this->keyValue = $keyValue;
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -26,7 +53,7 @@ class DeleteCommand extends ContainerAwareCommand
                 'name',
                 InputArgument::OPTIONAL,
                 $this->trans('commands.state.delete.arguments.name')
-            );
+            )->setAliases(['std']);
     }
 
     /**
@@ -37,8 +64,7 @@ class DeleteCommand extends ContainerAwareCommand
         $io = new DrupalStyle($input, $output);
         $name = $input->getArgument('name');
         if (!$name) {
-            $keyValue = $this->getService('keyvalue');
-            $names = array_keys($keyValue->get('state')->getAll());
+            $names = array_keys($this->keyValue->get('state')->getAll());
             $name = $io->choiceNoList(
                 $this->trans('commands.state.delete.arguments.name'),
                 $names
@@ -53,7 +79,6 @@ class DeleteCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
-        $state = $this->getState();
         $name = $input->getArgument('name');
         if (!$name) {
             $io->error($this->trans('commands.state.delete.messages.enter-name'));
@@ -61,7 +86,7 @@ class DeleteCommand extends ContainerAwareCommand
             return 1;
         }
 
-        if (!$state->get($name)) {
+        if (!$this->state->get($name)) {
             $io->error(
                 sprintf(
                     $this->trans('commands.state.delete.messages.state-not-exists'),
@@ -73,7 +98,7 @@ class DeleteCommand extends ContainerAwareCommand
         }
 
         try {
-            $state->delete($name);
+            $this->state->delete($name);
         } catch (\Exception $e) {
             $io->error($e->getMessage());
 
@@ -86,5 +111,7 @@ class DeleteCommand extends ContainerAwareCommand
                 $name
             )
         );
+
+        return 0;
     }
 }

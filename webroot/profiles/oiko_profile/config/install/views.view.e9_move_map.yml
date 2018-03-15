@@ -324,21 +324,17 @@ display:
       style:
         type: oiko_leafet_map
         options:
-          grouping:
-            -
-              field: ''
-              rendered: 1
-              rendered_strip: 0
-            -
-              field: ''
-              rendered: 1
-              rendered_strip: 0
-          id_field: id
+          uses_fields: 0
+          pan: 0
+          zoom: 0
+          zoom_controls: topleft
+          max_zoom: '6'
           clustering: 0
           sidebar: 0
           search: 0
           timeline: 0
           pagestate: 0
+          empty_map: 0
           empires: 0
           map: 'Ancient Terrain'
           full_height: 0

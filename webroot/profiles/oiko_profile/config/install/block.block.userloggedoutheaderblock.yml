@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_forum
+  theme:
+    - oiko
+id: userloggedoutheaderblock
+theme: oiko
+region: user_header
+weight: 0
+provider: null
+plugin: user_logged_out
+settings:
+  id: user_logged_out
+  label: 'User login/register'
+  provider: oiko_forum
+  label_display: visible
+visibility: {  }

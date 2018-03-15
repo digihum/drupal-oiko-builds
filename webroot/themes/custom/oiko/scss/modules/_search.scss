@@ -11,11 +11,19 @@
 .main-search-wrapper {
   height: 100%;
   width: 100%;
-  max-width: 450px;
+  max-width: 425px;
   position: relative;
   display: inline-block;
   margin: 0 $global-margin;
   text-align: left;
+  color: palette(black);
+  @include to('s') {
+    margin: 0;
+    max-width: none;
+  }
+  @include at('m') {
+    max-width: 315px;
+  }
 }
 
 .main-search-box {
@@ -36,6 +44,17 @@
   cursor: pointer;
   border: 0;
   background: none;
+  @include to('s') {
+    right: 4px;
+    top: 9px;
+    bottom: initial;
+  }
+}
+
+@include to('s') {
+  .main-search__no-results-text {
+    padding: 3px 6px;
+  }
 }
 
 .main-search__dropdown {
@@ -47,6 +66,11 @@
   border-top: 5px solid palette(oikoblue);
   width: 100%;
   max-width: 450px;
+  @include to('s') {
+    position: inherit;
+    width: auto;
+    max-width: none;
+  }
 }
 
 .main-search__results-listing {
@@ -57,6 +81,10 @@
   li {
     border-bottom: 1px solid palette(oikogrey);
     padding: 3px 0;
+    cursor: pointer;
+    @include to('s') {
+      padding: 3px 6px;
+    }
 
     &:last-child {
       border-bottom: none;

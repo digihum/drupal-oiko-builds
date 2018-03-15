@@ -19,6 +19,7 @@ content:
       view_mode: inline_field
       link: false
     third_party_settings: {  }
+    region: content
 hidden:
   citation: true
   property: true

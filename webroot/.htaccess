@@ -69,6 +69,9 @@ AddEncoding gzip svgz
 <IfModule mod_rewrite.c>
   RewriteEngine on
 
+  # don't rewrite server-status
+  RewriteRule ^server-status$ - [L]
+
   # Set "protossl" to "s" if we were accessed via https://.  This is used later
   # if you enable "www." stripping or enforcement, in order to ensure that
   # you don't bounce between http and https.
@@ -93,7 +96,7 @@ AddEncoding gzip svgz
   # If you do not have mod_rewrite installed, you should remove these
   # directories from your webroot or otherwise protect them from being
   # downloaded.
-  RewriteRule "(^|/)\.(?!well-known)" - [F]
+  RewriteRule "/\.|^\.(?!well-known/)" - [F]
 
   # If your site can be accessed both with and without the 'www.' prefix, you
   # can use one of the following settings to redirect users to your preferred

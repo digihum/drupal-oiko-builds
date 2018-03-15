@@ -4,6 +4,7 @@
  * Install tasks for oiko_profile
  */
 
+
 /**
  * Compute all E52 timespam timestamps.
  */
@@ -219,4 +220,51 @@ function oiko_profile_update_8125() {
  */
 function oiko_profile_update_8126() {
   \Drupal::service('module_installer')->install(['oiko_event_basket']);
+}
+
+/**
+ * Enable the oiko forum module.
+ */
+function oiko_profile_update_8127() {
+  \Drupal::service('module_installer')->install(['oiko_forum']);
+}
+
+/**
+ * Enable the avatars_gravatar module.
+ */
+function oiko_profile_update_8128() {
+  \Drupal::service('module_installer')->install(['avatars_gravatar']);
+}
+
+/**
+ * Enable the inside_iframe module.
+ */
+function oiko_profile_update_8129() {
+  \Drupal::service('module_installer')->install(['inside_iframe']);
+}
+
+/**
+ * Install r4032login module module.
+ */
+function oiko_profile_update_8130() {
+  \Drupal::service('module_installer')->install(['r4032login']);
+}
+
+/**
+ * Delete a view that was invalid.
+ */
+function oiko_profile_update_8131() {
+  if ($view = \Drupal\views\Views::getView('times')) {
+    $view->storage->delete();
+  }
+}
+
+/**
+ * Disable search API immmediate indexing.
+ */
+function oiko_profile_update_8132() {
+  if ($index = \Drupal\search_api\Entity\Index::load('crm_entities')) {
+    $index->setOption('index_directly', FALSE);
+    $index->save();
+  }
 }

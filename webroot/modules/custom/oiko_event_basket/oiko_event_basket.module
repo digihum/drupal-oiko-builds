@@ -1,0 +1,43 @@
+<?php
+use Drupal\Component\Utility\Html;
+
+/**
+ * Implements hook_theme().
+ */
+function oiko_event_basket_theme($existing, $type, $theme, $path) {
+  $return = array();
+
+  $return['event_list'] = array(
+    'variables' => array(
+      'title' => '',
+      'class' => '',
+    ),
+  );
+
+  return $return;
+}
+
+/**
+ * Prepares variables for CIDOC entity templates.
+ *
+ * Default template: cidoc_entity.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the user information and any
+ *   - attributes: HTML attributes for the containing element.
+ */
+function oiko_event_basket_preprocess_cidoc_entity(array &$variables) {
+  if ($variables['elements']['#view_mode'] === 'popup') {
+    $cidoc_entity = $variables['elements']['#cidoc_entity'];
+    // Add the link for adding.
+    $variables['content']['event_basket_link'] = [
+      '#markup' => '<a title="Add ' . Html::escape($cidoc_entity->label()) . ' to your event basket" class="add-event-basket-link js-add-event-basket" href="#" data-event-id="' . Html::escape($cidoc_entity->id()) . '" data-event-title="' . Html::escape($cidoc_entity->label()) . '"><span class="fa fa-plus-circle"></span></a>',
+      '#attached' => [
+        'library' => [
+          'oiko_event_basket/event-basket.link',
+        ],
+      ],
+    ];
+  }
+}

@@ -42,6 +42,12 @@ class CidocHookImplementations {
         'visible' => FALSE,
       );
 
+      $extra['cidoc_entity'][$bundle]['display']['cidoc_temporal_summary'] = array(
+        'label' => t('Temporal summary'),
+        'weight' => -20,
+        'visible' => FALSE,
+      );
+
       foreach (array(CidocProperty::DOMAIN_ENDPOINT => FALSE, CidocProperty::RANGE_ENDPOINT => TRUE) as $source_field => $reverse) {
         /** @var CidocEntityBundle $bundle_entity */
         if ($applicable_properties = $bundle_entity->getAllEditableProperties($reverse)) {

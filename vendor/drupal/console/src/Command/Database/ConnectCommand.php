@@ -10,11 +10,11 @@ namespace Drupal\Console\Command\Database;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Command\ContainerAwareCommand;
-use Drupal\Console\Command\Database\ConnectTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Command;
+use Drupal\Console\Command\Shared\ConnectTrait;
+use Drupal\Console\Core\Style\DrupalStyle;
 
-class ConnectCommand extends ContainerAwareCommand
+class ConnectCommand extends Command
 {
     use ConnectTrait;
 
@@ -32,7 +32,8 @@ class ConnectCommand extends ContainerAwareCommand
                 $this->trans('commands.database.connect.arguments.database'),
                 'default'
             )
-            ->setHelp($this->trans('commands.database.connect.help'));
+            ->setHelp($this->trans('commands.database.connect.help'))
+            ->setAliases(['dbco']);
     }
 
     /**
@@ -61,5 +62,7 @@ class ConnectCommand extends ContainerAwareCommand
                 $connection
             )
         );
+
+        return 0;
     }
 }

@@ -207,7 +207,17 @@ function oikoLocation(locationReducerFunction) {
         return changeQueryString(new_state, {[QUERYSTRING_VARIABLE_TIMELINES_START]: action.start, [QUERYSTRING_VARIABLE_TIMELINES_END]: action.end});
 
       case RECEIVE_CIDOC_ENTITY:
-        return changeQueryString(new_state, {[QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY]: action.id}, false);
+        // Also need to lookup and change the path. CHEEKY.
+        let pathchange = Object.assign({}, new_state, {});
+        if (typeof drupalSettings !== 'undefined' &&
+          typeof drupalSettings.oiko_app !== 'undefined' &&
+          typeof drupalSettings.oiko_app.lookups !== 'undefined' &&
+          typeof drupalSettings.oiko_app.lookups[action.id] !== 'undefined' &&
+          typeof drupalSettings.oiko_app.lookups[action.id].url !== 'undefined'
+        ) {
+          pathchange = Object.assign({}, pathchange, {action: 'REPLACE', pathname : drupalSettings.oiko_app.lookups[action.id].url});
+        }
+        return changeQueryString(pathchange, {[QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY]: action.id}, false);
 
       case SET_COMPARATIVE_TIMELINES:
         return changeQueryStringStructured(new_state, {[QUERYSTRING_VARIABLE_TIMELINE_ENTITIES]: action.timelines}, false);

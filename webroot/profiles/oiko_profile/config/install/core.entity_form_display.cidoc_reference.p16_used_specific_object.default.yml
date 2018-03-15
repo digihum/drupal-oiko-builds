@@ -24,6 +24,7 @@ content:
       add_mode: dropdown
       form_display_mode: default
     third_party_settings: {  }
+    region: content
   domain:
     type: squid_entity_reference_autocomplete_tags
     weight: 11
@@ -32,6 +33,7 @@ content:
       size: '60'
       placeholder: ''
     third_party_settings: {  }
+    region: content
   field_mode_of_use:
     weight: 13
     settings:
@@ -40,11 +42,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
+    region: content
   langcode:
     type: language_select
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
   range:
     type: squid_entity_reference_autocomplete_tags
     weight: 12
@@ -53,5 +57,6 @@ content:
       size: '60'
       placeholder: ''
     third_party_settings: {  }
+    region: content
 hidden:
   user_id: true

@@ -7,17 +7,71 @@
 
 namespace Drupal\Console\Command\Generate;
 
-use Drupal\Console\Command\ConfirmationTrait;
-use Drupal\Console\Command\GeneratorCommand;
+use Drupal\Console\Command\Shared\ConfirmationTrait;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Generator\ProfileGenerator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Extension\Manager;
+use Drupal\Console\Core\Utils\StringConverter;
+use Drupal\Console\Utils\Validator;
+use Webmozart\PathUtil\Path;
 
-class ProfileCommand extends GeneratorCommand
+/**
+ * Class ProfileCommand
+ *
+ * @package Drupal\Console\Command\Generate
+ */
+
+class ProfileCommand extends Command
 {
     use ConfirmationTrait;
+
+    /**
+     * @var Manager
+     */
+    protected $extensionManager;
+
+    /**
+     * @var ProfileGenerator
+     */
+    protected $generator;
+
+    /**
+     * @var StringConverter
+     */
+    protected $stringConverter;
+
+    /**
+     * @var Validator
+     */
+    protected $validator;
+
+    /**
+     * ProfileCommand constructor.
+     *
+     * @param Manager          $extensionManager
+     * @param ProfileGenerator $generator
+     * @param StringConverter  $stringConverter
+     * @param Validator        $validator
+     * @param $appRoot
+     */
+    public function __construct(
+        Manager $extensionManager,
+        ProfileGenerator $generator,
+        StringConverter $stringConverter,
+        Validator $validator,
+        $appRoot
+    ) {
+        $this->extensionManager = $extensionManager;
+        $this->generator = $generator;
+        $this->stringConverter = $stringConverter;
+        $this->validator = $validator;
+        $this->appRoot = $appRoot;
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
@@ -30,40 +84,54 @@ class ProfileCommand extends GeneratorCommand
             ->setHelp($this->trans('commands.generate.profile.help'))
             ->addOption(
                 'profile',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.generate.profile.options.profile')
             )
             ->addOption(
                 'machine-name',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.generate.profile.options.machine-name')
             )
             ->addOption(
+                'profile-path',
+                null,
+                InputOption::VALUE_REQUIRED,
+                $this->trans('commands.generate.profile.options.profile-path')
+            )
+            ->addOption(
                 'description',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.profile.options.description')
             )
             ->addOption(
                 'core',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.profile.options.core')
             )
             ->addOption(
                 'dependencies',
-                false,
+                null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.generate.profile.options.dependencies')
+                $this->trans('commands.generate.profile.options.dependencies'),
+                ''
+            )
+            ->addOption(
+                'themes',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                $this->trans('commands.generate.profile.options.themes'),
+                ''
             )
             ->addOption(
                 'distribution',
-                false,
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.profile.options.distribution')
-            );
+            )->setAliases(['gpr']);
     }
 
     /**
@@ -73,82 +141,35 @@ class ProfileCommand extends GeneratorCommand
     {
         $io = new DrupalStyle($input, $output);
 
-        $validators = $this->getValidator();
-
-        if (!$this->confirmGeneration($io)) {
-            return;
+        if (!$this->confirmGeneration($io, $input)) {
+            return 1;
         }
 
-        $profile = $validators->validateModuleName($input->getOption('profile'));
-        $machine_name = $validators->validateMachineName($input->getOption('machine-name'));
+        // Get the profile path and define a profile path if it is null
+        // Check that it is an absolute path or otherwise create an absolute path using appRoot
+        $profile_path = $input->getOption('profile-path');
+        $profile_path = $profile_path == null ? 'profiles' : $profile_path;
+        $profile_path = Path::isAbsolute($profile_path) ? $profile_path : Path::makeAbsolute($profile_path, $this->appRoot);
+        $profile_path = $this->validator->validateModulePath($profile_path, true);
+
+        $profile = $this->validator->validateModuleName($input->getOption('profile'));
+        $machine_name = $this->validator->validateMachineName($input->getOption('machine-name'));
         $description = $input->getOption('description');
         $core = $input->getOption('core');
+        $dependencies = $this->validator->validateExtensions($input->getOption('dependencies'), 'module', $io);
+        $themes = $this->validator->validateExtensions($input->getOption('themes'), 'theme', $io);
         $distribution = $input->getOption('distribution');
-        $profile_path = $this->getDrupalHelper()->getRoot() . '/profiles';
 
-        // Check if all module dependencies are available.
-        $dependencies = $validators->validateModuleDependencies($input->getOption('dependencies'));
-        if ($dependencies) {
-            $checked_dependencies = $this->checkDependencies($dependencies['success']);
-            if (!empty($checked_dependencies['no_modules'])) {
-                $io->info(
-                    sprintf(
-                        $this->trans('commands.generate.profile.warnings.module-unavailable'),
-                        implode(', ', $checked_dependencies['no_modules'])
-                    )
-                );
-            }
-            $dependencies = $dependencies['success'];
-        }
-
-        $generator = $this->getGenerator();
-        $generator->generate(
+        $this->generator->generate(
             $profile,
             $machine_name,
             $profile_path,
             $description,
             $core,
             $dependencies,
+            $themes,
             $distribution
         );
-    }
-
-    /**
-     * @param  array $dependencies
-     * @return array
-     */
-    private function checkDependencies(array $dependencies)
-    {
-        $this->getDrupalHelper()->loadLegacyFile('/core/modules/system/system.module');
-        $client = $this->getHttpClient();
-        $local_modules = array();
-
-        $modules = system_rebuild_module_data();
-        foreach ($modules as $module_id => $module) {
-            array_push($local_modules, basename($module->subpath));
-        }
-
-        $checked_dependencies = array(
-            'local_modules' => array(),
-            'drupal_modules' => array(),
-            'no_modules' => array(),
-        );
-
-        foreach ($dependencies as $module) {
-            if (in_array($module, $local_modules)) {
-                $checked_dependencies['local_modules'][] = $module;
-            } else {
-                $response = $client->head('https://www.drupal.org/project/' . $module);
-                $header_link = explode(';', $response->getHeader('link'));
-                if (empty($header_link[0])) {
-                    $checked_dependencies['no_modules'][] = $module;
-                } else {
-                    $checked_dependencies['drupal_modules'][] = $module;
-                }
-            }
-        }
-
-        return $checked_dependencies;
     }
 
     /**
@@ -158,17 +179,17 @@ class ProfileCommand extends GeneratorCommand
     {
         $io = new DrupalStyle($input, $output);
 
-        $stringUtils = $this->getStringHelper();
-        $validators = $this->getValidator();
+        //$stringUtils = $this->getStringHelper();
+        $validators = $this->validator;
 
         try {
             // A profile is technically also a module, so we can use the same
             // validator to check the name.
-            $profile = $input->getOption('profile') ? $this->validateModuleName($input->getOption('profile')) : null;
+            $profile = $input->getOption('profile') ? $validators->validateModuleName($input->getOption('profile')) : null;
         } catch (\Exception $error) {
             $io->error($error->getMessage());
 
-            return;
+            return 1;
         }
 
         if (!$profile) {
@@ -183,17 +204,17 @@ class ProfileCommand extends GeneratorCommand
         }
 
         try {
-            $machine_name = $input->getOption('machine-name') ? $this->validateModule($input->getOption('machine-name')) : null;
+            $machine_name = $input->getOption('machine-name') ? $validators->validateModuleName($input->getOption('machine-name')) : null;
         } catch (\Exception $error) {
             $io->error($error->getMessage());
 
-            return;
+            return 1;
         }
 
         if (!$machine_name) {
             $machine_name = $io->ask(
                 $this->trans('commands.generate.profile.questions.machine-name'),
-                $stringUtils->createMachineName($profile),
+                $this->stringConverter->createMachineName($profile),
                 function ($machine_name) use ($validators) {
                     return $validators->validateMachineName($machine_name);
                 }
@@ -201,11 +222,34 @@ class ProfileCommand extends GeneratorCommand
             $input->setOption('machine-name', $machine_name);
         }
 
+        $profile_path = $input->getOption('profile-path');
+        if (!$profile_path) {
+            $profile_path = $io->ask(
+                $this->trans('commands.generate.profile.questions.profile-path'),
+                'profiles',
+                function ($profile_path) use ($machine_name) {
+                    $fullPath = Path::isAbsolute($profile_path) ? $profile_path : Path::makeAbsolute($profile_path, $this->appRoot);
+                    $fullPath = $fullPath.'/'.$machine_name;
+                    if (file_exists($fullPath)) {
+                        throw new \InvalidArgumentException(
+                            sprintf(
+                                $this->trans('commands.generate.profile.errors.directory-exists'),
+                                $fullPath
+                            )
+                        );
+                    }
+
+                    return $profile_path;
+                }
+            );
+        }
+        $input->setOption('profile-path', $profile_path);
+
         $description = $input->getOption('description');
         if (!$description) {
             $description = $io->ask(
                 $this->trans('commands.generate.profile.questions.description'),
-                'My Useful Profile'
+                $this->trans('commands.generate.profile.suggestions.my-useful-profile')
             );
             $input->setOption('description', $description);
         }
@@ -224,8 +268,9 @@ class ProfileCommand extends GeneratorCommand
             if ($io->confirm(
                 $this->trans('commands.generate.profile.questions.dependencies'),
                 true
-            )) {
-                $dependencies = $output->ask(
+            )
+            ) {
+                $dependencies = $io->ask(
                     $this->trans('commands.generate.profile.options.dependencies'),
                     ''
                 );
@@ -238,10 +283,11 @@ class ProfileCommand extends GeneratorCommand
             if ($io->confirm(
                 $this->trans('commands.generate.profile.questions.distribution'),
                 false
-            )) {
-                $distribution = $output->ask(
+            )
+            ) {
+                $distribution = $io->ask(
                     $this->trans('commands.generate.profile.options.distribution'),
-                    'My Kick-ass Distribution'
+                    $this->trans('commands.generate.profile.suggestions.my-kick-ass-distribution')
                 );
                 $input->setOption('distribution', $distribution);
             }

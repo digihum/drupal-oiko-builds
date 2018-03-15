@@ -4,7 +4,7 @@ namespace Drupal\cidoc\Entity;
 
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\Core\Entity\ContentEntityBase;
+use Drupal\Core\Entity\EditorialContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\cidoc\CidocEntityInterface;
@@ -38,15 +38,25 @@ use Drupal\user\UserInterface;
  *     },
  *   },
  *   base_table = "cidoc_entity",
+ *   revision_table = "cidoc_entity_revision",
+ *   revision_data_table = "cidoc_entity_field_revision",
+ *   revision_metadata_keys = {
+ *     "revision_user" = "revision_user_id",
+ *     "revision_created" = "revision_created",
+ *     "revision_log_message" = "revision_log_message",
+ *   },
+ *   show_revision_ui = TRUE,
  *   admin_permission = "administer cidoc entities",
  *   entity_keys = {
  *     "id" = "id",
+ *     "revision" = "revision_id",
  *     "bundle" = "bundle",
  *     "label" = "name",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
  *     "langcode" = "langcode",
  *     "status" = "status",
+ *     "published" = "status",
  *   },
  *   links = {
  *     "canonical" = "/cidoc-entity/{cidoc_entity}",
@@ -60,7 +70,7 @@ use Drupal\user\UserInterface;
  *   field_ui_base_route = "entity.cidoc_entity_bundle.edit_form"
  * )
  */
-class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
+class CidocEntity extends EditorialContentEntityBase implements CidocEntityInterface {
 
   use EntityChangedTrait;
 
@@ -179,7 +189,7 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
   /**
    * {@inheritdoc}
    */
-  public function setPublished($published) {
+  public function setPublished($published = NULL) {
     $this->set('status', $published ? NODE_PUBLISHED : NODE_NOT_PUBLISHED);
     return $this;
   }
@@ -188,6 +198,8 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
+    $fields = parent::baseFieldDefinitions($entity_type);
+
     $fields['id'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('ID'))
       ->setDescription(t('The ID of the CIDOC entity.'))
@@ -205,17 +217,18 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
       ->setDescription(t('The user ID of author of the CIDOC entity.'))
-      ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
       ->setDefaultValueCallback('Drupal\node\Entity\Node::getCurrentUserId')
       ->setTranslatable(TRUE)
+      ->setRevisionable(TRUE)
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Name'))
       ->setTranslatable(TRUE)
+      ->setRevisionable(TRUE)
       ->setDescription(t('The name of the CIDOC entity.'))
       ->setSettings(array(
         'max_length' => 255,
@@ -237,6 +250,7 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
 
     $fields['internal_name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Internal name'))
+      ->setRevisionable(TRUE)
       ->setTranslatable(TRUE)
       ->setDescription(t('An internal name to provide further clarification beyond the normal name.'))
       ->setSettings(array(
@@ -253,18 +267,14 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
 
     $fields['content'] = BaseFieldDefinition::create('text_long')
       ->setLabel(t('Content'))
+      ->setRevisionable(TRUE)
       ->setTranslatable(TRUE)
       ->setDescription(t('Descriptive text.'))
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['status'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Publishing status'))
-      ->setDescription(t('A boolean indicating whether the CIDOC entity is published.'))
-      ->setDefaultValue(TRUE);
-
-    $fields['langcode'] = BaseFieldDefinition::create('language')
+    $fields['langcode']
       ->setLabel(t('Language code'))
       ->setDescription(t('The language code for the CIDOC entity.'))
       ->setDisplayOptions('form', array(
@@ -278,10 +288,12 @@ class CidocEntity extends ContentEntityBase implements CidocEntityInterface {
       ->setDescription(t('The time that the entity was created.'));
 
     $fields['changed'] = BaseFieldDefinition::create('changed')
+      ->setRevisionable(TRUE)
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the entity was last edited.'));
 
     $fields['populated'] = BaseFieldDefinition::create('boolean')
+      ->setRevisionable(TRUE)
       ->setLabel(t('Content populated'))
       ->setDescription(t('A boolean indicating whether the CIDOC entity has been populated.'))
       ->setDefaultValue(FALSE);

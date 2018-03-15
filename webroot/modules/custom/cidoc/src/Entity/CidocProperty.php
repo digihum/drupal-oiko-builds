@@ -6,6 +6,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\RevisionableEntityBundleInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
@@ -62,7 +63,7 @@ use Drupal\field\Entity\FieldStorageConfig;
  *   }
  * )
  */
-class CidocProperty extends ConfigEntityBundleBase {
+class CidocProperty extends ConfigEntityBundleBase implements RevisionableEntityBundleInterface {
 
   use StringTranslationTrait;
 
@@ -443,5 +444,10 @@ class CidocProperty extends ConfigEntityBundleBase {
     }
     return $val;
   }
+
+  public function shouldCreateNewRevision() {
+    return TRUE;
+  }
+
 
 }

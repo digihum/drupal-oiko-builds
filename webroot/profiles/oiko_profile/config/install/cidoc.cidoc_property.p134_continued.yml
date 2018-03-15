@@ -8,21 +8,25 @@ reverse_label: 'P134 was continued by'
 friendly_label: Continued
 reverse_friendly_label: 'Was continued by'
 domain_bundles:
-  e7_activity: e7_activity
-  e66_formation: e66_formation
-  e9_move: e9_move
-  o1_killing: o1_killing
-  o2_active_dissolution: o2_active_dissolution
-  o3_active_destruction: o3_active_destruction
-  e12_production: e12_production
+  0: e7_activity
+  5: e66_formation
+  6: e85_joining
+  7: e86_leaving
+  10: e9_move
+  11: o1_killing
+  12: o2_active_dissolution
+  13: o3_active_destruction
+  14: e12_production
 range_bundles:
-  e7_activity: e7_activity
-  e66_formation: e66_formation
-  e9_move: e9_move
-  o1_killing: o1_killing
-  o2_active_dissolution: o2_active_dissolution
-  o3_active_destruction: o3_active_destruction
-  e12_production: e12_production
+  0: e7_activity
+  5: e66_formation
+  6: e85_joining
+  7: e86_leaving
+  10: e9_move
+  11: o1_killing
+  12: o2_active_dissolution
+  13: o3_active_destruction
+  14: e12_production
 editability:
   domain: true
   range: true

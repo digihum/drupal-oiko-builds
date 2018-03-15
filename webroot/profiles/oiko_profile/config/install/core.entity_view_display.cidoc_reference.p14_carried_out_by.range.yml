@@ -18,8 +18,10 @@ content:
     settings:
       link: true
     third_party_settings: {  }
+    region: content
 hidden:
   citation: true
+  field_in_the_role_of: true
   property: true
   range: true
   user_id: true

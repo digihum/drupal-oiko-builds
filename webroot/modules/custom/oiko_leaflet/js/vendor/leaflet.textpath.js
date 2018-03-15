@@ -122,7 +122,7 @@
 
         /* Center text according to the path's bounding box */
       if (options.center) {
-        var textWidth = textNode.getBBox().width;
+        var textWidth = textNode.getBoundingClientRect().width;
         var pathWidth = this._path.getBoundingClientRect().width;
           /* Set the position for the left side of the textNode */
         textNode.setAttribute('dx', ((pathWidth / 2) - (textWidth / 2)));

@@ -4,15 +4,25 @@
   Drupal.oiko.addAppModule('marker-data');
   Drupal.oiko.addAppModule('empire-data');
 
+  var loadedFeatures = [];
+  var dataLoadCallback = function (data) {
+    loadedFeatures = loadedFeatures.concat(data.features);
+    // Check for a more property, and reload if we need to.
+    if (typeof data.more !== 'undefined') {
+      $.get(data.more).done(dataLoadCallback);
+    }
+    else {
+      // Load all of those features.
+      drupalLeaflet.add_features(loadedFeatures);
+      Drupal.oiko.appModuleDoneLoading('marker-data');
+    }
+  };
+
   $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
 
     // @TODO: Move this code, it does NOT belong here!
     if (mapDefinition.hasOwnProperty('data-url') && mapDefinition['data-url']) {
-      var get = $.get(mapDefinition['data-url']);
-      get.done(function (data) {
-        drupalLeaflet.add_features(data);
-        Drupal.oiko.appModuleDoneLoading('marker-data');
-      });
+      $.get(mapDefinition['data-url']).done(dataLoadCallback);
     }
     else {
       // There's nothing to load, so we're done here.
@@ -40,18 +50,33 @@
             start: parseInt(empire.temporal.minmin, 10),
             end: parseInt(empire.temporal.maxmax, 10)
           };
-          var styleOptions = {
-            stroke: false
+          var stripe_options = {
+            weight: 4,
+            spaceWeight: 4
           };
+
           if (empire.hasOwnProperty('empire_data')) {
             if (empire.empire_data.hasOwnProperty('color')) {
-              styleOptions.color = empire.empire_data.color;
+              stripe_options.color = empire.empire_data.color;
+              stripe_options.spaceColor = empire.empire_data.color;
             }
             if (empire.empire_data.hasOwnProperty('opacity')) {
-              styleOptions.fillOpacity = empire.empire_data.opacity;
+              stripe_options.opacity = empire.empire_data.opacity;
+              stripe_options.spaceOpacity = empire.empire_data.opacity * 0.25;
+            }
+            if (empire.empire_data.hasOwnProperty('label')) {
+              stripe_options.angle = hashCode(empire.empire_data.label) % 360;
             }
           }
+          var stripes = new L.StripePattern(stripe_options);
+          stripes.addTo(map);
+          var styleOptions = {
+            stroke: false,
+            fillPattern: stripes,
+            fillOpacity: 1.0
+          };
           lFeature.setStyle(styleOptions);
+          lFeature.bindTooltip('<div class="leaflet-tooltip--location">' + empire.label + '</div>', {direction: 'bottom', sticky: true, opacity: 1});
           drupalLeaflet.empires.empiresLayerHelper.addLayer(lFeature);
         });
         Drupal.oiko.appModuleDoneLoading('empire-data');
@@ -62,6 +87,17 @@
       Drupal.oiko.appModuleDoneLoading('empire-data');
     }
   });
+
+  var hashCode = function(str){
+    var hash = 0, char;
+    if (str.length == 0) return hash;
+    for (var i = 0; i < str.length; i++) {
+      char = str.charCodeAt(i);
+      hash = ((hash<<5)-hash)+char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return hash;
+  }
 
 
 })(jQuery);

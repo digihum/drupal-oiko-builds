@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\hal\Functional\EntityResource\EntityTest;
 
-use Drupal\Core\Cache\Cache;
 use Drupal\Tests\hal\Functional\EntityResource\HalEntityNormalizationTrait;
 use Drupal\Tests\rest\Functional\AnonResourceTestTrait;
 use Drupal\Tests\rest\Functional\EntityResource\EntityTest\EntityTestResourceTestBase;
@@ -34,18 +33,13 @@ class EntityTestHalJsonAnonTest extends EntityTestResourceTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static $expectedErrorMimeType = 'application/json';
-
-  /**
-   * {@inheritdoc}
-   */
   protected function getExpectedNormalizedEntity() {
     $default_normalization = parent::getExpectedNormalizedEntity();
 
     $normalization = $this->applyHalFieldNormalization($default_normalization);
 
     $author = User::load(0);
-    return  $normalization + [
+    return $normalization + [
       '_links' => [
         'self' => [
           'href' => $this->baseUrl . '/entity_test/1?_format=hal_json',
@@ -92,14 +86,6 @@ class EntityTestHalJsonAnonTest extends EntityTestResourceTestBase {
         ],
       ],
     ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function getExpectedCacheContexts() {
-    // The 'url.site' cache context is added for '_links' in the response.
-    return Cache::mergeTags(parent::getExpectedCacheContexts(), ['url.site']);
   }
 
 }

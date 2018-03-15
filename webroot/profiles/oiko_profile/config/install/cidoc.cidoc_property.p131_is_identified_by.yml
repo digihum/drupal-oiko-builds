@@ -8,10 +8,10 @@ reverse_label: 'P131 identifies'
 friendly_label: 'Identified by'
 reverse_friendly_label: Identifies
 domain_bundles:
-  e21_person: e21_person
-  e74_group: e74_group
+  1: e21_person
+  2: e74_group
 range_bundles:
-  e82_actor_appellation: e82_actor_appellation
+  - e82_actor_appellation
 editability:
   domain: true
   range: true

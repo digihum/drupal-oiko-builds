@@ -20,10 +20,9 @@ class EventBasketBlock extends BlockBase {
   public function build() {
     return [
       [
-        '#type' => 'container',
-        '#attributes' => array(
-          'class' => ['js-event-basket']
-        ),
+        '#theme' => 'event_list',
+        '#title' => t('My added events'),
+        '#class' => 'js-event-basket',
         '#attached' => array(
           'library' => array(
             'oiko_event_basket/event-basket',
@@ -31,10 +30,9 @@ class EventBasketBlock extends BlockBase {
         ),
       ],
       [
-        '#type' => 'container',
-        '#attributes' => array(
-          'class' => ['js-event-history']
-        ),
+        '#theme' => 'event_list',
+        '#title' => t('My journey'),
+        '#class' => 'js-event-history',
         '#attached' => array(
           'library' => array(
             'oiko_event_basket/event-history',
