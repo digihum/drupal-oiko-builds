@@ -794,6 +794,8 @@ cm_config_tools:
     - views.view.p95_formed_group
     - views.view.p99_dissolved
     - views.view.p99_dissov_group
+    - views.view.student_transcript_entities
+    - views.view.student_transcript_nodes
     - views.view.timeline
     - webform.webform.feedback
   delete:
@@ -837,6 +839,8 @@ cm_config_tools:
   implicit:
     - block_content.type.modal_welcome
     - core.entity_view_mode.cidoc_entity.temporal_summary
+    - core.entity_view_mode.cidoc_entity.transcript
+    - core.entity_view_mode.node.transcript
     - core.entity_view_mode.taxonomy_term.primary_historical_significance_pill
     - core.entity_view_mode.user.compact
     - field.field.block_content.modal_welcome.body

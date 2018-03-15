@@ -61,6 +61,13 @@ class EditorTools extends BlockBase {
         ],
       ];
 
+      $block['transcript'] = [
+        '#type' => 'link',
+        '#title' => $this->t('<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;View transcript'),
+        '#url' => Url::fromRoute('oiko_cidoc.student_transcript'),
+        '#access' => \Drupal::currentUser()->hasPermission('view student transcript'),
+      ];
+
     }
 
     return $block;
