@@ -6,10 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Twig_Extensions_' => array($vendorDir . '/twig/extensions/lib'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Stack' => array($vendorDir . '/stack/builder/src'),
-    'SAML2\\' => array($vendorDir . '/simplesamlphp/saml2/src'),
     'PEAR' => array($vendorDir . '/pear/pear_exception'),
     'Michelf' => array($vendorDir . '/michelf/php-markdown'),
     'Lurker' => array($vendorDir . '/henrikbjorn/lurker/src'),

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
+class ComposerStaticInit9c13250fe6ca9faa321e0fbe75ce93e8
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -17,8 +17,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         '5a12a5271c58108e0aa33355e6ac54ea' => __DIR__ . '/..' . '/drupal/console-core/src/functions.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         'a16312f9300fed4a097923eacb0ba814' => __DIR__ . '/..' . '/igorw/get-in/src/get_in.php',
-        '6175f5662c2e26de0149cb048cda7209' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/_autoload.php',
-        '5abda994d126976858eb25d2546ee3c9' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/_autoload_modules.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -40,13 +38,11 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         'W' => 
         array (
             'Wikimedia\\Composer\\' => 19,
-            'WhiteHat101\\Crypt\\' => 18,
             'Webmozart\\PathUtil\\' => 19,
             'Webmozart\\Assert\\' => 17,
         ),
         'T' => 
         array (
-            'Twig\\Extensions\\' => 16,
             'Twig\\' => 5,
         ),
         'S' => 
@@ -77,12 +73,10 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
             'Symfony\\Cmf\\Component\\Routing\\' => 30,
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
             'Stecman\\Component\\Symfony\\Console\\BashCompletion\\' => 49,
-            'SimpleSAML\\' => 11,
         ),
         'R' => 
         array (
             'Robo\\' => 5,
-            'RobRichards\\XMLSecLibs\\' => 23,
             'RedBeanPHP\\' => 11,
         ),
         'P' => 
@@ -106,10 +100,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         array (
             'League\\Csv\\' => 11,
         ),
-        'J' => 
-        array (
-            'JaimePerez\\TwigConfigurableI18n\\' => 32,
-        ),
         'I' => 
         array (
             'Ivory\\HttpAdapter\\' => 18,
@@ -119,8 +109,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
-            'Gettext\\Languages\\' => 18,
-            'Gettext\\' => 8,
         ),
         'D' => 
         array (
@@ -184,10 +172,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         array (
             0 => __DIR__ . '/..' . '/wikimedia/composer-merge-plugin/src',
         ),
-        'WhiteHat101\\Crypt\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/whitehat101/apr1-md5/src',
-        ),
         'Webmozart\\PathUtil\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/path-util/src',
@@ -195,10 +179,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
-        ),
-        'Twig\\Extensions\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/twig/extensions/src',
         ),
         'Twig\\' => 
         array (
@@ -308,17 +288,9 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         array (
             0 => __DIR__ . '/..' . '/stecman/symfony-console-completion/src',
         ),
-        'SimpleSAML\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML',
-        ),
         'Robo\\' => 
         array (
             0 => __DIR__ . '/..' . '/codegyre/robo/src',
-        ),
-        'RobRichards\\XMLSecLibs\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/robrichards/xmlseclibs/src',
         ),
         'RedBeanPHP\\' => 
         array (
@@ -360,10 +332,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         array (
             0 => __DIR__ . '/..' . '/league/csv/src',
         ),
-        'JaimePerez\\TwigConfigurableI18n\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/jaimeperez/twig-configurable-i18n/src',
-        ),
         'Ivory\\HttpAdapter\\' => 
         array (
             0 => __DIR__ . '/..' . '/egeloen/http-adapter/src',
@@ -379,14 +347,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
-        ),
-        'Gettext\\Languages\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/gettext/languages/src',
-        ),
-        'Gettext\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/gettext/gettext/src',
         ),
         'Drupal\\Driver\\' => 
         array (
@@ -481,10 +441,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
     public static $prefixesPsr0 = array (
         'T' => 
         array (
-            'Twig_Extensions_' => 
-            array (
-                0 => __DIR__ . '/..' . '/twig/extensions/lib',
-            ),
             'Twig_' => 
             array (
                 0 => __DIR__ . '/..' . '/twig/twig/lib',
@@ -495,10 +451,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
             'Stack' => 
             array (
                 0 => __DIR__ . '/..' . '/stack/builder/src',
-            ),
-            'SAML2\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/simplesamlphp/saml2/src',
             ),
         ),
         'P' => 
@@ -3124,51 +3076,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         'Geocoder\\Provider\\TomTom' => __DIR__ . '/..' . '/willdurand/geocoder/src/Geocoder/Provider/TomTom.php',
         'Geocoder\\Provider\\Yandex' => __DIR__ . '/..' . '/willdurand/geocoder/src/Geocoder/Provider/Yandex.php',
         'Geocoder\\TimedGeocoder' => __DIR__ . '/..' . '/willdurand/geocoder/src/Geocoder/TimedGeocoder.php',
-        'Gettext\\BaseTranslator' => __DIR__ . '/..' . '/gettext/gettext/src/BaseTranslator.php',
-        'Gettext\\Extractors\\Blade' => __DIR__ . '/..' . '/gettext/gettext/src/Extractors/Blade.php',
-        'Gettext\\Extractors\\CsvDictionary' => __DIR__ . '/..' . '/gettext/gettext/src/Extractors/CsvDictionary.php',
-        'Gettext\\Extractors\\Extractor' => __DIR__ . '/..' . '/gettext/gettext/src/Extractors/Extractor.php',
-        'Gettext\\Extractors\\ExtractorInterface' => __DIR__ . '/..' . '/gettext/gettext/src/Extractors/ExtractorInterface.php',
-        'Gettext\\Extractors\\Jed' => __DIR__ . '/..' . '/gettext/gettext/src/Extractors/Jed.php',
-        'Gettext\\Extractors\\JsCode' => __DIR__ . '/..' . '/gettext/gettext/src/Extractors/JsCode.php',
-        'Gettext\\Extractors\\JsonDictionary' => __DIR__ . '/..' . '/gettext/gettext/src/Extractors/JsonDictionary.php',
-        'Gettext\\Extractors\\Mo' => __DIR__ . '/..' . '/gettext/gettext/src/Extractors/Mo.php',
-        'Gettext\\Extractors\\PhpArray' => __DIR__ . '/..' . '/gettext/gettext/src/Extractors/PhpArray.php',
-        'Gettext\\Extractors\\PhpCode' => __DIR__ . '/..' . '/gettext/gettext/src/Extractors/PhpCode.php',
-        'Gettext\\Extractors\\Po' => __DIR__ . '/..' . '/gettext/gettext/src/Extractors/Po.php',
-        'Gettext\\Extractors\\Twig' => __DIR__ . '/..' . '/gettext/gettext/src/Extractors/Twig.php',
-        'Gettext\\Extractors\\YamlDictionary' => __DIR__ . '/..' . '/gettext/gettext/src/Extractors/YamlDictionary.php',
-        'Gettext\\Generators\\CsvDictionary' => __DIR__ . '/..' . '/gettext/gettext/src/Generators/CsvDictionary.php',
-        'Gettext\\Generators\\Generator' => __DIR__ . '/..' . '/gettext/gettext/src/Generators/Generator.php',
-        'Gettext\\Generators\\GeneratorInterface' => __DIR__ . '/..' . '/gettext/gettext/src/Generators/GeneratorInterface.php',
-        'Gettext\\Generators\\Jed' => __DIR__ . '/..' . '/gettext/gettext/src/Generators/Jed.php',
-        'Gettext\\Generators\\JsonDictionary' => __DIR__ . '/..' . '/gettext/gettext/src/Generators/JsonDictionary.php',
-        'Gettext\\Generators\\Mo' => __DIR__ . '/..' . '/gettext/gettext/src/Generators/Mo.php',
-        'Gettext\\Generators\\PhpArray' => __DIR__ . '/..' . '/gettext/gettext/src/Generators/PhpArray.php',
-        'Gettext\\Generators\\Po' => __DIR__ . '/..' . '/gettext/gettext/src/Generators/Po.php',
-        'Gettext\\Generators\\YamlDictionary' => __DIR__ . '/..' . '/gettext/gettext/src/Generators/YamlDictionary.php',
-        'Gettext\\GettextTranslator' => __DIR__ . '/..' . '/gettext/gettext/src/GettextTranslator.php',
-        'Gettext\\Languages\\Category' => __DIR__ . '/..' . '/gettext/languages/src/Category.php',
-        'Gettext\\Languages\\CldrData' => __DIR__ . '/..' . '/gettext/languages/src/CldrData.php',
-        'Gettext\\Languages\\Exporter\\Docs' => __DIR__ . '/..' . '/gettext/languages/src/Exporter/Docs.php',
-        'Gettext\\Languages\\Exporter\\Exporter' => __DIR__ . '/..' . '/gettext/languages/src/Exporter/Exporter.php',
-        'Gettext\\Languages\\Exporter\\Html' => __DIR__ . '/..' . '/gettext/languages/src/Exporter/Html.php',
-        'Gettext\\Languages\\Exporter\\Json' => __DIR__ . '/..' . '/gettext/languages/src/Exporter/Json.php',
-        'Gettext\\Languages\\Exporter\\Php' => __DIR__ . '/..' . '/gettext/languages/src/Exporter/Php.php',
-        'Gettext\\Languages\\Exporter\\Po' => __DIR__ . '/..' . '/gettext/languages/src/Exporter/Po.php',
-        'Gettext\\Languages\\Exporter\\Prettyjson' => __DIR__ . '/..' . '/gettext/languages/src/Exporter/Prettyjson.php',
-        'Gettext\\Languages\\Exporter\\Xml' => __DIR__ . '/..' . '/gettext/languages/src/Exporter/Xml.php',
-        'Gettext\\Languages\\FormulaConverter' => __DIR__ . '/..' . '/gettext/languages/src/FormulaConverter.php',
-        'Gettext\\Languages\\Language' => __DIR__ . '/..' . '/gettext/languages/src/Language.php',
-        'Gettext\\Translation' => __DIR__ . '/..' . '/gettext/gettext/src/Translation.php',
-        'Gettext\\Translations' => __DIR__ . '/..' . '/gettext/gettext/src/Translations.php',
-        'Gettext\\Translator' => __DIR__ . '/..' . '/gettext/gettext/src/Translator.php',
-        'Gettext\\TranslatorInterface' => __DIR__ . '/..' . '/gettext/gettext/src/TranslatorInterface.php',
-        'Gettext\\Utils\\FunctionsScanner' => __DIR__ . '/..' . '/gettext/gettext/src/Utils/FunctionsScanner.php',
-        'Gettext\\Utils\\JsFunctionsScanner' => __DIR__ . '/..' . '/gettext/gettext/src/Utils/JsFunctionsScanner.php',
-        'Gettext\\Utils\\ParsedFunction' => __DIR__ . '/..' . '/gettext/gettext/src/Utils/ParsedFunction.php',
-        'Gettext\\Utils\\PhpFunctionsScanner' => __DIR__ . '/..' . '/gettext/gettext/src/Utils/PhpFunctionsScanner.php',
-        'Gettext\\Utils\\StringReader' => __DIR__ . '/..' . '/gettext/gettext/src/Utils/StringReader.php',
         'GuzzleHttp\\Client' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Client.php',
         'GuzzleHttp\\ClientInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/ClientInterface.php',
         'GuzzleHttp\\Cookie\\CookieJar' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Cookie/CookieJar.php',
@@ -3340,10 +3247,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         'Ivory\\HttpAdapter\\StopwatchHttpAdapter' => __DIR__ . '/..' . '/egeloen/http-adapter/src/StopwatchHttpAdapter.php',
         'Ivory\\HttpAdapter\\Zend1HttpAdapter' => __DIR__ . '/..' . '/egeloen/http-adapter/src/Zend1HttpAdapter.php',
         'Ivory\\HttpAdapter\\Zend2HttpAdapter' => __DIR__ . '/..' . '/egeloen/http-adapter/src/Zend2HttpAdapter.php',
-        'JaimePerez\\TwigConfigurableI18n\\Twig\\Environment' => __DIR__ . '/..' . '/jaimeperez/twig-configurable-i18n/src/Twig/Environment.php',
-        'JaimePerez\\TwigConfigurableI18n\\Twig\\Extensions\\Extension\\I18n' => __DIR__ . '/..' . '/jaimeperez/twig-configurable-i18n/src/Twig/Extensions/Extension/I18n.php',
-        'JaimePerez\\TwigConfigurableI18n\\Twig\\Extensions\\Node\\Trans' => __DIR__ . '/..' . '/jaimeperez/twig-configurable-i18n/src/Twig/Extensions/Node/Trans.php',
-        'JaimePerez\\TwigConfigurableI18n\\Twig\\Extensions\\TokenParser\\Trans' => __DIR__ . '/..' . '/jaimeperez/twig-configurable-i18n/src/Twig/Extensions/TokenParser/Trans.php',
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
@@ -3817,9 +3720,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         'RedBeanPHP\\Util\\Dump' => __DIR__ . '/..' . '/gabordemooij/redbean/RedBeanPHP/Util/Dump.php',
         'RedBeanPHP\\Util\\MultiLoader' => __DIR__ . '/..' . '/gabordemooij/redbean/RedBeanPHP/Util/MultiLoader.php',
         'RedBeanPHP\\Util\\Transaction' => __DIR__ . '/..' . '/gabordemooij/redbean/RedBeanPHP/Util/Transaction.php',
-        'RobRichards\\XMLSecLibs\\XMLSecEnc' => __DIR__ . '/..' . '/robrichards/xmlseclibs/src/XMLSecEnc.php',
-        'RobRichards\\XMLSecLibs\\XMLSecurityDSig' => __DIR__ . '/..' . '/robrichards/xmlseclibs/src/XMLSecurityDSig.php',
-        'RobRichards\\XMLSecLibs\\XMLSecurityKey' => __DIR__ . '/..' . '/robrichards/xmlseclibs/src/XMLSecurityKey.php',
         'Robo\\Application' => __DIR__ . '/..' . '/codegyre/robo/src/Application.php',
         'Robo\\Collection\\CallableTask' => __DIR__ . '/..' . '/codegyre/robo/src/Collection/CallableTask.php',
         'Robo\\Collection\\Collectable' => __DIR__ . '/..' . '/codegyre/robo/src/Collection/Collectable.php',
@@ -3933,212 +3833,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         'Robo\\Task\\Vcs\\loadShortcuts' => __DIR__ . '/..' . '/codegyre/robo/src/Task/Vcs/loadShortcuts.php',
         'Robo\\Task\\Vcs\\loadTasks' => __DIR__ . '/..' . '/codegyre/robo/src/Task/Vcs/loadTasks.php',
         'Robo\\Tasks' => __DIR__ . '/..' . '/codegyre/robo/src/Tasks.php',
-        'SAML2\\ArtifactResolve' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/ArtifactResolve.php',
-        'SAML2\\ArtifactResponse' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/ArtifactResponse.php',
-        'SAML2\\Assertion' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion.php',
-        'SAML2\\Assertion\\Decrypter' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Decrypter.php',
-        'SAML2\\Assertion\\Exception\\InvalidAssertionException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Exception/InvalidAssertionException.php',
-        'SAML2\\Assertion\\Exception\\InvalidSubjectConfirmationException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Exception/InvalidSubjectConfirmationException.php',
-        'SAML2\\Assertion\\Exception\\NotDecryptedException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Exception/NotDecryptedException.php',
-        'SAML2\\Assertion\\Processor' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Processor.php',
-        'SAML2\\Assertion\\ProcessorBuilder' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/ProcessorBuilder.php',
-        'SAML2\\Assertion\\Transformer\\DecodeBase64Transformer' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Transformer/DecodeBase64Transformer.php',
-        'SAML2\\Assertion\\Transformer\\NameIdDecryptionTransformer' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Transformer/NameIdDecryptionTransformer.php',
-        'SAML2\\Assertion\\Transformer\\Transformer' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Transformer/Transformer.php',
-        'SAML2\\Assertion\\Transformer\\TransformerChain' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Transformer/TransformerChain.php',
-        'SAML2\\Assertion\\Validation\\AssertionConstraintValidator' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/AssertionConstraintValidator.php',
-        'SAML2\\Assertion\\Validation\\AssertionValidator' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/AssertionValidator.php',
-        'SAML2\\Assertion\\Validation\\ConstraintValidator\\NotBefore' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/ConstraintValidator/NotBefore.php',
-        'SAML2\\Assertion\\Validation\\ConstraintValidator\\NotOnOrAfter' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/ConstraintValidator/NotOnOrAfter.php',
-        'SAML2\\Assertion\\Validation\\ConstraintValidator\\SessionNotOnOrAfter' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/ConstraintValidator/SessionNotOnOrAfter.php',
-        'SAML2\\Assertion\\Validation\\ConstraintValidator\\SpIsValidAudience' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/ConstraintValidator/SpIsValidAudience.php',
-        'SAML2\\Assertion\\Validation\\ConstraintValidator\\SubjectConfirmationMethod' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/ConstraintValidator/SubjectConfirmationMethod.php',
-        'SAML2\\Assertion\\Validation\\ConstraintValidator\\SubjectConfirmationNotBefore' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/ConstraintValidator/SubjectConfirmationNotBefore.php',
-        'SAML2\\Assertion\\Validation\\ConstraintValidator\\SubjectConfirmationNotOnOrAfter' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/ConstraintValidator/SubjectConfirmationNotOnOrAfter.php',
-        'SAML2\\Assertion\\Validation\\ConstraintValidator\\SubjectConfirmationRecipientMatches' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/ConstraintValidator/SubjectConfirmationRecipientMatches.php',
-        'SAML2\\Assertion\\Validation\\ConstraintValidator\\SubjectConfirmationResponseToMatches' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/ConstraintValidator/SubjectConfirmationResponseToMatches.php',
-        'SAML2\\Assertion\\Validation\\Result' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/Result.php',
-        'SAML2\\Assertion\\Validation\\SubjectConfirmationConstraintValidator' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/SubjectConfirmationConstraintValidator.php',
-        'SAML2\\Assertion\\Validation\\SubjectConfirmationValidator' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Assertion/Validation/SubjectConfirmationValidator.php',
-        'SAML2\\AttributeQuery' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/AttributeQuery.php',
-        'SAML2\\AuthnRequest' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/AuthnRequest.php',
-        'SAML2\\Binding' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Binding.php',
-        'SAML2\\Certificate\\Exception\\InvalidCertificateStructureException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Certificate/Exception/InvalidCertificateStructureException.php',
-        'SAML2\\Certificate\\Exception\\InvalidKeyUsageException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Certificate/Exception/InvalidKeyUsageException.php',
-        'SAML2\\Certificate\\Exception\\NoKeysFoundException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Certificate/Exception/NoKeysFoundException.php',
-        'SAML2\\Certificate\\Fingerprint' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Certificate/Fingerprint.php',
-        'SAML2\\Certificate\\FingerprintCollection' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Certificate/FingerprintCollection.php',
-        'SAML2\\Certificate\\FingerprintLoader' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Certificate/FingerprintLoader.php',
-        'SAML2\\Certificate\\Key' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Certificate/Key.php',
-        'SAML2\\Certificate\\KeyCollection' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Certificate/KeyCollection.php',
-        'SAML2\\Certificate\\KeyLoader' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Certificate/KeyLoader.php',
-        'SAML2\\Certificate\\PrivateKey' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Certificate/PrivateKey.php',
-        'SAML2\\Certificate\\PrivateKeyLoader' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Certificate/PrivateKeyLoader.php',
-        'SAML2\\Certificate\\X509' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Certificate/X509.php',
-        'SAML2\\Compat\\AbstractContainer' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Compat/AbstractContainer.php',
-        'SAML2\\Compat\\ContainerSingleton' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Compat/ContainerSingleton.php',
-        'SAML2\\Compat\\MockContainer' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Compat/MockContainer.php',
-        'SAML2\\Compat\\Ssp\\Container' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Compat/Ssp/Container.php',
-        'SAML2\\Compat\\Ssp\\Logger' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Compat/Ssp/Logger.php',
-        'SAML2\\Configuration\\ArrayAdapter' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Configuration/ArrayAdapter.php',
-        'SAML2\\Configuration\\CertificateProvider' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Configuration/CertificateProvider.php',
-        'SAML2\\Configuration\\DecryptionProvider' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Configuration/DecryptionProvider.php',
-        'SAML2\\Configuration\\Destination' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Configuration/Destination.php',
-        'SAML2\\Configuration\\EntityIdProvider' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Configuration/EntityIdProvider.php',
-        'SAML2\\Configuration\\IdentityProvider' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Configuration/IdentityProvider.php',
-        'SAML2\\Configuration\\IdentityProviderAware' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Configuration/IdentityProviderAware.php',
-        'SAML2\\Configuration\\PrivateKey' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Configuration/PrivateKey.php',
-        'SAML2\\Configuration\\Queryable' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Configuration/Queryable.php',
-        'SAML2\\Configuration\\ServiceProvider' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Configuration/ServiceProvider.php',
-        'SAML2\\Configuration\\ServiceProviderAware' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Configuration/ServiceProviderAware.php',
-        'SAML2\\Configuration\\SimpleSAMLConverter' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Configuration/SimpleSAMLConverter.php',
-        'SAML2\\Constants' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Constants.php',
-        'SAML2\\DOMDocumentFactory' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/DOMDocumentFactory.php',
-        'SAML2\\EncryptedAssertion' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/EncryptedAssertion.php',
-        'SAML2\\Exception\\InvalidArgumentException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Exception/InvalidArgumentException.php',
-        'SAML2\\Exception\\RuntimeException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Exception/RuntimeException.php',
-        'SAML2\\Exception\\Throwable' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Exception/Throwable.php',
-        'SAML2\\Exception\\UnparseableXmlException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Exception/UnparseableXmlException.php',
-        'SAML2\\HTTPArtifact' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/HTTPArtifact.php',
-        'SAML2\\HTTPPost' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/HTTPPost.php',
-        'SAML2\\HTTPRedirect' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/HTTPRedirect.php',
-        'SAML2\\LogoutRequest' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/LogoutRequest.php',
-        'SAML2\\LogoutResponse' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/LogoutResponse.php',
-        'SAML2\\Message' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Message.php',
-        'SAML2\\Request' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Request.php',
-        'SAML2\\Response' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response.php',
-        'SAML2\\Response\\Exception\\InvalidResponseException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response/Exception/InvalidResponseException.php',
-        'SAML2\\Response\\Exception\\InvalidSignatureException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response/Exception/InvalidSignatureException.php',
-        'SAML2\\Response\\Exception\\NoAssertionsFoundException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response/Exception/NoAssertionsFoundException.php',
-        'SAML2\\Response\\Exception\\PreconditionNotMetException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response/Exception/PreconditionNotMetException.php',
-        'SAML2\\Response\\Exception\\UnencryptedAssertionFoundException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response/Exception/UnencryptedAssertionFoundException.php',
-        'SAML2\\Response\\Exception\\UnsignedResponseException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response/Exception/UnsignedResponseException.php',
-        'SAML2\\Response\\Processor' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response/Processor.php',
-        'SAML2\\Response\\Validation\\ConstraintValidator' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response/Validation/ConstraintValidator.php',
-        'SAML2\\Response\\Validation\\ConstraintValidator\\DestinationMatches' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response/Validation/ConstraintValidator/DestinationMatches.php',
-        'SAML2\\Response\\Validation\\ConstraintValidator\\IsSuccessful' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response/Validation/ConstraintValidator/IsSuccessful.php',
-        'SAML2\\Response\\Validation\\PreconditionValidator' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response/Validation/PreconditionValidator.php',
-        'SAML2\\Response\\Validation\\Result' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response/Validation/Result.php',
-        'SAML2\\Response\\Validation\\Validator' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Response/Validation/Validator.php',
-        'SAML2\\SOAP' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/SOAP.php',
-        'SAML2\\SOAPClient' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/SOAPClient.php',
-        'SAML2\\Signature\\AbstractChainedValidator' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Signature/AbstractChainedValidator.php',
-        'SAML2\\Signature\\ChainedValidator' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Signature/ChainedValidator.php',
-        'SAML2\\Signature\\FingerprintValidator' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Signature/FingerprintValidator.php',
-        'SAML2\\Signature\\MissingConfigurationException' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Signature/MissingConfigurationException.php',
-        'SAML2\\Signature\\PublicKeyValidator' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Signature/PublicKeyValidator.php',
-        'SAML2\\Signature\\Validator' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Signature/Validator.php',
-        'SAML2\\Signature\\ValidatorChain' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Signature/ValidatorChain.php',
-        'SAML2\\Signature\\ValidatorInterface' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Signature/ValidatorInterface.php',
-        'SAML2\\SignedElement' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/SignedElement.php',
-        'SAML2\\SignedElementHelper' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/SignedElementHelper.php',
-        'SAML2\\StatusResponse' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/StatusResponse.php',
-        'SAML2\\SubjectQuery' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/SubjectQuery.php',
-        'SAML2\\Utilities\\ArrayCollection' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Utilities/ArrayCollection.php',
-        'SAML2\\Utilities\\Certificate' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Utilities/Certificate.php',
-        'SAML2\\Utilities\\Collection' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Utilities/Collection.php',
-        'SAML2\\Utilities\\File' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Utilities/File.php',
-        'SAML2\\Utilities\\Temporal' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Utilities/Temporal.php',
-        'SAML2\\Utils' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/Utils.php',
-        'SAML2\\XML\\Chunk' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/Chunk.php',
-        'SAML2\\XML\\alg\\Common' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/alg/Common.php',
-        'SAML2\\XML\\alg\\DigestMethod' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/alg/DigestMethod.php',
-        'SAML2\\XML\\alg\\SigningMethod' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/alg/SigningMethod.php',
-        'SAML2\\XML\\ds\\KeyInfo' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/ds/KeyInfo.php',
-        'SAML2\\XML\\ds\\KeyName' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/ds/KeyName.php',
-        'SAML2\\XML\\ds\\X509Certificate' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/ds/X509Certificate.php',
-        'SAML2\\XML\\ds\\X509Data' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/ds/X509Data.php',
-        'SAML2\\XML\\ecp\\Response' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/ecp/Response.php',
-        'SAML2\\XML\\md\\AdditionalMetadataLocation' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/AdditionalMetadataLocation.php',
-        'SAML2\\XML\\md\\AffiliationDescriptor' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/AffiliationDescriptor.php',
-        'SAML2\\XML\\md\\AttributeAuthorityDescriptor' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/AttributeAuthorityDescriptor.php',
-        'SAML2\\XML\\md\\AttributeConsumingService' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/AttributeConsumingService.php',
-        'SAML2\\XML\\md\\AuthnAuthorityDescriptor' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/AuthnAuthorityDescriptor.php',
-        'SAML2\\XML\\md\\ContactPerson' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/ContactPerson.php',
-        'SAML2\\XML\\md\\EndpointType' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/EndpointType.php',
-        'SAML2\\XML\\md\\EntitiesDescriptor' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/EntitiesDescriptor.php',
-        'SAML2\\XML\\md\\EntityDescriptor' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/EntityDescriptor.php',
-        'SAML2\\XML\\md\\Extensions' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/Extensions.php',
-        'SAML2\\XML\\md\\IDPSSODescriptor' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/IDPSSODescriptor.php',
-        'SAML2\\XML\\md\\IndexedEndpointType' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/IndexedEndpointType.php',
-        'SAML2\\XML\\md\\KeyDescriptor' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/KeyDescriptor.php',
-        'SAML2\\XML\\md\\Organization' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/Organization.php',
-        'SAML2\\XML\\md\\PDPDescriptor' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/PDPDescriptor.php',
-        'SAML2\\XML\\md\\RequestedAttribute' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/RequestedAttribute.php',
-        'SAML2\\XML\\md\\RoleDescriptor' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/RoleDescriptor.php',
-        'SAML2\\XML\\md\\SPSSODescriptor' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/SPSSODescriptor.php',
-        'SAML2\\XML\\md\\SSODescriptorType' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/SSODescriptorType.php',
-        'SAML2\\XML\\md\\UnknownRoleDescriptor' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/md/UnknownRoleDescriptor.php',
-        'SAML2\\XML\\mdattr\\EntityAttributes' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/mdattr/EntityAttributes.php',
-        'SAML2\\XML\\mdrpi\\Common' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/mdrpi/Common.php',
-        'SAML2\\XML\\mdrpi\\PublicationInfo' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/mdrpi/PublicationInfo.php',
-        'SAML2\\XML\\mdrpi\\RegistrationInfo' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/mdrpi/RegistrationInfo.php',
-        'SAML2\\XML\\mdui\\Common' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/mdui/Common.php',
-        'SAML2\\XML\\mdui\\DiscoHints' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/mdui/DiscoHints.php',
-        'SAML2\\XML\\mdui\\Keywords' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/mdui/Keywords.php',
-        'SAML2\\XML\\mdui\\Logo' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/mdui/Logo.php',
-        'SAML2\\XML\\mdui\\UIInfo' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/mdui/UIInfo.php',
-        'SAML2\\XML\\saml\\Attribute' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/saml/Attribute.php',
-        'SAML2\\XML\\saml\\AttributeValue' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/saml/AttributeValue.php',
-        'SAML2\\XML\\saml\\BaseIDType' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/saml/BaseIDType.php',
-        'SAML2\\XML\\saml\\Issuer' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/saml/Issuer.php',
-        'SAML2\\XML\\saml\\NameID' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/saml/NameID.php',
-        'SAML2\\XML\\saml\\NameIDType' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/saml/NameIDType.php',
-        'SAML2\\XML\\saml\\SubjectConfirmation' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/saml/SubjectConfirmation.php',
-        'SAML2\\XML\\saml\\SubjectConfirmationData' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/saml/SubjectConfirmationData.php',
-        'SAML2\\XML\\samlp\\Extensions' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/samlp/Extensions.php',
-        'SAML2\\XML\\shibmd\\Scope' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2/XML/shibmd/Scope.php',
-        'SimpleSAML\\Auth\\Simple' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Auth/Simple.php',
-        'SimpleSAML\\Auth\\TimeLimitedToken' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Auth/TimeLimitedToken.php',
-        'SimpleSAML\\Bindings\\Shib13\\Artifact' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Bindings/Shib13/Artifact.php',
-        'SimpleSAML\\Bindings\\Shib13\\HTTPPost' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Bindings/Shib13/HTTPPost.php',
-        'SimpleSAML\\Database' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Database.php',
-        'SimpleSAML\\Error\\CannotSetCookie' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Error/CannotSetCookie.php',
-        'SimpleSAML\\Error\\ConfigurationError' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Error/ConfigurationError.php',
-        'SimpleSAML\\Error\\CriticalConfigurationError' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Error/CriticalConfigurationError.php',
-        'SimpleSAML\\Error\\ErrorCodes' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Error/ErrorCodes.php',
-        'SimpleSAML\\IdP\\IFrameLogoutHandler' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/IdP/IFrameLogoutHandler.php',
-        'SimpleSAML\\IdP\\LogoutHandlerInterface' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/IdP/LogoutHandlerInterface.php',
-        'SimpleSAML\\IdP\\TraditionalLogoutHandler' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/IdP/TraditionalLogoutHandler.php',
-        'SimpleSAML\\Locale\\Language' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Locale/Language.php',
-        'SimpleSAML\\Locale\\Localization' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Locale/Localization.php',
-        'SimpleSAML\\Locale\\Translate' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Locale/Translate.php',
-        'SimpleSAML\\Logger' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Logger.php',
-        'SimpleSAML\\Logger\\ErrorLogLoggingHandler' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Logger/ErrorLogLoggingHandler.php',
-        'SimpleSAML\\Logger\\FileLoggingHandler' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Logger/FileLoggingHandler.php',
-        'SimpleSAML\\Logger\\LoggingHandlerInterface' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Logger/LoggingHandlerInterface.php',
-        'SimpleSAML\\Logger\\StandardErrorLoggingHandler' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Logger/StandardErrorLoggingHandler.php',
-        'SimpleSAML\\Logger\\SyslogLoggingHandler' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Logger/SyslogLoggingHandler.php',
-        'SimpleSAML\\Metadata\\Sources\\MDQ' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Metadata/Sources/MDQ.php',
-        'SimpleSAML\\Module' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Module.php',
-        'SimpleSAML\\SessionHandler' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/SessionHandler.php',
-        'SimpleSAML\\SessionHandlerCookie' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/SessionHandlerCookie.php',
-        'SimpleSAML\\SessionHandlerPHP' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/SessionHandlerPHP.php',
-        'SimpleSAML\\SessionHandlerStore' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/SessionHandlerStore.php',
-        'SimpleSAML\\Store' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Store.php',
-        'SimpleSAML\\Store\\Memcache' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Store/Memcache.php',
-        'SimpleSAML\\Store\\Redis' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Store/Redis.php',
-        'SimpleSAML\\Store\\SQL' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Store/SQL.php',
-        'SimpleSAML\\Utils\\Arrays' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Utils/Arrays.php',
-        'SimpleSAML\\Utils\\Attributes' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Utils/Attributes.php',
-        'SimpleSAML\\Utils\\Auth' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Utils/Auth.php',
-        'SimpleSAML\\Utils\\ClearableState' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Utils/ClearableState.php',
-        'SimpleSAML\\Utils\\Config' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Utils/Config.php',
-        'SimpleSAML\\Utils\\Config\\Metadata' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Utils/Config/Metadata.php',
-        'SimpleSAML\\Utils\\Crypto' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Utils/Crypto.php',
-        'SimpleSAML\\Utils\\HTTP' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Utils/HTTP.php',
-        'SimpleSAML\\Utils\\Net' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Utils/Net.php',
-        'SimpleSAML\\Utils\\Random' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Utils/Random.php',
-        'SimpleSAML\\Utils\\System' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Utils/System.php',
-        'SimpleSAML\\Utils\\Time' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Utils/Time.php',
-        'SimpleSAML\\Utils\\XML' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/Utils/XML.php',
-        'SimpleSAML\\XHTML\\TemplateControllerInterface' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/XHTML/TemplateControllerInterface.php',
-        'SimpleSAML\\XML\\Errors' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/XML/Errors.php',
-        'SimpleSAML\\XML\\Parser' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/XML/Parser.php',
-        'SimpleSAML\\XML\\Shib13\\AuthnRequest' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/XML/Shib13/AuthnRequest.php',
-        'SimpleSAML\\XML\\Shib13\\AuthnResponse' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/XML/Shib13/AuthnResponse.php',
-        'SimpleSAML\\XML\\Signer' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/XML/Signer.php',
-        'SimpleSAML\\XML\\Validator' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML/XML/Validator.php',
         'Stack\\Builder' => __DIR__ . '/..' . '/stack/builder/src/Stack/Builder.php',
         'Stack\\StackedHttpKernel' => __DIR__ . '/..' . '/stack/builder/src/Stack/StackedHttpKernel.php',
         'Stecman\\Component\\Symfony\\Console\\BashCompletion\\Completion' => __DIR__ . '/..' . '/stecman/symfony-console-completion/src/Completion.php',
@@ -5241,13 +4935,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         'Twig\\Extension\\SandboxExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/SandboxExtension.php',
         'Twig\\Extension\\StagingExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/StagingExtension.php',
         'Twig\\Extension\\StringLoaderExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/StringLoaderExtension.php',
-        'Twig\\Extensions\\ArrayExtension' => __DIR__ . '/..' . '/twig/extensions/src/ArrayExtension.php',
-        'Twig\\Extensions\\DateExtension' => __DIR__ . '/..' . '/twig/extensions/src/DateExtension.php',
-        'Twig\\Extensions\\I18nExtension' => __DIR__ . '/..' . '/twig/extensions/src/I18nExtension.php',
-        'Twig\\Extensions\\IntlExtension' => __DIR__ . '/..' . '/twig/extensions/src/IntlExtension.php',
-        'Twig\\Extensions\\Node\\TransNode' => __DIR__ . '/..' . '/twig/extensions/src/Node/TransNode.php',
-        'Twig\\Extensions\\TextExtension' => __DIR__ . '/..' . '/twig/extensions/src/TextExtension.php',
-        'Twig\\Extensions\\TokenParser\\TransTokenParser' => __DIR__ . '/..' . '/twig/extensions/src/TokenParser/TransTokenParser.php',
         'Twig\\FileExtensionEscapingStrategy' => __DIR__ . '/..' . '/twig/twig/src/FileExtensionEscapingStrategy.php',
         'Twig\\Lexer' => __DIR__ . '/..' . '/twig/twig/src/Lexer.php',
         'Twig\\Loader\\ArrayLoader' => __DIR__ . '/..' . '/twig/twig/src/Loader/ArrayLoader.php',
@@ -5423,28 +5110,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         'Twig_Extension_Sandbox' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Extension/Sandbox.php',
         'Twig_Extension_Staging' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Extension/Staging.php',
         'Twig_Extension_StringLoader' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Extension/StringLoader.php',
-        'Twig_Extensions_Autoloader' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Autoloader.php',
-        'Twig_Extensions_Extension_Array' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Extension/Array.php',
-        'Twig_Extensions_Extension_Date' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Extension/Date.php',
-        'Twig_Extensions_Extension_I18n' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Extension/I18n.php',
-        'Twig_Extensions_Extension_Intl' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Extension/Intl.php',
-        'Twig_Extensions_Extension_Text' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Extension/Text.php',
-        'Twig_Extensions_Grammar' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Grammar.php',
-        'Twig_Extensions_GrammarInterface' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/GrammarInterface.php',
-        'Twig_Extensions_Grammar_Arguments' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Grammar/Arguments.php',
-        'Twig_Extensions_Grammar_Array' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Grammar/Array.php',
-        'Twig_Extensions_Grammar_Body' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Grammar/Body.php',
-        'Twig_Extensions_Grammar_Boolean' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Grammar/Boolean.php',
-        'Twig_Extensions_Grammar_Constant' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Grammar/Constant.php',
-        'Twig_Extensions_Grammar_Expression' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Grammar/Expression.php',
-        'Twig_Extensions_Grammar_Hash' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Grammar/Hash.php',
-        'Twig_Extensions_Grammar_Number' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Grammar/Number.php',
-        'Twig_Extensions_Grammar_Optional' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Grammar/Optional.php',
-        'Twig_Extensions_Grammar_Switch' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Grammar/Switch.php',
-        'Twig_Extensions_Grammar_Tag' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Grammar/Tag.php',
-        'Twig_Extensions_Node_Trans' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/Node/Trans.php',
-        'Twig_Extensions_SimpleTokenParser' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/SimpleTokenParser.php',
-        'Twig_Extensions_TokenParser_Trans' => __DIR__ . '/..' . '/twig/extensions/lib/Twig/Extensions/TokenParser/Trans.php',
         'Twig_FactoryRuntimeLoader' => __DIR__ . '/..' . '/twig/twig/lib/Twig/FactoryRuntimeLoader.php',
         'Twig_FileExtensionEscapingStrategy' => __DIR__ . '/..' . '/twig/twig/lib/Twig/FileExtensionEscapingStrategy.php',
         'Twig_Filter' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Filter.php',
@@ -5619,7 +5284,6 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
         'Webmozart\\PathUtil\\Path' => __DIR__ . '/..' . '/webmozart/path-util/src/Path.php',
         'Webmozart\\PathUtil\\Url' => __DIR__ . '/..' . '/webmozart/path-util/src/Url.php',
-        'WhiteHat101\\Crypt\\APR1_MD5' => __DIR__ . '/..' . '/whitehat101/apr1-md5/src/APR1_MD5.php',
         'Wikimedia\\Composer\\Logger' => __DIR__ . '/..' . '/wikimedia/composer-merge-plugin/src/Logger.php',
         'Wikimedia\\Composer\\MergePlugin' => __DIR__ . '/..' . '/wikimedia/composer-merge-plugin/src/MergePlugin.php',
         'Wikimedia\\Composer\\Merge\\ExtraPackage' => __DIR__ . '/..' . '/wikimedia/composer-merge-plugin/src/Merge/ExtraPackage.php',
@@ -5829,11 +5493,11 @@ class ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5::$prefixesPsr0;
-            $loader->fallbackDirsPsr0 = ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5::$fallbackDirsPsr0;
-            $loader->classMap = ComposerStaticInit3c723e34fb3dc2668dd9ebbd31816ba5::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9c13250fe6ca9faa321e0fbe75ce93e8::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9c13250fe6ca9faa321e0fbe75ce93e8::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit9c13250fe6ca9faa321e0fbe75ce93e8::$prefixesPsr0;
+            $loader->fallbackDirsPsr0 = ComposerStaticInit9c13250fe6ca9faa321e0fbe75ce93e8::$fallbackDirsPsr0;
+            $loader->classMap = ComposerStaticInit9c13250fe6ca9faa321e0fbe75ce93e8::$classMap;
 
         }, null, ClassLoader::class);
     }

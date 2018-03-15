@@ -16,6 +16,4 @@ return array(
     '5a12a5271c58108e0aa33355e6ac54ea' => $vendorDir . '/drupal/console-core/src/functions.php',
     'e7223560d890eab89cda23685e711e2c' => $vendorDir . '/psy/psysh/src/Psy/functions.php',
     'a16312f9300fed4a097923eacb0ba814' => $vendorDir . '/igorw/get-in/src/get_in.php',
-    '6175f5662c2e26de0149cb048cda7209' => $vendorDir . '/simplesamlphp/saml2/src/_autoload.php',
-    '5abda994d126976858eb25d2546ee3c9' => $vendorDir . '/simplesamlphp/simplesamlphp/lib/_autoload_modules.php',
 );
