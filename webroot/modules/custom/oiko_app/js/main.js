@@ -90,22 +90,22 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
 
   const timelinesListener = () => {
     const {comparativeTimelines} = store.getState();
-    const timeline = Drupal.oiko.timeline;
+    if (typeof Drupal.oiko.timeline !== 'undefined') {
+      const timeline = Drupal.oiko.timeline;
+      // Check to see if the timeslines displayed needs to change.
+      const timelines = timeline.getTimelines();
+      if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length ||
+          // Non-empty, with different values.
+          (comparativeTimelines.length > 0 && comparativeTimelines.every((v, i) => v !== timelines[i])))) {
+        timeline.setTimelines(comparativeTimelines);
+      }
 
-
-    // Check to see if the timeslines displayed needs to change.
-    const timelines = timeline.getTimelines();
-    if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length ||
-      // Non-empty, with different values.
-      (comparativeTimelines.length > 0 && comparativeTimelines.every((v, i) => v !== timelines[i])))) {
-      timeline.setTimelines(comparativeTimelines);
-    }
-
-    // Check to see if the visual range of the timeline needs to change.
-    const {timelinesState} = store.getState();
-    const window = Drupal.oiko.timeline.getVisibleTimeWindow();
-    if (timelinesState.start && timelinesState.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {
-      Drupal.oiko.timeline.setVisibleTimeWindow(timelinesState.start, timelinesState.end);
+      // Check to see if the visual range of the timeline needs to change.
+      const {timelinesState} = store.getState();
+      const window = Drupal.oiko.timeline.getVisibleTimeWindow();
+      if (timelinesState.start && timelinesState.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {
+        Drupal.oiko.timeline.setVisibleTimeWindow(timelinesState.start, timelinesState.end);
+      }
     }
   };
 

@@ -1,3 +1,6 @@
 services:
   oiko_timeline.hook_implementations:
     class: Drupal\oiko_timeline\OikoTimelineHookImplementations
+
+  oiko_timeline.helpers:
+    class: Drupal\oiko_timeline\OikoTimelineHelpers

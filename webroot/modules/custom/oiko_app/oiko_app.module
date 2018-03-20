@@ -49,7 +49,7 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
   // Compute the number of pages we'll need to fetch.
   $storage = Drupal::entityTypeManager()->getStorage('cidoc_entity');
 
-  // Check to see if there's another page of data to get.
+  // Get the number of pages that are in the data set.
   $count = $storage->getQuery()
     ->notExists('field_empire_outline')
     ->condition('status', 1)
@@ -67,6 +67,7 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
 
   $variables['timeline'] = array(
     '#theme' => 'comparative_timeline',
+    '#global' => TRUE,
   );
 
 

@@ -5,6 +5,7 @@ dependencies:
     - core.entity_view_mode.cidoc_entity.transcript
   module:
     - cidoc
+    - oiko_leaflet
 id: student_transcript_entities
 label: 'Student transcript Entities'
 module: views
@@ -189,6 +190,47 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+      tags: {  }
+  map:
+    display_plugin: embed
+    id: map
+    display_title: Map
+    position: 2
+    display_options:
+      display_extenders: {  }
+      display_description: ''
+      style:
+        type: oiko_leafet_map
+        options:
+          uses_fields: false
+          pan: 0
+          zoom: 0
+          zoom_controls: topleft
+          max_zoom: '0'
+          clustering: 1
+          sidebar: 0
+          search: 0
+          timeline: 0
+          pagestate: 0
+          empty_map: 0
+          empires: 0
+          map: 'Ancient Terrain'
+          full_height: 0
+          height: '600'
+          locate: 0
+      defaults:
+        style: false
+        row: false
+      row:
+        type: 'entity:cidoc_entity'
+        options:
+          relationship: none
+          view_mode: transcript
     cache_metadata:
       max-age: -1
       contexts:
