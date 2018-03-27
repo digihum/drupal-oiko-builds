@@ -12,6 +12,18 @@ routes:
   -
     route_name: entity.cidoc_entity.canonical
 tips:
+  test-tabs-title:
+    id: test-tabs-title
+    plugin: text
+    label: 'Test tabs title'
+    weight: -100
+    attributes:
+      data-class: 'subtitle, #cidoc-popup-tabs'
+    body: 'Try out the class selector'
+    location: null
+    next_label: null
+    previous_label: null
+    information_bar: null
   modal-tip:
     id: modal-tip
     plugin: text
@@ -56,8 +68,8 @@ tips:
       data-id: cidoc-popup-tabs-outer
     body: "<p><i class=\"fa fa-map-marker fa-2x\"></i> Click on the Info icon when something on the map is selected for information about this entry.</p>\r\n<p><strong>Info</strong>\r\nSee information relating to the selected item.</p>\r\n<p>\r\n<strong>Discuss</strong>\r\nRead and contribute to the discussion about the selected item.</p>\r\n<p><strong>Share</strong>\r\nShare a link to the selected item on social media.</p>\r\n\r\n<p><i class=\"fa fa-plus-circle fa-2x\"></i> Click on this to add this item to your Added Events</p>"
     location: right
-    next_label: null
-    previous_label: null
+    next_label: ''
+    previous_label: ''
     information_bar: 1
   4-4-switch-to-comparative-timeline:
     id: 4-4-switch-to-comparative-timeline
