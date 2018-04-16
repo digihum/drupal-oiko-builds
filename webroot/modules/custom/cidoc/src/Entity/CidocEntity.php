@@ -472,6 +472,8 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
   /**
    * Get reverse referenced entities from us.
    *
+   * @TODO: Refactor this out into \Drupal\cidoc\GraphTraversal.
+   *
    * @param array $properties
    * @param boolean $loaded
    *
@@ -506,6 +508,8 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
 
   /**
    * Get forward referenced entities.
+   *
+   * @TODO: Refactor this out into \Drupal\cidoc\GraphTraversal.
    *
    * @param array $properties
    * @param boolean $loaded

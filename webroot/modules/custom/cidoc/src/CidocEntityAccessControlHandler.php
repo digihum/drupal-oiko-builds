@@ -51,14 +51,19 @@ class CidocEntityAccessControlHandler extends EntityAccessControlHandler {
    * @param \Drupal\Core\Session\AccountInterface $account
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *
-   * @return \Drupal\Core\Access\AccessResultAllowed|\Drupal\Core\Access\AccessResultForbidden|\Drupal\Core\Access\AccessResultNeutral|static
+   * @return
+   *   The access result.
    */
   protected function checkGlobalPermissionOrOwnPermission($global_permission, $own_permission, AccountInterface $account, EntityInterface $entity) {
     $global_access = AccessResult::allowedIfHasPermission($account, $global_permission);
-    $own_access = AccessResult::allowedIfHasPermission($account, $own_permission);
-    $access_own_entity = AccessResult::allowedIf($account->id() == $entity->getOwnerId())->addCacheableDependency($entity);
-
-    return $global_access->orIf($own_access->andIf($access_own_entity));
+    if (method_exists($entity, 'getOwnerId')) {
+      $own_access = AccessResult::allowedIfHasPermission($account, $own_permission);
+      $access_own_entity = AccessResult::allowedIf($account->id() == $entity->getOwnerId())->addCacheableDependency($entity);
+      return $global_access->orIf($own_access->andIf($access_own_entity));
+    }
+    else {
+      return $global_access;
+    }
   }
 
   /**

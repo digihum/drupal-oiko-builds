@@ -449,5 +449,30 @@ class CidocProperty extends ConfigEntityBundleBase implements RevisionableEntity
     return TRUE;
   }
 
+  /**
+   * Determine if this property has property fields of its own.
+   */
+  public function hasCidocPropertyProperties() {
+    return !empty($this->listCidocPropertyProperties());
+
+  }
+
+  /**
+   * List the property property fields.
+   */
+  public function listCidocPropertyProperties() {
+    $property_properties = [];
+    // Fetch the fields for this bundle.
+    $entityManager = \Drupal::service('entity_field.manager');
+    $fields = $entityManager->getFieldDefinitions('cidoc_reference', $this->id());
+    foreach ($fields as $field_name => $field) {
+      // @TODO: There *must* be a better way to do this.
+      if (strpos($field_name, 'field_') !== FALSE) {
+        $property_properties[] = $field_name;
+      }
+    }
+    return $property_properties;
+  }
+
 
 }

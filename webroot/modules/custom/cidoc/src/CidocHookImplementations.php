@@ -36,6 +36,12 @@ class CidocHookImplementations {
         'visible' => FALSE,
       );
 
+      $extra['cidoc_entity'][$bundle]['display']['cidoc_properties_transcript'] = array(
+        'label' => t('All CIDOC Properties - For transcript'),
+        'weight' => 0,
+        'visible' => FALSE,
+      );
+
       $extra['cidoc_entity'][$bundle]['display']['cidoc_admin_links'] = array(
         'label' => t('Admin edit links'),
         'weight' => -20,

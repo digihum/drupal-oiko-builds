@@ -52,12 +52,12 @@ display:
       style:
         type: html_list
         options:
-          grouping: {  }
-          row_class: ''
+          row_class: student-transcript--list-row
           default_row_class: true
+          uses_fields: false
           type: ul
-          wrapper_class: item-list
-          class: ''
+          wrapper_class: ''
+          class: student-transcript--list
       row:
         type: 'entity:cidoc_entity'
         options:
@@ -138,10 +138,10 @@ display:
       empty: {  }
       relationships: {  }
       arguments:
-        user_id:
-          id: user_id
+        id:
+          id: id
           table: cidoc_entity
-          field: user_id
+          field: id
           relationship: none
           group_type: group
           admin_label: ''
@@ -170,10 +170,10 @@ display:
             type: none
             fail: 'not found'
           validate_options: {  }
-          break_phrase: false
+          break_phrase: true
           not: false
           entity_type: cidoc_entity
-          entity_field: user_id
+          entity_field: id
           plugin_id: numeric
       display_extenders: {  }
       title: Entities
@@ -226,6 +226,7 @@ display:
       defaults:
         style: false
         row: false
+        arguments: true
       row:
         type: 'entity:cidoc_entity'
         options:
