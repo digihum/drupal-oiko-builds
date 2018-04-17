@@ -3496,17 +3496,17 @@
     },
     {
         "name": "drupal/core",
-        "version": "8.4.4",
-        "version_normalized": "8.4.4.0",
+        "version": "8.4.6",
+        "version_normalized": "8.4.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/drupal/core.git",
-            "reference": "c6585ffaea5df4ed529e2bdf4371850f8fc3b88c"
+            "reference": "f439a43c7da1df8d16067f797c0bc3498eb4c699"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/drupal/core/zipball/c6585ffaea5df4ed529e2bdf4371850f8fc3b88c",
-            "reference": "c6585ffaea5df4ed529e2bdf4371850f8fc3b88c",
+            "url": "https://api.github.com/repos/drupal/core/zipball/f439a43c7da1df8d16067f797c0bc3498eb4c699",
+            "reference": "f439a43c7da1df8d16067f797c0bc3498eb4c699",
             "shasum": ""
         },
         "require": {
@@ -3659,7 +3659,7 @@
             "symfony/css-selector": "~3.2.8",
             "symfony/phpunit-bridge": "~3.2.8"
         },
-        "time": "2018-01-03 19:27:53",
+        "time": "2018-03-27 10:03:10",
         "type": "drupal-core",
         "extra": {
             "patches_applied": {
