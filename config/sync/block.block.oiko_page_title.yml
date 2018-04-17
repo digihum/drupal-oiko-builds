@@ -1,0 +1,25 @@
+uuid: d882aea9-3e4b-40d6-ac95-c61ab65cbab5
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - oiko
+id: oiko_page_title
+theme: oiko
+region: content
+weight: -6
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: true
+    context_mapping: {  }

@@ -1,0 +1,10 @@
+uuid: b0f523a9-db6e-4d70-8d35-d87cb37d8041
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_entity.summary
+label: Summary
+targetEntityType: cidoc_entity
+cache: true

@@ -1,0 +1,10 @@
+uuid: b2f8b798-d227-46af-8b42-3b8b1cd6505f
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_entity.inline_field
+label: 'Inline field'
+targetEntityType: cidoc_entity
+cache: true

@@ -1,0 +1,19 @@
+uuid: f88bdcec-a1bb-4c5b-9acb-5780c4e87040
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e53_place
+    - field.storage.cidoc_entity.field_location_lookup
+id: cidoc_entity.e53_place.field_location_lookup
+field_name: field_location_lookup
+entity_type: cidoc_entity
+bundle: e53_place
+label: 'Modern location name lookup'
+description: 'Enter the modern location name of a place and you can pick the location from a choice searched on Google Maps. Once you have entered a location, you can use the lookup button to try and find the location on the map.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

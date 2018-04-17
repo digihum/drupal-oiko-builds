@@ -1,0 +1,21 @@
+uuid: ca3f4a3a-5498-40f7-a1a2-a6c869f9d109
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_source_type
+    - taxonomy.vocabulary.source_books
+  module:
+    - options
+id: taxonomy_term.source_books.field_source_type
+field_name: field_source_type
+entity_type: taxonomy_term
+bundle: source_books
+label: 'Source type'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

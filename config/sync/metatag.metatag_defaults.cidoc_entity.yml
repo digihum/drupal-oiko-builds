@@ -1,0 +1,9 @@
+uuid: 6012d6ff-2270-4c50-ac36-ee20ec0c7cef
+langcode: en
+status: true
+dependencies: {  }
+id: cidoc_entity
+label: 'CIDOC entity'
+tags:
+  abstract: '[cidoc-entity:description]'
+  description: '[cidoc-entity:description]'

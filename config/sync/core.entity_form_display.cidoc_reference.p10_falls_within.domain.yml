@@ -1,0 +1,43 @@
+uuid: dc4a2904-7a97-4f57-974a-df7ef8c14984
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p10_falls_within
+    - core.entity_form_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.p10_falls_within.domain
+    - field.field.cidoc_reference.p10_falls_within.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+_core:
+  default_config_hash: UglhHu7zGIi8nU1bNGKXNmkmlqGxnhlH7M7ZCiWKIHQ
+id: cidoc_reference.p10_falls_within.domain
+targetEntityType: cidoc_reference
+bundle: p10_falls_within
+mode: domain
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+    region: content
+  range:
+    type: squid_entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: 60
+      placeholder: 'Start typing to find a match or create new entity...'
+    weight: 0
+    third_party_settings: {  }
+    region: content
+hidden:
+  domain: true
+  langcode: true
+  user_id: true

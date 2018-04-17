@@ -1,0 +1,11 @@
+uuid: e2d00ac4-0eb1-4dd8-b654-bce4b23f8e78
+langcode: en
+status: true
+dependencies: {  }
+name: 'Content page'
+type: content_page
+description: 'A page of general content. Useful for terms and conditions, about pages etc.'
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false

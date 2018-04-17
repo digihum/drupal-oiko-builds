@@ -1,0 +1,32 @@
+uuid: 29c930dd-8c6f-4142-b4b6-df0ebd30ed1b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.empire.field_single_color
+    - taxonomy.vocabulary.empire
+  module:
+    - color_field
+    - text
+id: taxonomy_term.empire.default
+targetEntityType: taxonomy_term
+bundle: empire
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_single_color:
+    weight: 1
+    label: above
+    settings:
+      format: hex
+      opacity: true
+    third_party_settings: {  }
+    type: color_field_formatter_text
+    region: content
+hidden: {  }

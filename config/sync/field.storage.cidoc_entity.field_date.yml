@@ -1,0 +1,22 @@
+uuid: 965a7dfa-ff19-405c-be6f-35f01eae63f7
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+    - edtf
+_core:
+  default_config_hash: hUuRXvhC07QFRfGvLrlbdHq3AKjIbS-6mLXEfshjUsw
+id: cidoc_entity.field_date
+field_name: field_date
+entity_type: cidoc_entity
+type: edtf
+settings:
+  max_length: '255'
+module: edtf
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,23 @@
+uuid: 4b02bd63-8f23-4467-b468-520d25e4722c
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access tour'
+  - 'access user profiles'
+  - 'avatars avatar_generator user gravatar'
+  - 'avatars avatar_generator user gravatar_generator'
+  - 'avatars avatar_generator user user_upload'
+  - 'display eu cookie compliance popup'
+  - 'edit own comments'
+  - 'post comments'
+  - 'view published cidoc entities'
+  - 'view sharemessages'

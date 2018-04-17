@@ -1,0 +1,29 @@
+uuid: 0a338f6f-5199-40d3-a2a8-456617b7ebb5
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e74_group
+    - cidoc.cidoc_property.p144_joined_with
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.p144_joined_with.range
+field_name: range
+entity_type: cidoc_reference
+bundle: p144_joined_with
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e74_group: e74_group
+    auto_create_bundle: e74_group
+field_type: entity_reference

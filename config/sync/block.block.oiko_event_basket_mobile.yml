@@ -1,0 +1,20 @@
+uuid: 6f6e6396-b7af-480d-b4d9-59afbd58c927
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_event_basket
+  theme:
+    - oiko
+id: oiko_event_basket_mobile
+theme: oiko
+region: mobile_user_header
+weight: 0
+provider: null
+plugin: event_basket
+settings:
+  id: event_basket
+  label: 'My events'
+  provider: oiko_event_basket
+  label_display: visible
+visibility: {  }

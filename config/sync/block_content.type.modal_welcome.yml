@@ -1,0 +1,8 @@
+uuid: a353f097-287e-4205-a232-f30fb9c0e215
+langcode: en
+status: true
+dependencies: {  }
+id: modal_welcome
+label: 'Modal welcome'
+revision: 0
+description: 'Used for the modal welcome to the site.'
