@@ -17,6 +17,7 @@ content:
     weight: -3
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_in_the_role_of:
     weight: -1
     label: above
@@ -24,6 +25,7 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   property:
     label: inline
     type: entity_reference_label
@@ -31,12 +33,14 @@ content:
     settings:
       link: false
     third_party_settings: {  }
+    region: content
   range:
     label: inline
     type: entity_reference_label
     weight: -2
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   citation: true
   user_id: true

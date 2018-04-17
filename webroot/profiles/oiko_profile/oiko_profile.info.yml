@@ -4,6 +4,7 @@ description: Install profile for the Oiko
 core: 8.x
 
 dependencies:
+  - menu_ui
   - r4032login
   - avatars_gravatar
   - oiko_forum
@@ -104,15 +105,6 @@ themes:
   - bartik
 
 cm_config_tools:
-  unmanaged:
-    - core.entity_view_mode.node.teaser
-    - field.storage.comment.comment_body
-    - field.storage.node.body
-    - filter.format.full_html
-    - system.menu.account
-    - system.menu.admin
-    - system.menu.main
-    - system.menu.tools
   managed:
     - avatars.generator.gravatar
     - avatars.generator.gravatar_generator
@@ -210,6 +202,8 @@ cm_config_tools:
     - comment.type.comment_forum
     - core.base_field_override.node.forum.promote
     - core.base_field_override.node.forum.title
+    - core.base_field_override.node.narrative.promote
+    - core.base_field_override.node.narrative.status
     - core.date_format.fallback
     - core.date_format.html_date
     - core.date_format.html_datetime
@@ -359,6 +353,7 @@ cm_config_tools:
     - core.entity_form_display.comment.comment_forum.default
     - core.entity_form_display.node.content_page.default
     - core.entity_form_display.node.forum.default
+    - core.entity_form_display.node.narrative.default
     - core.entity_form_display.paragraph.book.default
     - core.entity_form_display.paragraph.uri.default
     - core.entity_form_display.taxonomy_term.empire.default
@@ -472,6 +467,7 @@ cm_config_tools:
     - core.entity_view_display.cidoc_entity.e7_activity.summary_without_map
     - core.entity_view_display.cidoc_entity.e7_activity.timeline_preselection
     - core.entity_view_display.cidoc_entity.e7_activity.transcript
+    - core.entity_view_display.cidoc_entity.e82_actor_appellation.default
     - core.entity_view_display.cidoc_entity.e82_actor_appellation.popup
     - core.entity_view_display.cidoc_entity.e82_actor_appellation.preview
     - core.entity_view_display.cidoc_entity.e82_actor_appellation.timeline_preselection
@@ -618,6 +614,8 @@ cm_config_tools:
     - core.entity_view_display.node.content_page.teaser
     - core.entity_view_display.node.forum.default
     - core.entity_view_display.node.forum.teaser
+    - core.entity_view_display.node.narrative.default
+    - core.entity_view_display.node.narrative.teaser
     - core.entity_view_display.paragraph.book.default
     - core.entity_view_display.paragraph.uri.default
     - core.entity_view_display.taxonomy_term.empire.default
@@ -638,6 +636,7 @@ cm_config_tools:
     - core.entity_view_mode.cidoc_reference.domain
     - core.entity_view_mode.cidoc_reference.range
     - core.entity_view_mode.cidoc_reference.token
+    - core.entity_view_mode.node.teaser
     - core.entity_view_mode.paragraph.preview
     - editor.editor.basic_html
     - editor.editor.full_html
@@ -749,6 +748,8 @@ cm_config_tools:
     - field.storage.cidoc_reference.field_kind_of_member
     - field.storage.cidoc_reference.field_mode_of_use
     - field.storage.cidoc_reference.range
+    - field.storage.comment.comment_body
+    - field.storage.node.body
     - field.storage.node.comment_forum
     - field.storage.node.field_crm_entities
     - field.storage.node.taxonomy_forums
@@ -759,7 +760,10 @@ cm_config_tools:
     - field.storage.taxonomy_term.field_single_color
     - field.storage.taxonomy_term.forum_container
     - filter.format.basic_html
+    - filter.format.full_html
+    - filter.format.plain_text
     - filter.format.restricted_html
+    - filter.settings
     - google_analytics.settings
     - honeypot.settings
     - image.style.comparative_timeline_logo
@@ -778,7 +782,11 @@ cm_config_tools:
     - sharemessage.addthis
     - sharemessage.settings
     - sharemessage.sharemessage.share_links_block
+    - system.menu.account
+    - system.menu.admin
     - system.menu.footer
+    - system.menu.main
+    - system.menu.tools
     - system.theme
     - system.theme.global
     - taxonomy.vocabulary.empire
@@ -794,6 +802,7 @@ cm_config_tools:
     - user.role.authenticated
     - user.role.content_editor
     - user.role.forum_user
+    - user.role.moderated_contributor
     - views.view.bibliography
     - views.view.cidoc_entities
     - views.view.crm_entity_search
@@ -806,6 +815,7 @@ cm_config_tools:
     - views.view.important_people
     - views.view.map_of_places_people_went
     - views.view.my_discussions
+    - views.view.narrative_references
     - views.view.p108_produced_object
     - views.view.p11_has_participant
     - views.view.p12_occurred_in_the_presence_of
@@ -869,6 +879,8 @@ cm_config_tools:
     - core.entity_view_mode.taxonomy_term.primary_historical_significance_pill
     - core.entity_view_mode.user.compact
     - field.field.block_content.modal_welcome.body
+    - field.field.node.narrative.body
+    - field.field.node.narrative.field_crm_entities
     - field.field.user.user.field_contact_preference
     - field.field.user.user.field_terms_and_privacy
     - field.storage.block_content.body
@@ -880,3 +892,4 @@ cm_config_tools:
     - field.storage.user.user_picture
     - image.style.thumbnail
     - node.type.content_page
+    - node.type.narrative

@@ -18,10 +18,12 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_source_type:
     weight: 1
     label: inline
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
 hidden: {  }

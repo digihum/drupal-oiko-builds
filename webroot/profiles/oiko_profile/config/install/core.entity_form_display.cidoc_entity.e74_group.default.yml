@@ -132,30 +132,37 @@ content:
     weight: 20
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p131_is_identified_by':
     weight: 4
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p107_has_current_or_former_membe':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p144_joined_with':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p146_separated_from':
     weight: 22
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p95_has_formed':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p99_dissolved':
     weight: 22
     settings: {  }
     third_party_settings: {  }
+    region: content
   citation:
     type: entity_reference_paragraphs
     weight: 3
@@ -166,10 +173,12 @@ content:
       add_mode: button
       form_display_mode: default
     third_party_settings: {  }
+    region: content
   class_description:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+    region: content
   internal_name:
     type: string_textfield
     weight: 2
@@ -177,6 +186,7 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+    region: content
   name:
     type: string_textfield
     weight: 1
@@ -184,16 +194,19 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+    region: content
   path:
     type: path
     weight: 4
     settings: {  }
     third_party_settings: {  }
+    region: content
   significance:
     type: options_select
     weight: 4
     settings: {  }
     third_party_settings: {  }
+    region: content
   timeline_logo:
     type: image_image
     weight: 2
@@ -201,12 +214,14 @@ content:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
+    region: content
   timeline_preselect_option:
     type: boolean_checkbox
     weight: 3
     settings:
       display_label: true
     third_party_settings: {  }
+    region: content
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true

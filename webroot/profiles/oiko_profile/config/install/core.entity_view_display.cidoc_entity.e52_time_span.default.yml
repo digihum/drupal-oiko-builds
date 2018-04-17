@@ -78,34 +78,42 @@ content:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p1_is_identified_by':
     weight: 20
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p2_has_type':
     weight: 20
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p78_is_identified_by':
     weight: 20
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p15_was_influenced_by':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p17_was_motivated_by':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p4_has_time_span':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   duplicate_of_p15_influenced_entity_view_1:
     weight: 6
     settings: {  }
     third_party_settings: {  }
+    region: content
   internal_name:
     label: inline
     type: string
@@ -113,6 +121,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    region: content
   name:
     label: hidden
     type: string
@@ -120,38 +129,47 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    region: content
   p10_falls_within_entity_view_1:
     weight: 2
     settings: {  }
     third_party_settings: {  }
+    region: content
   p10_includes_entity_view_1:
     weight: 7
     settings: {  }
     third_party_settings: {  }
+    region: content
   p15_influenced_entity_view_1:
     weight: 8
     settings: {  }
     third_party_settings: {  }
+    region: content
   p9__entity_view_1:
     weight: 9
     settings: {  }
     third_party_settings: {  }
+    region: content
   people_entity_view_1:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+    region: content
   time_span_directly_linked_events_entity_view_1:
     weight: 5
     settings: {  }
     third_party_settings: {  }
+    region: content
   time_span_within_period_entity_view_1:
     weight: 6
     settings: {  }
     third_party_settings: {  }
+    region: content
   timeline_link:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   cidoc_admin_links: true
   cidoc_temporal_summary: true

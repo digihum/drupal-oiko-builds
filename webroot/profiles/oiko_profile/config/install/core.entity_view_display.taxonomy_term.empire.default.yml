@@ -18,6 +18,7 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_single_color:
     weight: 1
     label: above
@@ -26,4 +27,5 @@ content:
       opacity: true
     third_party_settings: {  }
     type: color_field_formatter_text
+    region: content
 hidden: {  }

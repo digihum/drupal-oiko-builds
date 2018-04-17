@@ -20,6 +20,7 @@ content:
     weight: 1
     settings: {  }
     third_party_settings: {  }
+    region: content
   content:
     type: text_trimmed
     weight: 3
@@ -27,6 +28,7 @@ content:
     settings:
       trim_length: 120
     third_party_settings: {  }
+    region: content
   name:
     type: string
     weight: 2
@@ -34,6 +36,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    region: content
   timeline_logo:
     type: image
     weight: 0
@@ -42,6 +45,7 @@ content:
       image_style: comparative_timeline_logo
       image_link: ''
     third_party_settings: {  }
+    region: content
 hidden:
   cidoc_admin_links: true
   cidoc_properties: true

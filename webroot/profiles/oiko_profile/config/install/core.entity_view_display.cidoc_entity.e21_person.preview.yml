@@ -16,8 +16,10 @@ content:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p143_joined':
     weight: 21
+    region: content
   citation:
     type: entity_reference_revisions_entity_view
     weight: 5
@@ -26,12 +28,14 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    region: content
   content:
     type: text_default
     weight: 3
     label: visually_hidden
     settings: {  }
     third_party_settings: {  }
+    region: content
   internal_name:
     label: above
     type: string
@@ -39,6 +43,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    region: content
   name:
     label: hidden
     type: string
@@ -46,6 +51,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    region: content
   significance:
     type: entity_reference_label
     weight: 2
@@ -53,6 +59,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
+    region: content
 hidden:
   appelations_entity_view_1: true
   cidoc_admin_links: true

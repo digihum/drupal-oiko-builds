@@ -20,6 +20,7 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+    region: content
   avatars_user_picture:
     weight: 1
     settings:
@@ -27,18 +28,22 @@ content:
       preview_image_style: thumbnail
     third_party_settings: {  }
     type: image_image
+    region: content
   field_contact_preference:
     type: boolean_checkbox
     weight: 4
     settings:
       display_label: true
     third_party_settings: {  }
+    region: content
   language:
     weight: 2
     settings: {  }
     third_party_settings: {  }
+    region: content
   timezone:
     weight: 3
+    region: content
 hidden:
   avatars_avatar_generator: true
   field_terms_and_privacy: true

@@ -9,7 +9,7 @@ dependencies:
     - oiko
 id: oiko_footer
 theme: oiko
-region: '-1'
+region: primary_menu
 weight: -6
 provider: null
 plugin: 'system_menu_block:footer'

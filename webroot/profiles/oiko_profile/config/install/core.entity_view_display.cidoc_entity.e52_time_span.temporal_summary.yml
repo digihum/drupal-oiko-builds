@@ -16,40 +16,49 @@ content:
     weight: 6
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_date:
     type: edtf_human_readable_formatter
     weight: 0
     label: visually_hidden
     settings: {  }
     third_party_settings: {  }
+    region: content
   p10_falls_within_entity_view_1:
     weight: 2
     settings: {  }
     third_party_settings: {  }
+    region: content
   p10_includes_entity_view_1:
     weight: 7
     settings: {  }
     third_party_settings: {  }
+    region: content
   p15_influenced_entity_view_1:
     weight: 8
     settings: {  }
     third_party_settings: {  }
+    region: content
   p9__entity_view_1:
     weight: 9
     settings: {  }
     third_party_settings: {  }
+    region: content
   people_entity_view_1:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+    region: content
   time_span_directly_linked_events_entity_view_1:
     weight: 5
     settings: {  }
     third_party_settings: {  }
+    region: content
   time_span_within_period_entity_view_1:
     weight: 6
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   cidoc_admin_links: true
   cidoc_properties: true
