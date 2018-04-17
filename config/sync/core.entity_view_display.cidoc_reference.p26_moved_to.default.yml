@@ -1,0 +1,37 @@
+uuid: e236bbd8-0318-4722-83b2-fb4d545e63f9
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p26_moved_to
+    - field.field.cidoc_reference.p26_moved_to.domain
+    - field.field.cidoc_reference.p26_moved_to.range
+_core:
+  default_config_hash: 98ZroIuHuu60SkqD3J2A6masg5p3z00zAqZiYKqXwpk
+id: cidoc_reference.p26_moved_to.default
+targetEntityType: cidoc_reference
+bundle: p26_moved_to
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  citation: true
+  user_id: true

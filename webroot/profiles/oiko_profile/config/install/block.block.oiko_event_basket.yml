@@ -8,7 +8,7 @@ dependencies:
 id: oiko_event_basket
 theme: oiko
 region: user_header
-weight: 0
+weight: -9
 provider: null
 plugin: event_basket
 settings:

@@ -1,0 +1,28 @@
+uuid: 60fc81ef-78ba-4155-aed5-faa4d1323f43
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.source_books.field_source_type
+    - taxonomy.vocabulary.source_books
+  module:
+    - options
+    - text
+id: taxonomy_term.source_books.default
+targetEntityType: taxonomy_term
+bundle: source_books
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  field_source_type:
+    weight: 1
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+hidden: {  }

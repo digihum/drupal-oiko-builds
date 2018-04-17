@@ -1,0 +1,13 @@
+uuid: 0c823c36-47a5-4d5a-af79-2e55b3b77aa6
+langcode: en
+status: true
+dependencies:
+  module:
+    - avatars_gravatar
+id: gravatar_generator
+label: 'Gravatar Generator'
+weight: -8
+plugin: gravatar_generator
+provider: null
+settings:
+  type: monsterid

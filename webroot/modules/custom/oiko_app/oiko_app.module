@@ -1,4 +1,5 @@
 <?php
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Url;
 
 
@@ -13,6 +14,13 @@ function oiko_app_theme($existing, $type, $theme, $path) {
     ),
     'main_cidoc_search' => array(
       'variables' => array(
+        'id' => 'main-search-dropdown',
+        'placeholder_map' => 'Search events',
+        'no_search_map' => 'Search for events, people, groups, places or objects e.g. \'The battle of Milvian Bridge\' or \'the Xiongnu\'.',
+        'placeholder_timeline' => 'Search groups and people',
+        'no_search_timeline' => 'Search for communities, empires or groups to compare on your timeline e.g. \'The Roman Empire\' or \'the Han\'.',
+        'no_results_text' => 'No results found.',
+        'searching_text' => 'Searching through known space and time...',
       ),
     ),
   );
@@ -34,7 +42,9 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
   $map['empires'] = TRUE;
   $map['clustering'] = TRUE;
   $map['locate'] = TRUE;
-  $map['layerControl'] = TRUE;
+  $map['settings']['layerControl'] = FALSE;
+  $map['settings']['zoomControl'] = FALSE;
+  $map['zoomControl'] = 'bottomright';
   $map['data-url'] = Url::fromRoute('oiko_leaflet.map_page_controller_allEntities')->toString();
   $height = 'full';
 
@@ -52,4 +62,51 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
       ),
     ),
   ];
+}
+
+/**
+ * Implements hook_preprocess_main_cidoc_search().
+ */
+function template_preprocess_main_cidoc_search(&$variables) {
+  // Create a valid HTML ID and make sure it is unique.
+  if (!empty($variables['id'])) {
+    $variables['attributes']['id'] = Html::getUniqueId($variables['id']);
+  }
+}
+
+/**
+ * Implements hook_toolbar().
+ */
+function oiko_app_toolbar() {
+  $items = [];
+  $items['welcome_modal'] = [
+    '#cache' => [
+      'contexts' => [
+        'user.permissions',
+      ],
+    ],
+  ];
+
+  if (!\Drupal::currentUser()->hasPermission('reshow welcome modal')) {
+    return $items;
+  }
+
+  $items['welcome_modal'] += array(
+    '#type' => 'toolbar_item',
+    'tab' => array(
+      '#type' => 'html_tag',
+      '#tag' => 'button',
+      '#value' => t('Welcome modal'),
+      '#attributes' => array(
+        'class' => array('toolbar-icon', 'toolbar-icon-system-admin-content'),
+        'aria-pressed' => 'false',
+      ),
+    ),
+    '#wrapper_attributes' => array(
+      'class' => array('tour-toolbar-tab'),
+      'data-open' => 'block-welcomeblock',
+    ),
+  );
+
+  return $items;
 }

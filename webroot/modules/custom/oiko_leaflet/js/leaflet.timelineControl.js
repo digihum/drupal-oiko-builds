@@ -166,7 +166,8 @@
 
         // If we need to, move the current time marker.
         if (!this.currentTimeAdjusted) {
-          this.setTime((bounds.max + bounds.min) / 2);
+          // Set to 230AD as per #43708.
+          this.setTime(-54909100800);
         }
 
         // Get the global count of events per biggest slice, this will be used to scale all events.

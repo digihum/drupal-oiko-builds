@@ -15,7 +15,7 @@ third_party_settings:
         - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
         - 'cidoc_properties:domain:p11_had_participant'
       parent_name: ''
-      weight: 7
+      weight: 9
       label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Participants'
       format_type: html_element
       format_settings:
@@ -32,7 +32,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:p4_has_time_span'
       parent_name: ''
-      weight: 8
+      weight: 10
       label: '<span class="fa fa-calendar">&nbsp;&nbsp;</span>Occurred on'
       format_type: html_element
       format_settings:
@@ -50,7 +50,7 @@ third_party_settings:
         - 'cidoc_properties:domain:p10_falls_within'
         - 'cidoc_properties:range:p10_falls_within'
       parent_name: ''
-      weight: 9
+      weight: 11
       label: '<span class="fa fa-clock-o">&nbsp;&nbsp;</span>Period'
       format_type: html_element
       format_settings:
@@ -70,7 +70,7 @@ third_party_settings:
         - 'cidoc_properties:domain:p15_was_influenced_by'
         - 'cidoc_properties:range:p15_was_influenced_by'
       parent_name: ''
-      weight: 10
+      weight: 12
       label: '<span class="fa fa-exchange">&nbsp;&nbsp;</span>Influences'
       format_type: html_element
       format_settings:
@@ -88,7 +88,7 @@ third_party_settings:
         - 'cidoc_properties:domain:p99_dissolved'
         - 'cidoc_properties:domain:p16_used_specific_object'
       parent_name: ''
-      weight: 4
+      weight: 7
       label: '<span class="fa fa-cubes">&nbsp;&nbsp;</span>Objects used'
       format_type: html_element
       format_settings:
@@ -110,7 +110,7 @@ third_party_settings:
         - 'cidoc_properties:domain:p132_overlaps_with'
         - 'cidoc_properties:domain:p133_is_separated_from'
       parent_name: ''
-      weight: 11
+      weight: 13
       label: '<span class="fa fa-sitemap">&nbsp;&nbsp;</span>Event structure'
       format_type: html_element
       format_settings:
@@ -123,27 +123,11 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
-    group_comparative_timeline:
-      children:
-        - timeline_link
-      parent_name: ''
-      weight: 12
-      format_type: html_element
-      format_settings:
-        id: ''
-        classes: ''
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-      label: '<span class="fa fa-tasks">&nbsp;&nbsp;</span>Comparative Timeline'
     group_places:
       children:
         - 'cidoc_properties:domain:p7_took_place_at'
       parent_name: ''
-      weight: 6
+      weight: 8
       format_type: html_element
       format_settings:
         id: ''
@@ -159,7 +143,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:p1_is_identified_by'
       parent_name: ''
-      weight: 3
+      weight: 6
       format_type: html_element
       format_settings:
         id: ''
@@ -171,29 +155,13 @@ third_party_settings:
         effect: none
         speed: fast
       label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Also known as'
-    group_map:
-      children:
-        - map_link
-      parent_name: ''
-      weight: 20
-      format_type: html_element
-      label: '<span class="fa fa-map">&nbsp;&nbsp;</span>Map'
-      format_settings:
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-        id: ''
-        classes: ''
 id: cidoc_entity.o2_active_dissolution.popup
 targetEntityType: cidoc_entity
 bundle: o2_active_dissolution
 mode: popup
 content:
   cidoc_admin_links:
-    weight: 0
+    weight: 3
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
@@ -284,15 +252,22 @@ content:
     weight: 28
     settings: {  }
     third_party_settings: {  }
+  cidoc_temporal_summary:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
   content:
     type: text_default
-    weight: 1
+    weight: 5
     label: hidden
     settings: {  }
     third_party_settings: {  }
-  map_link:
-    weight: 34
-    settings: {  }
+  name:
+    type: string
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
   p108_has_produced_entity_view_1:
     weight: 10
@@ -303,19 +278,16 @@ content:
     settings: {  }
     third_party_settings: {  }
   p7_took_place_at_map_entity_view_1:
-    weight: 0
+    weight: 4
     settings: {  }
     third_party_settings: {  }
   significance:
-    type: entity_reference_label
+    type: entity_reference_entity_view
     weight: 2
-    label: inline
+    label: visually_hidden
     settings:
+      view_mode: primary_historical_significance_pill
       link: false
-    third_party_settings: {  }
-  timeline_link:
-    weight: 0
-    settings: {  }
     third_party_settings: {  }
 hidden:
   cidoc_properties: true
@@ -326,7 +298,7 @@ hidden:
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   internal_name: true
-  name: true
+  map_link: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true
   p11_has_participant_entity_view_1: true
@@ -342,6 +314,7 @@ hidden:
   p9__entity_view_1: true
   p9_forms_part_of_entity_view_1: true
   people_entity_view_1: true
+  timeline_link: true
   timeline_logo: true
   timeline_preselect_option: true
   user_id: true

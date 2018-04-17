@@ -1,0 +1,204 @@
+uuid: 11099a02-9c00-4198-8f0d-84990554388d
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.o3_active_destruction
+id: cidoc_entity.o3_active_destruction.default
+targetEntityType: cidoc_entity
+bundle: o3_active_destruction
+mode: default
+content:
+  cidoc_properties:
+    weight: 19
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p10_falls_within':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p11_had_participant':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p12_occurred_in_the_presence_of':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p132_overlaps_with':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p133_is_separated_from':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p134_continued':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p13_destroyed':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p14_carried_out_by':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p15_was_influenced_by':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p16_used_specific_object':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p17_was_motivated_by':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p1_is_identified_by':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p2_has_type':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p4_has_time_span':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p7_took_place_at':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p9_consists_of':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p10_falls_within':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p134_continued':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p15_was_influenced_by':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p17_was_motivated_by':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p9_consists_of':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+  duplicate_of_p15_influenced_entity_view_1:
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+  duplicate_of_p15_was_influenced_by_entity_view_1:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+  internal_name:
+    label: inline
+    type: string
+    weight: 18
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  p108_has_produced_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p108_produced_by_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p10_falls_within_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  p10_includes_entity_view_1:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+  p11_has_participant_entity_view_1:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  p12_occurred_in_the_presence_of_entity_view_1:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+  p14_carried_out_by_entity_view_1:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  p15_influenced_entity_view_1:
+    weight: 12
+    settings: {  }
+    third_party_settings: {  }
+  p17_motivated_entity_view_1:
+    weight: 13
+    settings: {  }
+    third_party_settings: {  }
+  p17_was_motivated_by_entity_view_1:
+    weight: 14
+    settings: {  }
+    third_party_settings: {  }
+  p4_has_time_span_entity_view_1:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  p7_took_place_at_map_entity_view_1:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+  p7_took_place_at_map_entity_view_2:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+  p9__entity_view_1:
+    weight: 15
+    settings: {  }
+    third_party_settings: {  }
+  p9_forms_part_of_entity_view_1:
+    weight: 16
+    settings: {  }
+    third_party_settings: {  }
+  people_entity_view_1:
+    weight: 17
+    settings: {  }
+    third_party_settings: {  }
+  significance:
+    type: entity_reference_label
+    weight: 1
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+  timeline_link:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  cidoc_admin_links: true
+  citation: true
+  content: true
+  map_link: true
+  timeline_logo: true
+  timeline_preselect_option: true
+  user_id: true

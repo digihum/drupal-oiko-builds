@@ -1,0 +1,60 @@
+uuid: 9efd0ca7-b754-470a-8af0-c9cf4c85fc8d
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p14_carried_out_by
+    - field.field.cidoc_reference.p14_carried_out_by.domain
+    - field.field.cidoc_reference.p14_carried_out_by.field_in_the_role_of
+    - field.field.cidoc_reference.p14_carried_out_by.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+_core:
+  default_config_hash: gV-1bLvoTAqQwBbj3ODPhTVl8x11tR2Mua1U8Zk6ENU
+id: cidoc_reference.p14_carried_out_by.default
+targetEntityType: cidoc_reference
+bundle: p14_carried_out_by
+mode: default
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+  domain:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 3
+    settings:
+      match_operator: CONTAINS
+      size: '60'
+      placeholder: ''
+    third_party_settings: {  }
+  field_in_the_role_of:
+    weight: 0
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+  langcode:
+    type: language_select
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+  range:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 4
+    settings:
+      match_operator: CONTAINS
+      size: '60'
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  user_id: true

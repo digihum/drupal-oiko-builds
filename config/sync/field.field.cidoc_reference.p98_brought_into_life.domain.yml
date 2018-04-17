@@ -1,0 +1,31 @@
+uuid: ba71760a-dd47-4bdf-9b18-18d525ec059b
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e67_birth
+    - cidoc.cidoc_property.p98_brought_into_life
+    - field.storage.cidoc_reference.domain
+_core:
+  default_config_hash: EvvkE5moZRZHshT6DtN0vuv62qTgkE7RP1LpX50qDgA
+id: cidoc_reference.p98_brought_into_life.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: p98_brought_into_life
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e67_birth: e67_birth
+    auto_create_bundle: e67_birth
+field_type: entity_reference

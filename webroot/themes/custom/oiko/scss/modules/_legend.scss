@@ -2,3 +2,19 @@
   list-style-type: none;
   margin-left: 0;
 }
+
+.map-legend-features--image {
+  max-width: 160px;
+  height: auto;
+  float: left;
+  margin-right: $global-margin;
+}
+
+.map-legend-features li {
+  margin-bottom: $global-margin;
+  @include clearfix;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

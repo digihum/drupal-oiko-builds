@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_forum
+  theme:
+    - oiko
+id: userloggedinheaderblock
+theme: oiko
+region: user_header
+weight: 0
+provider: null
+plugin: user_logged_in
+settings:
+  id: user_logged_in
+  label: 'User profile'
+  provider: oiko_forum
+  label_display: visible
+visibility: {  }

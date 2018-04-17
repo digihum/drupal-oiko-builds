@@ -1,0 +1,35 @@
+uuid: ba22cba7-1722-4f30-b067-d77c23297e6e
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p143_joined
+    - field.field.cidoc_reference.p143_joined.domain
+    - field.field.cidoc_reference.p143_joined.range
+id: cidoc_reference.p143_joined.default
+targetEntityType: cidoc_reference
+bundle: p143_joined
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  citation: true
+  user_id: true

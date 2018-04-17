@@ -1,0 +1,37 @@
+uuid: 7f531a8d-54b7-43b7-8c19-c7aa89506106
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p108_has_produced
+    - field.field.cidoc_reference.p108_has_produced.domain
+    - field.field.cidoc_reference.p108_has_produced.range
+_core:
+  default_config_hash: F8bgtXEVNtgwdSGpgAdc9Z_xQPWwBSOkdFJegTDXLI8
+id: cidoc_reference.p108_has_produced.default
+targetEntityType: cidoc_reference
+bundle: p108_has_produced
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  citation: true
+  user_id: true

@@ -8,26 +8,28 @@ reverse_label: 'P12 was present at'
 friendly_label: 'Occurred in the presence of'
 reverse_friendly_label: 'Was present at'
 domain_bundles:
-  e5_event: e5_event
-  e7_activity: e7_activity
-  e12_production: e12_production
-  e66_formation: e66_formation
-  e67_birth: e67_birth
-  e68_dissolution: e68_dissolution
-  e69_death: e69_death
-  e6_destruction: e6_destruction
-  e9_move: e9_move
-  o1_killing: o1_killing
-  o2_active_dissolution: o2_active_dissolution
-  o3_active_destruction: o3_active_destruction
+  0: e5_event
+  3: e7_activity
+  4: e12_production
+  6: e66_formation
+  7: e67_birth
+  9: e68_dissolution
+  10: e69_death
+  11: e6_destruction
+  15: e85_joining
+  16: e86_leaving
+  19: e9_move
+  20: o1_killing
+  21: o2_active_dissolution
+  22: o3_active_destruction
 range_bundles:
-  e21_person: e21_person
-  e74_group: e74_group
-  e22_man_made_object: e22_man_made_object
-  e58_measurement_unit: e58_measurement_unit
-  e42_identifier: e42_identifier
-  e49_time_appellation: e49_time_appellation
-  e82_actor_appellation: e82_actor_appellation
+  3: e21_person
+  4: e74_group
+  12: e22_man_made_object
+  24: e58_measurement_unit
+  29: e42_identifier
+  31: e49_time_appellation
+  34: e82_actor_appellation
 editability:
   domain: true
   range: true

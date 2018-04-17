@@ -3,23 +3,59 @@
 
   Drupal.oiko = Drupal.oiko || {};
 
+  Drupal.oiko.sidebars = [];
+
+  // Wrapper to pass everything to the multiple sidebars.
+  Drupal.oiko.sidebar = {
+    open: function(id) {
+      for (var i = 0;i < Drupal.oiko.sidebars.length;i++) {
+        Drupal.oiko.sidebars[i].open(id);
+      }
+    },
+    close: function () {
+      for (var i = 0;i < Drupal.oiko.sidebars.length;i++) {
+        Drupal.oiko.sidebars[i].close();
+      }
+    },
+    current: function () {
+      for (var i = 0;i < Drupal.oiko.sidebars.length;i++) {
+        return Drupal.oiko.sidebars[i].current();
+      }
+    }
+  };
+
+  var previousPane;
+  $(window).bind('show.oiko.information-bar-demo', function() {
+    previousPane = Drupal.oiko.sidebar.current();
+    Drupal.oiko.sidebar.open('demo-information');
+  });
+  $(window).bind('hide.oiko.information-bar-demo', function() {
+    if (previousPane) {
+      Drupal.oiko.sidebar.open(previousPane);
+      previousPane = undefined;
+    }
+    else if (Drupal.oiko.sidebar.current() === 'demo-information') {
+      Drupal.oiko.sidebar.close();
+    }
+  });
+
   Drupal.behaviors.oiko_sidebar = {
     attach: function(context, settings) {
 
       $(context).find('.oiko-sidebar').once('oiko_sidebar').each(function () {
         var $content = $(context).find('.sidebar-content');
         if ($content.length) {
-          Drupal.oiko.sidebar = new Drupal.Sidebar(this, $content);
+          Drupal.oiko.sidebars[Drupal.oiko.sidebars.length] = new Drupal.Sidebar(this, $content);
+          $content.on('click', function(e) {
+            var $target = $(e.target);
+            var id = $target.data('cidoc-id');
+            if (id) {
+              e.preventDefault();
+              // Fall back to using the link text as the new sidebar title.
+              Drupal.oiko.openSidebar(id);
+            }
+          });
         }
-        $content.on('click', function(e) {
-          var $target = $(e.target);
-          var id = $target.data('cidoc-id');
-          if (id) {
-            e.preventDefault();
-            // Fall back to using the link text as the new sidebar title.
-            Drupal.oiko.openSidebar(id);
-          }
-        });
       });
     }
   };
@@ -27,7 +63,6 @@
   Drupal.oiko.openSidebar = function (id) {
     // Open the sidebar.
     if (Drupal.oiko.hasOwnProperty('sidebar')) {
-
       // Fire the event, our global state object then takes it from here.
       $(window).trigger('oikoSidebarOpen', id);
     }
@@ -42,10 +77,9 @@
 
   Drupal.oiko.displayLoadingContentInLeafletSidebar = function(label) {
     // This is actually a cheeky way to ensure that we don't need to scroll to the top.
-    $('.sidebar-information-content-title').text(Drupal.t('Loading...'));
-    $('.sidebar-information-content-content').text(Drupal.t('Loading details...'));
-    // $('#leaflet-sidebar .sidebar-discussion-content-content').text(Drupal.t('Loading discussions...'));
-    // $('#leaflet-sidebar .sidebar-share-content-content').text(Drupal.t('Loading share links...'));
+    $('.sidebar-information-content-content')
+        .text(Drupal.t('Searching across time and space for your information...'))
+        .append('<div class="loading-graphic show"></div>');
   };
 
   Drupal.oiko.displayContentInLeafletSidebar = function(id, donecb, errorcb) {

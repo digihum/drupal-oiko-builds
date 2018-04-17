@@ -11,6 +11,25 @@ global-styling:
   dependencies:
       - oiko/fonts
       - core/drupal
+      - oiko_sidebar/sidebar
+      - oiko/iframeResizer.contentWindow
+
+iframeResizer:
+  version: 3.5.14
+  js:
+    scripts/vendor/iframeResizer.min.js: {minified: true}
+
+iframeResizer.contentWindow:
+  version: 3.5.14
+  js:
+    scripts/vendor/iframeResizer.contentWindow.min.js: {minified: true}
+
+iframepage:
+  version: 1.0
+  js:
+    scripts/iframe.contentWindow.js: { weight: -10 }
+  dependencies:
+    - core/jquery.once
 
 localforage-js:
   version: 2.0.3
@@ -36,11 +55,22 @@ visualization-switcher:
     - core/drupal
     - core/jquery.once
 
+oiko-redirector:
+  version: 1.1
+  js:
+    scripts/oiko-redirector.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
 fonts:
   license:
       name: Open Font License
       url: http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web
   css:
     theme:
+      //maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css:
+        external: true
       //fonts.googleapis.com/css?family=Gilda+Display|Roboto&subset=latin-ext:
         type: external
+

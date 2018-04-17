@@ -8,9 +8,9 @@ reverse_label: 'P89 contains'
 friendly_label: 'Falls within'
 reverse_friendly_label: Contains
 domain_bundles:
-  e53_place: e53_place
+  - e53_place
 range_bundles:
-  e53_place: e53_place
+  - e53_place
 editability:
   domain: true
   range: true

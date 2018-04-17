@@ -1,0 +1,27 @@
+uuid: 91731492-fc0a-483d-85d0-b6f8abddc381
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.uri.field_uri
+    - paragraphs.paragraphs_type.uri
+  module:
+    - link
+_core:
+  default_config_hash: d9Wj0_Yg3ODWdGKsjw8FCdfAaPpCOZJaJ5xeDxdsNqc
+id: paragraph.uri.default
+targetEntityType: paragraph
+bundle: uri
+mode: default
+content:
+  field_uri:
+    weight: 0
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+hidden:
+  created: true
+  status: true
+  uid: true

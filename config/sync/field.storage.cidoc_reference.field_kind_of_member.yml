@@ -1,0 +1,20 @@
+uuid: b9a36dfa-6ef8-4b81-8107-6efa3f0b0c2e
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+    - taxonomy
+id: cidoc_reference.field_kind_of_member
+field_name: field_kind_of_member
+entity_type: cidoc_reference
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

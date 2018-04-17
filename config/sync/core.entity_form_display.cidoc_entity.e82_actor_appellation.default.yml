@@ -1,0 +1,137 @@
+uuid: fcd81f1c-3934-4e4b-9bf7-af8f2148f891
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e82_actor_appellation
+  module:
+    - field_group
+    - paragraphs
+third_party_settings:
+  field_group:
+    group_main_details:
+      children:
+        - group_main_deets
+        - group_aux_deets
+      parent_name: ''
+      weight: 1
+      label: 'Main data entry'
+      format_type: tabs
+      format_settings:
+        label: 'Main data entry'
+        direction: horizontal
+        id: ''
+        classes: ''
+    group_main_deets:
+      children:
+        - name
+        - internal_name
+        - citation
+        - significance
+        - 'cidoc_properties:range:p131_is_identified_by'
+      parent_name: group_main_details
+      weight: 2
+      label: 'Main details'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+    group_aux_deets:
+      children:
+        - group_other
+      parent_name: group_main_details
+      weight: 3
+      label: 'Auxiliary details'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+    group_other:
+      children:
+        - group_influence
+      parent_name: group_aux_deets
+      weight: 4
+      label: 'Other details'
+      format_type: tabs
+      format_settings:
+        direction: vertical
+        classes: ''
+        id: ''
+    group_influence:
+      children:
+        - 'cidoc_properties:range:p15_was_influenced_by'
+        - 'cidoc_properties:range:p17_was_motivated_by'
+      parent_name: group_other
+      weight: 3
+      label: 'Influence and motivation'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+id: cidoc_entity.e82_actor_appellation.default
+targetEntityType: cidoc_entity
+bundle: e82_actor_appellation
+mode: default
+content:
+  'cidoc_properties:range:p131_is_identified_by':
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p15_was_influenced_by':
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p17_was_motivated_by':
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  citation:
+    type: entity_reference_paragraphs
+    weight: 5
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: button
+      form_display_mode: default
+    third_party_settings: {  }
+  class_description:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  internal_name:
+    type: string_textfield
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 3
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  significance:
+    type: options_select
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:range:p12_occurred_in_the_presence_of': true
+  'cidoc_properties:range:p16_used_specific_object': true
+  'cidoc_properties:range:p1_is_identified_by': true
+  content: true
+  user_id: true

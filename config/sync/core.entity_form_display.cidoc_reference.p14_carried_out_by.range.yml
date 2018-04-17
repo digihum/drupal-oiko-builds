@@ -1,0 +1,50 @@
+uuid: bd8b5e9b-681e-4149-9070-1230d0910b32
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p14_carried_out_by
+    - core.entity_form_mode.cidoc_reference.range
+    - field.field.cidoc_reference.p14_carried_out_by.domain
+    - field.field.cidoc_reference.p14_carried_out_by.field_in_the_role_of
+    - field.field.cidoc_reference.p14_carried_out_by.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+_core:
+  default_config_hash: yHePAs9UvUw0UY5qcmfJ2fxYvKwL1dQJGzjA6Xw4iHs
+id: cidoc_reference.p14_carried_out_by.range
+targetEntityType: cidoc_reference
+bundle: p14_carried_out_by
+mode: range
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 2
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+  domain:
+    type: squid_entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: '40'
+      placeholder: 'Start typing to find a match or create new entity...'
+    weight: 0
+    third_party_settings: {  }
+  field_in_the_role_of:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 1
+    settings:
+      match_operator: CONTAINS
+      size: '20'
+      placeholder: 'Invader, Accountant etc.'
+    third_party_settings: {  }
+hidden:
+  langcode: true
+  range: true
+  user_id: true

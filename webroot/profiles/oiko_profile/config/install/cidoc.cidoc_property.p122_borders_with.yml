@@ -8,9 +8,9 @@ reverse_label: 'P122 borders with'
 friendly_label: 'Borders with'
 reverse_friendly_label: ''
 domain_bundles:
-  e53_place: e53_place
+  - e53_place
 range_bundles:
-  e53_place: e53_place
+  - e53_place
 editability:
   domain: true
   range: true

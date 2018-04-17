@@ -103,7 +103,7 @@ class TourTipDeleteForm extends ConfirmFormBase {
       if ($tip_id == $candidate) {
         continue;
       }
-      $tips[$tip_id] = $tip->export();
+      $tips[$tip_id] = $tip->getConfiguration();
     }
     $this->entity->set('tips', $tips);
     $this->entity->save();

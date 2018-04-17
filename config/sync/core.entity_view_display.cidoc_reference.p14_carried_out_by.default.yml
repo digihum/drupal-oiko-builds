@@ -1,0 +1,45 @@
+uuid: 9bf16077-c36a-46b8-98f7-73fe65ff4e9e
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p14_carried_out_by
+    - field.field.cidoc_reference.p14_carried_out_by.domain
+    - field.field.cidoc_reference.p14_carried_out_by.field_in_the_role_of
+    - field.field.cidoc_reference.p14_carried_out_by.range
+_core:
+  default_config_hash: 8UipjFkjIXXD5PwshUdffklx0JaSTxvqMFtbR6hlTO0
+id: cidoc_reference.p14_carried_out_by.default
+targetEntityType: cidoc_reference
+bundle: p14_carried_out_by
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+  field_in_the_role_of:
+    weight: -1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  citation: true
+  user_id: true

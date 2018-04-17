@@ -8,10 +8,10 @@ reverse_label: 'P100 died in'
 friendly_label: 'Was death of'
 reverse_friendly_label: 'Died in'
 domain_bundles:
-  e69_death: e69_death
-  o1_killing: o1_killing
+  - e69_death
+  - o1_killing
 range_bundles:
-  e21_person: e21_person
+  - e21_person
 editability:
   domain: true
   range: true

@@ -1,0 +1,18 @@
+uuid: 243a3eae-55be-4234-a61f-75905091d40b
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_contact_preference
+field_name: field_contact_preference
+entity_type: user
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

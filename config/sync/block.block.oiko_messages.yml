@@ -1,0 +1,20 @@
+uuid: 554bcbcf-ff7f-4862-b42e-53354b6a51a0
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - oiko
+id: oiko_messages
+theme: oiko
+region: highlighted
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

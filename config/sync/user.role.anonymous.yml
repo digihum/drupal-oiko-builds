@@ -1,0 +1,18 @@
+uuid: bf95c2c3-f8d6-414b-a34b-758926c01a72
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
+id: anonymous
+label: 'Anonymous user'
+weight: 0
+is_admin: false
+permissions:
+  - 'access content'
+  - 'view published cidoc entities'
+  - 'access comments'
+  - 'view sharemessages'
+  - 'display eu cookie compliance popup'
+  - 'use browsersync'
+  - 'access tour'

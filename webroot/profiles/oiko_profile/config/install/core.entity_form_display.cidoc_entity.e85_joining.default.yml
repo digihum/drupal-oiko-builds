@@ -289,7 +289,9 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p143_joined':
-    weight: 21
+    weight: 24
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p15_was_influenced_by':
     weight: 23
     settings: {  }

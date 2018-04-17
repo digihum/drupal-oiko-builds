@@ -1,0 +1,17 @@
+uuid: 2864a218-9bd0-4271-94f0-3425746fb670
+langcode: en
+status: true
+dependencies: {  }
+id: forum_user
+label: 'Forum user'
+weight: 4
+is_admin: null
+permissions:
+  - 'edit own comments'
+  - 'post comments'
+  - 'access comments'
+  - 'create forum content'
+  - 'edit own forum content'
+  - 'view published cidoc entities'
+  - 'access content'
+  - 'skip comment approval'

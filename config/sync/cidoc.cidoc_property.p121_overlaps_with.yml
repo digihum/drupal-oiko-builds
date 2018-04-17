@@ -1,0 +1,29 @@
+uuid: abdd5ef2-e028-4a47-9b62-12a8d0ec6b5a
+langcode: en
+status: true
+dependencies: {  }
+id: p121_overlaps_with
+label: 'P121 overlaps with'
+bidirectional: true
+reverse_label: 'P121 overlaps with'
+friendly_label: 'Overlaps with'
+reverse_friendly_label: ''
+domain_bundles:
+  - e53_place
+range_bundles:
+  - e53_place
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

@@ -33,10 +33,10 @@ class OikoLeafletHookImplementations {
     if ($entity->getEntityTypeId() == 'cidoc_entity') {
       // If we'd get any results on the timeline, add a link to it.
       /** @var CidocEntity $entity */
-      if ($display->getComponent('map_link') && $entity->hasGeospatialData()) {
-        $build['map_link'] = \Drupal\Core\Link::createFromRoute(t('View %title on the map.', ['%title' => $entity->label()]), 'entity.cidoc_entity.canonical', ['cidoc_entity' => $entity->id()])
-          ->toRenderable();
-      }
+//      if ($display->getComponent('map_link') && $entity->hasGeospatialData()) {
+//        $build['map_link'] = \Drupal\Core\Link::createFromRoute(t('View %title on the map.', ['%title' => $entity->label()]), 'entity.cidoc_entity.canonical', ['cidoc_entity' => $entity->id()])
+//          ->toRenderable();
+//      }
     }
   }
 }

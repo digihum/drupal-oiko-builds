@@ -1,0 +1,10 @@
+uuid: cbb02ef0-5810-4ae6-85b8-a228f158978f
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_entity.search_index
+label: 'Search index'
+targetEntityType: cidoc_entity
+cache: true

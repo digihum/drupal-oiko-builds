@@ -1,0 +1,41 @@
+uuid: 0def970c-2286-48b0-a43d-7a12c14e817c
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p100_was_death_of
+    - core.entity_form_mode.cidoc_reference.range
+    - field.field.cidoc_reference.p100_was_death_of.domain
+    - field.field.cidoc_reference.p100_was_death_of.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+_core:
+  default_config_hash: fq4oxO7Fj8MXyg4tML9DzlMolrcRZIMoMOsBEggKjo4
+id: cidoc_reference.p100_was_death_of.range
+targetEntityType: cidoc_reference
+bundle: p100_was_death_of
+mode: range
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+  domain:
+    type: squid_entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: 60
+      placeholder: 'Start typing to find a match or create new entity...'
+    weight: 0
+    third_party_settings: {  }
+hidden:
+  langcode: true
+  range: true
+  user_id: true

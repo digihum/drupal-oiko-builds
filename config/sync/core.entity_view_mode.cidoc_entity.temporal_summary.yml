@@ -1,0 +1,10 @@
+uuid: da91d375-ed43-499a-b8c0-64b54160b8b3
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_entity.temporal_summary
+label: 'Temporal summary'
+targetEntityType: cidoc_entity
+cache: true

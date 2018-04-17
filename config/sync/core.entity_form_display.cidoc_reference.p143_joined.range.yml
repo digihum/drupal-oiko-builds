@@ -1,0 +1,38 @@
+uuid: a85241ba-f96a-45aa-9d8a-74c7702a8246
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p143_joined
+    - core.entity_form_mode.cidoc_reference.range
+    - field.field.cidoc_reference.p143_joined.domain
+  module:
+    - oiko_citation
+    - squid_autocomplete
+id: cidoc_reference.p143_joined.range
+targetEntityType: cidoc_reference
+bundle: p143_joined
+mode: range
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+  domain:
+    type: squid_entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: '60'
+      placeholder: 'Start typing to find a match or create new entity...'
+    weight: 2
+    third_party_settings: {  }
+hidden:
+  langcode: true
+  range: true
+  user_id: true

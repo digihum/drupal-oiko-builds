@@ -1,0 +1,23 @@
+uuid: 59cf8a06-3976-4d88-b7db-bdb83c7ac1a2
+langcode: en
+status: true
+dependencies: {  }
+id: moderator
+label: moderator
+weight: 5
+is_admin: null
+permissions:
+  - 'administer forums'
+  - 'create forum content'
+  - 'delete any forum content'
+  - 'delete own forum content'
+  - 'delete forum revisions'
+  - 'edit any forum content'
+  - 'edit own forum content'
+  - 'revert forum revisions'
+  - 'view forum revisions'
+  - 'administer taxonomy'
+  - 'delete terms in forums'
+  - 'edit terms in forums'
+  - 'delete terms in source_books'
+  - 'edit terms in source_books'

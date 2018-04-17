@@ -1,0 +1,30 @@
+uuid: edab85ea-980f-40b7-abf1-b5f151558a5c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_book
+    - paragraphs.paragraphs_type.book
+    - taxonomy.vocabulary.source_books
+_core:
+  default_config_hash: 6W4dlmG00AHkMhDm87WmHsutKxzKFIUQswAVxtZ8hRk
+id: paragraph.book.field_book
+field_name: field_book
+entity_type: paragraph
+bundle: book
+label: Book
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      source_books: source_books
+    sort:
+      field: _none
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

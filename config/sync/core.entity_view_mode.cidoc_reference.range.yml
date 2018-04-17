@@ -1,0 +1,12 @@
+uuid: 3896809a-0645-471a-8526-6a3c395e56d9
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+_core:
+  default_config_hash: Nsd-yosf0M54o38u-4qpyZW2G98yen3cNYsv_n0CFqs
+id: cidoc_reference.range
+label: Range
+targetEntityType: cidoc_reference
+cache: true
