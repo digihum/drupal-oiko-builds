@@ -38,6 +38,7 @@ class TipPluginTextExtended extends TipPluginText {
       'location',
       'next_label',
       'previous_label',
+      'information_bar',
     ];
     foreach ($names as $name) {
       $properties[$name] = $this->get($name);
@@ -176,6 +177,13 @@ class TipPluginTextExtended extends TipPluginText {
       '#default_value' => $this->get('body'),
     ];
 
+    $form['information_bar'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Display demo information bar for this step.'),
+      '#description' => $this->t('If checked the information bar or popup will appear before displaying this tour item and show some example content.'),
+      '#default_value' => $this->get('information_bar'),
+    ];
+
     return $form;
   }
 
@@ -196,7 +204,7 @@ class TipPluginTextExtended extends TipPluginText {
    *   The form array.
    */
   public function optionsFormValidate($element, FormStateInterface $form_state, $form) {
-    $selector_type = $form_state->get(['attributes', 'selector_type']);
+    $selector_type = $element['#value'];
     $form_state->unsetValue(['attributes', 'selector_type']);
 
     // If modal we need to ensure that there is no data-id or data-class specified.

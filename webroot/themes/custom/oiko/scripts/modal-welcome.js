@@ -1,4 +1,6 @@
 (function ($, Drupal, storage) {
+  "use strict";
+
   Drupal.behaviors.oiko_modal_welcome = {
     attach: function (context) {
       $('.js-modal-welcome', context).once('oiko_modal_welcome').each(function() {
@@ -14,6 +16,17 @@
             $modal.foundation('open');
           }
         }
+
+        // Search for a menu link that should also display the modal.
+        $(document).on('click', function(e) {
+          var $link = $(e.target);
+          if ($link.attr('href') && $link.attr('href').indexOf('#welcome-modal') !== -1) {
+            // This is a link to reveal the modal
+            $modal.foundation('open');
+            e.preventDefault();
+          }
+
+        })
       });
     }
   };

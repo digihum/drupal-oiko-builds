@@ -9,7 +9,7 @@ dependencies:
     - oiko
 id: oiko_account_menu
 theme: oiko
-region: '-1'
+region: primary_menu
 weight: -3
 provider: null
 plugin: 'system_menu_block:account'

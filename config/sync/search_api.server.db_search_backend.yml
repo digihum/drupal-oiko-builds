@@ -1,0 +1,17 @@
+uuid: 92763cc3-ff97-4e89-aa81-754a97a99a3a
+langcode: en
+status: true
+dependencies:
+  module:
+    - search_api_db
+id: db_search_backend
+name: 'DB Search Backend'
+description: ''
+backend: search_api_db
+backend_config:
+  database: 'default:default'
+  min_chars: 3
+  partial_matches: true
+  autocomplete:
+    suggest_suffix: true
+    suggest_words: true

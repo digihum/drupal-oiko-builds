@@ -3,9 +3,8 @@
   $(document).on('leaflet.map', function (e, mapDefinition, map, drupalLeaflet) {
     // If this is the first map we're processing on the page, assume that we want to capture it's page state.
     if (mapDefinition.hasOwnProperty('pagestate') && mapDefinition.pagestate) {
-      // var hash = new L.Hash(map, drupalLeaflet);
 
-      // Swap out the add_features function for one that only sets map bounds if the page hash is empty.
+      // Swap out the add_features function for one that only sets map bounds if not already set.
       drupalLeaflet.add_features = function (features, initial) {
         for (var i = 0; i < features.length; i++) {
           var feature = features[i];
@@ -40,6 +39,9 @@
         if (features.length) {
           $(document).trigger('leaflet.features', [initial || false, this])
         }
+
+        // Fit bounds after adding features.
+        this.fitbounds();
       };
     }
   });

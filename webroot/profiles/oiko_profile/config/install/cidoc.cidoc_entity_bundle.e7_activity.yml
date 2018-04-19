@@ -7,8 +7,8 @@ label: 'E7 Activity'
 friendly_label: Activity
 weight: -23
 group: main
-description: "<p>This class comprises actions intentionally carried out by instances of E39 Actor that result in\r\nchanges of state in the cultural, social, or physical systems documented.</p>\r\n\r\n<p>This notion includes complex, composite and long-lasting actions such as the building of a\r\nsettlement or a war, as well as simple, short-lived actions such as the opening of a door.</p>\r\n"
-examples: "<ul>\r\n<li>the Battle of Stalingrad</li>\r\n<li>the Yalta Conference</li>\r\n<li>my birthday celebration 28-6-1995</li>\r\n<li>the writing of “Faust” by Goethe (E65)</li>\r\n<li>the formation of the Bauhaus 1919 (E66)</li>\r\n<li>calling the place identified by TGN ‘7017998’ ‘Quyunjig’ by the people of Iraq</li>\r\n</ul>\r\n"
+description: "<p>This class comprises actions intentionally carried out by instances of E39 Actor that result in\nchanges of state in the cultural, social, or physical systems documented.</p>\n\n<p>This notion includes complex, composite and long-lasting actions such as the building of a\nsettlement or a war, as well as simple, short-lived actions such as the opening of a door.</p>\n"
+examples: "<ul>\n<li>the Battle of Stalingrad</li>\n<li>the Yalta Conference</li>\n<li>my birthday celebration 28-6-1995</li>\n<li>the writing of “Faust” by Goethe (E65)</li>\n<li>the formation of the Bauhaus 1919 (E66)</li>\n<li>calling the place identified by TGN ‘7017998’ ‘Quyunjig’ by the people of Iraq</li>\n</ul>\n"
 geoserializers:
   event: event
   move: '0'

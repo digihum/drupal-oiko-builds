@@ -1,0 +1,27 @@
+uuid: 834a5d13-c5fe-4c24-be35-03b5d0284d15
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p89_falls_within
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.p89_falls_within.domain
+    - field.field.cidoc_reference.p89_falls_within.range
+id: cidoc_reference.p89_falls_within.domain
+targetEntityType: cidoc_reference
+bundle: p89_falls_within
+mode: domain
+content:
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  domain: true
+  property: true
+  user_id: true

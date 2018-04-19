@@ -1,0 +1,47 @@
+uuid: 48d13735-2102-42d8-adf9-9d51c9448d59
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e12_production
+    - cidoc.cidoc_entity_bundle.e66_formation
+    - cidoc.cidoc_entity_bundle.e7_activity
+    - cidoc.cidoc_entity_bundle.e85_joining
+    - cidoc.cidoc_entity_bundle.e86_leaving
+    - cidoc.cidoc_entity_bundle.e9_move
+    - cidoc.cidoc_entity_bundle.o1_killing
+    - cidoc.cidoc_entity_bundle.o2_active_dissolution
+    - cidoc.cidoc_entity_bundle.o3_active_destruction
+    - cidoc.cidoc_property.p134_continued
+    - field.storage.cidoc_reference.range
+_core:
+  default_config_hash: wv4jLQzL8aIpZrbxkHJprW7ZcQCeqOQnqD-wzW6ssPs
+id: cidoc_reference.p134_continued.range
+field_name: range
+entity_type: cidoc_reference
+bundle: p134_continued
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e7_activity: e7_activity
+      e66_formation: e66_formation
+      e85_joining: e85_joining
+      e86_leaving: e86_leaving
+      e9_move: e9_move
+      o1_killing: o1_killing
+      o2_active_dissolution: o2_active_dissolution
+      o3_active_destruction: o3_active_destruction
+      e12_production: e12_production
+    auto_create_bundle: e7_activity
+field_type: entity_reference

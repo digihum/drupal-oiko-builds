@@ -8,6 +8,7 @@ popups:
     - core/modernizr
     - oiko_sidebar/sidebar
     - oiko_sidebar/oikoApp
+    - oiko/iframeResizer
 
 mapstate:
   js:
@@ -33,12 +34,20 @@ arrows:
     - oiko_leaflet/leaflet-textpath
     - core/jquery
 
+zoomControl:
+  js:
+    js/leaflet.zoomControl.js: {}
+  version: VERSION
+  dependencies:
+    - core/jquery
+
 locate:
   js:
     js/leaflet.locate.js: {}
   version: VERSION
   dependencies:
     - oiko_leaflet/leaflet-locatecontrol
+    - oiko_leaflet/zoomControl
     - core/jquery
 
 loading:
@@ -139,6 +148,11 @@ intervalTree:
     js/vendor/intervalTree.js: {}
   version: 0.3.2
 
+leaflet.pattern:
+  js:
+    js/vendor/leaflet.pattern.js: {minified: true}
+  version: d543c9f
+
 markercluster:
   js:
     js/vendor/leaflet.markercluster.js: {}
@@ -151,7 +165,7 @@ markercluster:
   version: v1.0.3
 
 vis:
-  version: v4.19.1-1
+  version: v4.19.1-4
   js:
     js/vendor/vis.min.js: {}
   css:

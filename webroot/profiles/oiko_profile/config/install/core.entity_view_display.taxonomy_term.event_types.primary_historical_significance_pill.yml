@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.taxonomy_term.primary_historical_significance_pill
+    - field.field.taxonomy_term.event_types.field_icon_color
+    - field.field.taxonomy_term.event_types.field_single_color
+    - taxonomy.vocabulary.event_types
+id: taxonomy_term.event_types.primary_historical_significance_pill
+targetEntityType: taxonomy_term
+bundle: event_types
+mode: primary_historical_significance_pill
+content: {  }
+hidden:
+  description: true
+  field_icon_color: true
+  field_single_color: true

@@ -15,9 +15,25 @@ class CidocGraphingController extends ControllerBase {
     
     // Just one graph 'all' at the moment.
     // Easy to add more later, though, and load the relevant library.
-    $graph = 'all';
-    $display['#attached']['library'][] = 'cidoc_graphing/graph-' . $graph;
-    
+    switch ($graph) {
+      case 'vis':
+        $display = [
+          '#type' => 'markup',
+          '#markup' => '<div class="cidoc-graph-vis">Loading graph...</div>',
+          '#attached' => [
+            'library' => [
+              'cidoc_graphing/graph-' . $graph,
+            ],
+          ],
+        ];
+        break;
+
+      default:
+        $graph = 'all';
+        $display['#attached']['library'][] = 'cidoc_graphing/graph-' . $graph;
+        break;
+    }
+
     return $display;
   }
 }

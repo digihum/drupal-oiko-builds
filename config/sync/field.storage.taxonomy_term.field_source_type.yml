@@ -1,0 +1,27 @@
+uuid: 67ab18fa-fffb-4917-9369-776285528d89
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - taxonomy
+id: taxonomy_term.field_source_type
+field_name: field_source_type
+entity_type: taxonomy_term
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: primary
+      label: 'Primary source'
+    -
+      value: secondary
+      label: 'Secondary source'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

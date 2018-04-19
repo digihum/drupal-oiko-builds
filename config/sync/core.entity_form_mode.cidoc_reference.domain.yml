@@ -1,0 +1,12 @@
+uuid: 854494fa-6834-45c3-9032-4b8f2e24a5f2
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+_core:
+  default_config_hash: Pl3kCWyIc8eYBanXSGq0e1yQVSaaBVTjhEFhCHd4Sps
+id: cidoc_reference.domain
+label: Domain
+targetEntityType: cidoc_reference
+cache: true

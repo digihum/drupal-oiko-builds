@@ -23,3 +23,40 @@
   }
 
 }
+
+// Mobile
+.navigation-bar--mobile {
+  padding-bottom: 0;
+  .site-slogan {
+    float: left;
+  }
+  .navigation-bar--tabs {
+    float: right;
+    margin: 0;
+    .tabs-title {
+      > a {
+        padding: 0.5rem 0.6rem 28px 0.6rem;
+        border: none;
+        &:hover,
+        &:focus,
+        &[aria-selected='true'] {
+          border: none;
+          background: none;
+        }
+        &:not(.oiko-app--toggle) {
+          &[aria-selected='true'] {
+            background: palette(oikocream);
+            color: palette(black);
+          }
+        }
+      }
+    }
+  }
+}
+
+.navigation-bar--mobile-reveal {
+  .icon-links {
+    justify-content: center;
+    color: palette(black);
+  }
+}

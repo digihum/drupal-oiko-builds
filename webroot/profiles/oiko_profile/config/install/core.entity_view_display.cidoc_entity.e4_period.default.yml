@@ -50,6 +50,43 @@ content:
     weight: 8
     settings: {  }
     third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p10_falls_within':
+    weight: 20
+    region: content
+  'cidoc_properties:domain:p132_overlaps_with':
+    weight: 20
+    region: content
+  'cidoc_properties:domain:p133_is_separated_from':
+    weight: 20
+    region: content
+  'cidoc_properties:domain:p1_is_identified_by':
+    weight: 20
+    region: content
+  'cidoc_properties:domain:p2_has_type':
+    weight: 20
+    region: content
+  'cidoc_properties:domain:p4_has_time_span':
+    weight: 20
+    region: content
+  'cidoc_properties:domain:p7_took_place_at':
+    weight: 20
+    region: content
+  'cidoc_properties:domain:p9_consists_of':
+    weight: 20
+    region: content
+  'cidoc_properties:range:p10_falls_within':
+    weight: 21
+    region: content
+  'cidoc_properties:range:p15_was_influenced_by':
+    weight: 21
+    region: content
+  'cidoc_properties:range:p17_was_motivated_by':
+    weight: 21
+    region: content
+  'cidoc_properties:range:p9_consists_of':
+    weight: 21
+    region: content
   field_empire_outline:
     weight: 9
     label: above
@@ -57,6 +94,7 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   internal_name:
     label: inline
     type: string
@@ -64,6 +102,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    region: content
   name:
     label: hidden
     type: string
@@ -71,26 +110,32 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    region: content
   p10_contains_entity_view_1:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+    region: content
   p4_has_time_span_entity_view_1:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+    region: content
   p9__entity_view_1:
     weight: 6
     settings: {  }
     third_party_settings: {  }
+    region: content
   p9_forms_part_of_entity_view_1:
     weight: 7
     settings: {  }
     third_party_settings: {  }
+    region: content
   people_entity_view_1:
     weight: 5
     settings: {  }
     third_party_settings: {  }
+    region: content
   significance:
     type: entity_reference_label
     weight: 1
@@ -98,7 +143,16 @@ content:
     settings:
       link: false
     third_party_settings: {  }
+    region: content
+  timeline_link:
+    weight: 0
+    region: content
 hidden:
+  cidoc_admin_links: true
+  cidoc_temporal_summary: true
   citation: true
   content: true
+  map_link: true
+  timeline_logo: true
+  timeline_preselect_option: true
   user_id: true

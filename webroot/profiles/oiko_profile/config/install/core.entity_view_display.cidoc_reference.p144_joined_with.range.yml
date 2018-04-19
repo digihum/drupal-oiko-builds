@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_property.p144_joined_with
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p144_joined_with.domain
+    - field.field.cidoc_reference.p144_joined_with.range
 id: cidoc_reference.p144_joined_with.range
 targetEntityType: cidoc_reference
 bundle: p144_joined_with
@@ -17,7 +18,9 @@ content:
     settings:
       link: true
     third_party_settings: {  }
+    region: content
 hidden:
   citation: true
   property: true
+  range: true
   user_id: true

@@ -30,8 +30,8 @@ class oikoApp {
       oikoAppReducers,
       initialState,
       applyMiddleware(
-        thunkMiddleware,
-        createLogger()
+         thunkMiddleware
+        // ,createLogger() // Add this back in if you want nice logging of state changes.
       )
     );
 

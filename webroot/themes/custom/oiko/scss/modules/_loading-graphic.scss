@@ -7,4 +7,7 @@
   min-height: $ajax-loading-graphic-size;
   line-height: $ajax-loading-graphic-size;
   display: none;
+  &.show {
+    display: block;
+  }
 }

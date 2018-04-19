@@ -23,14 +23,16 @@ content:
     weight: 1
     settings: {  }
     third_party_settings: {  }
+    region: content
   comment_forum:
-    label: hidden
+    label: above
     type: comment_default
     weight: 3
     settings:
       pager_id: 0
       view_mode: default
     third_party_settings: {  }
+    region: content
   field_crm_entities:
     weight: 2
     label: above
@@ -38,15 +40,7 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
-  links:
-    weight: 4
-    settings: {  }
-    third_party_settings: {  }
-  taxonomy_forums:
-    type: entity_reference_label
-    weight: 0
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-hidden: {  }
+    region: content
+hidden:
+  links: true
+  taxonomy_forums: true

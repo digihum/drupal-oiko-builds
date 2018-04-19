@@ -1,0 +1,104 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e66_formation
+    - core.entity_view_mode.cidoc_entity.transcript
+  module:
+    - entity_reference_revisions
+    - text
+id: cidoc_entity.e66_formation.transcript
+targetEntityType: cidoc_entity
+bundle: e66_formation
+mode: transcript
+content:
+  cidoc_properties_transcript:
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  cidoc_temporal_summary:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  citation:
+    type: entity_reference_revisions_entity_view
+    weight: 5
+    region: content
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+  content:
+    type: text_default
+    weight: 4
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  significance:
+    type: entity_reference_entity_view
+    weight: 2
+    region: content
+    label: visually_hidden
+    settings:
+      view_mode: primary_historical_significance_pill
+      link: false
+    third_party_settings: {  }
+hidden:
+  cidoc_admin_links: true
+  cidoc_properties: true
+  'cidoc_properties:domain:p10_falls_within': true
+  'cidoc_properties:domain:p11_had_participant': true
+  'cidoc_properties:domain:p12_occurred_in_the_presence_of': true
+  'cidoc_properties:domain:p132_overlaps_with': true
+  'cidoc_properties:domain:p133_is_separated_from': true
+  'cidoc_properties:domain:p134_continued': true
+  'cidoc_properties:domain:p14_carried_out_by': true
+  'cidoc_properties:domain:p15_was_influenced_by': true
+  'cidoc_properties:domain:p16_used_specific_object': true
+  'cidoc_properties:domain:p17_was_motivated_by': true
+  'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p4_has_time_span': true
+  'cidoc_properties:domain:p7_took_place_at': true
+  'cidoc_properties:domain:p95_has_formed': true
+  'cidoc_properties:domain:p9_consists_of': true
+  'cidoc_properties:range:p10_falls_within': true
+  'cidoc_properties:range:p12_occurred_in_the_presence_of': true
+  'cidoc_properties:range:p131_is_identified_by': true
+  'cidoc_properties:range:p132_overlaps_with': true
+  'cidoc_properties:range:p133_is_separated_from': true
+  'cidoc_properties:range:p134_continued': true
+  'cidoc_properties:range:p15_was_influenced_by': true
+  'cidoc_properties:range:p16_used_specific_object': true
+  'cidoc_properties:range:p17_was_motivated_by': true
+  'cidoc_properties:range:p1_is_identified_by': true
+  'cidoc_properties:range:p70_documents': true
+  'cidoc_properties:range:p9_consists_of': true
+  internal_name: true
+  map_link: true
+  p11_has_participant_entity_view_1: true
+  p12_occurred_in_the_presence_of_entity_view_1: true
+  p14_carried_out_by_entity_view_1: true
+  p16_used_specific_object_entity_view_1: true
+  p17_motivated_entity_view_1: true
+  p17_was_motivated_by_entity_view_1: true
+  p7_took_place_at_map_entity_view_1: true
+  p7_took_place_at_map_entity_view_2: true
+  p95_formed_group_entity_view_1: true
+  p99_dissov_group_entity_view_1: true
+  timeline_link: true
+  timeline_logo: true
+  timeline_preselect_option: true
+  user_id: true

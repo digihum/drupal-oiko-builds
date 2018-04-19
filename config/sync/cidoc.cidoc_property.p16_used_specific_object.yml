@@ -1,0 +1,44 @@
+uuid: 7089473d-3f53-48f6-bc0d-938494686a43
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: l_n0gC5vuZ3B0jZo8K3SdRsyMpRdY1coL3xLrBqY88s
+id: p16_used_specific_object
+label: 'P16 used specific object'
+bidirectional: false
+reverse_label: 'P16 was used for'
+friendly_label: 'Used specific object'
+reverse_friendly_label: 'Was used for'
+domain_bundles:
+  0: e7_activity
+  5: e66_formation
+  6: e85_joining
+  7: e86_leaving
+  10: e9_move
+  11: o1_killing
+  12: o2_active_dissolution
+  13: o3_active_destruction
+  14: e12_production
+range_bundles:
+  7: e22_man_made_object
+  19: e58_measurement_unit
+  24: e42_identifier
+  26: e49_time_appellation
+  29: e82_actor_appellation
+  34: e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

@@ -31,17 +31,16 @@
       var $tab = $(this);
       $tab.find('a').bind('click', function (e) {
         var $link = $(this);
-
-        if ($link.data('paneId')) {
-          e.preventDefault();
+        if ($link.data('paneId') && !$link.hasClass('disabled')) {
           if ($tab.hasClass('is-active')) {
             sidebar.close();
           }
           else {
             sidebar.open($link.data('paneId'));
           }
-          $link.blur();
         }
+        $link.blur();
+        e.preventDefault();
       });
     });
 
@@ -52,17 +51,37 @@
 
   };
 
+  Drupal.Sidebar.prototype.current = function() {
+    var active;
+
+    this.$panes.each(function () {
+      var $pane = $(this);
+      if ($pane.hasClass('is-active')) {
+        active = $pane.data('paneId');
+      }
+    });
+
+    return active;
+  };
+
   Drupal.Sidebar.prototype.open = function(id) {
 
     this.$panes.each(function () {
       var $pane = $(this);
-      $pane.toggleClass('is-active', $pane.data('paneId') == id);
+      $pane.toggleClass('is-active', $pane.data('paneId') === id);
     });
 
     this.$tabs.each(function () {
       var $tab = $(this);
-      $tab.toggleClass('is-active', $tab.find('a').data('paneId') == id);
-      $tab.find('a').attr('aria-selected', $tab.find('a').data('paneId') == id ? 'true' : null);
+      $tab.toggleClass('is-active', $tab.find('a').data('paneId') === id);
+      $tab.find('a').attr('aria-selected', $tab.find('a').data('paneId') === id ? 'true' : null);
+      if ($tab.find('a').data('paneId') === id) {
+        $tab.find('a').removeClass('disabled');
+      }
+      // Super hacky way to get the mobile toggle to work.
+      // @TODO: re-do this when it's not the day before a big showcase.
+      $('.navigation-bar--mobile a[data-pane-id="' + id + '"]').removeClass('disabled').attr('aria-selected', 'true');
+      $('.navigation-bar--mobile a[data-pane-id="' + id + '"]').parent('li').addClass('is-active');
     });
 
     // Make sure the sidebar is open.

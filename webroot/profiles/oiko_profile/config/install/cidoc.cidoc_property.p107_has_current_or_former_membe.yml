@@ -8,10 +8,10 @@ reverse_label: 'P107 is current or former member of'
 friendly_label: 'Has current or former member'
 reverse_friendly_label: 'Is current or former member of'
 domain_bundles:
-  e74_group: e74_group
+  - e74_group
 range_bundles:
-  e21_person: e21_person
-  e74_group: e74_group
+  1: e21_person
+  2: e74_group
 editability:
   domain: true
   range: true

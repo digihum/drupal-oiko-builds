@@ -7,3 +7,17 @@ graph-all:
   css:
     theme:
       assets/css/cidoc_graph.css: {}
+
+graph-vis:
+  version: 1
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once
+    - oiko_leaflet/vis
+  js:
+    assets/js/cidoc_graph_vis.js: {}
+  css:
+    theme:
+      assets/css/cidoc_graph_vis.css: {}

@@ -12,13 +12,29 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\ProcessBuilder;
-use Drupal\Console\Command\ContainerAwareCommand;
-use Drupal\Console\Command\Database\ConnectTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Command;
+use Drupal\Console\Command\Shared\ConnectTrait;
+use Drupal\Console\Core\Style\DrupalStyle;
 
-class RestoreCommand extends ContainerAwareCommand
+class RestoreCommand extends Command
 {
     use ConnectTrait;
+
+    /**
+     * @var string
+     */
+    protected $appRoot;
+
+    /**
+     * RestoreCommand constructor.
+     *
+     * @param string $appRoot
+     */
+    public function __construct($appRoot)
+    {
+        $this->appRoot = $appRoot;
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
@@ -40,7 +56,8 @@ class RestoreCommand extends ContainerAwareCommand
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.database.restore.options.file')
             )
-            ->setHelp($this->trans('commands.database.restore.help'));
+            ->setHelp($this->trans('commands.database.restore.help'))
+            ->setAliases(['dbr']);
     }
 
     /**
@@ -52,7 +69,7 @@ class RestoreCommand extends ContainerAwareCommand
 
         $database = $input->getArgument('database');
         $file = $input->getOption('file');
-        $learning = $input->hasOption('learning')?$input->getOption('learning'):false;
+        $learning = $input->getOption('learning');
 
         $databaseConnection = $this->resolveConnection($io, $database);
 
@@ -60,27 +77,32 @@ class RestoreCommand extends ContainerAwareCommand
             $io->error(
                 $this->trans('commands.database.restore.messages.no-file')
             );
-            return;
+            return 1;
+        }
+        if (strpos($file, '.sql.gz') !== false) {
+            $catCommand = "gunzip -c %s | ";
+        } else {
+            $catCommand = "cat %s | ";
         }
         if ($databaseConnection['driver'] == 'mysql') {
             $command = sprintf(
-                'mysql --user=%s --password=%s --host=%s --port=%s %s < %s',
+                $catCommand . 'mysql --user=%s --password=%s --host=%s --port=%s %s',
+                $file,
                 $databaseConnection['username'],
                 $databaseConnection['password'],
                 $databaseConnection['host'],
                 $databaseConnection['port'],
-                $databaseConnection['database'],
-                $file
+                $databaseConnection['database']
             );
         } elseif ($databaseConnection['driver'] == 'pgsql') {
             $command = sprintf(
-                'PGPASSWORD="%s" psql -w -U %s -h %s -p %s -d %s -f %s',
+                'PGPASSWORD="%s" ' . $catCommand . 'psql -w -U %s -h %s -p %s -d %s',
+                $file,
                 $databaseConnection['password'],
                 $databaseConnection['username'],
                 $databaseConnection['host'],
                 $databaseConnection['port'],
-                $databaseConnection['database'],
-                $file
+                $databaseConnection['database']
             );
         }
 
@@ -90,8 +112,8 @@ class RestoreCommand extends ContainerAwareCommand
 
         $processBuilder = new ProcessBuilder(['-v']);
         $process = $processBuilder->getProcess();
-        $process->setWorkingDirectory($this->getDrupalHelper()->getRoot());
-        $process->setTty('true');
+        $process->setWorkingDirectory($this->appRoot);
+        $process->setTty($input->isInteractive());
         $process->setCommandLine($command);
         $process->run();
 
@@ -106,5 +128,7 @@ class RestoreCommand extends ContainerAwareCommand
                 $file
             )
         );
+
+        return 0;
     }
 }

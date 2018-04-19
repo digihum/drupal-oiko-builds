@@ -4,7 +4,7 @@
 
     if (drupalLeaflet.map_definition.hasOwnProperty('locate') && drupalLeaflet.map_definition.locate) {
       L.control.locate({
-        position: 'bottomleft',
+        position: 'bottomright',
         drawCircle: false,
         locateOptions: {
           maxZoom: 10

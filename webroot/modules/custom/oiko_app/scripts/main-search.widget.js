@@ -38,6 +38,9 @@
             if (that._currentSearch.length > 0) {
               that.executeSearch(that._currentSearch);
             }
+            else {
+              that.render();
+            }
           }
         });
 
@@ -91,10 +94,20 @@
         var that = this;
 
         // Hide and show the various elements.
-        that.$noSearchContainer.toggleClass('is-hidden', that._currentSearch.length > 0);
         that.$noResultsContainer.toggleClass('is-hidden', that._isLoadingResults || that._currentSearch.length === 0 || that._currentResults.length > 0);
         that.$resultsContainer.toggleClass('is-hidden', that._isLoadingResults || that._currentResults.length === 0);
         that.$loadingContainer.toggleClass('is-hidden', !that._isLoadingResults);
+
+        if (that._visualisation === 'timeline') {
+          that.$noSearchContainerTimeline.toggleClass('is-hidden', that._currentSearch.length > 0);
+          that.$noSearchContainerMap.toggleClass('is-hidden', true);
+          that.$searchBox.attr('placeholder', that.$searchBox.data('placeholderTimeline'));
+        }
+        else {
+          that.$noSearchContainerMap.toggleClass('is-hidden', that._currentSearch.length > 0);
+          that.$noSearchContainerTimeline.toggleClass('is-hidden', true);
+          that.$searchBox.attr('placeholder', that.$searchBox.data('placeholderMap'));
+        }
 
         // If this is a different search from the last one we rendered, clear out the results container.
         var lastRenderedSearch = '';
@@ -255,7 +268,8 @@
     this.$outerContainer = $outerContainer;
 
     this.$searchBox = $outerContainer.find('.js-input');
-    this.$noSearchContainer = $outerContainer.find('.js-no-search-text');
+    this.$noSearchContainerMap = $outerContainer.find('.js-no-search-text--map');
+    this.$noSearchContainerTimeline = $outerContainer.find('.js-no-search-text--timeline');
     this.$noResultsContainer = $outerContainer.find('.js-no-results-text');
     this.$resultsContainer = $outerContainer.find('.js-results-listing');
     this.$loadingContainer = $outerContainer.find('.js-loading-results-text');

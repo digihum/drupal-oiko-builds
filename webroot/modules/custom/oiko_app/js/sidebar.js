@@ -11,6 +11,13 @@ import { QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY } from './querystring-definit
  * }
  */
 export const REQUEST_CIDOC_ENTITY = 'oiko/REQUEST_CIDOC_ENTITY';
+/**
+ * Return an action that will initiate the request for the given CIDOC entity.
+ *
+ * @param id
+ *   The CIDOC entity to load.
+ * @returns {{type: string, id: *}}
+ */
 function requestCidocEntity(id) {
   return {
     type: REQUEST_CIDOC_ENTITY,
@@ -19,6 +26,14 @@ function requestCidocEntity(id) {
 }
 
 export const RECEIVE_CIDOC_ENTITY = 'oiko/RECEIVE_CIDOC_ENTITY';
+/**
+ * Return an action that will indicate that the given CIDOC entity has been loaded.
+ *
+ * @param id
+ * The CIDOC entity that was just loaded.
+ *
+ * @returns {{type: string, id: *, receivedAt: number}}
+ */
 function receiveCidocEntity(id) {
   return {
     type: RECEIVE_CIDOC_ENTITY,
@@ -27,28 +42,60 @@ function receiveCidocEntity(id) {
   }
 }
 
+export const REQUEST_CIDOC_ENTITY_FAILURE = 'oiko/REQUEST_CIDOC_ENTITY_FAILURE';
+/**
+ * An action that will indicate that the given CIDOC entity has failed to load.
+ *
+ * @param id
+ *   The CIDOC entity that failed to load.
+ *
+ * @returns {{type: string, id: *, failedAt: number}}
+ */
+function receiveCidocEntityFailure(id) {
+  return {
+    type: REQUEST_CIDOC_ENTITY_FAILURE,
+    id,
+    failedAt: Date.now()
+  }
+}
+
+/**
+ * Initial the fetch of a CIDOC entity.
+ *
+ * @param id
+ *   The CIDOC entity to fetch.
+ *
+ * @returns {function(*)}
+ */
 function fetchCidocEntity(id) {
   return dispatch => {
     dispatch(requestCidocEntity(id));
     Drupal.oiko.sidebar.open('information');
     // Replace the content with the loading content.
-    Drupal.oiko.displayLoadingContentInLeafletSidebar('');
+    Drupal.oiko.displayLoadingContentInLeafletSidebar();
     return Drupal.oiko.displayContentInLeafletSidebar(id, () => {
+      // Dispatch our receieveCidocEntity action on the store.
       dispatch(receiveCidocEntity(id));
     }, () => {
-      // @TODO: should we record the failure?
-      // dispatch(receiveCidocEntity(id));
+      Drupal.oiko.displayFailureContentInLeafletSidebar();
+      dispatch(receiveCidocEntityFailure(id));
     });
   }
 }
 
+/**
+ * Determine if we should fetch the specified CIDOC entity.
+ *
+ * @param state
+ * @param id
+ * @returns {boolean}
+ */
 function shouldFetchCidocEntity(state, id) {
   const cidocState = state.cidocEntity;
   if (!cidocState) {
     return true
   }
   else if (cidocState.isFetching) {
-    // @TOOD: Implement some kind of logic to cancel the current AJAX request.
     return false
   }
   else {
@@ -56,6 +103,12 @@ function shouldFetchCidocEntity(state, id) {
   }
 }
 
+/**
+ * Fetch the given CIDOC entity if we need to.
+ *
+ * @param id
+ * @returns {function(*, *)}
+ */
 export function fetchFetchCidocEntityIfNeeded(id) {
   return (dispatch, getState) => {
     if (shouldFetchCidocEntity(getState(), id)) {
@@ -66,7 +119,6 @@ export function fetchFetchCidocEntityIfNeeded(id) {
 }
 
 
-
 function cidoc(state = {
   isFetching: false,
   id: 0
@@ -75,6 +127,12 @@ function cidoc(state = {
     case REQUEST_CIDOC_ENTITY:
       return Object.assign({}, state, {
         isFetching: true,
+        id: action.id
+      });
+    case REQUEST_CIDOC_ENTITY_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        lastUpdated: action.failedAt,
         id: action.id
       });
     case RECEIVE_CIDOC_ENTITY:
@@ -99,6 +157,7 @@ export function cidocEntityReducer(state = {}, action) {
   switch (action.type) {
     case REQUEST_CIDOC_ENTITY:
     case RECEIVE_CIDOC_ENTITY:
+    case REQUEST_CIDOC_ENTITY_FAILURE:
       return Object.assign({}, state, cidoc(state, action));
 
     case UPDATE_LOCATION:

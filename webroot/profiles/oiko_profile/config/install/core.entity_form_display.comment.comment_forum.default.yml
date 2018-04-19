@@ -11,8 +11,6 @@ targetEntityType: comment
 bundle: comment_forum
 mode: default
 content:
-  author:
-    weight: -2
   comment_body:
     type: text_textarea
     weight: 11
@@ -20,11 +18,7 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  subject:
-    type: string_textfield
-    weight: 10
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-hidden: {  }
+    region: content
+hidden:
+  author: true
+  subject: true

@@ -1,0 +1,61 @@
+.student-transcript--high-level-item {
+  margin: $global-margin * 2 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.student-transcript {
+  padding-bottom: $global-margin * 4;
+  margin-bottom: $global-margin * 6;
+  border-bottom: 2px solid palette(oikogrey);
+}
+
+.student-transcript--summary {
+  padding: $global-padding;
+  background-color: $table-striped-background;
+  margin-bottom: $global-margin * 2;
+
+  h2 {
+    margin-bottom: $global-margin * 2;
+    text-align: center;
+  }
+}
+
+.student-transcript--detail {
+  margin-top: $global-margin * 2;
+  margin-bottom: $global-margin * 2;
+
+  h2 {
+    margin-bottom: $global-margin * 2;
+    text-align: center;
+  }
+}
+
+.student-transcript--list {
+  list-style: none;
+  margin: $global-margin * 2 0;
+
+  h2 {
+    text-align: left;
+  }
+}
+
+.student-transcript--list-row {
+  padding-top: $global-margin * 2 ;
+  margin-top: $global-margin * 2;
+  position: relative;
+
+  &:before {
+    content: "";
+    border-top: 2px solid palette(oikogrey);
+    width: 80%;
+    margin: 0 10%;
+    position: absolute;
+    top: 0;
+  }
+}
+
+.student-transcript--list-row:last-child {
+  border-bottom: none;
+}

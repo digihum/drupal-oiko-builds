@@ -18,13 +18,13 @@ tour-styling:
 
 jquery.joyride:
   remote: https://github.com/zurb/joyride
-  version: "v2.1.0"
+  version: "v2.1.2"
   license:
     name: MIT
     url: https://github.com/zurb/joyride/blob/v2.1.0/README.markdown
     gpl-compatible: true
   js:
-    js/vendor/jquery.joyride-2.1.1.js: { }
+    js/vendor/jquery.joyride-2.1.2.js: { }
   dependencies:
     - core/jquery
     - core/jquery.cookie

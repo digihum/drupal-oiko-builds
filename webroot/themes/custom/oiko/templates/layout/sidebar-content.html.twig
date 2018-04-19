@@ -1,13 +1,21 @@
 <div class="l-sidebar-content sidebar-content">
   <div class="sidebar-pane" data-pane-id="main-menu">
-      {{ page.primary_menu }}
-      {{ page.secondary_menu }}
+    <div class="sidebar-close close-button"><span aria-hidden="true">&times;</span></div>
+    {{ page.primary_menu }}
+    {{ page.secondary_menu }}
   </div>
-  <div class="sidebar-pane" data-pane-id="legend">
-      {{ page.sidebar_legend }}
+  <div class="sidebar-pane with-padding" data-pane-id="legend">
+    <div class="sidebar-close close-button"><span aria-hidden="true">&times;</span></div>
+    {{ page.sidebar_legend }}
   </div>
-  <div class="sidebar-pane" data-pane-id="information">
-    <h1 class="sidebar-information-content-title">Title</h1>
-    <div class="sidebar-information-content-content">Content</div>
+  <div class="sidebar-pane with-padding" data-pane-id="information">
+    <div class="sidebar-close close-button"><span aria-hidden="true">&times;</span></div>
+    <div class="sidebar-information-content-content"></div>
+  </div>
+  <div class="sidebar-pane with-padding" data-pane-id="demo-information">
+    <div class="sidebar-close close-button"><span aria-hidden="true">&times;</span></div>
+    <div class="sidebar-demo-information-content-content">
+        {{ page.sidebardemo }}
+    </div>
   </div>
 </div>

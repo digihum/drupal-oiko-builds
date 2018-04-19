@@ -20,6 +20,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: squid_entity_reference_autocomplete
+    region: content
   field_pages:
     weight: 1
     settings:
@@ -27,6 +28,7 @@ content:
       placeholder: 'e.g. p6 or pp65-87'
     third_party_settings: {  }
     type: string_textfield
+    region: content
 hidden:
   created: true
   status: true

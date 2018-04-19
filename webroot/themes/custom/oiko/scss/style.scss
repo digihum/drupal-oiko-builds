@@ -2,10 +2,15 @@
 @import "base/base";
 // Import layout
 @import "layout/layout.scss";
+@import "layout/welcome.scss";
 // Import modules
 @import "modules/bare";
+@import "modules/scroll";
 @import "modules/breakpoint-debugger";
 @import "modules/loading-graphic";
+@import "modules/event-list";
+@import "modules/cookie_popup";
+@import "modules/dropdowns";
 @import "modules/footer";
 @import "modules/footer-links";
 @import "modules/footer-links";
@@ -18,9 +23,8 @@
 @import "modules/legend";
 @import "modules/navigation-bar";
 @import "modules/oiko-app";
-@import "modules/oiko-sidebar";
-@import "modules/sidebar";
 @import "modules/tabs";
+@import "modules/oiko-sidebar";
 @import "modules/tour";
 @import "modules/fancy-titles";
 @import "modules/cidoc-entities";
@@ -29,3 +33,7 @@
 @import "modules/reveal";
 @import "modules/search";
 @import "modules/category-labels";
+@import "modules/discussions-iframe";
+@import "modules/user-header";
+@import "modules/notifications";
+@import "modules/transcript";

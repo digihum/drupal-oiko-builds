@@ -1,0 +1,235 @@
+uuid: c48904d8-2c55-4f53-b62c-694cbf5959ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - search_api.server.db_search_backend
+    - core.entity_view_mode.cidoc_entity.search_index
+  module:
+    - search_api
+    - cidoc
+id: crm_entities
+name: 'CRM Entities'
+description: ''
+read_only: false
+field_settings:
+  rendered_item:
+    label: 'Rendered HTML output'
+    property_path: rendered_item
+    type: text
+    configuration:
+      roles:
+        anonymous: anonymous
+      view_mode:
+        'entity:cidoc_entity':
+          e12_production: ''
+          e21_person: ''
+          e22_man_made_object: ''
+          e4_period: ''
+          e52_time_span: ''
+          e53_place: ''
+          e5_event: ''
+          e66_formation: ''
+          e67_birth: ''
+          e68_dissolution: ''
+          e69_death: ''
+          e6_destruction: ''
+          e74_group: ''
+          e7_activity: ''
+          e9_move: search_index
+          o1_killing: ''
+          o2_active_dissolution: ''
+          o3_active_destruction: ''
+          e42_identifier: ''
+          e49_time_appellation: ''
+          e54_dimension: ''
+          e58_measurement_unit: ''
+          e82_actor_appellation: ''
+  name:
+    label: Name
+    datasource_id: 'entity:cidoc_entity'
+    property_path: name
+    type: text
+    boost: !!float 5
+  internal_name:
+    label: 'Internal name'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: internal_name
+    type: text
+    boost: !!float 2
+  child_events:
+    label: 'Child event count'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: cidoc_child_events
+    type: integer
+  status:
+    label: 'Publishing status'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: status
+    type: boolean
+  has_geodata:
+    label: 'Has geospatial data'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: cidoc_has_geodata
+    type: boolean
+  user_id:
+    label: 'Authored by'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: user_id
+    type: integer
+processor_settings:
+  cidoc:
+    plugin_id: cidoc
+    settings: {  }
+  add_url:
+    plugin_id: add_url
+    settings: {  }
+  aggregated_field:
+    plugin_id: aggregated_field
+    settings: {  }
+  html_filter:
+    plugin_id: html_filter
+    settings:
+      fields:
+        - rendered_item
+      title: true
+      alt: true
+      tags:
+        h1: 5
+        h2: 3
+        h3: 2
+        strong: 2
+        b: 2
+      weights:
+        preprocess_index: -10
+        preprocess_query: -10
+  ignorecase:
+    plugin_id: ignorecase
+    settings:
+      fields:
+        - rendered_item
+        - name
+        - internal_name
+      weights:
+        preprocess_index: -9
+        preprocess_query: -9
+  ignore_character:
+    plugin_id: ignore_character
+    settings:
+      fields:
+        - rendered_item
+        - name
+        - internal_name
+      ignorable: '[''¿¡!?,.:;]'
+      strip:
+        character_sets:
+          Pc: Pc
+          Pd: Pd
+          Pe: Pe
+          Pf: Pf
+          Pi: Pi
+          Po: Po
+          Ps: Ps
+          Cc: 0
+          Cf: 0
+          Co: 0
+          Mc: 0
+          Me: 0
+          Mn: 0
+          Sc: 0
+          Sk: 0
+          Sm: 0
+          So: 0
+          Zl: 0
+          Zp: 0
+          Zs: 0
+      weights:
+        preprocess_index: -8
+        preprocess_query: -8
+  rendered_item:
+    plugin_id: rendered_item
+    settings: {  }
+  stopwords:
+    plugin_id: stopwords
+    settings:
+      fields:
+        - rendered_item
+        - name
+        - internal_name
+      stopwords:
+        - a
+        - an
+        - and
+        - are
+        - as
+        - at
+        - be
+        - but
+        - by
+        - for
+        - if
+        - in
+        - into
+        - is
+        - it
+        - 'no'
+        - not
+        - of
+        - 'on'
+        - or
+        - s
+        - such
+        - t
+        - that
+        - the
+        - their
+        - then
+        - there
+        - these
+        - they
+        - this
+        - to
+        - was
+        - will
+        - with
+      weights:
+        preprocess_index: -5
+        preprocess_query: -5
+  tokenizer:
+    plugin_id: tokenizer
+    settings:
+      fields:
+        - rendered_item
+        - name
+        - internal_name
+      spaces: ''
+      overlap_cjk: 1
+      minimum_word_size: '3'
+      weights:
+        preprocess_index: -7
+        preprocess_query: -7
+  transliteration:
+    plugin_id: transliteration
+    settings:
+      fields:
+        - rendered_item
+        - name
+        - internal_name
+      weights:
+        preprocess_index: -6
+        preprocess_query: -6
+options:
+  index_directly: true
+  cron_limit: 50
+datasource_settings:
+  'entity:cidoc_entity':
+    plugin_id: 'entity:cidoc_entity'
+    settings:
+      bundles:
+        default: true
+        selected: {  }
+tracker_settings:
+  default:
+    plugin_id: default
+    settings: {  }
+server: db_search_backend

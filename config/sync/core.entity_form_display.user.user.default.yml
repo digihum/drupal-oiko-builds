@@ -1,0 +1,53 @@
+uuid: 011d944a-2d2e-4748-86a7-a2c2a098f188
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.user.user.avatars_avatar_generator
+    - field.field.user.user.avatars_user_picture
+    - field.field.user.user.field_contact_preference
+    - field.field.user.user.field_terms_and_privacy
+    - field.field.user.user.user_picture
+    - image.style.thumbnail
+  module:
+    - image
+    - user
+id: user.user.default
+targetEntityType: user
+bundle: user
+mode: default
+content:
+  account:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  avatars_user_picture:
+    weight: 1
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_contact_preference:
+    type: boolean_checkbox
+    weight: 4
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    region: content
+  language:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  timezone:
+    weight: 3
+    region: content
+hidden:
+  avatars_avatar_generator: true
+  field_terms_and_privacy: true
+  google_analytics: true
+  path: true
+  user_picture: true

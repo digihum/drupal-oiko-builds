@@ -1,0 +1,22 @@
+uuid: e1c7212b-b0fd-438b-ad8a-0efa64e72640
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+    - node
+_core:
+  default_config_hash: YdI8copbdEDYcStPcl4Uuk7t4TIGe1SefMFjWLlYvGY
+id: node.field_crm_entities
+field_name: field_crm_entities
+entity_type: node
+type: entity_reference
+settings:
+  target_type: cidoc_entity
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

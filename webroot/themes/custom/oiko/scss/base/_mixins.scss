@@ -90,5 +90,6 @@
 @mixin category-pill($color) {
   @include pill($color);
   margin-left: 0;
+  display: inline-block;
 }
 

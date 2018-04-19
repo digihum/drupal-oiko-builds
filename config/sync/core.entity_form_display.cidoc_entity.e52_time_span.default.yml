@@ -1,0 +1,208 @@
+uuid: f4d15de5-46c1-405f-bf88-133419de30d8
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e52_time_span
+    - field.field.cidoc_entity.e52_time_span.field_date
+    - image.style.thumbnail
+  module:
+    - edtf
+    - field_group
+    - image
+    - paragraphs
+    - path
+third_party_settings:
+  field_group:
+    group_main:
+      children:
+        - group_main_deets
+        - group_aux_deets
+      parent_name: ''
+      weight: 1
+      label: 'Main data entry'
+      format_type: tabs
+      format_settings:
+        label: 'Main data entry'
+        direction: horizontal
+        id: ''
+        classes: ''
+    group_main_deets:
+      children:
+        - name
+        - internal_name
+        - field_date
+        - group_main_details
+      parent_name: group_main
+      weight: 4
+      label: 'Main details'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+    group_aux_deets:
+      children: {  }
+      parent_name: group_main
+      weight: 5
+      label: 'Auxiliary details'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+    group_main_details:
+      children:
+        - group_appellations
+        - group_relations
+      parent_name: group_main_deets
+      weight: 4
+      label: 'Main details'
+      format_type: tabs
+      format_settings:
+        direction: vertical
+        classes: ''
+        id: ''
+    group_appellations:
+      children:
+        - 'cidoc_properties:domain:p78_is_identified_by'
+      parent_name: group_main_details
+      weight: 5
+      label: 'Also known as'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+    group_relations:
+      children:
+        - 'cidoc_properties:range:p4_has_time_span'
+      parent_name: group_main_details
+      weight: 6
+      label: Relations
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+_core:
+  default_config_hash: 2SUHoO5eTVUz1-68JxM-fgk94H_8tS_aShXePXQ60dM
+id: cidoc_entity.e52_time_span.default
+targetEntityType: cidoc_entity
+bundle: e52_time_span
+mode: default
+content:
+  'cidoc_properties:domain:p131_is_identified_by':
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p78_is_identified_by':
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p4_has_time_span':
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  citation:
+    type: entity_reference_paragraphs
+    weight: -1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: button
+      form_display_mode: default
+    third_party_settings: {  }
+    region: content
+  class_description:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_date:
+    type: edtf_default
+    weight: 3
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  internal_name:
+    type: string_textfield
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  name:
+    type: string_textfield
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  path:
+    type: path
+    weight: 30
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  significance:
+    type: options_select
+    weight: -1
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
+    region: content
+    third_party_settings: {  }
+  timeline_logo:
+    type: image_image
+    weight: 10
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    region: content
+  timeline_preselect_option:
+    type: boolean_checkbox
+    weight: 10
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:range:p100_was_death_of': true
+  'cidoc_properties:range:p11_had_participant': true
+  'cidoc_properties:range:p12_occurred_in_the_presence_of': true
+  'cidoc_properties:range:p13_destroyed': true
+  'cidoc_properties:range:p14_carried_out_by': true
+  'cidoc_properties:range:p15_was_influenced_by': true
+  'cidoc_properties:range:p16_used_specific_object': true
+  'cidoc_properties:range:p17_was_motivated_by': true
+  'cidoc_properties:range:p25_moved': true
+  'cidoc_properties:range:p96_by_mother': true
+  'cidoc_properties:range:p97_from_father': true
+  'cidoc_properties:range:p98_brought_into_life': true
+  content: true
+  user_id: true

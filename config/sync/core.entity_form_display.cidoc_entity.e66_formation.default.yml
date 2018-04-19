@@ -1,0 +1,386 @@
+uuid: 2ed7f8b2-e47a-4cf2-89e9-11c2ede25882
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e66_formation
+    - image.style.thumbnail
+  module:
+    - field_group
+    - image
+    - paragraphs
+    - path
+    - text
+third_party_settings:
+  field_group:
+    group_temporal:
+      children:
+        - 'cidoc_properties:domain:p4_has_time_span'
+      parent_name: group_tabset
+      weight: 4
+      label: When
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+    group_tabset:
+      children:
+        - group_temporal
+        - group_where
+        - group_who
+        - group_what
+        - group_descriptive_text
+      parent_name: group_main_deets
+      weight: 5
+      label: 'Main details'
+      format_type: tabs
+      format_settings:
+        label: 'Main details'
+        direction: vertical
+        id: ''
+        classes: ''
+    group_where:
+      children:
+        - 'cidoc_properties:domain:p7_took_place_at'
+      parent_name: group_tabset
+      weight: 5
+      label: Where
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+    group_descriptive_text:
+      children:
+        - content
+      parent_name: group_tabset
+      weight: 9
+      label: 'Descriptive text'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+    group_who:
+      children:
+        - 'cidoc_properties:domain:p95_has_formed'
+        - 'cidoc_properties:domain:p14_carried_out_by'
+        - 'cidoc_properties:domain:p11_had_participant'
+      parent_name: group_tabset
+      weight: 6
+      label: People/groups
+      format_type: tab
+      format_settings:
+        label: People/groups
+        formatter: closed
+        description: ''
+        required_fields: true
+        id: ''
+        classes: ''
+    group_influence:
+      children:
+        - 'cidoc_properties:domain:p15_was_influenced_by'
+        - 'cidoc_properties:range:p15_was_influenced_by'
+        - 'cidoc_properties:domain:p17_was_motivated_by'
+        - 'cidoc_properties:range:p17_was_motivated_by'
+      parent_name: group_other
+      weight: 9
+      label: 'Influence and motivation'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+    group_other:
+      children:
+        - group_sequence
+        - group_influence
+        - group_geo_temp
+      parent_name: group_auxiliary_deets
+      weight: 5
+      label: 'Other details'
+      format_type: tabs
+      format_settings:
+        direction: vertical
+        classes: ''
+        id: ''
+    group_what:
+      children:
+        - 'cidoc_properties:domain:p16_used_specific_object'
+        - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
+      parent_name: group_tabset
+      weight: 7
+      label: Things
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+    group_geo_temp:
+      children:
+        - 'cidoc_properties:domain:p9_consists_of'
+        - 'cidoc_properties:range:p9_consists_of'
+        - 'cidoc_properties:domain:p10_falls_within'
+        - 'cidoc_properties:range:p10_falls_within'
+        - 'cidoc_properties:domain:p132_overlaps_with'
+        - 'cidoc_properties:domain:p133_is_separated_from'
+      parent_name: group_other
+      weight: 10
+      label: 'Geo-temporal relationships'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+    group_data:
+      children:
+        - group_main_deets
+        - group_auxiliary_deets
+      parent_name: ''
+      weight: 3
+      label: 'Main data entry'
+      format_type: tabs
+      format_settings:
+        label: 'Main data entry'
+        direction: horizontal
+        id: ''
+        classes: ''
+    group_main_deets:
+      children:
+        - name
+        - internal_name
+        - citation
+        - significance
+        - group_tabset
+      parent_name: group_data
+      weight: 3
+      label: 'Main details'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+    group_auxiliary_deets:
+      children:
+        - group_other
+      parent_name: group_data
+      weight: 4
+      label: 'Auxiliary details'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+    group_sequence:
+      children:
+        - 'cidoc_properties:domain:p134_continued'
+        - 'cidoc_properties:range:p134_continued'
+      parent_name: group_other
+      weight: 8
+      label: Sequence
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+_core:
+  default_config_hash: MCecFoOh1b0B-sp83OJ4_942EIMUo6UJjL0R5-XB0xk
+id: cidoc_entity.e66_formation.default
+targetEntityType: cidoc_entity
+bundle: e66_formation
+mode: default
+content:
+  'cidoc_properties:domain:p10_falls_within':
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p11_had_participant':
+    weight: 22
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p12_occurred_in_the_presence_of':
+    weight: 22
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p132_overlaps_with':
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p133_is_separated_from':
+    weight: 12
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p134_continued':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p14_carried_out_by':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p15_was_influenced_by':
+    weight: 22
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p16_used_specific_object':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p17_was_motivated_by':
+    weight: 24
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p4_has_time_span':
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p7_took_place_at':
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p95_has_formed':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p9_consists_of':
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p10_falls_within':
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p134_continued':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p15_was_influenced_by':
+    weight: 23
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p17_was_motivated_by':
+    weight: 25
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p9_consists_of':
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  citation:
+    type: entity_reference_paragraphs
+    weight: 3
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: button
+      form_display_mode: default
+    third_party_settings: {  }
+    region: content
+  class_description:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  content:
+    type: text_textarea
+    weight: 0
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  internal_name:
+    type: string_textfield
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  name:
+    type: string_textfield
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  significance:
+    type: options_select
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
+    region: content
+    third_party_settings: {  }
+  timeline_logo:
+    type: image_image
+    weight: 10
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    region: content
+    third_party_settings: {  }
+  timeline_preselect_option:
+    type: boolean_checkbox
+    weight: 10
+    settings:
+      display_label: true
+    region: content
+    third_party_settings: {  }
+hidden:
+  'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:range:p132_overlaps_with': true
+  'cidoc_properties:range:p133_is_separated_from': true
+  user_id: true

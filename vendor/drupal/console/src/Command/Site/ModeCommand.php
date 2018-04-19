@@ -11,11 +11,55 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
-use Drupal\Console\Command\ContainerAwareCommand;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\ContainerAwareCommand;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Utils\ConfigurationManager;
+use Drupal\Core\Config\ConfigFactory;
+use Drupal\Console\Core\Utils\ChainQueue;
 
 class ModeCommand extends ContainerAwareCommand
 {
+    /**
+     * @var ConfigFactory
+     */
+    protected $configFactory;
+
+    /**
+     * @var ConfigurationManager
+     */
+    protected $configurationManager;
+
+    /**
+     * @var string
+     */
+    protected $appRoot;
+
+    /**
+     * @var ChainQueue
+     */
+    protected $chainQueue;
+
+    /**
+     * DebugCommand constructor.
+     *
+     * @param ConfigFactory        $configFactory
+     * @param ConfigurationManager $configurationManager
+     * @param $appRoot,
+     * @param ChainQueue           $chainQueue,
+     */
+    public function __construct(
+        ConfigFactory $configFactory,
+        ConfigurationManager $configurationManager,
+        $appRoot,
+        ChainQueue $chainQueue
+    ) {
+        $this->configFactory = $configFactory;
+        $this->configurationManager = $configurationManager;
+        $this->appRoot = $appRoot;
+        $this->chainQueue = $chainQueue;
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -25,7 +69,8 @@ class ModeCommand extends ContainerAwareCommand
                 'environment',
                 InputArgument::REQUIRED,
                 $this->trans('commands.site.mode.arguments.environment')
-            );
+            )
+            ->setAliases(['smo']);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -34,12 +79,12 @@ class ModeCommand extends ContainerAwareCommand
 
         $environment = $input->getArgument('environment');
 
-        $loadedConfigurations = [];
-        if (in_array($environment, array('dev', 'prod'))) {
-            $loadedConfigurations = $this->loadConfigurations($environment);
-        } else {
+        if (!in_array($environment, ['dev', 'prod'])) {
             $io->error($this->trans('commands.site.mode.messages.invalid-env'));
+            return 1;
         }
+
+        $loadedConfigurations = $this->loadConfigurations($environment);
 
         $configurationOverrideResult = $this->overrideConfigurations(
             $loadedConfigurations['configurations']
@@ -61,7 +106,8 @@ class ModeCommand extends ContainerAwareCommand
             $io->table($tableHeader, $result);
         }
 
-        $servicesOverrideResult = $this->overrideServices(
+        $servicesOverrideResult = $this->processServicesFile(
+            $environment,
             $loadedConfigurations['services'],
             $io
         );
@@ -80,14 +126,14 @@ class ModeCommand extends ContainerAwareCommand
             $io->table($tableHeaders, $servicesOverrideResult);
         }
 
-        $this->getChain()->addCommand('cache:rebuild', ['cache' => 'all']);
+        $this->chainQueue->addCommand('cache:rebuild', ['cache' => 'all']);
     }
 
     protected function overrideConfigurations($configurations)
     {
         $result = [];
         foreach ($configurations as $configName => $options) {
-            $config = $this->getConfigFactory()->getEditable($configName);
+            $config = $this->configFactory->getEditable($configName);
             foreach ($options as $key => $value) {
                 $original = $config->get($key);
                 if (is_bool($original)) {
@@ -111,18 +157,19 @@ class ModeCommand extends ContainerAwareCommand
         return $result;
     }
 
-    protected function overrideServices($servicesSettings, DrupalStyle $io)
+    protected function processServicesFile($environment, $servicesSettings, DrupalStyle $io)
     {
         $directory = sprintf(
             '%s/%s',
-            $this->getDrupalHelper()->getRoot(),
+            $this->appRoot,
             \Drupal::service('site.path')
         );
 
         $settingsServicesFile = $directory . '/services.yml';
+
         if (!file_exists($settingsServicesFile)) {
             // Copying default services
-            $defaultServicesFile = $this->getDrupalHelper()->getRoot() . '/sites/default/default.services.yml';
+            $defaultServicesFile = $this->appRoot . '/sites/default/default.services.yml';
             if (!copy($defaultServicesFile, $settingsServicesFile)) {
                 $io->error(
                     sprintf(
@@ -137,19 +184,31 @@ class ModeCommand extends ContainerAwareCommand
         }
 
         $yaml = new Yaml();
+
         $services = $yaml->parse(file_get_contents($settingsServicesFile));
 
         $result = [];
         foreach ($servicesSettings as $service => $parameters) {
-            foreach ($parameters as $parameter => $value) {
-                $services['parameters'][$service][$parameter] = $value;
-                // Set values for output
-                $result[$parameter]['service'] = $service;
-                $result[$parameter]['parameter'] = $parameter;
-                if (is_bool($value)) {
-                    $value = $value? 'true' : 'false';
+            if (is_array($parameters)) {
+                foreach ($parameters as $parameter => $value) {
+                    $services['parameters'][$service][$parameter] = $value;
+                    // Set values for output
+                    $result[$parameter]['service'] = $service;
+                    $result[$parameter]['parameter'] = $parameter;
+                    if (is_bool($value)) {
+                        $value = $value ? 'true' : 'false';
+                    }
+                    $result[$parameter]['value'] = $value;
                 }
-                $result[$parameter]['value'] = $value;
+            } else {
+                $services['parameters'][$service] = $parameters;
+                // Set values for output
+                $result[$service]['service'] = $service;
+                $result[$service]['parameter'] = '';
+                if (is_bool($parameters)) {
+                    $value = $parameters ? 'true' : 'false';
+                }
+                $result[$service]['value'] = $value;
             }
         }
 
@@ -178,28 +237,22 @@ class ModeCommand extends ContainerAwareCommand
 
     protected function loadConfigurations($env)
     {
-        $config = $this->getApplication()->getConfig();
-        $configFile = sprintf(
-            '%s/.console/site.mode.yml',
-            $config->getUserHomeDir()
-        );
+        $configFile = $this->configurationManager
+            ->getVendorCoreDirectory() . 'site.mode.yml';
 
-        if (!file_exists($configFile)) {
-            $configFile = sprintf(
-                '%s/config/dist/site.mode.yml',
-                $this->getApplication()->getDirectoryRoot()
-            );
-        }
-
-        $siteModeConfiguration = $config->getFileContents($configFile);
+        $siteModeConfiguration = Yaml::parse(file_get_contents($configFile));
         $configKeys = array_keys($siteModeConfiguration);
 
         $configurationSettings = [];
         foreach ($configKeys as $configKey) {
             $siteModeConfigurationItem = $siteModeConfiguration[$configKey];
             foreach ($siteModeConfigurationItem as $setting => $parameters) {
-                foreach ($parameters as $parameter => $value) {
-                    $configurationSettings[$configKey][$setting][$parameter] = $value[$env];
+                if (array_key_exists($env, $parameters)) {
+                    $configurationSettings[$configKey][$setting] = $parameters[$env];
+                } else {
+                    foreach ($parameters as $parameter => $value) {
+                        $configurationSettings[$configKey][$setting][$parameter] = $value[$env];
+                    }
                 }
             }
         }

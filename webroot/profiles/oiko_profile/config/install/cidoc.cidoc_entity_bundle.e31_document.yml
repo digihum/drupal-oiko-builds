@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies: {  }
+crm_entity: e31_document
+id: e31_document
+label: 'E31 Document'
+friendly_label: null
+weight: 0
+group: auxiliary
+description: null
+examples: null
+geoserializers: {  }
