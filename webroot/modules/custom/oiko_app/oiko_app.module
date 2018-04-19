@@ -1,6 +1,7 @@
 <?php
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Url;
+use Drupal\views\ViewExecutable;
 
 
 /**
@@ -87,6 +88,15 @@ function template_preprocess_main_cidoc_search(&$variables) {
   // Create a valid HTML ID and make sure it is unique.
   if (!empty($variables['id'])) {
     $variables['attributes']['id'] = Html::getUniqueId($variables['id']);
+  }
+}
+
+/**
+ * Implements hook_views_post_build().
+ */
+function oiko_app_views_pre_build(ViewExecutable $view) {
+  if ($view->id() == 'crm_entity_search') {
+    $view->filter['user_id']->value = [Drupal::currentUser()->id() => Drupal::currentUser()->id()];
   }
 }
 

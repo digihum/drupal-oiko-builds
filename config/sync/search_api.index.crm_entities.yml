@@ -72,6 +72,11 @@ field_settings:
     datasource_id: 'entity:cidoc_entity'
     property_path: cidoc_has_geodata
     type: boolean
+  user_id:
+    label: 'Authored by'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: user_id
+    type: integer
 processor_settings:
   cidoc:
     plugin_id: cidoc
