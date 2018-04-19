@@ -2,6 +2,7 @@
 
 namespace Drupal\oiko_cidoc\Controller;
 
+use Drupal\cidoc\CidocEntityViewBuilder;
 use Drupal\cidoc\Entity\CidocEntity;
 use Drupal\cidoc\GraphTraversal;
 use Drupal\Component\Utility\Html;
@@ -130,15 +131,22 @@ class StudentTranscriptController extends ControllerBase {
       }
     }
 
+    $response['footnote'] = [
+      '#type' => 'markup',
+      '#markup' => $this->t(CidocEntityViewBuilder::TRANSCRIPT_NOT_MINE_DISCLAIMER),
+    ];
+
     return $response;
   }
 
-  protected function getRemainingNarrativeEntities($exclude) {
+  protected function getRemainingNarrativeEntities($exclude = []) {
     $storage = $this->entityTypeManager->getStorage('cidoc_entity');
     $query = $storage->getQuery()
       ->accessCheck(TRUE)
-      ->condition('id', $exclude, 'NOT IN')
       ->condition('user_id', $this->currentUser()->id());
+    if (!empty($exclude)) {
+      $query->condition('id', $exclude, 'NOT IN');
+    }
     $ids = $query->execute();
     return !empty($ids) ? $storage->loadMultiple($ids) : [];
   }

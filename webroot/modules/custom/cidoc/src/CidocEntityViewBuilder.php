@@ -18,6 +18,10 @@ use Drupal\views\Views;
  */
 class CidocEntityViewBuilder extends EntityViewBuilder {
 
+  const TRANSCRIPT_NOT_MINE_DISCLAIMER = 'References marked in <em>italics</em> and with an asterisk <em>*</em> are references to entities <strong>not</strong> created as part of this transcript of work. The references themselves however, <em>were</em> created as part of this transcript.';
+
+  const TRANSCRIPT_NOT_MINE_PLAIN = 'This entity was not created by this user, but the reference to it was.';
+
   /**
    * {@inheritdoc}
    */
@@ -160,7 +164,7 @@ class CidocEntityViewBuilder extends EntityViewBuilder {
               $referenced_entity = $reference_entity->{$target_field}->entity;
               // @TODO: Factor this out into an argument.
               if ($referenced_entity->getOwnerId() != \Drupal::currentUser()->id()) {
-                $label = $this->t('<em>@label*</em>', ['@label' => $referenced_entity->label()]);
+                $label = $this->t('<em title="@not_mine_description">@label*</em>', ['@label' => $referenced_entity->label(), '@not_mine_description' => self::TRANSCRIPT_NOT_MINE_PLAIN]);
               }
               else {
                 $label = $this->t('@label', ['@label' => $referenced_entity->label()]);
@@ -177,7 +181,7 @@ class CidocEntityViewBuilder extends EntityViewBuilder {
               $referenced_entity = $reference_entity->{$target_field}->entity;
               // @TODO: Factor this out into an argument.
               if ($referenced_entity->getOwnerId() != \Drupal::currentUser()->id()) {
-                $label = $this->t('<em>@label*</em>', ['@label' => $referenced_entity->label()]);
+                $label = $this->t('<em title="@not_mine_description">@label*</em>', ['@label' => $referenced_entity->label(), '@not_mine_description' => self::TRANSCRIPT_NOT_MINE_PLAIN]);
               }
               else {
                 $label = $this->t('@label', ['@label' => $referenced_entity->label()]);
