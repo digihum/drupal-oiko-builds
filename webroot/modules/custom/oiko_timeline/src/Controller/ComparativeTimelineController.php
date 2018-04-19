@@ -10,6 +10,7 @@ use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Render\RenderContext;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\oiko_timeline\OikoTimelineHelpersInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
@@ -35,19 +36,19 @@ class ComparativeTimelineController extends ControllerBase {
   protected $entityTypeManager;
 
   /**
-   * queryInterface definition.
+   * Timeline helpers.
    *
-   * @var QueryInterface
+   * @var OikoTimelineHelpersInterface
    */
-  protected $entityQuery;
+  protected $oikoTimelineHelpers;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeManager $entityTypeManager, QueryFactory $entityQuery, RendererInterface $renderer) {
+  public function __construct(EntityTypeManager $entityTypeManager, RendererInterface $renderer, OikoTimelineHelpersInterface $oikoTimelineHelpers) {
     $this->entityTypeManager = $entityTypeManager;
-    $this->entityQuery = $entityQuery;
     $this->renderer = $renderer;
+    $this->oikoTimelineHelpers = $oikoTimelineHelpers;
   }
 
   /**
@@ -56,8 +57,8 @@ class ComparativeTimelineController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity_type.manager'),
-      $container->get('entity.query'),
-      $container->get('renderer')
+      $container->get('renderer'),
+      $container->get('oiko_timeline.helpers')
     );
   }
 
@@ -132,41 +133,9 @@ class ComparativeTimelineController extends ControllerBase {
     // We need to get all events that happened at this place, and return times and other data for them.
     $events = $cidoc_entity->getChildEventEntities();
 
-    foreach ($events as $event) {
-      /** @var CidocEntity $event */
-      $entities[] = $event;
-      $temporal = $event->getTemporalInformation();
-      if (isset($temporal['minmin']) || isset($temporal['maxmax'])) {
-        if ($significance = $event->significance->entity) {
-          $significance_id = $significance->id();
-          if ($color = $significance->field_icon_color->getValue()[0]['value']) {
-            $event_color = $color;
-          }
-          else {
-            $event_color = 'blue';
-          }
-        }
-        else {
-          $significance_id = 0;
-          $event_color = 'blue';
-        }
+    // Render those events.
+    $this->oikoTimelineHelpers->renderEventsForTimeline($events, $entities, $data);
 
-        $events_uri = $event->toUrl()->toString(TRUE);
-        $entities[] = $events_uri;
-        $data['events'][] = array(
-          'type' => $event->bundle() == 'e4_period' ? 'period' : 'event',
-          'crm_type' => $event->bundle(),
-          'uri' => $events_uri->getGeneratedUrl(),
-          'id' => $event->id(),
-          'label' => $event->getFriendlyLabel() . ': ' . $event->label(),
-          'date_title' => $temporal['human'],
-          'minmin' => $temporal['minmin'],
-          'maxmax' => $temporal['maxmax'],
-          'color' => $event_color,
-          'significance' => $significance_id,
-        );
-      }
-    }
     $response = new CacheableJsonResponse($data);
     foreach ($entities as $entity) {
       $response->addCacheableDependency($entity);
@@ -175,5 +144,4 @@ class ComparativeTimelineController extends ControllerBase {
     $response->getCacheableMetadata()->addCacheTags($definition->getListCacheTags());
     return $response;
   }
-
 }

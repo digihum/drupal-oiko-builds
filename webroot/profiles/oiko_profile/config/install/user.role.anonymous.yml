@@ -6,10 +6,10 @@ label: 'Anonymous user'
 weight: 0
 is_admin: false
 permissions:
-  - 'access content'
-  - 'view published cidoc entities'
   - 'access comments'
-  - 'view sharemessages'
+  - 'access content'
+  - 'access tour'
   - 'display eu cookie compliance popup'
   - 'use browsersync'
-  - 'access tour'
+  - 'view published cidoc entities'
+  - 'view sharemessages'

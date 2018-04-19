@@ -1,0 +1,9 @@
+uuid: 3f308edd-4d4e-4c39-a81c-eab7bb3497c5
+langcode: en
+status: true
+dependencies: {  }
+name: Role
+vid: role
+description: 'In the role of'
+hierarchy: 0
+weight: 0

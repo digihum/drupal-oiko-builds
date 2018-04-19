@@ -1,0 +1,59 @@
+uuid: 0ba74ccc-1f49-4c30-a883-1a72c2edd7b6
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: rKiT8-zYwr3NfqTykh1NWpxwkCO0ICIM7w8ysgXqozU
+id: p10_falls_within
+label: 'P10 falls within'
+bidirectional: false
+reverse_label: 'P10 contains'
+friendly_label: 'Falls within'
+reverse_friendly_label: Contains
+domain_bundles:
+  0: e4_period
+  1: e5_event
+  4: e7_activity
+  5: e12_production
+  7: e66_formation
+  8: e67_birth
+  10: e68_dissolution
+  11: e69_death
+  12: e6_destruction
+  16: e85_joining
+  17: e86_leaving
+  20: e9_move
+  21: o1_killing
+  22: o2_active_dissolution
+  23: o3_active_destruction
+range_bundles:
+  0: e4_period
+  1: e5_event
+  4: e7_activity
+  5: e12_production
+  7: e66_formation
+  8: e67_birth
+  10: e68_dissolution
+  11: e69_death
+  12: e6_destruction
+  16: e85_joining
+  17: e86_leaving
+  20: e9_move
+  21: o1_killing
+  22: o2_active_dissolution
+  23: o3_active_destruction
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: range

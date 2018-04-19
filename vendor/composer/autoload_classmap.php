@@ -2150,6 +2150,7 @@ return array(
     'Drupal\\Core\\Routing\\UrlGeneratorInterface' => $baseDir . '/webroot/core/lib/Drupal/Core/Routing/UrlGeneratorInterface.php',
     'Drupal\\Core\\Routing\\UrlGeneratorTrait' => $baseDir . '/webroot/core/lib/Drupal/Core/Routing/UrlGeneratorTrait.php',
     'Drupal\\Core\\Routing\\UrlMatcher' => $baseDir . '/webroot/core/lib/Drupal/Core/Routing/UrlMatcher.php',
+    'Drupal\\Core\\Security\\RequestSanitizer' => $baseDir . '/webroot/core/lib/Drupal/Core/Security/RequestSanitizer.php',
     'Drupal\\Core\\Serialization\\Yaml' => $baseDir . '/webroot/core/lib/Drupal/Core/Serialization/Yaml.php',
     'Drupal\\Core\\Session\\AccountInterface' => $baseDir . '/webroot/core/lib/Drupal/Core/Session/AccountInterface.php',
     'Drupal\\Core\\Session\\AccountProxy' => $baseDir . '/webroot/core/lib/Drupal/Core/Session/AccountProxy.php',

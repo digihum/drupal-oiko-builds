@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_property.p144_joined_with
     - core.entity_form_mode.cidoc_reference.range
     - field.field.cidoc_reference.p144_joined_with.domain
+    - field.field.cidoc_reference.p144_joined_with.range
   module:
     - oiko_citation
     - squid_autocomplete

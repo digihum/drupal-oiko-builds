@@ -5,6 +5,7 @@ namespace Drupal\oiko_leaflet\Controller;
 use Drupal\Core\Cache\CacheableJsonResponse;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Lock\LockBackendInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityTypeManager;
@@ -64,29 +65,16 @@ class MapPageController extends ControllerBase {
     $entities_per_page = 100;
 
     // Add some lovely locking.
-    if ($this->lock->acquire('MapPageController::allEntitiesForMap::' . $page, 180)) {
+    $lock_name = 'MapPageController::allEntitiesForMap::' . $page;
+    if ($this->lock->acquire($lock_name, 180)) {
       $storage = $this->entity_type_manager->getStorage('cidoc_entity');
-
-      // Check to see if there's another page of data to get.
-      $countQuery = $storage->getQuery();
-      $more = $countQuery
-        ->notExists('field_empire_outline')
-        ->range(($page + 1) * $entities_per_page, 1)
-        ->sort('id')
-        ->count()
-        ->execute();
-      if (!empty($more)) {
-        $more_url = Url::fromRoute('oiko_leaflet.map_page_controller_allEntities', [], [
-          'query' => [
-            'page' => $page + 1,
-          ]
-        ])->toString(TRUE);
-        $data['more'] = $more_url->getGeneratedUrl();
-      }
 
       $query = $storage->getQuery();
       $results = $query
+        // We're essentially doing our own access checking so skip the built in stuff.
+        ->accessCheck(FALSE)
         ->notExists('field_empire_outline')
+        ->condition('status', 1)
         ->range($page * $entities_per_page, $entities_per_page)
         ->sort('id')
         ->execute();
@@ -114,14 +102,71 @@ class MapPageController extends ControllerBase {
         $response->getCacheableMetadata()->addCacheTags($definition->getListCacheTags());
       }
 
-      $this->lock->release('MapPageController::allEntitiesForMap');
+      $this->lock->release($lock_name);
 
       return $response;
     }
     else {
       // Get the browser to retry in a bit.
-      $this->lock->wait('MapPageController::allEntitiesForMap', 10);
+      $this->lock->wait($lock_name, 10);
       return new RedirectResponse(Url::fromRoute('oiko_leaflet.map_page_controller_allEntities', [], ['query' => ['page' => $page]])->toString(), 307);
+    }
+  }
+
+  /**
+   *
+   */
+  public function ownEntitiesForMap(Request $request) {
+    $data = [
+      'features' => [],
+    ];
+
+    $currentUser = $this->currentUser();
+    // Add some lovely locking.
+    $lock_name = 'MapPageController::ownEntitiesForMap::' . $currentUser->id();
+    if ($this->lock->acquire($lock_name, 180)) {
+      $storage = $this->entity_type_manager->getStorage('cidoc_entity');
+      $query = $storage->getQuery()
+        ->notExists('field_empire_outline')
+        // Query for unpublished entities. Access checking takes care of limiting this to the correct entities.
+        ->condition('status', 0)
+        ->sort('id');
+
+      // User can view all entities.
+      if ($currentUser->hasPermission('view unpublished cidoc entities')) {
+        $query->condition('status', 0);
+      }
+      else if ($currentUser->hasPermission('view own unpublished cidoc entities')) {
+        $query->condition('status', 0);
+        $query->condition('user_id', $currentUser->id());
+      }
+
+      $results = $query->execute();
+
+      // Get the entities.
+      $entities = $storage->loadMultiple($results);
+      foreach ($entities as $entity) {
+        /** @var \Drupal\cidoc\Entity\CidocEntity $entity */
+        $data['features'] = array_merge($data['features'], $entity->getGeospatialData());
+      }
+
+      $response = new CacheableJsonResponse($data);
+      $response->getCacheableMetadata()->addCacheContexts(['user']);
+      foreach ($entities as $entity) {
+        $response->addCacheableDependency($entity);
+      }
+
+      $definition = $this->entity_type_manager->getDefinition('cidoc_entity');
+      $response->getCacheableMetadata()->addCacheTags($definition->getListCacheTags());
+
+      $this->lock->release($lock_name);
+
+      return $response;
+    }
+    else {
+      // Get the browser to retry in a bit.
+      $this->lock->wait($lock_name, 10);
+      return new RedirectResponse(Url::fromRoute('oiko_leaflet.map_page_controller_unpublishedEntities')->toString(), 307);
     }
   }
 

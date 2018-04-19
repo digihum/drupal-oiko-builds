@@ -6,9 +6,11 @@ dependencies:
     - field.field.cidoc_entity.e53_place.field_geodata
     - field.field.cidoc_entity.e53_place.field_location_lookup
     - field.field.cidoc_entity.e53_place.field_pleiades_uri
+    - image.style.thumbnail
   module:
     - field_group
     - geocoder_autocomplete
+    - image
     - leaflet_widget
     - link
     - paragraphs

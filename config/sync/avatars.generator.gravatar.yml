@@ -1,0 +1,13 @@
+uuid: 471b77eb-e2dc-44c8-bcae-486894b9bb8f
+langcode: en
+status: true
+dependencies:
+  module:
+    - avatars_gravatar
+id: gravatar
+label: Gravatar
+weight: -9
+plugin: gravatar
+provider: null
+settings:
+  maximum_rating: g

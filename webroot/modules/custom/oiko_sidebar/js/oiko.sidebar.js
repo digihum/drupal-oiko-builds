@@ -75,11 +75,18 @@
     }
   };
 
-  Drupal.oiko.displayLoadingContentInLeafletSidebar = function(label) {
-    // This is actually a cheeky way to ensure that we don't need to scroll to the top.
+  Drupal.oiko.displayLoadingContentInLeafletSidebar = function() {
+    // This is actually a cheeky way to ensure that we don't need to scroll to
+    // the top during 'page loads'.
     $('.sidebar-information-content-content')
         .text(Drupal.t('Searching across time and space for your information...'))
         .append('<div class="loading-graphic show"></div>');
+  };
+
+  Drupal.oiko.displayFailureContentInLeafletSidebar = function() {
+    // This is actually a cheeky way to ensure that we don't need to scroll to the top.
+    $('.sidebar-information-content-content')
+      .text(Drupal.t('Sorry! There was an error loading that content, log in or try again later.'));
   };
 
   Drupal.oiko.displayContentInLeafletSidebar = function(id, donecb, errorcb) {

@@ -1,0 +1,29 @@
+uuid: eedeb17f-aaa7-49fc-baae-b843d1b90a30
+langcode: en
+status: true
+dependencies: {  }
+id: p122_borders_with
+label: 'P122 borders with'
+bidirectional: true
+reverse_label: 'P122 borders with'
+friendly_label: 'Borders with'
+reverse_friendly_label: ''
+domain_bundles:
+  - e53_place
+range_bundles:
+  - e53_place
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

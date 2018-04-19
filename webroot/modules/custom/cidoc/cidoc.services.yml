@@ -13,3 +13,6 @@ services:
 
   cidoc.hook_implementations:
       class: Drupal\cidoc\CidocHookImplementations
+
+  cidoc.graph_traversal:
+    class: Drupal\cidoc\GraphTraversal

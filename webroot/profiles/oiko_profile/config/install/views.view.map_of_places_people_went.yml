@@ -32,7 +32,7 @@ display:
         type: none
         options: {  }
       cache:
-        type: tag
+        type: none
         options: {  }
       query:
         type: views_query
@@ -438,7 +438,7 @@ display:
       bundles:
         - e21_person
         - e74_group
-      show_title: 0
+      show_title: false
       title: 'Places visited'
     cache_metadata:
       max-age: -1

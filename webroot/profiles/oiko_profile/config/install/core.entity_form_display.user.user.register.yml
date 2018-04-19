@@ -13,27 +13,6 @@ dependencies:
     - image
     - path
     - user
-third_party_settings:
-  field_group:
-    group_agree:
-      children:
-        - field_contact_preference
-        - field_terms_and_privacy
-      parent_name: ''
-      weight: 4
-      format_type: html_element
-      format_settings:
-        label: Agree
-        element: div
-        show_label: false
-        label_element: h3
-        required_fields: true
-        attributes: ''
-        effect: none
-        speed: fast
-        id: ''
-        classes: callout
-      label: Agree
 id: user.user.register
 targetEntityType: user
 bundle: user
@@ -45,40 +24,38 @@ content:
     third_party_settings: {  }
     region: content
   avatars_user_picture:
-    weight: 1
+    weight: 2
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
     type: image_image
-    region: content
   field_contact_preference:
     type: boolean_checkbox
     weight: 6
     settings:
       display_label: true
     third_party_settings: {  }
-    region: content
   field_terms_and_privacy:
-    weight: 5
+    weight: 6
     settings:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
   google_analytics:
-    weight: 3
+    weight: 4
     settings: {  }
     third_party_settings: {  }
     region: content
   language:
-    weight: 2
+    weight: 3
     settings: {  }
     third_party_settings: {  }
     region: content
   path:
     type: path
-    weight: 4
+    weight: 5
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -87,4 +64,5 @@ content:
     region: content
 hidden:
   avatars_avatar_generator: true
+  field_contact_preference: true
   user_picture: true

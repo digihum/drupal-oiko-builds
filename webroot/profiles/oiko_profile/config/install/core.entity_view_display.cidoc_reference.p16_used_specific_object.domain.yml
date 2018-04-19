@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_property.p16_used_specific_object
     - core.entity_view_mode.cidoc_reference.domain
     - field.field.cidoc_reference.p16_used_specific_object.domain
+    - field.field.cidoc_reference.p16_used_specific_object.field_mode_of_use
     - field.field.cidoc_reference.p16_used_specific_object.range
 id: cidoc_reference.p16_used_specific_object.domain
 targetEntityType: cidoc_reference

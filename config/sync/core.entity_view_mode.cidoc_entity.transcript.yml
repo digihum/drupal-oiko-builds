@@ -1,0 +1,10 @@
+uuid: f4bd0387-bb23-4713-93da-1a2fb3f363d4
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_entity.transcript
+label: Transcript
+targetEntityType: cidoc_entity
+cache: true

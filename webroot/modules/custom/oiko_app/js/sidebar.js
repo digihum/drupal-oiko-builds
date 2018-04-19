@@ -42,6 +42,23 @@ function receiveCidocEntity(id) {
   }
 }
 
+export const REQUEST_CIDOC_ENTITY_FAILURE = 'oiko/REQUEST_CIDOC_ENTITY_FAILURE';
+/**
+ * An action that will indicate that the given CIDOC entity has failed to load.
+ *
+ * @param id
+ *   The CIDOC entity that failed to load.
+ *
+ * @returns {{type: string, id: *, failedAt: number}}
+ */
+function receiveCidocEntityFailure(id) {
+  return {
+    type: REQUEST_CIDOC_ENTITY_FAILURE,
+    id,
+    failedAt: Date.now()
+  }
+}
+
 /**
  * Initial the fetch of a CIDOC entity.
  *
@@ -55,13 +72,13 @@ function fetchCidocEntity(id) {
     dispatch(requestCidocEntity(id));
     Drupal.oiko.sidebar.open('information');
     // Replace the content with the loading content.
-    Drupal.oiko.displayLoadingContentInLeafletSidebar('');
+    Drupal.oiko.displayLoadingContentInLeafletSidebar();
     return Drupal.oiko.displayContentInLeafletSidebar(id, () => {
       // Dispatch our receieveCidocEntity action on the store.
       dispatch(receiveCidocEntity(id));
     }, () => {
-      // @TODO: should we record the failure?
-      // dispatch(receiveCidocEntity(id));
+      Drupal.oiko.displayFailureContentInLeafletSidebar();
+      dispatch(receiveCidocEntityFailure(id));
     });
   }
 }
@@ -112,6 +129,12 @@ function cidoc(state = {
         isFetching: true,
         id: action.id
       });
+    case REQUEST_CIDOC_ENTITY_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        lastUpdated: action.failedAt,
+        id: action.id
+      });
     case RECEIVE_CIDOC_ENTITY:
       return Object.assign({}, state, {
         isFetching: false,
@@ -134,6 +157,7 @@ export function cidocEntityReducer(state = {}, action) {
   switch (action.type) {
     case REQUEST_CIDOC_ENTITY:
     case RECEIVE_CIDOC_ENTITY:
+    case REQUEST_CIDOC_ENTITY_FAILURE:
       return Object.assign({}, state, cidoc(state, action));
 
     case UPDATE_LOCATION:

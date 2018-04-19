@@ -1,0 +1,11 @@
+uuid: 3dc17b9f-e63c-4df3-993b-9aa829a58d7b
+langcode: en
+status: true
+dependencies:
+  module:
+    - comment
+id: comment_delete_action
+label: 'Delete comment'
+type: comment
+plugin: comment_delete_action
+configuration: {  }

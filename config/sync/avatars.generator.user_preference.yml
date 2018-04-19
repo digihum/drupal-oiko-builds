@@ -1,0 +1,12 @@
+uuid: 0f96baae-4b13-46f1-945f-f4a468b6e753
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 2nwEP0bxQtG_Vg6uQlbZ9WQc1-SA7M9cEoQ_eD1Z5WE
+id: user_preference
+label: 'User preference'
+weight: -10
+plugin: user_preference
+provider: avatars
+settings: {  }

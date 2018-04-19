@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_property.p143_joined
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p143_joined.domain
+    - field.field.cidoc_reference.p143_joined.range
 id: cidoc_reference.p143_joined.range
 targetEntityType: cidoc_reference
 bundle: p143_joined

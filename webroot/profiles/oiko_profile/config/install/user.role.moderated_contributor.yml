@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies: {  }
+id: moderated_contributor
+label: 'Moderated contributor'
+weight: 6
+is_admin: null
+permissions:
+  - 'access cidoc entity overview'
+  - 'access cidoc reference overview'
+  - 'add cidoc entities'
+  - 'create narrative content'
+  - 'delete own cidoc entities'
+  - 'edit own cidoc entities'
+  - 'edit own narrative content'
+  - 'use text format basic_html'
+  - 'view own unpublished cidoc entities'
+  - 'view own unpublished content'
+  - 'view student transcript'
+  - 'view the administration theme'

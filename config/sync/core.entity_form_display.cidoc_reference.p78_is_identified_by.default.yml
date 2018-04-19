@@ -1,0 +1,55 @@
+uuid: 5bb1c2f1-e2ee-4c31-bf73-ba8c12959342
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p78_is_identified_by
+    - field.field.cidoc_reference.p78_is_identified_by.domain
+    - field.field.cidoc_reference.p78_is_identified_by.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+_core:
+  default_config_hash: 7B4gZ07XnRQ0Pvne2RyQUyMxJgqmIfd9Yqvs6sNJkOo
+id: cidoc_reference.p78_is_identified_by.default
+targetEntityType: cidoc_reference
+bundle: p78_is_identified_by
+mode: default
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+    region: content
+  domain:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 11
+    settings:
+      match_operator: CONTAINS
+      size: '60'
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  langcode:
+    type: language_select
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  range:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 12
+    settings:
+      match_operator: CONTAINS
+      size: '60'
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+hidden:
+  user_id: true

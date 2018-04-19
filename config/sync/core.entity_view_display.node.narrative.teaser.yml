@@ -1,0 +1,20 @@
+uuid: 418101ba-1794-4d96-bf0e-a479116d7ee8
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - node.type.narrative
+  module:
+    - user
+id: node.narrative.teaser
+targetEntityType: node
+bundle: narrative
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  body: true
+  field_crm_entities: true

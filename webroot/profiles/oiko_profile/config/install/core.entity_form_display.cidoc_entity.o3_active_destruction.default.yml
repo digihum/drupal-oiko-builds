@@ -3,9 +3,12 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.o3_active_destruction
+    - image.style.thumbnail
   module:
     - field_group
+    - image
     - paragraphs
+    - path
     - text
 third_party_settings:
   field_group:

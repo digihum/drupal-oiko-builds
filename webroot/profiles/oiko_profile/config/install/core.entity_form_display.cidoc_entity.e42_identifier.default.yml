@@ -3,9 +3,12 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e42_identifier
+    - image.style.thumbnail
   module:
     - field_group
+    - image
     - paragraphs
+    - path
 third_party_settings:
   field_group:
     group_main_details:

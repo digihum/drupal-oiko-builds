@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_property.p121_overlaps_with
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p121_overlaps_with.domain
+    - field.field.cidoc_reference.p121_overlaps_with.range
 id: cidoc_reference.p121_overlaps_with.range
 targetEntityType: cidoc_reference
 bundle: p121_overlaps_with

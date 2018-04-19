@@ -7,6 +7,7 @@ dependencies:
     - field.field.cidoc_reference.p121_overlaps_with.range
   module:
     - oiko_citation
+    - squid_autocomplete
 id: cidoc_reference.p121_overlaps_with.default
 targetEntityType: cidoc_reference
 bundle: p121_overlaps_with

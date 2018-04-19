@@ -74,8 +74,7 @@ third_party_settings:
         id: ''
         classes: fg-carried-out-by
     group_period:
-      children:
-        - p10_falls_within_entity_view_1
+      children: {  }
       parent_name: ''
       weight: 4
       label: Period
@@ -91,8 +90,7 @@ third_party_settings:
         id: ''
         classes: fg-period
     group_includes:
-      children:
-        - p10_includes_entity_view_1
+      children: {  }
       parent_name: ''
       weight: 9
       label: 'Includes these events and time periods'
@@ -108,8 +106,7 @@ third_party_settings:
         id: ''
         classes: fg-includes
     group_influences:
-      children:
-        - p15_was_influenced_by_entity_view_1
+      children: {  }
       parent_name: ''
       weight: 10
       label: Influences
@@ -142,8 +139,7 @@ third_party_settings:
         id: ''
         classes: fg-objects-used
     group_influenced:
-      children:
-        - p15_influenced_entity_view_1
+      children: {  }
       parent_name: ''
       weight: 15
       label: Influenced
@@ -159,8 +155,7 @@ third_party_settings:
         id: ''
         classes: fg-influenced
     group_continues:
-      children:
-        - duplicate_of_p15_was_influenced_by_entity_view_1
+      children: {  }
       parent_name: ''
       weight: 13
       label: Continues
@@ -176,8 +171,7 @@ third_party_settings:
         id: ''
         classes: fg-continues
     group_continued_by:
-      children:
-        - duplicate_of_p15_influenced_entity_view_1
+      children: {  }
       parent_name: ''
       weight: 14
       label: 'Continued by'
@@ -193,8 +187,7 @@ third_party_settings:
         id: ''
         classes: fg-continued-by
     group_forms:
-      children:
-        - p9_forms_part_of_entity_view_1
+      children: {  }
       parent_name: ''
       weight: 11
       label: 'Forms part of'
@@ -210,8 +203,7 @@ third_party_settings:
         id: ''
         classes: fg-forms-part-of
     group_sub_events:
-      children:
-        - p9__entity_view_1
+      children: {  }
       parent_name: ''
       weight: 12
       label: 'Constituent events'
@@ -233,106 +225,142 @@ mode: default
 content:
   cidoc_properties:
     weight: 18
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p10_falls_within':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p11_had_participant':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p12_occurred_in_the_presence_of':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p132_overlaps_with':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p133_is_separated_from':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p134_continued':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p14_carried_out_by':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p15_was_influenced_by':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p16_used_specific_object':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p17_was_motivated_by':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p1_is_identified_by':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p2_has_type':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p4_has_time_span':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p7_took_place_at':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p9_consists_of':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:range:p10_falls_within':
     weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p132_overlaps_with':
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p133_is_separated_from':
+    weight: 21
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:range:p134_continued':
     weight: 21
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:range:p15_was_influenced_by':
     weight: 21
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:range:p17_was_motivated_by':
     weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p70_documents':
+    weight: 21
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:range:p9_consists_of':
     weight: 21
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -384,16 +412,19 @@ content:
     region: content
   p11_has_participant_entity_view_1:
     weight: 5
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   p12_occurred_in_the_presence_of_entity_view_1:
     weight: 10
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   p14_carried_out_by_entity_view_1:
     weight: 9
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -409,16 +440,19 @@ content:
     region: content
   p16_used_specific_object_entity_view_1:
     weight: 11
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   p17_motivated_entity_view_1:
     weight: 10
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   p17_was_motivated_by_entity_view_1:
     weight: 10
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -429,11 +463,13 @@ content:
     region: content
   p7_took_place_at_map_entity_view_1:
     weight: 2
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
   p7_took_place_at_map_entity_view_2:
     weight: 3
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -462,11 +498,13 @@ content:
     region: content
   timeline_link:
     weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
     region: content
 hidden:
   cidoc_admin_links: true
+  cidoc_properties_transcript: true
   cidoc_temporal_summary: true
   citation: true
   content: true

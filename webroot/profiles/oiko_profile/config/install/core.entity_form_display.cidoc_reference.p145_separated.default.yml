@@ -7,6 +7,7 @@ dependencies:
     - field.field.cidoc_reference.p145_separated.range
   module:
     - oiko_citation
+    - squid_autocomplete
 id: cidoc_reference.p145_separated.default
 targetEntityType: cidoc_reference
 bundle: p145_separated

@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_property.p122_borders_with
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p122_borders_with.domain
+    - field.field.cidoc_reference.p122_borders_with.range
 id: cidoc_reference.p122_borders_with.range
 targetEntityType: cidoc_reference
 bundle: p122_borders_with

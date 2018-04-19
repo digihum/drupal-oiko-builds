@@ -44,7 +44,8 @@ function cidoc_query_cidoc_entity_get_properties_alter(\Drupal\Core\Database\Que
   /** @var \Drupal\Core\Database\Query\Select $query */
   $fields = &$query->getFields();
   $existing_fields = array_keys($fields);
-  $fields[$existing_fields[1]]['field'] = 'property';
+  $fields[$existing_fields[0]]['field'] = 'property';
+  $fields = array_reverse($fields);
 
   $query->orderBy($existing_fields[1]);
 }
@@ -85,6 +86,81 @@ function cidoc_query_cidoc_get_properties_for_population_alter(\Drupal\Core\Data
   $query->addExpression('CONCAT(' . $domain_field . ",'>'," . $range_field . ')', 'opposite_endpoint');
 
   $query->orderBy($base_table . '.' . $id_field);
+}
+
+/**
+ * Implements hook_query_TAG_alter().
+ */
+function cidoc_query_cidoc_entity_access_alter(Drupal\Core\Database\Query\AlterableInterface $query) {
+  // Read meta-data from query, if provided.
+  if (!$account = $query->getMetaData('account')) {
+    $account = \Drupal::currentUser();
+  }
+  if (!$op = $query->getMetaData('op')) {
+    $op = 'view';
+  }
+
+  // If an account can view all unpublished CIDOC entities, then there's nothing to do here.
+  if ($account->hasPermission('view unpublished cidoc entities')) {
+    return;
+  }
+  else {
+
+    $tables = $query->getTables();
+    $base_table = $query->getMetaData('base_table');
+    // If the base table is not given, default to one of the node base tables.
+    if (!$base_table) {
+      /** @var \Drupal\Core\Entity\Sql\DefaultTableMapping $table_mapping */
+      $table_mapping = \Drupal::entityTypeManager()->getStorage('cidoc_entity')->getTableMapping();
+      $cidoc_entity_base_tables = $table_mapping->getTableNames();
+
+      foreach ($tables as $table_info) {
+        if (!($table_info instanceof SelectInterface)) {
+          $table = $table_info['table'];
+          // Ensure that 'cidoc_entity' and 'cidoc_entity_field_data' are always preferred over
+          // 'node_revision' and 'node_field_revision'.
+          if ($table == 'cidoc_entity' || $table == 'cidoc_entity_field_data') {
+            $base_table = $table;
+            break;
+          }
+          // If one of the node base tables are in the query, add it to the list
+          // of possible base tables to join against.
+          if (in_array($table, $cidoc_entity_base_tables)) {
+            $base_table = $table;
+          }
+        }
+      }
+
+      // Bail out if the base table is missing.
+      if (!$base_table) {
+        throw new Exception(t('Query tagged for cidoc_entity access but there is no cidoc_entity table, specify the base_table using meta data.'));
+      }
+    }
+
+    // Find all instances of the base table being joined -- could appear
+    // more than once in the query, and could be aliased. Add conditions to each.
+    foreach ($tables as $nalias => $tableinfo) {
+      $table = $tableinfo['table'];
+      if (!($table instanceof SelectInterface) && $table == $base_table) {
+
+        if ($account->hasPermission('view own unpublished cidoc entities')) {
+          $condition = db_or();
+          $condition->condition($table . '.status', 1);
+          $own_condition = db_and()
+            ->condition($table . '.status', 0)
+            ->condition($table . '.user_id', $account->id());
+          $condition->condition($own_condition);
+          $query->condition($condition);
+        }
+        else {
+          // Enforce published entities only.
+          $query->condition($table . '.status', 1);
+        }
+      }
+    }
+
+  }
+
 }
 
 /**

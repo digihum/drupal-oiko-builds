@@ -4,10 +4,13 @@ dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e52_time_span
     - field.field.cidoc_entity.e52_time_span.field_date
+    - image.style.thumbnail
   module:
     - edtf
     - field_group
+    - image
     - paragraphs
+    - path
 third_party_settings:
   field_group:
     group_main:

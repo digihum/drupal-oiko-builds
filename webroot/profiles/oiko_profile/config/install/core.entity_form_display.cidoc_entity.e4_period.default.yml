@@ -4,8 +4,10 @@ dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e4_period
     - field.field.cidoc_entity.e4_period.field_empire_outline
+    - image.style.thumbnail
   module:
     - field_group
+    - image
     - paragraphs
     - path
     - text

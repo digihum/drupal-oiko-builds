@@ -3496,17 +3496,17 @@
     },
     {
         "name": "drupal/core",
-        "version": "8.4.4",
-        "version_normalized": "8.4.4.0",
+        "version": "8.4.6",
+        "version_normalized": "8.4.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/drupal/core.git",
-            "reference": "c6585ffaea5df4ed529e2bdf4371850f8fc3b88c"
+            "reference": "f439a43c7da1df8d16067f797c0bc3498eb4c699"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/drupal/core/zipball/c6585ffaea5df4ed529e2bdf4371850f8fc3b88c",
-            "reference": "c6585ffaea5df4ed529e2bdf4371850f8fc3b88c",
+            "url": "https://api.github.com/repos/drupal/core/zipball/f439a43c7da1df8d16067f797c0bc3498eb4c699",
+            "reference": "f439a43c7da1df8d16067f797c0bc3498eb4c699",
             "shasum": ""
         },
         "require": {
@@ -5902,12 +5902,18 @@
     },
     {
         "name": "drupal/eva",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
+        "version": "1.3.0",
+        "version_normalized": "1.3.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/eva",
-            "reference": "66a6412d468e7620d62999b41f59cdc9223e17e5"
+            "reference": "8.x-1.3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/eva-8.x-1.3.zip",
+            "reference": "8.x-1.3",
+            "shasum": "75613d17488158d844071388fea264c37adb7d6c"
         },
         "require": {
             "drupal/core": "*"
@@ -5919,14 +5925,18 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.1-rc1+4-dev",
-                "datestamp": "1489714085"
+                "version": "8.x-1.3",
+                "datestamp": "1519483384",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "notification-url": "https://packages.drupal.org/8/downloads",
         "license": [
-            "GPL-2.0+"
+            "GPL-2.0-or-later"
         ],
         "authors": [
             {
@@ -6360,17 +6370,17 @@
     },
     {
         "name": "phayes/geophp",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "1.2",
+        "version_normalized": "1.2.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/phayes/geoPHP.git",
-            "reference": "685562416ec6d22b9b3927e02ca0ddacf84ca646"
+            "reference": "015404e85b602e0df1f91441f8db0f9e98f7e567"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phayes/geoPHP/zipball/685562416ec6d22b9b3927e02ca0ddacf84ca646",
-            "reference": "685562416ec6d22b9b3927e02ca0ddacf84ca646",
+            "url": "https://api.github.com/repos/phayes/geoPHP/zipball/015404e85b602e0df1f91441f8db0f9e98f7e567",
+            "reference": "015404e85b602e0df1f91441f8db0f9e98f7e567",
             "shasum": ""
         },
         "require-dev": {
@@ -6378,7 +6388,7 @@
         },
         "time": "2016-03-04 05:42:29",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "classmap": [
                 "geoPHP.inc"
@@ -6398,22 +6408,22 @@
     },
     {
         "name": "drupal/geofield",
-        "version": "1.0.0-alpha2",
-        "version_normalized": "1.0.0.0-alpha2",
+        "version": "1.0.0-beta3",
+        "version_normalized": "1.0.0.0-beta3",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/geofield",
-            "reference": "8.x-1.0-alpha2"
+            "reference": "8.x-1.0-beta3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/geofield-8.x-1.0-alpha2.zip",
-            "reference": "8.x-1.0-alpha2",
-            "shasum": "312100e9f087c6b178eb971c6a8a70919edff7f0"
+            "url": "https://ftp.drupal.org/files/projects/geofield-8.x-1.0-beta3.zip",
+            "reference": "8.x-1.0-beta3",
+            "shasum": "712f3a005e5fac02791d314ac87fda4e449af6fe"
         },
         "require": {
             "drupal/core": "~8.0",
-            "phayes/geophp": "dev-master"
+            "phayes/geophp": "^1.2"
         },
         "type": "drupal-module",
         "extra": {
@@ -6422,11 +6432,7 @@
             },
             "drupal": {
                 "version": "8.x-1.0-alpha2",
-                "datestamp": "1496249943",
-                "security-coverage": {
-                    "status": "not-covered",
-                    "message": "Alpha releases are not covered by Drupal security advisories."
-                }
+                "datestamp": "1464201846"
             }
         },
         "installation-source": "dist",
@@ -6446,24 +6452,17 @@
                 "role": "Maintainer"
             },
             {
-                "name": "chachasikes",
-                "homepage": "https://www.drupal.org/user/50674"
+                "name": "Italo Mairo",
+                "homepage": "https://www.drupal.org/u/itamair",
+                "role": "Maintainer"
             },
             {
                 "name": "davidseth",
                 "homepage": "https://www.drupal.org/user/254857"
             },
             {
-                "name": "dtarc",
-                "homepage": "https://www.drupal.org/user/114087"
-            },
-            {
-                "name": "jherencia",
-                "homepage": "https://www.drupal.org/user/360690"
-            },
-            {
-                "name": "nikhiltri",
-                "homepage": "https://www.drupal.org/user/270223"
+                "name": "itamair",
+                "homepage": "https://www.drupal.org/user/1179076"
             },
             {
                 "name": "phayes",
@@ -6992,18 +6991,18 @@
     },
     {
         "name": "drupal/paragraphs",
-        "version": "1.0.0",
-        "version_normalized": "1.0.0.0",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/paragraphs",
-            "reference": "8.x-1.0"
+            "reference": "8.x-1.1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/paragraphs-8.x-1.0.zip",
-            "reference": "8.x-1.0",
-            "shasum": "4fcbd6a50f5b725a9ba66ee105d6f8a1385ff2c8"
+            "url": "https://ftp.drupal.org/files/projects/paragraphs-8.x-1.1.zip",
+            "reference": "8.x-1.1",
+            "shasum": "c678e5704a98c6a0549e415412da081cfeb03a00"
         },
         "require": {
             "drupal/core": "~8.0",
@@ -7011,6 +7010,8 @@
         },
         "require-dev": {
             "drupal/diff": "*",
+            "drupal/field_group": "*",
+            "drupal/inline_entity_form": "*",
             "drupal/replicate": "*",
             "drupal/search_api": "*",
             "drupal/search_api_db": "*"
@@ -7022,17 +7023,13 @@
             },
             "drupal": {
                 "version": "8.x-1.0",
-                "datestamp": "1487331784",
-                "security-coverage": {
-                    "status": "covered",
-                    "message": "Covered by Drupal's security advisory policy"
-                }
+                "datestamp": "1469726249"
             }
         },
         "installation-source": "dist",
         "notification-url": "https://packages.drupal.org/8/downloads",
         "license": [
-            "GPL-2.0+"
+            "GPL-2.0-or-later"
         ],
         "authors": [
             {
@@ -7056,7 +7053,7 @@
                 "homepage": "https://www.drupal.org/user/227761"
             }
         ],
-        "description": "Enables the creation of paragraphs entities. To safely uninstall, go first to Structure > Paragraphs types > Settings.",
+        "description": "Enables the creation of paragraphs entities.",
         "homepage": "https://www.drupal.org/project/paragraphs",
         "support": {
             "source": "http://cgit.drupalcode.org/paragraphs"

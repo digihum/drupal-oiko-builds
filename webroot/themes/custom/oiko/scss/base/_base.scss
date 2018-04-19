@@ -264,3 +264,11 @@ select {
     }
   }
 }
+
+input[aria-describedby] {
+  margin-bottom: 0;
+}
+
+.description {
+  margin-bottom: $global-margin;
+}

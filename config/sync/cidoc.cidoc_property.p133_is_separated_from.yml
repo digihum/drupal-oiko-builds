@@ -1,0 +1,59 @@
+uuid: 63ec2f0e-45a8-447b-b92c-6f0076100c4b
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: BT4o3aOH88lnEbovpQym7ctDb-MwBlPCEeVd18plv7A
+id: p133_is_separated_from
+label: 'P133 is separated from'
+bidirectional: true
+reverse_label: 'P133 is separated from'
+friendly_label: 'Is separated from'
+reverse_friendly_label: ''
+domain_bundles:
+  0: e4_period
+  1: e5_event
+  4: e7_activity
+  5: e12_production
+  7: e66_formation
+  8: e67_birth
+  10: e68_dissolution
+  11: e69_death
+  12: e6_destruction
+  16: e85_joining
+  17: e86_leaving
+  20: e9_move
+  21: o1_killing
+  22: o2_active_dissolution
+  23: o3_active_destruction
+range_bundles:
+  0: e4_period
+  1: e5_event
+  4: e7_activity
+  5: e12_production
+  7: e66_formation
+  8: e67_birth
+  10: e68_dissolution
+  11: e69_death
+  12: e6_destruction
+  16: e85_joining
+  17: e86_leaving
+  20: e9_move
+  21: o1_killing
+  22: o2_active_dissolution
+  23: o3_active_destruction
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0
