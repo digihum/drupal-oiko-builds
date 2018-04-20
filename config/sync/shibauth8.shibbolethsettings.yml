@@ -1,6 +1,6 @@
 shibboleth_login_handler_url: /Shibboleth.sso/Login
 shibboleth_logout_handler_url: /Shibboleth.sso/Logout
-shibboleth_login_link_text: 'Shibboleth Login'
+shibboleth_login_link_text: 'Sign In via Warwick Single Sign-on'
 server_variable_username: cn
 server_variable_email: mail
 shibboleth_account_linking_text: 'Link this account with another identity'

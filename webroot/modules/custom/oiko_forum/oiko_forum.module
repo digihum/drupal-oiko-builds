@@ -1,0 +1,29 @@
+<?php
+
+use Drupal\Core\Access\AccessResultForbidden;
+
+/**
+ * Implements hook_form_alter().
+ */
+function oiko_forum_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+  if ($form_id == 'user_form') {
+    $account = $form_state->getFormObject()->getEntity();
+    if (oiko_forum_user_is_external($account)) {
+      foreach (['pass', 'mail', 'current_pass'] as $element) {
+        if (isset($form['account'][$element])) {
+          $form['account'][$element]['#access'] = FALSE;
+        }
+      }
+    }
+  }
+}
+
+function oiko_forum_user_is_external($account) {
+  $db = \Drupal::service('database');
+  return (bool) $db->select('shib_authmap')
+    ->condition('uid', $account->id())
+    ->countQuery()
+    ->execute()
+    ->fetchField();
+}

@@ -1,0 +1,9 @@
+<div class="callout primary">
+    <h3>{% trans %}Login using Warwick Single Sign-on{% endtrans %}</h3>
+    {{ form.shibboleth_login_block }}
+</div>
+<h4>{% trans %}Or{% endtrans %}</h4>
+<div class="callout secondary">
+    <h3>{% trans %}Login using an oiko.world account{% endtrans %}</h3>
+    {{ form|without('shibboleth_login_block') }}
+</div>

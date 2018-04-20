@@ -24,6 +24,9 @@ function oiko_app_theme($existing, $type, $theme, $path) {
         'searching_text' => 'Searching through known space and time...',
       ),
     ),
+    'user_login_form' => [
+      'render element' => 'form',
+    ],
   );
 }
 
@@ -135,4 +138,16 @@ function oiko_app_toolbar() {
   );
 
   return $items;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function oiko_app_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+  if ($form_id != 'user_login_form') {
+    return;
+  }
+
+  $form['#theme'] = 'user_login_form';
 }

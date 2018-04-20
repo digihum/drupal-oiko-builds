@@ -40,11 +40,36 @@ class EditorTools extends BlockBase {
         '#markup' => $this->t('<h3>Editor tools</h3>'),
       ];
 
-      $block['add_new_content'] = [
+      $block['actions']['#theme_wrappers'] = [
+        'container' => [
+          '#attributes' => [
+            'class'=> 'button-group expanded',
+          ],
+        ],
+      ];
+
+      $block['actions']['add_new_content'] = [
         '#type' => 'link',
         '#title' => $this->t('<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add new CIDOC entity'),
         '#url' => Url::fromRoute('entity.cidoc_entity.add_page'),
         '#access' => \Drupal::currentUser()->hasPermission('add cidoc entities'),
+        '#attributes' => [
+          'class' => [
+            'button',
+          ],
+        ],
+      ];
+
+      $block['actions']['add_new_narrative'] = [
+        '#type' => 'link',
+        '#title' => $this->t('<i class="fa fa-plus-square-o" aria-hidden="true"></i>&nbsp;Add new Narrative'),
+        '#url' => Url::fromUri('internal:/node/add/narrative'),
+        '#access' => \Drupal::currentUser()->hasPermission('create narrative content'),
+        '#attributes' => [
+          'class' => [
+            'button',
+          ],
+        ],
       ];
 
       $block['editor_tools_recent_edits']['title'] = [
@@ -61,11 +86,16 @@ class EditorTools extends BlockBase {
         ],
       ];
 
-      $block['transcript'] = [
+      $block['actions']['transcript'] = [
         '#type' => 'link',
-        '#title' => $this->t('<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;View transcript'),
+        '#title' => $this->t('<i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;View transcript'),
         '#url' => Url::fromRoute('oiko_cidoc.student_transcript'),
         '#access' => \Drupal::currentUser()->hasPermission('view student transcript'),
+        '#attributes' => [
+          'class' => [
+            'button',
+          ],
+        ],
       ];
 
     }

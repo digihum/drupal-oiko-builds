@@ -31,6 +31,9 @@
   }
 }
 
+a {
+  transition: border-color 0.1s ease-out, background-color 0.1s ease-out, color 0.1s ease-out;
+}
 
 //
 // Copy of system.theme.css.
@@ -271,4 +274,8 @@ input[aria-describedby] {
 
 .description {
   margin-bottom: $global-margin;
+}
+
+.pagination a:hover, .pagination button:hover {
+  color: $pagination-item-color-hover;
 }
