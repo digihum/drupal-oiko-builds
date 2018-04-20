@@ -3,14 +3,11 @@
     "description": "Oiko structure data platform",
     "type": "project",
     "license": "GPL-2.0+",
-    "authors": [
-        {
-            "name": "ComputerMinds",
-            "email": "info@computerminds.co.uk"
-        }
-    ],
-    "repositories": [
-        {
+    "authors": [{
+        "name": "ComputerMinds",
+        "email": "info@computerminds.co.uk"
+    }],
+    "repositories": [{
             "type": "package",
             "package": {
                 "name": "drupal/pathauto",
@@ -94,6 +91,20 @@
                 }
             }
         },
+
+        {
+            "type": "package",
+            "package": {
+                "name": "drupal/shibauth8",
+                "version": "dev-8.1.x",
+                "type": "drupal-module",
+                "source": {
+                    "url": "https://git.drupal.org/sandbox/dcgoodwin/2891275.git",
+                    "type": "git",
+                    "reference": "8.x-1.x"
+                }
+            }
+        },
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
@@ -138,6 +149,7 @@
         "drupal/r4032login": "1.x-dev",
         "drupal/search_api": "1.0-beta3",
         "drupal/sharemessage": "1.0-beta1",
+        "drupal/shibauth8": "dev-8.1.x",
         "drupal/squid_autocomplete": "1.0-alpha5",
         "drupal/twig_xdebug": "^1",
         "drupal/webform": "^5.0@beta",
@@ -148,6 +160,7 @@
     "require-dev": {
         "behat/mink": "~1.6",
         "behat/mink-goutte-driver": "~1.2",
+        "drupal/drush_entity": "6.x-dev",
         "drupal/stage_file_proxy": "^1.0@alpha",
         "jcalderonzumba/gastonjs": "^1.1@dev",
         "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
@@ -178,9 +191,7 @@
         "composer-exit-on-patch-failure": true,
         "merge-plugin": {
             "include": [
-                 "webroot/modules/custom/cidoc_spec/composer.json"
-                ,"webroot/modules/custom/cidoc_sync/composer.json"
-                ,"webroot/modules/custom/edtf/composer.json"
+                "webroot/modules/custom/cidoc_spec/composer.json", "webroot/modules/custom/cidoc_sync/composer.json", "webroot/modules/custom/edtf/composer.json"
             ],
             "recurse": true,
             "replace": false,
@@ -221,8 +232,8 @@
                 "Add applies method patch": "https://www.drupal.org/files/issues/checkfordefinitiontype-2709377.patch"
             },
             "drupal/leaflet": {
-                "New version of geofield uses composer for geophp dependency, geophp_load not needed" : "https://www.drupal.org/files/issues/leaflet-remove_geophp_load_call-2731917-2.patch",
-                "Fixes Incorrect parameter icon_url in Drupal.Leaflet.prototype.create_icon" : "https://www.drupal.org/files/issues/leaflet-fix_incorrect_parameter_name_in_create_icon-2732267-2.patch",
+                "New version of geofield uses composer for geophp dependency, geophp_load not needed": "https://www.drupal.org/files/issues/leaflet-remove_geophp_load_call-2731917-2.patch",
+                "Fixes Incorrect parameter icon_url in Drupal.Leaflet.prototype.create_icon": "https://www.drupal.org/files/issues/leaflet-fix_incorrect_parameter_name_in_create_icon-2732267-2.patch",
                 "Fixes maps not working on HTTPS": "https://www.drupal.org/files/issues/leaflet-ssl_support-2753703-2_0.patch",
                 "Fixes the API docs to include a missing hook": "https://www.drupal.org/files/issues/leaflet-add-hook_leaflet_map_info_alter-2746721-2.patch",
                 "Allows use of geometrycollection": "https://www.drupal.org/files/issues/leaflet-2799311-geometry-collection.patch",

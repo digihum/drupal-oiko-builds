@@ -19,9 +19,9 @@ mode: default
 content:
   account:
     weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   avatars_user_picture:
     weight: 1
     settings:
@@ -39,9 +39,9 @@ content:
     region: content
   language:
     weight: 2
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   timezone:
     weight: 3
     region: content

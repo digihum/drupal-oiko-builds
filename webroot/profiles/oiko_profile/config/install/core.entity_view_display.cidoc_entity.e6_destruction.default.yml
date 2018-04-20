@@ -13,6 +13,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p10_falls_within':
     weight: 20
     region: content
@@ -157,16 +158,19 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
   p12_occurred_in_the_presence_of_entity_view_1:
     weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
   p14_carried_out_by_entity_view_1:
     weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
   p15_influenced_entity_view_1:
     weight: 9
     settings: {  }
@@ -177,16 +181,19 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
   p17_motivated_entity_view_1:
     weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
   p17_was_motivated_by_entity_view_1:
     weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
   p4_has_time_span_entity_view_1:
     weight: 4
     settings: {  }
@@ -197,11 +204,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
   p7_took_place_at_map_entity_view_2:
     weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
   p9__entity_view_1:
     weight: 14
     settings: {  }
@@ -230,6 +239,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   cidoc_admin_links: true
   cidoc_properties_transcript: true

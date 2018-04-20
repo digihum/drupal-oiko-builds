@@ -122,6 +122,40 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p121_overlaps_with':
+    weight: 20
+    region: content
+  'cidoc_properties:domain:p122_borders_with':
+    weight: 20
+    region: content
+  'cidoc_properties:domain:p1_is_identified_by':
+    weight: 20
+    region: content
+  'cidoc_properties:domain:p2_has_type':
+    weight: 20
+    region: content
+  'cidoc_properties:domain:p89_falls_within':
+    weight: 20
+    region: content
+  'cidoc_properties:range:p15_was_influenced_by':
+    weight: 21
+    region: content
+  'cidoc_properties:range:p17_was_motivated_by':
+    weight: 21
+    region: content
+  'cidoc_properties:range:p26_moved_to':
+    weight: 21
+    region: content
+  'cidoc_properties:range:p27_moved_from':
+    weight: 21
+    region: content
+  'cidoc_properties:range:p7_took_place_at':
+    weight: 21
+    region: content
+  'cidoc_properties:range:p89_falls_within':
+    weight: 21
+    region: content
   events_at_this_location_entity_view_1:
     weight: 3
     settings: {  }

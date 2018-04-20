@@ -30,7 +30,12 @@ content:
       preview_image_style: thumbnail
     third_party_settings: {  }
     type: image_image
-    region: content
+  field_contact_preference:
+    type: boolean_checkbox
+    weight: 6
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_terms_and_privacy:
     weight: 6
     settings:
@@ -53,6 +58,9 @@ content:
     weight: 5
     settings: {  }
     third_party_settings: {  }
+    region: content
+  timezone:
+    weight: 6
     region: content
 hidden:
   avatars_avatar_generator: true
