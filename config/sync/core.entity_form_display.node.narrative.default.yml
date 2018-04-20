@@ -31,12 +31,9 @@ content:
     third_party_settings: {  }
   field_crm_entities:
     weight: 122
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: options_buttons
     region: content
   path:
     type: path
