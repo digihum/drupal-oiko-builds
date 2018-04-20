@@ -74,16 +74,13 @@ class EditorTools extends BlockBase {
 
       $block['editor_tools_recent_edits']['title'] = [
         '#type' => 'markup',
-        '#markup' => $this->t('<h3>Recently created content</h3>'),
+        '#markup' => $this->t('<h3>Recently edited content</h3>'),
       ];
       $block['editor_tools_recent_edits']['view'] = [
         '#access' => \Drupal::currentUser()->hasPermission('add cidoc entities'),
         '#type' => 'view',
-        '#name' => 'editor_tools_recent_edits',
+        '#name' => 'editor_tools_recent_changes',
         '#display_id' => 'embed',
-        '#arguments' => [
-          $account->id(),
-        ],
       ];
 
       $block['actions']['transcript'] = [

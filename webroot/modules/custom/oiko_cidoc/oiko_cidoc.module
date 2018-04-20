@@ -1,9 +1,31 @@
 <?php
 
+use Drupal\views\ViewExecutable;
+
 
 /**
  * Implements hook_entity_base_field_info().
  */
 function oiko_cidoc_entity_base_field_info(\Drupal\Core\Entity\EntityTypeInterface $entity_type) {
   return \Drupal::service('oiko_cidoc.hook_implementations')->entity_base_field_info($entity_type);
+}
+
+/**
+ * Implements hook_views_post_build().
+ */
+function oiko_cidoc_views_pre_build(ViewExecutable $view) {
+  if ($view->id() == 'editor_tools_recent_changes') {
+    if (isset($view->filter['cidoc_user_id'])) {
+      $view->filter['cidoc_user_id']->value = [
+        Drupal::currentUser()
+          ->id() => Drupal::currentUser()->id()
+      ];
+    }
+    if (isset($view->filter['node_uid'])) {
+      $view->filter['node_uid']->value = [
+        Drupal::currentUser()
+          ->id() => Drupal::currentUser()->id()
+      ];
+    }
+  }
 }
