@@ -9,7 +9,7 @@
         };
 
         // Get Some AJAX Requests going to get the data.
-        $.getJSON("/graphing/data/cidoc-entities", function(entities) {
+        $.getJSON("/graphing/graph/vis/entities", function(entities) {
           var items = [];
           $.each(entities, function(key, entity) {
             items.push({id: entity.id, label: entity.name});
@@ -35,8 +35,8 @@
           physics: {
             solver: 'barnesHut',
             barnesHut: {
-              gravitationalConstant: -6000,
-              springConstant:0.02
+              gravitationalConstant: -30000,
+              springConstant:0.05
             },
             stabilization: {
               enabled: true,

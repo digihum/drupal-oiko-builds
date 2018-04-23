@@ -19,3 +19,24 @@ cidoc_graphing.cidoc_graph_all:
     _permission: 'access cidoc entity overview'
   options:
     _admin_route: TRUE
+
+
+cidoc_graphing.cidoc_graph_entities:
+  path: '/graphing/graph/vis/entities'
+  defaults:
+    _title: 'All CIDOC data'
+    _controller: '\Drupal\cidoc_graphing\Controller\CidocGraphingController::entity'
+  requirements:
+    _permission: 'access cidoc entity overview'
+  options:
+    _admin_route: TRUE
+
+cidoc_graphing.cidoc_graph_references:
+  path: '/graphing/graph/vis/references'
+  defaults:
+    _title: 'All CIDOC data'
+    _controller: '\Drupal\cidoc_graphing\Controller\CidocGraphingController::reference'
+  requirements:
+    _permission: 'access cidoc entity overview'
+  options:
+    _admin_route: TRUE

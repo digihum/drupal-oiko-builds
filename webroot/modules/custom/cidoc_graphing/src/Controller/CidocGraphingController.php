@@ -7,6 +7,8 @@
 
 namespace Drupal\cidoc_graphing\Controller;
 
+use Drupal\cidoc\Entity\CidocEntity;
+use Drupal\Core\Cache\CacheableJsonResponse;
 use Drupal\Core\Controller\ControllerBase;
 
 class CidocGraphingController extends ControllerBase {
@@ -36,4 +38,53 @@ class CidocGraphingController extends ControllerBase {
 
     return $display;
   }
+
+  public function entity() {
+    $entity = CidocEntity::load(4377);
+    $traversal = \Drupal::service('cidoc.graph_traversal');
+    $entities = $traversal->findConnectedVertices($entity, NULL, 2);
+
+    $references = [];
+    /** @var \Drupal\cidoc\Entity\CidocReference $reference */
+    foreach ($entities as $reference) {
+      $references[] = [
+        'id' => $reference->id(),
+        'name' => $reference->label(),
+      ];
+    }
+
+    $response = new CacheableJsonResponse($references);
+    foreach ($entities as $entity) {
+      $response->addCacheableDependency($entity);
+    }
+//    $definition = $this->entity_type_manager->getDefinition('cidoc_reference');
+//    $response->getCacheableMetadata()->addCacheTags($definition->getListCacheTags());
+    return $response;
+  }
+
+//  public function reference() {
+//    $references = [];
+//
+//    // Try to get all references.
+//    $entity_storage = $this->entity_type_manager->getStorage('cidoc_reference');
+//    $entities = $entity_storage->loadMultiple();
+//
+//    /** @var \Drupal\cidoc\Entity\CidocReference $reference */
+//    foreach ($entities as $reference) {
+//      $references[] = [
+//        'domain' => $reference->domain->getValue()[0]['target_id'],
+//        'property' => $reference->getPropertyLabel(),
+//        'range' => $reference->range->getValue()[0]['target_id'],
+//      ];
+//    }
+//
+//    $response = new CacheableJsonResponse($references);
+//    foreach ($entities as $entity) {
+//      $response->addCacheableDependency($entity);
+//    }
+//    $definition = $this->entity_type_manager->getDefinition('cidoc_reference');
+//    $response->getCacheableMetadata()->addCacheTags($definition->getListCacheTags());
+//    return $response;
+//
+//  }
 }
