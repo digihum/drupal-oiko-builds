@@ -9,28 +9,24 @@
         };
 
         // Get Some AJAX Requests going to get the data.
-        $.getJSON("/graphing/graph/vis/entities", function(entities) {
-          var items = [];
-          $.each(entities, function(key, entity) {
-            items.push({id: entity.id, label: entity.name});
+        $.getJSON("/graphing/graph/vis/entities", function(responseData) {
+          var nodes = [];
+          var edges = [];
+          $.each(responseData.nodes, function(key, entity) {
+            nodes.push({id: entity.id, label: entity.label});
           });
-          data.nodes.add(items);
-        });
-
-        $.getJSON("/graphing/data/cidoc-references", function(references) {
-          var items = [];
-          $.each(references, function(key, reference) {
-            items.push({from: reference.domain, to: reference.range, label: reference.property});
+          $.each(responseData.edges, function(key, reference) {
+            edges.push({from: reference.from, to: reference.to, label: reference.property, arrows: reference.bidirectional ? 'to, from' : 'to'});
           });
-          data.edges.add(items);
+          data.nodes.add(nodes);
+          data.edges.add(edges);
         });
-
 
         var options = {
           height: '768px',
           nodes: {
             shape: 'dot',
-            size: 16
+            size: 8
           },
           physics: {
             solver: 'barnesHut',
@@ -44,21 +40,23 @@
               updateInterval: 500,
               fit: true
             },
-            timestep: 0.5,
+            timestep: 1,
             adaptiveTimestep: true
           },
           edges: {
             smooth: {
-              enabled: false
+              enabled: true
             },
+            font: {
+              align: 'middle',
+            }
           },
         };
 
         var network = new vis.Network(this, data, options);
-
-        network.on("stabilizationProgress", function(params) {
-          var widthFactor = params.iterations/params.total;
-          console.log(Math.round(widthFactor*100) + '%');
+        
+        network.once("stabilizationIterationsDone", function() {
+          console.log('done');
         });
       });
     }

@@ -349,7 +349,7 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
       $query = \Drupal::entityQuery('cidoc_reference')
         ->condition($endpoint, $this->id());
       if ($property_name) {
-        $query->condition('property', $property_name);
+        $query->condition('property', $property_name, is_array($property_name) ? 'IN' : '=');
       }
       $query->addTag('cidoc_entity_get_properties');
       $references = $query->execute();

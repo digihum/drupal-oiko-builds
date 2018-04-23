@@ -357,6 +357,11 @@ class CidocReference extends EditorialContentEntityBase implements CidocReferenc
     return $this->get('domain')->getValue()[0]['target_id'];
   }
 
+  public function getDomainEntity() {
+    // @TODO: fairly certain this is wrong/could be done better.
+    return $this->domain->entity;
+  }
+
   /**
    * Get the first entity in the range of this reference.
    *
@@ -366,6 +371,10 @@ class CidocReference extends EditorialContentEntityBase implements CidocReferenc
   public function getRange() {
     // @TODO: fairly certain this is wrong/could be done better.
     return $this->get('range')->getValue()[0]['target_id'];
+  }
+  public function getRangeEntity() {
+    // @TODO: fairly certain this is wrong/could be done better.
+    return $this->range->entity;
   }
 
 }
