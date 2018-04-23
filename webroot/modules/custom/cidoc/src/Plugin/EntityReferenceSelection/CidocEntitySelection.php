@@ -223,17 +223,4 @@ class CidocEntitySelection extends DefaultSelection {
 
     return $query;
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function createNewEntity($entity_type_id, $bundle, $label, $uid) {
-    $entity = parent::createNewEntity($entity_type_id, $bundle, $label, $uid);
-
-    /** @var CidocEntity $entity */
-    $entity->setPublished(TRUE);
-
-    return $entity;
-  }
-
 }

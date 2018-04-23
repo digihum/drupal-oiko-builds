@@ -98,7 +98,6 @@ class StudentTranscriptController extends ControllerBase {
       }
     }
 
-    // @TODO: Add the remaining cidoc entities not referenced by a narrative.
     if ($remaining_entities = $this->getRemainingNarrativeEntities($rendered_entities)) {
       $cidoc_view_builder = $this->cidocViewBuilder();
       $response['others']['detail'] = [
