@@ -152,6 +152,7 @@
         "drupal/shibauth8": "dev-8.1.x",
         "drupal/squid_autocomplete": "1.0-alpha5",
         "drupal/twig_xdebug": "^1",
+        "drupal/views_bulk_operations": "^2.2",
         "drupal/webform": "^5.0@beta",
         "drush/drush": "~8.1.15",
         "oomphinc/composer-installers-extender": "dev-master",

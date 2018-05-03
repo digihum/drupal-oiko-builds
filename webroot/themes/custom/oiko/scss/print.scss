@@ -7,3 +7,11 @@
 body.layout-flex, .l-main, .l-content-container, .l-main-content, .oiko-app, .page-scroll-container {
   display: block;
 }
+
+.student-transcript {
+  break-after: always;
+}
+
+.student-transcript--list-row {
+  break-inside: avoid;
+}

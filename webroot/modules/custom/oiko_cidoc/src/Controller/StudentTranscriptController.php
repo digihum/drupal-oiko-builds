@@ -213,6 +213,10 @@ class StudentTranscriptController extends ControllerBase {
       $narrative->body->view(['label' => 'hidden']),
     ];
 
+    $rendered_narrative['summary']['related_to'] = [
+      $narrative->field_crm_entities->view(['label' => 'above']),
+    ];
+
     // Timeline of entities.
     $data = [
       'id' => 0,

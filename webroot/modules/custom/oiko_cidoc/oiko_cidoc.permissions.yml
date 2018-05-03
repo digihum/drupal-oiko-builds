@@ -1,2 +1,6 @@
 view student transcript:
   title: 'View student transcript'
+
+moderate cidoc entities:
+  title: 'Moderate CIDOC entities'
+
