@@ -5,7 +5,7 @@ services:
       - { name: access_check, applies_to: _access_cidoc_entity_references_info }
   cidoc.entity_type_helper:
     class: Drupal\cidoc\EntityTypeHelper
-    arguments: ["@cidoc_spec.entity_traversal", "@cidoc_spec.entity_factory", "@cidoc_spec.drupal_manager"]
+    arguments: ['@cidoc_spec.entity_traversal', '@cidoc_spec.entity_factory', '@cidoc_spec.drupal_manager', '@entity_type.manager']
 
   plugin.manager.cidoc.geoserializer:
     class: Drupal\cidoc\Geoserializer\GeoserializerPluginManager
