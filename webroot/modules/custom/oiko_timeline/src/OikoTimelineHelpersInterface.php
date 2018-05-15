@@ -9,5 +9,5 @@ interface OikoTimelineHelpersInterface {
    * @param $entities
    * @param $data
    */
-  public function renderEventsForTimeline($events, &$entities, &$data): void;
+  public function renderEventsForTimeline($events, &$entities, &$data);
 }
