@@ -11,7 +11,7 @@ class OikoTimelineHelpers implements OikoTimelineHelpersInterface {
    *
    * @TODO: Extract this out into a service, and generally clean it up.
    */
-  public function renderEventsForTimeline($events, &$entities, &$data): void {
+  public function renderEventsForTimeline($events, &$entities, &$data)  {
     foreach ($events as $event) {
       /** @var CidocEntity $event */
       $entities[] = $event;
