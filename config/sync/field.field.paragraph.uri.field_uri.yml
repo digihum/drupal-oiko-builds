@@ -1,0 +1,25 @@
+uuid: ec2fd28a-ee04-4b8c-885b-d19dfc5c9555
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_uri
+    - paragraphs.paragraphs_type.uri
+  module:
+    - link
+_core:
+  default_config_hash: CI54wZfesuY2uM3cKd0AoK1blieX81iQ2lqDAXvSmaI
+id: paragraph.uri.field_uri
+field_name: field_uri
+entity_type: paragraph
+bundle: uri
+label: URI
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 0
+field_type: link

@@ -6,11 +6,11 @@ label: 'Forum user'
 weight: 4
 is_admin: null
 permissions:
-  - 'edit own comments'
-  - 'post comments'
   - 'access comments'
-  - 'create forum content'
-  - 'edit own forum content'
-  - 'view published cidoc entities'
   - 'access content'
+  - 'create forum content'
+  - 'edit own comments'
+  - 'edit own forum content'
+  - 'post comments'
   - 'skip comment approval'
+  - 'view published cidoc entities'

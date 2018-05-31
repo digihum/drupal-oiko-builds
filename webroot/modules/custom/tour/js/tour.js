@@ -190,8 +190,10 @@
         if ($tour.find('li').length) {
           $tour.joyride({
             autoStart: true,
-            postRideCallback: function () { that.model.set('isActive', false); },
-            postExposeCallback: function () { setTimeout(function() { $(window).trigger('resize'); }, 1); },
+            postRideCallback: function () {
+              $(window).trigger('hide.oiko.information-bar');
+              that.model.set('isActive', false);
+            },
             modal: true,
             expose: true,
             // HTML segments for tip layout.
@@ -199,6 +201,18 @@
               link: '<a href=\"#close\" class=\"joyride-close-tip\">&times;</a>',
               button: '<a href=\"#\" class=\"button button--primary joyride-next-tip\"></a>',
               prevButton: '<a href=\"#\" class=\"button joyride-prev-tip\"></a>'
+            },
+            preStepCallback: function (index, nextTip) {
+              var tour = this;
+              if ($(tour.$li).data('informationBar') === 'visible') {
+                $(window).trigger('show.oiko.information-bar-demo');
+              }
+              else {
+                $(window).trigger('hide.oiko.information-bar-demo');
+              }
+            },
+            postStepCallback: function (index, currentTip) {
+              setTimeout(function() { $(window).trigger('resize'); }, 250);
             }
           });
           this.model.set({isActive: true, activeTour: $tour});
@@ -389,9 +403,10 @@
         if ($tour.find('li').length) {
           $tour.joyride({
             autoStart: true,
-            postRideCallback: function () { that.model.set('isActive', false); },
-            // This creates an infinite loop, ideally it would not!
-            postExposeCallback: function () { setTimeout(function() { $(window).trigger('resize'); }, 250); },
+            postRideCallback: function () {
+              $(window).trigger('hide.oiko.information-bar');
+              that.model.set('isActive', false);
+            },
             modal: true,
             expose: true,
             // HTML segments for tip layout.
@@ -399,6 +414,18 @@
               link: '<a href=\"#close\" class=\"joyride-close-tip\">&times;</a>',
               button: '<a href=\"#\" class=\"button button--primary joyride-next-tip\"></a>',
               prevButton: '<a href=\"#\" class=\"button joyride-prev-tip\"></a>'
+            },
+            preStepCallback: function (index, nextTip) {
+              var tour = this;
+              if ($(tour.$li).data('informationBar') === 'visible') {
+                $(window).trigger('show.oiko.information-bar-demo');
+              }
+              else {
+                $(window).trigger('hide.oiko.information-bar-demo');
+              }
+            },
+            postStepCallback: function (index, currentTip) {
+              setTimeout(function() { $(window).trigger('resize'); }, 250);
             }
           });
           this.model.set({isActive: true, activeTour: $tour});

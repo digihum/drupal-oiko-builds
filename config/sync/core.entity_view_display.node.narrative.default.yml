@@ -1,0 +1,24 @@
+uuid: 2f26fab8-ad08-4a29-aa32-e4a6709c2105
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.narrative.body
+    - field.field.node.narrative.field_crm_entities
+    - node.type.narrative
+  module:
+    - user
+id: node.narrative.default
+targetEntityType: node
+bundle: narrative
+mode: default
+content:
+  rendered_transcript:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  body: true
+  field_crm_entities: true
+  links: true

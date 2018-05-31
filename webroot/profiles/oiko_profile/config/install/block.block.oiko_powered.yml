@@ -7,7 +7,7 @@ dependencies:
     - oiko
 id: oiko_powered
 theme: oiko
-region: '-1'
+region: primary_menu
 weight: -5
 provider: null
 plugin: system_powered_by_block

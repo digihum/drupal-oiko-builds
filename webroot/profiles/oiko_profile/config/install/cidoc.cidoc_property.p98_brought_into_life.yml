@@ -8,9 +8,9 @@ reverse_label: 'P98 was born'
 friendly_label: 'Brought into life'
 reverse_friendly_label: 'Was born'
 domain_bundles:
-  e67_birth: e67_birth
+  - e67_birth
 range_bundles:
-  e21_person: e21_person
+  - e21_person
 editability:
   domain: true
   range: true

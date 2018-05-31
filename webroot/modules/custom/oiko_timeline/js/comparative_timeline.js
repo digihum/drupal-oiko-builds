@@ -1,22 +1,43 @@
 (function ($) {
   "use strict";
 
-Drupal.oiko.addAppModule('comparative-timeline');
+var WINDOW_SLIDER_ID = 'window-slider';
 
 Drupal.behaviors.comparative_timeline = {
   attach: function(context, settings) {
     $(context).find('.js-comparative-timeline-container').once('comparative_timeline').each(function() {
       var $component = $(this);
+      var id = $component.attr('id');
+      var timelineSettings, timeline;
+      // Ensure that there's an oiko_timeline collection on the settings collection.
+      settings.oiko_timeline = settings.oiko_timeline || {};
       if ($component.data('comparative_timeline') == undefined) {
-        Drupal.oiko.timeline = new Drupal.OikoComparativeTimeline($component, settings.oiko_timeline);
-        $component.data('comparative_timeline', Drupal.oiko.timeline);
+        // Find our settings.
+        timelineSettings = settings.oiko_timeline[id] || {};
+
+        if (timelineSettings.hasOwnProperty('pagestate') && timelineSettings.pagestate) {
+          Drupal.oiko.addAppModule('comparative-timeline');
+        }
+        timeline = new Drupal.OikoComparativeTimeline($component, timelineSettings);
+        $component.data('comparative_timeline', timeline);
+        if (timelineSettings.hasOwnProperty('pagestate') && timelineSettings.pagestate) {
+          Drupal.oiko.timeline = timeline;
+          Drupal.oiko.appModuleDoneLoading('comparative-timeline');
+        }
+
       }
-      Drupal.oiko.appModuleDoneLoading('comparative-timeline');
     });
   }
 };
 
 
+  /**
+   * Define a comparative timeline widget.
+   *
+   * @param $outerContainer
+   * @param element_settings
+   * @constructor
+   */
   Drupal.OikoComparativeTimeline = function ($outerContainer, element_settings) {
     var timeline = this;
     var defaults = {
@@ -26,18 +47,41 @@ Drupal.behaviors.comparative_timeline = {
       categories: [],
       crmTypes: [],
       window: {},
-      rangeAdjusted: false
+      rangeAdjusted: false,
+      interactive: true,
+      pagestate: false,
+      initialData: false,
+      hasPreselectionsAvailable: false,
+      $outerContainer: $outerContainer,
+      _timelineMin: Infinity,
+      _timelineMax: -Infinity
     };
 
     $.extend(this, defaults, element_settings);
 
-    this.$outerContainer = $outerContainer;
+    // Set vis timeline options.
+    timeline._setVisTimelineOptions.call(timeline);
 
-    this.$timelineContainer = this.$outerContainer.find('.js-comparative-timeline');
-    this.$overviewContainer = this.$outerContainer.find('.js-comparative-timeline-overview');
-    this.$addNewContainer = this.$outerContainer.find('.js-comparative-timeline-add-new');
-    this.$preselectionsContainer = this.$outerContainer.find('.js-comparative-timeline-preselections');
-    this.$ajaxLoader = this.$outerContainer.find('.js-loading-graphic');
+    // Find the DOM elements.
+    timeline._findDOMElements.call(timeline);
+
+    // Init the vis items.
+    timeline._initVisElements.call(timeline);
+
+    // Add the preselected options.
+    timeline._loadPreselectionsAndInitialData.call(timeline);
+
+    // Hook events up.
+    timeline._initialiseEvents.call(timeline);
+
+    // Now that we're all loaded up, update the DOM.
+    timeline.updateTheDOM.call(timeline);
+  };
+
+  /**
+   * Setup our vis timeline options.
+   */
+  Drupal.OikoComparativeTimeline.prototype._setVisTimelineOptions = function () {
     this._timelineOptions = {
       align: 'auto',
       showCurrentTime: false,
@@ -51,7 +95,9 @@ Drupal.behaviors.comparative_timeline = {
         axis: 'top',
         item: 'top'
       },
-      selectable : true,
+      selectable : this.isInteractive(),
+      moveable: this.isInteractive(),
+      zoomable: this.isInteractive(),
       hiddenDates: [
         {start: '0000-01-01 00:00:00', end: '0001-01-01 00:00:00'}
       ],
@@ -61,8 +107,8 @@ Drupal.behaviors.comparative_timeline = {
           month: 'MMM PPPP'
         },
         majorLabels: {
-          weekday:    'MMMM PPPP',
-          day:        'MMMM PPPP',
+          weekday: 'MMMM PPPP',
+          day: 'MMMM PPPP',
           month: 'PPPP'
         }
       },
@@ -72,54 +118,261 @@ Drupal.behaviors.comparative_timeline = {
       zoomMin: 1000 * 86400 * 365.25
     };
 
-    // Settings for the overview timeline.
     this._overviewOptions = {
       width:  "100%",
-      stack: false,
-      showCurrentTime: false,
-      showMajorLabels: false,
-      height: 60,
+        stack: false,
+        showCurrentTime: false,
+        showMajorLabels: false,
+        height: 60,
+        maxHeight: 60,
+        margin: {
+        axis: 0,
+      },
       hiddenDates: [
         {start: '0000-01-01 00:00:00', end: '0001-01-01 00:00:00'}
       ],
-      format: {
+        format: {
         minorLabels: {
           year: 'PPPP',
-          month: 'MMM PPPP'
+            month: 'MMM PPPP'
         },
         majorLabels: {
           weekday:    'MMMM PPPP',
-          day:        'MMMM PPPP',
-          month: 'PPPP'
+            day:        'MMMM PPPP',
+            month: 'PPPP'
         }
       },
       moment: vis.moment.utc,
       moveable: false,
       zoomable: false,
-      selectable: false
+      selectable: true,
+      snap: null,
+      editable: {
+        add: false,         // add new items by double tapping
+        updateTime: true,  // drag items horizontally
+        updateGroup: false, // drag items from one group to another
+        remove: false,       // delete an item by tapping the delete button top right
+        overrideItems: false  // allow these options to override item.editable
+      },
+      onMoving: function (item, callback) {
+        if (item.id === WINDOW_SLIDER_ID) {
+          // Make sure we can't drag outside the bounds.
+          var window = timeline._visTimelineOverview.getWindow();
+          if (item.start < window.start) {
+            item.start = window.start;
+          }
+          else if (item.end > window.end) {
+            item.end = window.end;
+          }
+          else {
+            // Move the upper timeline to this timeline window.
+            timeline._visTimeline.setWindow(item.start, item.end, {animation: false});
+            callback(item); // send back adjusted item
+          }
+        }
+      }
     };
-
-    this._timelineMin = Infinity;
-    this._timelineMax = -Infinity;
-
-    this.initialise.call(this);
   };
 
-  Drupal.OikoComparativeTimeline.prototype.getTimelines = function () {
-    return this._visGroups.getIds();
+  /**
+   * Find our DOM elements.
+   */
+  Drupal.OikoComparativeTimeline.prototype._findDOMElements = function () {
+    this.$timelineContainer = this.$outerContainer.find('.js-comparative-timeline');
+    this.$overviewContainer = this.$outerContainer.find('.js-comparative-timeline-overview');
+    this.$addNewContainer = this.$outerContainer.find('.js-comparative-timeline-add-new');
+    this.$preselectionsContainer = this.$outerContainer.find('.js-comparative-timeline-preselections');
+    this.$ajaxLoader = this.$outerContainer.find('.js-loading-graphic');
+  };
+
+  /**
+   * Init the vis items we'll be using.
+   */
+  Drupal.OikoComparativeTimeline.prototype._initVisElements = function () {
+    var timeline = this;
+    // Construct the vis timeline datasets.
+    this._visItems = new vis.DataSet({});
+    // Add the item that we'll use to show what we're browsing.
+    this._visDisplayedItems = new vis.DataView(this._visItems, {
+      filter: $.proxy(this._filterItemsCallback, this)
+    });
+
+    this._visOverviewItems = new vis.DataView(this._visDisplayedItems, {
+      fields: {
+        id: 'id',
+        start: 'start',
+        end: 'end',
+        _summaryType: 'type',
+        _summaryClass: 'className'
+      }
+    });
+    this._visGroups = new vis.DataSet({});
+    this._visTimeline = new vis.Timeline(this.$timelineContainer.get(0), this._visDisplayedItems, this._visGroups, this._timelineOptions);
+    // Setting this with the options array didn't work, so set it again here.
+    this._visTimeline.setOptions({ orientation: {axis: this._timelineOptions.orientation.axis} });
+    // Add another timeline that's the summary of our timelines.
+    this._visTimelineOverview = new vis.Timeline(this.$overviewContainer.get(0), this._visOverviewItems, this._overviewOptions);
+  };
+
+  /**
+   * Add preselections and initial data.
+   */
+  Drupal.OikoComparativeTimeline.prototype._loadPreselectionsAndInitialData = function () {
+    var timeline = this;
+    if (timeline.hasOwnProperty('defaultOptions')) {
+      var defaultOptionTitle, defaultOptionId;
+      for (defaultOptionId in timeline.defaultOptions) {
+        timeline.hasPreselectionsAvailable = true;
+        defaultOptionTitle = timeline.defaultOptions[defaultOptionId];
+        var $link = $('<a href="#">').html(defaultOptionTitle).data('groupId', defaultOptionId).addClass('comparative-timeline--preselect-link').click(function(e) {
+          e.preventDefault();
+          timeline.loadDataHandler.call(timeline, $(this).data('groupId'));
+          $(this).hide();
+        });
+        this.$preselectionsContainer.find('.js-items').append($link);
+        this.preselectedLinks.push($link);
+      }
+    }
+
+    // If we've got some initialData then set that up now.
+    if (timeline.initialData && typeof timeline.initialData.id !== 'undefined') {
+      timeline.addDataToTimeline.call(timeline, timeline.initialData);
+    }
+  };
+
+  /**
+   * Setup the event handling and hooks for our widget.
+   */
+  Drupal.OikoComparativeTimeline.prototype._initialiseEvents = function () {
+    var timeline = this;
+    if (this.isInteractive()) {
+      this._visTimeline
+        // Selecting a timeline item, should open the sidebar.
+        .on('select', function(properties) {
+          timeline.selectedTimelineItems.call(timeline, properties);
+        })
+        // Changing the range of the main vis timeline.
+        .on('rangechange', $.proxy(function(e) {
+          this.updateCurrentWindowItem();
+        }, this))
+        // Changed the range of the main vis timeline.
+        .on('rangechanged', $.proxy(function(e) {
+          this.updateCurrentWindowItem();
+          this.window = {
+            start: Math.round(e.start.getTime() / 1000),
+            end: Math.round(e.end.getTime() / 1000)
+          };
+          if (timeline.isPagestate.call(timeline)) {
+            // Execute this in the 'next tick'.
+            setTimeout(function () {
+              $(window).trigger('oiko.timelineRangeChanged');
+            }, 1);
+          }
+        }, this));
+
+      // Clicking remove links should remove those items.
+      this.$timelineContainer.bind('click', function(e) {
+        var $target = $(e.target);
+        if ($target.is('.js-comparative-timeline-remove-link')) {
+          // We need to remove this group.
+          if ($target.data('groupId')) {
+            timeline.removeGroupFromTimeline($target.data('groupId'));
+          }
+        }
+      });
+
+
+      // Interacting with the overview timeline should update the main vis timeline.
+      this._visTimelineOverview
+        .on('doubleClick', function(event) {
+          if (event.time) {
+            // Move our window to be centered on this time.
+            timeline._visTimeline.moveTo(event.time, {animation: false});
+          }
+        })
+        .on('select', function(e) {
+          if (e.items.indexOf(WINDOW_SLIDER_ID) === -1) {
+            timeline._visTimelineOverview.setSelection(WINDOW_SLIDER_ID);
+          }
+        });
+    }
+
+    // If we're tied into the global page state, reflect that.
+    if (timeline.isPagestate.call(timeline)) {
+      $(window).bind('oikoSidebarOpen', function (e, id) {
+        // Find the selected item in our items, and select it.
+        var selectedItems = timeline._visItems.getIds({
+          filter: function (item) {
+            return item.event == id;
+          }
+        });
+        timeline._visTimeline.setSelection(selectedItems, {focus: selectedItems.length > 0});
+      });
+      $(window).bind('set.oiko.categories', function (e, categories) {
+        timeline.setCategories(categories);
+      });
+      $(window).bind('selected.timeline.searchitem', function (e, id) {
+        timeline.loadDataHandler.call(timeline, parseInt(id, 10));
+      });
+    }
+  };
+
+  /**
+   * Should the timeline be connected to the global pagestate.
+   *
+   * @returns {boolean}
+   */
+  Drupal.OikoComparativeTimeline.prototype.isPagestate = function () {
+    return this.pagestate;
+  };
+
+  /**
+   * Should the timeline be interactive.
+   *
+   * @returns {boolean}
+   */
+  Drupal.OikoComparativeTimeline.prototype.isInteractive = function () {
+    return this.interactive;
+  };
+
+  /**
+   * Get timelines displayed by this widget.
+   *
+   * @param includeLoading
+   *   Include timelines that have yet to load their data.
+   *
+   * @returns {*}
+   */
+  Drupal.OikoComparativeTimeline.prototype.getTimelines = function (includeLoading) {
+    if (typeof includeLoading === 'undefined') {
+      includeLoading = true;
+    }
+    if (includeLoading) {
+      var visGroups = this._visGroups.getIds();
+      var loadingItems = this.getLoadingIds();
+      return loadingItems.concat(visGroups);
+    }
+    else {
+      return this._visGroups.getIds();
+    }
   };
 
   Drupal.OikoComparativeTimeline.prototype.setTimelines = function (timelines) {
+    if (!timelines.length) {debugger};
     // Remove all existing timelines.
-    var oldTimelines = this.getTimelines();
-    for (var i in oldTimelines) {
-      this.removeGroupFromTimeline(oldTimelines[i]);
-    }
+    this.removeGroupsFromTimeline(this.getTimelines(), false);
+
     // And now add the timelines we want.
     for (var i in timelines) {
       if (timelines[i] && !this.isLoadingCheck(timelines[i])) {
         this.loadDataHandler(timelines[i]);
       }
+    }
+
+    if (timelines.length) {
+      // Show/hide the preselections as needed.
+      this.updateTheDOM();
+      $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
     }
   };
 
@@ -150,18 +403,23 @@ Drupal.behaviors.comparative_timeline = {
     // Should we fire an event?
   };
 
+  /**
+   * Handler to load data for a group.
+   *
+   * @param groupID
+   */
   Drupal.OikoComparativeTimeline.prototype.loadDataHandler = function (groupID) {
     var timeline = this;
     var url = '/comparative-timeline/data/' + groupID;
-    this.nowLoading(groupID);
-    $.get(url, function(data) {
+    var request = $.get(url, function(data) {
       timeline.doneLoading.call(timeline, groupID);
       timeline.addDataToTimeline.call(timeline, data);
     });
+    this.nowLoading(groupID, request);
   };
 
-  Drupal.OikoComparativeTimeline.prototype.nowLoading = function(id) {
-    this.loadingItems[id] = true;
+  Drupal.OikoComparativeTimeline.prototype.nowLoading = function(id, request) {
+    this.loadingItems[id] = request;
     this.evalLoadingState();
   };
 
@@ -174,6 +432,18 @@ Drupal.behaviors.comparative_timeline = {
     this.evalLoadingState();
   };
 
+  Drupal.OikoComparativeTimeline.prototype.abortLoading = function(id) {
+    if (this.loadingItems[id]) {
+      this.loadingItems[id].abort();
+      delete this.loadingItems[id];
+    }
+    this.evalLoadingState();
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.getLoadingIds = function() {
+    return Object.keys(this.loadingItems);
+  };
+
   Drupal.OikoComparativeTimeline.prototype.evalLoadingState = function() {
     var items = false;
     for (var i in this.loadingItems) {
@@ -184,7 +454,7 @@ Drupal.behaviors.comparative_timeline = {
     }
     this.$ajaxLoader.toggleClass('js-loading-graphic--comparative-timeline-working', items);
     this.isLoading = items;
-    this.$preselectionsContainer.toggle(this.getTimelines().length < 2);
+    this.updateTheDOM();
   };
 
   Drupal.OikoComparativeTimeline.prototype.isLoadingItems = function() {
@@ -192,7 +462,7 @@ Drupal.behaviors.comparative_timeline = {
   };
 
   Drupal.OikoComparativeTimeline.prototype._filterItemsTimeWindowCallback = function(item) {
-    return item.id === 'window-slider';
+    return item.id === WINDOW_SLIDER_ID;
   };
 
   Drupal.OikoComparativeTimeline.prototype._filterItemsCategoriesCallback = function(item) {
@@ -219,86 +489,7 @@ Drupal.behaviors.comparative_timeline = {
     return this._filterItemsTimeWindowCallback(item) || (this._filterItemsCategoriesCallback(item) && this._filterItemsCRMTypesCallback(item));
   };
 
-  Drupal.OikoComparativeTimeline.prototype.initialise = function () {
-    var timeline = this;
-    // Construct the vis timeline datasets.
-    this._visItems = new vis.DataSet({});
-    // Add the item that we'll use to show what we're browsing.
-    this._visDisplayedItems = new vis.DataView(this._visItems, {
-      filter: $.proxy(this._filterItemsCallback, this)
-    });
 
-    this._visOverviewItems = new vis.DataView(this._visDisplayedItems, {
-      fields: {
-        id: 'id',
-        start: 'start',
-        end: 'end',
-        _summaryType: 'type',
-        _summaryClass: 'className'
-      }
-    });
-    this._visGroups = new vis.DataSet({});
-    this._visTimeline = new vis.Timeline(this.$timelineContainer.get(0), this._visDisplayedItems, this._visGroups, this._timelineOptions);
-    // Setting this with the options array didn't work, so set it again here.
-    this._visTimeline.setOptions({ orientation: {axis: this._timelineOptions.orientation.axis} });
-    // Add another timeline that's the summary of our timelines.
-    this._visTimelineOverview = new vis.Timeline(this.$overviewContainer.get(0), this._visOverviewItems, this._overviewOptions);
-
-
-    // Add the preselected options.
-    if (timeline.hasOwnProperty('defaultOptions')) {
-      var defaultOptionTitle, defaultOptionId;
-      for (defaultOptionId in timeline.defaultOptions) {
-        defaultOptionTitle = timeline.defaultOptions[defaultOptionId];
-        var $link = $('<a href="#">').html(defaultOptionTitle).data('groupId', defaultOptionId).addClass('comparative-timeline--preselect-link').click(function(e) {
-          e.preventDefault();
-          timeline.loadDataHandler.call(timeline, $(this).data('groupId'));
-          $(this).hide();
-        });
-        this.$preselectionsContainer.find('.js-items').append($link);
-        this.preselectedLinks.push($link);
-      }
-    }
-
-    // Hook events up.
-    this._visTimeline
-      .on('select', function(properties) {
-        timeline.selectedTimelineItems.call(timeline, properties);
-      })
-      .on('rangechange', $.proxy(function(e) {
-        this.updateCurrentWindowItem();
-      }, this))
-      .on('rangechanged', $.proxy(function(e) {
-        this.updateCurrentWindowItem();
-        this.window = {
-          start: Math.round(e.start.getTime() / 1000),
-          end: Math.round(e.end.getTime() / 1000)
-        };
-        $(window).trigger('oiko.timelineRangeChanged');
-      }, this));
-    this.$timelineContainer.bind('click', function(e) {
-      var $target = $(e.target);
-      if ($target.is('.js-comparative-timeline-remove-link')) {
-        // We need to remove this group.
-        if ($target.data('groupId')) {
-          timeline.removeGroupFromTimeline($target.data('groupId'));
-        }
-      }
-    });
-    $(window).bind('oikoSidebarOpen', function(e, id) {
-      // Find the selected item in our items, and select it.
-      var selectedItems = timeline._visItems.getIds({filter: function(item) {
-        return item.event == id;
-      }});
-      timeline._visTimeline.setSelection(selectedItems, {focus: selectedItems.length > 0});
-    });
-    $(window).bind('set.oiko.categories', function(e, categories) {
-      timeline.setCategories(categories);
-    });
-    $(window).bind('selected.timeline.searchitem', function (e, id) {
-      timeline.loadDataHandler.call(timeline, parseInt(id, 10));
-    });
-  };
 
   Drupal.OikoComparativeTimeline.prototype.getVisibleTimeWindow = function() {
     var w = this._visTimeline.getWindow();
@@ -319,7 +510,36 @@ Drupal.behaviors.comparative_timeline = {
     this.rangeAdjusted = true;
   };
 
-  Drupal.OikoComparativeTimeline.prototype.removeGroupFromTimeline = function(groupId) {
+  /**
+   * Recompute the displayed min and max for our timeline items.
+   *
+   * If the timeline is in interactive mode, then we add a little more padding
+   * to either side of the bounds for nicer display and scrolling.
+   */
+  Drupal.OikoComparativeTimeline.prototype.recomputeMinMaxOfItems = function() {
+    var timeline = this;
+    this._timelineMin = Infinity;
+    this._timelineMax = -Infinity;
+    var pad = this.isInteractive() ? 86400 * 365 * 10 : 0;
+    this._visItems.forEach(function(item) {
+      if (item.id !== WINDOW_SLIDER_ID) {
+        timeline._timelineMin = Math.min(timeline._timelineMin, ((item.start / 1000) - pad));
+        timeline._timelineMax = Math.max(timeline._timelineMax, ((item.end / 1000) + pad));
+      }
+    });
+
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.removeGroupFromTimeline = function(groupId, fireEvents) {
+    if (typeof fireEvents === 'undefined') {
+      fireEvents = true;
+    }
+
+    // If we're loading this group, then abort that Ajax request.
+    if (this.isLoadingCheck(groupId)) {
+      this.abortLoading(groupId);
+    }
+
     // Find the items to remove.
     var ids = this._visItems.getIds({
       filter: function(item) {
@@ -334,6 +554,10 @@ Drupal.behaviors.comparative_timeline = {
     // Refresh our data view.
     this._visDisplayedItems.refresh();
 
+    this.recomputeMinMaxOfItems();
+    this.updateTimelineBounds();
+    this.updateCurrentWindowItem();
+
     // If this is one of the pre-built links, put it back.
     for (var i in this.preselectedLinks) {
       if ($(this.preselectedLinks[i]).data('groupId') == groupId) {
@@ -341,9 +565,29 @@ Drupal.behaviors.comparative_timeline = {
       }
     }
 
-    // Show/hide the preselections as needed.
-    this.$preselectionsContainer.toggle(this.getTimelines().length < 2);
-    $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
+    if (fireEvents) {
+      // Show/hide the preselections as needed.
+      this.updateTheDOM();
+      $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
+    }
+  };
+
+  Drupal.OikoComparativeTimeline.prototype.removeGroupsFromTimeline = function(groups, fireEvents) {
+    if (typeof fireEvents === 'undefined') {
+      fireEvents = true;
+    }
+
+    if (groups.length) {
+      for (var i in groups) {
+        this.removeGroupFromTimeline(groups[i], false);
+      }
+
+      if (fireEvents) {
+        // Show/hide the preselections as needed.
+        this.updateTheDOM();
+        $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
+      }
+    }
   };
 
   Drupal.OikoComparativeTimeline.prototype.selectedTimelineItems = function (properties) {
@@ -358,16 +602,25 @@ Drupal.behaviors.comparative_timeline = {
     }
   };
 
+  Drupal.OikoComparativeTimeline.prototype.stringsGroupLabel = function(data) {
+    if (this.isInteractive()) {
+      return '<span class="js-comparative-timeline-remove-link fa fa-times" data-group-id="' + data.id + '"></span>&nbsp;' + data.label + data.logo;
+    }
+    else {
+      return data.label + data.logo;
+    }
+  };
+
   Drupal.OikoComparativeTimeline.prototype.addDataToTimeline = function(data) {
     // We have some data, we should add it to the timeline.
     var groupId = data.id;
     // Add a group:
     this._visGroups.add([{
       id: groupId,
-      content: '<span class="js-comparative-timeline-remove-link fa fa-times" data-group-id="' + data.id + '"></span>&nbsp;' + data.label + data.logo
+      content: this.stringsGroupLabel(data)
     }]);
 
-    if (data.events !== null) {
+    if (typeof data.events !== 'undefined') {
       var newEvents = [];
       for (var i = 0; i < data.events.length;i++) {
         var event = data.events[i];
@@ -393,12 +646,11 @@ Drupal.behaviors.comparative_timeline = {
           _summaryType: 'background',
           _summaryClass: ''
         });
-
-        this._timelineMin = Math.min(this._timelineMin, (minmin - 86400 * 365 * 10));
-        this._timelineMax = Math.max(this._timelineMax, (maxmax + 86400 * 365 * 10));
       }
       this._visItems.add(newEvents);
     }
+
+    this.recomputeMinMaxOfItems();
 
     // Refresh our data view.
     this._visDisplayedItems.refresh();
@@ -406,7 +658,7 @@ Drupal.behaviors.comparative_timeline = {
     this.updateTimelineBounds();
     this.updateCurrentWindowItem();
 
-    // If this is one of the pre-built links, put it back.
+    // If this is one of the pre-built links, hide it.
     for (var i in this.preselectedLinks) {
       if ($(this.preselectedLinks[i]).data('groupId') == groupId) {
         $(this.preselectedLinks[i]).hide();
@@ -415,24 +667,40 @@ Drupal.behaviors.comparative_timeline = {
 
     this._visTimeline.setOptions({ orientation: {axis: 'top'} });
 
-    this.$preselectionsContainer.toggle(this.getTimelines().length < 2);
+    this.updateTheDOM();
     $(window).trigger('oiko.timelines_updated', [this.getTimelines()]);
+    this.updateTimelineBounds();
+    this.updateCurrentWindowItem();
   };
 
   Drupal.OikoComparativeTimeline.prototype.updateCurrentWindowItem = function() {
-    var timeWindow = this._visTimeline.getWindow();
-    // Ensure that we have a browser window element.
-    this._visItems.update({
-      // Timeline information.
-      id: 'window-slider',
-      type: 'range',
-      start: timeWindow.start,
-      end: timeWindow.end,
+    if (this.getTimelines().length > 0) {
+      var timeWindow = this._visTimeline.getWindow();
+      // Ensure that we have a browser window element.
+      this._visItems.update({
+        // Timeline information.
+        id: WINDOW_SLIDER_ID,
+        type: 'range',
+        start: timeWindow.start,
+        end: timeWindow.end,
 
-      // Information for our summary timeline.
-      _summaryType: 'background',
-      _summaryClass: 'currentWindow'
-    });
+        // Flag to force an update.
+        __random: Math.random(),
+
+        // Information for our summary timeline.
+        _summaryType: 'range',
+        _summaryClass: 'currentWindow'
+      });
+
+      // Ensure that the current window item is selected in the overview.
+      var selections = this._visTimelineOverview.getSelection();
+      if (selections.indexOf(WINDOW_SLIDER_ID) === -1) {
+        this._visTimelineOverview.setSelection(WINDOW_SLIDER_ID);
+      }
+    }
+    else {
+      this._visItems.remove(WINDOW_SLIDER_ID);
+    }
   };
 
   Drupal.OikoComparativeTimeline.prototype.updateTimelineBounds = function() {
@@ -468,9 +736,41 @@ Drupal.behaviors.comparative_timeline = {
     }
 
     if (moved && !this.rangeAdjusted) {
-      this._visTimeline.fit();
-      this._visTimelineOverview.fit();
+      this._visTimeline.setWindow(this._timelineMin * 1000, this._timelineMax * 1000, {animation: false});
     }
+    if (moved) {
+      this._visTimelineOverview.setWindow(this._timelineMin * 1000, this._timelineMax * 1000, {animation: false});
+    }
+
+    this._visTimeline.redraw();
+    this._visTimelineOverview.redraw();
+  };
+
+  /**
+   * Update the DOM to match our state.
+   *
+   * The idea is that this function should be idempotent.
+   */
+  Drupal.OikoComparativeTimeline.prototype.updateTheDOM = function() {
+    if (this.isInteractive()) {
+      // Hide or show the overview container depending on the number of timelines we have.
+      this.$overviewContainer.toggle(this.getTimelines().length > 0);
+    }
+    else {
+      this.$overviewContainer.toggle(false);
+    }
+
+    // Hide or show the overview container depending on the number of timelines we have.
+    this.$timelineContainer.toggle(this.getTimelines().length > 0);
+
+    // Hide preseleections if you have more than one item in the timeline.
+    if (this.hasPreselectionsAvailable) {
+      this.$preselectionsContainer.toggle(this.getTimelines().length < 2);
+    }
+    else {
+      this.$preselectionsContainer.toggle(false);
+    }
+
   };
 
 })(jQuery);

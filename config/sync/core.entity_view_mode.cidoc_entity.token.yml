@@ -1,0 +1,10 @@
+uuid: 4ac7835e-572b-42e4-9e81-bc0a72718d7d
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_entity.token
+label: Token
+targetEntityType: cidoc_entity
+cache: true

@@ -1,0 +1,31 @@
+uuid: 2dc68f61-c081-4a8c-afba-c4d63e3e830e
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 9qfD9NCHMyXU6IwyZk8mnHLpTPaQVGhjiY6hAU9ZV2U
+id: p96_by_mother
+label: 'P96 by mother'
+bidirectional: false
+reverse_label: 'P96 gave birth'
+friendly_label: 'By mother'
+reverse_friendly_label: 'Gave birth'
+domain_bundles:
+  - e67_birth
+range_bundles:
+  - e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

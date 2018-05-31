@@ -1,0 +1,17 @@
+uuid: eb0890e8-f978-4fde-8e65-bb34efec1574
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Narrative
+type: narrative
+description: 'A curated narrative of Oiko.world content'
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false

@@ -18,6 +18,8 @@ regions:
   user_header: User header
   search_header: Search header
   content_header: Content Header
+  mobile_user_header: Mobile user header
+  mobile_search_header: Mobile search header
   sidebar_upper: Sidebar - Upper
   sidebar_lower: Sidebar - Lower
   sidebar_legend: Sidebar - legend

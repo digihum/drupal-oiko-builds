@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_property.p89_falls_within
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p89_falls_within.domain
+    - field.field.cidoc_reference.p89_falls_within.range
 id: cidoc_reference.p89_falls_within.range
 targetEntityType: cidoc_reference
 bundle: p89_falls_within
@@ -17,7 +18,9 @@ content:
     settings:
       link: true
     third_party_settings: {  }
+    region: content
 hidden:
   citation: true
   property: true
+  range: true
   user_id: true

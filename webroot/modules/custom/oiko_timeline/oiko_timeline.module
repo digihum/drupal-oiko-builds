@@ -8,6 +8,10 @@ function oiko_timeline_theme($existing, $type, $theme, $path) {
   return array(
     'comparative_timeline' => array(
       'variables' => array(
+        'interactive' => TRUE,
+        'initialData' => [],
+        'default_links' => [],
+        'pagestate' => FALSE,
       ),
     ),
   );
@@ -19,25 +23,32 @@ function oiko_timeline_theme($existing, $type, $theme, $path) {
  */
 function oiko_timeline_preprocess_comparative_timeline(&$variables, $hook) {
 
-  $cidoc_entity_query = \Drupal::service('entity.query')
-    ->get('cidoc_entity')
-    ->condition('timeline_preselect_option', TRUE)
-    ->condition('status', TRUE)
-    ->sort('name');
+  // Get a nice unique ID for this timeline.
+  $variables['timeline_id'] = Drupal\Component\Utility\Html::getUniqueId('oiko_timeline');
 
-  $place_ids = $cidoc_entity_query->execute();
-  $ids = $place_ids;
-  $loaded = \Drupal::service('entity_type.manager')->getStorage('cidoc_entity')->loadMultiple($ids);
-  $links = [];
+  // Build a list of links for the timline if it's interactive.
+  if (!empty($variables['interactive'])) {
+    $cidoc_entity_query = \Drupal::service('entity.query')
+      ->get('cidoc_entity')
+      ->condition('timeline_preselect_option', TRUE)
+      ->condition('status', TRUE)
+      ->sort('name');
 
-  $view_builder = \Drupal::service('entity_type.manager')->getViewBuilder('cidoc_entity');
+    $place_ids = $cidoc_entity_query->execute();
+    $ids = $place_ids;
+    $loaded = \Drupal::service('entity_type.manager')
+      ->getStorage('cidoc_entity')
+      ->loadMultiple($ids);
 
-  foreach ($loaded as $entity) {
-    $rendered = $view_builder->view($entity, 'timeline_preselection');
-    $links[$entity->id()] = render($rendered);
+    $view_builder = \Drupal::service('entity_type.manager')
+      ->getViewBuilder('cidoc_entity');
+
+    foreach ($loaded as $entity) {
+      $rendered = $view_builder->view($entity, 'timeline_preselection');
+      $variables['default_links'][$entity->id()] = render($rendered);
+    }
   }
 
-  // Work out what items to show in the initial select.
   $variables['js'] = [
     '#attached' => array(
       'library' =>  array(
@@ -45,7 +56,13 @@ function oiko_timeline_preprocess_comparative_timeline(&$variables, $hook) {
       ),
       'drupalSettings' => [
         'oiko_timeline' => [
-          'defaultOptions' => $links,
+          $variables['timeline_id'] => [
+            'id' => $variables['timeline_id'],
+            'defaultOptions' => $variables['default_links'],
+            'interactive' => $variables['interactive'],
+            'initialData' => $variables['initialData'],
+            'pagestate' => $variables['pagestate'],
+          ],
         ],
       ],
     ),

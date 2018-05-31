@@ -1,0 +1,31 @@
+uuid: e2c98513-d838-450a-95f9-0b5d1c6a69f7
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_property.p100_was_death_of
+    - field.storage.cidoc_reference.range
+_core:
+  default_config_hash: QP3gpodZTZ85Jnbv2yHUx7MpyNTlw0CmYkl-N00uNDQ
+id: cidoc_reference.p100_was_death_of.range
+field_name: range
+entity_type: cidoc_reference
+bundle: p100_was_death_of
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e21_person: e21_person
+    auto_create_bundle: e21_person
+field_type: entity_reference

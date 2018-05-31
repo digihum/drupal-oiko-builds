@@ -1,0 +1,35 @@
+uuid: 887f825a-ffad-4a89-b7c9-696a5a8716eb
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.transcript
+    - field.field.node.narrative.body
+    - field.field.node.narrative.field_crm_entities
+    - node.type.narrative
+  module:
+    - text
+    - user
+id: node.narrative.transcript
+targetEntityType: node
+bundle: narrative
+mode: transcript
+content:
+  body:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_crm_entities:
+    type: entity_reference_label
+    weight: 1
+    region: content
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+hidden:
+  links: true
+  rendered_transcript: true

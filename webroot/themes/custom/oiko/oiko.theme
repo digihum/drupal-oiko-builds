@@ -1,6 +1,13 @@
 <?php
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Block\MainContentBlockPluginInterface;
+use Drupal\Core\Block\MessagesBlockPluginInterface;
+use Drupal\Core\Block\TitleBlockPluginInterface;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\block\Entity\Block;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Url;
+use Drupal\views\Views;
 
 /**
  * Implements theme_preprocess().
@@ -34,10 +41,10 @@ function oiko_preprocess_comment(&$variables) {
   if ($variables['commented_entity']->getEntityTypeId() == 'node') {
     if ($variables['commented_entity']->bundle() == 'forum') {
       $variables['attributes']['class'][] = 'forum-comment';
-      $variables['content_attributes']['class'][] = 'forum-comment-content';
-      $variables['user_picture'] = '';
+      $variables['content_attributes']['class'][] = 'forum-comment-content callout';
+//      $variables['user_picture'] = '';
       $variables['submitted'] = [
-        '#markup' => t('Submitted by @username', ['@username' => $variables['author']]) . '<br />' . $variables['created']
+        '#markup' => t('@username', ['@username' => $variables['author']]) . '<br />' . $variables['created']
       ];
     }
   }
@@ -54,7 +61,78 @@ function oiko_preprocess_comment(&$variables) {
  */
 function oiko_preprocess_node(&$variables) {
   if ($variables['node']->bundle() == 'forum') {
-    $variables['author_picture'] = '';
+    $variables['#attributes']['class'][] = 'forum--post';
+    $variables['content']['comment_forum']['#attributes']['class'][] = 'forum--comments';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - node: The node object.
+ *   - view_mode: View mode; e.g., 'full', 'teaser', etc.
+ */
+function oiko_preprocess_user(&$variables) {
+  if ($variables['elements']['#view_mode'] === 'compact') {
+    $variables['attributes']['class'][] = 'forum--author-picture';
+  }
+}
+
+function oiko_preprocess_taxonomy_term(&$variables) {
+  /** @var \Drupal\taxonomy\TermInterface $term */
+  $term = $variables['term'];
+  $view_mode = $variables['view_mode'];
+
+  if ($view_mode == 'primary_historical_significance_pill') {
+    $variables['attributes']['class'][] = 'category-label';
+    if ($color = $term->field_icon_color->getValue()[0]['value']) {
+      $variables['attributes']['class'][] = 'category-label--' . $color;
+    }
+    else {
+      $variables['attributes']['class'][] = 'category-label--blue';
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - node: The node object.
+ *   - view_mode: View mode; e.g., 'full', 'teaser', etc.
+ */
+function oiko_preprocess_page(&$variables) {
+  if (\Drupal::request()->get('display') === 'iframe') {
+    $variables['page']['content']['#attached']['library'][] = 'oiko/iframepage';
+    $variables['page']['highlighted']['#attributes']['class'][] = 'js-no-process';
+  }
+  $match = \Drupal::routeMatch();
+  if ($match->getRouteName() != 'entity.cidoc_entity.canonical' && !\Drupal::service('path.matcher')->isFrontPage()) {
+    // This isn't our app page, so add a library to help to get back to there!
+    $variables['page']['content']['#attached']['library'][] = 'oiko/oiko-redirector';
+  }
+  else {
+    // Get a nice entity to use as a demo.
+    $cidoc_entity_query = \Drupal::service('entity.query')
+      ->get('cidoc_entity')
+      ->condition('timeline_preselect_option', TRUE)
+      ->condition('status', TRUE)
+      ->sort('name');
+
+    $place_ids = $cidoc_entity_query->execute();
+    $id = array_rand($place_ids, 1);
+    $loaded = \Drupal::service('entity_type.manager')->getStorage('cidoc_entity')->loadMultiple([$place_ids[$id]]);
+
+    $view_builder = \Drupal::service('entity_type.manager')->getViewBuilder('cidoc_entity');
+
+    foreach ($loaded as $entity) {
+      $variables['page']['sidebardemo'] = $view_builder->view($entity, 'popup');
+    }
   }
 }
 
@@ -76,6 +154,10 @@ function oiko_preprocess_html(&$variables) {
     $view = 'map';
   }
   $variables['attributes']['class'][] = 'showing-' . $view;
+
+  if (\Drupal::request()->get('display') !== 'iframe') {
+    $variables['attributes']['class'][] = 'layout-flex';
+  }
 }
 
 /**
@@ -94,11 +176,13 @@ function oiko_preprocess_field(&$variables) {
       if ($node = $variables['element']['#object']) {
         if ($node->bundle() == 'forum') {
           $variables['attributes']['class'][] = 'forum-topic-content';
+          $variables['attributes']['class'][] = 'callout';
         }
       }
     }
   }
   if ($variables['field_name'] == 'field_crm_entities' && $variables['element']['#bundle'] == 'forum' && $variables['element']['#view_mode'] == 'full') {
+    $variables['attributes']['class'][] = 'callout';
     $variables['attributes']['class'][] = 'forum-related-to';
   }
 }
@@ -119,6 +203,19 @@ function oiko_preprocess_block(&$variables) {
   if ($variables['plugin_id'] === 'main_cidoc_search') {
     $variables['attributes']['class'][] = 'main-search-outer-wrapper';
   }
+  // Contextual link s on these were causing JS bugs.
+  $js_bugs = [
+    'event_basket',
+    'webform_block',
+    'discussion_notifcations',
+    'user_logged_in',
+    'user_logged_out',
+    'editor_tools',
+  ];
+  if (in_array($variables['plugin_id'], $js_bugs, TRUE)) {
+    unset($variables['title_suffix']['contextual_links']);
+  }
+
   if (isset($variables['base_plugin_id']) && $variables['base_plugin_id'] === 'block_content') {
     if (isset($variables['content']['#block_content']) && $variables['content']['#block_content']->bundle() === 'modal_welcome') {
       $variables['attributes']['class'][] = 'reveal';
@@ -142,6 +239,21 @@ function oiko_theme_suggestions_block_alter(array &$suggestions, array $variable
       $suggestions[] = 'block__' . $block->getRegion();
       $suggestions[] = 'block__' . $block->getRegion() . '__' . $variables['elements']['#id'];
     }
+
+    // Mobile specific
+    if ($variables['elements']['#id'] == 'feedback_mobile') {
+      array_unshift($suggestions, 'block__user_header__feedback');
+    }
+    if ($variables['elements']['#id'] == 'oiko_event_basket_mobile') {
+      array_unshift($suggestions, 'block__user_header__oiko_event_basket');
+    }
+    if ($variables['elements']['#id'] == 'oiko_editor_tools_mobile') {
+      array_unshift($suggestions, 'block__user_header__oiko_editor_tools');
+    }
+    if ($variables['elements']['#id'] == 'discussionnotificationsblock_mobile') {
+      array_unshift($suggestions, 'block__user_header__discussionnotificationsblock');
+    }
+
   }
   // Add a template suggestion for modal welcome blocks.
   if (isset($variables['elements']['#base_plugin_id']) && $variables['elements']['#base_plugin_id'] === 'block_content') {
@@ -165,7 +277,75 @@ function oiko_preprocess_cidoc_entity(array &$variables) {
   if ($variables['elements']['#view_mode'] == 'inline_field') {
     $variables['attributes']['class'][] = 'cidoc-entity--inline';
   }
+  if (isset($variables['content']['cidoc_admin_links'])) {
+    $variables['content']['cidoc_admin_links']['#attributes']['class'][] = 'button-group';
+    foreach ($variables['content']['cidoc_admin_links']['#items'] as $index => $v) {
+      $variables['content']['cidoc_admin_links']['#items'][$index]['#attributes']['class'][] = 'button';
+    }
+  }
+  if ($variables['elements']['#view_mode'] === 'popup') {
+    // Create a valid HTML ID for the tabs and make sure it is unique.
+    $variables['tabs_id'] = Html::getUniqueId('cidoc-popup-tabs');
+    $variables['tabs_id_outer'] = Html::getUniqueId('cidoc-popup-tabs-outer');
 
+    // Add the discussions view to the popup.
+
+    $variables['discussion_panel'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'iframe',
+      '#attributes' => [
+        'src' => Url::fromUri('internal:/iframe/discussions/' . $variables['elements']['#cidoc_entity']->id(), ['query' => ['display' => 'iframe']])->toString(),
+        'frameborder' => 0,
+        'class' => [
+          'discussion-iframe',
+        ],
+//        'scrolling' => 'no',
+      ],
+    ];
+
+    // Add the sidebar share region to the popup.
+    $build = [
+      '#cache' => [
+        'tags' => \Drupal::service('entity.manager')
+          ->getDefinition('block')
+          ->getListCacheTags(),
+      ],
+    ];
+    $blockViewBuilder = \Drupal::service('entity.manager')
+      ->getViewBuilder('block');
+    // Load all region content assigned via blocks.
+    $cacheable_metadata_list = [];
+    $regions = \Drupal::service('block.repository')
+      ->getVisibleBlocksPerRegion($cacheable_metadata_list);
+    if (isset($regions['sidebar_share'])) {
+      foreach ($regions['sidebar_share'] as $key => $block) {
+        $block_plugin = $block->getPlugin();
+        if ($block_plugin instanceof MainContentBlockPluginInterface) {
+          continue;
+        }
+        elseif ($block_plugin instanceof TitleBlockPluginInterface) {
+          continue;
+        }
+        elseif ($block_plugin instanceof MessagesBlockPluginInterface) {
+          continue;
+        }
+        $build[$key] = $blockViewBuilder->view($block);
+      }
+    }
+    $merged_cacheable_metadata = CacheableMetadata::createFromRenderArray($build);
+    foreach ($cacheable_metadata_list as $cacheable_metadata) {
+      $merged_cacheable_metadata = $merged_cacheable_metadata->merge($cacheable_metadata);
+    }
+    $merged_cacheable_metadata->applyTo($build);
+
+    $share_links = [
+      'title' => [
+        '#markup' => '<p>Use the buttons below to share a link straight to this point in history!</p>',
+      ],
+      'block' => $build,
+    ];
+    $variables['share_panel'] = $share_links;
+  }
 }
 
 /**
@@ -174,12 +354,32 @@ function oiko_preprocess_cidoc_entity(array &$variables) {
 function oiko_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   $match = \Drupal::routeMatch();
   if ($match->getRouteName() == 'entity.cidoc_entity.canonical') {
-//    array_unshift($suggestions, 'page__bare');
+    array_unshift($suggestions, 'page__bare');
   }
   if (\Drupal::service('path.matcher')->isFrontPage()) {
     array_unshift($suggestions, 'page__bare');
   }
 }
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for form templates.
+ */
+function oiko_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables) {
+  if (isset($variables['elements']['#view_mode'])) {
+    $suggestions[] = 'taxonomy_term__' . $variables['elements']['#view_mode'];
+    $suggestions[] = $suggestions[0] . '__' . $variables['elements']['#view_mode'];
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for form templates.
+ */
+function oiko_theme_suggestions_region_alter(array &$suggestions, array $variables) {
+  if ($variables['elements']['#region'] == 'mobile_user_header') {
+    $suggestions[] = 'region__user_header';
+  }
+}
+
 
 /**
  * Implements hook_element_info_alter().

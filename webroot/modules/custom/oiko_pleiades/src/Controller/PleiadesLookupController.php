@@ -49,7 +49,7 @@ class PleiadesLookupController extends ControllerBase {
 
     $url = $request->query->get('pleiades');
     // Validate this this is a Pleiades URL.
-    if (!preg_match('/^http:\/\/pleiades\.stoa\.org\/places\/(\d+)$/i', $url)) {
+    if (!preg_match('/^https?:\/\/pleiades\.stoa\.org\/places\/(\d+)$/i', $url)) {
       throw new AccessDeniedHttpException();
     }
 

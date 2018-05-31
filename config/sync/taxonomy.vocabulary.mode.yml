@@ -1,0 +1,9 @@
+uuid: d32ac82e-2db5-4e10-804c-a9cfaa266d9c
+langcode: en
+status: true
+dependencies: {  }
+name: Mode
+vid: mode
+description: 'Mode of use'
+hierarchy: 0
+weight: 0

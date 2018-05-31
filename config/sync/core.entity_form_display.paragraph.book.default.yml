@@ -1,0 +1,38 @@
+uuid: b2544863-d2b3-4a4a-a14c-ccbf743cb25b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.book.field_book
+    - field.field.paragraph.book.field_pages
+    - paragraphs.paragraphs_type.book
+  module:
+    - squid_autocomplete
+_core:
+  default_config_hash: 1F5vxdqd-KAsfG3wopOHCSPnK4-VpMD3rTNC8EX-InI
+id: paragraph.book.default
+targetEntityType: paragraph
+bundle: book
+mode: default
+content:
+  field_book:
+    weight: 0
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: squid_entity_reference_autocomplete
+    region: content
+  field_pages:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: 'e.g. p6 or pp65-87'
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

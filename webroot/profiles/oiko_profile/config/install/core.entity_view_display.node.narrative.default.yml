@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.narrative.body
+    - field.field.node.narrative.field_crm_entities
+    - node.type.narrative
+  module:
+    - text
+    - user
+id: node.narrative.default
+targetEntityType: node
+bundle: narrative
+mode: default
+content:
+  body:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_crm_entities:
+    type: entity_reference_label
+    weight: 1
+    region: content
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+hidden:
+  links: true

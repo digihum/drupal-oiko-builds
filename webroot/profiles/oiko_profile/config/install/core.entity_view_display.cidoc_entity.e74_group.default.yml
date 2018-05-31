@@ -184,78 +184,109 @@ content:
     weight: 2
     settings: {  }
     third_party_settings: {  }
+    region: content
   cidoc_properties:
     weight: 14
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p107_has_current_or_former_membe':
     weight: 20
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p131_is_identified_by':
     weight: 20
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p1_is_identified_by':
     weight: 20
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p2_has_type':
     weight: 20
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p107_has_current_or_former_membe':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p11_had_participant':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p12_occurred_in_the_presence_of':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p143_joined':
+    weight: 21
+    region: content
+  'cidoc_properties:range:p144_joined_with':
+    weight: 21
+    region: content
+  'cidoc_properties:range:p145_separated':
+    weight: 21
+    region: content
+  'cidoc_properties:range:p146_separated_from':
+    weight: 21
+    region: content
   'cidoc_properties:range:p14_carried_out_by':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p15_was_influenced_by':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p17_was_motivated_by':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p95_has_formed':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p99_dissolved':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   duplicate_of_p134_continues_entity_view_1:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
   duplicate_of_p15_was_influenced_by_entity_view_1:
     weight: 6
     settings: {  }
     third_party_settings: {  }
+    region: content
   e6_destroyed_entity_view_1:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
   key_achievements_entity_view_1:
     weight: 6
     settings: {  }
     third_party_settings: {  }
+    region: content
   map_of_places_people_went_entity_view_1:
     weight: 3
     settings: {  }
     third_party_settings: {  }
+    region: content
   name:
     label: hidden
     type: string
@@ -263,42 +294,52 @@ content:
     settings:
       link_to_entity: true
     third_party_settings: {  }
+    region: content
   p108_produced_by_entity_view_1:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
   p108_produced_object_entity_view_1:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
   p11_participae_entity_view_1:
     weight: 6
     settings: {  }
     third_party_settings: {  }
+    region: content
   p12_present_at_entity_view_1:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
   p17_motivated_entity_view_1:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
   p4_has_time_span_entity_view_1:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
   p95_formed_entity_view_1:
     weight: 11
     settings: {  }
     third_party_settings: {  }
+    region: content
   p99_dissolved_entity_view_1:
     weight: 11
     settings: {  }
     third_party_settings: {  }
+    region: content
   people_entity_view_1:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
   significance:
     type: entity_reference_label
     weight: 1
@@ -306,12 +347,16 @@ content:
     settings:
       link: false
     third_party_settings: {  }
+    region: content
   timeline_link:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   cidoc_admin_links: true
+  cidoc_properties_transcript: true
+  cidoc_temporal_summary: true
   citation: true
   content: true
   internal_name: true

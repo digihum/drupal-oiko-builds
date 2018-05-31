@@ -12,6 +12,7 @@
 .icon-links__link {
   display: inline-block;
   text-align: center;
+  position: relative;
   line-height: $content-header-height;
   width: $content-header-height;
   i.fa {
@@ -26,10 +27,38 @@
 }
 
 .icon-links__dropdown {
-  top: initial !important;
-  left: initial !important;
-  right: 0 !important;
+  top: $content-header-height !important;
+  @include from('m') {
+    bottom: 0;
+  }
   z-index: 10000;
+
+  .showing-timeline & {
+    left: 0 !important;
+    right: initial !important;
+  }
+
+  .showing-map & {
+    right: 0 !important;
+    left: initial !important;
+  }
+
+  padding: 25px;
+
+  @include to('s') {
+    // @TODO: Why does this need to be !important.
+    width: 100% !important;
+  }
+  @include at('m') {
+    width: calc(100% - #{$oiko-sidebar-width});
+    border-left: none !important;
+  }
+  @include from('l') {
+    min-width: (map-get($breakpoints, 'l') - $oiko-sidebar-width);
+    width: calc(40% - #{$oiko-sidebar-width});
+  }
   border: none;
   border-top: 5px solid palette(oikoblue);
+
 }
+

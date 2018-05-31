@@ -1,0 +1,20 @@
+uuid: f2910d70-d3bb-40ca-a8e1-a1dfd0fef296
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_cidoc
+  theme:
+    - oiko
+id: oiko_editor_tools
+theme: oiko
+region: user_header
+weight: 0
+provider: null
+plugin: editor_tools
+settings:
+  id: editor_tools
+  label: 'Editor Tools'
+  provider: oiko_cidoc
+  label_display: visible
+visibility: {  }

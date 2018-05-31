@@ -1,5 +1,8 @@
 <?php
 
+use Drupal\cidoc\CidocEntityViewBuilder;
+use Drupal\views\ViewExecutable;
+
 
 /**
  * Implements hook_entity_base_field_info().
@@ -7,3 +10,55 @@
 function oiko_cidoc_entity_base_field_info(\Drupal\Core\Entity\EntityTypeInterface $entity_type) {
   return \Drupal::service('oiko_cidoc.hook_implementations')->entity_base_field_info($entity_type);
 }
+
+/**
+ * Implements hook_views_post_build().
+ */
+function oiko_cidoc_views_pre_build(ViewExecutable $view) {
+  if ($view->id() == 'editor_tools_recent_changes') {
+    if (isset($view->filter['cidoc_user_id'])) {
+      $view->filter['cidoc_user_id']->value = [
+        Drupal::currentUser()
+          ->id() => Drupal::currentUser()->id()
+      ];
+    }
+    if (isset($view->filter['node_uid'])) {
+      $view->filter['node_uid']->value = [
+        Drupal::currentUser()
+          ->id() => Drupal::currentUser()->id()
+      ];
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function oiko_cidoc_entity_extra_field_info() {
+  $extra['node']['narrative']['display']['rendered_transcript'] = [
+    'label' => t('Rendered Transcript'),
+    'weight' => 0,
+    'visible' => FALSE,
+  ];
+
+  return $extra;
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function oiko_cidoc_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+  if ($display->getComponent('rendered_transcript')) {
+    /** @var \Drupal\oiko_cidoc\OikoCidocTranscriptRenderer $service */
+    $service = \Drupal::service('oiko_cidoc.transcript_renderer');
+
+    $build['rendered_transcript'] = [
+      'transcript' => $service->transcriptNarrative($entity),
+      'footnote' => [
+        '#type' => 'markup',
+        '#markup' => t(CidocEntityViewBuilder::TRANSCRIPT_NOT_MINE_DISCLAIMER),
+      ],
+    ];
+  }
+}
+

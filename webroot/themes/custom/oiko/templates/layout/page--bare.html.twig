@@ -44,14 +44,17 @@
  */
 #}
 <div id="main" role="main" class="clearfix l-main page--bare">
-    <div class="l-sidebar oiko-sidebar">
+    <div class="oiko-sidebar mobile-only">
+        {% include directory ~ '/templates/layout/header--bare--mobile.html.twig' %}
+    </div>
+    <div class="l-sidebar oiko-sidebar desktop-only">
         <div class="l-sidebar-upper">
             {% include directory ~ '/templates/layout/header.html.twig' %}
             {{ page.sidebar_upper }}
             <ul class="sidebar-tabs tabs vertical">
                 <li class="tabs-title"><a href="#" data-pane-id="main-menu"><i class="fa fa-bars" title="Main menu"></i></a></li>
                 <li class="tabs-title"><a href="#" data-pane-id="legend"><i class="fa fa-filter" title="Legend"></i></a></li>
-                <li class="tabs-title"><a href="#" data-pane-id="information"><i class="fa fa-map-marker" title="Information"></i></a></li>
+                <li class="tabs-title"><a href="#" data-pane-id="information" class="disabled"><i class="fa fa-map-marker" title="Information"></i></a></li>
             </ul>
         </div>
         <div class="l-sidebar-lower">
@@ -60,7 +63,7 @@
         </div>
     </div>
     <div class="l-content-container">
-        <div class="l-content-header">
+        <div class="l-content-header desktop-only">
             {{ page.search_header }}
             {{ page.user_header }}
         </div>

@@ -1,0 +1,11 @@
+shibboleth_login_handler_url: /Shibboleth.sso/Login
+shibboleth_logout_handler_url: /Shibboleth.sso/Logout
+shibboleth_login_link_text: 'Shibboleth Login'
+server_variable_username: cn
+server_variable_email: mail
+shibboleth_account_linking_text: 'Link this account with another identity'
+debug_prefix_path: /user/
+_core:
+  default_config_hash: g7vrZiBt0_zdwo8nE6CF-b9hJwuebwswhSeMAr3goyw
+force_https_on_login: 1
+enable_debug_mode: 0

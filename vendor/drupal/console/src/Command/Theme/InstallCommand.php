@@ -11,26 +11,64 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Command\ContainerAwareCommand;
+use Drupal\Console\Core\Command\Command;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Config\UnmetDependenciesException;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Utils\ChainQueue;
 
-class InstallCommand extends ContainerAwareCommand
+class InstallCommand extends Command
 {
-    protected $moduleInstaller;
+    /**
+     * @var ConfigFactory
+     */
+    protected $configFactory;
+
+    /**
+     * @var ThemeHandler
+     */
+    protected $themeHandler;
+
+    /**
+     * @var ChainQueue
+     */
+    protected $chainQueue;
+
+    /**
+     * DebugCommand constructor.
+     *
+     * @param ConfigFactory $configFactory
+     * @param ThemeHandler  $themeHandler
+     * @param ChainQueue    $chainQueue
+     */
+    public function __construct(
+        ConfigFactoryInterface $configFactory,
+        ThemeHandlerInterface $themeHandler,
+        ChainQueue $chainQueue
+    ) {
+        $this->configFactory = $configFactory;
+        $this->themeHandler = $themeHandler;
+        $this->chainQueue = $chainQueue;
+        parent::__construct();
+    }
 
     protected function configure()
     {
         $this
             ->setName('theme:install')
             ->setDescription($this->trans('commands.theme.install.description'))
-            ->addArgument('theme', InputArgument::IS_ARRAY, $this->trans('commands.theme.install.options.module'))
+            ->addArgument(
+                'theme',
+                InputArgument::IS_ARRAY,
+                $this->trans('commands.theme.install.options.theme')
+            )
             ->addOption(
                 'set-default',
-                '',
+                null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.theme.install.options.set-default')
-            );
+            )->setAliases(['thi']);
     }
 
     /**
@@ -45,7 +83,7 @@ class InstallCommand extends ContainerAwareCommand
         if (!$theme) {
             $theme_list = [];
 
-            $themes = $this->getThemeHandler()->rebuildThemeData();
+            $themes = $this->themeHandler->rebuildThemeData();
 
             foreach ($themes as $theme_id => $theme) {
                 if (!empty($theme->info['hidden'])) {
@@ -64,7 +102,9 @@ class InstallCommand extends ContainerAwareCommand
             while (true) {
                 $theme_name = $io->choiceNoList(
                     $this->trans('commands.theme.install.questions.theme'),
-                    array_keys($theme_list)
+                    array_keys($theme_list),
+                    null,
+                    true
                 );
 
                 if (empty($theme_name)) {
@@ -86,23 +126,19 @@ class InstallCommand extends ContainerAwareCommand
     {
         $io = new DrupalStyle($input, $output);
 
-        $configFactory = $this->getConfigFactory();
+        $config = $this->configFactory->getEditable('system.theme');
 
-        $config = $configFactory->getEditable('system.theme');
-
-        $themeHandler = $this->getThemeHandler();
-        $themeHandler->refreshInfo();
+        $this->themeHandler->refreshInfo();
         $theme = $input->getArgument('theme');
         $default = $input->getOption('set-default');
 
         if ($default && count($theme) > 1) {
             $io->error($this->trans('commands.theme.install.messages.invalid-theme-default'));
 
-            return;
+            return 1;
         }
 
-
-        $themes  = $themeHandler->rebuildThemeData();
+        $themes  = $this->themeHandler->rebuildThemeData();
         $themesAvailable = [];
         $themesInstalled = [];
         $themesUnavailable = [];
@@ -119,7 +155,7 @@ class InstallCommand extends ContainerAwareCommand
 
         if (count($themesAvailable) > 0) {
             try {
-                if ($themeHandler->install($theme)) {
+                if ($this->themeHandler->install($theme)) {
                     if (count($themesAvailable) > 1) {
                         $io->info(
                             sprintf(
@@ -155,6 +191,8 @@ class InstallCommand extends ContainerAwareCommand
                     )
                 );
                 drupal_set_message($e->getTranslatedMessage($this->getStringTranslation(), $theme), 'error');
+
+                return 1;
             }
         } elseif (empty($themesAvailable) && count($themesInstalled) > 0) {
             if (count($themesInstalled) > 1) {
@@ -191,6 +229,8 @@ class InstallCommand extends ContainerAwareCommand
         }
 
         // Run cache rebuild to see changes in Web UI
-        $this->getChain()->addCommand('cache:rebuild', ['cache' => 'all']);
+        $this->chainQueue->addCommand('cache:rebuild', ['cache' => 'all']);
+
+        return 0;
     }
 }

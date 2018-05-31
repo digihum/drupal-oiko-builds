@@ -1,0 +1,20 @@
+.dropdown-pane {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+
+  @include from('m') {
+    .showing-map & {
+      border-left: 2px solid palette(oikoblue);
+    }
+
+    .showing-timeline & {
+      border-right: 2px solid palette(oikoblue);
+    }
+  }
+
+  @include to('s') {
+    padding: 0;
+    overflow: visible;
+    background: palette(oikocream);
+  }
+}

@@ -1,0 +1,43 @@
+uuid: 8b540908-3550-4337-9a77-17481cae9931
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p96_by_mother
+    - core.entity_form_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.p96_by_mother.domain
+    - field.field.cidoc_reference.p96_by_mother.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+_core:
+  default_config_hash: NnP2oWRGzgA_SFRoEh927Teh8tbWaSpqJz4xbj3hFts
+id: cidoc_reference.p96_by_mother.domain
+targetEntityType: cidoc_reference
+bundle: p96_by_mother
+mode: domain
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+    region: content
+  range:
+    type: squid_entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: 60
+      placeholder: 'Start typing to find a match or create new entity...'
+    weight: 0
+    third_party_settings: {  }
+    region: content
+hidden:
+  domain: true
+  langcode: true
+  user_id: true

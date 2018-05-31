@@ -11,12 +11,30 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Command\ContainerAwareCommand;
+use Drupal\Console\Core\Command\Command;
+use Drupal\Core\Database\Connection;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Core\Logger\RfcLogLevel;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 
-class LogClearCommand extends ContainerAwareCommand
+class LogClearCommand extends Command
 {
+    /**
+     * @var Connection
+     */
+    protected $database;
+
+    /**
+     * LogClearCommand constructor.
+     *
+     * @param Connection $database
+     */
+    public function __construct(Connection $database)
+    {
+        $this->database = $database;
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -32,22 +50,23 @@ class LogClearCommand extends ContainerAwareCommand
             )
             ->addOption(
                 'type',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.database.log.clear.options.type')
             )
             ->addOption(
                 'severity',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.database.log.clear.options.severity')
             )
             ->addOption(
                 'user-id',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.database.log.clear.options.user-id')
-            );
+            )
+            ->setAliases(['dblc']);
     }
 
     /**
@@ -67,19 +86,18 @@ class LogClearCommand extends ContainerAwareCommand
         } else {
             $this->clearEvents($io, $eventType, $eventSeverity, $userId);
         }
+
+        return 0;
     }
 
-
     /**
-     * @param \Drupal\Console\Style\DrupalStyle $io
+     * @param DrupalStyle $io
      * @param $eventId
      * @return bool
      */
     private function clearEvent(DrupalStyle $io, $eventId)
     {
-        $connection = $this->getDatabase();
-
-        $result = $connection->delete('watchdog')->condition('wid', $eventId)->execute();
+        $result = $this->database->delete('watchdog')->condition('wid', $eventId)->execute();
 
         if (!$result) {
             $io->error(
@@ -103,7 +121,7 @@ class LogClearCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param \Drupal\Console\Style\DrupalStyle $io
+     * @param DrupalStyle   $io
      * @param $eventType
      * @param $eventSeverity
      * @param $userId
@@ -111,10 +129,8 @@ class LogClearCommand extends ContainerAwareCommand
      */
     protected function clearEvents(DrupalStyle $io, $eventType, $eventSeverity, $userId)
     {
-        $connection = $this->getDatabase();
         $severity = RfcLogLevel::getLevels();
-
-        $query = $connection->delete('watchdog');
+        $query = $this->database->delete('watchdog');
 
         if ($eventType) {
             $query->condition('type', $eventType);

@@ -1,0 +1,10 @@
+uuid: 3f7e6437-b61a-4886-80ad-5cab6d812f75
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy
+id: taxonomy_term.primary_historical_significance_pill
+label: 'Primary Historical Significance Pill'
+targetEntityType: taxonomy_term
+cache: true

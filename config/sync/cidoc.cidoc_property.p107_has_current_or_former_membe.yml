@@ -1,0 +1,30 @@
+uuid: fe3efb2d-9dc1-436c-bbf1-417fb1c81ceb
+langcode: en
+status: true
+dependencies: {  }
+id: p107_has_current_or_former_membe
+label: 'P107 has current or former member'
+bidirectional: false
+reverse_label: 'P107 is current or former member of'
+friendly_label: 'Has current or former member'
+reverse_friendly_label: 'Is current or former member of'
+domain_bundles:
+  - e74_group
+range_bundles:
+  1: e21_person
+  2: e74_group
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  range: range
+  domain: 0
