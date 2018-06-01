@@ -248,24 +248,41 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
     }
   });
 
-  $(window).bind('load', function() {
+  // Encase any specified elements in carbonite, i.e. turn them into images.
+  $(function() {
     $('.carbonite .carbonite--victim').each(function() {
       var that = this;
       var $that = $(that);
-
-      domtoimage
-      // @TODO:  make the height and width all proper
-        .toPng(this, {height: $that.height(), width: $that.width()})
-        .then(function (dataUrl) {
-          var img = new Image();
-          img.src = dataUrl;
-          $(that).replaceWith(img);
-        })
-        .catch(function (error) {
-          console.error('oops, something went wrong!', error);
-        });
+      var carbonize = function() {
+        // Support someone adding an 'is-loading' class. We're looking at you leaflet.
+        if ($that.find('.is-loading').length) {
+          // Wait and try again.
+          setTimeout(carbonize, 100);
+        }
+        else {
+          // Sleep 1 second so that any animations hopefully complete!
+          setTimeout(function() {
+          domtoimage
+            .toPng(that, {
+              height: $that.height(),
+              width: $that.width(),
+              bgcolor: 'transparent'
+            })
+            .then(function (dataUrl) {
+              var img = new Image();
+              img.src = dataUrl;
+              $that.replaceWith(img);
+            })
+            .catch(function (error) {
+              console.error('oops, something went wrong!', error);
+            });
+          }, 1000);
+        }
+      };
+      // Call the carbonizer.
+      carbonize();
     });
   });
-  
+
 // @TODO: END: Move all of this elsewhere.
 }
