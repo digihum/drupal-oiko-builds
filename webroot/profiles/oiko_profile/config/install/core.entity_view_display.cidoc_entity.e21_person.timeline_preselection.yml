@@ -68,6 +68,7 @@ hidden:
   'cidoc_properties:range:p96_by_mother': true
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true
+  cidoc_properties_transcript: true
   citation: true
   internal_name: true
   map_link: true

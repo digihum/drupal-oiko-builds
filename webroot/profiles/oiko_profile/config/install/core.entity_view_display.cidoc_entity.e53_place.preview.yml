@@ -89,6 +89,7 @@ hidden:
   'cidoc_properties:range:p7_took_place_at': true
   'cidoc_properties:range:p89_falls_within': true
   'cidoc_properties:range:p9_consists_of': true
+  cidoc_properties_transcript: true
   cidoc_temporal_summary: true
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true

@@ -53,6 +53,7 @@ hidden:
   'cidoc_properties:range:p15_was_influenced_by': true
   'cidoc_properties:range:p17_was_motivated_by': true
   'cidoc_properties:range:p4_has_time_span': true
+  cidoc_properties_transcript: true
   citation: true
   field_date: true
   internal_name: true

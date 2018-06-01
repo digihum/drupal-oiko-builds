@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\cidoc\CidocEntityViewBuilder;
 use Drupal\views\ViewExecutable;
 
 
@@ -29,3 +30,35 @@ function oiko_cidoc_views_pre_build(ViewExecutable $view) {
     }
   }
 }
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function oiko_cidoc_entity_extra_field_info() {
+  $extra['node']['narrative']['display']['rendered_transcript'] = [
+    'label' => t('Rendered Transcript'),
+    'weight' => 0,
+    'visible' => FALSE,
+  ];
+
+  return $extra;
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function oiko_cidoc_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+  if ($display->getComponent('rendered_transcript')) {
+    /** @var \Drupal\oiko_cidoc\OikoCidocTranscriptRenderer $service */
+    $service = \Drupal::service('oiko_cidoc.transcript_renderer');
+
+    $build['rendered_transcript'] = [
+      'transcript' => $service->transcriptNarrative($entity),
+      'footnote' => [
+        '#type' => 'markup',
+        '#markup' => t(CidocEntityViewBuilder::TRANSCRIPT_NOT_MINE_DISCLAIMER),
+      ],
+    ];
+  }
+}
+

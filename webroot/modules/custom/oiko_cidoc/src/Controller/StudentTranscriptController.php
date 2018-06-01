@@ -11,6 +11,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\node\Entity\Node;
+use Drupal\oiko_cidoc\OikoCidocTranscriptRenderer;
 use Drupal\oiko_timeline\OikoTimelineHelpersInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -50,13 +51,21 @@ class StudentTranscriptController extends ControllerBase {
   protected $cidocGraphTraversal;
 
   /**
+   * CIDOC Transcript renderer.
+   *
+   * @var \Drupal\oiko_cidoc\OikoCidocTranscriptRenderer
+   */
+  protected $oikoCidocTranscriptRenderer;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeManager $entityTypeManager, RendererInterface $renderer,OikoTimelineHelpersInterface $oikoTimelineHelpers, GraphTraversal $cidocGraphTraversal) {
+  public function __construct(EntityTypeManager $entityTypeManager, RendererInterface $renderer,OikoTimelineHelpersInterface $oikoTimelineHelpers, GraphTraversal $cidocGraphTraversal, OikoCidocTranscriptRenderer $oikoCidocTranscriptRenderer) {
     $this->entityTypeManager = $entityTypeManager;
     $this->renderer = $renderer;
     $this->oikoTimelineHelpers = $oikoTimelineHelpers;
     $this->cidocGraphTraversal = $cidocGraphTraversal;
+    $this->oikoCidocTranscriptRenderer = $oikoCidocTranscriptRenderer;
   }
 
   /**
@@ -67,8 +76,21 @@ class StudentTranscriptController extends ControllerBase {
       $container->get('entity_type.manager'),
       $container->get('renderer'),
       $container->get('oiko_timeline.helpers'),
-      $container->get('cidoc.graph_traversal')
+      $container->get('cidoc.graph_traversal'),
+      $container->get('oiko_cidoc.transcript_renderer')
     );
+  }
+
+  /**
+   * The _title_callback for the transcript route.
+   *
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup
+   */
+  public function transcriptTitle() {
+    return $this
+      ->t('Transcript - @name', [
+        '@name' => $this->currentUser()->getDisplayName(),
+      ]);
   }
 
   /**
@@ -92,7 +114,7 @@ class StudentTranscriptController extends ControllerBase {
     $rendered_entities = [];
 
     foreach ($narratives as $narrative) {
-      $response['narratives'][$narrative->id()] = $this->transcriptNarrative($narrative);
+      $response['narratives'][$narrative->id()] = $this->oikoCidocTranscriptRenderer->transcriptNarrative($narrative);
       if (isset($response['narratives'][$narrative->id()]['#entities'])) {
         $rendered_entities = array_merge($rendered_entities, array_keys($response['narratives'][$narrative->id()]['#entities']));
       }
@@ -150,159 +172,13 @@ class StudentTranscriptController extends ControllerBase {
     return !empty($ids) ? $storage->loadMultiple($ids) : [];
   }
 
-  protected function computeEntitiesInNarrative(Node $narrative) {
-    $entities = [];
-
-    foreach ($narrative->field_crm_entities as $field_crm_entity) {
-      $entities += $this->cidocGraphTraversal->findConnectedVertices($field_crm_entity->entity, [$this, 'isEntityOwnedByCurrentUser']);
-    }
-
-    return $entities;
-  }
-
   public function isEntityOwnedByCurrentUser(CidocEntity $entity) {
     return $entity->getOwnerId() == $this->currentUser()->id();
   }
 
 
 
-  /**
-   * Compute the render array for a single narrative.
-   *
-   * @param \Drupal\node\Entity\Node $narrative
-   *   The Narrative to compute the render array for.
-   *
-   * @return array
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
-   */
-  protected function transcriptNarrative(Node $narrative) {
-    $rendered_narrative = [
-      '#theme_wrappers' => [
-        'container' => [
-          '#attributes' => [
-            'class'=> 'student-transcript',
-          ],
-        ],
-      ],
-    ];
 
-    // These are the entities for this narrative.
-    $entities = $this->computeEntitiesInNarrative($narrative);
-    $rendered_narrative['#entities'] = $entities;
-
-    // Summary visual grouping.
-    $rendered_narrative['summary'] = [
-      '#theme_wrappers' => [
-        'container' => [
-          '#attributes' => [
-            'class'=> 'student-transcript--summary',
-          ],
-        ],
-      ],
-    ];
-
-    // Summary title.
-    $rendered_narrative['summary']['title'] = [
-      '#type' => 'html_tag',
-      '#tag' => 'h2',
-      '#value' => Html::escape($narrative->label()),
-    ];
-
-    $rendered_narrative['summary']['description'] = [
-      $narrative->body->view(['label' => 'hidden']),
-    ];
-
-    $rendered_narrative['summary']['related_to'] = [
-      $narrative->field_crm_entities->view(['label' => 'above']),
-    ];
-
-    // Timeline of entities.
-    $data = [
-      'id' => 0,
-      'label' => $narrative->label(),
-      'logo' => '',
-    ];
-    $cache_metadata = [];
-    $this->oikoTimelineHelpers->renderEventsForTimeline($entities, $cache_metadata, $data);
-    $cidoc_entity_definition = $this->entityTypeManager->getDefinition('cidoc_entity');
-    $cidoc_view_builder = $this->cidocViewBuilder();
-
-    $rendered_narrative['summary']['timeline'] = [
-      '#theme' => 'comparative_timeline',
-      '#theme_wrappers' => [
-        'container' => [
-          '#attributes' => [
-            'class'=> 'student-transcript--high-level-item',
-          ],
-        ],
-      ],
-      '#interactive' => FALSE,
-      '#initialData' => $data,
-      '#cache' => [
-        'contexts' => [
-          // We vary by the current user.
-          'user',
-        ],
-        // Start with the tags for a list of entities.
-        'tags' => $cidoc_entity_definition->getListCacheTags(),
-      ],
-    ];
-    // Add the cache data to our render array.
-    foreach ($cache_metadata as $entity) {
-      $this->renderer->addCacheableDependency($rendered_narrative['summary']['timeline'], $entity);
-    }
-
-    // Map of entities.
-    $rendered_narrative['summary']['map'] = [
-      '#type' => 'view',
-      '#name' => 'student_transcript_entities',
-      '#display_id' => 'map',
-      '#arguments' => [
-        // Pump the entity ids into the view.
-        implode('+', array_keys($entities)),
-      ],
-      '#theme_wrappers' => [
-        'container' => [
-          '#attributes' => [
-            'class'=> 'student-transcript--high-level-item',
-          ],
-        ],
-      ],
-    ];
-
-    // Listing of entities.
-    $rendered_narrative['detail'] = [
-      '#theme_wrappers' => [
-        'container' => [
-          '#attributes' => [
-            'class'=> 'student-transcript--detail',
-          ],
-        ],
-      ],
-    ];
-
-    $rendered_narrative['detail']['title'] = [
-      '#markup' => $this->t('<h2>In Detail</h2>'),
-    ];
-
-    $rendered_narrative['detail']['cidoc_entities'] = [
-      '#theme' => 'item_list',
-      '#list_type' => 'ul',
-      '#items' => [],
-      '#attributes' => [
-        'class' => [
-          'student-transcript--list',
-        ],
-      ],
-    ];
-
-    foreach ($entities as $key => $entity) {
-      $rendered_narrative['detail']['cidoc_entities']['#items'][$key] = $cidoc_view_builder->view($entity, 'transcript') + ['#wrapper_attributes' => ['class' => 'student-transcript--list-row', $key]];
-    }
-
-    return $rendered_narrative;
-  }
 
   /**
    * @return \Drupal\cidoc\CidocEntityViewBuilder

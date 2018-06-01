@@ -16,6 +16,5 @@ permissions:
   - 'display eu cookie compliance popup'
   - 'edit own comments'
   - 'post comments'
-  - 'use browsersync'
   - 'view published cidoc entities'
   - 'view sharemessages'

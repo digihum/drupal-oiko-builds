@@ -7,20 +7,18 @@ dependencies:
     - field.field.node.narrative.field_crm_entities
     - node.type.narrative
   module:
-    - text
     - user
 id: node.narrative.default
 targetEntityType: node
 bundle: narrative
 mode: default
 content:
-  body:
+  rendered_transcript:
     weight: 0
-    label: hidden
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: text_default
-    region: content
 hidden:
+  body: true
   field_crm_entities: true
   links: true

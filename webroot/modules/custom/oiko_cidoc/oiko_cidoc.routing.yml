@@ -20,6 +20,6 @@ oiko_cidoc.student_transcript:
   path: '/student-transcript'
   defaults:
     _controller: '\Drupal\oiko_cidoc\Controller\StudentTranscriptController::transcript'
-    _title: 'Transcript'
+    _title_callback: '\Drupal\oiko_cidoc\Controller\StudentTranscriptController::transcriptTitle'
   requirements:
     _permission: 'view student transcript'

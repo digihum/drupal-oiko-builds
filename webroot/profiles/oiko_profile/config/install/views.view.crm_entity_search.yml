@@ -32,7 +32,7 @@ display:
         options:
           perm: 'view published cidoc entities'
       cache:
-        type: tag
+        type: none
         options: {  }
       query:
         type: views_query
@@ -145,7 +145,7 @@ display:
             precision: 0
             decimal: .
             format_plural: false
-            format_plural_string: "1\x03@count"
+            format_plural_string: !!binary MQNAY291bnQ=
             prefix: ''
             suffix: ''
             link_to_item: false
@@ -536,42 +536,6 @@ display:
       auth: {  }
       display_description: ''
       filters:
-        status:
-          id: status
-          table: search_api_index_crm_entities
-          field: status
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: '='
-          value: true
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: search_api_boolean
         has_geodata:
           id: has_geodata
           table: search_api_index_crm_entities
@@ -608,6 +572,80 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           plugin_id: search_api_boolean
+        status:
+          id: status
+          table: search_api_index_crm_entities
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: true
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: search_api_boolean
+        user_id:
+          id: user_id
+          table: search_api_index_crm_entities
+          field: user_id
+          relationship: none
+          group_type: group
+          admin_label: 'Changed to current user by oiko_app_views_pre_build'
+          operator: or
+          value:
+            - '0'
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: search_api_user
       defaults:
         filters: false
         filter_groups: false
@@ -615,6 +653,7 @@ display:
         operator: AND
         groups:
           1: AND
+          2: OR
     cache_metadata:
       max-age: 0
       contexts:
@@ -660,7 +699,7 @@ display:
           admin_label: ''
           operator: '='
           value: true
-          group: 1
+          group: 2
           exposed: false
           expose:
             operator_id: ''
@@ -726,6 +765,44 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           plugin_id: search_api_numeric
+        user_id:
+          id: user_id
+          table: search_api_index_crm_entities
+          field: user_id
+          relationship: none
+          group_type: group
+          admin_label: 'Changed to current user by oiko_app_views_pre_build'
+          operator: or
+          value:
+            - '0'
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: search_api_user
       defaults:
         filters: false
         filter_groups: false
@@ -735,6 +812,7 @@ display:
         operator: AND
         groups:
           1: AND
+          2: OR
       sorts:
         search_api_relevance:
           id: search_api_relevance

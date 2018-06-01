@@ -271,7 +271,21 @@ display:
           entity_field: bundle
           plugin_id: field
       filters: {  }
-      sorts: {  }
+      sorts:
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
       header: {  }
       footer: {  }
       empty: {  }
@@ -341,9 +355,16 @@ display:
         type: entity_reference
         options:
           default_field_elements: true
-          inline: {  }
+          inline:
+            name: name
+            internal_name: internal_name
+            bundle: bundle
           separator: ' - '
           hide_empty: true
+      pager:
+        type: none
+        options:
+          offset: 0
     cache_metadata:
       max-age: -1
       contexts:

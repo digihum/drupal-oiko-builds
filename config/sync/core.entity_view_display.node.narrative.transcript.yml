@@ -1,17 +1,19 @@
+uuid: 887f825a-ffad-4a89-b7c9-696a5a8716eb
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.transcript
     - field.field.node.narrative.body
     - field.field.node.narrative.field_crm_entities
     - node.type.narrative
   module:
     - text
     - user
-id: node.narrative.default
+id: node.narrative.transcript
 targetEntityType: node
 bundle: narrative
-mode: default
+mode: transcript
 content:
   body:
     weight: 0
@@ -30,3 +32,4 @@ content:
     third_party_settings: {  }
 hidden:
   links: true
+  rendered_transcript: true

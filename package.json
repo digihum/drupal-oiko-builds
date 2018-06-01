@@ -12,6 +12,7 @@
     "breakpoint-sass": "2.7.0",
     "breakpoint-slicer": "github:stevetweeddale/breakpoint-slicer",
     "browser-sync": "^2.13.0",
+    "dom-to-image": "^2.6.0",
     "es6-promise": "^4.1.0",
     "exports-loader": "^0.6.4",
     "eyeglass": "^0.8.3",

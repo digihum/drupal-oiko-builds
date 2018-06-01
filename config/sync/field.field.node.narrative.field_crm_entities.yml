@@ -9,9 +9,9 @@ id: node.narrative.field_crm_entities
 field_name: field_crm_entities
 entity_type: node
 bundle: narrative
-label: 'Related to'
-description: ''
-required: false
+label: 'Key events'
+description: 'Select the main items that your narrative relates to. These items will be used to generate a listing of all connected entities involved in your narrative.'
+required: true
 translatable: true
 default_value: {  }
 default_value_callback: ''

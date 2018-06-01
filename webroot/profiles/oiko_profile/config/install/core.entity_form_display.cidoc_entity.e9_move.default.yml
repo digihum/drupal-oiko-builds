@@ -231,127 +231,106 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p11_had_participant':
     weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p12_occurred_in_the_presence_of':
     weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p132_overlaps_with':
     weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p133_is_separated_from':
     weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p134_continued':
     weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p14_carried_out_by':
     weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p15_was_influenced_by':
     weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p16_used_specific_object':
     weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p17_was_motivated_by':
     weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p25_moved':
     weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p26_moved_to':
     weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p27_moved_from':
     weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p4_has_time_span':
     weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p7_took_place_at':
     weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p9_consists_of':
     weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p10_falls_within':
     weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p134_continued':
     weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p15_was_influenced_by':
     weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p17_was_motivated_by':
     weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p9_consists_of':
     weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   citation:
     type: entity_reference_paragraphs
     weight: 3
@@ -368,7 +347,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   content:
     type: text_textarea
     weight: 0
@@ -395,7 +373,7 @@ content:
     region: content
   path:
     type: path
-    weight: 30
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -403,22 +381,6 @@ content:
     type: options_select
     weight: 4
     settings: {  }
-    third_party_settings: {  }
-    region: content
-  timeline_logo:
-    type: image_image
-    weight: 10
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    region: content
-    third_party_settings: {  }
-  timeline_preselect_option:
-    type: boolean_checkbox
-    weight: 10
-    settings:
-      display_label: true
-    region: content
     third_party_settings: {  }
     region: content
   status:

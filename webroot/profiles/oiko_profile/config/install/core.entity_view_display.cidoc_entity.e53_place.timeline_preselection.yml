@@ -60,6 +60,7 @@ hidden:
   'cidoc_properties:range:p27_moved_from': true
   'cidoc_properties:range:p7_took_place_at': true
   'cidoc_properties:range:p89_falls_within': true
+  cidoc_properties_transcript: true
   citation: true
   field_geodata: true
   field_location_lookup: true

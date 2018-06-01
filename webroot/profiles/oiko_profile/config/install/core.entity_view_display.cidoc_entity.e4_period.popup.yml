@@ -268,6 +268,7 @@ hidden:
   cidoc_properties: true
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:range:p132_overlaps_with': true
+  cidoc_properties_transcript: true
   citation: true
   duplicate_of_p134_continues_entity_view_1: true
   duplicate_of_p15_influenced_entity_view_1: true

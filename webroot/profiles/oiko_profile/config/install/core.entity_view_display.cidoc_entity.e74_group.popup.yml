@@ -259,6 +259,7 @@ hidden:
   appelations_entity_view_1: true
   cidoc_properties: true
   'cidoc_properties:domain:p2_has_type': true
+  cidoc_properties_transcript: true
   citation: true
   duplicate_of_p134_continues_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true

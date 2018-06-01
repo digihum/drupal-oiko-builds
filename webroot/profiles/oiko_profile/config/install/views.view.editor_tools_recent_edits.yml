@@ -43,15 +43,17 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
-        type: mini
+        type: full
         options:
-          items_per_page: 5
+          items_per_page: 20
           offset: 0
-          id: 1
+          id: 3
           total_pages: null
           tags:
             previous: ‹‹
             next: ››
+            first: '« First'
+            last: 'Last »'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -60,6 +62,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          quantity: 5
       style:
         type: table
         options:
@@ -82,7 +85,7 @@ display:
               sortable: false
               default_sort_order: asc
               align: ''
-              separator: ' - '
+              separator: ''
               empty_column: false
               responsive: ''
             internal_name:
@@ -130,7 +133,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Name
+          label: Title
           exclude: false
           alter:
             alter_text: false
@@ -198,8 +201,8 @@ display:
           label: 'Internal name'
           exclude: false
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: ' - {{ internal_name }}'
             make_link: false
             path: ''
             absolute: false
@@ -239,7 +242,7 @@ display:
           click_sort_column: value
           type: string
           settings:
-            link_to_entity: true
+            link_to_entity: false
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -260,7 +263,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Class
+          label: Type
           exclude: false
           alter:
             alter_text: false
@@ -325,7 +328,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Last edit'
+          label: 'Last edited'
           exclude: false
           alter:
             alter_text: false

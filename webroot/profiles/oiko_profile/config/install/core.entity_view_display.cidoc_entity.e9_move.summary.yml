@@ -246,6 +246,7 @@ content:
 hidden:
   cidoc_admin_links: true
   cidoc_properties: true
+  cidoc_properties_transcript: true
   cidoc_temporal_summary: true
   citation: true
   content: true

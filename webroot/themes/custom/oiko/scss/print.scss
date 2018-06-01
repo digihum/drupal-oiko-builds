@@ -3,6 +3,9 @@
   display: none;
 }
 
+// Hide the printing links thing.
+a[href]:after { content: ''; }
+
 // Remove our flexbox crazy times.
 body.layout-flex, .l-main, .l-content-container, .l-main-content, .oiko-app, .page-scroll-container {
   display: block;

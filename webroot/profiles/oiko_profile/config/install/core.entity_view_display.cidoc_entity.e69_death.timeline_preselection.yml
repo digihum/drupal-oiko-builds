@@ -61,6 +61,7 @@ hidden:
   'cidoc_properties:range:p15_was_influenced_by': true
   'cidoc_properties:range:p17_was_motivated_by': true
   'cidoc_properties:range:p9_consists_of': true
+  cidoc_properties_transcript: true
   citation: true
   internal_name: true
   map_link: true

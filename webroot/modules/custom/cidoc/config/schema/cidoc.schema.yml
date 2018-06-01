@@ -84,3 +84,7 @@ cidoc.cidoc_property.*:
     bidirectional:
       type: boolean
       label: 'Whether this property is symmetric.'
+
+views.filter.cidoc_bundle:
+  type: views.filter.in_operator
+  label: 'CIDOC Bundle'

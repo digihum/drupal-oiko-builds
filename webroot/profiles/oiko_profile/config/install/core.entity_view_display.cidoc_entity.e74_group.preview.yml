@@ -100,6 +100,7 @@ hidden:
   'cidoc_properties:range:p95_has_formed': true
   'cidoc_properties:range:p99_dissolved': true
   'cidoc_properties:range:p9_consists_of': true
+  cidoc_properties_transcript: true
   cidoc_temporal_summary: true
   duplicate_of_p134_continues_entity_view_1: true
   duplicate_of_p15_influenced_entity_view_1: true

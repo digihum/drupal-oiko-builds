@@ -7,6 +7,7 @@ import { createOikoApp } from './store';
 import $ from './jquery';
 import isEqual from 'is-equal'
 import watch from 'redux-watch'
+import domtoimage from 'dom-to-image';
 
 // Spin up a new instance of our OikoApp.
 const app = createOikoApp();
@@ -245,6 +246,42 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
 
       }
     }
+  });
+
+  // Encase any specified elements in carbonite, i.e. turn them into images.
+  $(function() {
+    $('.carbonite .carbonite--victim').each(function() {
+      var that = this;
+      var $that = $(that);
+      var carbonize = function() {
+        // Support someone adding an 'is-loading' class. We're looking at you leaflet.
+        if ($that.find('.is-loading').length) {
+          // Wait and try again.
+          setTimeout(carbonize, 100);
+        }
+        else {
+          // Sleep 1 second so that any animations hopefully complete!
+          setTimeout(function() {
+          domtoimage
+            .toPng(that, {
+              height: $that.height(),
+              width: $that.width(),
+              bgcolor: 'transparent'
+            })
+            .then(function (dataUrl) {
+              var img = new Image();
+              img.src = dataUrl;
+              $that.replaceWith(img);
+            })
+            .catch(function (error) {
+              console.error('oops, something went wrong!', error);
+            });
+          }, 1000);
+        }
+      };
+      // Call the carbonizer.
+      carbonize();
+    });
   });
 
 // @TODO: END: Move all of this elsewhere.
