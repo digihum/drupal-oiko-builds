@@ -1,0 +1,33 @@
+{#
+/**
+ * @file cidoc_entity.html.twig
+ * Default theme implementation to present CIDOC entity data.
+ *
+ * This template is used when viewing CIDOC entity pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_cidoc_entity()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('cidoc_entity') }}>
+    {% if content.name %}
+        <h2>{{- content.name -}}</h2>
+    {% endif %}
+    <div class="subtitle">
+        {% if content.cidoc_temporal_summary %}
+            {{- content.cidoc_temporal_summary -}}
+        {% endif %}
+        {% if content.significance %}
+            {{- content.significance -}}
+        {% endif %}
+    </div>
+    {% if content %}
+        {{- content|without('name', 'significance', 'cidoc_temporal_summary') -}}
+    {% endif %}
+</div>

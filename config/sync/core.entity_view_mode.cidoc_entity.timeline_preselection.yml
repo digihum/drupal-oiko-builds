@@ -1,0 +1,10 @@
+uuid: bb3ab468-8033-4f88-9ed6-0828f3310d81
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_entity.timeline_preselection
+label: 'Timeline preselection'
+targetEntityType: cidoc_entity
+cache: true

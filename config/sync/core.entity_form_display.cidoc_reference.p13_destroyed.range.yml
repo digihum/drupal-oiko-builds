@@ -1,0 +1,43 @@
+uuid: d24d3978-2382-4eee-93ee-39f42a81093e
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p13_destroyed
+    - core.entity_form_mode.cidoc_reference.range
+    - field.field.cidoc_reference.p13_destroyed.domain
+    - field.field.cidoc_reference.p13_destroyed.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+_core:
+  default_config_hash: fE9g1jhOhmZsLpDC0_Ydf44LXB3FFHDlNr6lQqNdP8E
+id: cidoc_reference.p13_destroyed.range
+targetEntityType: cidoc_reference
+bundle: p13_destroyed
+mode: range
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+    region: content
+  domain:
+    type: squid_entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: 60
+      placeholder: 'Start typing to find a match or create new entity...'
+    weight: 0
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true
+  range: true
+  user_id: true

@@ -252,45 +252,22 @@ class Eva extends DisplayPluginBase {
     }
   }
 
-  public function preExecute() {
-    parent::preExecute();
-    
-    if (isset($this->view->current_entity)) {
-      $entity = $this->view->current_entity;
-      $entity_type = $this->view->display_handler->getOption('entity_type');
-      $entity_info = \Drupal::entityManager()->getDefinition($entity_type);
-  
-      $arg_mode = $this->view->display_handler->getOption('argument_mode');
-      if ($arg_mode == 'token') {
-        if ($token_string = $this->view->display_handler->getOption('default_argument')) {
-          // Now do the token replacement.
-          $token_values = eva_get_arguments_from_token_string($token_string, $entity_type, $entity);
-          $new_args = array();
-          // We have to be careful to only replace arguments that have tokens.
-          foreach ($token_values as $key => $value) {
-            $new_args[Html::escape($key)] = Html::escape($value);
-          }
-  
-          $this->view->args = $new_args;
-        }
-      }
-      elseif ($arg_mode == 'id') {
-        $this->view->args = array($entity->id());
-      }
-    }
-  }
-  
   public function getPath() {
     if (isset($this->view->current_entity)) {
-      $uri = $this->view->current_entity->url();
+      /** @var \Drupal\Core\Entity\EntityInterface $current_entity */
+      $current_entity = $this->view->current_entity;
+
+      /** @var \Drupal\Core\Url $uri */
+      $uri = $current_entity->toUrl();
       if ($uri) {
-        $uri['options']['absolute'] = TRUE;
-        return url($uri['path'], $uri['options']);
+        $uri->setAbsolute(TRUE);
+        return $uri->toUriString();
       }
     }
+
     return parent::getPath();
   }
- 
+
   function execute() {
     // Prior to this being called, the $view should already be set to this
     // display, and arguments should be set on the view.
@@ -302,5 +279,7 @@ class Eva extends DisplayPluginBase {
     if (!empty($this->view->result) || $this->getOption('empty') || !empty($this->view->style_plugin->definition['even empty'])) {
       return $element;
     }
+
+    return [];
   }
 }

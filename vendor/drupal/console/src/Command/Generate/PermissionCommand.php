@@ -10,18 +10,60 @@ namespace Drupal\Console\Command\Generate;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Command\ModuleTrait;
-use Drupal\Console\Command\PermissionTrait;
+use Drupal\Console\Core\Command\Command;
+use Drupal\Console\Command\Shared\ModuleTrait;
+use Drupal\Console\Command\Shared\PermissionTrait;
 use Drupal\Console\Generator\PermissionGenerator;
-use Drupal\Console\Command\ConfirmationTrait;
-use Drupal\Console\Command\GeneratorCommand;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Command\Shared\ConfirmationTrait;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Extension\Manager;
+use Drupal\Console\Core\Utils\StringConverter;
+use Drupal\Console\Utils\Validator;
 
-class PermissionCommand extends GeneratorCommand
+class PermissionCommand extends Command
 {
     use ModuleTrait;
     use PermissionTrait;
     use ConfirmationTrait;
+
+    /**
+     * @var Manager
+     */
+    protected $extensionManager;
+
+    /**
+     * @var StringConverter
+     */
+    protected $stringConverter;
+
+    /**
+     * @var PermissionGenerator;
+     */
+    protected $generator;
+
+    /**
+     * @var Validator
+     */
+    protected $validator;
+
+    /**
+     * PermissionCommand constructor.
+     *
+     * @param Manager         $extensionManager
+     * @param StringConverter $stringConverter
+     */
+    public function __construct(
+        Manager $extensionManager,
+        StringConverter $stringConverter,
+        PermissionGenerator $permissionGenerator,
+        Validator $validator
+    ) {
+        $this->extensionManager = $extensionManager;
+        $this->stringConverter = $stringConverter;
+        $this->generator = $permissionGenerator;
+        $this->validator = $validator;
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
@@ -30,20 +72,21 @@ class PermissionCommand extends GeneratorCommand
     {
         $this
             ->setName('generate:permissions')
-            ->setDescription($this->trans('commands.generate.permission.description'))
-            ->setHelp($this->trans('commands.generate.permission.help'))
+            ->setDescription($this->trans('commands.generate.permissions.description'))
+            ->setHelp($this->trans('commands.generate.permissions.help'))
             ->addOption(
                 'module',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.common.options.module')
             )
             ->addOption(
                 'permissions',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.common.options.permissions')
-            );
+            )
+            ->setAliases(['gp']);
     }
 
     /**
@@ -53,12 +96,10 @@ class PermissionCommand extends GeneratorCommand
     {
         $module = $input->getOption('module');
         $permissions = $input->getOption('permissions');
+        $learning = $input->hasOption('learning');
 
-        $learning = $input->hasOption('learning')?$input->getOption('learning'):false;
 
-        $generator = $this->getGenerator();
-        $generator->setLearning($learning);
-        $generator->generate($module, $permissions);
+        $this->generator->generate($module, $permissions, $learning);
     }
 
     /**
@@ -66,28 +107,17 @@ class PermissionCommand extends GeneratorCommand
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
+        $io = new DrupalStyle($input, $output);
+
         // --module option
-        $module = $input->getOption('module');
-        if (!$module) {
-            // @see Drupal\Console\Command\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($output);
-            $input->setOption('module', $module);
-        }
+        $this->getModuleOption();
 
         // --permissions option
         $permissions = $input->getOption('permissions');
         if (!$permissions) {
-            // @see \Drupal\Console\Command\PermissionTrait::permissionQuestion
-            $permissions = $this->permissionQuestion($output);
+            // @see \Drupal\Console\Command\Shared\PermissionTrait::permissionQuestion
+            $permissions = $this->permissionQuestion($io);
             $input->setOption('permissions', $permissions);
         }
-    }
-
-    /**
-     * @return \Drupal\Console\Generator\PermissionGenerator.
-     */
-    protected function createGenerator()
-    {
-        return new PermissionGenerator();
     }
 }

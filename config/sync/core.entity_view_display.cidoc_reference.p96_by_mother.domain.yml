@@ -1,0 +1,29 @@
+uuid: 0dea0420-aa97-4f58-a99b-cc9350b8a97b
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p96_by_mother
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.p96_by_mother.domain
+    - field.field.cidoc_reference.p96_by_mother.range
+_core:
+  default_config_hash: tGywPjzLU_ORq2tGAeZjtL2ceV20YS5YdRt6z4R2sWU
+id: cidoc_reference.p96_by_mother.domain
+targetEntityType: cidoc_reference
+bundle: p96_by_mother
+mode: domain
+content:
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  domain: true
+  property: true
+  user_id: true

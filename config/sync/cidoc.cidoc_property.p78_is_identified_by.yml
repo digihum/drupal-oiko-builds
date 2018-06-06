@@ -1,0 +1,31 @@
+uuid: f45aee4d-b478-4aaf-ae26-c99944e29b00
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: eTKSgpRuPT9rcjVpMJbDjDgt8ZPIKVMbECEYTytWl0Y
+id: p78_is_identified_by
+label: 'P78 is identified by'
+bidirectional: false
+reverse_label: 'P78 identifies'
+friendly_label: 'Is identified by'
+reverse_friendly_label: Identifies
+domain_bundles:
+  - e52_time_span
+range_bundles:
+  - e49_time_appellation
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

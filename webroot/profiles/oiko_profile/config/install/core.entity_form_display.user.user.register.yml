@@ -22,38 +22,39 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+    region: content
   avatars_user_picture:
-    weight: 1
+    weight: 2
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
     type: image_image
-  field_contact_preference:
-    type: boolean_checkbox
+    region: content
+  field_terms_and_privacy:
     weight: 6
     settings:
       display_label: true
     third_party_settings: {  }
-  field_terms_and_privacy:
-    weight: 5
-    settings:
-      display_label: true
-    third_party_settings: {  }
     type: boolean_checkbox
+    region: content
   google_analytics:
-    weight: 3
-    settings: {  }
-    third_party_settings: {  }
-  language:
-    weight: 2
-    settings: {  }
-    third_party_settings: {  }
-  path:
-    type: path
     weight: 4
     settings: {  }
     third_party_settings: {  }
+    region: content
+  language:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  path:
+    type: path
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+    region: content
 hidden:
   avatars_avatar_generator: true
+  field_contact_preference: true
   user_picture: true

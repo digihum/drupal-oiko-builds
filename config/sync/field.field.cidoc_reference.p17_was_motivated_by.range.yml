@@ -1,0 +1,79 @@
+uuid: 92dd22e1-e521-456d-a9b4-3a805fdd41e8
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e12_production
+    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_entity_bundle.e22_man_made_object
+    - cidoc.cidoc_entity_bundle.e42_identifier
+    - cidoc.cidoc_entity_bundle.e49_time_appellation
+    - cidoc.cidoc_entity_bundle.e4_period
+    - cidoc.cidoc_entity_bundle.e52_time_span
+    - cidoc.cidoc_entity_bundle.e53_place
+    - cidoc.cidoc_entity_bundle.e54_dimension
+    - cidoc.cidoc_entity_bundle.e58_measurement_unit
+    - cidoc.cidoc_entity_bundle.e5_event
+    - cidoc.cidoc_entity_bundle.e66_formation
+    - cidoc.cidoc_entity_bundle.e67_birth
+    - cidoc.cidoc_entity_bundle.e68_dissolution
+    - cidoc.cidoc_entity_bundle.e69_death
+    - cidoc.cidoc_entity_bundle.e6_destruction
+    - cidoc.cidoc_entity_bundle.e74_group
+    - cidoc.cidoc_entity_bundle.e7_activity
+    - cidoc.cidoc_entity_bundle.e82_actor_appellation
+    - cidoc.cidoc_entity_bundle.e85_joining
+    - cidoc.cidoc_entity_bundle.e86_leaving
+    - cidoc.cidoc_entity_bundle.e9_move
+    - cidoc.cidoc_entity_bundle.o1_killing
+    - cidoc.cidoc_entity_bundle.o2_active_dissolution
+    - cidoc.cidoc_entity_bundle.o3_active_destruction
+    - cidoc.cidoc_property.p17_was_motivated_by
+    - field.storage.cidoc_reference.range
+_core:
+  default_config_hash: AQrskl5i6tspDQNNmzrx9aiPbzYBfKOEM1ZrPozmN2w
+id: cidoc_reference.p17_was_motivated_by.range
+field_name: range
+entity_type: cidoc_reference
+bundle: p17_was_motivated_by
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e52_time_span: e52_time_span
+      e53_place: e53_place
+      e54_dimension: e54_dimension
+      e4_period: e4_period
+      e5_event: e5_event
+      e21_person: e21_person
+      e74_group: e74_group
+      e7_activity: e7_activity
+      e12_production: e12_production
+      e66_formation: e66_formation
+      e67_birth: e67_birth
+      e68_dissolution: e68_dissolution
+      e69_death: e69_death
+      e6_destruction: e6_destruction
+      e85_joining: e85_joining
+      e86_leaving: e86_leaving
+      e9_move: e9_move
+      o1_killing: o1_killing
+      o2_active_dissolution: o2_active_dissolution
+      o3_active_destruction: o3_active_destruction
+      e22_man_made_object: e22_man_made_object
+      e58_measurement_unit: e58_measurement_unit
+      e42_identifier: e42_identifier
+      e49_time_appellation: e49_time_appellation
+      e82_actor_appellation: e82_actor_appellation
+    auto_create_bundle: e52_time_span
+field_type: entity_reference

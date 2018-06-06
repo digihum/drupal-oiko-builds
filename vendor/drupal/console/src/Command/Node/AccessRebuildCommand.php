@@ -10,15 +10,33 @@ namespace Drupal\Console\Command\Node;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Command\ContainerAwareCommand;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Command;
+use Drupal\Core\State\StateInterface;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class AccessRebuildCommand
+ *
  * @package Drupal\Console\Command\Node
  */
-class AccessRebuildCommand extends ContainerAwareCommand
+class AccessRebuildCommand extends Command
 {
+    /**
+     * @var StateInterface
+     */
+    protected $state;
+
+    /**
+     * AccessRebuildCommand constructor.
+     *
+     * @param StateInterface $state
+     */
+    public function __construct(StateInterface $state)
+    {
+        $this->state = $state;
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -32,7 +50,7 @@ class AccessRebuildCommand extends ContainerAwareCommand
                 null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.node.access.rebuild.options.batch')
-            );
+            )->setAliases(['nar']);
     }
 
     /**
@@ -51,18 +69,22 @@ class AccessRebuildCommand extends ContainerAwareCommand
             node_access_rebuild($batch);
         } catch (\Exception $e) {
             $io->error($e->getMessage());
-            return;
+
+            return 1;
         }
 
-        $needs_rebuild = $this->getState()->get('node.node_access_needs_rebuild') ? : false;
+        $needs_rebuild = $this->state->get('node.node_access_needs_rebuild') ? : false;
         if ($needs_rebuild) {
-            $io->warning(
+            $io->error(
                 $this->trans('commands.node.access.rebuild.messages.failed')
             );
-        } else {
-            $io->success(
-                $this->trans('commands.node.access.rebuild.messages.completed')
-            );
+
+            return 1;
         }
+
+        $io->success(
+            $this->trans('commands.node.access.rebuild.messages.completed')
+        );
+        return 0;
     }
 }

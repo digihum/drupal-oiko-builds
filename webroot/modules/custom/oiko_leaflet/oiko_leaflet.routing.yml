@@ -5,7 +5,8 @@ oiko_leaflet.popup_content_controller_view:
     _controller: '\Drupal\oiko_leaflet\Controller\PopupContentController::view'
     _title: 'cidocCRMPopupConent'
   requirements:
-    _permission: 'view published cidoc entities'
+    cidoc_entity: '\d+'
+    _entity_access: 'cidoc_entity.view'
 
 oiko_leaflet.popup_discussion_controller_view:
   path: '/discussion/{cidoc_entity}/popup'
@@ -13,7 +14,8 @@ oiko_leaflet.popup_discussion_controller_view:
     _controller: '\Drupal\oiko_leaflet\Controller\PopupDiscussionController::view'
     _title: 'cidocCRMPopupDiscussion'
   requirements:
-    _permission: 'view published cidoc entities'
+    cidoc_entity: '\d+'
+    _entity_access: 'cidoc_entity.view'
 
 oiko_leaflet.empire_controller_listall:
   path: '/oiko_leaflet/empires/list.json'
@@ -37,4 +39,13 @@ oiko_leaflet.map_page_controller_allEntities:
     _controller: '\Drupal\oiko_leaflet\Controller\MapPageController::allEntitiesForMap'
     _title: 'Fetch the entities for items on a map'
   requirements:
+    _permission: 'view published cidoc entities'
+
+oiko_leaflet.map_page_controller_unpublishedEntities:
+  path: '/oiko_leaflet/map/own-entities.json'
+  defaults:
+    _controller: '\Drupal\oiko_leaflet\Controller\MapPageController::ownEntitiesForMap'
+    _title: 'Fetch the entities for items on a map (unpublished)'
+  requirements:
+     # @TODO: Sort the permissions here.
     _permission: 'view published cidoc entities'

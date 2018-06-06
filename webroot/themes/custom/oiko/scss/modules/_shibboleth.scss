@@ -1,0 +1,19 @@
+.shibboleth-login {
+  margin-bottom: $global-margin * 2;
+}
+
+.shibboleth-login a {
+  background-color: #5b3069;
+  padding: $global-padding/2 $global-padding;
+  color: white;
+  display: inline-block;
+  border-radius: 6px;
+  border: 1px solid #4c2858;
+  text-decoration: none;
+  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  &:hover {
+    border-color: #27152e;
+    background-color: #3d2046;
+  }
+}

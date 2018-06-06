@@ -18,5 +18,5 @@
  */
 #}
 {#<div class="js-map-loader"></div>#}
-<div id="{{ map_id }}" style="min-width: 150px;{% if height %} height: {{ height }}{% endif %}" {% if not height %} class="leaflet-full-height"{% endif %}></div>
+<div id="{{ map_id }}" style="min-width: 150px;{% if height %} height: {{ height }}{% endif %}" {% if not height %} class="leaflet-full-height carbonite--victim"{% else %} class="carbonite--victim"{% endif %}></div>
 

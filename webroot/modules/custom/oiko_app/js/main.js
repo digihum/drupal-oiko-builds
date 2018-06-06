@@ -7,6 +7,7 @@ import { createOikoApp } from './store';
 import $ from './jquery';
 import isEqual from 'is-equal'
 import watch from 'redux-watch'
+import domtoimage from 'dom-to-image';
 
 // Spin up a new instance of our OikoApp.
 const app = createOikoApp();
@@ -90,22 +91,22 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
 
   const timelinesListener = () => {
     const {comparativeTimelines} = store.getState();
-    const timeline = Drupal.oiko.timeline;
+    if (typeof Drupal.oiko.timeline !== 'undefined') {
+      const timeline = Drupal.oiko.timeline;
+      // Check to see if the timeslines displayed needs to change.
+      const timelines = timeline.getTimelines();
+      if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length ||
+          // Non-empty, with different values.
+          (comparativeTimelines.length > 0 && comparativeTimelines.every((v, i) => v !== timelines[i])))) {
+        timeline.setTimelines(comparativeTimelines);
+      }
 
-
-    // Check to see if the timeslines displayed needs to change.
-    const timelines = timeline.getTimelines();
-    if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length ||
-      // Non-empty, with different values.
-      (comparativeTimelines.length > 0 && comparativeTimelines.every((v, i) => v !== timelines[i])))) {
-      timeline.setTimelines(comparativeTimelines);
-    }
-
-    // Check to see if the visual range of the timeline needs to change.
-    const {timelinesState} = store.getState();
-    const window = Drupal.oiko.timeline.getVisibleTimeWindow();
-    if (timelinesState.start && timelinesState.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {
-      Drupal.oiko.timeline.setVisibleTimeWindow(timelinesState.start, timelinesState.end);
+      // Check to see if the visual range of the timeline needs to change.
+      const {timelinesState} = store.getState();
+      const window = Drupal.oiko.timeline.getVisibleTimeWindow();
+      if (timelinesState.start && timelinesState.end && (timelinesState.start != window.start || timelinesState.end != window.end)) {
+        Drupal.oiko.timeline.setVisibleTimeWindow(timelinesState.start, timelinesState.end);
+      }
     }
   };
 
@@ -245,6 +246,42 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
 
       }
     }
+  });
+
+  // Encase any specified elements in carbonite, i.e. turn them into images.
+  $(function() {
+    $('.carbonite .carbonite--victim').each(function() {
+      var that = this;
+      var $that = $(that);
+      var carbonize = function() {
+        // Support someone adding an 'is-loading' class. We're looking at you leaflet.
+        if ($that.find('.is-loading').length) {
+          // Wait and try again.
+          setTimeout(carbonize, 100);
+        }
+        else {
+          // Sleep 1 second so that any animations hopefully complete!
+          setTimeout(function() {
+          domtoimage
+            .toPng(that, {
+              height: $that.height(),
+              width: $that.width(),
+              bgcolor: 'transparent'
+            })
+            .then(function (dataUrl) {
+              var img = new Image();
+              img.src = dataUrl;
+              $that.replaceWith(img);
+            })
+            .catch(function (error) {
+              console.error('oops, something went wrong!', error);
+            });
+          }, 1000);
+        }
+      };
+      // Call the carbonizer.
+      carbonize();
+    });
   });
 
 // @TODO: END: Move all of this elsewhere.

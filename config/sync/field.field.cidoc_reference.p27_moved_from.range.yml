@@ -1,0 +1,31 @@
+uuid: 800cf4b7-4c38-475b-b122-0015d0c3edb3
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e53_place
+    - cidoc.cidoc_property.p27_moved_from
+    - field.storage.cidoc_reference.range
+_core:
+  default_config_hash: 5Ta1yG_X4e96IFlW1xRMZNl9kaIZAa7lUFbMJWgCqSI
+id: cidoc_reference.p27_moved_from.range
+field_name: range
+entity_type: cidoc_reference
+bundle: p27_moved_from
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e53_place: e53_place
+    auto_create_bundle: e53_place
+field_type: entity_reference

@@ -12,10 +12,11 @@
     "breakpoint-sass": "2.7.0",
     "breakpoint-slicer": "github:stevetweeddale/breakpoint-slicer",
     "browser-sync": "^2.13.0",
+    "dom-to-image": "^2.6.0",
     "es6-promise": "^4.1.0",
     "exports-loader": "^0.6.4",
     "eyeglass": "^0.8.3",
-    "foundation-sites": "6.2.3",
+    "foundation-sites": "6.2.4",
     "gulp": "^3.9.1",
     "gulp-postcss": "^6.1.1",
     "gulp-sass": "^2.3.2",
@@ -43,7 +44,7 @@
   },
   "scripts": {
     "compile": "gulp compile",
-    "watch": "gulp watch",
+    "browsersync": "gulp browsersync",
     "webpack-watch": "webpack --watch"
   },
   "repository": {

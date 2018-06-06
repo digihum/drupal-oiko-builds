@@ -25,6 +25,7 @@ content:
       add_mode: dropdown
       form_display_mode: default
     third_party_settings: {  }
+    region: content
   field_in_the_role_of:
     type: squid_entity_reference_autocomplete_tags
     weight: 1
@@ -33,6 +34,7 @@ content:
       size: '20'
       placeholder: 'Invader, Accountant etc.'
     third_party_settings: {  }
+    region: content
   range:
     type: squid_entity_reference_autocomplete_tags
     settings:
@@ -41,6 +43,7 @@ content:
       placeholder: 'Start typing to find a match or create new entity...'
     weight: 0
     third_party_settings: {  }
+    region: content
 hidden:
   domain: true
   langcode: true

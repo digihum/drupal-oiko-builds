@@ -146,94 +146,117 @@ content:
     weight: 3
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p131_is_identified_by':
     weight: 1
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p143_joined':
     weight: 18
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p145_separated':
     weight: 17
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p1_is_identified_by':
     weight: 2
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p100_was_death_of':
     weight: 9
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p107_has_current_or_former_membe':
     weight: 12
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p11_had_participant':
     weight: 13
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p12_occurred_in_the_presence_of':
     weight: 14
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p13_destroyed':
     weight: 15
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p143_joined':
     weight: 21
+    region: content
   'cidoc_properties:range:p145_separated':
     weight: 15
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p14_carried_out_by':
     weight: 12
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p15_was_influenced_by':
     weight: 15
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p16_used_specific_object':
     weight: 16
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p17_was_motivated_by':
     weight: 14
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p25_moved':
     weight: 13
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p96_by_mother':
     weight: 8
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p97_from_father':
     weight: 7
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p98_brought_into_life':
     weight: 8
     settings: {  }
     third_party_settings: {  }
+    region: content
   cidoc_temporal_summary:
     weight: 1
     settings: {  }
     third_party_settings: {  }
+    region: content
   content:
     type: text_default
     weight: 4
     label: hidden
     settings: {  }
     third_party_settings: {  }
+    region: content
   map_of_places_people_went_entity_view_1:
     weight: 6
     settings: {  }
     third_party_settings: {  }
+    region: content
   name:
     type: string
     weight: 0
@@ -241,14 +264,17 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    region: content
   p108_produced_by_entity_view_1:
     weight: 11
     settings: {  }
     third_party_settings: {  }
+    region: content
   places_people_went_entity_view_1:
     weight: 7
     settings: {  }
     third_party_settings: {  }
+    region: content
   significance:
     type: entity_reference_entity_view
     weight: 2
@@ -257,10 +283,12 @@ content:
       view_mode: primary_historical_significance_pill
       link: false
     third_party_settings: {  }
+    region: content
 hidden:
   appelations_entity_view_1: true
   cidoc_properties: true
   'cidoc_properties:domain:p2_has_type': true
+  cidoc_properties_transcript: true
   citation: true
   duplicate_of_p134_continues_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true

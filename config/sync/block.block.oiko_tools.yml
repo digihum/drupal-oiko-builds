@@ -1,0 +1,24 @@
+uuid: ffe1b0ea-39b2-4973-a812-58df311a3543
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.tools
+  module:
+    - system
+  theme:
+    - oiko
+id: oiko_tools
+theme: oiko
+region: primary_menu
+weight: -4
+provider: null
+plugin: 'system_menu_block:tools'
+settings:
+  id: 'system_menu_block:tools'
+  label: Tools
+  provider: system
+  label_display: visible
+  level: 1
+  depth: 0
+visibility: {  }

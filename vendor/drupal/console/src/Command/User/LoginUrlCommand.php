@@ -10,17 +10,26 @@ namespace Drupal\Console\Command\User;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Component\Utility\SafeMarkup;
-use Drupal\Console\Command\ContainerAwareCommand;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class UserLoginCommand.
  *
  * @package Drupal\Console
  */
-class LoginUrlCommand extends ContainerAwareCommand
+class LoginUrlCommand extends UserBase
 {
+    /**
+     * LoginUrlCommand constructor.
+     *
+     * @param EntityTypeManagerInterface $entityTypeManager
+     */
+    public function __construct(EntityTypeManagerInterface $entityTypeManager)
+    {
+        parent::__construct($entityTypeManager);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -30,33 +39,54 @@ class LoginUrlCommand extends ContainerAwareCommand
             ->setName('user:login:url')
             ->setDescription($this->trans('commands.user.login.url.description'))
             ->addArgument(
-                'user-id',
+                'user',
                 InputArgument::REQUIRED,
-                $this->trans('commands.user.login.url.options.user-id'),
+                $this->trans('commands.user.login.url.options.user'),
                 null
-            );
+            )
+            ->setAliases(['ulu']);
     }
 
     /**
-   * {@inheritdoc}
-   */
+     * {@inheritdoc}
+     */
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+        $this->getUserArgument();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
 
-        $uid = $input->getArgument('user-id');
-        $user = $this->getEntityManager()->getStorage('user')->load($uid);
+        $user = $input->getArgument('user');
+        $userEntity = $this->getUserEntity($user);
 
-        if (!$user) {
-            $text = $this->trans('commands.user.login.url.errors.invalid-user');
-            $text = SafeMarkup::format($text, ['@uid' => $uid]);
-            $io->error($text);
-            return;
+        if (!$userEntity) {
+            $io->error(
+                sprintf(
+                    $this->trans('commands.user.login.url.errors.invalid-user'),
+                    $user
+                )
+            );
+
+            return 1;
         }
 
-        $url = user_pass_reset_url($user);
-        $text = $this->trans('commands.user.login.url.messages.url');
-        $text = SafeMarkup::format($text, ['@name' => $user->getUsername(), '@url' => $url]);
-        $io->success($text);
+        $url = user_pass_reset_url($userEntity) . '/login';
+        $io->success(
+            sprintf(
+                $this->trans('commands.user.login.url.messages.url'),
+                $userEntity->getUsername()
+            )
+        );
+
+        $io->simple($url);
+        $io->newLine();
+
+        return 0;
     }
 }

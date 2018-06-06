@@ -1,0 +1,83 @@
+uuid: 784ab3a9-82ef-43b3-881d-49950e4f5fa8
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e52_time_span
+    - core.entity_view_mode.cidoc_entity.temporal_summary
+    - field.field.cidoc_entity.e52_time_span.field_date
+  module:
+    - edtf
+id: cidoc_entity.e52_time_span.temporal_summary
+targetEntityType: cidoc_entity
+bundle: e52_time_span
+mode: temporal_summary
+content:
+  duplicate_of_p15_influenced_entity_view_1:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_date:
+    type: edtf_human_readable_formatter
+    weight: 0
+    label: visually_hidden
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  p10_falls_within_entity_view_1:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  p10_includes_entity_view_1:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  p15_influenced_entity_view_1:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  p9__entity_view_1:
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  people_entity_view_1:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  time_span_directly_linked_events_entity_view_1:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  time_span_within_period_entity_view_1:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  cidoc_admin_links: true
+  cidoc_properties: true
+  'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p78_is_identified_by': true
+  'cidoc_properties:range:p15_was_influenced_by': true
+  'cidoc_properties:range:p17_was_motivated_by': true
+  'cidoc_properties:range:p4_has_time_span': true
+  cidoc_properties_transcript: true
+  cidoc_temporal_summary: true
+  citation: true
+  content: true
+  internal_name: true
+  map_link: true
+  name: true
+  significance: true
+  timeline_link: true
+  timeline_logo: true
+  timeline_preselect_option: true
+  user_id: true

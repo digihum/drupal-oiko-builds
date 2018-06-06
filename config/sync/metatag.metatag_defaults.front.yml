@@ -1,0 +1,31 @@
+uuid: 0c913619-7be2-4b60-a965-895787843b45
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: yBqw6UD3j0MM1yoDSVDif7nw4SNdoS2e385nw--3ysk
+id: front
+label: 'Front page'
+tags:
+  canonical_url: 'https://oiko.world/'
+  shortlink: '[site:url]'
+  title: Oiko.world
+  og_description: 'Oiko.world is here to help you discover, compare, and discuss the histories of, and connections between, communities from across the ancient world. ou can explore the ancient civilisations in Oiko.world via a map and/or a timeline.'
+  og_image: 'https://oiko.world/themes/custom/oiko/images/oiko.jpg'
+  og_image_height: '630'
+  og_image_secure_url: 'https://oiko.world/themes/custom/oiko/images/oiko.jpg'
+  og_image_type: jpg
+  og_image_url: 'https://oiko.world/themes/custom/oiko/images/oiko.jpg'
+  og_image_width: '1200'
+  og_site_name: Oiko.world
+  og_title: Oiko.world
+  og_type: app
+  og_url: 'https://oiko.world/'
+  twitter_cards_description: 'Oiko.world is here to help you discover, compare, and discuss the histories of, and connections between, communities from across the ancient world. You can explore the ancient civilisations in Oiko.world via a map and/or a timeline. '
+  twitter_cards_image: 'https://oiko.world/themes/custom/oiko/images/oiko.jpg'
+  twitter_cards_image_alt: 'Interactive map to navigate the ancient world.'
+  twitter_cards_image_height: '630'
+  twitter_cards_image_width: '1200'
+  twitter_cards_page_url: 'https://oiko.world'
+  twitter_cards_title: 'Welcome to Oiko.world'
+  twitter_cards_type: summary_large_image

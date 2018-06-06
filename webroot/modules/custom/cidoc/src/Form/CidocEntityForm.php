@@ -4,18 +4,23 @@ namespace Drupal\cidoc\Form;
 
 use Drupal\cidoc\Entity\CidocEntity;
 use Drupal\cidoc\Entity\CidocProperty;
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Utility\Tags;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Entity\EntityReferenceSelection\SelectionInterface;
 use Drupal\Core\Entity\EntityReferenceSelection\SelectionWithAutocreateInterface;
+use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form controller for CIDOC entity edit forms.
@@ -23,6 +28,42 @@ use Drupal\Core\Url;
  * @ingroup cidoc
  */
 class CidocEntityForm extends ContentEntityForm {
+
+  /**
+   * The Current User object.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $currentUser;
+
+  /**
+   * Constructs a CidocEntityForm object.
+   *
+   * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
+   *   The entity manager.
+   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
+   *   The entity type bundle service.
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   The time service.
+   * @param \Drupal\Core\Session\AccountInterface $current_user
+   *   The current user.
+   */
+  public function __construct(EntityManagerInterface $entity_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL, AccountInterface $current_user) {
+    parent::__construct($entity_manager, $entity_type_bundle_info, $time);
+    $this->currentUser = $current_user;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity.manager'),
+      $container->get('entity_type.bundle.info'),
+      $container->get('datetime.time'),
+      $container->get('current_user')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -48,7 +89,28 @@ class CidocEntityForm extends ContentEntityForm {
     $this->addCidocPropertiesWidget($form, $form_state);
     $this->addCidocPropertiesWidget($form, $form_state, TRUE);
 
+    $form['#pre_render'][] = array(
+      $this,
+      'formPrerender',
+    );
+
+    $form['status']['#access'] = $this->currentUser->hasPermission('administer cidoc entities');
+    $form['user_id']['#access'] = $this->currentUser->hasPermission('administer cidoc entities');
+    if (isset($form['timeline_preselect_option'])) {
+      $form['timeline_preselect_option']['#access'] = $this->currentUser->hasPermission('administer cidoc entities');
+    }
+
+    if (isset($form['timeline_logo'])) {
+      $form['timeline_logo']['#access'] = $this->currentUser->hasPermission('administer cidoc entities');
+    }
+
     return $form;
+  }
+
+  public function formPrerender($element) {
+    // @TODO: Make sure this group exists on the form.
+    $element['#group_children']['advanced'] = 'group_oiko_world_settings';
+    return $element;
   }
 
   /**
@@ -198,9 +260,13 @@ class CidocEntityForm extends ContentEntityForm {
                 $title = $this->recursivelyFindAndHideElementTitle($form[$element_key]['references'][$reference_id]['subform'][$key]);
 
                 // Take the field headers from the first row that has them.
-                if (!isset($headers[$key])) {
+                if (!isset($headers[$key]) && $key !== 'revision_log_message') {
                   $headers[$key] = $title;
                 }
+              }
+
+              if (isset($form[$element_key]['references'][$reference_id]['subform']['revision_log_message'])) {
+                $form[$element_key]['references'][$reference_id]['subform']['revision_log_message']['#access'] = FALSE;
               }
 
               if (isset($form[$element_key]['references'][$reference_id]['subform'][$target_field]['widget']['target_id'])) {
@@ -636,7 +702,7 @@ class CidocEntityForm extends ContentEntityForm {
 
     // If saving is an option, privileged users get dedicated form submit
     // buttons to continue onto stub entities after saving.
-    if (\Drupal::currentUser()->hasPermission('edit cidoc entities')) {
+    if (\Drupal::currentUser()->hasPermission('edit cidoc entities') || \Drupal::currentUser()->hasPermission('edit own cidoc entities')) {
       // Add a "Save and continue" button.
       $element['continue'] = $element['submit'];
       // If the "Save and continue" button is clicked, we want to redirect.

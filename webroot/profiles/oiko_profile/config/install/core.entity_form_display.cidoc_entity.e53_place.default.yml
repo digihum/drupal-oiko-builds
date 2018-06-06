@@ -6,9 +6,11 @@ dependencies:
     - field.field.cidoc_entity.e53_place.field_geodata
     - field.field.cidoc_entity.e53_place.field_location_lookup
     - field.field.cidoc_entity.e53_place.field_pleiades_uri
+    - image.style.thumbnail
   module:
     - field_group
     - geocoder_autocomplete
+    - image
     - leaflet_widget
     - link
     - paragraphs
@@ -123,30 +125,37 @@ content:
     weight: 23
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p122_borders_with':
     weight: 24
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p131_is_identified_by':
     weight: 4
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p87_is_identified_by':
     weight: 20
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p88_consists_of':
     weight: 20
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p89_falls_within':
     weight: 21
     settings: {  }
     third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p89_falls_within':
     weight: 22
     settings: {  }
     third_party_settings: {  }
+    region: content
   citation:
     type: entity_reference_paragraphs
     weight: 3
@@ -157,10 +166,12 @@ content:
       add_mode: button
       form_display_mode: default
     third_party_settings: {  }
+    region: content
   class_description:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_geodata:
     weight: 24
     settings:
@@ -179,6 +190,7 @@ content:
         show: '1'
     third_party_settings: {  }
     type: leaflet_widget
+    region: content
   field_location_lookup:
     weight: 22
     settings:
@@ -187,6 +199,7 @@ content:
       autocomplete_route_name: geocoder_autocomplete.autocomplete
     third_party_settings: {  }
     type: geocoder_autocomplete
+    region: content
   field_pleiades_uri:
     weight: 23
     settings:
@@ -194,6 +207,7 @@ content:
       placeholder_title: ''
     third_party_settings: {  }
     type: link_default
+    region: content
   internal_name:
     type: string_textfield
     weight: 2
@@ -201,6 +215,7 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+    region: content
   name:
     type: string_textfield
     weight: 1
@@ -208,15 +223,25 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+    region: content
   path:
     type: path
     weight: 30
     settings: {  }
     third_party_settings: {  }
+    region: content
   significance:
     type: options_select
     weight: 4
     settings: {  }
+    third_party_settings: {  }
+    region: content
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
+    region: content
     third_party_settings: {  }
   timeline_logo:
     type: image_image
@@ -225,12 +250,14 @@ content:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
+    region: content
   timeline_preselect_option:
     type: boolean_checkbox
     weight: 10
     settings:
       display_label: true
     third_party_settings: {  }
+    region: content
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true

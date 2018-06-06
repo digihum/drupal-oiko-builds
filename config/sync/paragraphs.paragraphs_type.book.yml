@@ -1,0 +1,8 @@
+uuid: 0bfb8404-1661-4d61-93a5-ee8609f8deda
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: i0n95IdE3ljdwORUTI0yU1Hi0uFFkXUtUEr38wIKU6k
+id: book
+label: Book

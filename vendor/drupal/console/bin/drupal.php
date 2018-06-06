@@ -1,97 +1,89 @@
 <?php
 
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Input\ArrayInput;
+use Drupal\Console\Core\Utils\ConfigurationManager;
+use Drupal\Console\Core\Utils\ArgvInputReader;
+use Drupal\Console\Core\Utils\DrupalFinder;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Bootstrap\Drupal;
 use Drupal\Console\Application;
-use Drupal\Console\Helper\KernelHelper;
-use Drupal\Console\Helper\StringHelper;
-use Drupal\Console\Helper\ValidatorHelper;
-use Drupal\Console\Helper\TranslatorHelper;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Drupal\Console\Helper\SiteHelper;
-use Drupal\Console\EventSubscriber\ShowGeneratedFilesListener;
-use Drupal\Console\EventSubscriber\ShowWelcomeMessageListener;
-use Drupal\Console\Helper\ShowFileHelper;
-use Drupal\Console\Helper\ChainCommandHelper;
-use Drupal\Console\EventSubscriber\CallCommandListener;
-use Drupal\Console\EventSubscriber\ShowGenerateChainListener;
-use Drupal\Console\EventSubscriber\ShowGenerateInlineListener;
-use Drupal\Console\EventSubscriber\ShowTerminateMessageListener;
-use Drupal\Console\EventSubscriber\ValidateDependenciesListener;
-use Drupal\Console\EventSubscriber\DefaultValueEventListener;
-use Drupal\Console\Helper\NestedArrayHelper;
-use Drupal\Console\Helper\TwigRendererHelper;
-use Drupal\Console\EventSubscriber\ShowGenerateDocListener;
-use Drupal\Console\Helper\DrupalHelper;
-use Drupal\Console\Helper\CommandDiscoveryHelper;
-use Drupal\Console\Helper\RemoteHelper;
-use Drupal\Console\Helper\HttpClientHelper;
-use Drupal\Console\Helper\DrupalApiHelper;
-use Drupal\Console\Helper\ContainerHelper;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 set_time_limit(0);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-$consoleRoot = __DIR__.'/../';
+$autoloaders = [];
 
-if (file_exists($consoleRoot.'vendor/autoload.php')) {
-    include_once $consoleRoot.'vendor/autoload.php';
-} elseif (file_exists($consoleRoot.'../../autoload.php')) {
-    include_once $consoleRoot.'../../autoload.php';
+if (file_exists(__DIR__ . '/../autoload.local.php')) {
+    include_once __DIR__ . '/../autoload.local.php';
 } else {
-    echo 'Something goes wrong with your archive'.PHP_EOL.
-        'Try downloading again'.PHP_EOL;
+    $autoloaders = [
+        __DIR__ . '/../../../autoload.php',
+        __DIR__ . '/../vendor/autoload.php'
+    ];
+}
+
+foreach ($autoloaders as $file) {
+    if (file_exists($file)) {
+        $autoloader = $file;
+        break;
+    }
+}
+
+if (isset($autoloader)) {
+    $autoload = include_once $autoloader;
+} else {
+    echo ' You must set up the project dependencies using `composer install`' . PHP_EOL;
     exit(1);
 }
 
-$container = new ContainerBuilder();
-$loader = new YamlFileLoader($container, new FileLocator($consoleRoot));
-$loader->load('services.yml');
+$output = new ConsoleOutput();
+$input = new ArrayInput([]);
+$io = new DrupalStyle($input, $output);
 
-$config = $container->get('config');
+$argvInputReader = new ArgvInputReader();
+$root = $argvInputReader->get('root', getcwd());
 
-$translatorHelper = new TranslatorHelper();
-$translatorHelper->loadResource($config->get('application.language'), $consoleRoot);
+$drupalFinder = new DrupalFinder();
+if (!$drupalFinder->locateRoot($root)) {
+    $io->error('DrupalConsole must be executed within a Drupal Site.');
 
-$helpers = [
-    'nested-array' => new NestedArrayHelper(),
-    'kernel' => new KernelHelper(),
-    'string' => new StringHelper(),
-    'validator' => new ValidatorHelper(),
-    'translator' => $translatorHelper,
-    'site' => new SiteHelper(),
-    'renderer' => new TwigRendererHelper(),
-    'showFile' => new ShowFileHelper(),
-    'chain' => new ChainCommandHelper(),
-    'drupal' => new DrupalHelper(),
-    'commandDiscovery' => new CommandDiscoveryHelper($config->get('application.develop')),
-    'remote' => new RemoteHelper(),
-    'httpClient' => new HttpClientHelper(),
-    'api' => new DrupalApiHelper(),
-    'container' => new ContainerHelper($container),
-];
-
-$application = new Application($helpers);
-$application->setDirectoryRoot($consoleRoot);
-
-$dispatcher = new EventDispatcher();
-$dispatcher->addSubscriber(new ValidateDependenciesListener());
-$dispatcher->addSubscriber(new ShowWelcomeMessageListener());
-//$dispatcher->addSubscriber(new ShowGenerateDocListener());
-$dispatcher->addSubscriber(new DefaultValueEventListener());
-$dispatcher->addSubscriber(new ShowGeneratedFilesListener());
-$dispatcher->addSubscriber(new CallCommandListener());
-$dispatcher->addSubscriber(new ShowGenerateChainListener());
-$dispatcher->addSubscriber(new ShowGenerateInlineListener());
-$dispatcher->addSubscriber(new ShowTerminateMessageListener());
-$application->setDispatcher($dispatcher);
-
-$defaultCommand = 'about';
-if ($config->get('application.command')
-    && $application->has($config->get('application.command'))
-) {
-    $defaultCommand = $config->get('application.command');
+    exit(1);
 }
 
-$application->setDefaultCommand($defaultCommand);
+chdir($drupalFinder->getDrupalRoot());
+$configurationManager = new ConfigurationManager();
+$configuration = $configurationManager
+    ->loadConfiguration($drupalFinder->getComposerRoot())
+    ->getConfiguration();
+
+$debug = $argvInputReader->get('debug', false);
+if ($configuration && $options = $configuration->get('application.options') ?: []) {
+    $argvInputReader->setOptionsFromConfiguration($options);
+}
+$argvInputReader->setOptionsAsArgv();
+
+if ($debug) {
+    $io->writeln(
+        sprintf(
+            '<info>%s</info> version <comment>%s</comment>',
+            Application::NAME,
+            Application::VERSION
+        )
+    );
+}
+
+$drupal = new Drupal($autoload, $drupalFinder, $configurationManager);
+$container = $drupal->boot();
+
+if (!$container) {
+    $io->error('Something was wrong. Drupal can not be bootstrap.');
+
+    exit(1);
+}
+
+$application = new Application($container);
+$application->setDrupal($drupal);
 $application->run();

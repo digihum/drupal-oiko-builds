@@ -1,6 +1,9 @@
 add cidoc entities:
   title: 'Create new CIDOC entities'
 
+add cidoc entities as published:
+    title: 'Create new CIDOC entities as published entities'
+
 administer cidoc entities:
   title: 'Administer CIDOC entities'
   description: 'Allow to access administration forms to configure CIDOC entities, references, classes and properties.'
@@ -12,11 +15,20 @@ delete cidoc entities:
 edit cidoc entities:
   title: 'Edit CIDOC entities'
 
+delete own cidoc entities:
+  title: 'Delete Own CIDOC entities'
+
+edit own cidoc entities:
+  title: 'Edit Own CIDOC entities'
+
 view published cidoc entities:
   title: 'View published CIDOC entities'
 
 view unpublished cidoc entities:
   title: 'View unpublished CIDOC entities'
+
+view own unpublished cidoc entities:
+  title: 'View own unpublished CIDOC entities'
 
 access cidoc entity overview:
   title: 'Access the CIDOC CRM entity overview page'

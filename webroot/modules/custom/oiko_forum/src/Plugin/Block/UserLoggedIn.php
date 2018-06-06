@@ -83,13 +83,33 @@ class UserLoggedIn extends BlockBase {
         'label' => 'hidden',
       ]);
 
+      // @TODO: Style this up.
       $block['logout_link'] = [
         '#type' => 'link',
-        '#title' => $this->t('Log out'),
+        '#title' => $this->t('<i class="fa fa-sign-out"></i> Log out'),
         '#url' => Url::fromRoute('user.logout'),
+        '#attributes' => [
+          'class' => [
+            'button',
+          ],
+        ],
       ];
 
+      // @TODO: Add a wrapper.
       $block['profile_form'] = \Drupal::formBuilder()->getForm($profile_form);
+      $block['profile_form']['header'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'h3',
+        '#value' => $this->t('Edit profile and settings'),
+        '#weight' => -100,
+      ];
+      $block['profile_form']['#theme_wrappers'] = [
+        'container' => [
+          '#attributes' => [
+            'class'=> 'callout',
+          ],
+        ],
+      ];
       // Instead of setting an actual action URL, we set the placeholder, which
       // will be replaced at the very last moment. This ensures forms with
       // dynamically generated action URLs don't have poor cacheability.

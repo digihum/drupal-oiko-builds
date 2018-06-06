@@ -1,0 +1,10 @@
+uuid: 63896bcf-bb88-4e73-a821-937e7991627c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.transcript
+label: Transcript
+targetEntityType: node
+cache: true

@@ -5,7 +5,8 @@ visibility:
   request_path_mode: 0
   request_path_pages: "/admin\r\n/admin/*\r\n/batch\r\n/node/add*\r\n/node/*/*\r\n/user/*/*"
   user_role_mode: 0
-  user_role_roles: {  }
+  user_role_roles:
+    forum_user: forum_user
   user_account_mode: 0
 track:
   outbound: true
@@ -15,7 +16,7 @@ track:
   colorbox: true
   linkid: false
   urlfragments: false
-  userid: false
+  userid: true
   messages: {  }
   site_search: false
   adsense: false

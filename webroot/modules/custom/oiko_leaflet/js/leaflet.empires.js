@@ -4,15 +4,37 @@
   Drupal.oiko.addAppModule('marker-data');
   Drupal.oiko.addAppModule('empire-data');
 
+  var loadedFeatures = [];
+
   $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
 
     // @TODO: Move this code, it does NOT belong here!
-    if (mapDefinition.hasOwnProperty('data-url') && mapDefinition['data-url']) {
-      var get = $.get(mapDefinition['data-url']);
-      get.done(function (data) {
-        drupalLeaflet.add_features(data);
+    if (mapDefinition.hasOwnProperty('data-url') && mapDefinition['data-url'] && mapDefinition.hasOwnProperty('data-url-number-pages') && mapDefinition['data-url-number-pages']) {
+      var pageRequests = [];
+      var totalPages = parseInt(mapDefinition['data-url-number-pages'], 10);
+      for (var i = 0;i < totalPages;i++) {
+        pageRequests[pageRequests.length] = $.getJSON(mapDefinition['data-url'], {'page': i}, function(data) {
+          loadedFeatures = loadedFeatures.concat(data.features);
+        });
+      }
+
+      // Add a page request for user specific features.
+
+      if (mapDefinition.hasOwnProperty('data-url-per-user') && mapDefinition['data-url-per-user']) {
+        pageRequests[pageRequests.length] = $.getJSON(mapDefinition['data-url-per-user'], function(data) {
+          loadedFeatures = loadedFeatures.concat(data.features);
+        });
+      }
+
+      // When all of the data promises have resolved, load that data.
+      $.when.apply($, pageRequests).then(function(data) {
+        drupalLeaflet.add_features(loadedFeatures);
+        Drupal.oiko.appModuleDoneLoading('marker-data');
+      }, function (e) {
+        // Error, just load the marker-data.
         Drupal.oiko.appModuleDoneLoading('marker-data');
       });
+
     }
     else {
       // There's nothing to load, so we're done here.

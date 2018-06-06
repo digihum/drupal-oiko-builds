@@ -5,6 +5,7 @@ dependencies:
     - cidoc.cidoc_property.p121_overlaps_with
     - core.entity_form_mode.cidoc_reference.range
     - field.field.cidoc_reference.p121_overlaps_with.domain
+    - field.field.cidoc_reference.p121_overlaps_with.range
   module:
     - oiko_citation
     - squid_autocomplete
@@ -23,6 +24,7 @@ content:
       add_mode: dropdown
       form_display_mode: default
     third_party_settings: {  }
+    region: content
   domain:
     type: squid_entity_reference_autocomplete_tags
     settings:
@@ -31,6 +33,8 @@ content:
       placeholder: 'Start typing to find a match or create new entity...'
     weight: 2
     third_party_settings: {  }
+    region: content
 hidden:
   langcode: true
+  range: true
   user_id: true

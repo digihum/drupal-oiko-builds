@@ -1,0 +1,20 @@
+// Hide lots of things we don't need printed.
+.l-sidebar, .l-content-header {
+  display: none;
+}
+
+// Hide the printing links thing.
+a[href]:after { content: ''; }
+
+// Remove our flexbox crazy times.
+body.layout-flex, .l-main, .l-content-container, .l-main-content, .oiko-app, .page-scroll-container {
+  display: block;
+}
+
+.student-transcript {
+  break-after: always;
+}
+
+.student-transcript--list-row {
+  break-inside: avoid;
+}

@@ -19,6 +19,7 @@ content:
     weight: 4
     settings: {  }
     third_party_settings: {  }
+    region: content
   citation:
     type: entity_reference_revisions_entity_view
     weight: 5
@@ -27,12 +28,14 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    region: content
   content:
     type: text_default
     weight: 3
     label: visually_hidden
     settings: {  }
     third_party_settings: {  }
+    region: content
   internal_name:
     label: above
     type: string
@@ -40,6 +43,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    region: content
   name:
     label: hidden
     type: string
@@ -47,6 +51,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    region: content
   significance:
     type: entity_reference_label
     weight: 2
@@ -54,6 +59,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
+    region: content
 hidden:
   cidoc_admin_links: true
   'cidoc_properties:domain:p10_falls_within': true
@@ -83,6 +89,8 @@ hidden:
   'cidoc_properties:range:p7_took_place_at': true
   'cidoc_properties:range:p89_falls_within': true
   'cidoc_properties:range:p9_consists_of': true
+  cidoc_properties_transcript: true
+  cidoc_temporal_summary: true
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   events_at_this_location_entity_view_1: true

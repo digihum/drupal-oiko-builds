@@ -1,0 +1,14 @@
+uuid: 441d9098-6542-4595-a3f3-4703ea9cf7e5
+langcode: en
+status: true
+dependencies: {  }
+name: comparative_timeline_logo
+label: 'Comparative Timeline Logo'
+effects:
+  d0ec019d-1a04-4ce0-b324-536e7d3247e8:
+    uuid: d0ec019d-1a04-4ce0-b324-536e7d3247e8
+    id: image_scale_and_crop
+    weight: 2
+    data:
+      width: 300
+      height: 300

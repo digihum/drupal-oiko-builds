@@ -1,6 +1,7 @@
 <?php
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Url;
+use Drupal\views\ViewExecutable;
 
 
 /**
@@ -23,6 +24,9 @@ function oiko_app_theme($existing, $type, $theme, $path) {
         'searching_text' => 'Searching through known space and time...',
       ),
     ),
+    'user_login_form' => [
+      'render element' => 'form',
+    ],
   );
 }
 
@@ -46,12 +50,28 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
   $map['settings']['zoomControl'] = FALSE;
   $map['zoomControl'] = 'bottomright';
   $map['data-url'] = Url::fromRoute('oiko_leaflet.map_page_controller_allEntities')->toString();
+  // Compute the number of pages we'll need to fetch.
+  $storage = Drupal::entityTypeManager()->getStorage('cidoc_entity');
+
+  // Get the number of pages that are in the data set.
+  $count = $storage->getQuery()
+    ->notExists('field_empire_outline')
+    ->condition('status', 1)
+    ->count()
+    ->execute();
+  $map['data-url-number-pages'] = ceil($count / 100);
   $height = 'full';
+
+  // @TODO: Bubble the cache metadata.
+  if (\Drupal::currentUser()->hasPermission('view own unpublished cidoc entities') || \Drupal::currentUser()->hasPermission('view unpublished cidoc entities')) {
+    $map['data-url-per-user'] = Url::fromRoute('oiko_leaflet.map_page_controller_unpublishedEntities')->toString();
+  }
 
   $variables['map'] = leaflet_render_map($map, [], $height);
 
   $variables['timeline'] = array(
     '#theme' => 'comparative_timeline',
+    '#global' => TRUE,
   );
 
 
@@ -71,6 +91,15 @@ function template_preprocess_main_cidoc_search(&$variables) {
   // Create a valid HTML ID and make sure it is unique.
   if (!empty($variables['id'])) {
     $variables['attributes']['id'] = Html::getUniqueId($variables['id']);
+  }
+}
+
+/**
+ * Implements hook_views_post_build().
+ */
+function oiko_app_views_pre_build(ViewExecutable $view) {
+  if ($view->id() == 'crm_entity_search') {
+    $view->filter['user_id']->value = [Drupal::currentUser()->id() => Drupal::currentUser()->id()];
   }
 }
 
@@ -109,4 +138,16 @@ function oiko_app_toolbar() {
   );
 
   return $items;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function oiko_app_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+  if ($form_id != 'user_login_form') {
+    return;
+  }
+
+  $form['#theme'] = 'user_login_form';
 }

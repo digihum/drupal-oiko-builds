@@ -22,6 +22,7 @@ content:
       rel: '0'
     third_party_settings: {  }
     type: link
+    region: content
 hidden:
   created: true
   uid: true

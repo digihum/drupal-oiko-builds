@@ -1,0 +1,20 @@
+uuid: 8f6690fb-208d-4cfa-8648-f33101e85b4e
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_forum
+  theme:
+    - oiko
+id: discussionnotificationsblock
+theme: oiko
+region: user_header
+weight: -10
+provider: null
+plugin: discussion_notifcations
+settings:
+  id: discussion_notifcations
+  label: Discussions
+  provider: oiko_forum
+  label_display: visible
+visibility: {  }

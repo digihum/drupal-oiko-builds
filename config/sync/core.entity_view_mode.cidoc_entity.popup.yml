@@ -1,0 +1,10 @@
+uuid: d74d9cac-4daf-4c59-9fed-13e9ed9605ee
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_entity.popup
+label: Sidebar
+targetEntityType: cidoc_entity
+cache: true

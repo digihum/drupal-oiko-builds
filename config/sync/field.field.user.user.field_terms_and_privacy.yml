@@ -1,0 +1,24 @@
+uuid: b2b712c1-2705-4263-a502-ea844df40d2c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_terms_and_privacy
+  module:
+    - user
+id: user.user.field_terms_and_privacy
+field_name: field_terms_and_privacy
+entity_type: user
+bundle: user
+label: 'I agree to the terms and conditions and privacy policy for oiko.world'
+description: 'Please read the <a href="/terms-and-conditions"  target="_blank">Terms and Conditions</a> and <a href="privacy-policy" target="_blank">Privacy Policy</a> before ticking this box.'
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'I agree'
+  off_label: 'I don''t agree'
+field_type: boolean

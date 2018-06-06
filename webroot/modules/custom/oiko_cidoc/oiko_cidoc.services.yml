@@ -2,3 +2,10 @@ services:
   oiko_cidoc.hook_implementations:
     class: Drupal\oiko_cidoc\OikoCidocHookImplementations
 
+  oiko_cidoc.transcript_renderer:
+    class: Drupal\oiko_cidoc\OikoCidocTranscriptRenderer
+    arguments:
+      - '@entity_type.manager'
+      - '@renderer'
+      - '@oiko_timeline.helpers'
+      - '@cidoc.graph_traversal'

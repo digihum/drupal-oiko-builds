@@ -1,0 +1,32 @@
+uuid: 60cb1c4b-b886-4c24-bfdb-a75ba79eff74
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 9zlzK3GK7btAMuQjQDeLQLZz9PEvroqAA75AoNErC4E
+id: p131_is_identified_by
+label: 'P131 is identified by'
+bidirectional: false
+reverse_label: 'P131 identifies'
+friendly_label: 'Identified by'
+reverse_friendly_label: Identifies
+domain_bundles:
+  1: e21_person
+  2: e74_group
+range_bundles:
+  - e82_actor_appellation
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

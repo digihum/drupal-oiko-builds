@@ -6,6 +6,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\RevisionableEntityBundleInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
@@ -62,7 +63,7 @@ use Drupal\field\Entity\FieldStorageConfig;
  *   }
  * )
  */
-class CidocProperty extends ConfigEntityBundleBase {
+class CidocProperty extends ConfigEntityBundleBase implements RevisionableEntityBundleInterface {
 
   use StringTranslationTrait;
 
@@ -443,5 +444,35 @@ class CidocProperty extends ConfigEntityBundleBase {
     }
     return $val;
   }
+
+  public function shouldCreateNewRevision() {
+    return TRUE;
+  }
+
+  /**
+   * Determine if this property has property fields of its own.
+   */
+  public function hasCidocPropertyProperties() {
+    return !empty($this->listCidocPropertyProperties());
+
+  }
+
+  /**
+   * List the property property fields.
+   */
+  public function listCidocPropertyProperties() {
+    $property_properties = [];
+    // Fetch the fields for this bundle.
+    $entityManager = \Drupal::service('entity_field.manager');
+    $fields = $entityManager->getFieldDefinitions('cidoc_reference', $this->id());
+    foreach ($fields as $field_name => $field) {
+      // @TODO: There *must* be a better way to do this.
+      if (strpos($field_name, 'field_') !== FALSE) {
+        $property_properties[] = $field_name;
+      }
+    }
+    return $property_properties;
+  }
+
 
 }
