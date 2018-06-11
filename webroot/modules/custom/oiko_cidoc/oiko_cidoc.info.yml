@@ -21,4 +21,5 @@ dependencies:
   - text
   - user
   - views
+  - oiko_timeline
 package: Oiko
