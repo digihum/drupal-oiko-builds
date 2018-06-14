@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  module:
-    - cidoc
-id: cidoc_entity.preview
-label: 'View for editing'
-targetEntityType: cidoc_entity
-cache: true

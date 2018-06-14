@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  module:
-    - cidoc
-id: cidoc_reference.range
-label: Range
-targetEntityType: cidoc_reference
-cache: true

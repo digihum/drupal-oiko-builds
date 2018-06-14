@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  module:
-    - cidoc
-id: cidoc_entity.search_index
-label: 'Search index'
-targetEntityType: cidoc_entity
-cache: true

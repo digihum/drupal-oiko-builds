@@ -1,7 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: modal_welcome
-label: 'Modal welcome'
-revision: 0
-description: 'Used for the modal welcome to the site.'

@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  module:
-    - cidoc
-id: cidoc_entity.popup
-label: 'Sidebar'
-targetEntityType: cidoc_entity
-cache: true

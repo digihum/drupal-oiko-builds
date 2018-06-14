@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  module:
-    - cidoc
-id: cidoc_entity.inline_field
-label: 'Inline field'
-targetEntityType: cidoc_entity
-cache: true
