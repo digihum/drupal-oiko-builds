@@ -3928,99 +3928,6 @@
         }
     },
     {
-        "name": "drupal/config_update",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/config_update",
-            "reference": "f84f49be150c2032921e2cb99ffea5dbcb5f89ca"
-        },
-        "require": {
-            "drupal/core": "*"
-        },
-        "time": "2016-08-31 19:41:53",
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.x-dev",
-                "datestamp": "1484769783"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "jhodgdon",
-                "homepage": "https://www.drupal.org/user/155601"
-            },
-            {
-                "name": "nedjo",
-                "homepage": "https://www.drupal.org/user/4481"
-            }
-        ],
-        "description": "Provides basic revert and update functionality for other modules",
-        "homepage": "https://www.drupal.org/project/config_update",
-        "support": {
-            "source": "http://cgit.drupalcode.org/config_update"
-        }
-    },
-    {
-        "name": "drupal/cm_config_tools",
-        "version": "dev-1.x",
-        "version_normalized": "dev-1.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/cm_config_tools",
-            "reference": "af80d2a2b3d7e82eb83ece9ec6b7b285363d4882"
-        },
-        "require": {
-            "drupal/config_update": "*",
-            "drupal/core": "*"
-        },
-        "time": "2017-04-11 14:45:16",
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.x-dev",
-                "datestamp": "1488883384"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "James Williams",
-                "homepage": "https://www.computerminds.co.uk/about/our-people/james-williams"
-            },
-            {
-                "name": "james.williams",
-                "homepage": "https://www.drupal.org/user/592268"
-            },
-            {
-                "name": "stevetweeddale",
-                "homepage": "https://www.drupal.org/user/702570"
-            }
-        ],
-        "description": "Configuration management workflow tools.",
-        "homepage": "http://www.computerminds.co.uk",
-        "support": {
-            "source": "http://cgit.drupalcode.org/cm_config_tools"
-        }
-    },
-    {
         "name": "drupal/color_field",
         "version": "2.0.0-rc1",
         "version_normalized": "2.0.0.0-RC1",
@@ -4193,6 +4100,50 @@
         "homepage": "https://www.drupal.org/project/config_readonly",
         "support": {
             "source": "http://cgit.drupalcode.org/config_readonly"
+        }
+    },
+    {
+        "name": "drupal/config_update",
+        "version": "dev-1.x",
+        "version_normalized": "dev-1.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/config_update",
+            "reference": "f84f49be150c2032921e2cb99ffea5dbcb5f89ca"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "time": "2016-08-31 19:41:53",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.x-dev",
+                "datestamp": "1484769783"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "jhodgdon",
+                "homepage": "https://www.drupal.org/user/155601"
+            },
+            {
+                "name": "nedjo",
+                "homepage": "https://www.drupal.org/user/4481"
+            }
+        ],
+        "description": "Provides basic revert and update functionality for other modules",
+        "homepage": "https://www.drupal.org/project/config_update",
+        "support": {
+            "source": "http://cgit.drupalcode.org/config_update"
         }
     },
     {
