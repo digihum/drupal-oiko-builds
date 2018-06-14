@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5c8adc272b7571daa216c5cc5ec4769",
+    "content-hash": "a143ae39580bf6cc95a5f33191ec5fbd",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1517,53 +1517,6 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/browsersync"
             }
-        },
-        {
-            "name": "drupal/cm_config_tools",
-            "version": "dev-1.x",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupal.org/project/cm_config_tools",
-                "reference": "af80d2a2b3d7e82eb83ece9ec6b7b285363d4882"
-            },
-            "require": {
-                "drupal/config_update": "*",
-                "drupal/core": "*"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev"
-                },
-                "drupal": {
-                    "version": "8.x-1.x-dev",
-                    "datestamp": "1488883384"
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "James Williams",
-                    "homepage": "https://www.computerminds.co.uk/about/our-people/james-williams"
-                },
-                {
-                    "name": "james.williams",
-                    "homepage": "https://www.drupal.org/user/592268"
-                },
-                {
-                    "name": "stevetweeddale",
-                    "homepage": "https://www.drupal.org/user/702570"
-                }
-            ],
-            "description": "Configuration management workflow tools.",
-            "homepage": "http://www.computerminds.co.uk",
-            "support": {
-                "source": "http://cgit.drupalcode.org/cm_config_tools"
-            },
-            "time": "2017-04-11T14:45:16+00:00"
         },
         {
             "name": "drupal/color_field",
@@ -8766,7 +8719,6 @@
     "stability-flags": {
         "drupal/add_to_head": 20,
         "drupal/avatars": 10,
-        "drupal/cm_config_tools": 20,
         "drupal/config_devel": 20,
         "drupal/config_update": 20,
         "drupal/devel": 20,

@@ -1,8 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-name: Kind
-vid: kind
-description: 'Kind of member'
-hierarchy: 0
-weight: 0

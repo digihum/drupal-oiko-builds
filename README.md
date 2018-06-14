@@ -10,7 +10,7 @@ We are using composer to assemble the codebase. If you haven't done so already y
 
 Clone the codebase to a location of your choice, and run the following in that location to bring in the dependencies:
 
-    composer install
+    composer install && composer update --lock
 
 
 Adding contrib modules
@@ -22,12 +22,37 @@ To add a contrib module, find the module you wish to use on drupal.org and then 
 
 from the repo root to add the module to the composer.json file.
 
+Site installation
+-----------------
+
+You can install the site using Drush in the following way:
+
+```
+drush si oiko_profile --config-dir=../config/sync
+```
 
 Configuration Management
 ------------------------
 
-We are using Features to bundle up configuration. Once you've added some configuration, head to admin/config/development/features to create a new feature.
+In general, core configuration management is to be used, in conjuction with the
+Configuration Split module. 
 
+We use the core configuration management commands to import and export config.
+
+To export configuration changes:
+
+```
+  drush cex 
+```
+
+To import configuration changes:
+
+```
+  drush cim
+```
+
+For useful links and details on advanced usage of the config_split module, in particular the actual splitting up config between development and live environments, please see the documentation links here: https://github.com/computerminds/cm_config_tools/issues/34
+@todo - expand this to detail better usage of config_split.
 
 
 Theming

@@ -121,7 +121,6 @@
         "drupal/admin_toolbar": "^1.14",
         "drupal/avatars": "^1.0@beta",
         "drupal/browsersync": "1.0-beta1",
-        "drupal/cm_config_tools": "dev-1.x",
         "drupal/color_field": "2.0-rc1",
         "drupal/config_devel": "1.x-dev#92f735cae8e9fb328edca285340a5bfbf72028cc",
         "drupal/config_readonly": "1.0-beta2",
