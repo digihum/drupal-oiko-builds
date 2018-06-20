@@ -16,6 +16,7 @@ third_party_settings:
       children:
         - group_main_deets
         - group_aux_deets
+        - group_oiko_world_settings
       parent_name: ''
       weight: 1
       label: 'Main data entry'
@@ -124,6 +125,23 @@ third_party_settings:
         description: ''
         required_fields: true
       label: 'Group Heirachy'
+    group_oiko_world_settings:
+      children:
+        - status
+        - user_id
+        - timeline_preselect_option
+        - timeline_logo
+        - path
+      parent_name: group_main
+      weight: 20
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Oiko.world settings'
 _core:
   default_config_hash: HCRPe3rJQbJza05JUc-u_Y3QqAlaQFJcLRKT4OZ-4eQ
 id: cidoc_entity.e74_group.default
@@ -133,39 +151,39 @@ mode: default
 content:
   'cidoc_properties:domain:p107_has_current_or_former_membe':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p131_is_identified_by':
     weight: 4
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p107_has_current_or_former_membe':
     weight: 21
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p144_joined_with':
     weight: 21
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p146_separated_from':
     weight: 22
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p95_has_formed':
     weight: 21
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p99_dissolved':
     weight: 22
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   citation:
     type: entity_reference_paragraphs
     weight: 3
@@ -175,13 +193,14 @@ content:
       edit_mode: preview
       add_mode: button
       form_display_mode: default
+      default_paragraph_type: ''
     third_party_settings: {  }
     region: content
   class_description:
     weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   internal_name:
     type: string_textfield
     weight: 2
@@ -200,7 +219,7 @@ content:
     region: content
   path:
     type: path
-    weight: 4
+    weight: 124
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -219,7 +238,7 @@ content:
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 2
+    weight: 123
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -227,11 +246,20 @@ content:
     region: content
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 3
+    weight: 122
     settings:
       display_label: true
     third_party_settings: {  }
     region: content
+  user_id:
+    type: entity_reference_autocomplete
+    weight: 121
+    region: content
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
@@ -250,4 +278,3 @@ hidden:
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true
   content: true
-  user_id: true

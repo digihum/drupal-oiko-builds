@@ -16,6 +16,7 @@ third_party_settings:
       children:
         - group_main_deets
         - group_aux_deets
+        - group_oiko_world_settings
       parent_name: ''
       weight: 1
       label: 'Main data entry'
@@ -79,6 +80,23 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+    group_oiko_world_settings:
+      children:
+        - status
+        - user_id
+        - timeline_preselect_option
+        - timeline_logo
+        - path
+      parent_name: group_main_details
+      weight: 20
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Oiko.world settings'
 id: cidoc_entity.e49_time_appellation.default
 targetEntityType: cidoc_entity
 bundle: e49_time_appellation
@@ -86,19 +104,19 @@ mode: default
 content:
   'cidoc_properties:range:p15_was_influenced_by':
     weight: 5
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p17_was_motivated_by':
     weight: 6
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p78_is_identified_by':
     weight: 6
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   citation:
     type: entity_reference_paragraphs
     weight: 4
@@ -108,13 +126,14 @@ content:
       edit_mode: preview
       add_mode: button
       form_display_mode: default
+      default_paragraph_type: ''
     third_party_settings: {  }
     region: content
   class_description:
     weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   name:
     type: string_textfield
     weight: 3
@@ -125,7 +144,7 @@ content:
     region: content
   path:
     type: path
-    weight: 30
+    weight: 124
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -144,7 +163,7 @@ content:
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 10
+    weight: 123
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -152,10 +171,19 @@ content:
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 10
+    weight: 122
     settings:
       display_label: true
     region: content
+    third_party_settings: {  }
+  user_id:
+    type: entity_reference_autocomplete
+    weight: 121
+    region: content
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
@@ -165,4 +193,3 @@ hidden:
   'cidoc_properties:range:p1_is_identified_by': true
   content: true
   internal_name: true
-  user_id: true
