@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies: {  }
 id: moderator
-label: moderator
+label: Moderator
 weight: 5
 is_admin: null
 permissions:
@@ -19,5 +19,6 @@ permissions:
   - 'edit own forum content'
   - 'edit terms in forums'
   - 'edit terms in source_books'
+  - 'moderate cidoc entities'
   - 'revert forum revisions'
   - 'view forum revisions'
