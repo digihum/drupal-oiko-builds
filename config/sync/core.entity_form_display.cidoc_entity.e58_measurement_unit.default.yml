@@ -10,6 +10,7 @@ dependencies:
     - image
     - paragraphs
     - path
+    - text
 third_party_settings:
   field_group:
     group_main_details:
@@ -32,6 +33,7 @@ third_party_settings:
         - internal_name
         - citation
         - significance
+        - content
       parent_name: group_main_details
       weight: 2
       label: 'Main details'
@@ -129,6 +131,14 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  content:
+    type: text_textarea
+    weight: 7
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
   internal_name:
     type: string_textfield
     weight: 4
@@ -194,4 +204,3 @@ hidden:
   'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p16_used_specific_object': true
   'cidoc_properties:range:p2_has_type': true
-  content: true

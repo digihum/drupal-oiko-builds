@@ -13,6 +13,7 @@ dependencies:
   - leaflet_widget
   - link
   - oiko_citation
+  - oiko_timeline
   - options
   - paragraphs
   - path

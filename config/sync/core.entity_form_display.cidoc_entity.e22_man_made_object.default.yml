@@ -10,6 +10,7 @@ dependencies:
     - image
     - paragraphs
     - path
+    - text
 third_party_settings:
   field_group:
     group_main:
@@ -100,6 +101,7 @@ third_party_settings:
       children:
         - group_production
         - group_usage
+        - group_descriptive_text
       parent_name: group_main_deets
       weight: 8
       label: 'Main details'
@@ -140,6 +142,19 @@ third_party_settings:
         description: ''
         required_fields: true
       label: 'Oiko.world settings'
+    group_descriptive_text:
+      children:
+        - content
+      parent_name: group_main_details
+      weight: 10
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Descriptive text'
 _core:
   default_config_hash: Xm5Nxz-LFo9Zm524Tg15P2x7ocT9UQEFo6EcGeac-w4
 id: cidoc_entity.e22_man_made_object.default
@@ -203,6 +218,14 @@ content:
     weight: 0
     region: content
     settings: {  }
+    third_party_settings: {  }
+  content:
+    type: text_textarea
+    weight: 0
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
     third_party_settings: {  }
   internal_name:
     type: string_textfield
@@ -272,4 +295,3 @@ hidden:
   'cidoc_properties:range:p96_by_mother': true
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true
-  content: true
