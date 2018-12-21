@@ -9,6 +9,7 @@ is_admin: null
 permissions:
   - 'access cidoc entity overview'
   - 'access cidoc reference overview'
+  - 'access contextual links'
   - 'access geocoder autocomplete'
   - 'access pleiades lookup'
   - 'add cidoc entities'
