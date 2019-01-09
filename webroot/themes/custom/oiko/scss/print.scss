@@ -3,6 +3,10 @@
   display: none;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 // Hide the printing links thing.
 a[href]:after { content: ''; }
 

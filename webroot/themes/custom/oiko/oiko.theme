@@ -64,6 +64,13 @@ function oiko_preprocess_node(&$variables) {
     $variables['#attributes']['class'][] = 'forum--post';
     $variables['content']['comment_forum']['#attributes']['class'][] = 'forum--comments';
   }
+  if ($variables['node']->bundle() == 'narrative') {
+    if ($variables['view_mode'] == 'full') {
+      // Remove the contextual links, otherwise we'll end up with double.
+      unset($variables["title_suffix"]["contextual_links"]);
+    }
+
+  }
 }
 
 /**
