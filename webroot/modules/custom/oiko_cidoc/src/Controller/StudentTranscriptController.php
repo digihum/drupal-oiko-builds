@@ -100,7 +100,13 @@ class StudentTranscriptController extends ControllerBase {
    * entities added by the user not used in the narratives.
    */
   public function transcript() {
-    $response = [];
+    $response = [
+      '#cache' => [
+        // Always get up to date transcripts.
+        'max-age' => 0,
+      ],
+    ];
+
 
     // Timeline of entities.
     $storage = $this->entityTypeManager->getStorage('node');
