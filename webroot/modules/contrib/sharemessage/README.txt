@@ -83,6 +83,26 @@ OPTIONS
   access to http://cache.addthiscdn.com/services/v1/sharing.en.json and the
   services select field is empty.
 
+REQUIREMENTS
+--------------------------------------------------------------------------------
+- Social Share Privacy library:
+  http://panzi.github.io/SocialSharePrivacy/
+
+  Download minimized js from:
+  http://panzi.github.io/SocialSharePrivacy/javascripts/jquery.socialshareprivacy.min.js
+  copy file to:
+  /libraries/socialshareprivacy/jquery.socialshareprivacy.min.js
+
+  Download minimized css from:
+  http://panzi.github.io/SocialSharePrivacy/stylesheets/jquery.socialshareprivacy.min.css
+  copy file to:
+  /libraries/socialshareprivacy/stylesheets/jquery.socialshareprivacy.min.css
+
+  Download compressed files from:
+  http://panzi.github.io/SocialSharePrivacy/
+  extract files and copy content of images folder to:
+  /libraries/socialshareprivacy/images
+
 
 EXPORT/IMPORT
 -------------

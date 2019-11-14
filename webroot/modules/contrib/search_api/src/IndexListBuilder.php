@@ -2,6 +2,7 @@
 
 namespace Drupal\search_api;
 
+use Drupal\Component\Plugin\Exception\PluginException;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
@@ -9,6 +10,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Url;
+use Drupal\node\Entity\NodeType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -51,6 +53,81 @@ class IndexListBuilder extends ConfigEntityListBuilder {
   }
 
   /**
+   * Determines whether the "Database Search Defaults" module can be installed.
+   *
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup[]
+   *   An array of error messages describing why the module cannot be installed,
+   *   keyed by a short, machine name-like identifier for the kind of error. If
+   *   the array is empty, the module can be installed.
+   */
+  public static function checkDefaultsModuleCanBeInstalled() {
+    $errors = [];
+
+    // If the Node module is missing, no further checks are necessary/possible.
+    if (!\Drupal::moduleHandler()->moduleExists('node')) {
+      $errors['node_module'] = t('The required Node module is not installed on your site. Database Search Defaults module could not be installed.');
+      return $errors;
+    }
+
+    $node_types = NodeType::loadMultiple();
+    $required_types = [
+      'article' => ['body', 'comment', 'field_tags', 'field_image'],
+      'page' => ['body'],
+    ];
+
+    /** @var \Drupal\Core\Entity\EntityFieldManager $entity_field_manager */
+    $entity_field_manager = \Drupal::service('entity_field.manager');
+
+    foreach ($required_types as $required_type_id => $required_fields) {
+      if (!isset($node_types[$required_type_id])) {
+        $errors[$required_type_id] = t('Content type @content_type not found. Database Search Defaults module could not be installed.', ['@content_type' => $required_type_id]);
+      }
+      else {
+        // Check if all the fields are here.
+        $fields = $entity_field_manager->getFieldDefinitions('node', $required_type_id);
+        foreach ($required_fields as $required_field) {
+          if (!isset($fields[$required_field])) {
+            $errors[$required_type_id . ':' . $required_field] = t('Field @field in content type @node_type not found. Database Search Defaults module could not be installed', [
+              '@node_type' => $required_type_id,
+              '@field' => $required_field
+            ]);
+          }
+        }
+      }
+    }
+
+    if (\Drupal::moduleHandler()->moduleExists('search_api_db')) {
+      $entities_to_check = [
+        'search_api_index' => 'default_index',
+        'search_api_server' => 'default_server',
+        'view' => 'search_content',
+      ];
+
+      /** @var \Drupal\Core\Entity\EntityTypeManager $entity_type_manager */
+      $entity_type_manager = \Drupal::service('entity_type.manager');
+      foreach ($entities_to_check as $entity_type => $entity_id) {
+        try {
+          // Find out if the entity is already in place. If so, fail to install
+          // the module.
+          $entity_storage = $entity_type_manager->getStorage($entity_type);
+          $entity_storage->resetCache();
+          $entity = $entity_storage->load($entity_id);
+          if ($entity) {
+            $errors['defaults_exist'] = t('It looks like the default setup provided by this module already exists on your site. Cannot re-install module.');
+            break;
+          }
+        }
+        catch (PluginException $e) {
+          // This can only happen for the view, if the Views module isn't
+          // installed. Ignore.
+        }
+      }
+    }
+
+    return $errors;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function getDefaultOperations(EntityInterface $entity) {
@@ -58,16 +135,16 @@ class IndexListBuilder extends ConfigEntityListBuilder {
 
     if ($entity instanceof IndexInterface) {
       $route_parameters['search_api_index'] = $entity->id();
-      $operations['fields'] = array(
+      $operations['fields'] = [
         'title' => $this->t('Fields'),
         'weight' => 20,
         'url' => new Url('entity.search_api_index.fields', $route_parameters),
-      );
-      $operations['processors'] = array(
+      ];
+      $operations['processors'] = [
         'title' => $this->t('Processors'),
         'weight' => 30,
         'url' => new Url('entity.search_api_index.processors', $route_parameters),
-      );
+      ];
     }
 
     return $operations;
@@ -77,14 +154,14 @@ class IndexListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    return array(
+    return [
       'type' => $this->t('Type'),
       'title' => $this->t('Name'),
-      'status' => array(
+      'status' => [
         'data' => $this->t('Status'),
-        'class' => array('checkbox'),
-      ),
-    ) + parent::buildHeader();
+        'class' => ['checkbox'],
+      ],
+    ] + parent::buildHeader();
   }
 
   /**
@@ -104,42 +181,42 @@ class IndexListBuilder extends ConfigEntityListBuilder {
       $status_label = $this->t('Unavailable');
     }
 
-    $status_icon = array(
+    $status_icon = [
       '#theme' => 'image',
       '#uri' => $status ? 'core/misc/icons/73b355/check.svg' : 'core/misc/icons/e32700/error.svg',
       '#width' => 18,
       '#height' => 18,
       '#alt' => $status_label,
       '#title' => $status_label,
-    );
+    ];
 
-    $row = array(
-      'data' => array(
-        'type' => array(
+    $row = [
+      'data' => [
+        'type' => [
           'data' => $entity instanceof ServerInterface ? $this->t('Server') : $this->t('Index'),
-          'class' => array('search-api-type'),
-        ),
-        'title' => array(
-          'data' => array(
+          'class' => ['search-api-type'],
+        ],
+        'title' => [
+          'data' => [
             '#type' => 'link',
             '#title' => $entity->label(),
             '#suffix' => '<div>' . $entity->get('description') . '</div>',
-          ) + $entity->toUrl('canonical')->toRenderArray(),
-          'class' => array('search-api-title'),
-        ),
-        'status' => array(
+          ] + $entity->toUrl('canonical')->toRenderArray(),
+          'class' => ['search-api-title'],
+        ],
+        'status' => [
           'data' => $status_icon,
-          'class' => array('checkbox'),
-        ),
+          'class' => ['checkbox'],
+        ],
         'operations' => $row['operations'],
-      ),
-      'title' => $this->t('ID: @name', array('@name' => $entity->id())),
-      'class' => array(
+      ],
+      'title' => $this->t('ID: @name', ['@name' => $entity->id()]),
+      'class' => [
         Html::cleanCssIdentifier($entity->getEntityTypeId() . '-' . $entity->id()),
         $status ? 'search-api-list-enabled' : 'search-api-list-disabled',
         $entity instanceof ServerInterface ? 'search-api-list-server' : 'search-api-list-index',
-      ),
-    );
+      ],
+    ];
 
     if (!$status_server) {
       $row['class'][] = 'color-error';
@@ -156,16 +233,16 @@ class IndexListBuilder extends ConfigEntityListBuilder {
     $list['#type'] = 'container';
     $list['#attached']['library'][] = 'search_api/drupal.search_api.admin_css';
 
-    $list['servers'] = array(
+    $list['servers'] = [
       '#type' => 'table',
       '#header' => $this->buildHeader(),
-      '#rows' => array(),
-      '#empty' => $entity_groups['lone_indexes'] ? '' : $this->t('There are no servers or indexes defined. For a quick start, we suggest you install the Database Search Defaults module.'),
-      '#attributes' => array(
+      '#rows' => [],
+      '#empty' => '',
+      '#attributes' => [
         'id' => 'search-api-entity-list',
-        'class' => array('search-api-entity-list'),
-      ),
-    );
+        'class' => ['search-api-entity-list'],
+      ],
+    ];
     foreach ($entity_groups['servers'] as $server_groups) {
       /** @var \Drupal\Core\Config\Entity\ConfigEntityInterface $entity */
       foreach ($server_groups as $entity) {
@@ -176,14 +253,22 @@ class IndexListBuilder extends ConfigEntityListBuilder {
     // Output the list of indexes without a server separately.
     if (!empty($entity_groups['lone_indexes'])) {
       $list['lone_indexes']['heading']['#markup'] = '<h3>' . $this->t('Indexes not currently associated with any server') . '</h3>';
-      $list['lone_indexes']['table'] = array(
+      $list['lone_indexes']['table'] = [
         '#type' => 'table',
         '#header' => $this->buildHeader(),
-        '#rows' => array(),
-      );
+        '#rows' => [],
+      ];
 
       foreach ($entity_groups['lone_indexes'] as $entity) {
         $list['lone_indexes']['table']['#rows'][$entity->id()] = $this->buildRow($entity);
+      }
+    }
+    elseif (!$list['servers']['#rows']) {
+      if (static::checkDefaultsModuleCanBeInstalled() === []) {
+        $list['servers']['#empty'] = $this->t('There are no servers or indexes defined. For a quick start, we suggest you install the Database Search Defaults module.');
+      }
+      else {
+        $list['servers']['#empty'] = $this->t('There are no servers or indexes defined.');
       }
     }
 
@@ -207,11 +292,11 @@ class IndexListBuilder extends ConfigEntityListBuilder {
     $this->sortByStatusThenAlphabetically($indexes);
     $this->sortByStatusThenAlphabetically($servers);
 
-    $server_groups = array();
+    $server_groups = [];
     foreach ($servers as $server) {
-      $server_group = array(
+      $server_group = [
         'server.' . $server->id() => $server,
-      );
+      ];
 
       foreach ($server->getIndexes() as $index) {
         $server_group['index.' . $index->id()] = $index;
@@ -223,10 +308,10 @@ class IndexListBuilder extends ConfigEntityListBuilder {
       $server_groups['server.' . $server->id()] = $server_group;
     }
 
-    return array(
+    return [
       'servers' => $server_groups,
       'lone_indexes' => $indexes,
-    );
+    ];
   }
 
   /**

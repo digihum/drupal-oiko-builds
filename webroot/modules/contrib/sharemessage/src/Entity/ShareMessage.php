@@ -5,6 +5,8 @@ namespace Drupal\sharemessage\Entity;
 use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\Core\Url;
+use Drupal\file\FileInterface;
+use Drupal\node\NodeInterface;
 use Drupal\sharemessage\ShareMessageInterface;
 
 /**
@@ -34,12 +36,16 @@ use Drupal\sharemessage\ShareMessageInterface;
  *     "message_long",
  *     "message_short",
  *     "image_url",
+ *     "image_width",
+ *     "image_height",
  *     "fallback_image",
  *     "video_url",
  *     "share_url",
  *     "plugin",
  *     "enforce_usage",
  *     "settings",
+ *     "extra_field_entity_type",
+ *     "extra_field_bundles",
  *   },
  *   links = {
  *     "edit-form" = "/admin/config/services/sharemessage/manage/{sharemessage}",
@@ -107,6 +113,20 @@ class ShareMessage extends ConfigEntityBase implements ShareMessageInterface {
   public $image_url;
 
   /**
+   * The width of the image that will be used for sharing.
+   *
+   * @var string
+   */
+  public $image_width;
+
+  /**
+   * The height of the image that will be used for sharing.
+   *
+   * @var string
+   */
+  public $image_height;
+
+  /**
    * An optional fallback image as file UUID if the image URL does not resolve.
    *
    * @var string
@@ -133,6 +153,27 @@ class ShareMessage extends ConfigEntityBase implements ShareMessageInterface {
    * @var string
    */
   protected $plugin;
+
+  /**
+   * The entity type to filter its bundles to display on the UI.
+   *
+   * @var string
+   */
+  protected $extra_field_entity_type;
+
+  /**
+   * The entity types bundles where the Share Message will be displayed.
+   *
+   * @var string[]
+   */
+  protected $extra_field_bundles = [];
+
+  /**
+   * The runtime token context.
+   *
+   * @var array
+   */
+  protected $runtimeContext = [];
 
   /**
    * {@inheritdoc}
@@ -202,9 +243,21 @@ class ShareMessage extends ConfigEntityBase implements ShareMessageInterface {
   /**
    * {@inheritdoc}
    */
+  public function setRuntimeContext(array $context) {
+    $this->runtimeContext = $context;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getContext($view_mode = 'full') {
-    $context = array('sharemessage' => $this, 'view_mode' => $view_mode);
-    if ($node = \Drupal::request()->attributes->get('node')) {
+    $context = ['sharemessage' => $this, 'view_mode' => $view_mode];
+    // Add a runtime context to the context list.
+    $context += $this->runtimeContext;
+    // Attempt to use the current node as context if none has been set
+    // explicitly as runtime context.
+    $node = \Drupal::request()->attributes->get('node');
+    if (!isset($context['node']) && $node instanceof NodeInterface) {
       $context['node'] = $node;
     }
 
@@ -219,112 +272,191 @@ class ShareMessage extends ConfigEntityBase implements ShareMessageInterface {
    * {@inheritdoc}
    */
   public function buildOGTags($context) {
-    $tags = array();
+    $tags = [];
 
     // Base value for og:type meta tag.
     // @todo don't hardcode this, make configurable per Share Message entity.
     $type = 'website';
 
     // OG: Title.
-    $tags[] = array(
+    $tags[] = [
       '#type' => 'html_tag',
       '#tag' => 'meta',
-      '#attributes' => array(
+      '#attributes' => [
         'property' => 'og:title',
         'content' => $this->getTokenizedField($this->title, $context),
-      ),
-    );
+      ],
+    ];
 
     // OG: Image, also used for video thumbnail.
-    $image_url = $this->getTokenizedField($this->image_url, $context);
-    // If the returned image URl is empty, try to use the fallback image if
-    // one is defined.
-    if (!$image_url && !empty($this->fallback_image)) {
-      $entity_repository = \Drupal::getContainer()->get('entity.repository');
-      /** @var \Drupal\file\FileInterface $image */
-      $image = $entity_repository->loadEntityByUuid('file', $this->fallback_image);
-      if ($image) {
-        $image_url = file_create_url($image->getFileUri());
-      }
-    }
-    if ($image_url) {
-      $tags[] = array(
+    if ($image_url = $this->getImageUrl($context, $fallback_image)) {
+      $tags[] = [
         '#type' => 'html_tag',
         '#tag' => 'meta',
-        '#attributes' => array(
+        '#attributes' => [
           'property' => 'og:image',
           'content' => $image_url,
-        ),
-      );
+        ],
+      ];
+
+      $image_width = NULL;
+      $image_height = NULL;
+      if ($fallback_image instanceof FileInterface) {
+        if (file_exists($fallback_image->getFileUri())) {
+          $image = \Drupal::service('image.factory')->get($fallback_image->getFileUri());
+          if ($image->isValid()) {
+            $image_width = $image->getWidth();
+            $image_height = $image->getHeight();
+          }
+        }
+      }
+      else {
+        $image_width = $this->getTokenizedField($this->image_width, $context);
+        $image_height = $this->getTokenizedField($this->image_height, $context);
+      }
+      if ($image_width && $image_height) {
+        $tags[] = [
+          '#type' => 'html_tag',
+          '#tag' => 'meta',
+          '#attributes' => [
+            'property' => 'og:image:width',
+            'content' => $image_width,
+          ],
+        ];
+        $tags[] = [
+          '#type' => 'html_tag',
+          '#tag' => 'meta',
+          '#attributes' => [
+            'property' => 'og:image:height',
+            'content' => $image_height,
+          ],
+        ];
+      }
+
     }
 
     // OG: Video.
     if ($video_url = $this->getTokenizedField($this->video_url, $context)) {
-      $tags[] = array(
+      $tags[] = [
         '#type' => 'html_tag',
         '#tag' => 'meta',
-        '#attributes' => array(
+        '#attributes' => [
           'property' => 'og:video',
           'content' => $video_url . '?fs=1',
-        ),
-      );
-      $tags[] = array(
+        ],
+      ];
+      $tags[] = [
         '#type' => 'html_tag',
         '#tag' => 'meta',
-        '#attributes' => array(
+        '#attributes' => [
           'property' => 'og:video:width',
           'content' => \Drupal::config('sharemessage.addthis')->get('shared_video_width'),
-        ),
-      );
-      $tags[] = array(
+        ],
+      ];
+      $tags[] = [
         '#type' => 'html_tag',
         '#tag' => 'meta',
-        '#attributes' => array(
+        '#attributes' => [
           'property' => 'og:video:height',
           'content' => \Drupal::config('sharemessage.addthis')->get('shared_video_height'),
-        ),
-      );
-      $tags[] = array(
+        ],
+      ];
+      $tags[] = [
         '#type' => 'html_tag',
         '#tag' => 'meta',
-        '#attributes' => array(
+        '#attributes' => [
           'property' => 'og:video:type',
           'content' => 'application/x-shockwave-flash',
-        ),
-      );
+        ],
+      ];
       // Override og:type to video.
       $type = 'video';
     }
 
     // OG: URL.
-    $tags[] = array(
+    $tags[] = [
       '#type' => 'html_tag',
       '#tag' => 'meta',
-      '#attributes' => array(
+      '#attributes' => [
         'property' => 'og:url',
         'content' => $this->getUrl($context),
-      ),
-    );
+      ],
+    ];
 
     // OG: Description.
-    $tags[] = array(
+    $tags[] = [
       '#type' => 'html_tag',
       '#tag' => 'meta',
-      '#attributes' => array(
+      '#attributes' => [
         'property' => 'og:description',
         'content' => $this->getTokenizedField($this->message_long, $context),
-      ),
-    );
+      ],
+    ];
 
     // OG: Type.
-    $tags[] = array(
+    $tags[] = [
       '#type' => 'html_tag',
       '#tag' => 'meta',
-      '#attributes' => array(
+      '#attributes' => [
         'property' => 'og:type',
         'content' => $type,
-      ),
-    );
+      ],
+    ];
+
+    return $tags;
+  }
+
+  /**
+   * Adds meta tags in order to share images on Twitter.
+   *
+   * @param array $context
+   *   The context for the token replacements.
+   *
+   * @return array
+   *   The twitter tags.
+   */
+  public function buildTwitterCardTags($context) {
+    $twitter = [
+      '#type' => 'html_tag',
+      '#tag' => 'meta',
+      '#attributes' => [
+        'property' => 'twitter:card',
+        'content' => 'summary_large_image',
+      ],
+    ];
+    $tags[] = [$twitter, 'twitter_card'];
+
+    $twitter = [
+      '#type' => 'html_tag',
+      '#tag' => 'meta',
+      '#attributes' => [
+        'property' => 'twitter:site',
+        'content' => \Drupal::config('sharemessage.settings')->get('twitter_user'),
+      ],
+    ];
+    $tags[] = [$twitter, 'twitter_site'];
+
+    $twitter = [
+      '#type' => 'html_tag',
+      '#tag' => 'meta',
+      '#attributes' => [
+        'property' => 'twitter:description',
+        'content' => $this->getTokenizedField($this->message_long, $context),
+      ],
+    ];
+    $tags[] = [$twitter, 'twitter_description'];
+
+    if ($image_url = $this->getImageUrl($context)) {
+      $twitter = [
+        '#type' => 'html_tag',
+        '#tag' => 'meta',
+        '#attributes' => [
+          'property' => 'twitter:image',
+          'content' => $image_url,
+        ],
+      ];
+      $tags[] = [$twitter, 'twitter_image'];
+    }
 
     return $tags;
   }
@@ -334,7 +466,7 @@ class ShareMessage extends ConfigEntityBase implements ShareMessageInterface {
    */
   public function getTokenizedField($property_value, $context, $default = '') {
     if ($property_value) {
-      return strip_tags(PlainTextOutput::renderFromHtml(\Drupal::token()->replace($property_value, $context, array('clear' => TRUE))));
+      return strip_tags(PlainTextOutput::renderFromHtml(\Drupal::token()->replace($property_value, $context, ['clear' => TRUE])));
     }
     return $default;
   }
@@ -343,9 +475,9 @@ class ShareMessage extends ConfigEntityBase implements ShareMessageInterface {
    * {@inheritdoc}
    */
   public function getUrl($context) {
-    $options = array('absolute' => TRUE);
+    $options = ['absolute' => TRUE];
     if ($this->enforce_usage) {
-      $options['query'] = array('smid' => $this->id);
+      $options['query'] = ['smid' => $this->id];
     }
     $uri = $this->getTokenizedField($this->share_url, $context, Url::fromRoute('<current>')->getInternalPath());
     if (strpos($uri, '://') !== FALSE) {
@@ -360,4 +492,59 @@ class ShareMessage extends ConfigEntityBase implements ShareMessageInterface {
     }
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getExtraFieldEntityType() {
+    return $this->extra_field_entity_type;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setExtraFieldEntityType($extra_field_entity_type) {
+    $this->extra_field_entity_type = $extra_field_entity_type;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getExtraFieldBundles() {
+    return $this->extra_field_bundles;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setExtraFieldBundles(array $extra_field_bundles) {
+    $this->extra_field_bundles = $extra_field_bundles;
+  }
+
+  /**
+   * Gets the image url of the ShareMessage.
+   *
+   * @param array $context
+   *   The context for the token replacements.
+   * @param \Drupal\file\FileInterface|null $fallback_image
+   *   By-reference argument that holds the fallback image reference if that
+   *   was used.
+   *
+   * @return bool|string
+   *   The found URL or FALSE.
+   */
+  protected function getImageUrl($context, &$fallback_image = NULL) {
+    // Get image url either from dedicated file field or by resolving token.
+    $image_url = $this->getTokenizedField($this->image_url, $context);
+    // If the returned image URl is empty, try to use the fallback image if
+    // one is defined.
+    if (!$image_url && !empty($this->fallback_image)) {
+      $entity_repository = \Drupal::getContainer()->get('entity.repository');
+      /** @var \Drupal\file\FileInterface $image */
+      $fallback_image = $entity_repository->loadEntityByUuid('file', $this->fallback_image);
+      if ($fallback_image) {
+        $image_url = file_create_url($fallback_image->getFileUri());
+      }
+    }
+    return $image_url;
+  }
 }

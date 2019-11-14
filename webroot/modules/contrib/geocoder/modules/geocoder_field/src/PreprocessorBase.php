@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_field\PreprocessorBase.
- */
-
 namespace Drupal\geocoder_field;
 
 use Drupal\Core\Field\FieldItemListInterface;
@@ -58,19 +53,14 @@ abstract class PreprocessorBase extends PluginBase implements PreprocessorInterf
 
   /**
    * {@inheritdoc}
-   *
-   * @todo [cc]: Revisit the method body when fixing the reverse stuff.
    */
   public function getPreparedReverseGeocodeValues(array $values = []) {
-    foreach ($values as $index => $value) {
-      list($lat, $lon) = explode(',', trim($value['value']));
-      $values[$index] += [
-        'lat' => trim($lat),
-        'lon' => trim($lon),
-      ];
-    }
-
-    return $values;
+    return array_map(function ($value) {
+      return array_combine(['lat', 'lon'], array_map(
+        'trim',
+        explode(',', trim($value['value']), 2)
+      ));
+    }, $values);
   }
 
 }

@@ -2,9 +2,14 @@
 
 namespace Drupal\search_api\Query;
 
+use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\search_api\Display\DisplayPluginManagerInterface;
+use Drupal\search_api\Event\QueryPreExecuteEvent;
+use Drupal\search_api\Event\ProcessingResultsEvent;
+use Drupal\search_api\Event\SearchApiEvents;
 use Drupal\search_api\IndexInterface;
 use Drupal\search_api\ParseMode\ParseModeInterface;
 use Drupal\search_api\ParseMode\ParseModePluginManager;
@@ -110,7 +115,7 @@ class Query implements QueryInterface {
    *
    * @var array
    */
-  protected $sorts = array();
+  protected $sorts = [];
 
   /**
    * Information about whether the query has been aborted or not.
@@ -131,7 +136,7 @@ class Query implements QueryInterface {
    *
    * @var string[]
    */
-  protected $tags = array();
+  protected $tags = [];
 
   /**
    * Flag for whether preExecute() was already called for this query.
@@ -155,6 +160,13 @@ class Query implements QueryInterface {
   protected $moduleHandler;
 
   /**
+   * The event dispatcher.
+   *
+   * @var \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher|null
+   */
+  protected $eventDispatcher;
+
+  /**
    * The parse mode manager.
    *
    * @var \Drupal\search_api\ParseMode\ParseModePluginManager|null
@@ -162,11 +174,25 @@ class Query implements QueryInterface {
   protected $parseModeManager;
 
   /**
+   * The display plugin manager.
+   *
+   * @var \Drupal\search_api\Display\DisplayPluginManagerInterface|null
+   */
+  protected $displayPluginManager;
+
+  /**
    * The result cache service.
    *
-   * @var \Drupal\search_api\Utility\QueryHelperInterface
+   * @var \Drupal\search_api\Utility\QueryHelperInterface|null
    */
   protected $queryHelper;
+
+  /**
+   * The original query before preprocessing.
+   *
+   * @var static|null
+   */
+  protected $originalQuery;
 
   /**
    * Constructs a Query object.
@@ -182,23 +208,21 @@ class Query implements QueryInterface {
    *   Thrown if a search on that index (or with those options) won't be
    *   possible.
    */
-  public function __construct(IndexInterface $index, array $options = array()) {
+  public function __construct(IndexInterface $index, array $options = []) {
     if (!$index->status()) {
       $index_label = $index->label();
       throw new SearchApiException("Can't search on index '$index_label' which is disabled.");
     }
     $this->index = $index;
     $this->results = new ResultSet($this);
-    $this->options = $options + array(
-      'conjunction' => 'AND',
-    );
+    $this->options = $options;
     $this->conditionGroup = $this->createConditionGroup('AND');
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(IndexInterface $index, array $options = array()) {
+  public static function create(IndexInterface $index, array $options = []) {
     return new static($index, $options);
   }
 
@@ -226,6 +250,29 @@ class Query implements QueryInterface {
   }
 
   /**
+   * Retrieves the event dispatcher.
+   *
+   * @return \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher
+   *   The event dispatcher.
+   */
+  public function getEventDispatcher() {
+    return $this->eventDispatcher ?: \Drupal::service('event_dispatcher');
+  }
+
+  /**
+   * Sets the event dispatcher.
+   *
+   * @param \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher $event_dispatcher
+   *   The new event dispatcher.
+   *
+   * @return $this
+   */
+  public function setEventDispatcher(ContainerAwareEventDispatcher $event_dispatcher) {
+    $this->eventDispatcher = $event_dispatcher;
+    return $this;
+  }
+
+  /**
    * Retrieves the parse mode manager.
    *
    * @return \Drupal\search_api\ParseMode\ParseModePluginManager
@@ -245,6 +292,29 @@ class Query implements QueryInterface {
    */
   public function setParseModeManager(ParseModePluginManager $parse_mode_manager) {
     $this->parseModeManager = $parse_mode_manager;
+    return $this;
+  }
+
+  /**
+   * Retrieves the display plugin manager.
+   *
+   * @return \Drupal\search_api\Display\DisplayPluginManagerInterface
+   *   The display plugin manager.
+   */
+  public function getDisplayPluginManager() {
+    return $this->displayPluginManager ?: \Drupal::service('plugin.manager.search_api.display');
+  }
+
+  /**
+   * Sets the display plugin manager.
+   *
+   * @param \Drupal\search_api\Display\DisplayPluginManagerInterface $display_plugin_manager
+   *   The new display plugin manager.
+   *
+   * @return $this
+   */
+  public function setDisplayPluginManager(DisplayPluginManagerInterface $display_plugin_manager) {
+    $this->displayPluginManager = $display_plugin_manager;
     return $this;
   }
 
@@ -294,8 +364,7 @@ class Query implements QueryInterface {
    * {@inheritdoc}
    */
   public function getDisplayPlugin() {
-    $display_manager = \Drupal::getContainer()
-      ->get('plugin.manager.search_api.display');
+    $display_manager = $this->getDisplayPluginManager();
     if (isset($this->searchId) && $display_manager->hasDefinition($this->searchId)) {
       return $display_manager->createInstance($this->searchId);
     }
@@ -308,7 +377,6 @@ class Query implements QueryInterface {
   public function getParseMode() {
     if (!$this->parseMode) {
       $this->parseMode = $this->getParseModeManager()->createInstance('terms');
-      $this->parseMode->setConjunction($this->options['conjunction']);
     }
     return $this->parseMode;
   }
@@ -318,6 +386,9 @@ class Query implements QueryInterface {
    */
   public function setParseMode(ParseModeInterface $parse_mode) {
     $this->parseMode = $parse_mode;
+    if (is_scalar($this->origKeys)) {
+      $this->keys = $parse_mode->parseInput($this->origKeys);
+    }
     return $this;
   }
 
@@ -332,14 +403,14 @@ class Query implements QueryInterface {
    * {@inheritdoc}
    */
   public function setLanguages(array $languages = NULL) {
-    $this->languages = $languages;
+    $this->languages = isset($languages) ? array_values($languages) : NULL;
     return $this;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function createConditionGroup($conjunction = 'AND', array $tags = array()) {
+  public function createConditionGroup($conjunction = 'AND', array $tags = []) {
     return new ConditionGroup($conjunction, $tags);
   }
 
@@ -385,11 +456,11 @@ class Query implements QueryInterface {
    * {@inheritdoc}
    */
   public function sort($field, $order = self::SORT_ASC) {
-    $order = strtoupper(trim($order)) == self::SORT_DESC ? self::SORT_DESC : self::SORT_ASC;
-    if (isset($this->sorts[$field])) {
-      unset($this->sorts[$field]);
+    $order = strtoupper(trim($order));
+    $order = $order == self::SORT_DESC ? self::SORT_DESC : self::SORT_ASC;
+    if (!isset($this->sorts[$field])) {
+      $this->sorts[$field] = $order;
     }
-    $this->sorts[$field] = $order;
     return $this;
   }
 
@@ -435,7 +506,7 @@ class Query implements QueryInterface {
    * {@inheritdoc}
    */
   public function getAbortMessage() {
-    return is_bool($this->aborted) ? $this->aborted : NULL;
+    return !is_bool($this->aborted) ? $this->aborted : NULL;
   }
 
   /**
@@ -478,8 +549,11 @@ class Query implements QueryInterface {
    *   TRUE if the query should be aborted, FALSE otherwise.
    */
   protected function shouldAbort() {
-    if (!$this->wasAborted() && $this->languages !== array()) {
+    if (!$this->wasAborted() && $this->languages !== []) {
       return FALSE;
+    }
+    if (!$this->originalQuery) {
+      $this->originalQuery = clone $this;
     }
     $this->postExecute();
     return TRUE;
@@ -491,18 +565,32 @@ class Query implements QueryInterface {
   public function preExecute() {
     // Make sure to only execute this once per query, and not for queries with
     // the "none" processing level.
-    if (!$this->preExecuteRan && $this->processingLevel != self::PROCESSING_NONE) {
+    if (!$this->preExecuteRan) {
+      $this->originalQuery = clone $this;
+      $this->originalQuery->executed = FALSE;
       $this->preExecuteRan = TRUE;
+
+      if ($this->processingLevel == self::PROCESSING_NONE) {
+        return;
+      }
 
       // Preprocess query.
       $this->index->preprocessSearchQuery($this);
 
       // Let modules alter the query.
-      $hooks = array('search_api_query');
+      $event_base_name = SearchApiEvents::QUERY_PRE_EXECUTE;
+      $event = new QueryPreExecuteEvent($this);
+      $this->getEventDispatcher()->dispatch($event_base_name, $event);
+      $hooks = ['search_api_query'];
       foreach ($this->tags as $tag) {
         $hooks[] = "search_api_query_$tag";
+        $event_name = "$event_base_name.$tag";
+        $event = new QueryPreExecuteEvent($this);
+        $this->getEventDispatcher()->dispatch($event_name, $event);
       }
-      $this->getModuleHandler()->alter($hooks, $this);
+
+      $description = 'This hook is deprecated in search_api 8.x-1.14 and will be removed in 9.x-1.0. Please use the "search_api.query_pre_execute" event instead. See https://www.drupal.org/node/3059866';
+      $this->getModuleHandler()->alterDeprecated($description, $hooks, $this);
     }
   }
 
@@ -518,11 +606,21 @@ class Query implements QueryInterface {
     $this->index->postprocessSearchResults($this->results);
 
     // Let modules alter the results.
-    $hooks = array('search_api_results');
+    $event_base_name = SearchApiEvents::PROCESSING_RESULTS;
+    $event = new ProcessingResultsEvent($this->results);
+    $this->results = $event->getResults();
+    $this->getEventDispatcher()->dispatch($event_base_name, $event);
+
+    $hooks = ['search_api_results'];
     foreach ($this->tags as $tag) {
       $hooks[] = "search_api_results_$tag";
+
+      $event = new ProcessingResultsEvent($this->results);
+      $this->getEventDispatcher()->dispatch("$event_base_name.$tag", $event);
+      $this->results = $event->getResults();
     }
-    $this->getModuleHandler()->alter($hooks, $this->results);
+    $description = 'This hook is deprecated in search_api 8.x-1.14 and will be removed in 9.x-1.0. Please use the "search_api.processing_results" event instead. See https://www.drupal.org/node/3059866';
+    $this->getModuleHandler()->alterDeprecated($description, $hooks, $this->results);
 
     // Store the results in the static cache.
     $this->getQueryHelper()->addResults($this->results);
@@ -646,8 +744,22 @@ class Query implements QueryInterface {
   /**
    * {@inheritdoc}
    */
+  public function getOriginalQuery() {
+    return $this->originalQuery ?: clone $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function __clone() {
     $this->results = $this->getResults()->getCloneForQuery($this);
+    $this->conditionGroup = clone $this->conditionGroup;
+    if ($this->originalQuery) {
+      $this->originalQuery = clone $this->originalQuery;
+    }
+    if ($this->parseMode) {
+      $this->parseMode = clone $this->parseMode;
+    }
   }
 
   /**
@@ -656,19 +768,23 @@ class Query implements QueryInterface {
   public function __sleep() {
     $this->indexId = $this->index->id();
     $keys = $this->traitSleep();
-    return array_diff($keys, array('index'));
+    return array_diff($keys, ['index']);
   }
 
   /**
    * Implements the magic __wakeup() method to reload the query's index.
    */
   public function __wakeup() {
-    if (!isset($this->index) && !empty($this->indexId) && \Drupal::hasContainer()) {
+    if (!isset($this->index)
+        && !empty($this->indexId)
+        && \Drupal::hasContainer()
+        && \Drupal::getContainer()->has('entity_type.manager')) {
       $this->index = \Drupal::entityTypeManager()
         ->getStorage('search_api_index')
         ->load($this->indexId);
       $this->indexId = NULL;
     }
+
     $this->traitWakeup();
   }
 
@@ -690,7 +806,7 @@ class Query implements QueryInterface {
       $ret .= "Conditions:\n  $conditions\n";
     }
     if ($this->sorts) {
-      $sorts = array();
+      $sorts = [];
       foreach ($this->sorts as $field => $order) {
         $sorts[] = "$field $order";
       }

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\ProviderInterface.
- */
-
 namespace Drupal\geocoder;
 
 /**
@@ -21,7 +16,7 @@ interface ProviderInterface {
    * @param string $source
    *   The data to be geocoded.
    *
-   * @return \Geocoder\Model\Address|null
+   * @return \Geocoder\Model\AddressCollection|\Geometry|null
    *   The address object or NULL.
    */
   public function geocode($source);
@@ -35,6 +30,7 @@ interface ProviderInterface {
    *   The longitude.
    *
    * @return \Geocoder\Model\AddressCollection|null
+   *   The AddressCollection object, NULL otherwise.
    */
   public function reverse($latitude, $longitude);
 

@@ -2,6 +2,9 @@
 
 namespace Drupal\Console\Core\Utils;
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Finder\Finder;
@@ -94,7 +97,7 @@ class ConfigurationManager
         return $this->configuration;
     }
 
-    public function readSite($siteFile)
+    private function readSite($siteFile)
     {
         if (!file_exists($siteFile)) {
             return [];
@@ -110,20 +113,30 @@ class ConfigurationManager
      */
     public function readTarget($target)
     {
-        if (!array_key_exists($target, $this->sites)) {
+        $site = $target;
+        $environment = null;
+        $exploded = explode('.', $target, 2);
+
+        if (count($exploded)>1) {
+            $site = $exploded[0];
+            $environment = $exploded[1];
+        }
+        $sites = $this->getSites($site);
+        if (!array_key_exists($site, $sites)) {
             return [];
         }
 
-        $targetInformation = $this->sites[$target];
+        $targetInformation = $sites[$site];
 
-        if (array_key_exists('host', $targetInformation) && $targetInformation['host'] != 'local') {
-            $targetInformation['remote'] = true;
+        if ($environment) {
+            if (!array_key_exists($environment, $sites[$site])) {
+                return [];
+            }
+
+            $targetInformation = $sites[$site][$environment];
         }
 
-        return array_merge(
-            $this->configuration->get('application.remote'),
-            $targetInformation
-        );
+        return $targetInformation;
     }
 
     /**
@@ -143,10 +156,7 @@ class ConfigurationManager
     {
         $sitesDirectories = array_map(
             function ($directory) {
-                return sprintf(
-                    '%s/sites',
-                    $directory
-                );
+                return $directory . 'sites';
             },
             $this->getConfigurationDirectories()
         );
@@ -157,6 +167,8 @@ class ConfigurationManager
                 return is_dir($directory);
             }
         );
+
+        $sitesDirectories = array_unique($sitesDirectories);
 
         return $sitesDirectories;
     }
@@ -349,7 +361,7 @@ class ConfigurationManager
 
     public function loadExtendConfiguration()
     {
-        $directory = $this->getConsoleDirectory() . '/extend/';
+        $directory = $this->getConsoleDirectory() . 'extend/';
         if (!is_dir($directory)) {
             return null;
         }
@@ -377,18 +389,25 @@ class ConfigurationManager
     }
 
     /**
+     * @param string $target
+     *
      * @return array
      */
-    public function getSites()
+    public function getSites($target = "*")
     {
         if ($this->sites) {
             return $this->sites;
         }
 
         $sitesDirectories = $this->getSitesDirectories();
+
+        if (!$sitesDirectories) {
+            return [];
+        }
+
         $finder = new Finder();
         $finder->in($sitesDirectories);
-        $finder->name("*.yml");
+        $finder->name($target.".yml");
 
         foreach ($finder as $site) {
             $siteName = $site->getBasename('.yml');
@@ -398,13 +417,108 @@ class ConfigurationManager
                 continue;
             }
 
+            $this->sites[$siteName] = [
+                'file' => $site->getRealPath()
+            ];
+
             foreach ($environments as $environment => $config) {
-                $site = $siteName . '.' . $environment;
-                $this->sites[$site] = $config;
+                if (!array_key_exists('type', $config)) {
+                    throw new \UnexpectedValueException(
+                        sprintf(
+                            "The 'type' parameter is required in sites configuration:\n %s.", $site->getPathname()
+                        )
+                    );
+                }
+                if ($config['type'] !== 'local') {
+                    if (array_key_exists('host', $config)) {
+                        $targetInformation['remote'] = true;
+                    }
+
+                    $config = array_merge(
+                        $this->configuration->get('application.remote')?:[],
+                        $config
+                    );
+                }
+
+                $this->sites[$siteName][$environment] = $config;
             }
         }
 
         return $this->sites;
+    }
+
+    /**
+     * Get config global as array.
+     *
+     * @return array
+     */
+    public function getConfigGlobalAsArray()
+    {
+        $filePath = sprintf(
+            '%s/.console/config.yml',
+            $this->getHomeDirectory()
+        );
+
+        $fs = new Filesystem();
+
+        if (!$fs->exists($filePath)) {
+            return null;
+        }
+
+        $yaml = new Parser();
+        $globalConfig = $yaml->parse(file_get_contents($filePath), true);
+
+        return $globalConfig;
+    }
+
+    /**
+     * Update parameter in global config.
+     *
+     * @param  $configName
+     * @param  $value
+     * @return int
+     */
+    public function updateConfigGlobalParameter($configName, $value)
+    {
+        $parser = new Parser();
+        $dumper = new Dumper();
+
+        $userConfigFile = sprintf(
+            '%s/.console/config.yml',
+            $this->getHomeDirectory()
+        );
+
+        if (!file_exists($userConfigFile)) {
+            return 1;
+        }
+
+        try {
+            $userConfigFileParsed = $parser->parse(
+                file_get_contents($userConfigFile)
+            );
+        } catch (\Exception $e) {
+        }
+
+        $parents = array_merge(['application'], explode('.', $configName));
+
+        $nestedArray = new NestedArray();
+
+        $nestedArray->setValue(
+            $userConfigFileParsed,
+            $parents,
+            $value,
+            true
+        );
+
+        try {
+            $userConfigFileDump = $dumper->dump($userConfigFileParsed, 10);
+        } catch (\Exception $e) {
+        }
+
+        try {
+            file_put_contents($userConfigFile, $userConfigFileDump);
+        } catch (\Exception $e) {
+        }
     }
 
     /**

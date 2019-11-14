@@ -17,7 +17,7 @@ abstract class ProcessorTestBase extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = array(
+  public static $modules = [
     'user',
     'node',
     'field',
@@ -28,7 +28,7 @@ abstract class ProcessorTestBase extends KernelTestBase {
     'text',
     'action',
     'system',
-  );
+  ];
 
   /**
    * The processor used for this test.
@@ -64,14 +64,15 @@ abstract class ProcessorTestBase extends KernelTestBase {
   public function setUp($processor = NULL) {
     parent::setUp();
 
-    $this->installSchema('node', array('node_access'));
-    $this->installSchema('search_api', array('search_api_item'));
+    $this->installSchema('node', ['node_access']);
+    $this->installSchema('search_api', ['search_api_item']);
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');
     $this->installEntitySchema('comment');
     $this->installEntitySchema('search_api_task');
-    $this->installSchema('comment', array('comment_entity_statistics'));
-    $this->installConfig(array('field'));
+    $this->installSchema('comment', ['comment_entity_statistics']);
+    $this->installConfig(['field']);
+    $this->installConfig('search_api');
 
     Action::create([
       'id' => 'foo',
@@ -82,50 +83,35 @@ abstract class ProcessorTestBase extends KernelTestBase {
     // Do not use a batch for tracking the initial items after creating an
     // index when running the tests via the GUI. Otherwise, it seems Drupal's
     // Batch API gets confused and the test fails.
-    if (php_sapi_name() != 'cli') {
+    if (!Utility::isRunningInCli()) {
       \Drupal::state()->set('search_api_use_tracking_batch', FALSE);
     }
 
-    // Set tracking page size so tracking will work properly.
-    \Drupal::configFactory()
-      ->getEditable('search_api.settings')
-      ->set('tracking_page_size', 100)
-      ->save();
-
-    $this->server = Server::create(array(
+    $this->server = Server::create([
       'id' => 'server',
       'name' => 'Server & Name',
       'status' => TRUE,
       'backend' => 'search_api_db',
-      'backend_config' => array(
+      'backend_config' => [
         'min_chars' => 3,
         'database' => 'default:default',
-      ),
-    ));
+      ],
+    ]);
     $this->server->save();
 
-    $this->index = Index::create(array(
+    $this->index = Index::create([
       'id' => 'index',
       'name' => 'Index name',
       'status' => TRUE,
-      'datasource_settings' => array(
-        'entity:comment' => array(
-          'plugin_id' => 'entity:comment',
-          'settings' => array(),
-        ),
-        'entity:node' => array(
-          'plugin_id' => 'entity:node',
-          'settings' => array(),
-        ),
-      ),
+      'datasource_settings' => [
+        'entity:comment' => [],
+        'entity:node' => [],
+      ],
       'server' => 'server',
-      'tracker_settings' => array(
-        'default' => array(
-          'plugin_id' => 'default',
-          'settings' => array(),
-        ),
-      ),
-    ));
+      'tracker_settings' => [
+        'default' => [],
+      ],
+    ]);
     $this->index->setServer($this->server);
 
     $field_subject = new Field($this->index, 'subject');
@@ -144,8 +130,9 @@ abstract class ProcessorTestBase extends KernelTestBase {
     $this->index->addField($field_title);
 
     if ($processor) {
-      /** @var \Drupal\search_api\Processor\ProcessorPluginManager $plugin_manager */
-      $this->processor = $this->index->createPlugin('processor', $processor);
+      $this->processor = \Drupal::getContainer()
+        ->get('search_api.plugin_helper')
+        ->createProcessorPlugin($this->index, $processor);
       $this->index->addProcessor($this->processor);
     }
     $this->index->save();
@@ -166,25 +153,57 @@ abstract class ProcessorTestBase extends KernelTestBase {
    * @return \Drupal\search_api\Item\ItemInterface[]
    *   The generated test items.
    */
-  public function generateItems(array $items) {
+  protected function generateItems(array $items) {
     /** @var \Drupal\search_api\Item\ItemInterface[] $extracted_items */
-    $extracted_items = array();
-    foreach ($items as $item) {
-      $id = Utility::createCombinedId($item['datasource'], $item['item_id']);
-      $extracted_items[$id] = Utility::createItemFromObject($this->index, $item['item'], $id);
-      foreach (array(NULL, $item['datasource']) as $datasource_id) {
-        foreach ($this->index->getFieldsByDatasource($datasource_id) as $key => $field) {
-          /** @var \Drupal\search_api\Item\FieldInterface $field */
-          $field = clone $field;
-          if (isset($item[$field->getPropertyPath()])) {
-            $field->addValue($item[$field->getPropertyPath()]);
-          }
-          $extracted_items[$id]->setField($key, $field);
-        }
-      }
+    $extracted_items = [];
+    foreach ($items as $values) {
+      $item = $this->generateItem($values);
+      $extracted_items[$item->getId()] = $item;
     }
 
     return $extracted_items;
+  }
+
+  /**
+   * Generates a single test item.
+   *
+   * @param array $values
+   *   An associative array with the following keys:
+   *   - datasource: The datasource plugin ID.
+   *   - item: The item object to be indexed.
+   *   - item_id: The datasource-specific raw item ID.
+   *   - *: Any other keys will be treated as property paths, and their values
+   *     as a single value for a field with that property path.
+   *
+   * @return \Drupal\search_api\Item\Item|\Drupal\search_api\Item\ItemInterface
+   *   The generated test item.
+   */
+  protected function generateItem(array $values) {
+    $id = Utility::createCombinedId($values['datasource'], $values['item_id']);
+    $item = \Drupal::getContainer()
+      ->get('search_api.fields_helper')
+      ->createItemFromObject($this->index, $values['item'], $id);
+    foreach ([NULL, $values['datasource']] as $datasource_id) {
+      foreach ($this->index->getFieldsByDatasource($datasource_id) as $key => $field) {
+        /** @var \Drupal\search_api\Item\FieldInterface $field */
+        $field = clone $field;
+        if (isset($values[$field->getPropertyPath()])) {
+          $field->addValue($values[$field->getPropertyPath()]);
+        }
+        $item->setField($key, $field);
+      }
+    }
+    return $item;
+  }
+
+  /**
+   * Indexes all (unindexed) items.
+   *
+   * @return int
+   *   The number of successfully indexed items.
+   */
+  protected function indexItems() {
+    return $this->index->indexItems();
   }
 
 }

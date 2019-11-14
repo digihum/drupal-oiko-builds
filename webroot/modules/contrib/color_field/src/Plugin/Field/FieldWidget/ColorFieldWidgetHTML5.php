@@ -1,14 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\color_field\Plugin\Field\FieldWidget\ColorFieldWidgetSpectrum.
- */
-
 namespace Drupal\color_field\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -23,14 +17,13 @@ use Drupal\Core\Form\FormStateInterface;
  *   }
  * )
  */
-class ColorFieldWidgetHTML5 extends WidgetBase {
+class ColorFieldWidgetHTML5 extends ColorFieldWidgetBase {
 
   /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return array(
-    ) + parent::defaultSettings();
+    return [] + parent::defaultSettings();
   }
 
   /**
@@ -46,7 +39,7 @@ class ColorFieldWidgetHTML5 extends WidgetBase {
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $summary = array();
+    $summary = [];
 
     return $summary;
   }
@@ -55,28 +48,8 @@ class ColorFieldWidgetHTML5 extends WidgetBase {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $element['color'] = array(
-      '#title' => t('Color'),
-      '#type' => 'color',
-      '#maxlength' => 7,
-      '#size' => 7,
-      '#required' => $element['#required'],
-      '#default_value' => isset($items[$delta]->color) ? $items[$delta]->color : NULL,
-    );
-
-    if ($this->getFieldSetting('opacity')) {
-      $element['color']['#prefix'] = '<div class="container-inline">';
-
-      $element['opacity'] = array(
-        '#title' => t('Opacity'),
-        '#type' => 'textfield',
-        '#maxlength' => 4,
-        '#size' => 4,
-        '#required' => $element['#required'],
-        '#default_value' => isset($items[$delta]->opacity) ? $items[$delta]->opacity : NULL,
-        '#suffix' => '</div>',
-      );
-    }
+    $element = parent::formElement($items, $delta, $element, $form, $form_state);
+    $element['color']['#type'] = 'color';
 
     return $element;
   }

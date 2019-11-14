@@ -1,14 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\color_field\Plugin\Field\FieldWidget\ColorFieldWidgetSpectrum.
- */
-
 namespace Drupal\color_field\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -23,20 +17,20 @@ use Drupal\Core\Form\FormStateInterface;
  *   }
  * )
  */
-class ColorFieldWidgetSpectrum extends WidgetBase {
+class ColorFieldWidgetSpectrum extends ColorFieldWidgetBase {
 
   /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return array(
+    return [
       'show_input' => FALSE,
       'show_palette' => FALSE,
       'palette' => '',
-      'show_palette_only' => TRUE,
+      'show_palette_only' => FALSE,
       'show_buttons' => FALSE,
       'allow_empty' => FALSE,
-    ) + parent::defaultSettings();
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -45,47 +39,52 @@ class ColorFieldWidgetSpectrum extends WidgetBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $element = [];
 
-    $element['show_input'] = array(
+    $element['show_input'] = [
       '#type' => 'checkbox',
-      '#title' => t('Show Input'),
+      '#title' => $this->t('Show Input'),
       '#default_value' => $this->getSetting('show_input'),
-      '#description' => t('Allow free form typing.'),
-    );
-    $element['show_palette'] = array(
+      '#description' => $this->t('Allow free form typing.'),
+    ];
+    $element['show_palette'] = [
       '#type' => 'checkbox',
-      '#title' => t('Show Palette'),
+      '#title' => $this->t('Show Palette'),
       '#default_value' => $this->getSetting('show_palette'),
-      '#description' => t('Show or hide Palette in Spectrum Widget'),
-    );
-    $element['palette'] = array(
+      '#description' => $this->t('Show or hide Palette in Spectrum Widget'),
+    ];
+    $element['palette'] = [
       '#type' => 'textarea',
-      '#title' => t('Color Palette'),
+      '#title' => $this->t('Color Palette'),
       '#default_value' => $this->getSetting('palette'),
-      '#description' => t('Selectable color palette to accompany the Spectrum Widget'),
-      '#states' => array(
-        'visible' => array(
-          ':input[name="field[settings][show_palette]"]' => array('checked' => TRUE),
-        ),
-      ),
-    );
-    $element['show_palette_only'] = array(
+      '#description' => $this->t('Selectable color palette to accompany the Spectrum Widget. Separate values with a comma, and group them with square brackets. Ex: <br> ["#fff","#aaa","#f00","#00f"],<br>["#414141","#242424","#0a8db9"]'),
+      '#states' => [
+        'visible' => [
+          ':input[name="fields[' . $this->fieldDefinition->getName() . '][settings_edit_form][settings][show_palette]"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    $element['show_palette_only'] = [
       '#type' => 'checkbox',
-      '#title' => t('Show Palette Only'),
+      '#title' => $this->t('Show Palette Only'),
       '#default_value' => $this->getSetting('show_palette_only'),
-      '#description' => t('Only show thePalette in Spectrum Widget and nothing else'),
-    );
-    $element['show_buttons'] = array(
+      '#description' => $this->t('Only show the palette in Spectrum Widget and nothing else'),
+      '#states' => [
+        'visible' => [
+          ':input[name="fields[' . $this->fieldDefinition->getName() . '][settings_edit_form][settings][show_palette]"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    $element['show_buttons'] = [
       '#type' => 'checkbox',
-      '#title' => t('Show Buttons'),
+      '#title' => $this->t('Show Buttons'),
       '#default_value' => $this->getSetting('show_buttons'),
-      '#description' => t('Add Cancel/Confirm Button.'),
-    );
-    $element['allow_empty'] = array(
+      '#description' => $this->t('Add Cancel/Confirm Button.'),
+    ];
+    $element['allow_empty'] = [
       '#type' => 'checkbox',
-      '#title' => t('Allow Empty'),
+      '#title' => $this->t('Allow Empty'),
       '#default_value' => $this->getSetting('allow_empty'),
-      '#description' => t('Allow empty value.'),
-    );
+      '#description' => $this->t('Allow empty value.'),
+    ];
     return $element;
   }
 
@@ -93,7 +92,7 @@ class ColorFieldWidgetSpectrum extends WidgetBase {
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $summary = array();
+    $summary = [];
 
     return $summary;
   }
@@ -102,40 +101,42 @@ class ColorFieldWidgetSpectrum extends WidgetBase {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    // We are nesting some sub-elements inside the parent, so we need a wrapper.
-    // We also need to add another #title attribute at the top level for ease in
-    // identifying this item in error messages. We do not want to display this
-    // title because the actual title display is handled at a higher level by
-    // the Field module.
-
-    $element['#theme_wrappers'] = array('color_field_widget_spectrum');
-
+    $element = parent::formElement($items, $delta, $element, $form, $form_state);
     $element['#attached']['library'][] = 'color_field/color-field-widget-spectrum';
 
     // Set Drupal settings.
     $settings = $this->getSettings();
-    $settings['show_alpha'] = $this->getFieldSetting('opacity');
-    $element['#attached']['drupalSettings']['color_field']['color_field_widget_spectrum'] = $settings;
 
-    $element['color'] = array(
-      '#type' => 'textfield',
-      '#maxlength' => 7,
-      '#size' => 7,
-      '#required' => $element['#required'],
-      '#default_value' => isset($items[$delta]->color) ? $items[$delta]->color : NULL,
-      '#attributes' => array('class' => array('js-color-field-widget-spectrum__color')),
-    );
-
-    if ($this->getFieldSetting('opacity')) {
-      $element['opacity'] = array(
-        '#type' => 'textfield',
-        '#maxlength' => 4,
-        '#size' => 4,
-        '#required' => $element['#required'],
-        '#default_value' => isset($items[$delta]->opacity) ? $items[$delta]->opacity : NULL,
-        '#attributes' => array('class' => array('js-color-field-widget-spectrum__opacity', 'visually-hidden')),
-      );
+    // Compare with default settings make sure they are the same datatype.
+    $defaults = self::defaultSettings();
+    foreach ($settings as $key => $value) {
+      if (is_bool($defaults[$key])) {
+        $settings[$key] = boolval($value);
+      }
     }
+
+    // Parsing Palette data so that it works with spectrum color picker.
+    // This will create a multidimensional array of hex values.
+    if (!empty($settings['palette'])) {
+      // Remove any whitespace.
+      $settings['palette'] = str_replace(' ', '', $settings['palette']);
+
+      // Parse each row first and reset the palette.
+      $rows = explode("\n", $settings['palette']);
+      $settings['palette'] = [];
+
+      foreach ($rows as $row) {
+        // Next explode each row into an array of values.
+        $settings['palette'][] = $columns = explode(',', $row);
+      }
+    }
+
+    $settings['show_alpha'] = (bool) $this->getFieldSetting('opacity');
+    $element['#attributes']['id'] = $element['#uid'];
+    $element['#attributes']['class'][] = 'js-color-field-widget-spectrum';
+    $element['#attached']['drupalSettings']['color_field']['color_field_widget_spectrum'][$element['#uid']] = $settings;
+    $element['color']['#attributes']['class'][] = 'js-color-field-widget-spectrum__color';
+    $element['opacity']['#attributes']['class'][] = 'js-color-field-widget-spectrum__opacity';
 
     return $element;
   }

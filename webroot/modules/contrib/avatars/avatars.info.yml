@@ -10,8 +10,8 @@ dependencies:
   - image
   - options
   - unlimited_number
-# Information added by Drupal.org packaging script on 2016-08-19
-version: '8.x-1.0-beta5'
+# Information added by Drupal.org packaging script on 2017-10-09
+version: '8.x-1.0'
 core: '8.x'
 project: 'avatars'
-datestamp: 1471615457
+datestamp: 1507559646

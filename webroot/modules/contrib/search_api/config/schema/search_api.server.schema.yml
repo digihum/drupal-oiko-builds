@@ -8,9 +8,6 @@ search_api.server.*:
     name:
       type: label
       label: 'Name'
-    uuid:
-      type: string
-      label: 'UUID'
     description:
       type: text
       label: 'Description'
@@ -28,3 +25,6 @@ search_api.server.*:
     dependencies:
       type: config_dependencies
       label: 'Dependencies'
+
+plugin.plugin_configuration.search_api_backend.*:
+  type: mapping

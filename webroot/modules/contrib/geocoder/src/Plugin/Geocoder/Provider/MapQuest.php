@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Provider\MapQuest.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
@@ -17,7 +12,7 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  *   name = "MapQuest",
  *   handler = "\Geocoder\Provider\MapQuest",
  *   arguments = {
- *     "apiKey",
+ *     "apikey" = NULL,
  *     "licensed" = FALSE
  *   }
  * )

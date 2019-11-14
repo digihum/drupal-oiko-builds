@@ -3,7 +3,9 @@
 namespace Drupal\search_api\Task;
 
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\search_api\IndexInterface;
@@ -58,6 +60,13 @@ class TaskManager implements TaskManagerInterface {
   protected $eventDispatcher;
 
   /**
+   * The messenger service.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
    * Constructs a TaskManager object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -66,11 +75,14 @@ class TaskManager implements TaskManagerInterface {
    *   The event dispatcher.
    * @param \Drupal\Core\StringTranslation\TranslationInterface $translation
    *   The string translation service.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The messenger.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, EventDispatcherInterface $event_dispatcher, TranslationInterface $translation) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, EventDispatcherInterface $event_dispatcher, TranslationInterface $translation, MessengerInterface $messenger) {
     $this->entityTypeManager = $entity_type_manager;
     $this->eventDispatcher = $event_dispatcher;
     $this->setStringTranslation($translation);
+    $this->messenger = $messenger;
   }
 
   /**
@@ -94,7 +106,7 @@ class TaskManager implements TaskManagerInterface {
    * @return \Drupal\Core\Entity\Query\QueryInterface
    *   An entity query for search tasks.
    */
-  protected function getTasksQuery(array $conditions = array()) {
+  protected function getTasksQuery(array $conditions = []) {
     $query = $this->getTaskStorage()->getQuery();
     foreach ($conditions as $property => $values) {
       $query->condition($property, $values, is_array($values) ? 'IN' : '=');
@@ -106,7 +118,7 @@ class TaskManager implements TaskManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function getTasksCount(array $conditions = array()) {
+  public function getTasksCount(array $conditions = []) {
     return $this->getTasksQuery($conditions)->count()->execute();
   }
 
@@ -114,12 +126,22 @@ class TaskManager implements TaskManagerInterface {
    * {@inheritdoc}
    */
   public function addTask($type, ServerInterface $server = NULL, IndexInterface $index = NULL, $data = NULL) {
-    $task = $this->getTaskStorage()->create(array(
+    if (isset($data)) {
+      if ($data instanceof EntityInterface) {
+        $data = [
+          '#entity_type' => $data->getEntityTypeId(),
+          '#values' => $data->toArray(),
+        ];
+      }
+      $data = serialize($data);
+    }
+
+    $task = $this->getTaskStorage()->create([
       'type' => $type,
       'server_id' => $server ? $server->id() : NULL,
       'index_id' => $index ? $index->id() : NULL,
-      'data' => isset($data) ? serialize($data) : NULL,
-    ));
+      'data' => $data,
+    ]);
     $task->save();
     return $task;
   }
@@ -127,12 +149,12 @@ class TaskManager implements TaskManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function loadTasks(array $conditions = array()) {
+  public function loadTasks(array $conditions = []) {
     $task_ids = $this->getTasksQuery($conditions)->execute();
     if ($task_ids) {
       return $this->getTaskStorage()->loadMultiple($task_ids);
     }
-    return array();
+    return [];
   }
 
   /**
@@ -148,7 +170,7 @@ class TaskManager implements TaskManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function deleteTasks(array $conditions = array()) {
+  public function deleteTasks(array $conditions = []) {
     $storage = $this->getTaskStorage();
     while (TRUE) {
       $task_ids = $this->getTasksQuery($conditions)
@@ -185,7 +207,7 @@ class TaskManager implements TaskManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function executeSingleTask(array $conditions = array()) {
+  public function executeSingleTask(array $conditions = []) {
     $task_id = $this->getTasksQuery($conditions)->range(0, 1)->execute();
     if ($task_id) {
       $task_id = reset($task_id);
@@ -200,7 +222,7 @@ class TaskManager implements TaskManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function executeAllTasks(array $conditions = array(), $limit = NULL) {
+  public function executeAllTasks(array $conditions = [], $limit = NULL) {
     // We have to use this roundabout way because tasks, during their execution,
     // might create additional tasks. (For example, see
     // \Drupal\search_api\Task\IndexTaskManager::trackItems().)
@@ -241,21 +263,48 @@ class TaskManager implements TaskManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function setTasksBatch(array $conditions = array()) {
+  public function setTasksBatch(array $conditions = []) {
     $task_ids = $this->getTasksQuery($conditions)->range(0, 100)->execute();
 
     if (!$task_ids) {
       return;
     }
 
-    $batch_definition = array(
-      'operations' => array(
-        array(array($this, 'processBatch'), array($task_ids, $conditions)),
-      ),
-      'finished' => array($this, 'finishBatch'),
-    );
+    $batch_definition = [
+      'operations' => [
+        [[$this, 'processBatch'], [$task_ids, $conditions]],
+      ],
+      'finished' => [$this, 'finishBatch'],
+    ];
+
+    // If called inside of Drush, we want to start the batch immediately.
+    // However, we first need to determine whether there already is one running,
+    // since we don't want to start a second one – our new batch will
+    // automatically be appended to the currently running batch operation.
+    $batch = batch_get();
+    $run_drush_batch = function_exists('drush_backend_batch_process')
+      && empty($batch['running']);
+
     // Schedule the batch.
     batch_set($batch_definition);
+
+    // Now run the Drush batch, if applicable.
+    if ($run_drush_batch) {
+      $result = drush_backend_batch_process();
+      // Drush performs batch processing in a separate PHP request. When the
+      // last batch is processed the batch list is cleared, but this only takes
+      // effect in the other request. Take the same action here to ensure that
+      // we are not requeueing stale batches when there are multiple tasks being
+      // handled in a single request.
+      // (Drush 9.6 changed the structure of $result, so check for both variants
+      // as long as we support earlier Drush versions, too.)
+      if (!empty($result['context']['drush_batch_process_finished'])
+          || !empty($result['drush_batch_process_finished'])) {
+        $batch = &batch_get();
+        $batch = NULL;
+        unset($batch);
+      }
+    }
   }
 
   /**
@@ -266,17 +315,19 @@ class TaskManager implements TaskManagerInterface {
    * @param array $conditions
    *   An array of conditions defining the tasks to be executed. Should be used
    *   to retrieve more task IDs if necessary.
-   * @param array $context
-   *   The current batch context, as defined in the @link batch Batch operations
-   *   @endlink documentation.
+   * @param array|\ArrayAccess $context
+   *   The context of the current batch, as defined in the @link batch Batch
+   *   operations @endlink documentation.
    *
    * @throws \Drupal\search_api\SearchApiException
    *   Thrown if any error occurred while processing the task.
    */
-  public function processBatch(array $task_ids, array $conditions, array &$context) {
+  public function processBatch(array $task_ids, array $conditions, &$context) {
     // Initialize context information.
     if (!isset($context['sandbox']['task_ids'])) {
       $context['sandbox']['task_ids'] = $task_ids;
+    }
+    if (!isset($context['results']['total'])) {
       $context['results']['total'] = $this->getTasksCount($conditions);
     }
 
@@ -324,11 +375,11 @@ class TaskManager implements TaskManagerInterface {
         'Successfully executed @count pending task.',
         'Successfully executed @count pending tasks.'
       );
-      drupal_set_message($message);
+      $this->messenger->addStatus($message);
     }
     else {
       // Notify the user about the batch job failure.
-      drupal_set_message($this->t('An error occurred while trying to execute tasks. Check the logs for details.'), 'error');
+      $this->messenger->addError($this->t('An error occurred while trying to execute tasks. Check the logs for details.'));
     }
   }
 

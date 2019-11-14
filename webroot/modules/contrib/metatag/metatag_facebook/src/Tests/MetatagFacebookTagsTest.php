@@ -1,9 +1,8 @@
 <?php
 
-namespace Drupal\metatag_facebook\Tests;
+namespace Drupal\Tests\metatag_facebook\Functional;
 
-use Drupal\simpletest\WebTestBase;
-use Drupal\metatag\Tests\MetatagTagsTestBase;
+use Drupal\Tests\metatag\Functional\MetatagTagsTestBase;
 
 /**
  * Tests that each of the Metatag Facebook tags work correctly.
@@ -15,16 +14,16 @@ class MetatagFacebookTagsTest extends MetatagTagsTestBase {
   /**
    * {@inheritdoc}
    */
-  public $tags = [
+  private $tags = [
     'fb_admins',
     'fb_app_id',
     'fb_pages',
   ];
 
   /**
-   * The attribute to look for to indicate which tag.
+   * {@inheritdoc}
    */
-  public $test_name_attribute = 'property';
+  private $testNameAttribute = 'property';
 
   /**
    * {@inheritdoc}
@@ -37,7 +36,7 @@ class MetatagFacebookTagsTest extends MetatagTagsTestBase {
   /**
    * Each of these meta tags has a different tag name vs its internal name.
    */
-  public function get_test_tag_name($tag_name) {
+  private function getTestTagName($tag_name) {
     $tag_name = str_replace('fb_', 'fb:', $tag_name);
     return $tag_name;
   }

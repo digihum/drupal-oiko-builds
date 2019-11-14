@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Provider\TomTom.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
@@ -17,7 +12,8 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  *   name = "TomTom",
  *   handler = "\Geocoder\Provider\TomTom",
  *   arguments = {
- *     "apiKey"
+ *     "apikey" = NULL,
+ *     "locale" = NULL
  *   }
  * )
  */

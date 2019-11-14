@@ -25,6 +25,7 @@ messages:
     username: 'Username'
     created: 'Created Time'
     created-users: 'Created "%s" users successfully'
+    error: 'Error creating users: "%s"'
 examples:
     - description: 'Provide the user role.'
       execution: drupal create:users role
@@ -34,4 +35,3 @@ examples:
           --limit="5" \
           --password="usersnewpassword" \
           --time-range="1"
-

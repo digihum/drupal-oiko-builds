@@ -2,10 +2,8 @@
 
 namespace Drupal\search_api\Query;
 
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\search_api\IndexInterface;
 use Drupal\search_api\ParseMode\ParseModeInterface;
-use Drupal\search_api\ParseMode\ParseModePluginManager;
 
 /**
  * Represents a search query on a Search API index.
@@ -67,7 +65,7 @@ interface QueryInterface extends ConditionSetInterface {
    *   Thrown if a search on that index (or with those options) won't be
    *   possible.
    */
-  public static function create(IndexInterface $index, array $options = array());
+  public static function create(IndexInterface $index, array $options = []);
 
   /**
    * Retrieves the search ID.
@@ -162,8 +160,10 @@ interface QueryInterface extends ConditionSetInterface {
    *
    * @return \Drupal\search_api\Query\ConditionGroupInterface
    *   A condition group object that is set to use the specified conjunction.
+   *
+   * @todo Add $add_directly = TRUE parameter.
    */
-  public function createConditionGroup($conjunction = 'AND', array $tags = array());
+  public function createConditionGroup($conjunction = 'AND', array $tags = []);
 
   /**
    * Sets the keys to search for.
@@ -253,6 +253,7 @@ interface QueryInterface extends ConditionSetInterface {
    * @return $this
    */
   public function setProcessingLevel($level);
+
   /**
    * Aborts this query.
    *
@@ -286,6 +287,11 @@ interface QueryInterface extends ConditionSetInterface {
 
   /**
    * Executes this search query.
+   *
+   * The results of the search will be cached on the query, so subsequent calls
+   * of this method will always return the same result set (even if conditions
+   * were changed in between). If you want to re-execute a query, use
+   * getOriginalQuery().
    *
    * @return \Drupal\search_api\Query\ResultSetInterface
    *   The results of the search.
@@ -416,9 +422,6 @@ interface QueryInterface extends ConditionSetInterface {
    *
    * @param string $name
    *   The name of an option. The following options are recognized by default:
-   *   - conjunction: The type of conjunction to use for this query – either
-   *     'AND' or 'OR'. 'AND' by default. This only influences the search keys,
-   *     condition groups will always use AND by default.
    *   - offset: The position of the first returned search results relative to
    *     the whole result in the index.
    *   - limit: The maximum number of search results to return. -1 means no
@@ -431,6 +434,10 @@ interface QueryInterface extends ConditionSetInterface {
    *     access checks, if available and enabled for the index.
    *   - search_api_bypass_access: If set to TRUE, entity access checks will be
    *     skipped, even if enabled for the index.
+   *   - search_api_retrieved_field_values: A list of IDs of fields whose values
+   *     should be returned along with the results by the backend, if possible.
+   *     For backends that support retrieving fields values, this allows them to
+   *     only retrieve the values that are actually needed.
    *   However, contrib modules might introduce arbitrary other keys with their
    *   own, special meaning. (Usually they should be prefixed with the module
    *   name, though, to avoid conflicts.)
@@ -517,5 +524,15 @@ interface QueryInterface extends ConditionSetInterface {
    *   existing tags.
    */
   public function &getTags();
+
+  /**
+   * Retrieves the original version of the query, before preprocessing occurred.
+   *
+   * Will be a clone of this query if preprocessing has not already run.
+   *
+   * @return \Drupal\search_api\Query\Query
+   *   The original, unpreprocessed version of this query.
+   */
+  public function getOriginalQuery();
 
 }

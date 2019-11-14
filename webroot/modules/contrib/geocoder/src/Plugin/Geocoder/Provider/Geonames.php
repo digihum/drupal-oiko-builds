@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Provider\Geonames.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
@@ -17,7 +12,8 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  *   name = "Geonames",
  *   handler = "\Geocoder\Provider\Geonames",
  *   arguments = {
- *     "username"
+ *     "username" = NULL,
+ *     "locale" = NULL
  *   }
  * )
  */

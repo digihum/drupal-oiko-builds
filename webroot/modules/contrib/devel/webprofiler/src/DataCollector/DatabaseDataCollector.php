@@ -43,8 +43,16 @@ class DatabaseDataCollector extends DataCollector implements DrupalDataCollector
   public function collect(Request $request, Response $response, \Exception $exception = NULL) {
     $connections = [];
     foreach (Database::getAllConnectionInfo() as $key => $info) {
-      $database = Database::getConnection('default', $key);
-      $connections[$key] = $database->getLogger()->get('webprofiler');
+      try {
+        $database = Database::getConnection('default', $key);
+
+        if ($database->getLogger()) {
+          $connections[$key] = $database->getLogger()->get('webprofiler');
+        }
+      } catch(\Exception $e) {
+        // There was some error during database connection, maybe a stale
+        // configuration in settings.php or wrong values used for a migration.
+      }
     }
 
     $this->data['connections'] = array_keys($connections);
@@ -56,7 +64,7 @@ class DatabaseDataCollector extends DataCollector implements DrupalDataCollector
         unset($query['caller']['args']);
 
         // Remove query args element if empty.
-        if (empty($query['args'])) {
+        if (isset($query['args']) && empty($query['args'])) {
           unset($query['args']);
         }
 
@@ -223,8 +231,11 @@ class DatabaseDataCollector extends DataCollector implements DrupalDataCollector
       $query['type'] = $type;
 
       $quoted = [];
-      foreach ((array) $query['args'] as $key => $val) {
-        $quoted[$key] = is_null($val) ? 'NULL' : $conn->quote($val);
+
+      if (isset($query['args'])) {
+        foreach ((array) $query['args'] as $key => $val) {
+          $quoted[$key] = is_null($val) ? 'NULL' : $conn->quote($val);
+        }
       }
 
       $query['query_args'] = strtr($query['query'], $quoted);

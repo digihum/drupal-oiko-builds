@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Core\Command\Command;
 use Drupal\Core\Config\CachedStorage;
 use Drupal\Core\Config\ConfigManager;
-use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Core\Config\ConfigImporterException;
 use Drupal\Core\Config\ConfigImporter;
 use Drupal\Core\Config\FileStorage;
@@ -83,21 +82,30 @@ class ImportCommand extends Command
     /**
      * {@inheritdoc}
      */
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+        if (!$input->getOption('directory')) {
+            $directory = $this->getIo()->ask(
+                $this->trans('commands.config.import.questions.directory'),
+                config_get_config_directory(CONFIG_SYNC_DIRECTORY)
+        );
+            $input->setOption('directory', $directory);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
         $directory = $input->getOption('directory');
         $skipUuid = $input->getOption('skip-uuid');
 
         if ($directory) {
-            $configSyncDir = $directory;
+            $source_storage = new FileStorage($directory);
         } else {
-            $configSyncDir = config_get_config_directory(
-                CONFIG_SYNC_DIRECTORY
-            );
+            $source_storage = \Drupal::service('config.storage.sync');
         }
-
-        $source_storage = new FileStorage($configSyncDir);
 
         $storageComparer = '\Drupal\Core\Config\StorageComparer';
         if ($skipUuid) {
@@ -111,18 +119,18 @@ class ImportCommand extends Command
         );
 
         if (!$storage_comparer->createChangelist()->hasChanges()) {
-            $io->success($this->trans('commands.config.import.messages.nothing-to-do'));
+            $this->getIo()->success($this->trans('commands.config.import.messages.nothing-to-do'));
         }
 
-        if ($this->configImport($io, $storage_comparer)) {
-            $io->success($this->trans('commands.config.import.messages.imported'));
+        if ($this->configImport($storage_comparer)) {
+            $this->getIo()->success($this->trans('commands.config.import.messages.imported'));
         } else {
             return 1;
         }
     }
 
 
-    private function configImport(DrupalStyle $io, StorageComparerInterface $storage_comparer)
+    private function configImport(StorageComparerInterface $storage_comparer)
     {
         $config_importer = new ConfigImporter(
             $storage_comparer,
@@ -137,21 +145,21 @@ class ImportCommand extends Command
         );
 
         if ($config_importer->alreadyImporting()) {
-            $io->success($this->trans('commands.config.import.messages.already-imported'));
+            $this->getIo()->success($this->trans('commands.config.import.messages.already-imported'));
         } else {
             try {
-                $io->info($this->trans('commands.config.import.messages.importing'));
+                $this->getIo()->info($this->trans('commands.config.import.messages.importing'));
                 $config_importer->import();
                 return true;
             } catch (ConfigImporterException $e) {
-                $io->error(
+                $this->getIo()->error(
                     sprintf(
                         $this->trans('commands.site.import.local.messages.error-writing'),
                         implode("\n", $config_importer->getErrors())
                     )
                 );
             } catch (\Exception $e) {
-                $io->error(
+                $this->getIo()->error(
                     sprintf(
                         $this->trans('commands.site.import.local.messages.error-writing'),
                         $e->getMessage()

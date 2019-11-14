@@ -15,8 +15,8 @@ use Drupal\search_api\Processor\FieldsProcessorPluginBase;
  *   description = @Translation("Configure types of characters which should be ignored for searches."),
  *   stages = {
  *     "pre_index_save" = 0,
- *     "preprocess_index" = -20,
- *     "preprocess_query" = -20
+ *     "preprocess_index" = -10,
+ *     "preprocess_query" = -10,
  *   }
  * )
  */
@@ -33,23 +33,22 @@ class IgnoreCharacters extends FieldsProcessorPluginBase {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    // @todo As elsewhere, the "character_sets" setting should only contain the
-    //   enabled classes, in a numeric array.
-    // @todo Also, nesting this setting makes no sense.
-    return array(
+    $configuration = parent::defaultConfiguration();
+
+    $configuration += [
       'ignorable' => "['¿¡!?,.:;]",
-      'strip' => array(
-        'character_sets' => array(
-          'Pc' => 'Pc',
-          'Pd' => 'Pd',
-          'Pe' => 'Pe',
-          'Pf' => 'Pf',
-          'Pi' => 'Pi',
-          'Po' => 'Po',
-          'Ps' => 'Ps',
-        ),
-      ),
-    );
+      'ignorable_classes' => [
+        'Pc',
+        'Pd',
+        'Pe',
+        'Pf',
+        'Pi',
+        'Po',
+        'Ps',
+      ],
+    ];
+
+    return $configuration;
   }
 
   /**
@@ -58,30 +57,31 @@ class IgnoreCharacters extends FieldsProcessorPluginBase {
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
 
-    $form['ignorable'] = array(
+    $form['ignorable'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Strip by regular expression'),
-      '#description' => $this->t('Specify characters which should be removed from fulltext fields and search strings, as a <a href=":url">PCRE regular expression</a>.', array(':url' => Url::fromUri('http://php.net/manual/reference.pcre.pattern.syntax.php')->toString())),
+      '#description' => $this->t('Specify characters which should be removed from fulltext fields and search strings, as a <a href=":url">PCRE regular expression</a>.', [':url' => Url::fromUri('https://secure.php.net/manual/reference.pcre.pattern.syntax.php')->toString()]),
       '#default_value' => $this->configuration['ignorable'],
       '#maxlength' => 1000,
-    );
+    ];
 
     $character_sets = $this->getCharacterSets();
-    $form['strip'] = array(
+    $form['strip'] = [
       '#type' => 'details',
       '#title' => $this->t('Strip by character property'),
-      '#description' => $this->t('Specify <a href=":url">Unicode character properties</a> of characters to be ignored.', array(':url' => Url::fromUri('http://www.fileformat.info/info/unicode/category/index.htm')->toString())),
+      '#description' => $this->t('Specify <a href=":url">Unicode character properties</a> of characters to be ignored.', [':url' => Url::fromUri('https://en.wikipedia.org/wiki/Unicode_character_property')->toString()]),
       '#open' => FALSE,
       '#maxlength' => 300,
 
-    );
-    $form['strip']['character_sets'] = array(
+    ];
+    $classes = $this->configuration['ignorable_classes'];
+    $form['strip']['character_sets'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Ignored character properties'),
       '#options' => $character_sets,
-      '#default_value' => $this->configuration['strip']['character_sets'],
+      '#default_value' => array_combine($classes, $classes),
       '#multiple' => TRUE,
-    );
+    ];
 
     return $form;
   }
@@ -102,6 +102,18 @@ class IgnoreCharacters extends FieldsProcessorPluginBase {
   /**
    * {@inheritdoc}
    */
+  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
+    $config = $form_state->getValues();
+    unset($config['strip']);
+    // Get our own version of 'ignorable_classes' from form values.
+    $classes = $form_state->getValue(['strip', 'character_sets'], []);
+    $config['ignorable_classes'] = array_values(array_filter($classes));
+    $this->setConfiguration($config);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   protected function process(&$value) {
     if ($this->configuration['ignorable']) {
       if (!isset($this->ignorable)) {
@@ -111,7 +123,7 @@ class IgnoreCharacters extends FieldsProcessorPluginBase {
     }
 
     // Loop over the character sets and strip the characters from the text.
-    foreach ($this->configuration['strip']['character_sets'] as $character_set) {
+    foreach ($this->configuration['ignorable_classes'] as $character_set) {
       $regex = $this->getFormatRegularExpression($character_set);
       if ($regex) {
         $value = preg_replace('/[' . $regex . ']+/u', '', $value);
@@ -126,7 +138,7 @@ class IgnoreCharacters extends FieldsProcessorPluginBase {
    *   An options list with all available Unicode character properties.
    */
   protected function getCharacterSets() {
-    return array(
+    return [
       'Pc' => $this->t('Punctuation, Connector Characters'),
       'Pd' => $this->t('Punctuation, Dash Characters'),
       'Pe' => $this->t('Punctuation, Close Characters'),
@@ -151,7 +163,7 @@ class IgnoreCharacters extends FieldsProcessorPluginBase {
       'Zl' => $this->t('Separator, Line Characters'),
       'Zp' => $this->t('Separator, Paragraph Characters'),
       'Zs' => $this->t('Separator, Space Characters'),
-    );
+    ];
   }
 
   /**

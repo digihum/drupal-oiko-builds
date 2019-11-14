@@ -31,19 +31,21 @@ class WebformTermCheckboxes extends Checkboxes {
    * {@inheritdoc}
    */
   public static function processCheckboxes(&$element, FormStateInterface $form_state, &$complete_form) {
-    self::setOptions($element);
+    static::setOptions($element);
     $element = parent::processCheckboxes($element, $form_state, $complete_form);
 
     if (!\Drupal::moduleHandler()->moduleExists('taxonomy')) {
       return $element;
     }
 
-    /** @var \Drupal\taxonomy\TermStorageInterface $taxonomy_storage */
-    $taxonomy_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
-    $tree = $taxonomy_storage->loadTree($element['#vocabulary'], 0, NULL, TRUE);
+    /** @var \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository */
+    $entity_repository = \Drupal::service('entity.repository');
+
+    $tree = static::loadTree($element['#vocabulary']);
 
     if (empty($element['#breadcrumb'])) {
       foreach ($tree as $item) {
+        $item = $entity_repository->getTranslationFromContext($item);
         $element[$item->id()]['#title'] = $item->label();
         $element[$item->id()]['#field_prefix'] = str_repeat($element['#tree_delimiter'], $item->depth);
       }
@@ -65,15 +67,15 @@ class WebformTermCheckboxes extends Checkboxes {
   protected static function getOptionsTree(array $element, $language) {
     $element += ['#tree_delimiter' => '-'];
 
-    /** @var \Drupal\taxonomy\TermStorageInterface $taxonomy_storage */
-    $taxonomy_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
-    $tree = $taxonomy_storage->loadTree($element['#vocabulary'], 0, NULL, TRUE);
+    /** @var \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository */
+    $entity_repository = \Drupal::service('entity.repository');
+
+    $tree = static::loadTree($element['#vocabulary']);
 
     $options = [];
     foreach ($tree as $item) {
-      if ($item->isTranslatable() && $item->hasTranslation($language)) {
-        $item = $item->getTranslation($language);
-      }
+      // Set the item in the correct language for display.
+      $item = $entity_repository->getTranslationFromContext($item);
       $options[$item->id()] = $item->getName();
     }
     return $options;

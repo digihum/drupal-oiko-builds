@@ -2,12 +2,12 @@
 
 namespace Drupal\search_api\Plugin\search_api\processor;
 
-use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\PluginFormInterface;
 use Drupal\search_api\IndexInterface;
 use Drupal\search_api\Plugin\PluginFormTrait;
 use Drupal\search_api\Processor\ProcessorPluginBase;
+use Drupal\search_api\Utility\Utility;
 use Drupal\user\RoleInterface;
 use Drupal\user\UserInterface;
 
@@ -45,10 +45,10 @@ class RoleFilter extends ProcessorPluginBase implements PluginFormInterface {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return array(
+    return [
       'default' => TRUE,
-      'roles' => array(),
-    );
+      'roles' => [],
+    ];
   }
 
   /**
@@ -56,26 +56,26 @@ class RoleFilter extends ProcessorPluginBase implements PluginFormInterface {
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $options = array_map(function (RoleInterface $role) {
-      return Html::escape($role->label());
+      return Utility::escapeHtml($role->label());
     }, user_roles());
 
-    $form['default'] = array(
+    $form['default'] = [
       '#type' => 'radios',
       '#title' => $this->t('Which users should be indexed?'),
-      '#default_value' => $this->configuration['default'],
-      '#options' => array(
+      '#options' => [
         1 => $this->t('All but those from one of the selected roles'),
         0 => $this->t('Only those from the selected roles'),
-      ),
-    );
-    $form['roles'] = array(
+      ],
+      '#default_value' => (int) $this->configuration['default'],
+    ];
+    $form['roles'] = [
       '#type' => 'select',
       '#title' => $this->t('Roles'),
-      '#default_value' => array_combine($this->configuration['roles'], $this->configuration['roles']),
       '#options' => $options,
-      '#size' => min(4, count($options)),
       '#multiple' => TRUE,
-    );
+      '#size' => min(4, count($options)),
+      '#default_value' => array_combine($this->configuration['roles'], $this->configuration['roles']),
+    ];
     return $form;
   }
 

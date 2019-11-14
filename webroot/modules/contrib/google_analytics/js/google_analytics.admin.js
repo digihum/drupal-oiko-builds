@@ -3,9 +3,9 @@
  * Google Analytics admin behaviors.
  */
 
-(function ($, window) {
+(function ($) {
 
-  "use strict";
+  'use strict';
 
   /**
    * Provide the summary information for the tracking settings vertical tabs.
@@ -141,4 +141,4 @@
     }
   };
 
-})(jQuery, window);
+})(jQuery);

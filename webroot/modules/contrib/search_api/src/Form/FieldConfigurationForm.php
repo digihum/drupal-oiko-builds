@@ -2,10 +2,15 @@
 
 namespace Drupal\search_api\Form;
 
+use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityForm;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\EventSubscriber\MainContentViewSubscriber;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\search_api\Processor\ConfigurablePropertyInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -33,11 +38,18 @@ class FieldConfigurationForm extends EntityForm {
   protected $field;
 
   /**
-   * {@inheritdoc}
+   * The "id" attribute of the generated form.
+   *
+   * @var string
    */
-  public function getFormId() {
-    return 'search_api_field_config';
-  }
+  protected $formIdAttribute;
+
+  /**
+   * The messenger.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
 
   /**
    * Constructs a FieldConfigurationForm object.
@@ -50,12 +62,15 @@ class FieldConfigurationForm extends EntityForm {
    *   The date formatter.
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   The request stack.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The messenger.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer, DateFormatterInterface $date_formatter, RequestStack $request_stack) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer, DateFormatterInterface $date_formatter, RequestStack $request_stack, MessengerInterface $messenger) {
     $this->entityTypeManager = $entity_type_manager;
     $this->renderer = $renderer;
     $this->dateFormatter = $date_formatter;
     $this->requestStack = $request_stack;
+    $this->messenger = $messenger;
   }
 
   /**
@@ -66,8 +81,23 @@ class FieldConfigurationForm extends EntityForm {
     $renderer = $container->get('renderer');
     $date_formatter = $container->get('date.formatter');
     $request_stack = $container->get('request_stack');
+    $messenger = $container->get('messenger');
 
-    return new static($entity_type_manager, $renderer, $date_formatter, $request_stack);
+    return new static($entity_type_manager, $renderer, $date_formatter, $request_stack, $messenger);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getBaseFormId() {
+    return NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFormId() {
+    return 'search_api_field_config';
   }
 
   /**
@@ -76,23 +106,35 @@ class FieldConfigurationForm extends EntityForm {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $field = $this->getField();
 
+    if (!$field) {
+      $args['@id'] = $this->getRequest()->attributes->get('field_id');
+      $form['message'] = [
+        '#markup' => $this->t('Unknown field with ID "@id".', $args),
+      ];
+      return $form;
+    }
+
     $args['%field'] = $field->getLabel();
     $form['#title'] = $this->t('Edit field %field', $args);
 
-    if (!$field) {
-      $args['@id'] = $this->getRequest()->attributes->get('field_id');
-      $form['message'] = array(
-        '#markup' => $this->t('Unknown field with ID "@id".', $args),
-      );
-      return $form;
+    if ($this->getRequest()->query->get('modal_redirect')) {
+      $form['title']['#markup'] = new FormattableMarkup('<h2>@title</h2>', ['@title' => $form['#title']]);
+      Html::setIsAjax(TRUE);
     }
+
+    $this->formIdAttribute = Html::getUniqueId($this->getFormId());
+    $form['#id'] = $this->formIdAttribute;
+
+    $form['messages'] = [
+      '#type' => 'status_messages',
+    ];
 
     $property = $field->getDataDefinition();
     if (!($property instanceof ConfigurablePropertyInterface)) {
       $args['%field'] = $field->getLabel();
-      $form['message'] = array(
+      $form['message'] = [
         '#markup' => $this->t('Field %field is not configurable.', $args),
-      );
+      ];
       return $form;
     }
 
@@ -123,11 +165,16 @@ class FieldConfigurationForm extends EntityForm {
     $actions = parent::actions($form, $form_state);
     unset($actions['delete']);
 
-    $actions['cancel'] = array(
-      '#type' => 'link',
-      '#title' => $this->t('Cancel'),
-      '#url' => $this->entity->toUrl('fields'),
-    );
+    if ($this->getRequest()->query->get('modal_redirect')) {
+      $actions['submit']['#ajax']['wrapper'] = $this->formIdAttribute;
+    }
+    else {
+      $actions['cancel'] = [
+        '#type' => 'link',
+        '#title' => $this->t('Cancel'),
+        '#url' => $this->entity->toUrl('fields'),
+      ];
+    }
 
     return $actions;
   }
@@ -151,8 +198,25 @@ class FieldConfigurationForm extends EntityForm {
     $property = $field->getDataDefinition();
     $property->submitConfigurationForm($field, $form, $form_state);
 
-    drupal_set_message($this->t('The field configuration was successfully saved.'));
-    $form_state->setRedirectUrl($this->entity->toUrl('fields'));
+    $this->messenger->addStatus($this->t('The field configuration was successfully saved.'));
+    if ($this->getRequest()->query->get('modal_redirect')) {
+      $url = $this->entity->toUrl('add-fields-ajax')
+        ->setOption('query', [
+          MainContentViewSubscriber::WRAPPER_FORMAT => 'drupal_ajax',
+        ]);
+      $form_state->setRedirectUrl($url);
+    }
+    else {
+      $form_state->setRedirectUrl($this->entity->toUrl('fields'));
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function copyFormValuesToEntity(EntityInterface $entity, array $form, FormStateInterface $form_state) {
+    // Our form structure doesn't emulate the entity structure, so copying those
+    // values wouldn't make any sense.
   }
 
   /**

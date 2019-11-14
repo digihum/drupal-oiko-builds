@@ -78,7 +78,7 @@ class FieldsHelper implements FieldsHelperInterface {
    *
    * @see getDataTypeFallbackMapping()
    */
-  protected $dataTypeFallbackMapping = array();
+  protected $dataTypeFallbackMapping = [];
 
   /**
    * Constructs a FieldsHelper object.
@@ -87,7 +87,7 @@ class FieldsHelper implements FieldsHelperInterface {
    *   The entity type manager.
    * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entityFieldManager
    *   The entity field manager.
-   * @param EntityTypeBundleInfoInterface $entityBundleInfo
+   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entityBundleInfo
    *   The entity type bundle info service.
    * @param \Drupal\search_api\Utility\DataTypeHelperInterface $dataTypeHelper
    *   The data type helper service.
@@ -122,8 +122,8 @@ class FieldsHelper implements FieldsHelperInterface {
 
     // Figure out which fields are directly on the item and which need to be
     // extracted from nested items.
-    $directFields = array();
-    $nestedFields = array();
+    $directFields = [];
+    $nestedFields = [];
     foreach (array_keys($fields) as $key) {
       if (strpos($key, ':') !== FALSE) {
         list($direct, $nested) = explode(':', $key, 2);
@@ -186,49 +186,47 @@ class FieldsHelper implements FieldsHelperInterface {
    */
   public function extractFieldValues(TypedDataInterface $data) {
     if ($data->getDataDefinition()->isList()) {
-      $values = array();
+      $values = [];
       foreach ($data as $piece) {
         $values[] = $this->extractFieldValues($piece);
       }
-      return $values ? call_user_func_array('array_merge', $values) : array();
+      return $values ? call_user_func_array('array_merge', $values) : [];
     }
 
     $value = $data->getValue();
     $definition = $data->getDataDefinition();
     if ($definition instanceof ComplexDataDefinitionInterface) {
       $property = $definition->getMainPropertyName();
-      if (isset($value[$property])) {
-        return array($value[$property]);
-      }
+      return isset($value[$property]) ? [$value[$property]] : [];
     }
-    elseif (is_array($value)) {
+    if (is_array($value)) {
       return array_values($value);
     }
-    return array($value);
+    return [$value];
   }
 
   /**
    * {@inheritdoc}
    */
   public function extractItemValues(array $items, array $required_properties, $load = TRUE) {
-    $extracted_values = array();
+    $extracted_values = [];
 
     /** @var \Drupal\search_api\Item\ItemInterface $item */
     foreach ($items as $i => $item) {
       $index = $item->getIndex();
-      $item_values = array();
+      $item_values = [];
       /** @var \Drupal\search_api\Item\FieldInterface[][] $missing_fields */
-      $missing_fields = array();
-      $processor_fields = array();
-      $needed_processors = array();
-      foreach (array(NULL, $item->getDatasourceId()) as $datasource_id) {
+      $missing_fields = [];
+      $processor_fields = [];
+      $needed_processors = [];
+      foreach ([NULL, $item->getDatasourceId()] as $datasource_id) {
         if (empty($required_properties[$datasource_id])) {
           continue;
         }
 
         $properties = $index->getPropertyDefinitions($datasource_id);
         foreach ($required_properties[$datasource_id] as $property_path => $combined_id) {
-          $item_values[$combined_id] = array();
+          $item_values[$combined_id] = [];
 
           // If a field with the right property path is already set on the item,
           // use it. This might actually make problems in case the values have
@@ -250,15 +248,20 @@ class FieldsHelper implements FieldsHelperInterface {
           // set our own combined ID as the field identifier as kind of a hack,
           // to easily be able to add the field values to $property_values
           // afterwards.
+          // In case the first part of the property path refers to a
+          // processor-defined property, we need to use the processor to
+          // retrieve the value. Otherwise, we extract it normally from the
+          // data object.
           $property = NULL;
-          if (isset($properties[$property_path])) {
-            $property = $properties[$property_path];
+          $property_name = Utility::splitPropertyPath($property_path, FALSE)[0];
+          if (isset($properties[$property_name])) {
+            $property = $properties[$property_name];
           }
           if ($property instanceof ProcessorPropertyInterface) {
-            $field_info = array(
+            $field_info = [
               'datasource_id' => $datasource_id,
               'property_path' => $property_path,
-            );
+            ];
             if ($property instanceof ConfigurablePropertyInterface) {
               $field_info['configuration'] = $property->defaultConfiguration();
               // If the index contains a field with that property, just use the
@@ -291,8 +294,7 @@ class FieldsHelper implements FieldsHelperInterface {
         $dummy_item->setFieldsExtracted(TRUE);
         $processors = $index->getProcessorsByStage(ProcessorInterface::STAGE_ADD_PROPERTIES);
         foreach ($processors as $processor_id => $processor) {
-          // Avoid an infinite recursion.
-          if (isset($needed_processors[$processor_id]) && $processor != $this) {
+          if (isset($needed_processors[$processor_id])) {
             $processor->addFieldValues($dummy_item);
           }
         }
@@ -311,7 +313,7 @@ class FieldsHelper implements FieldsHelperInterface {
    * {@inheritdoc}
    */
   public function filterForPropertyPath(array $fields, $datasource_id, $property_path) {
-    $found_fields = array();
+    $found_fields = [];
     foreach ($fields as $field_id => $field) {
       if ($field->getDatasourceId() === $datasource_id && $field->getPropertyPath() === $property_path) {
         $found_fields[$field_id] = $field;
@@ -350,7 +352,7 @@ class FieldsHelper implements FieldsHelperInterface {
     }
 
     $property = $this->getInnerProperty($properties[$key]);
-    if (!isset($nestedPath)) {
+    if ($nestedPath === NULL) {
       return $property;
     }
 
@@ -380,7 +382,7 @@ class FieldsHelper implements FieldsHelperInterface {
   public function isContentEntityType($entity_type_id) {
     try {
       $definition = $this->entityTypeManager->getDefinition($entity_type_id);
-      return $definition->isSubclassOf(ContentEntityInterface::class);
+      return $definition->entityClassImplements(ContentEntityInterface::class);
     }
     catch (PluginNotFoundException $e) {
       return FALSE;
@@ -419,7 +421,7 @@ class FieldsHelper implements FieldsHelperInterface {
   /**
    * {@inheritdoc}
    */
-  public function createField(IndexInterface $index, $fieldIdentifier, $fieldInfo = array()) {
+  public function createField(IndexInterface $index, $fieldIdentifier, array $fieldInfo = []) {
     $field = new Field($index, $fieldIdentifier);
 
     foreach ($fieldInfo as $key => $value) {
@@ -452,12 +454,13 @@ class FieldsHelper implements FieldsHelperInterface {
       }
     }
 
-    $fieldInfo = array(
+    $fieldInfo = [
       'label' => $property->getLabel(),
       'datasource_id' => $datasourceId,
       'property_path' => $propertyPath,
       'type' => $type,
-    );
+      'data_definition' => $property,
+    ];
     if ($property instanceof ConfigurablePropertyInterface) {
       $fieldInfo['configuration'] = $property->defaultConfiguration();
     }
@@ -485,6 +488,13 @@ class FieldsHelper implements FieldsHelperInterface {
     }
 
     return $fieldId;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function compareFieldLabels(FieldInterface $a, FieldInterface $b) {
+    return strnatcasecmp($a->getLabel(), $b->getLabel());
   }
 
 }

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Provider\OpenCage.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
@@ -15,11 +10,11 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  * @GeocoderProvider(
  *   id = "opencage",
  *   name = "OpenCage",
- *   handler = "",
+ *   handler = "\Geocoder\Provider\OpenCage",
  *   arguments = {
- *     "apiKey",
- *     "useSsl" = FALSE,
- *     "locale"
+ *     "apikey" = NULL,
+ *     "usessl" = FALSE,
+ *     "locale" = NULL
  *   }
  * )
  */

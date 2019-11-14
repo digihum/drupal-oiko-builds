@@ -7,9 +7,21 @@ field.field.*.*.*.third_party.geocoder_field:
     method:
       type: string
       label: 'Geocode method'
-    field:
+    weight:
+      type: integer
+      label: 'Weight'
+    geocode_field:
       type: string
-      label: 'Field to geocode from or to'
+      label: 'Field to geocode from'
+    reverse_geocode_field:
+      type: string
+      label: 'Field to geocode to'
+    hidden:
+      type: boolean
+      label: 'Hide field'
+    disabled:
+      type: boolean
+      label: 'Disable field'
     plugins:
       type: sequence
       label: 'Geocoding plugins'
@@ -30,7 +42,7 @@ field.field.*.*.*.third_party.geocoder_field:
           label: 'Handling of geocoding failure'
         status_message:
           type: boolean
-          label: 'Display a status mesage in case of failure'
+          label: 'Display a status message in case of failure'
         log:
           type: boolean
           label: 'Log the failure'

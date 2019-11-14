@@ -1,0 +1,11 @@
+--- src/Plugin/field_group/FieldGroupFormatter/HtmlElement.php
++++ src/Plugin/field_group/FieldGroupFormatter/HtmlElement.php
+@@ -69,7 +70,7 @@ class HtmlElement extends FieldGroupFormatterBase {
+     $element['#attributes'] = $element_attributes;
+     if ($this->getSetting('show_label')) {
+       $element['#title_element'] = $this->getSetting('label_element');
+-      $element['#title'] = Html::escape($this->t($this->getLabel()));
++      $element['#title'] = $this->t(Xss::filterAdmin($this->getLabel()));
+     }
+ 
+     $form_state = new FormState();

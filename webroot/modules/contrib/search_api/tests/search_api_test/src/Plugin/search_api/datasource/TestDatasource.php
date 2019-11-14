@@ -11,7 +11,8 @@ use Drupal\search_api_test\TestPluginTrait;
  *
  * @SearchApiDatasource(
  *   id = "search_api_test",
- *   label = @Translation("Test datasource"),
+ *   label = @Translation("&quot;Test&quot; datasource"),
+ *   description = @Translation("This is the <em>test datasource</em> plugin description."),
  * )
  */
 class TestDatasource extends DatasourcePluginBase {
@@ -29,7 +30,7 @@ class TestDatasource extends DatasourcePluginBase {
    * {@inheritdoc}
    */
   public function loadMultiple(array $ids) {
-    return $this->getReturnValue(__FUNCTION__, array());
+    return $this->getReturnValue(__FUNCTION__, []);
   }
 
   /**
@@ -45,7 +46,7 @@ class TestDatasource extends DatasourcePluginBase {
   public function onDependencyRemoval(array $dependencies) {
     $remove = $this->getReturnValue(__FUNCTION__, FALSE);
     if ($remove) {
-      $this->configuration = array();
+      $this->configuration = [];
     }
     return $remove;
   }

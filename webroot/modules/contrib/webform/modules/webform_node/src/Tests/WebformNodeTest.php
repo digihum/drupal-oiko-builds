@@ -19,7 +19,7 @@ class WebformNodeTest extends WebformNodeTestBase {
    *
    * @var array
    */
-  public static $modules = ['webform', 'webform_node'];
+  public static $modules = ['block', 'webform', 'webform_node'];
 
   /**
    * Webforms to load.
@@ -34,8 +34,8 @@ class WebformNodeTest extends WebformNodeTestBase {
   public function setUp() {
     parent::setUp();
 
-    // Create users.
-    $this->createUsers();
+    // Place webform test blocks.
+    $this->placeWebformBlocks('webform_test_block_submission_limit');
   }
 
   /**
@@ -44,19 +44,32 @@ class WebformNodeTest extends WebformNodeTestBase {
   public function testNode() {
     $node = $this->createWebformNode('contact');
 
+    /** @var \Drupal\webform\WebformEntityReferenceManagerInterface $entity_reference_manager */
+    $entity_reference_manager = \Drupal::service('webform.entity_reference_manager');
+
+    $normal_user = $this->drupalCreateUser();
+
+    /**************************************************************************/
+
+    // Check table names.
+    $this->assertEqual($entity_reference_manager->getTableNames(), [
+      "node__webform" => 'webform',
+      "node_revision__webform" => 'webform',
+    ]);
+
     /**************************************************************************/
     // Webform node basic.
     /**************************************************************************/
 
     // Check contact webform.
-    $this->drupalGet('node/' . $node->id());
-    $this->assertRaw('webform-submission-contact-form');
+    $this->drupalGet('/node/' . $node->id());
+    $this->assertRaw('id="webform-submission-contact-node-' . $node->id() . '-add-form"');
     $this->assertNoFieldByName('name', 'John Smith');
 
     // Check contact webform with default data.
     $node->webform->default_data = "name: 'John Smith'";
     $node->save();
-    $this->drupalGet('node/' . $node->id());
+    $this->drupalGet('/node/' . $node->id());
     $this->assertFieldByName('name', 'John Smith');
 
     /**************************************************************************/
@@ -66,9 +79,9 @@ class WebformNodeTest extends WebformNodeTestBase {
     // Check contact webform closed.
     $node->webform->status = WebformInterface::STATUS_CLOSED;
     $node->save();
-    $this->drupalGet('node/' . $node->id());
+    $this->drupalGet('/node/' . $node->id());
     $this->assertNoFieldByName('name', 'John Smith');
-    $this->assertRaw('Sorry...This form is closed to new submissions.');
+    $this->assertRaw('Sorry… This form is closed to new submissions.');
 
     /* Confirmation inline (test_confirmation_inline) */
 
@@ -92,7 +105,7 @@ class WebformNodeTest extends WebformNodeTestBase {
     $node->webform->open = date('Y-m-d\TH:i:s', strtotime('today +1 day'));
     $node->webform->close = '';
     $node->save();
-    $this->drupalGet('node/' . $node->id());
+    $this->drupalGet('/node/' . $node->id());
     $this->assertRaw('This form has not yet been opened to submissions.');
     $this->assertNoFieldByName('name', 'John Smith');
 
@@ -102,7 +115,7 @@ class WebformNodeTest extends WebformNodeTestBase {
     $node->webform->open = date('Y-m-d\TH:i:s', strtotime('today -1 day'));
     $node->webform->close = '';
     $node->save();
-    $this->drupalGet('node/' . $node->id());
+    $this->drupalGet('/node/' . $node->id());
     $this->assertNoRaw('This form has not yet been opened to submissions.');
     $this->assertFieldByName('name');
 
@@ -112,8 +125,8 @@ class WebformNodeTest extends WebformNodeTestBase {
     $node->webform->open = '';
     $node->webform->close = date('Y-m-d\TH:i:s', strtotime('today -1 day'));
     $node->save();
-    $this->drupalGet('node/' . $node->id());
-    $this->assertRaw('Sorry...This form is closed to new submissions.');
+    $this->drupalGet('/node/' . $node->id());
+    $this->assertRaw('Sorry… This form is closed to new submissions.');
     $this->assertNoFieldByName('name');
 
     // Check scheduled and is open because open or close data was not set.
@@ -122,8 +135,8 @@ class WebformNodeTest extends WebformNodeTestBase {
     $node->webform->open = '';
     $node->webform->close = '';
     $node->save();
-    $this->drupalGet('node/' . $node->id());
-    $this->assertNoRaw('Sorry...This form is closed to new submissions.');
+    $this->drupalGet('/node/' . $node->id());
+    $this->assertNoRaw('Sorry… This form is closed to new submissions.');
     $this->assertFieldByName('name');
 
     // Check that changes to global message clear the cache.
@@ -132,13 +145,13 @@ class WebformNodeTest extends WebformNodeTestBase {
     $node->webform->open = '';
     $node->webform->close = date('Y-m-d\TH:i:s', strtotime('today -1 day'));
     $node->save();
-    $this->drupalGet('node/' . $node->id());
+    $this->drupalGet('/node/' . $node->id());
 
     \Drupal::configFactory()
       ->getEditable('webform.settings')
       ->set('settings.default_form_close_message', '{Custom closed message}')
       ->save();
-    $this->drupalGet('node/' . $node->id());
+    $this->drupalGet('/node/' . $node->id());
     $this->assertRaw('{Custom closed message}');
 
     /**************************************************************************/
@@ -164,21 +177,70 @@ class WebformNodeTest extends WebformNodeTestBase {
     ]);
     $limit_form->save();
 
-    // Check per source entity user limit.
-    $this->drupalLogin($this->normalUser);
+    $this->drupalGet('/node/' . $node->id());
+
+    // Check submission limit tokens.
+    $this->assertRaw('limit:webform:source_entity: 3');
+    $this->assertRaw('remaining:webform:source_entity: 3');
+    $this->assertRaw('limit:user:source_entity: 1');
+    $this->assertRaw('remaining:user:source_entity: 1');
+
+    // Check submission limit blocks.
+    $this->assertRaw('0 user + source entity submission(s)');
+    $this->assertRaw('1 user + source entity limit');
+    $this->assertRaw('0 webform + source entity submission(s)');
+    $this->assertRaw('3 webform + source entity limit');
+
+    // Login as normal user.
+    $this->drupalLogin($normal_user);
+
+    // Create submission as authenticated user.
     $this->postNodeSubmission($node);
-    $this->drupalGet('node/' . $node->id());
+
+    $this->drupalGet('/node/' . $node->id());
+
+    // Check per source entity user limit.
     $this->assertNoFieldByName('op', 'Submit');
     $this->assertRaw('You are only allowed to have 1 submission for this webform.');
-    $this->drupalLogout();
+
+    // Check submission limit blocks.
+    $this->assertRaw('1 user + source entity submission(s)');
+    $this->assertRaw('1 user + source entity limit');
+    $this->assertRaw('1 webform + source entity submission(s)');
+    $this->assertRaw('3 webform + source entity limit');
+
+    // Login as root user.
+    $this->drupalLogin($this->rootUser);
+
+    // Check submission limit tokens.
+    $this->drupalGet('/node/' . $node->id());
+    $this->assertRaw('remaining:webform:source_entity: 2');
+    $this->assertRaw('remaining:user:source_entity: 1');
+
+    // Create 2 submissions as root user, who can ignore submission limits.
+    $this->postNodeSubmission($node);
+    $this->postNodeSubmission($node);
+
+    // Check submission limit tokens.
+    $this->drupalGet('/node/' . $node->id());
+    $this->assertRaw('remaining:webform:source_entity: 0');
+    $this->assertRaw('remaining:user:source_entity: 0');
+
+    // Login as normal user.
+    $this->drupalLogin($normal_user);
+
+    $this->drupalGet('/node/' . $node->id());
 
     // Check per source entity total limit.
-    $this->postNodeSubmission($node);
-    $this->postNodeSubmission($node);
-    $this->drupalGet('node/' . $node->id());
     $this->assertNoFieldByName('op', 'Submit');
     $this->assertRaw('Only 3 submissions are allowed.');
     $this->assertNoRaw('You are only allowed to have 1 submission for this webform.');
+
+    // Check submission limit blocks.
+    $this->assertRaw('1 user + source entity submission(s)');
+    $this->assertRaw('1 user + source entity limit');
+    $this->assertRaw('3 webform + source entity submission(s)');
+    $this->assertRaw('3 webform + source entity limit');
 
     /**************************************************************************/
     // Prepopulate source entity.
@@ -196,7 +258,7 @@ class WebformNodeTest extends WebformNodeTestBase {
     $source_entity_options = ['query' => ['source_entity_type' => 'node', 'source_entity_id' => $node->id()]];
 
     // Check default data from source entity using query string.
-    $this->drupalGet('webform/contact', $source_entity_options);
+    $this->drupalGet('/webform/contact', $source_entity_options);
     $this->assertFieldByName('name', '{name}');
 
     // Check prepopulating source entity using query string.
@@ -239,7 +301,7 @@ class WebformNodeTest extends WebformNodeTestBase {
     $node->save();
 
     // Check 'Register' link.
-    $this->drupalGet('node/' . $node->id());
+    $this->drupalGet('/node/' . $node->id());
     $this->assertLink('Register');
 
     // Check that link include source_entity_type and source_entity_id.

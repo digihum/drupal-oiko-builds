@@ -1,33 +1,31 @@
 <?php
 
-/**
- * @file
- */
-
 namespace Drupal\geocoder_geofield\Geocoder\Dumper;
 
-use Drupal\geocoder\DumperInterface;
-use Drupal\geocoder\DumperPluginManager;
 use Geocoder\Dumper\Dumper;
 use Geocoder\Model\Address;
-use Drupal\geofield\geophp\geoPHPInterface;
 
 /**
- * @author Pol Dellaiera <pol.dellaiera@gmail.com>
+ * Class for Geohash.
  */
 class Geohash extends Geometry implements Dumper {
+
   /**
+   * Dumper.
+   *
    * @var \Geocoder\Dumper\Dumper
    */
   protected $dumper;
 
   /**
-   * @var GeoPHPWrapper
+   * Geophp interface.
+   *
+   * @var \Drupal\geofield\GeoPHP\GeoPHPInterface
    */
   protected $geophp;
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function dump(Address $address) {
     return parent::dump($address)->out('geohash');

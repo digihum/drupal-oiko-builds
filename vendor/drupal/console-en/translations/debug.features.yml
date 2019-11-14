@@ -1,5 +1,5 @@
 description: 'List registered features.'
-help: ''
+help: 'List registered features.'
 arguments:
   bundle: 'Bundle name'
 messages:
@@ -8,4 +8,3 @@ messages:
   machine-name: 'Machine Name'
   status: 'Status'
   state: 'State'
-

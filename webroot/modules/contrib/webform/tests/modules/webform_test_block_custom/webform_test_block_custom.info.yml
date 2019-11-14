@@ -2,14 +2,13 @@ name: 'Webform module block custom tests'
 type: module
 description: 'Support module for Webform module block custom testing.'
 package: Testing
-# core: 8.x
+core: 8.x
 dependencies:
-  - block
-  - block_content
-  - 'drupal:webform'
+  - 'drupal:block'
+  - 'drupal:block_content'
+  - 'webform:webform'
 
-# Information added by Drupal.org packaging script on 2017-04-06
-version: '8.x-5.0-beta11'
-core: '8.x'
+# Information added by Drupal.org packaging script on 2019-10-29
+version: '8.x-5.5'
 project: 'webform'
-datestamp: 1491471192
+datestamp: 1572377290

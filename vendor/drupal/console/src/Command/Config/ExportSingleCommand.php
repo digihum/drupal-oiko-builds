@@ -16,7 +16,6 @@ use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Utils\Validator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Config\CachedStorage;
-use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Command\Shared\ExportTrait;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Extension\Manager;
@@ -104,7 +103,7 @@ class ExportSingleCommand extends Command
                 'directory',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.config.export.arguments.directory')
+                $this->trans('commands.config.export.options.directory')
             )->addOption(
                 'module',
                 null,
@@ -202,20 +201,18 @@ class ExportSingleCommand extends Command
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
         $config_types = $this->getConfigTypes();
 
         $name = $input->getOption('name');
         if (!$name) {
-            $type = $io->choiceNoList(
+            $type = $this->getIo()->choiceNoList(
                 $this->trans('commands.config.export.single.questions.config-type'),
                 array_keys($config_types),
                 'system.simple'
             );
             $names = $this->getConfigNames($type);
 
-            $name = $io->choiceNoList(
+            $name = $this->getIo()->choiceNoList(
                 $this->trans('commands.config.export.single.questions.name'),
                 array_keys($names)
             );
@@ -233,7 +230,7 @@ class ExportSingleCommand extends Command
         if ($module) {
             $optionalConfig = $input->getOption('optional');
             if (!$optionalConfig) {
-                $optionalConfig = $io->confirm(
+                $optionalConfig = $this->getIo()->confirm(
                     $this->trans('commands.config.export.single.questions.optional'),
                     true
                 );
@@ -242,14 +239,14 @@ class ExportSingleCommand extends Command
         }
 
         if (!$input->getOption('remove-uuid')) {
-            $removeUuid = $io->confirm(
+            $removeUuid = $this->getIo()->confirm(
                 $this->trans('commands.config.export.single.questions.remove-uuid'),
                 true
             );
             $input->setOption('remove-uuid', $removeUuid);
         }
         if (!$input->getOption('remove-config-hash')) {
-            $removeHash = $io->confirm(
+            $removeHash = $this->getIo()->confirm(
                 $this->trans('commands.config.export.single.questions.remove-config-hash'),
                 true
             );
@@ -262,10 +259,8 @@ class ExportSingleCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
         $directory = $input->getOption('directory');
-        $module = $input->getOption('module');
+        $module = $this->validateModule($input->getOption('module'));
         $name = $input->getOption('name');
         $optional = $input->getOption('optional');
         $removeUuid = $input->getOption('remove-uuid');
@@ -294,14 +289,13 @@ class ExportSingleCommand extends Command
                         }
                     }
                 } else {
-                    $io->error($this->trans('commands.config.export.single.messages.config-not-found'));
+                    $this->getIo()->error($this->trans('commands.config.export.single.messages.config-not-found'));
                 }
             }
 
             if ($module) {
                 $this->exportConfigToModule(
                     $module,
-                    $io,
                     $this->trans(
                         'commands.config.export.single.messages.config-exported'
                     )
@@ -310,8 +304,8 @@ class ExportSingleCommand extends Command
                 return 0;
             }
 
+            $directory = $directory_copy = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
             if (!is_dir($directory)) {
-                $directory = $directory_copy = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
                 if ($value) {
                     $directory = $directory_copy .'/' . str_replace('.', '/', $value);
                 }
@@ -325,7 +319,6 @@ class ExportSingleCommand extends Command
 
             $this->exportConfig(
                 $directory,
-                $io,
                 $this->trans('commands.config.export.single.messages.config-exported')
             );
         }

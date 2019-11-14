@@ -2,6 +2,8 @@
 
 namespace Drupal\webform\Plugin\WebformElement;
 
+use Drupal\webform\Plugin\WebformElementOtherInterface;
+
 /**
  * Provides a 'buttons_other' element.
  *
@@ -12,13 +14,4 @@ namespace Drupal\webform\Plugin\WebformElement;
  *   category = @Translation("Options elements"),
  * )
  */
-class WebformButtonsOther extends OptionsBase {
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDefaultProperties() {
-    return parent::getDefaultProperties() + self::getOtherProperties();
-  }
-
-}
+class WebformButtonsOther extends OptionsBase implements WebformElementOtherInterface {}

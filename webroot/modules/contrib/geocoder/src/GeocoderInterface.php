@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\GeocoderInterface.
- */
-
 namespace Drupal\geocoder;
 
 /**
@@ -15,33 +10,36 @@ interface GeocoderInterface {
   /**
    * Geocodes a string.
    *
-   * @param $data
+   * @param string $data
    *   The string to geocoded.
    * @param string[] $plugins
    *   A list of plugin identifiers to use.
    * @param array $options
    *   (optional) An associative array with plugin options, keyed plugin by the
-   *   plugin id. Defaults to an empty array.
+   *   plugin id. Defaults to an empty array. These options would be merged with
+   *   (and would override) plugins options set in the module configurations.
    *
-   * @return \Geocoder\Model\AddressCollection|null An address collection or NULL on gecoding failure.
-   * An address collection or NULL on gecoding failure.
+   * @return \Geocoder\Model\AddressCollection|\Geometry|null
+   *   An address collection or NULL on geocoding failure.
    */
   public function geocode($data, array $plugins, array $options = []);
 
   /**
    * Reverse geocode coordinates.
    *
-   * @param double $latitude
+   * @param string $latitude
    *   The latitude.
-   * @param double $longitude
+   * @param string $longitude
    *   The longitude.
    * @param string[] $plugins
    *   A list of plugin identifiers to use.
    * @param array $options
    *   (optional) An associative array with plugin options, keyed plugin by the
-   *   plugin id. Defaults to an empty array.
+   *   plugin id. Defaults to an empty array. These options would be merged with
+   *   (and would override) plugins options set in the module configurations.
    *
    * @return \Geocoder\Model\AddressCollection|null
+   *   An address collection or NULL on gecoding failure.
    */
   public function reverse($latitude, $longitude, array $plugins, array $options = []);
 

@@ -1,12 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\color_field\Plugin\Field\FieldFormatter\ColorFieldFormatterSwatch.
- */
-
 namespace Drupal\color_field\Plugin\Field\FieldFormatter;
 
+use Drupal\color_field\Plugin\Field\FieldType\ColorFieldType;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -18,7 +14,7 @@ use Drupal\color_field\ColorHex;
  * @FieldFormatter(
  *   id = "color_field_formatter_swatch",
  *   module = "color_field",
- *   label = @Translation("Color Swatch"),
+ *   label = @Translation("Color swatch"),
  *   field_types = {
  *     "color_field_type"
  *   }
@@ -30,12 +26,12 @@ class ColorFieldFormatterSwatch extends FormatterBase {
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return array(
+    return [
       'shape' => 'square',
       'width' => 50,
       'height' => 50,
       'opacity' => TRUE,
-    ) + parent::defaultSettings();
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -46,42 +42,47 @@ class ColorFieldFormatterSwatch extends FormatterBase {
 
     $elements = [];
 
-    $elements['shape'] = array(
+    $elements['shape'] = [
       '#type' => 'select',
-      '#title' => t('Shape'),
+      '#title' => $this->t('Shape'),
       '#options' => $this->getShape(),
       '#default_value' => $this->getSetting('shape'),
-      '#description' => t(''),
-    );
-    $elements['width'] = array(
+      '#description' => '',
+    ];
+    $elements['width'] = [
       '#type' => 'number',
-      '#title' => t('Width'),
+      '#title' => $this->t('Width'),
       '#default_value' => $this->getSetting('width'),
       '#min' => 1,
-      '#description' => t(''),
-    );
-    $elements['height'] = array(
+      '#description' => '',
+    ];
+    $elements['height'] = [
       '#type' => 'number',
-      '#title' => t('Height'),
+      '#title' => $this->t('Height'),
       '#default_value' => $this->getSetting('height'),
       '#min' => 1,
-      '#description' => t(''),
-    );
+      '#description' => '',
+    ];
 
     if ($opacity) {
-      $elements['opacity'] = array(
+      $elements['opacity'] = [
         '#type' => 'checkbox',
-        '#title' => t('Display opacity'),
+        '#title' => $this->t('Display opacity'),
         '#default_value' => $this->getSetting('opacity'),
-      );
+      ];
     }
 
     return $elements;
   }
 
   /**
-   * @param string $shape
+   * This is used to get the shape.
+   *
+   * @param string|null $shape
+   *   The specific shape name to get.
+   *
    * @return array|string
+   *   An array of shape ids/names or translated name of the specified shape.
    */
   protected function getShape($shape = NULL) {
     $formats = [];
@@ -104,17 +105,17 @@ class ColorFieldFormatterSwatch extends FormatterBase {
 
     $summary = [];
 
-    $summary[] = t('@shape', array(
+    $summary[] = $this->t('@shape', [
       '@shape' => $this->getShape($settings['shape']),
-    ));
+    ]);
 
-    $summary[] = t('Width: @width Height: @height', array(
+    $summary[] = $this->t('Width: @width Height: @height', [
       '@width' => $settings['width'],
-      '@height' => $settings['height']
-    ));
+      '@height' => $settings['height'],
+    ]);
 
     if ($opacity && $settings['opacity']) {
-      $summary[] = t('Display with opacity.');
+      $summary[] = $this->t('Display with opacity.');
     }
 
     return $summary;
@@ -131,13 +132,13 @@ class ColorFieldFormatterSwatch extends FormatterBase {
     $elements['#attached']['library'][] = 'color_field/color-field-formatter-swatch';
 
     foreach ($items as $delta => $item) {
-      $elements[$delta] = array(
+      $elements[$delta] = [
         '#theme' => 'color_field_formatter_swatch',
         '#color' => $this->viewValue($item),
         '#shape' => $settings['shape'],
         '#width' => $settings['width'],
         '#height' => $settings['height'],
-      );
+      ];
     }
 
     return $elements;
@@ -146,7 +147,7 @@ class ColorFieldFormatterSwatch extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  protected function viewValue(FieldItemInterface $item) {
+  protected function viewValue(ColorFieldType $item) {
     $opacity = $this->getFieldSetting('opacity');
     $settings = $this->getSettings();
 
@@ -154,7 +155,8 @@ class ColorFieldFormatterSwatch extends FormatterBase {
 
     if ($opacity && $settings['opacity']) {
       $rgbtext = $color_hex->toRGB()->toString(TRUE);
-    } else {
+    }
+    else {
       $rgbtext = $color_hex->toRGB()->toString(FALSE);
     }
 

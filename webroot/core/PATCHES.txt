@@ -5,7 +5,3 @@ Use entity's cache tags for their entity cache entries
 Source: https://www.drupal.org/files/issues/persistent-entity-cache-tags-2537588-10.patch
 
 
-https://www.drupal.org/project/drupal/issues/2919157#comment-12321518
-Source: https://www.drupal.org/files/issues/2919157-11.patch
-
-

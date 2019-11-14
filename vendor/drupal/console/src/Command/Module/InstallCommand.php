@@ -15,7 +15,6 @@ use Symfony\Component\Process\ProcessBuilder;
 use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Command\Shared\ProjectDownloadTrait;
 use Drupal\Console\Command\Shared\ModuleTrait;
-use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Utils\Site;
 use Drupal\Console\Utils\Validator;
 use Drupal\Core\Extension\ModuleInstallerInterface;
@@ -121,7 +120,7 @@ class InstallCommand extends Command
                 'composer',
                 null,
                 InputOption::VALUE_NONE,
-                $this->trans('commands.module.uninstall.options.composer')
+                $this->trans('commands.module.install.options.composer')
             )
             ->setAliases(['moi']);
     }
@@ -131,11 +130,9 @@ class InstallCommand extends Command
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
         $module = $input->getArgument('module');
         if (!$module) {
-            $module = $this->modulesQuestion($io);
+            $module = $this->modulesQuestion();
             $input->setArgument('module', $module);
         }
     }
@@ -145,77 +142,108 @@ class InstallCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
         $module = $input->getArgument('module');
         $latest = $input->getOption('latest');
         $composer = $input->getOption('composer');
 
         $this->site->loadLegacyFile('/core/includes/bootstrap.inc');
 
-        // check module's requirements
-        $this->moduleRequirement($module, $io);
-
+        // When --composer is specified, build a command to Composer require
+        // all the needed modules in one go. This will just download the
+        // modules from the composer endpoint, not do any 'installation', in
+        // Drupal terminology.
         if ($composer) {
-            foreach ($module as $moduleItem) {
-                $command = sprintf(
-                    'composer show drupal/%s ',
-                    $moduleItem
-                );
-
-                $processBuilder = new ProcessBuilder([]);
-                $processBuilder->setWorkingDirectory($this->appRoot);
-                $processBuilder->setArguments(explode(" ", $command));
-                $process = $processBuilder->getProcess();
-                $process->setTty('true');
-                $process->run();
-
-                if ($process->isSuccessful()) {
-                    $io->info(
-                        sprintf(
-                            $this->trans('commands.module.install.messages.download-with-composer'),
-                            $moduleItem
-                        )
-                    );
+            $composer_package_list = [];
+            $module_list = [];
+            foreach ($module as $item) {
+                // Decompose each module item passed on the command line into
+                // Composer-ready elements.
+                $temp = explode('/', $item);
+                if (count($temp) === 1) {
+                    $package_namespace = 'drupal';
+                    $package = $temp[0];
                 } else {
-                    $io->error(
-                        sprintf(
-                            $this->trans('commands.module.install.messages.not-installed-with-composer'),
-                            $moduleItem
-                        )
-                    );
-                    throw new \RuntimeException($process->getErrorOutput());
+                    $package_namespace = $temp[0];
+                    $package = $temp[1];
+                }
+                $temp = explode(':', $package);
+                if (count($temp) === 1) {
+                    $package_constraint = null;
+                } else {
+                    $package = $temp[0];
+                    $package_constraint = $temp[1];
+                }
+
+                // Add the Composer argument.
+                $temp = "$package_namespace/$package";
+                if (isset($package_constraint)) {
+                    $temp .= ':' . $package_constraint;
+                }
+                $composer_package_list[] = $temp;
+
+                // Add the module to the list of those to be Drupal-installed.
+                if ($package_namespace === 'drupal') {
+                    $module_list[] = $package;
                 }
             }
+            $module = $module_list;
 
-            $unInstalledModules = $module;
-        } else {
-            $resultList = $this->downloadModules($io, $module, $latest);
+            // Run the Composer require command.
+            $command = array_merge(['composer', 'require'], $composer_package_list);
+            $this->getIo()->info('Executing... ' . implode(' ', $command));
+            $processBuilder = new ProcessBuilder([]);
+            $processBuilder->setWorkingDirectory($this->appRoot);
+            $processBuilder->setArguments($command);
+            $processBuilder->inheritEnvironmentVariables();
+            $process = $processBuilder->getProcess();
+            $process->setTty(true);
+            $process->run();
 
-            $invalidModules = $resultList['invalid'];
-            $unInstalledModules = $resultList['uninstalled'];
-
-            if ($invalidModules) {
-                foreach ($invalidModules as $invalidModule) {
-                    unset($module[array_search($invalidModule, $module)]);
-                    $io->error(
-                        sprintf(
-                            $this->trans('commands.module.install.messages.invalid-name'),
-                            $invalidModule
-                        )
-                    );
-                }
-            }
-
-            if (!$unInstalledModules) {
-                $io->warning($this->trans('commands.module.install.messages.nothing'));
-
-                return 0;
+            if ($process->isSuccessful()) {
+                $this->getIo()->info(
+                    sprintf(
+                        $this->trans('commands.module.install.messages.download-with-composer'),
+                        implode(', ', $composer_package_list)
+                    )
+                );
+            } else {
+                $this->getIo()->error(
+                    sprintf(
+                        $this->trans('commands.module.install.messages.not-installed-with-composer'),
+                        implode(', ', $composer_package_list)
+                    )
+                );
+                throw new \RuntimeException($process->getErrorOutput());
             }
         }
 
+        // Build the list of modules to be installed, skipping those that are
+        // installed already.
+        $resultList = $this->downloadModules($module, $latest);
+        $invalidModules = $resultList['invalid'];
+        $unInstalledModules = $resultList['uninstalled'];
+
+        if ($invalidModules) {
+            foreach ($invalidModules as $invalidModule) {
+                unset($module[array_search($invalidModule, $module)]);
+                $this->getIo()->error(
+                    sprintf(
+                        $this->trans('commands.module.install.messages.invalid-name'),
+                        $invalidModule
+                    )
+                );
+            }
+        }
+
+        // If no modules need to be installed, warn and exit.
+        if (!$unInstalledModules) {
+            $this->getIo()->warning($this->trans('commands.module.install.messages.nothing'));
+            return 0;
+        }
+
+        // Install the needed modules.
         try {
-            $io->comment(
+            $this->getIo()->comment(
                 sprintf(
                     $this->trans('commands.module.install.messages.installing'),
                     implode(', ', $unInstalledModules)
@@ -225,14 +253,14 @@ class InstallCommand extends Command
             drupal_static_reset('system_rebuild_module_data');
 
             $this->moduleInstaller->install($unInstalledModules, true);
-            $io->success(
+            $this->getIo()->success(
                 sprintf(
                     $this->trans('commands.module.install.messages.success'),
                     implode(', ', $unInstalledModules)
                 )
             );
         } catch (\Exception $e) {
-            $io->error($e->getMessage());
+            $this->getIo()->error($e->getMessage());
 
             return 1;
         }

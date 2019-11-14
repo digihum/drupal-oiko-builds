@@ -23,4 +23,14 @@ class ProcessorProperty extends DataDefinition implements ProcessorPropertyInter
     return !empty($this->definition['hidden']);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function isList() {
+    if (isset($this->definition['is_list'])) {
+      return (bool) $this->definition['is_list'];
+    }
+    return parent::isList();
+  }
+
 }

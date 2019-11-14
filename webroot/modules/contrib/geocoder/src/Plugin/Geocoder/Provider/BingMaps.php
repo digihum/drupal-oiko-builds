@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Provider\BingMaps.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
@@ -17,7 +12,8 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  *   name = "BingMaps",
  *   handler = "\Geocoder\Provider\BingMaps",
  *   arguments = {
- *     "apiKey"
+ *     "apikey" = NULL,
+ *     "locale" = NULL
  *   }
  * )
  */

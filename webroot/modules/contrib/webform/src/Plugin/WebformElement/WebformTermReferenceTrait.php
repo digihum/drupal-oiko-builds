@@ -3,6 +3,7 @@
 namespace Drupal\webform\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\taxonomy\Entity\Vocabulary;
 
 /**
  * Provides an 'term_reference' trait.
@@ -17,6 +18,33 @@ trait WebformTermReferenceTrait {
    */
   public function getRelatedTypes(array $element) {
     return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function preview() {
+    if ($vocabularies = Vocabulary::loadMultiple()) {
+      $vocabulary = reset($vocabularies);
+      $vocabulary_id = $vocabulary->id();
+    }
+    else {
+      $vocabulary_id = 'tags';
+    }
+
+    // Make sure the vocabulary does not have more than 250 terms.
+    // This will prevent a fatal memory error when
+    // previewing term related elements.
+    /** @var \Drupal\taxonomy\TermStorageInterface $taxonomy_storage */
+    $taxonomy_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+    $tree = $taxonomy_storage->loadTree($vocabulary_id);
+    if (count($tree) > 250) {
+      $vocabulary_id = NULL;
+    }
+
+    return parent::preview() + [
+      '#vocabulary' => $vocabulary_id,
+    ];
   }
 
   /**
@@ -38,7 +66,7 @@ trait WebformTermReferenceTrait {
     ];
     $form['term_reference']['breadcrumb'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Display term hierarchy using breadcrumbs.'),
+      '#title' => $this->t('Display term hierarchy using breadcrumbs'),
       '#return_value' => TRUE,
     ];
     $form['term_reference']['breadcrumb_delimiter'] = [
@@ -94,7 +122,7 @@ trait WebformTermReferenceTrait {
   /**
    * {@inheritdoc}
    */
-  protected function getTargetType(array $element) {
+  public function getTargetType(array $element) {
     return 'taxonomy_term';
   }
 

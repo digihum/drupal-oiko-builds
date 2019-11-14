@@ -4,8 +4,11 @@ namespace Drupal\search_api\Utility;
 
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\search_api\DataType\DataTypePluginManager;
+use Drupal\search_api\Event\MappingFieldTypesEvent;
+use Drupal\search_api\Event\SearchApiEvents;
 use Drupal\search_api\IndexInterface;
 use Drupal\search_api\SearchApiException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Provides helper methods for dealing with Search API data types.
@@ -27,6 +30,13 @@ class DataTypeHelper implements DataTypeHelperInterface {
   protected $dataTypeManager;
 
   /**
+   * The event dispatcher.
+   *
+   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+   */
+  protected $eventDispatcher;
+
+  /**
    * Cache for the field type mapping.
    *
    * @var array|null
@@ -42,25 +52,28 @@ class DataTypeHelper implements DataTypeHelperInterface {
    *
    * @see getDataTypeFallbackMapping()
    */
-  protected $dataTypeFallbackMapping = array();
+  protected $dataTypeFallbackMapping = [];
 
   /**
    * Constructs a DataTypeHelper object.
    *
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
    *   The module handler.
+   * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+   *   The event dispatcher.
    * @param \Drupal\search_api\DataType\DataTypePluginManager $dataTypeManager
    *   The data type plugin manager.
    */
-  public function __construct(ModuleHandlerInterface $moduleHandler, DataTypePluginManager $dataTypeManager) {
+  public function __construct(ModuleHandlerInterface $moduleHandler, EventDispatcherInterface $eventDispatcher, DataTypePluginManager $dataTypeManager) {
     $this->moduleHandler = $moduleHandler;
+    $this->eventDispatcher = $eventDispatcher;
     $this->dataTypeManager = $dataTypeManager;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function isTextType($type, array $textTypes = array('text')) {
+  public function isTextType($type, array $textTypes = ['text']) {
     if (in_array($type, $textTypes)) {
       return TRUE;
     }
@@ -78,43 +91,44 @@ class DataTypeHelper implements DataTypeHelperInterface {
     // Check the cache first.
     if (!isset($this->fieldTypeMapping)) {
       // It's easier to write and understand this array in the form of
-      // $searchApiFieldType => array($dataTypes) and flip it below.
-      $defaultMapping = array(
-        'text' => array(
+      // $searchApiFieldType => [$dataTypes] and flip it below.
+      $defaultMapping = [
+        'text' => [
           'field_item:string_long.string',
           'field_item:text_long.string',
           'field_item:text_with_summary.string',
-          'text',
-        ),
-        'string' => array(
+          'search_api_html',
+          'search_api_text',
+        ],
+        'string' => [
           'string',
           'email',
           'uri',
           'filter_format',
           'duration_iso8601',
           'field_item:path',
-        ),
-        'integer' => array(
+        ],
+        'integer' => [
           'integer',
           'timespan',
-        ),
-        'decimal' => array(
+        ],
+        'decimal' => [
           'decimal',
           'float',
-        ),
-        'date' => array(
+        ],
+        'date' => [
           'date',
           'datetime_iso8601',
           'timestamp',
-        ),
-        'boolean' => array(
+        ],
+        'boolean' => [
           'boolean',
-        ),
+        ],
         // Types we know about but want/have to ignore.
-        NULL => array(
+        NULL => [
           'language',
-        ),
-      );
+        ],
+      ];
 
       foreach ($defaultMapping as $searchApiType => $dataTypes) {
         foreach ($dataTypes as $dataType) {
@@ -124,7 +138,12 @@ class DataTypeHelper implements DataTypeHelperInterface {
 
       // Allow other modules to intercept and define what default type they want
       // to use for their data type.
-      $this->moduleHandler->alter('search_api_field_type_mapping', $mapping);
+      $description = 'This hook is deprecated in search_api 8.x-1.14 and will be removed in 9.x-1.0. Please use the "search_api.mapping_field_types" event instead. See https://www.drupal.org/node/3059866';
+      $hook = 'search_api_field_type_mapping';
+      $this->moduleHandler->alterDeprecated($description, $hook, $mapping);
+      $eventName = SearchApiEvents::MAPPING_FIELD_TYPES;
+      $event = new MappingFieldTypesEvent($mapping);
+      $this->eventDispatcher->dispatch($eventName, $event);
 
       $this->fieldTypeMapping = $mapping;
     }
@@ -147,7 +166,7 @@ class DataTypeHelper implements DataTypeHelperInterface {
         // If the server isn't available, just ignore it here and return all
         // custom types.
       }
-      $this->dataTypeFallbackMapping[$indexId] = array();
+      $this->dataTypeFallbackMapping[$indexId] = [];
       $dataTypes = $this->dataTypeManager->getInstances();
       foreach ($dataTypes as $typeId => $dataType) {
         // We know for sure that we do not need to fall back for the default

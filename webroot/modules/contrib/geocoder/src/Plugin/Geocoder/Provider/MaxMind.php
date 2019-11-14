@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Provider\MaxMind.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
@@ -17,9 +12,9 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  *   name = "MaxMind",
  *   handler = "\Geocoder\Provider\MaxMind",
  *   arguments = {
- *     "apiKey",
+ *     "apikey" = NULL,
  *     "service" = "f",
- *     "useSsl" = FALSE
+ *     "usessl" = FALSE
  *   }
  * )
  */

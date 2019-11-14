@@ -30,7 +30,7 @@ class SharrreCounterController extends ControllerBase {
    */
   public function getCounter(Request $request) {
     // Sharrre by Julien Hany.
-    $json = array('url' => $request->get('url'), 'count' => 0);
+    $json = ['url' => $request->get('url'), 'count' => 0];
     $url = urlencode($json['url']);
     $type = $request->get('type');
 

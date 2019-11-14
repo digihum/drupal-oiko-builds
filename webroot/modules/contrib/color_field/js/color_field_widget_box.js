@@ -1,16 +1,25 @@
 /**
- * Color Field jQuery
+ * @file
+ * Color Field jQuery.
  */
+
 (function ($) {
+
 jQuery.fn.addColorPicker = function (props) {
-  if (!props) { props = []; }
+
+  'use strict';
+
+  if (!props) {
+    props = [];
+  }
 
   props = jQuery.extend({
     currentColor:'',
-    blotchElemType: 'span',
+    blotchElemType: 'button',
     blotchClass:'colorBox',
     blotchTransparentClass:'transparentBox',
-    clickCallback: function(ignoredColor) {},
+    addTransparentBlotch: true,
+    clickCallback: function (ignoredColor) {},
     iterationCallback: null,
     fillString: '&nbsp;',
     fillStringX: '?',
@@ -23,20 +32,20 @@ jQuery.fn.addColorPicker = function (props) {
     ]
   }, props);
 
-  var count = props.colors.length;
-  for (var i = 0; i < count; ++i) {
-    var color = props.colors[i];
+  this.addBlotchElement = function(color, blotchClass) {
     var elem = jQuery('<' + props.blotchElemType + '/>')
-      .addClass(props.blotchClass)
+      .addClass(blotchClass)
       .attr('color',color)
+      .attr('title', color)
       .css('background-color',color);
-    // jq bug: chaining here fails if color is null b/c .css() returns (new String('transparent'))!
+    // Jq bug: chaining here fails if color is null b/c .css() returns (new String('transparent'))!
     if (props.currentColor == color) {
       elem.addClass('active');
     }
     if (props.clickCallback) {
-      elem.click(function() {
-        jQuery(this).parent().children('.' + props.blotchClass).removeClass('active');
+      elem.click(function (event) {
+        event.preventDefault();
+        jQuery(this).parent().children().removeClass('active');
         jQuery(this).addClass('active');
         props.clickCallback(jQuery(this).attr('color'));
       });
@@ -47,25 +56,13 @@ jQuery.fn.addColorPicker = function (props) {
     }
   }
 
-  var elem = jQuery('<' + props.blotchElemType + '/>')
-    .addClass(props.blotchTransparentClass)
-    .attr('color', '')
-    .css('background-color', '');
-
-  if (props.currentColor == '') {
-    elem.addClass('active');
+  for (var i = 0; i < props.colors.length; ++i) {
+    var color = props.colors[i];
+    this.addBlotchElement(color, props.blotchClass);
   }
 
-  if (props.clickCallback) {
-    elem.click(function() {
-      jQuery(this).parent().children('.' + props.blotchClass).removeClass('active');
-      jQuery(this).addClass('active');
-      props.clickCallback(jQuery(this).attr('color'));
-    });
-  }
-  this.append(elem);
-  if (props.iterationCallback) {
-    props.iterationCallback(this, elem, color, i);
+  if (props.addTransparentBlotch) {
+    this.addBlotchElement('', props.blotchTransparentClass);
   }
 
   return this;

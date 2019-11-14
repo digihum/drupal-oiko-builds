@@ -18,7 +18,7 @@ class ShareMessageWorkflowTest extends ShareMessageTestBase {
 
     // Step 1: Create a Share Message in the UI.
     $this->drupalGet('admin/config/services/sharemessage/add');
-    $edit = array(
+    $edit = [
       'label' => 'Share Message Test Label',
       'id' => 'sharemessage_test_label',
       'title' => 'Share Message Test Title',
@@ -26,9 +26,9 @@ class ShareMessageWorkflowTest extends ShareMessageTestBase {
       'message_short' => 'Share Message Test Short Description',
       'image_url' => 'http://www.example.com/drupal.jpg',
       'share_url' => 'http://www.example.com',
-    );
+    ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $this->assertText(t('Share Message @label has been added.', array('@label' => $edit['label'])), 'Share Message is successfully saved.');
+    $this->assertText(t('Share Message @label has been added.', ['@label' => $edit['label']]), 'Share Message is successfully saved.');
 
     // Step 2: Display Share Message and verify AddThis markup
     // and meta header elements.
@@ -44,7 +44,7 @@ class ShareMessageWorkflowTest extends ShareMessageTestBase {
     // Check if the enforce checkbox is there.
     $this->assertFieldByName('enforce_usage', NULL, 'The enforce checkbox was found.');
 
-    $edit_2 = array(
+    $edit_2 = [
       'label' => 'Share Message 2 Test Label',
       'id' => 'sharemessage_test_label2',
       'title' => 'Share Message 2 Test Title',
@@ -53,19 +53,19 @@ class ShareMessageWorkflowTest extends ShareMessageTestBase {
       'image_url' => $edit['image_url'],
       'share_url' => $edit['share_url'],
       'enforce_usage' => 1,
-    );
+    ];
     $this->drupalPostForm(NULL, $edit_2, t('Save'));
 
     /** @var \Drupal\sharemessage\ShareMessageInterface $sharemessage */
     $sharemessage = \Drupal::entityTypeManager()->getStorage('sharemessage')->load('sharemessage_test_label2');
     // Check if the option was saved as expected.
     $this->assertEqual($sharemessage->enforce_usage, TRUE, 'Enforce setting was saved on the entity.');
-    $this->drupalGet('sharemessage-test/sharemessage_test_label', array('query' => array('smid' => 'sharemessage_test_label2')));
+    $this->drupalGet('sharemessage-test/sharemessage_test_label', ['query' => ['smid' => 'sharemessage_test_label2']]);
 
     // Check if the og:description tag gets rendered correctly.
     $this->assertOGTags('og:description', $edit_2['message_long']);
     // Check if the og:url tag gets rendered correctly.
-    $url = Url::fromUri($edit['share_url'], array('query' => array('smid' => 'sharemessage_test_label2')))->toString();
+    $url = Url::fromUri($edit['share_url'], ['query' => ['smid' => 'sharemessage_test_label2']])->toString();
     $this->assertOGTags('og:url', $url);
     $message_description = 'Suppressing og:url meta tag for overridden sharemessage.';
     $this->assertNoOGTags('og:url', $edit['share_url'], $message_description);
@@ -75,12 +75,12 @@ class ShareMessageWorkflowTest extends ShareMessageTestBase {
 
     // Disable enforcement of overrides in the global settings.
     $this->config('sharemessage.settings')->set('message_enforcement', FALSE)->save();
-    $this->drupalGet('sharemessage-test/sharemessage_test_label', array('query' => array('smid' => 'sharemessage_test_label2')));
+    $this->drupalGet('sharemessage-test/sharemessage_test_label', ['query' => ['smid' => 'sharemessage_test_label2']]);
 
-    // Check if the og:description tag gets rendered correctly.
-    $this->assertOGTags('og:description', $edit_2['message_long']);
-    // Check if the og:url tag gets rendered correctly.
-    $this->assertOGTags('og:url', $url);
+    // Check if the og:description tag no longer displays the override.
+    $this->assertOGTags('og:description', $edit['message_long']);
+    // Check if the og:url tag no longer displays the override.
+    $this->assertOGTags('og:url', $edit['share_url']);
   }
 
   /**
@@ -89,21 +89,21 @@ class ShareMessageWorkflowTest extends ShareMessageTestBase {
   public function testTokenCacheability() {
     // Step 1: Create a Share Message in the UI.
     $this->drupalGet('admin/config/services/sharemessage/add');
-    $edit = array(
+    $edit = [
       'label' => 'Share Message Test Label',
       'id' => 'sharemessage_test_label',
       'title' => 'Share Message Test Title [current-user:name]',
       'message_long' => 'Share Message Test Long Description',
-    );
+    ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
     // Add a block that will contain the created Share Message.
     $theme = 'classy';
-    $block = array(
+    $block = [
       'settings[label]' => 'Share Message test block',
       'settings[sharemessage]' => $edit['id'],
       'region' => 'content',
-    );
+    ];
     $this->drupalPostForm('admin/structure/block/add/sharemessage_block/' . $theme, $block, t('Save block'));
 
     $this->drupalGet('user');

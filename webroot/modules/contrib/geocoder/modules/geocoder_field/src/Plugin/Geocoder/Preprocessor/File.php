@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_field\Plugin\Geocoder\Preprocessor\File.
- */
-
 namespace Drupal\geocoder_field\Plugin\Geocoder\Preprocessor;
 
 use Drupal\Core\File\FileSystemInterface;
@@ -72,7 +67,13 @@ class File extends PreprocessorBase {
       if ($value['target_id']) {
         $uri = FileEntity::load($value['target_id'])->getFileUri();
         $value['value'] = $this->fileSystem->realpath($uri);
-        $this->field->set($delta, $value);
+        try {
+          $this->field->set($delta, $value);
+        }
+        catch (\Exception $e) {
+          watchdog_exception('geocoder', $e);
+        }
+
       }
     }
 

@@ -1,43 +1,42 @@
 <?php
 
-/**
- * @file
- */
-
 namespace Drupal\geocoder_geofield\Geocoder\Dumper;
 
-use Drupal\geocoder\DumperPluginManager;
 use Geocoder\Dumper\Dumper;
 use Geocoder\Model\Address;
-use Drupal\geophp\geoPHPInterface;
 
 /**
- * @author Pol Dellaiera <pol.dellaiera@gmail.com>
+ * Dumper.
  */
 class Geometry implements Dumper {
+
   /**
+   * Dumper.
+   *
    * @var \Geocoder\Dumper\Dumper
    */
   private $dumper;
 
   /**
-   * @var \Drupal\geofield\geophp\geoPHPInterface
+   * Geophp interface.
+   *
+   * @var \Drupal\geofield\GeoPHP\GeoPHPInterface
    */
   private $geophp;
 
   /**
-   * @inheritdoc
-   */
-  public function dump(Address $address) {
-    return $this->geophp->load($this->dumper->dump($address), 'json');
-  }
-
-  /**
-   * @inheritDoc
+   * {@inheritdoc}
    */
   public function __construct() {
     $this->dumper = \Drupal::service('plugin.manager.geocoder.dumper')->createInstance('geojson');
     $this->geophp = \Drupal::service('geofield.geophp');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function dump(Address $address) {
+    return $this->geophp->load($this->dumper->dump($address), 'json');
   }
 
 }

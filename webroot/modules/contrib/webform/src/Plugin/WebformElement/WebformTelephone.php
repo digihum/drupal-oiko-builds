@@ -2,10 +2,9 @@
 
 namespace Drupal\webform\Plugin\WebformElement;
 
-use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Locale\CountryManager;
-use Drupal\webform\Element\WebformTelephone as WebformTelephoneElement;
+use Drupal\webform\WebformSubmissionInterface;
 
 /**
  * Provides a 'telephone' (composite) element.
@@ -16,6 +15,7 @@ use Drupal\webform\Element\WebformTelephone as WebformTelephoneElement;
  *   category = @Translation("Composite elements"),
  *   description = @Translation("Provides a form element to display a telephone number with type and extension."),
  *   composite = TRUE,
+ *   states_wrapper = TRUE,
  * )
  */
 class WebformTelephone extends WebformCompositeBase {
@@ -24,28 +24,12 @@ class WebformTelephone extends WebformCompositeBase {
    * {@inheritdoc}
    */
   public function getDefaultProperties() {
-    $default_properties = parent::getDefaultProperties();
-    $default_properties['title_display'] = '';
-    $default_properties['phone__international'] = TRUE;
-    $default_properties['phone__international_initial_country'] = '';
-    unset($default_properties['flexbox']);
-    return $default_properties;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function getCompositeElements() {
-    return WebformTelephoneElement::getCompositeElements();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function getInitializedCompositeElement(array &$element) {
-    $form_state = new FormState();
-    $form_completed = [];
-    return WebformTelephoneElement::processWebformComposite($element, $form_state, $form_completed);
+    $properties = parent::getDefaultProperties();
+    $properties['title_display'] = '';
+    $properties['phone__international'] = TRUE;
+    $properties['phone__international_initial_country'] = '';
+    unset($properties['flexbox']);
+    return $properties;
   }
 
   /**
@@ -61,7 +45,9 @@ class WebformTelephone extends WebformCompositeBase {
   /**
    * {@inheritdoc}
    */
-  protected function formatHtmlItemValue(array $element, array $value) {
+  protected function formatHtmlItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []) {
+    $value = $this->getValue($element, $webform_submission, $options);
+
     $t_args = [
       ':tel' => 'tel:' . $value['phone'],
       '@tel' => $value['phone'],
@@ -86,7 +72,9 @@ class WebformTelephone extends WebformCompositeBase {
   /**
    * {@inheritdoc}
    */
-  protected function formatTextItemValue(array $element, array $value) {
+  protected function formatTextItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []) {
+    $value = $this->getValue($element, $webform_submission, $options);
+
     $t_args = [
       '@tel' => $value['phone'],
       '@ext' => $value['ext'],
@@ -120,7 +108,7 @@ class WebformTelephone extends WebformCompositeBase {
     $form['composite']['phone__international_initial_country'] = [
       '#title' => $this->t('Initial country'),
       '#type' => 'select',
-      '#empty_option' => '',
+      '#empty_option' => $this->t('- None -'),
       '#options' => [
         'auto' => $this->t('Auto detect'),
       ] + CountryManager::getStandardList(),
@@ -130,6 +118,11 @@ class WebformTelephone extends WebformCompositeBase {
         ],
       ],
     ];
+    if ($this->librariesManager->isExcluded('jquery.intl-tel-input')) {
+      $form['composite']['phone__international']['#access'] = FALSE;
+      $form['composite']['phone__international_initial_country']['#access'] = FALSE;
+    }
+
     return $form;
   }
 

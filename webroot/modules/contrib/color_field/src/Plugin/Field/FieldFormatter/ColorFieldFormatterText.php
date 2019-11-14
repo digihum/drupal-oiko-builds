@@ -1,13 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\color_field\Plugin\Field\FieldFormatter\ColorFieldFormatterText.
- */
-
 namespace Drupal\color_field\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Field\FieldItemInterface;
+use Drupal\color_field\Plugin\Field\FieldType\ColorFieldType;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -19,7 +14,7 @@ use Drupal\color_field\ColorHex;
  * @FieldFormatter(
  *   id = "color_field_formatter_text",
  *   module = "color_field",
- *   label = @Translation("Color Text"),
+ *   label = @Translation("Color text"),
  *   field_types = {
  *     "color_field_type"
  *   }
@@ -31,10 +26,10 @@ class ColorFieldFormatterText extends FormatterBase {
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return array(
+    return [
       'format' => 'hex',
       'opacity' => TRUE,
-    ) + parent::defaultSettings();
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -45,27 +40,32 @@ class ColorFieldFormatterText extends FormatterBase {
 
     $elements = [];
 
-    $elements['format'] = array(
+    $elements['format'] = [
       '#type' => 'select',
-      '#title' => t('Format'),
+      '#title' => $this->t('Format'),
       '#options' => $this->getColorFormat(),
       '#default_value' => $this->getSetting('format'),
-    );
+    ];
 
     if ($opacity) {
-      $elements['opacity'] = array(
+      $elements['opacity'] = [
         '#type' => 'checkbox',
-        '#title' => t('Display opacity'),
+        '#title' => $this->t('Display opacity'),
         '#default_value' => $this->getSetting('opacity'),
-      );
+      ];
     }
 
     return $elements;
   }
 
   /**
+   * This function is used to get the color format.
+   *
    * @param string $format
+   *   Format is of string type.
+   *
    * @return array|string
+   *   Returns array or string.
    */
   protected function getColorFormat($format = NULL) {
     $formats = [];
@@ -87,12 +87,12 @@ class ColorFieldFormatterText extends FormatterBase {
 
     $summary = [];
 
-    $summary[] = t('@format', array(
+    $summary[] = $this->t('@format', [
       '@format' => $this->getColorFormat($settings['format']),
-    ));
+    ]);
 
     if ($opacity && $settings['opacity']) {
-      $summary[] = t('Display with opacity.');
+      $summary[] = $this->t('Display with opacity.');
     }
 
     return $summary;
@@ -114,7 +114,7 @@ class ColorFieldFormatterText extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  protected function viewValue(FieldItemInterface $item) {
+  protected function viewValue(ColorFieldType $item) {
     $opacity = $this->getFieldSetting('opacity');
     $settings = $this->getSettings();
 
@@ -124,7 +124,8 @@ class ColorFieldFormatterText extends FormatterBase {
       case 'hex':
         if ($opacity && $settings['opacity']) {
           $output = $color_hex->toString(TRUE);
-        } else {
+        }
+        else {
           $output = $color_hex->toString(FALSE);
         }
         break;
@@ -132,7 +133,8 @@ class ColorFieldFormatterText extends FormatterBase {
       case 'rgb':
         if ($opacity && $settings['opacity']) {
           $output = $color_hex->toRGB()->toString(TRUE);
-        } else {
+        }
+        else {
           $output = $color_hex->toRGB()->toString(FALSE);
         }
         break;

@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * The TomTom plugin.
- */
 
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
@@ -53,20 +49,22 @@ class Random extends ProviderBase {
   }
 
   /**
+   * Get Random Country info.
+   *
    * @todo [cc]: Tidy-up, document, etc.
    */
   private function getRandomCountryInfo($type = NULL) {
     $manager = new CountryManager($this->getModuleHandler());
     $countries = $manager->getList();
-    uksort($countries, function() {
+    uksort($countries, function () {
       return rand() > rand();
     });
     $country = array_slice($countries, 0, 1);
 
-    $value = array(
+    $value = [
       'code' => key($country),
       'name' => reset($country),
-    );
+    ];
 
     if (is_null($type)) {
       return $value;
@@ -76,17 +74,30 @@ class Random extends ProviderBase {
   }
 
   /**
-   * @todo [cc]: Tidi-up, document, etc.
-   *
    * Generate a fake random address array.
    *
+   * @todo [cc]: Tidi-up, document, etc.
+   *
    * @return array
+   *   Return array of dta such as latitude, longitude, etc.
    */
   protected function getRandomResult() {
     $country = $this->getRandomCountryInfo();
-    $streetTypes = array('street', 'avenue', 'square', 'road', 'way', 'drive', 'lane', 'place', 'hill', 'gardens', 'park');
+    $streetTypes = [
+      'street',
+      'avenue',
+      'square',
+      'road',
+      'way',
+      'drive',
+      'lane',
+      'place',
+      'hill',
+      'gardens',
+      'park',
+    ];
 
-    return array(
+    return [
       'latitude' => mt_rand(0, 90) + mt_rand() / mt_getrandmax(),
       'longitude' => mt_rand(-180, 180) + mt_rand() / mt_getrandmax(),
       'streetName' => $this->getRandomCountryInfo('name') . ' ' . $streetTypes[mt_rand(0, count($streetTypes) - 1)],
@@ -95,13 +106,14 @@ class Random extends ProviderBase {
       'locality' => sha1(mt_rand() / mt_getrandmax()),
       'country' => $country['name'],
       'countryCode' => $country['code'],
-    );
+    ];
   }
 
   /**
    * Returns the address factory.
    *
    * @return \Geocoder\Model\AddressFactory
+   *   Return the address Factory.
    */
   protected function getAddressFactory() {
     if (!isset($this->addressFactory)) {
@@ -114,6 +126,7 @@ class Random extends ProviderBase {
    * Returns the module handler service.
    *
    * @return \Drupal\Core\Extension\ModuleHandlerInterface
+   *   Return the module Handler.
    */
   protected function getModuleHandler() {
     if (!isset($this->moduleHandler)) {

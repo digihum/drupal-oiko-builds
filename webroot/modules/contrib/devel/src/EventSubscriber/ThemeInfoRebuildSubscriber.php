@@ -75,6 +75,10 @@ class ThemeInfoRebuildSubscriber implements EventSubscriberInterface {
       drupal_theme_rebuild();
       // Refresh theme data.
       $this->themeHandler->refreshInfo();
+      // Resets the internal state of the theme handler and clear the 'system
+      // list' cache; this allow to properly register, if needed, PSR-4
+      // namespaces for theme extensions after refreshing the info data.
+      $this->themeHandler->reset();
       // Notify the user that the theme info are rebuilt on every request.
       $this->triggerWarningIfNeeded($event->getRequest());
     }
@@ -92,7 +96,7 @@ class ThemeInfoRebuildSubscriber implements EventSubscriberInterface {
   protected function triggerWarningIfNeeded(Request $request) {
     if ($this->account && $this->account->hasPermission('access devel information')) {
       $session = $request->getSession();
-      if (!$session->has($this->notificationFlag)) {
+      if ($session && !$session->has($this->notificationFlag)) {
         $session->set($this->notificationFlag, TRUE);
         $message = $this->t('The theme information is being rebuilt on every request. Remember to <a href=":url">turn off</a> this feature on production websites.', [':url' => Url::fromRoute('devel.admin_settings')->toString()]);
         drupal_set_message($message, 'warning', TRUE);

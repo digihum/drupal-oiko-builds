@@ -1,6 +1,6 @@
 /**
  * @file
- * Javascript behaviors for time integration.
+ * JavaScript behaviors for time integration.
  */
 
 (function ($, Drupal) {
@@ -22,18 +22,21 @@
    */
   Drupal.behaviors.webformTime = {
     attach: function (context, settings) {
-      var $context = $(context);
-      // Skip if time inputs are supported by the browser.
-      if (Modernizr.inputtypes.time === true) {
+      if (!$.fn.timepicker) {
         return;
       }
-      $context.find('input[type="time"]').once('timePicker').each(function () {
+
+      $(context).find('input[data-webform-time-format]').once('webformTimePicker').each(function () {
         var $input = $(this);
 
-        var options = {};
-        if ($input.data('webformTimeFormat')) {
-          options.timeFormat = $input.data('webformTimeFormat');
+        // Skip if time inputs are supported by the browser and input is not a text field.
+        // @see \Drupal\webform\Element\WebformDatetime
+        if (window.Modernizr && Modernizr.inputtypes && Modernizr.inputtypes.time === true && $input.attr('type') !== 'text') {
+          return;
         }
+
+        var options = {};
+        options.timeFormat = $input.data('webformTimeFormat');
         if ($input.attr('min')) {
           options.minTime = $input.attr('min');
         }
@@ -59,6 +62,6 @@
         $input.timepicker(options);
       });
     }
-  }
+  };
 
 })(jQuery, Drupal);

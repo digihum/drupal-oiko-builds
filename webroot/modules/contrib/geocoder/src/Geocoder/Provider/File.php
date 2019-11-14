@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Geocoder\Provider\File.
- */
-
 namespace Drupal\geocoder\Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
@@ -28,7 +23,8 @@ class File extends AbstractProvider implements Provider {
    * {@inheritdoc}
    */
   public function geocode($filename) {
-    if ($exif = exif_read_data($filename)) {
+    // Check file type exists and is a JPG (IMAGETYPE_JPEG) before exif_read.
+    if (file_exists($filename) && exif_imagetype($filename) == 2 && $exif = @exif_read_data($filename)) {
       if (isset($exif['GPSLatitude']) && isset($exif['GPSLatitudeRef']) && $exif['GPSLongitude'] && $exif['GPSLongitudeRef']) {
         $latitude = $this->getGpsExif($exif['GPSLatitude'], $exif['GPSLatitudeRef']);
         $longitude = $this->getGpsExif($exif['GPSLongitude'], $exif['GPSLongitudeRef']);
@@ -36,7 +32,8 @@ class File extends AbstractProvider implements Provider {
         return $this->returnResults([[
           'latitude' => $latitude,
           'longitude' => $longitude,
-        ] + $this->getDefaults()]);
+        ] + $this->getDefaults(),
+        ]);
       }
     }
 
@@ -52,6 +49,7 @@ class File extends AbstractProvider implements Provider {
    *   The hemisphere.
    *
    * @return float
+   *   Return value based on coordinate and Hemisphere.
    */
   protected function getGpsExif($coordinate, $hemisphere) {
     for ($i = 0; $i < 3; $i++) {
@@ -79,7 +77,7 @@ class File extends AbstractProvider implements Provider {
    * {@inheritdoc}
    */
   public function reverse($latitude, $longitude) {
-    throw new UnsupportedOperation('The Image plugin is not able to do reverse geocoding.');
+    throw new UnsupportedOperation('The File plugin is not able to do reverse geocoding.');
   }
 
 }

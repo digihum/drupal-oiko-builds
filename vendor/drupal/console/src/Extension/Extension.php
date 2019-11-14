@@ -110,6 +110,15 @@ class Extension extends BaseExtension
      * @param bool $fullPath
      * @return string
      */
+    public function getGeneratorDirectory($fullPath=false)
+    {
+        return $this->getSourcePath($fullPath) . '/Generator/';
+    }
+
+    /**
+     * @param bool $fullPath
+     * @return string
+     */
     public function getEntityPath($fullPath = false)
     {
         return $this->getSourcePath($fullPath) . '/Entity';
@@ -125,12 +134,13 @@ class Extension extends BaseExtension
     }
 
     /**
+     * @param string $testType
      * @param bool $fullPath
      * @return string
      */
-    public function getTestsPath($fullPath = false)
+    public function getTestsPath($testType, $fullPath = false)
     {
-        return $this->getPath($fullPath) . '/tests';
+        return $this->getPath($fullPath) . '/tests/' . $testType;
     }
 
     /**
@@ -150,4 +160,24 @@ class Extension extends BaseExtension
     {
         return $this->getTestsSourcePath($fullPath) . '/FunctionalJavascript';
     }
+
+    /**
+     * @param BaseExtension $extension
+     */
+    function loadFromParentObj(BaseExtension $extension)
+    {
+        $objValues = get_object_vars($extension);
+        foreach($objValues AS $key => $value)
+        {
+            $this->$key = $value;
+        }
+    }
+
+    /**
+     * @param $root
+     */
+    function setRoot($root) {
+        $this->root = $root;
+    }
+
 }

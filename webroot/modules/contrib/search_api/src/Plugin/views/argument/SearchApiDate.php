@@ -3,8 +3,6 @@
 namespace Drupal\search_api\Plugin\views\argument;
 
 use Drupal\Component\Render\FormattableMarkup;
-use Drupal\Component\Utility\Html;
-use Drupal\Core\Cache\UncacheableDependencyTrait;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -16,8 +14,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ViewsArgument("search_api_date")
  */
 class SearchApiDate extends SearchApiStandard {
-
-  use UncacheableDependencyTrait;
 
   /**
    * The date formatter.
@@ -90,7 +86,7 @@ class SearchApiDate extends SearchApiStandard {
       foreach ($this->value as $value) {
         $value_conditions = $this->query->createConditionGroup($inner_conjunction);
         $values = explode(';', $value);
-        $values = array_map(array($this, 'getTimestamp'), $values);
+        $values = array_map([$this, 'getTimestamp'], $values);
         if (in_array(FALSE, $values, TRUE)) {
           $this->abort();
           return;
@@ -118,7 +114,7 @@ class SearchApiDate extends SearchApiStandard {
   public function title() {
     if (!empty($this->argument)) {
       $this->fillValue();
-      $dates = array();
+      $dates = [];
       foreach ($this->value as $date) {
         $date_parts = explode(';', $date);
 
@@ -133,10 +129,10 @@ class SearchApiDate extends SearchApiStandard {
           $dates[] = $date_string;
         }
       }
-      return $dates ? implode(', ', $dates) : Html::escape($this->argument);
+      return $dates ? implode(', ', $dates) : $this->argument;
     }
 
-    return Html::escape($this->argument);
+    return $this->argument;
   }
 
   /**
@@ -163,7 +159,7 @@ class SearchApiDate extends SearchApiStandard {
   protected function unpackArgumentValue($force_int = FALSE) {
     // Set up the defaults.
     if (!isset($this->value)) {
-      $this->value = array();
+      $this->value = [];
     }
     if (!isset($this->operator)) {
       $this->operator = 'or';

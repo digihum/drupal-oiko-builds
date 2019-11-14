@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\color_field\ColorCMY.
- */
-
 namespace Drupal\color_field;
 
 /**
@@ -13,34 +8,37 @@ namespace Drupal\color_field;
 class ColorCMY extends ColorBase {
 
   /**
-   * The cyan
+   * The cyan.
+   *
    * @var float
    */
   private $cyan;
 
   /**
-   * The magenta
+   * The magenta.
+   *
    * @var float
    */
   private $magenta;
 
   /**
-   * The yellow
+   * The yellow.
+   *
    * @var float
    */
   private $yellow;
 
   /**
-   * Create a new CMYK color
+   * Create a new CMYK color.
    *
    * @param float $cyan
-   *  The cyan
+   *   The cyan.
    * @param float $magenta
-   *  The magenta
+   *   The magenta.
    * @param float $yellow
-   *  The yellow
+   *   The yellow.
    * @param float $opacity
-   *  The opacity
+   *   The opacity.
    */
   public function __construct($cyan, $magenta, $yellow, $opacity) {
     $this->cyan = $cyan;
@@ -50,42 +48,46 @@ class ColorCMY extends ColorBase {
   }
 
   /**
-   * Get the amount of Cyan
+   * Get the amount of Cyan.
    *
-   * @return int The amount of cyan
+   * @return int
+   *   The amount of cyan.
    */
   public function getCyan() {
     return $this->cyan;
   }
 
   /**
-   * Get the amount of Magenta
+   * Get the amount of Magenta.
    *
-   * @return int The amount of magenta
+   * @return int
+   *   The amount of magenta.
    */
   public function getMagenta() {
     return $this->magenta;
   }
 
   /**
-   * Get the amount of Yellow
+   * Get the amount of Yellow.
    *
-   * @return int The amount of yellow
+   * @return int
+   *   The amount of yellow.
    */
   public function getYellow() {
     return $this->yellow;
   }
 
   /**
-   * A string representation of this color in the current format
+   * A string representation of this color in the current format.
    *
    * @param bool $opacity
    *   Whether or not to display the opacity.
    *
    * @return string
-   *   The color in format: #RRGGBB
+   *   The color in format: #RRGGBB.
    */
   public function toString($opacity = TRUE) {
+    return $this->toHex()->toString($opacity);
   }
 
   /**

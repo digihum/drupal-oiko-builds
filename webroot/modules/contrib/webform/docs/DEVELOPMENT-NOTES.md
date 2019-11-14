@@ -63,6 +63,22 @@ git push
 git archive --format zip --output webform-[issue-number]-[issue-description].zip [issue-number]-[issue-description]
 ```
 
+**Reverting a branch**
+
+```bash
+# Remove anything staged but not committed:
+git reset --hard
+
+# Adding changes to the last commit
+git commit --amendd ../
+
+# Unstage a file about to be committed
+git reset HEAD <file>…
+
+# Revert (in SVN terms) an uncommitted file to the copy in your latest commit
+git checkout -- filename
+```
+
 **Delete issue branch**
 
 ```bash
@@ -83,6 +99,12 @@ interdiff \
 ```
 
 ### Drush 
+
+**Execute Webform update hook **
+
+```bash
+drush php-eval 'module_load_include('install', 'webform'); webform_update_N();';
+```
 
 **Reinstall Webform module.**
 

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Provider\IpInfoDb.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
@@ -17,7 +12,7 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  *   name = "IpInfoDb",
  *   handler = "\Geocoder\Provider\IpInfoDb",
  *   arguments = {
- *     "apiKey",
+ *     "apikey" = NULL,
  *     "precision" = "city"
  *   }
  * )

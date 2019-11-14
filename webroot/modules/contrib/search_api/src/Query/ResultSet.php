@@ -3,6 +3,7 @@
 namespace Drupal\search_api\Query;
 
 use Drupal\search_api\Item\ItemInterface;
+use Drupal\search_api\SearchApiException;
 
 /**
  * Represents the result set of a search query.
@@ -28,28 +29,28 @@ class ResultSet implements \IteratorAggregate, ResultSetInterface {
    *
    * @var \Drupal\search_api\Item\ItemInterface[]
    */
-  protected $resultItems = array();
+  protected $resultItems = [];
 
   /**
    * A numeric array of translated, sanitized warning messages.
    *
    * @var string[]
    */
-  protected $warnings = array();
+  protected $warnings = [];
 
   /**
    * A numeric array of search keys that were ignored.
    *
    * @var string[]
    */
-  protected $ignoredSearchKeys = array();
+  protected $ignoredSearchKeys = [];
 
   /**
    * Extra data set on this search result.
    *
    * @var array
    */
-  protected $extraData = array();
+  protected $extraData = [];
 
   /**
    * Constructs a ResultSet object.
@@ -104,6 +105,31 @@ class ResultSet implements \IteratorAggregate, ResultSetInterface {
   public function setResultItems(array $result_items) {
     $this->resultItems = $result_items;
     return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function preLoadResultItems() {
+    $item_ids = [];
+    foreach ($this->resultItems as $item_id => $object) {
+      try {
+        if (!$object->getOriginalObject(FALSE)) {
+          $item_ids[] = $item_id;
+        }
+      }
+      catch (SearchApiException $e) {
+        // Can't actually be thrown here, but catch for the static analyzer's
+        // sake.
+      }
+    }
+    if (!$item_ids) {
+      return;
+    }
+    $objects = $this->getQuery()->getIndex()->loadItemsMultiple($item_ids);
+    foreach ($objects as $item_id => $object) {
+      $this->resultItems[$item_id]->setOriginalObject($object);
+    }
   }
 
   /**

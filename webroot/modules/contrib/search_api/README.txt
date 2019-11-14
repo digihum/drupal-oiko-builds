@@ -34,9 +34,9 @@ No other modules are required.
 
 INSTALLATION
 ------------
- * Install as you would normally install a contributed drupal module. See:
-  https://www.drupal.org/documentation/install/modules-themes/modules-8
-  for further information.
+Install as you would normally install a contributed Drupal module. For further
+information, see:
+   https://www.drupal.org/docs/8/extending-drupal-8/installing-modules
 
 CONFIGURATION
 -------------
@@ -56,8 +56,8 @@ configured to be indexed. More details are available online in the handbook [4].
 There, you can also find answers to frequently asked questions and common
 pitfalls to avoid.
 
-[3] https://www.drupal.org/node/1254698
-[4] https://www.drupal.org/node/1251246
+[3] https://www.drupal.org/docs/8/modules/search-api/getting-started/server-backends-and-features
+[4] https://www.drupal.org/docs/8/modules/search-api/getting-started
 
 DEVELOPERS
 ----------
@@ -84,7 +84,7 @@ framework.
   - Datasources: src/Datasource
   - Data types: src/DataType
   - Displays: src/Display
-  - ParseModes: src/ParseMode
+  - Parse modes: src/ParseMode
   - Processors: src/Processor
   - Trackers: src/Tracker
   The display plugins are a bit of a special case there, because they aren't
@@ -93,13 +93,46 @@ framework.
   defines. They can then be used to provide, for example, faceting support for
   those pages. Therefore, if your module provides any search pages, it's a good
   idea to provide display plugins for them. For an example (for Views pages),
-  see \Drupal\search_api\Plugin\search_api\display\ViewsPageDisplay.
+  see \Drupal\search_api\Plugin\search_api\display\ViewsPage.
 
 The handbook documentation for developers is available at [5].
 
-[5] https://www.drupal.org/node/2001110
+[5] https://www.drupal.org/docs/8/modules/search-api/developer-documentation
+
+To know which parts of the module can be relied upon as its public API, please
+read the "Drupal 8 backwards compatibility and internal API policy" [6] and the
+module's issue regarding potential module-specific changes to that policy [7].
+
+[6] https://www.drupal.org/core/d8-bc-policy
+[7] https://www.drupal.org/node/2871549
+
+SERVER BACKEND FEATURES
+-----------------------
+
+Server backend features are a way for other contrib modules to cleanly define
+ways in which the Search API can be extended. For more information, see [8].
+
+[8] https://www.drupal.org/docs/8/modules/search-api/getting-started/server-backends-and-features
+
+The Search API module itself currently defines one feature:
+
+- More Like This (search_api_mlt)
+  This feature can be used to retrieve a list of search results that are similar
+  to a given indexed item. A backend that supports this plugin has to recognize
+  the "search_api_mlt" query option. If present, it contains an associative
+  array with the following keys:
+  - id: The Search API item ID (consisting of the datasource ID and the
+    datasource-specific item ID – passing a plain entity ID will NOT work!) of
+    the item for which similar results should be found.
+  - fields: A simple array of fields which should be used for determining
+    similarity. Backends can choose to ignore this field.
+  - "field boosts": (optional) An associative array mapping fields to a numeric
+    "boost" value that determines how important they should be considered when
+    determining similarity. Backends can choose to ignore this field.
+  The feature can be used in the UI via the "More like this" Views contextual
+  filter.
 
 MAINTAINERS
 -----------
 Current maintainers:
- * Thomas Seidl (drunken monkey) - https://www.drupal.org/u/drunken-monkey
+  * Thomas Seidl (drunken monkey) - https://www.drupal.org/u/drunken-monkey

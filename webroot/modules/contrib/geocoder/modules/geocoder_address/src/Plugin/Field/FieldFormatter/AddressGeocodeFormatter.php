@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_field\Plugin\Field\FieldFormatter\AddressGeocodeFormatter.
- */
-
 namespace Drupal\geocoder_address\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
@@ -22,16 +17,18 @@ use Drupal\geocoder_field\Plugin\Field\FieldFormatter\GeocodeFormatter;
  * )
  */
 class AddressGeocodeFormatter extends GeocodeFormatter {
+
   /**
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-    $elements = array();
-    $dumper = $this->dumperPluginManager->createInstance($this->getSetting('dumper_plugin'));
+    $elements = [];
+    $dumper = $this->dumperPluginManager->createInstance($this->getSetting('dumper'));
+    $provider_plugins = $this->getEnabledProviderPlugins();
 
     foreach ($items as $delta => $item) {
       $value = $item->getValue();
-      $address = array();
+      $address = [];
 
       $address[] = !empty($value['address_line1']) ? $value['address_line1'] : NULL;
       $address[] = !empty($value['address_line2']) ? $value['address_line2'] : NULL;
@@ -39,10 +36,10 @@ class AddressGeocodeFormatter extends GeocodeFormatter {
       $address[] = !empty($value['locality']) ? $value['locality'] : NULL;
       $address[] = !empty($value['country']) ? $value['country'] : NULL;
 
-      if ($addressCollection = $this->geocoder->geocode(implode(',', array_filter($address)), $this->getEnabledProviderPlugins())) {
-        $elements[$delta] = array(
+      if ($addressCollection = $this->geocoder->geocode(implode(' ', array_filter($address)), array_keys($provider_plugins))) {
+        $elements[$delta] = [
           '#plain_text' => $dumper->dump($addressCollection->first()),
-        );
+        ];
       }
     }
 

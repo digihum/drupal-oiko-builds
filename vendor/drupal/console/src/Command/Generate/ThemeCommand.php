@@ -7,6 +7,7 @@
 
 namespace Drupal\Console\Command\Generate;
 
+use Drupal\Console\Command\Shared\ArrayInputTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,7 +16,6 @@ use Drupal\Console\Command\Shared\ThemeBreakpointTrait;
 use Drupal\Console\Generator\ThemeGenerator;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Drupal\Console\Core\Command\Command;
-use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Extension\Manager;
 use Drupal\Console\Utils\Site;
 use Drupal\Console\Core\Utils\StringConverter;
@@ -33,6 +33,7 @@ class ThemeCommand extends Command
     use ConfirmationTrait;
     use ThemeRegionTrait;
     use ThemeBreakpointTrait;
+    use ArrayInputTrait;
 
     /**
  * @var Manager
@@ -149,7 +150,7 @@ class ThemeCommand extends Command
             ->addOption(
                 'libraries',
                 null,
-                InputOption::VALUE_OPTIONAL,
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.generate.theme.options.libraries')
             )
             ->addOption(
@@ -159,15 +160,21 @@ class ThemeCommand extends Command
                 $this->trans('commands.generate.theme.options.base-theme')
             )
             ->addOption(
+                'base-theme-regions',
+                null,
+                InputOption::VALUE_NONE,
+                $this->trans('commands.generate.theme.options.base-theme-regions')
+            )
+            ->addOption(
                 'regions',
                 null,
-                InputOption::VALUE_OPTIONAL,
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.generate.theme.options.regions')
             )
             ->addOption(
                 'breakpoints',
                 null,
-                InputOption::VALUE_OPTIONAL,
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.generate.theme.options.breakpoints')
             )
             ->setAliases(['gt']);
@@ -178,10 +185,8 @@ class ThemeCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
-        // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
-        if (!$this->confirmGeneration($io, $input)) {
+        // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmOperation
+        if (!$this->confirmOperation()) {
             return 1;
         }
 
@@ -189,33 +194,54 @@ class ThemeCommand extends Command
         // Get the profile path and define a profile path if it is null
         // Check that it is an absolute path or otherwise create an absolute path using appRoot
         $theme_path = $input->getOption('theme-path');
-        $theme_path = $theme_path == null ? 'themes/custom' : $theme_path;
+        if(is_null($theme_path)) {
+            $uri = $this->site->getMultisiteName($input);
+            $defaultThemePath = 'themes/custom';
+            $theme_path = $this->site->multisiteMode($uri)? 'sites/'.$this->site->getMultisiteDir($uri).'/'.$defaultThemePath : $defaultThemePath;
+        }
         $theme_path = Path::isAbsolute($theme_path) ? $theme_path : Path::makeAbsolute($theme_path, $this->appRoot);
         $theme_path = $this->validator->validateModulePath($theme_path, true);
 
-        $machine_name = $this->validator->validateMachineName($input->getOption('machine-name'));
+        $machine_name = $input->getOption('machine-name') ?
+            $this->validator->validateMachineName($input->getOption('machine-name'))
+            :$this->stringConverter->createMachineName($theme);
+
         $description = $input->getOption('description');
         $core = $input->getOption('core');
         $package = $input->getOption('package');
         $base_theme = $input->getOption('base-theme');
+        $base_theme_regions = $input->getOption('base-theme-regions');
         $global_library = $input->getOption('global-library');
         $libraries = $input->getOption('libraries');
         $regions = $input->getOption('regions');
         $breakpoints = $input->getOption('breakpoints');
+        $noInteraction = $input->getOption('no-interaction');
 
-        $this->generator->generate(
-            $theme,
-            $machine_name,
-            $theme_path,
-            $description,
-            $core,
-            $package,
-            $base_theme,
-            $global_library,
-            $libraries,
-            $regions,
-            $breakpoints
-        );
+        // Parse nested data.
+        if ($noInteraction) {
+            $libraries = $this->explodeInlineArray($libraries);
+            $regions = $this->explodeInlineArray($regions);
+            $breakpoints = $this->explodeInlineArray($breakpoints);
+        }
+
+        $base_theme_path = $this->extensionManager->getTheme($base_theme);
+
+        $this->generator->generate([
+            'theme' => $theme,
+            'machine_name' => $machine_name,
+            'dir' => $theme_path,
+            'core' => $core,
+            'description' => $description,
+            'package' => $package,
+            'base_theme' => $base_theme,
+            'base_theme_path' => is_null($base_theme_path) ? false : $base_theme_path->getRealPath(),
+            'base_theme_regions' => $base_theme_regions,
+            'global_library' => $global_library,
+            'libraries' => $libraries,
+            'regions' => $regions,
+            'breakpoints' => $breakpoints,
+        ]);
+
 
         return 0;
     }
@@ -225,23 +251,20 @@ class ThemeCommand extends Command
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
         try {
             $theme = $input->getOption('theme') ? $this->validator->validateModuleName($input->getOption('theme')) : null;
         } catch (\Exception $error) {
-            $io->error($error->getMessage());
+            $this->getIo()->error($error->getMessage());
 
             return 1;
         }
 
         if (!$theme) {
-            $validators = $this->validator;
-            $theme = $io->ask(
+            $theme = $this->getIo()->ask(
                 $this->trans('commands.generate.theme.questions.theme'),
                 '',
-                function ($theme) use ($validators) {
-                    return $validators->validateModuleName($theme);
+                function ($theme) {
+                    return $this->validator->validateModuleName($theme);
                 }
             );
             $input->setOption('theme', $theme);
@@ -250,17 +273,17 @@ class ThemeCommand extends Command
         try {
             $machine_name = $input->getOption('machine-name') ? $this->validator->validateModuleName($input->getOption('machine-name')) : null;
         } catch (\Exception $error) {
-            $io->error($error->getMessage());
+            $this->getIo()->error($error->getMessage());
 
             return 1;
         }
 
         if (!$machine_name) {
-            $machine_name = $io->ask(
+            $machine_name = $this->getIo()->ask(
                 $this->trans('commands.generate.theme.questions.machine-name'),
                 $this->stringConverter->createMachineName($theme),
-                function ($machine_name) use ($validators) {
-                    return $validators->validateMachineName($machine_name);
+                function ($machine_name) {
+                    return $this->validator->validateMachineName($machine_name);
                 }
             );
             $input->setOption('machine-name', $machine_name);
@@ -268,10 +291,12 @@ class ThemeCommand extends Command
 
         $theme_path = $input->getOption('theme-path');
         if (!$theme_path) {
-            $theme_path = $io->ask(
+            $uri = $this->site->getMultisiteName($input);
+            $defaultThemePath = 'themes/custom';
+            $theme_path = $this->getIo()->ask(
                 $this->trans('commands.generate.theme.questions.theme-path'),
-                'themes/custom',
-                function ($theme_path) use ($machine_name) {
+                $this->site->multisiteMode($uri)? 'sites/'.$this->site->getMultisiteDir($uri).'/'.$defaultThemePath : $defaultThemePath,
+                 function ($theme_path) use ($machine_name) {
                     $fullPath = Path::isAbsolute($theme_path) ? $theme_path : Path::makeAbsolute($theme_path, $this->appRoot);
                     $fullPath = $fullPath.'/'.$machine_name;
                     if (file_exists($fullPath)) {
@@ -291,7 +316,7 @@ class ThemeCommand extends Command
 
         $description = $input->getOption('description');
         if (!$description) {
-            $description = $io->ask(
+            $description = $this->getIo()->ask(
                 $this->trans('commands.generate.theme.questions.description'),
                 $this->trans('commands.generate.theme.suggestions.my-awesome-theme')
             );
@@ -300,7 +325,7 @@ class ThemeCommand extends Command
 
         $package = $input->getOption('package');
         if (!$package) {
-            $package = $io->ask(
+            $package = $this->getIo()->ask(
                 $this->trans('commands.generate.theme.questions.package'),
                 $this->trans('commands.generate.theme.suggestions.other')
             );
@@ -309,7 +334,7 @@ class ThemeCommand extends Command
 
         $core = $input->getOption('core');
         if (!$core) {
-            $core = $io->ask(
+            $core = $this->getIo()->ask(
                 $this->trans('commands.generate.theme.questions.core'),
                 '8.x'
             );
@@ -323,7 +348,7 @@ class ThemeCommand extends Command
 
             uasort($themes, 'system_sort_modules_by_info_name');
 
-            $base_theme = $io->choiceNoList(
+            $base_theme = $this->getIo()->choiceNoList(
                 $this->trans('commands.generate.theme.options.base-theme'),
                 array_keys($themes)
             );
@@ -332,7 +357,7 @@ class ThemeCommand extends Command
 
         $global_library = $input->getOption('global-library');
         if (!$global_library) {
-            $global_library = $io->ask(
+            $global_library = $this->getIo()->ask(
                 $this->trans('commands.generate.theme.questions.global-library'),
                 'global-styling'
             );
@@ -343,43 +368,49 @@ class ThemeCommand extends Command
         // --libraries option.
         $libraries = $input->getOption('libraries');
         if (!$libraries) {
-            if ($io->confirm(
+            if ($this->getIo()->confirm(
                 $this->trans('commands.generate.theme.questions.library-add'),
                 true
             )
             ) {
                 // @see \Drupal\Console\Command\Shared\ThemeRegionTrait::libraryQuestion
-                $libraries = $this->libraryQuestion($io);
-                $input->setOption('libraries', $libraries);
+                $libraries = $this->libraryQuestion();
             }
+        } else {
+            $libraries = $this->explodeInlineArray($libraries);
         }
+        $input->setOption('libraries', $libraries);
 
         // --regions option.
         $regions = $input->getOption('regions');
         if (!$regions) {
-            if ($io->confirm(
+            if ($this->getIo()->confirm(
                 $this->trans('commands.generate.theme.questions.regions'),
                 true
             )
             ) {
                 // @see \Drupal\Console\Command\Shared\ThemeRegionTrait::regionQuestion
-                $regions = $this->regionQuestion($io);
-                $input->setOption('regions', $regions);
+                $regions = $this->regionQuestion();
             }
+        } else {
+            $regions = $this->explodeInlineArray($regions);
         }
+        $input->setOption('regions', $regions);
 
         // --breakpoints option.
         $breakpoints = $input->getOption('breakpoints');
         if (!$breakpoints) {
-            if ($io->confirm(
+            if ($this->getIo()->confirm(
                 $this->trans('commands.generate.theme.questions.breakpoints'),
                 true
             )
             ) {
                 // @see \Drupal\Console\Command\Shared\ThemeRegionTrait::regionQuestion
-                $breakpoints = $this->breakpointQuestion($io);
-                $input->setOption('breakpoints', $breakpoints);
+                $breakpoints = $this->breakpointQuestion();
             }
+        } else {
+            $breakpoints = $this->explodeInlineArray($breakpoints);
         }
+        $input->setOption('breakpoints', $breakpoints);
     }
 }

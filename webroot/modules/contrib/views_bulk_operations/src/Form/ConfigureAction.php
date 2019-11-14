@@ -114,6 +114,7 @@ class ConfigureAction extends FormBase {
         [$this, 'submitForm'],
       ],
     ];
+    $this->addCancelButton($form);
 
     $action = $this->actionManager->createInstance($form_data['action_id']);
 
@@ -121,9 +122,8 @@ class ConfigureAction extends FormBase {
       $action->setContext($form_data);
     }
 
-    $form = $action->buildConfigurationForm($form, $form_state);
-
     $form_state->set('views_bulk_operations', $form_data);
+    $form = $action->buildConfigurationForm($form, $form_state);
 
     return $form;
   }

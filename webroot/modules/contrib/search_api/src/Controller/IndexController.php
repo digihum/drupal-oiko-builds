@@ -3,15 +3,104 @@
 namespace Drupal\search_api\Controller;
 
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\EventSubscriber\AjaxResponseSubscriber;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\search_api\IndexInterface;
 use Drupal\search_api\SearchApiException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Provides route responses for search indexes.
  */
 class IndexController extends ControllerBase {
+
+  /**
+   * The request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack|null
+   */
+  protected $requestStack;
+
+  /**
+   * The messenger.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface|null
+   */
+  protected $messenger;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    /** @var static $controller */
+    $controller = parent::create($container);
+
+    $controller->setRequestStack($container->get('request_stack'));
+    $controller->setMessenger($container->get('messenger'));
+
+    return $controller;
+  }
+
+  /**
+   * Retrieves the request stack.
+   *
+   * @return \Symfony\Component\HttpFoundation\RequestStack
+   *   The request stack.
+   */
+  public function getRequestStack() {
+    return $this->requestStack ?: \Drupal::service('request_stack');
+  }
+
+  /**
+   * Retrieves the current request.
+   *
+   * @return \Symfony\Component\HttpFoundation\Request|null
+   *   The current request.
+   */
+  public function getRequest() {
+    return $this->getRequestStack()->getCurrentRequest();
+  }
+
+  /**
+   * Sets the request stack.
+   *
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The new request stack.
+   *
+   * @return $this
+   */
+  public function setRequestStack(RequestStack $request_stack) {
+    $this->requestStack = $request_stack;
+    return $this;
+  }
+
+  /**
+   * Retrieves the messenger.
+   *
+   * @return \Drupal\Core\Messenger\MessengerInterface
+   *   The messenger.
+   */
+  public function getMessenger() {
+    return $this->messenger ?: \Drupal::service('messenger');
+  }
+
+  /**
+   * Sets the messenger.
+   *
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The new messenger.
+   *
+   * @return $this
+   */
+  public function setMessenger(MessengerInterface $messenger) {
+    $this->messenger = $messenger;
+    return $this;
+  }
 
   /**
    * Displays information about a search index.
@@ -24,12 +113,12 @@ class IndexController extends ControllerBase {
    */
   public function page(IndexInterface $search_api_index) {
     // Build the search index information.
-    $render = array(
-      'view' => array(
+    $render = [
+      'view' => [
         '#theme' => 'search_api_index',
         '#index' => $search_api_index,
-      ),
-    );
+      ],
+    ];
     // Check if the index is enabled and can be written to.
     if ($search_api_index->status() && !$search_api_index->isReadOnly()) {
       // Attach the index status form.
@@ -48,7 +137,7 @@ class IndexController extends ControllerBase {
    *   The page title.
    */
   public function pageTitle(IndexInterface $search_api_index) {
-    return new FormattableMarkup('@title', array('@title' => $search_api_index->label()));
+    return new FormattableMarkup('@title', ['@title' => $search_api_index->label()]);
   }
 
   /**
@@ -68,11 +157,11 @@ class IndexController extends ControllerBase {
     // enabled if its server is not set or disabled.
     if ($search_api_index->status()) {
       // Notify the user about the status change.
-      drupal_set_message($this->t('The search index %name has been enabled.', array('%name' => $search_api_index->label())));
+      $this->getMessenger()->addStatus($this->t('The search index %name has been enabled.', ['%name' => $search_api_index->label()]));
     }
     else {
       // Notify the user that the status change did not succeed.
-      drupal_set_message($this->t('The search index %name could not be enabled. Check if its server is set and enabled.', array('%name' => $search_api_index->label())));
+      $this->getMessenger()->addWarning($this->t('The search index %name could not be enabled. Check if its server is set and enabled.', ['%name' => $search_api_index->label()]));
     }
 
     // Redirect to the index's "View" page.
@@ -96,21 +185,29 @@ class IndexController extends ControllerBase {
    */
   public function removeField(IndexInterface $search_api_index, $field_id) {
     $fields = $search_api_index->getFields();
+    $success = FALSE;
     if (isset($fields[$field_id])) {
       try {
         $search_api_index->removeField($field_id);
         $search_api_index->save();
+        $success = TRUE;
       }
       catch (SearchApiException $e) {
         $args['%field'] = $fields[$field_id]->getLabel();
-        drupal_set_message($this->t('The field %field is locked and cannot be removed.', $args), 'error');
+        $this->getMessenger()->addError($this->t('The field %field is locked and cannot be removed.', $args));
       }
     }
     else {
       throw new NotFoundHttpException();
     }
 
-    // Redirect to the index's "View" page.
+    // If this is an AJAX request, just remove the row in question.
+    if ($success && $this->getRequest()->request->get(AjaxResponseSubscriber::AJAX_REQUEST_PARAMETER)) {
+      $response = new AjaxResponse();
+      $response->addCommand(new RemoveCommand("tr[data-field-row-id='$field_id']"));
+      return $response;
+    }
+    // Redirect to the index's "Fields" page.
     $url = $search_api_index->toUrl('fields');
     return $this->redirect($url->getRouteName(), $url->getRouteParameters());
   }

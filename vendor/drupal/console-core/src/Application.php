@@ -2,7 +2,9 @@
 
 namespace Drupal\Console\Core;
 
+use Drupal\Console\Core\EventSubscriber\SendStatisticsListener;
 use Drupal\Console\Core\EventSubscriber\RemoveMessagesListener;
+use Drupal\Console\Core\EventSubscriber\SaveStatisticsListener;
 use Drupal\Console\Core\EventSubscriber\ShowGenerateCountCodeLinesListener;
 use Drupal\Console\Core\Utils\TranslatorManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -11,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Application as BaseApplication;
+use Symfony\Component\Console\Input\ArrayInput;
 use Drupal\Console\Core\EventSubscriber\DefaultValueEventListener;
 use Drupal\Console\Core\EventSubscriber\ShowGenerateChainListener;
 use Drupal\Console\Core\EventSubscriber\ShowTipsListener;
@@ -19,6 +22,7 @@ use Drupal\Console\Core\EventSubscriber\ValidateExecutionListener;
 use Drupal\Console\Core\EventSubscriber\ShowGeneratedFilesListener;
 use Drupal\Console\Core\EventSubscriber\ShowGenerateInlineListener;
 use Drupal\Console\Core\EventSubscriber\CallCommandListener;
+use Drupal\Console\Core\EventSubscriber\MaintenanceModeListener;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Utils\ChainDiscovery;
@@ -60,7 +64,7 @@ class Application extends BaseApplication
      * @param string             $version
      */
     public function __construct(
-        ContainerInterface$container,
+        ContainerInterface $container,
         $name,
         $version
     ) {
@@ -112,28 +116,13 @@ class Application extends BaseApplication
             $output->write(sprintf("\033\143"));
         }
 
-        $this->registerGenerators();
-        $this->registerCommands();
-        $this->registerEvents();
-        $this->registerExtendCommands();
+        $this->loadCommands();
 
         /**
          * @var ConfigurationManager $configurationManager
          */
         $configurationManager = $this->container
             ->get('console.configuration_manager');
-
-        $config = $configurationManager->getConfiguration()
-            ->get('application.extras.config')?:'true';
-        if ($config === 'true') {
-            $this->registerCommandsFromAutoWireConfiguration();
-        }
-
-        $chains = $configurationManager->getConfiguration()
-            ->get('application.extras.chains')?:'true';
-        if ($chains === 'true') {
-            $this->registerChainCommands();
-        }
 
         if (!$this->has($this->commandName)) {
             $isValidCommand = false;
@@ -170,6 +159,18 @@ class Application extends BaseApplication
                 );
             }
 
+            $namespaces = $this->getNamespaces();
+            if (in_array($this->commandName, $namespaces)) {
+                $input = new ArrayInput(
+                    [
+                        'command' => 'list',
+                        'namespace' => $this->commandName
+                    ]
+                );
+                $this->commandName = 'list';
+                $isValidCommand = true;
+            }
+
             if (!$isValidCommand) {
                 $io->error(
                     sprintf(
@@ -187,14 +188,66 @@ class Application extends BaseApplication
             $output
         );
 
-        $messages = $messageManager->getMessages();
+        // Propagate Drupal messages.
+        $this->addDrupalMessages($messageManager);
 
-        foreach ($messages as $message) {
-            $type = $message['type'];
-            $io->$type($message['message']);
+        if ($this->showMessages($input)) {
+            $messages = $messageManager->getMessages();
+
+            foreach ($messages as $message) {
+                $showBy = $message['showBy'];
+                if ($showBy!=='all' && $showBy!==$this->commandName) {
+                    continue;
+                }
+                $type = $message['type'];
+                $io->$type($message['message']);
+            }
         }
 
+
         return $code;
+    }
+
+    public function loadCommands()
+    {
+        $this->registerGenerators();
+        $this->registerCommands();
+        $this->registerEvents();
+        $this->registerExtendCommands();
+
+        /**
+         * @var ConfigurationManager $configurationManager
+         */
+        $configurationManager = $this->container
+            ->get('console.configuration_manager');
+
+        $config = $configurationManager->getConfiguration()
+            ->get('application.extras.config')?:'true';
+        if ($config === 'true') {
+            $this->registerCommandsFromAutoWireConfiguration();
+        }
+
+        $chains = $configurationManager->getConfiguration()
+            ->get('application.extras.chains')?:'true';
+        if ($chains === 'true') {
+            $this->registerChainCommands();
+        }
+    }
+
+    /**
+     * @param InputInterface $input
+     *
+     * @return bool
+     */
+    private function showMessages(InputInterface $input)
+    {
+        $format = $input->hasOption('format')?$input->getOption('format'):'txt';
+
+        if ($format !== 'txt') {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -255,10 +308,34 @@ class Application extends BaseApplication
             );
 
             $dispatcher->addSubscriber(
+                new SaveStatisticsListener(
+                    $this->container->get('console.count_code_lines'),
+                    $this->container->get('console.configuration_manager'),
+                    $this->container->get('console.translator_manager')
+                )
+            );
+
+            $dispatcher->addSubscriber(
+                new SendStatisticsListener(
+                    $this->container->get('console.configuration_manager'),
+                    $this->container->get('console.translator_manager')
+                )
+            );
+
+            $dispatcher->addSubscriber(
                 new RemoveMessagesListener(
                     $this->container->get('console.message_manager')
                 )
             );
+
+            if($this->container->has('state')) {
+                $dispatcher->addSubscriber(
+                    new MaintenanceModeListener(
+                        $this->container->get('console.translator_manager'),
+                        $this->container->get('state')
+                    )
+                );
+            }
 
             $this->setDispatcher($dispatcher);
             $this->eventRegistered = true;
@@ -372,9 +449,10 @@ class Application extends BaseApplication
             ->get('application.commands.aliases')?:[];
 
         $invalidCommands = [];
-        if ($this->container->has('console.invalid_commands')) {
-            $invalidCommands = (array)$this->container
-                ->get('console.invalid_commands');
+        if ($this->container->has('console.key_value_storage')) {
+            $invalidCommands = $this->container
+                ->get('console.key_value_storage')
+                ->get('invalid_commands', []);
         }
 
         foreach ($consoleCommands as $name => $tags) {
@@ -407,6 +485,12 @@ class Application extends BaseApplication
             if (method_exists($command, 'setContainer')) {
                 $command->setContainer(
                     $this->container->get('service_container')
+                );
+            }
+
+            if (method_exists($command, 'setDrupalFinder')) {
+                $command->setDrupalFinder(
+                    $this->container->get('console.drupal_finder')
                 );
             }
 
@@ -450,6 +534,7 @@ class Application extends BaseApplication
             if (!$generator) {
                 continue;
             }
+
             if (method_exists($generator, 'setRenderer')) {
                 $generator->setRenderer(
                     $this->container->get('console.renderer')
@@ -465,6 +550,12 @@ class Application extends BaseApplication
             if (method_exists($generator, 'setCountCodeLines')) {
                 $generator->setCountCodeLines(
                     $this->container->get('console.count_code_lines')
+                );
+            }
+
+            if (method_exists($generator, 'setDrupalFinder')) {
+                $generator->setDrupalFinder(
+                    $this->container->get('console.drupal_finder')
                 );
             }
         }
@@ -578,12 +669,11 @@ class Application extends BaseApplication
             try {
                 $file = $chainCommand['file'];
                 $description = $chainCommand['description'];
-                $placeHolders = $chainCommand['placeholders'];
                 $command = new ChainCustomCommand(
                     $name,
                     $description,
-                    $placeHolders,
-                    $file
+                    $file,
+                    $chainDiscovery
                 );
                 $this->add($command);
             } catch (\Exception $e) {
@@ -601,8 +691,7 @@ class Application extends BaseApplication
             ->loadExtendConfiguration();
     }
 
-
-    public function getData()
+    public function getData($filterNamespaces = null, $excludeNamespaces = [], $excludeChainCommands = false)
     {
         $singleCommands = [
             'about',
@@ -614,7 +703,8 @@ class Application extends BaseApplication
             'init',
             'list',
             'shell',
-            'server'
+            'server',
+            'snippet'
         ];
 
         $languages = $this->container->get('console.configuration_manager')
@@ -622,8 +712,11 @@ class Application extends BaseApplication
             ->get('application.languages');
 
         $data = [];
-        foreach ($singleCommands as $singleCommand) {
-            $data['commands']['misc'][] = $this->commandData($singleCommand);
+        // Exclude misc if it is inside the $excludeNamespaces array.
+        if (!in_array('misc', $excludeNamespaces)) {
+            foreach ($singleCommands as $singleCommand) {
+                $data['commands']['misc'][] = $this->commandData($singleCommand);
+            }
         }
 
         $namespaces = array_filter(
@@ -631,8 +724,17 @@ class Application extends BaseApplication
                 return (strpos($item, ':')<=0);
             }
         );
+
         sort($namespaces);
         array_unshift($namespaces, 'misc');
+
+        // Exclude specific namespaces
+        $namespaces = array_diff($namespaces, $excludeNamespaces);
+
+        // filter namespaces if available
+        if ($filterNamespaces) {
+            $namespaces = array_intersect($namespaces, $filterNamespaces);
+        }
 
         foreach ($namespaces as $namespace) {
             $commands = $this->all($namespace);
@@ -643,6 +745,11 @@ class Application extends BaseApplication
             );
 
             foreach ($commands as $command) {
+                // Exclude command if is a chain command and was requested to exclude chain commands
+                if ($excludeChainCommands && $command instanceof ChainCustomCommand) {
+                    continue;
+                }
+
                 if (method_exists($command, 'getModule')) {
                     if ($command->getModule() == 'Console') {
                         $data['commands'][$namespace][] = $this->commandData(
@@ -656,6 +763,13 @@ class Application extends BaseApplication
                 }
             }
         }
+
+        // Remove namepsaces without commands
+        $namespaces = array_filter(
+            $namespaces, function ($namespace) use ($data) {
+                return count($data['commands'][$namespace]) > 0;
+            }
+        );
 
         $input = $this->getDefinition();
         $options = [];
@@ -673,25 +787,32 @@ class Application extends BaseApplication
             ];
         }
 
-        $data['application'] = [
-            'namespaces' => $namespaces,
-            'options' => $options,
-            'arguments' => $arguments,
-            'languages' => $languages,
-            'messages' => [
-                'title' => $this->trans('application.gitbook.messages.title'),
-                'note' =>  $this->trans('application.gitbook.messages.note'),
-                'note_description' =>  $this->trans('application.gitbook.messages.note-description'),
-                'command' =>  $this->trans('application.gitbook.messages.command'),
-                'options' => $this->trans('application.gitbook.messages.options'),
-                'option' => $this->trans('application.gitbook.messages.option'),
-                'details' => $this->trans('application.gitbook.messages.details'),
-                'arguments' => $this->trans('application.gitbook.messages.arguments'),
-                'argument' => $this->trans('application.gitbook.messages.argument'),
-                'examples' => $this->trans('application.gitbook.messages.examples')
-            ],
-            'examples' => []
-        ];
+        //Add default Language
+        $language = $this->container->get('console.translator_manager')->getLanguage();
+        $data['default_language'] = $language;
+
+        // Exclude application if it is inside the $excludeNamespaces array.
+        if (!in_array('application', $excludeNamespaces)) {
+            $data['application'] = [
+                'namespaces' => $namespaces,
+                'options' => $options,
+                'arguments' => $arguments,
+                'languages' => $languages,
+                'messages' => [
+                    'title' => $this->trans('application.gitbook.messages.title'),
+                    'note' =>  $this->trans('application.gitbook.messages.note'),
+                    'note_description' =>  $this->trans('application.gitbook.messages.note-description'),
+                    'command' =>  $this->trans('application.gitbook.messages.command'),
+                    'options' => $this->trans('application.gitbook.messages.options'),
+                    'option' => $this->trans('application.gitbook.messages.option'),
+                    'details' => $this->trans('application.gitbook.messages.details'),
+                    'arguments' => $this->trans('application.gitbook.messages.arguments'),
+                    'argument' => $this->trans('application.gitbook.messages.argument'),
+                    'examples' => $this->trans('application.gitbook.messages.examples')
+                ],
+                'examples' => []
+            ];
+        }
 
         return $data;
     }
@@ -793,6 +914,44 @@ class Application extends BaseApplication
     public function getContainer()
     {
         return $this->container;
+    }
+
+    /**
+     * Add Drupal system messages.
+     */
+    protected function addDrupalMessages($messageManager)
+    {
+        if (function_exists('drupal_get_messages')) {
+            $drupalMessages = drupal_get_messages();
+            foreach ($drupalMessages as $type => $messages) {
+                foreach ($messages as $message) {
+                    $method = $this->getMessageMethod($type);
+                    $messageManager->{$method}((string)$message);
+                }
+            }
+        }
+    }
+
+    /**
+     * Gets method name for MessageManager.
+     *
+     * @param string $type
+     *   Type of the message.
+     *
+     * @return string
+     *   Name of the method
+     */
+    protected function getMessageMethod($type)
+    {
+        $methodName = 'info';
+        switch ($type) {
+        case 'error':
+        case 'warning':
+            $methodName = $type;
+            break;
+        }
+
+        return $methodName;
     }
 
     /**

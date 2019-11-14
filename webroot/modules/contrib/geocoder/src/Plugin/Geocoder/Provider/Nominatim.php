@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Provider\Nominatim.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
@@ -17,8 +12,8 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  *   name = "Nominatim",
  *   handler = "\Geocoder\Provider\Nominatim",
  *   arguments = {
- *     "rootUrl",
- *     "locale"
+ *     "rooturl" = NULL,
+ *     "locale" = NULL
  *   }
  * )
  */

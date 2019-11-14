@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Provider\GoogleMaps.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
@@ -17,10 +12,10 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  *   name = "GoogleMaps",
  *   handler = "\Geocoder\Provider\GoogleMaps",
  *   arguments = {
- *     "locale",
- *     "region",
- *     "useSsl" = FALSE,
- *     "apiKey"
+ *     "locale" = NULL,
+ *     "region" = NULL,
+ *     "usessl" = TRUE,
+ *     "apikey" = NULL,
  *   }
  * )
  */

@@ -2,6 +2,7 @@
 
 namespace Drupal\webform;
 
+use Drupal\Core\Session\AccountInterface;
 use Drupal\user\EntityOwnerInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\user\UserInterface;
@@ -17,14 +18,29 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
   const STATE_UNSAVED = 'unsaved';
 
   /**
-   * Return status for submission in draft.
+   * Return status for submission in draft created.
    */
   const STATE_DRAFT = 'draft';
+
+  /**
+   * Return status for submission in draft created.
+   */
+  const STATE_DRAFT_CREATED = 'draft_created';
+
+  /**
+   * Return status for submission in draft updated.
+   */
+  const STATE_DRAFT_UPDATED = 'draft_updated';
 
   /**
    * Return status for submission that has been completed.
    */
   const STATE_COMPLETED = 'completed';
+
+  /**
+   * Return status for submission that has been locked.
+   */
+  const STATE_LOCKED = 'locked';
 
   /**
    * Return status for submission that has been updated.
@@ -140,6 +156,24 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
   public function setSticky($sticky);
 
   /**
+   * Get the submission's locked status.
+   *
+   * @return string
+   *   The submission's lock status.
+   */
+  public function isLocked();
+
+  /**
+   * Sets the submission's locked flag.
+   *
+   * @param bool $locked
+   *   The submission's locked flag.
+   *
+   * @return $this
+   */
+  public function setLocked($locked);
+
+  /**
    * Gets the remote IP address of the submission.
    *
    * @return string
@@ -217,6 +251,17 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
   public function isSticky();
 
   /**
+   * Test whether the provided account is owner of this webform submission.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   Account whose ownership to test.
+   *
+   * @return bool
+   *   Whether the provided account is owner of this webform submission.
+   */
+  public function isOwner(AccountInterface $account);
+
+  /**
    * Checks submission notes.
    *
    * @return bool
@@ -227,43 +272,69 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
   /**
    * Track the state of a submission.
    *
-   * @return int
-   *   Either STATE_NEW, STATE_DRAFT, STATE_COMPLETED, or STATE_UPDATED,
+   * @return string
+   *   Either STATE_UNSAVED, STATE_DRAFT_CREATED, STATE_DRAFT_UPDATED,
+   *   STATE_COMPLETED, STATE_UPDATED, STATE_LOCKED, or STATE_CONVERTED
    *   depending on the last save operation performed.
    */
   public function getState();
 
   /**
-   * Gets the webform submission's data.
+   * Get a webform submission element's data.
    *
    * @param string $key
-   *   A string that maps to a key in the submission's data.
-   *   If no key is specified, then the entire data array is returned.
+   *   An webform submission element's key.
+   *
+   * @return mixed
+   *   An webform submission element's data/value.
+   */
+  public function getElementData($key);
+
+  /**
+   * Set a webform submission element's data.
+   *
+   * @param string $key
+   *   An webform submission element's key.
+   * @param mixed $value
+   *   A value.
+   *
+   * @return $this
+   */
+  public function setElementData($key, $value);
+
+  /**
+   * Gets the webform submission's raw data.
    *
    * @return array
-   *   The webform submission data.
+   *   The webform submission raw data.
    */
-  public function getData($key = NULL);
+  public function getRawData();
+
+  /**
+   * Gets the webform submission's data with computed valued.
+   *
+   * @return array
+   *   The webform submission data with computed valued.
+   */
+  public function getData();
 
   /**
    * Set the webform submission's data.
    *
    * @param array $data
    *   The webform submission data.
+   *
+   * @return $this
    */
   public function setData(array $data);
 
   /**
-   * Gets the webform submission's original data before any changes..
-   *
-   * @param string $key
-   *   A string that maps to a key in the submission's original data.
-   *   If no key is specified, then the entire data array is returned.
+   * Gets the webform submission's original data before any changes.
    *
    * @return array
    *   The webform submission original data.
    */
-  public function getOriginalData($key = NULL);
+  public function getOriginalData();
 
   /**
    * Set the webform submission's original data.
@@ -274,6 +345,17 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
    * @return $this
    */
   public function setOriginalData(array $data);
+
+  /**
+   * Get a webform submission element's original data.
+   *
+   * @param string $key
+   *   An webform submission element's key.
+   *
+   * @return mixed
+   *   An webform submission element's original data/value.
+   */
+  public function getElementOriginalData($key);
 
   /**
    * Gets the webform submission's token.
@@ -294,10 +376,13 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
   /**
    * Gets the webform submission's source entity.
    *
+   * @param bool $translate
+   *   (optional) If TRUE the source entity will be translated.
+   *
    * @return \Drupal\Core\Entity\EntityInterface|null
    *   The entity that this webform submission was created from.
    */
-  public function getSourceEntity();
+  public function getSourceEntity($translate = FALSE);
 
   /**
    * Gets the webform submission's source URL.
@@ -311,7 +396,7 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
    * Gets the webform submission's secure tokenized URL.
    *
    * @return \Drupal\Core\Url
-   *   The the webform submission's secure tokenized URL.
+   *   The webform submission's secure tokenized URL.
    */
   public function getTokenUrl();
 
@@ -332,12 +417,17 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
   public function invokeWebformElements($method);
 
   /**
-   * Convert anonymous submission to authenicated.
+   * Convert anonymous submission to authenticated.
    *
    * @param \Drupal\user\UserInterface $account
    *   An authenticated user account.
    */
   public function convert(UserInterface $account);
+
+  /**
+   * Resave a webform submission without trigger any hooks or handlers.
+   */
+  public function resave();
 
   /**
    * Gets an array of all property values.

@@ -1,19 +1,15 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\color_field\ColorHex.
- */
-
 namespace Drupal\color_field;
 
 /**
- * Hex represents the Hex color format
+ * Hex represents the Hex color format.
  */
 class ColorHex extends ColorBase {
 
   /**
    * The Hex triplet of the color.
+   *
    * @var int
    */
   private $color;
@@ -25,12 +21,11 @@ class ColorHex extends ColorBase {
    *   The string hex value (i.e. "FFFFFF").
    * @param string $opacity
    *   The opacity value.
-   * @return ColorHex
-   *   The ColorHex object.
+   *
    * @throws Exception
    */
   public function __construct($color, $opacity) {
-    $color = strtolower($color);
+    $color = trim(strtolower($color));
 
     if (substr($color, 0, 1) === '#') {
       $color = substr($color, 1);
@@ -51,13 +46,13 @@ class ColorHex extends ColorBase {
   }
 
   /**
-   * A string representation of this color in the current format
+   * A string representation of this color in the current format.
    *
    * @param bool $opacity
    *   Whether or not to display the opacity.
    *
    * @return string
-   *   The color in format: #RRGGBB
+   *   The color in format: #RRGGBB.
    */
   public function toString($opacity = TRUE) {
     $rgb = $this->toRGB();

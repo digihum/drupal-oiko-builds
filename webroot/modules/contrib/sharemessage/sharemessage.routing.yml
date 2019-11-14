@@ -22,6 +22,14 @@ sharemessage.sharrre.settings:
   requirements:
     _permission: 'administer sharemessages'
 
+sharemessage.socialshareprivacy.settings:
+  path: '/admin/config/services/sharemessage/socialshareprivacy-settings'
+  defaults:
+    _title: 'Social share privacy settings'
+    _form: '\Drupal\sharemessage\Form\SocialSharePrivacySettingsForm'
+  requirements:
+    _permission: 'administer sharemessages'
+
 sharemessage.sharrre.counter:
   path: '/sharemessage/sharrre/counter'
   defaults:

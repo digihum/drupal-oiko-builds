@@ -2,9 +2,6 @@
 
 namespace Drupal\Console\Command\Shared;
 
-use Drupal\Console\Core\Style\DrupalStyle;
-use Symfony\Component\Console\Input\InputInterface;
-
 /**
  * Class ModuleTrait
  *
@@ -55,44 +52,11 @@ trait ModuleTrait
     }
 
     /**
-     * Verify that install requirements for a list of modules are met.
-     *
-     * @param string[]    $module
-     *   List of modules to verify.
-     * @param DrupalStyle $io
-     *   Console interface.
-     *
-     * @throws \Exception
-     *   When one or more requirements are not met.
-     */
-    public function moduleRequirement(array $module, DrupalStyle $io)
-    {
-        // TODO: Module dependencies should also be checked
-        // for unmet requirements recursively.
-        $fail = false;
-        foreach ($module as $module_name) {
-            module_load_install($module_name);
-            if ($requirements = \Drupal::moduleHandler()->invoke($module_name, 'requirements', ['install'])) {
-                foreach ($requirements as $requirement) {
-                    if (isset($requirement['severity']) && $requirement['severity'] == REQUIREMENT_ERROR) {
-                        $io->info("Module '{$module_name}' cannot be installed: " . $requirement['title'] . ' | ' . $requirement['value']);
-                        $fail = true;
-                    }
-                }
-            }
-        }
-        if ($fail) {
-            throw new \Exception("Some module install requirements are not met.");
-        }
-    }
-
-    /**
      * Get module name from user.
      *
      * @return mixed|string
      *   Module name.
-     * @throws \Exception
-     *   When module is not found.
+
      */
     public function getModuleOption()
     {
@@ -103,19 +67,35 @@ trait ModuleTrait
             $module = $this->moduleQuestion();
             $input->setOption('module', $module);
         } else {
-            $missing_modules = $this->validator->getMissingModules([$module]);
-            if ($missing_modules) {
-                throw new \Exception(
-                    sprintf(
-                        $this->trans(
-                            'commands.module.download.messages.no-releases'
-                        ),
-                        $module
-                    )
-                );
-            }
+            $this->validateModule($module);
         }
 
+        return $module;
+    }
+
+    /**
+     * Validate module.
+     *
+     * @param string $module
+     *   Module name.
+     * @return string
+     *   Module name.
+     *
+     * @throws \Exception
+     *   When module is not found.
+     */
+    public function validateModule($module) {
+        $missing_modules = $this->validator->getMissingModules([$module]);
+        if ($missing_modules) {
+            throw new \Exception(
+                sprintf(
+                    $this->trans(
+                        'commands.module.download.messages.no-releases'
+                    ),
+                    $module
+                )
+            );
+        }
         return $module;
     }
 }

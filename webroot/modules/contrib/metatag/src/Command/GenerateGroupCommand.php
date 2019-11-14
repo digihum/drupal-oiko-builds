@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains Drupal\metatag\Command\GenerateGroupCommand.
- */
 
 namespace Drupal\metatag\Command;
 
@@ -10,14 +6,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\FormTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\metatag\Generator\MetatagGroupGenerator;
 use Drupal\Console\Extension\Manager;
-use Drupal\Console\Utils\ChainQueue;
+use Drupal\Console\Core\Utils\ChainQueue;
 
 /**
  * Class GenerateGroupCommand.
@@ -34,24 +30,35 @@ class GenerateGroupCommand extends Command {
   use ConfirmationTrait;
 
   /**
-   * @var MetatagGroupGenerator
+   * The metatag group generator.
+   *
+   * @var \Drupal\metatag\Generator\MetatagGroupGenerator
    */
   protected $generator;
 
-  /** @var Manager  */
+  /**
+   * The console extension manager.
+   *
+   * @var \Drupal\Console\Extension\Manager
+   */
   protected $extensionManager;
 
   /**
-   * @var ChainQueue
+   * The console chain queue.
+   *
+   * @var \Drupal\Console\Core\Utils\ChainQueue
    */
   protected $chainQueue;
 
   /**
-   * GenerateTagCommand constructor.
+   * The GenerateTagCommand constructor.
    *
-   * @param MetatagTagGenerator $generator
-   * @param Manager $extensionManager
-   * @param ChainQueue $chainQueue
+   * @param \Drupal\metatag\Generator\MetatagGroupGenerator $generator
+   *   The generator object.
+   * @param \Drupal\Console\Extension\Manager $extensionManager
+   *   The extension manager object.
+   * @param \Drupal\Console\Core\Utils\ChainQueue $chainQueue
+   *   The chain queue object.
    */
   public function __construct(
       MetatagGroupGenerator $generator,
@@ -70,7 +77,7 @@ class GenerateGroupCommand extends Command {
    */
   protected function configure() {
     $this
-      ->setName('generate:metatag:group')
+      ->setName('generate:plugin:metatag:group')
       ->setDescription($this->trans('commands.generate.metatag.group.description'))
       ->setHelp($this->trans('commands.generate.metatag.group.help'))
       ->addOption('base_class', '', InputOption::VALUE_REQUIRED,
@@ -95,7 +102,7 @@ class GenerateGroupCommand extends Command {
   protected function execute(InputInterface $input, OutputInterface $output) {
     $io = new DrupalStyle($input, $output);
 
-    // @see use Drupal\Console\Command\ConfirmationTrait::confirmGeneration
+    // @see Drupal\Console\Command\ConfirmationTrait::confirmGeneration
     if (!$this->confirmGeneration($io)) {
       return 1;
     }
@@ -176,8 +183,7 @@ class GenerateGroupCommand extends Command {
     $input->setOption('class-name', $class_name);
 
     // --weight option.
-    // @todo Automatically get the next integer value based upon the current
-    //   group.
+    // @todo Automatically get the next int value based upon the current group.
     $weight = $input->getOption('weight');
     if (is_null($weight)) {
       $weight = $io->ask(

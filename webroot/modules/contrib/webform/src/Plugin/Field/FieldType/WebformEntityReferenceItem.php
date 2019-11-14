@@ -2,14 +2,12 @@
 
 namespace Drupal\webform\Plugin\Field\FieldType;
 
-use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\TypedData\DataDefinition;
-use Drupal\webform\WebformInterface;
 
 /**
  * Defines the 'webform_entity_reference' entity field type.
@@ -40,18 +38,6 @@ class WebformEntityReferenceItem extends EntityReferenceItem {
   /**
    * {@inheritdoc}
    */
-  public static function defaultFieldSettings() {
-    return [
-      'default_data' => '',
-      'status' => WebformInterface::STATUS_OPEN,
-      'open' => '',
-      'close' => '',
-    ] + parent::defaultFieldSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
     return [
       'columns' => [
@@ -75,7 +61,7 @@ class WebformEntityReferenceItem extends EntityReferenceItem {
           'length' => 20,
         ],
         'close' => [
-          'description' => 'The open date/time.',
+          'description' => 'The close date/time.',
           'type' => 'varchar',
           'length' => 20,
         ],
@@ -109,31 +95,6 @@ class WebformEntityReferenceItem extends EntityReferenceItem {
   }
 
   /**
-   * Get an entity's webform field name.
-   *
-   * @param \Drupal\Core\Entity\EntityInterface $entity
-   *   A fieldable content entity.
-   *
-   * @return string
-   *   The name of the webform field or an empty string.
-   */
-  public static function getEntityWebformFieldName(EntityInterface $entity = NULL) {
-    if ($entity === NULL || !method_exists($entity, 'hasField')) {
-      return '';
-    }
-
-    if ($entity instanceof ContentEntityInterface) {
-      $fields = $entity->getFieldDefinitions();
-      foreach ($fields as $field_name => $field_definition) {
-        if ($field_definition->getType() == 'webform') {
-          return $field_name;
-        }
-      }
-    }
-    return '';
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function storageSettingsForm(array &$form, FormStateInterface $form_state, $has_data) {
@@ -145,6 +106,15 @@ class WebformEntityReferenceItem extends EntityReferenceItem {
    */
   public static function getPreconfiguredOptions() {
     return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getSettableOptions(AccountInterface $account = NULL) {
+    /** @var \Drupal\webform\WebformEntityStorageInterface $webform_storage */
+    $webform_storage = \Drupal::service('entity_type.manager')->getStorage('webform');
+    return $webform_storage->getOptions(FALSE);
   }
 
 }

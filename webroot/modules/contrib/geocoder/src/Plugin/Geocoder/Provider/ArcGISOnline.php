@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\Provider\ArcGisOnline.
- */
-
 namespace Drupal\geocoder\Plugin\Geocoder\Provider;
 
 use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
@@ -17,7 +12,8 @@ use Drupal\geocoder\ProviderUsingHandlerWithAdapterBase;
  *   name = "ArcGISOnline",
  *   handler = "\Geocoder\Provider\ArcGISOnline",
  *   arguments = {
- *     "sourceCountry"
+ *     "sourcecountry" = NULL,
+ *     "usessl" = false
  *   }
  * )
  */

@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\search_api\Unit;
 
+use Drupal\search_api\DataType\DataTypeInterface;
 use Drupal\search_api\Entity\Index;
 use Drupal\search_api\Item\Field;
 use Drupal\Tests\UnitTestCase;
@@ -28,7 +29,7 @@ class ItemFieldTest extends UnitTestCase {
   protected function setUp() {
     parent::setUp();
 
-    $data_type = $this->getMock('Drupal\search_api\DataType\DataTypeInterface');
+    $data_type = $this->createMock(DataTypeInterface::class);
     $data_type->expects($this->any())
       ->method('getValue')
       ->willReturnCallback(function ($v) {
@@ -46,7 +47,7 @@ class ItemFieldTest extends UnitTestCase {
       ->method('createInstance')
       ->willReturn($data_type);
 
-    $index = new Index(array(), 'search_api_index');
+    $index = new Index([], 'search_api_index');
 
     $this->field = new Field($index, 'field');
     $this->field->setDataTypeManager($data_type_manager);
@@ -58,7 +59,7 @@ class ItemFieldTest extends UnitTestCase {
    * @covers ::setValues
    */
   public function testSetValues() {
-    $values = array('*foo', '*bar');
+    $values = ['*foo', '*bar'];
     $this->field->setValues($values);
     $this->assertEquals($values, $this->field->getValues());
   }
@@ -72,9 +73,9 @@ class ItemFieldTest extends UnitTestCase {
    * @covers ::addValue
    */
   public function testAddValue() {
-    $this->field->setValues(array('*foo'));
+    $this->field->setValues(['*foo']);
     $this->field->addValue('bar');
-    $this->assertEquals(array('*foo', '*bar'), $this->field->getValues());
+    $this->assertEquals(['*foo', '*bar'], $this->field->getValues());
   }
 
 }

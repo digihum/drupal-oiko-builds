@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder\Plugin\Geocoder\DumperInterface.
- */
-
 namespace Drupal\geocoder;
 
 use Geocoder\Model\Address;
@@ -20,7 +15,7 @@ interface DumperInterface {
   /**
    * Dumps the argument into a specific format.
    *
-   * @param \Geocoder\Model\Address
+   * @param \Geocoder\Model\Address $address
    *   The address to be formatted.
    *
    * @return string

@@ -61,7 +61,6 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
     $search['keys'] = $this->randomMachineName(8);
 
     // Create a node to search for.
-    // Create a node.
     $edit = [];
     $edit['title[0][value]'] = 'This is a test title';
     $edit['body[0][value]'] = 'This test content contains ' . $search['keys'] . ' string.';
@@ -73,7 +72,7 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
 
     // Save the node.
     $this->drupalPostForm('node/add/page', $edit, t('Save'));
-    $this->assertRaw(t('@type %title has been created.', ['@type' => 'Basic page', '%title' => $edit['title[0][value]']]), 'Basic page created.');
+    $this->assertText(t('@type @title has been created.', ['@type' => 'Basic page', '@title' => $edit['title[0][value]']]), 'Basic page created.');
 
     // Index the node or it cannot found.
     $this->cronRun();
@@ -83,7 +82,7 @@ class GoogleAnalyticsSearchTest extends WebTestBase {
     $this->assertRaw('window.google_analytics_search_results = 1;', '[testGoogleAnalyticsSearch]: One search result found.');
 
     $this->drupalPostForm('node/add/page', $edit, t('Save'));
-    $this->assertRaw(t('@type %title has been created.', ['@type' => 'Basic page', '%title' => $edit['title[0][value]']]), 'Basic page created.');
+    $this->assertText(t('@type @title has been created.', ['@type' => 'Basic page', '@title' => $edit['title[0][value]']]), 'Basic page created.');
 
     // Index the node or it cannot found.
     $this->cronRun();

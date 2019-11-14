@@ -78,6 +78,12 @@ class DrupalFinder extends DrupalFinderBase
                 "/{$vendorDir}/drupal/console-%s/translations/"
             );
         }
+      if (!defined("DRUPAL_CONSOLE_LANGUAGE_INSTALLERS")) {
+        define(
+          "DRUPAL_CONSOLE_LANGUAGE_INSTALLERS",
+          "/console/language/console-%s/translations/"
+        );
+      }
 
         if (!defined("DRUPAL_CONSOLE_LIBRARY")) {
             define(
@@ -109,5 +115,9 @@ class DrupalFinder extends DrupalFinderBase
     public function getConsoleLanguagePath()
     {
         return $this->consoleLanguagePath;
+    }
+
+    public function isValidDrupal() {
+        return ($this->getComposerRoot() && $this->getDrupalRoot());
     }
 }

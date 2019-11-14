@@ -15,3 +15,7 @@ sharemessage.sharrre.settings:
   route_name: sharemessage.sharrre.settings
   base_route: entity.sharemessage.collection
   title: 'Sharrre settings'
+sharemessage.socialshareprivacy.settings:
+  route_name: sharemessage.socialshareprivacy.settings
+  base_route: entity.sharemessage.collection
+  title: 'Social Share Privacy settings'

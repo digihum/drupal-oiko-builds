@@ -10,20 +10,22 @@ namespace Drupal\Console\Command\Generate;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Command\Shared\ServicesTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Generator\AjaxCommandGenerator;
-use Drupal\Console\Core\Command\ContainerAwareCommand;
-use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\ChainQueue;
 use Drupal\Console\Extension\Manager;
 use Drupal\Console\Utils\Validator;
 
-class AjaxCommand extends ContainerAwareCommand
+/**
+ * Class AjaxCommand
+ *
+ * @package Drupal\Console\Command\Generate
+ */
+class AjaxCommand extends Command
 {
     use ModuleTrait;
-    use ServicesTrait;
     use ConfirmationTrait;
 
     /**
@@ -32,10 +34,9 @@ class AjaxCommand extends ContainerAwareCommand
     protected $extensionManager;
 
     /**
-     * @var ControllerGenerator
+     * @var AjaxCommandGenerator
      */
     protected $generator;
-
 
     /**
      * @var Validator
@@ -68,12 +69,15 @@ class AjaxCommand extends ContainerAwareCommand
         parent::__construct();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
             ->setName('generate:ajax:command')
-            ->setDescription($this->trans('commands.generate.controller.description'))
-            ->setHelp($this->trans('commands.generate.controller.help'))
+            ->setDescription($this->trans('commands.generate.ajax.command.description'))
+            ->setHelp($this->trans('commands.generate.ajax.command.help'))
             ->addOption(
                 'module',
                 null,
@@ -84,13 +88,19 @@ class AjaxCommand extends ContainerAwareCommand
                 'class',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.generate.controller.options.class')
+                $this->trans('commands.generate.ajax.command.options.class')
             )
             ->addOption(
                 'method',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.generate.controller.options.class')
+                $this->trans('commands.generate.ajax.command.options.method')
+            )
+            ->addOption(
+                'js-name',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                $this->trans('commands.generate.ajax.command.options.js-name')
             )
             ->setAliases(['gac']);
     }
@@ -100,21 +110,23 @@ class AjaxCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
-        // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
-        if (!$this->confirmGeneration($io, $input)) {
+        // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmOperation
+        if (!$this->confirmOperation()) {
             return 1;
         }
 
-        $module = $input->getOption('module');
+        $module = $this->validateModule($input->getOption('module'));
         $class = $this->validator->validateClassName($input->getOption('class'));
         $method = $input->getOption('method');
+        $js_name = $input->getOption('js-name');
 
         $this->generator->generate(
-            $module,
-            $class,
-            $method
+            [
+                'module' => $module,
+                'class_name' => $class,
+                'method' => $method,
+                'js_name' => $js_name,
+            ]
         );
 
         // Run cache rebuild to see changes in Web UI
@@ -128,16 +140,14 @@ class AjaxCommand extends ContainerAwareCommand
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
         // --module option
         $this->getModuleOption();
 
         // --class option
         $class = $input->getOption('class');
         if (!$class) {
-            $class = $io->ask(
-                $this->trans('commands.generate.controller.questions.class'),
+            $class = $this->getIo()->ask(
+                $this->trans('commands.generate.ajax.command.questions.class'),
                 'AjaxCommand',
                 function ($class) {
                     return $this->validator->validateClassName($class);
@@ -149,19 +159,21 @@ class AjaxCommand extends ContainerAwareCommand
         // --method option
         $method = $input->getOption('method');
         if (!$method) {
-            $method = $io->ask(
-                $this->trans('commands.generate.controller.questions.method'),
+            $method = $this->getIo()->ask(
+                $this->trans('commands.generate.ajax.command.questions.method'),
                 'hello'
             );
             $input->setOption('method', $method);
         }
-    }
 
-    /**
-     * @return \Drupal\Console\Generator\AjaxCommandGenerator
-     */
-    protected function createGenerator()
-    {
-        return new AjaxCommandGenerator();
+        // --js-name option
+        $js_name = $input->getOption('js-name');
+        if (!$js_name) {
+            $js_name = $this->getIo()->ask(
+                $this->trans('commands.generate.ajax.command.questions.js-name'),
+                'script'
+            );
+            $input->setOption('js-name', $js_name);
+        }
     }
 }

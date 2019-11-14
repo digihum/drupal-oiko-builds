@@ -2,6 +2,7 @@
 
 namespace Drupal\search_api\Datasource;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\TypedData\ComplexDataInterface;
@@ -40,14 +41,14 @@ abstract class DatasourcePluginBase extends IndexPluginBase implements Datasourc
    * {@inheritdoc}
    */
   public function getPropertyDefinitions() {
-    return array();
+    return [];
   }
 
   /**
    * {@inheritdoc}
    */
   public function load($id) {
-    $items = $this->loadMultiple(array($id));
+    $items = $this->loadMultiple([$id]);
     return $items ? reset($items) : NULL;
   }
 
@@ -55,7 +56,7 @@ abstract class DatasourcePluginBase extends IndexPluginBase implements Datasourc
    * {@inheritdoc}
    */
   public function loadMultiple(array $ids) {
-    return array();
+    return [];
   }
 
   /**
@@ -97,37 +98,45 @@ abstract class DatasourcePluginBase extends IndexPluginBase implements Datasourc
    * {@inheritdoc}
    */
   public function checkItemAccess(ComplexDataInterface $item, AccountInterface $account = NULL) {
-    return TRUE;
+    @trigger_error('\Drupal\search_api\Datasource\DatasourceInterface::checkItemAccess() is deprecated in search_api:8.x-1.14 and is removed from search_api:9.x-1.0. Use getItemAccessResult() instead. See https://www.drupal.org/node/3051902', E_USER_DEPRECATED);
+    return $this->getItemAccessResult($item, $account)->isAllowed();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getItemAccessResult(ComplexDataInterface $item, AccountInterface $account = NULL) {
+    return AccessResult::allowed();
   }
 
   /**
    * {@inheritdoc}
    */
   public function getViewModes($bundle = NULL) {
-    return array();
+    return [];
   }
 
   /**
    * {@inheritdoc}
    */
   public function getBundles() {
-    return array(
+    return [
       $this->getPluginId() => $this->label(),
-    );
+    ];
   }
 
   /**
    * {@inheritdoc}
    */
   public function viewItem(ComplexDataInterface $item, $view_mode, $langcode = NULL) {
-    return array();
+    return [];
   }
 
   /**
    * {@inheritdoc}
    */
   public function viewMultipleItems(array $items, $view_mode, $langcode = NULL) {
-    $build = array();
+    $build = [];
     foreach ($items as $key => $item) {
       $build[$key] = $this->viewItem($item, $view_mode, $langcode);
     }
@@ -152,7 +161,7 @@ abstract class DatasourcePluginBase extends IndexPluginBase implements Datasourc
    * {@inheritdoc}
    */
   public function getFieldDependencies(array $fields) {
-    return array();
+    return [];
   }
 
 }

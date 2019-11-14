@@ -64,7 +64,7 @@ On Drupal 8.1.x, install the module manually:
 
      "require": {
          ... other packages ...
-         "drupal/twig_xdebug": "8.*"
+         "drupal/twig_xdebug": "^1.0"
      },
 
  3. Install the module and its dependencies:

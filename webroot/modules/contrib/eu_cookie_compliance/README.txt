@@ -10,44 +10,47 @@ half a million pounds for a serious breach.
 How it works.
 =============
 
-The module displays a pop-up at the bottom or at the top of website to make
+The module displays a banner at the bottom or the top of website to make
 users aware of the fact that cookies are being set. The user may then give
 his/her consent or move to a page that provides more details. Consent is given
 by user pressing the agree buttons or by continuing browsing the website. Once
-consent is given another pop-up appears with a thank you message.
+consent is given another banner appears with a "Thank you" message.
 
-The module provides a settings page where the pop-up can be customized. There
-are also template files for the pop-ups that can be overridden by your theme.
+The module provides a settings page where the banner can be customized. There
+are also template files for the banners that can be overridden by your theme.
 
 Installation.
 =============
 
-1. Unzip the files to the "sites/all/modules" OR "modules" directory and enable the module.
+1. Unzip the files to the "sites/all/modules" OR "modules" directory and enable
+   the module.
 
-2. If desired, give the administer EU Cookie Compliance pop-up permissions that
-allow users of certain roles access the administration page. You can do so on
-the admin/user/permissions page.
+2. If desired, give the administer EU Cookie Compliance banner permissions that
+   allow users of certain roles access the administration page. You can do so on
+   the admin/user/permissions page.
 
-  - there is also a 'display eu cookie compliance popup' permission that helps
-    you show the popup to the roles you desire.
+  - there is also a 'display eu cookie compliance banner' permission that helps
+    you show the banner to the roles you desire.
 
 3. You may want to create a page that would explain how your site uses cookies.
-Alternatively, if you have a privacy policy, you can link the pop-up to that
-page (see next step).
+   Alternatively, if you have a privacy policy, you can link the banner to that
+   page (see next step).
 
-4. Go to the admin/config/system/eu-cookie-compliance page to configure and enable
-the pop-up.
+4. Go to the admin/config/system/eu-cookie-compliance page to configure and
+   enable the banner.
 
-5. If you want to customize the pop-up background and text color, either type
-in the hex values or simply install http://drupal.org/project/jquery_colorpicker.
+5. If you want to customize the banner background and text color, either type
+   in the hex values or simply install
+   http://drupal.org/project/jquery_colorpicker.
 
-6. If you want to theme your pop-up override the themes in the template file.
+6. If you want to theme your banner, override the themes in the template file.
 
-7. If you want to show the message in EU countries only, install the geoip
-module: http://drupal.org/project/geoip and enable the option on the admin page.
-
-NOTICE: The module does not audit your cookies nor does it prevent cookies
-from being set.
+7. If you want to show the message in EU countries only, install the Smart IP
+   module: http://drupal.org/project/smart_ip and enable the option "Only
+   display banner in EU countries" on the admin page. There is a JavaScript
+   based option available for sites that use Varnish (or other caching
+   strategies). The JavaScript based variant also works for visitors that bypass
+   Varnish.
 
 For developers.
 ===============
@@ -57,10 +60,8 @@ function provided that returns TRUE if the current user has given his consent:
 
 Drupal.eu_cookie_compliance.hasAgreed()
 
-To run test you should run next script:
-
-php ./core/scripts/run-tests.sh --color --verbose --browser --url <http://example.com> --class "\Drupal\eu_cookie_compliance\Tests\EuCookieComplianceTest"
-
-If you have Drupal Console installed:
-
-drupal tr --url=<http://example.com> "\Drupal\eu_cookie_compliance\Tests\EuCookieComplianceTest"
+Prevent "Consent by clicking" for some links
+============================================
+The module offers a feature to accept consent by clicking. It may be relevant to
+prevent this for certain links. In such cases, the link(s) can be wrapped in an
+element with the class "popup-content".

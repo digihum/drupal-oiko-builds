@@ -5,6 +5,12 @@ sharemessage.settings:
     message_enforcement:
       type: boolean
       label: Enforce message through URL
+    add_twitter_card:
+      type: boolean
+      label: Add meta tags for twitter
+    twitter_user:
+      type: string
+      label: Twitter account username
 
 sharemessage.addthis:
   type: config_object
@@ -62,6 +68,25 @@ sharemessage.sharrre:
         - type: string
           label: Service name
 
+sharemessage.socialshareprivacy:
+  type: config_object
+  mapping:
+    services:
+      type: sequence
+      label: Visible services
+      sequence:
+        - type: string
+          label: Service name
+    facebook_action:
+      type: string
+      label: Facebok action
+    disqus_shortname:
+      type: string
+      label: Disqus shortname
+    flattr_uid:
+      type: string
+      label: Flattr user id
+
 sharemessage.sharemessage.*:
   type: config_entity
   label: 'Share Message'
@@ -84,6 +109,12 @@ sharemessage.sharemessage.*:
     image_url:
       type: string
       label: 'Image URL'
+    image_width:
+      type: string
+      label: 'Image Width'
+    image_height:
+      type: string
+      label: 'Image Height'
     fallback_image:
       type: string
       label: 'Fallback image UUID'
@@ -121,6 +152,15 @@ sharemessage.sharemessage.*:
           sequence:
             - type: string
               label: Service name
+    extra_field_entity_type:
+      type: string
+      label: 'Share Message extra field entity type'
+    extra_field_bundles:
+      type: sequence
+      label: 'Entity type bundles list'
+      sequence:
+        type: string
+        label: 'Share Message extra field bundles'
 
 block.settings.sharemessage_block:
   type: block_settings

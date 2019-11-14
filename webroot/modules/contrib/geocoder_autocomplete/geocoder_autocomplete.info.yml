@@ -3,8 +3,8 @@ description: 'Provides a text field widget with autocomplete via the Google Geoc
 # core: 8.x
 type: module
 
-# Information added by Drupal.org packaging script on 2016-06-28
-version: '8.x-1.0-alpha1'
+# Information added by Drupal.org packaging script on 2017-01-13
+version: '8.x-1.0'
 core: '8.x'
 project: 'geocoder_autocomplete'
-datestamp: 1467125668
+datestamp: 1484303586

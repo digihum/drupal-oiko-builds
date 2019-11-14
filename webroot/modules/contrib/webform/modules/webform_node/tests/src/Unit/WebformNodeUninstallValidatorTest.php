@@ -2,7 +2,7 @@
 
 namespace Drupal\Tests\webform_node\Unit;
 
-use Drupal\simpletest\AssertHelperTrait;
+use Drupal\Tests\AssertHelperTrait;
 use Drupal\Tests\UnitTestCase;
 
 /**
@@ -14,6 +14,8 @@ class WebformNodeUninstallValidatorTest extends UnitTestCase {
   use AssertHelperTrait;
 
   /**
+   * A mock webform node uninstall validator.
+   *
    * @var \Drupal\webform_node\WebformNodeUninstallValidator|\PHPUnit_Framework_MockObject_MockObject
    */
   protected $webformNodeUninstallValidator;

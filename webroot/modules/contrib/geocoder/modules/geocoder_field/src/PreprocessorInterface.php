@@ -1,11 +1,7 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\geocoder_field\PreprocessorInterface.
- */
-
 namespace Drupal\geocoder_field;
+
 use Drupal\Core\Field\FieldItemListInterface;
 
 /**
@@ -34,9 +30,11 @@ interface PreprocessorInterface {
   public function preprocess();
 
   /**
+   * Get prepared reverse geocode values.
+   *
    * @todo [cc]: When fixing reverse operation, clarify the interface for this
    *   method, including the method name.
    */
-  public function getPreparedReverseGeocodeValues(array $values = array());
+  public function getPreparedReverseGeocodeValues(array $values = []);
 
 }

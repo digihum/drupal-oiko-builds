@@ -1,4 +1,44 @@
-# CHANGELOG
+# Change Log
+
+## 6.4.1 - 2019-10-23
+
+* No `guzzle.phar` was created in 6.4.0 due expired API token. This release will fix that 
+* Added `parent::__construct()` to `FileCookieJar` and `SessionCookieJar`
+
+## 6.4.0 - 2019-10-23
+
+* Improvement: Improved error messages when using curl < 7.21.2 [#2108](https://github.com/guzzle/guzzle/pull/2108)
+* Fix: Test if response is readable before returning a summary in `RequestException::getResponseBodySummary()` [#2081](https://github.com/guzzle/guzzle/pull/2081)
+* Fix: Add support for GUZZLE_CURL_SELECT_TIMEOUT environment variable [#2161](https://github.com/guzzle/guzzle/pull/2161)
+* Improvement: Added `GuzzleHttp\Exception\InvalidArgumentException` [#2163](https://github.com/guzzle/guzzle/pull/2163)
+* Improvement: Added `GuzzleHttp\_current_time()` to use `hrtime()` if that function exists. [#2242](https://github.com/guzzle/guzzle/pull/2242)
+* Improvement: Added curl's `appconnect_time` in `TransferStats` [#2284](https://github.com/guzzle/guzzle/pull/2284)
+* Improvement: Make GuzzleException extend Throwable wherever it's available [#2273](https://github.com/guzzle/guzzle/pull/2273)
+* Fix: Prevent concurrent writes to file when saving `CookieJar` [#2335](https://github.com/guzzle/guzzle/pull/2335)
+* Improvement: Update `MockHandler` so we can test transfer time [#2362](https://github.com/guzzle/guzzle/pull/2362)
+
+## 6.3.3 - 2018-04-22
+
+* Fix: Default headers when decode_content is specified
+
+
+## 6.3.2 - 2018-03-26
+
+* Fix: Release process
+
+
+## 6.3.1 - 2018-03-26
+
+* Bug fix: Parsing 0 epoch expiry times in cookies [#2014](https://github.com/guzzle/guzzle/pull/2014)
+* Improvement: Better ConnectException detection [#2012](https://github.com/guzzle/guzzle/pull/2012)
+* Bug fix: Malformed domain that contains a "/" [#1999](https://github.com/guzzle/guzzle/pull/1999)
+* Bug fix: Undefined offset when a cookie has no first key-value pair [#1998](https://github.com/guzzle/guzzle/pull/1998)
+* Improvement: Support PHPUnit 6 [#1953](https://github.com/guzzle/guzzle/pull/1953)
+* Bug fix: Support empty headers [#1915](https://github.com/guzzle/guzzle/pull/1915)
+* Bug fix: Ignore case during header modifications [#1916](https://github.com/guzzle/guzzle/pull/1916)
+
++ Minor code cleanups, documentation fixes and clarifications.
+
 
 ## 6.3.0 - 2017-06-22
 

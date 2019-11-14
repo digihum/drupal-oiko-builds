@@ -1,7 +1,5 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Drupal\search_api;
 
 use Drupal\Core\Entity\EntityInterface;
@@ -16,13 +14,10 @@ use Drupal\search_api\Processor\ProcessorInterface;
 use Drupal\search_api\Query\QueryInterface;
 use Drupal\search_api\Query\ResultSetInterface;
 use Drupal\search_api\Tracker\TrackerInterface;
-use Drupal\user\SharedTempStore;
+use Drupal\Core\TempStore\SharedTempStore;
 
 /**
  * Represents a configuration of an index that was not yet permanently saved.
- *
- * Proxy code created with:
- * php ./core/scripts/generate-proxy-class.php 'Drupal\search_api\IndexInterface' modules/search_api/src/
  */
 class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationInterface {
 
@@ -36,7 +31,7 @@ class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationI
   /**
    * The shared temporary storage to use.
    *
-   * @var \Drupal\user\SharedTempStore
+   * @var \Drupal\Core\TempStore\SharedTempStore
    */
   protected $tempStore;
 
@@ -55,11 +50,18 @@ class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationI
   protected $lock;
 
   /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|null
+   */
+  protected $entityTypeManager;
+
+  /**
    * Constructs a new UnsavedIndexConfiguration.
    *
    * @param \Drupal\search_api\IndexInterface $index
    *   The index to proxy.
-   * @param \Drupal\user\SharedTempStore $temp_store
+   * @param \Drupal\Core\TempStore\SharedTempStore $temp_store
    *   The shared temporary storage to use.
    * @param int|string $current_user_id
    *   Either the UID of the currently logged-in user, or the session ID (for
@@ -69,6 +71,29 @@ class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationI
     $this->entity = $index;
     $this->tempStore = $temp_store;
     $this->currentUserId = $current_user_id;
+  }
+
+  /**
+   * Retrieves the entity type manager.
+   *
+   * @return \Drupal\Core\Entity\EntityTypeManagerInterface
+   *   The entity type manager.
+   */
+  public function getEntityTypeManager() {
+    return $this->entityTypeManager ?: \Drupal::entityTypeManager();
+  }
+
+  /**
+   * Sets the entity type manager.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The new entity type manager.
+   *
+   * @return $this
+   */
+  public function setEntityTypeManager(EntityTypeManagerInterface $entity_type_manager) {
+    $this->entityTypeManager = $entity_type_manager;
+    return $this;
   }
 
   /**
@@ -98,13 +123,12 @@ class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationI
   /**
    * {@inheritdoc}
    */
-  public function getLockOwner(EntityTypeManagerInterface $entity_type_manager = NULL) {
+  public function getLockOwner() {
     if (!$this->lock) {
       return NULL;
     }
     $uid = is_numeric($this->lock->owner) ? $this->lock->owner : 0;
-    $entity_type_manager = $entity_type_manager ?: \Drupal::entityTypeManager();
-    return $entity_type_manager->getStorage('user')->load($uid);
+    return $this->getEntityTypeManager()->getStorage('user')->load($uid);
   }
 
   /**
@@ -125,17 +149,16 @@ class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationI
   /**
    * {@inheritdoc}
    */
-  public function savePermanent(EntityTypeManagerInterface $entity_type_manager = NULL) {
-    if (!$entity_type_manager) {
-      $entity_type_manager = \Drupal::entityTypeManager();
-    }
+  public function savePermanent() {
     // Make sure to overwrite only the index's fields, not just all properties.
     // Unlike the Views UI, we have several separate pages for editing index
     // entities, and only one of them is locked. Therefore, this extra step is
     // necessary, we can't just call $this->entity->save().
+    /** @var \Drupal\search_api\Entity\SearchApiConfigEntityStorage $storage */
+    $storage = $this->getEntityTypeManager()->getStorage('search_api_index');
+    $storage->resetCache([$this->entity->id()]);
     /** @var \Drupal\search_api\IndexInterface $original */
-    $storage = $entity_type_manager->getStorage($this->entity->getEntityTypeId());
-    $original = $storage->loadUnchanged($this->entity->id());
+    $original = $storage->loadOverrideFree($this->entity->id());
     $fields = $this->entity->getFields();
     // Set the correct index object on the field objects.
     foreach ($fields as $field) {
@@ -203,20 +226,6 @@ class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationI
   /**
    * {@inheritdoc}
    */
-  public function createPlugin($type, $plugin_id, $configuration = array()) {
-    return $this->entity->createPlugin($type, $plugin_id, $configuration);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function createPlugins($type, array $plugin_ids = NULL, $configurations = array()) {
-    return $this->entity->createPlugins($type, $plugin_ids, $configurations);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getDatasources() {
     return $this->entity->getDatasources();
   }
@@ -264,6 +273,13 @@ class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationI
   public function setDatasources(array $datasources) {
     $this->entity->setDatasources($datasources);
     return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getEntityTypes() {
+    return $this->entity->getEntityTypes();
   }
 
   /**
@@ -341,8 +357,8 @@ class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationI
   /**
    * {@inheritdoc}
    */
-  public function getProcessorsByStage($stage) {
-    return $this->entity->getProcessorsByStage($stage);
+  public function getProcessorsByStage($stage, array $overrides = []) {
+    return $this->entity->getProcessorsByStage($stage, $overrides);
   }
 
   /**
@@ -481,6 +497,14 @@ class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationI
   /**
    * {@inheritdoc}
    */
+  public function discardFieldChanges() {
+    $this->entity->discardFieldChanges();
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getPropertyDefinitions($datasource_id) {
     return $this->entity->getPropertyDefinitions($datasource_id);
   }
@@ -574,6 +598,13 @@ class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationI
   /**
    * {@inheritdoc}
    */
+  public function rebuildTracker() {
+    $this->entity->rebuildTracker();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function isReindexing() {
     return $this->entity->isReindexing();
   }
@@ -581,7 +612,7 @@ class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationI
   /**
    * {@inheritdoc}
    */
-  public function query(array $options = array()) {
+  public function query(array $options = []) {
     return $this->entity->query($options);
   }
 
@@ -757,28 +788,28 @@ class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationI
   /**
    * {@inheritdoc}
    */
-  public function urlInfo($rel = 'canonical', array $options = array()) {
+  public function urlInfo($rel = 'canonical', array $options = []) {
     return $this->entity->toUrl($rel, $options);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function toUrl($rel = 'canonical', array $options = array()) {
+  public function toUrl($rel = 'canonical', array $options = []) {
     return $this->entity->toUrl($rel, $options);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function url($rel = 'canonical', $options = array()) {
+  public function url($rel = 'canonical', $options = []) {
     return $this->entity->toUrl($rel, $options)->toString();
   }
 
   /**
    * {@inheritdoc}
    */
-  public function link($text = NULL, $rel = 'canonical', array $options = array()) {
+  public function link($text = NULL, $rel = 'canonical', array $options = []) {
     return $this->entity->toLink($text, $rel, $options)->toString();
   }
 
@@ -820,7 +851,7 @@ class UnsavedIndexConfiguration implements IndexInterface, UnsavedConfigurationI
   /**
    * {@inheritdoc}
    */
-  public static function create(array $values = array()) {
+  public static function create(array $values = []) {
     return Index::create($values);
   }
 

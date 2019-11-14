@@ -57,7 +57,7 @@ class GeocoderAutocomplete extends StringTextfieldWidget {
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The form state.
    */
-  public function validateFormElement($element, FormStateInterface $form_state) {
+  public static function validateFormElement($element, FormStateInterface $form_state) {
     if ($geocoded_address = $element['#value']) {
       $geocoded_address_cleaned = trim($geocoded_address, '"');
       $form_state->setValueForElement($element, $geocoded_address_cleaned);

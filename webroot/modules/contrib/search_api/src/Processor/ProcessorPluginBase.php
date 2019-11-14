@@ -23,6 +23,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * - id: The unique, system-wide identifier of the processor.
  * - label: The human-readable name of the processor, translated.
  * - description: A human-readable description for the processor, translated.
+ * - stages: The default weights for all stages for which the processor should
+ *   run. Available stages are defined by the STAGE_* constants in
+ *   ProcessorInterface. This is, by default, used for supportsStage(), so if
+ *   you don't provide a value here, your processor might not work as expected
+ *   even though it implements the corresponding method.
  *
  * A complete plugin definition should be written as in this example:
  *
@@ -34,7 +39,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   stages = {
  *     "preprocess_index" = 0,
  *     "preprocess_query" = 0,
- *     "postprocess_query" = 0
+ *     "postprocess_query" = 0,
  *   }
  * )
  * @endcode
@@ -136,14 +141,15 @@ abstract class ProcessorPluginBase extends IndexPluginBase implements ProcessorI
    * {@inheritdoc}
    */
   public function isHidden() {
-    return !empty($this->pluginDefinition['hidden']);
+    return !empty($this->pluginDefinition['hidden'])
+        || !empty($this->pluginDefinition['no_ui']);
   }
 
   /**
    * {@inheritdoc}
    */
   public function getPropertyDefinitions(DatasourceInterface $datasource = NULL) {
-    return array();
+    return [];
   }
 
   /**
@@ -254,63 +260,6 @@ abstract class ProcessorPluginBase extends IndexPluginBase implements ProcessorI
       }
     }
     return NULL;
-  }
-
-  /**
-   * Filters the given fields for those with the specified property path.
-   *
-   * Array keys will be preserved.
-   *
-   * @param \Drupal\search_api\Item\FieldInterface[] $fields
-   *   The fields to filter.
-   * @param string $property_path
-   *   The searched property path on the item.
-   *
-   * @return \Drupal\search_api\Item\FieldInterface[]
-   *   All fields with the given property path.
-   *
-   * @deprecated Will be removed by 8.x-1.0 RC1. Use
-   *   \Drupal\search_api\Utility\FieldsHelperInterface::filterForPropertyPath()
-   *   instead.
-   */
-  protected function filterForPropertyPath(array $fields, $property_path) {
-    $found_fields = array();
-    foreach ($fields as $field_id => $field) {
-      if ($field->getPropertyPath() === $property_path) {
-        $found_fields[$field_id] = $field;
-      }
-    }
-    return $found_fields;
-  }
-
-  /**
-   * Extracts property values from items.
-   *
-   * Values are taken from existing fields on the item, where present, and are
-   * otherwise extracted from the item's underlying object.
-   *
-   * @param \Drupal\search_api\Item\ItemInterface[] $items
-   *   The items from which properties should be extracted.
-   * @param string[][] $required_properties
-   *   The properties that should be extracted, keyed by datasource ID and
-   *   property path, with the values being the IDs that the values should be
-   *   put under in the return value.
-   * @param bool $load
-   *   (optional) If FALSE, only field values already present will be returned.
-   *   Otherwise, fields will be extracted (and underlying objects loaded) if
-   *   necessary.
-   *
-   * @return mixed[][][]
-   *   Arrays of field values, keyed by items' indexes in $items and the given
-   *   field IDs from $required_properties.
-   *
-   * @deprecated Will be removed by 8.x-1.0 RC1. Use
-   *   \Drupal\search_api\Utility\FieldsHelperInterface::extractItemValues()
-   *   instead.
-   */
-  protected function extractItemValues(array $items, array $required_properties, $load = TRUE) {
-    return $this->getFieldsHelper()
-      ->extractItemValues($items, $required_properties, $load);
   }
 
 }

@@ -1,10 +1,9 @@
 name: 'Share Message Tests'
 type: module
 description: 'Share Message Tests Module.'
-# core: 8.x
+core: 8.x
 
-# Information added by Drupal.org packaging script on 2016-05-30
-version: '8.x-1.0-beta1'
-core: '8.x'
+# Information added by Drupal.org packaging script on 2019-10-22
+version: '8.x-1.0-beta3'
 project: 'sharemessage'
-datestamp: 1464640750
+datestamp: 1571729288

@@ -4,8 +4,8 @@ namespace Drupal\search_api\Display;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Path\CurrentPathStack;
-use Drupal\Core\Plugin\PluginBase;
 use Drupal\Core\Url;
+use Drupal\search_api\Plugin\HideablePluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -23,6 +23,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "my_display",
  *   label = @Translation("My display"),
  *   description = @Translation("A few words about this search display"),
+ *   index = "search_index",
+ *   path = "/my/custom/search",
  * )
  * @endcode
  *
@@ -31,7 +33,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @see \Drupal\search_api\Display\DisplayInterface
  * @see plugin_api
  */
-abstract class DisplayPluginBase extends PluginBase implements DisplayInterface {
+abstract class DisplayPluginBase extends HideablePluginBase implements DisplayInterface {
 
   /**
    * The current path service.
@@ -135,9 +137,9 @@ abstract class DisplayPluginBase extends PluginBase implements DisplayInterface 
    * {@inheritdoc}
    */
   public function getUrl() {
-    $plugin_definition = $this->getPluginDefinition();
-    if (!empty($plugin_definition['path'])) {
-      return Url::fromUserInput($plugin_definition['path']);
+    @trigger_error('\Drupal\search_api\Display\DisplayInterface::getUrl() is deprecated in Search API 8.x-1.0 Beta 5. Use ::getPath() instead. See https://www.drupal.org/node/2856050', E_USER_DEPRECATED);
+    if ($path = $this->getPath()) {
+      return Url::fromUserInput($path);
     }
     return NULL;
   }
@@ -146,19 +148,39 @@ abstract class DisplayPluginBase extends PluginBase implements DisplayInterface 
    * {@inheritdoc}
    */
   public function getPath() {
-    return $this->getUrl();
+    $plugin_definition = $this->getPluginDefinition();
+    if (!empty($plugin_definition['path'])) {
+      return $plugin_definition['path'];
+    }
+    return NULL;
   }
 
   /**
    * {@inheritdoc}
    */
   public function isRenderedInCurrentRequest() {
-    $plugin_definition = $this->getPluginDefinition();
-    if (!empty($plugin_definition['path'])) {
+    if ($path = $this->getPath()) {
       $current_path = $this->getCurrentPath()->getPath();
-      return $current_path == $plugin_definition['path'];
+      return $current_path == $path;
     }
     return FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function calculateDependencies() {
+    $dependencies = [];
+
+    // By default, add dependencies to the module providing this display and to
+    // the index it is based on.
+    $definition = $this->getPluginDefinition();
+    $dependencies['module'][] = $definition['provider'];
+
+    $index = $this->getIndex();
+    $dependencies[$index->getConfigDependencyKey()][] = $index->getConfigDependencyName();
+
+    return $dependencies;
   }
 
 }

@@ -24,6 +24,7 @@ class NodeData extends Base
      * @param $limit
      * @param $titleWords
      * @param $timeRange
+     * @param $revision
      *
      * @return array
      */
@@ -32,30 +33,37 @@ class NodeData extends Base
         $limit,
         $titleWords,
         $timeRange,
+        $revision,
         $language = LanguageInterface::LANGCODE_NOT_SPECIFIED
     ) {
         $nodes = [];
         $bundles = $this->drupalApi->getBundles();
-        for ($i=0; $i<$limit; $i++) {
-            $contentType = $contentTypes[array_rand($contentTypes)];
-            $node = $this->entityTypeManager->getStorage('node')->create(
-                [
-                    'nid' => null,
-                    'type' => $contentType,
-                    'created' => REQUEST_TIME - mt_rand(0, $timeRange),
-                    'uid' => $this->getUserID(),
-                    'title' => $this->getRandom()->sentences(mt_rand(1, $titleWords), true),
-                    'revision' => mt_rand(0, 1),
-                    'status' => true,
-                    'promote' => mt_rand(0, 1),
-                    'langcode' => $language
-                ]
-            );
-
-            $this->generateFieldSampleData($node);
-
+        for ($i = 0; $i < $limit; $i++) {
             try {
+                $contentType = $contentTypes[array_rand($contentTypes)];
+                $node = $this->entityTypeManager->getStorage('node')->create(
+                    [
+                        'nid' => null,
+                        'type' => $contentType,
+                        'created' => REQUEST_TIME - mt_rand(0, $timeRange),
+                        'uid' => $this->getUserID(),
+                        'title' => $this->getRandom()->sentences(mt_rand(1, $titleWords), true),
+                        'revision' => mt_rand(0, 1),
+                        'status' => true,
+                        'promote' => mt_rand(0, 1),
+                        'langcode' => $language
+                    ]
+                );
+
+                $this->generateFieldSampleData($node);
                 $node->save();
+
+                if($revision) {
+                    for ($a = 0; $a < 3; $a++) {
+                        $this->addRevision($node, $a);
+                    }
+                }
+
                 $nodes['success'][] = [
                     'nid' => $node->id(),
                     'node_type' => $bundles[$contentType],
@@ -67,14 +75,22 @@ class NodeData extends Base
                     )
                 ];
             } catch (\Exception $error) {
-                $nodes['error'][] = [
-                    'node_type' =>  $bundles[$contentType],
-                    'title' => $node->getTitle(),
-                    'error' => $error->getMessage()
-                ];
+                $nodes['error'][] = $error->getMessage();
             }
         }
 
         return $nodes;
+    }
+
+    /**
+     * @param $node
+     * @param $count
+     */
+    private function addRevision($node, $count) {
+        $node->setTitle($this->getRandom()->sentences(mt_rand(1, 5), true));
+        $node->setNewRevision(TRUE);
+        $node->revision_log = "Revision number $count was created";
+        $node->setRevisionCreationTime(REQUEST_TIME);
+        $node->save();
     }
 }
