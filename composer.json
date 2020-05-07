@@ -221,12 +221,13 @@
                 "Allows use of geometrycollection": "https://www.drupal.org/files/issues/leaflet-2799311-geometry-collection.patch",
                 "https://www.drupal.org/node/2858091#comment-11971355": "https://www.drupal.org/files/issues/leaflet-2858091-no-features-on-ajax.patch"
             }
-        }
+        },
+        "composer-version": "^1.8.4"
     },
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "5.6"
+            "php": "7.2"
         }
     }
 }
