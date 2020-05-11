@@ -71,7 +71,7 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
 
   $variables['timeline'] = array(
     '#theme' => 'comparative_timeline',
-    '#global' => TRUE,
+    '#pagestate' => TRUE,
   );
 
 
