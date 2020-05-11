@@ -116,7 +116,7 @@
         "drupal/devel": "1.x-dev",
         "drupal/eu_cookie_compliance": "^1.0",
         "drupal/eva": "^2.0",
-        "drupal/field_group": "^3.0-rc1",
+        "drupal/field_group": "^3.0.0",
         "drupal/geocoder": "^2.0",
         "drupal/geocoder_autocomplete": "^1.0",
         "drupal/geofield": "^1.6",
