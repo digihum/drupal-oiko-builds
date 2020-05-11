@@ -123,10 +123,12 @@ if (drupalSettings.ajaxPageState.theme === 'oiko') {
     PHSCategoryListener(PHSCategories, PHSCategories, 'PHSCategories');
 
     $(window).on('oiko.timelines_updated', (e, timelines) => {
-      const {comparativeTimelines} = store.getState();
-      const timeline = Drupal.oiko.timeline;
-      if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length || comparativeTimelines.every((v, i) => v !== timelines[i]))) {
-        store.dispatch(setComparativeTimelines(timelines));
+      if (typeof Drupal.oiko.timeline !== 'undefined') {
+        const {comparativeTimelines} = store.getState();
+        const timeline = Drupal.oiko.timeline;
+        if (!timeline.isLoadingItems() && (comparativeTimelines.length !== timelines.length || comparativeTimelines.every((v, i) => v !== timelines[i]))) {
+          store.dispatch(setComparativeTimelines(timelines));
+        }
       }
     });
 
