@@ -3,6 +3,11 @@
 body.layout-flex {
   display: flex;
   flex-direction: column;
+  > .dialog-off-canvas-main-canvas {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
 }
 
 .l-main {

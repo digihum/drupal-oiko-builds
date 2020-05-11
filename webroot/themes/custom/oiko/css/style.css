@@ -2874,6 +2874,14 @@ body.layout-flex {
       flex-direction: column;
 }
 
+body.layout-flex > .dialog-off-canvas-main-canvas {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 100%;
+}
+
 .l-main {
   -ms-flex-positive: 1;
       flex-grow: 1;

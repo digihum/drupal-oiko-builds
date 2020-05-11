@@ -10,7 +10,7 @@ a[href]:after {
   content: '';
 }
 
-body.layout-flex, .l-main, .l-content-container, .l-main-content, .oiko-app, .page-scroll-container {
+body.layout-flex, body.layout-flex > .data-off-canvas-main-canvas, .l-main, .l-content-container, .l-main-content, .oiko-app, .page-scroll-container {
   display: block;
 }
 
