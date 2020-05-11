@@ -62,7 +62,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @see \Drupal\Tests\KernelTestBase::installSchema()
  * @see \Drupal\Tests\BrowserTestBase
  *
- * @deprecated in Drupal 8.0.x, will be removed before Drupal 9.0.0. Use
+ * @deprecated in drupal:8.0.0 and is removed from drupal:9.0.0. Use
  *   \Drupal\KernelTests\KernelTestBase instead.
  *
  * @ingroup testing
@@ -216,6 +216,9 @@ EOD;
     if (file_exists($directory . '/settings.testing.php')) {
       Settings::initialize(DRUPAL_ROOT, $site_path, $class_loader);
     }
+    // Set the module list upfront to avoid setting the kernel into the
+    // pre-installer mode.
+    $this->kernel->updateModules([], []);
     $this->kernel->boot();
 
     // Ensure database install tasks have been run.
@@ -231,6 +234,9 @@ EOD;
     // prevents any services created during the first boot from having stale
     // database connections, for example, \Drupal\Core\Config\DatabaseStorage.
     $this->kernel->shutdown();
+    // Set the module list upfront to avoid setting the kernel into the
+    // pre-installer mode.
+    $this->kernel->updateModules([], []);
     $this->kernel->boot();
 
     // Save the original site directory path, so that extensions in the
@@ -385,12 +391,12 @@ EOD;
         ->addArgument(new Reference('keyvalue'));
     }
 
-    if ($container->hasDefinition('path_processor_alias')) {
+    if ($container->hasDefinition('path_alias.path_processor')) {
       // The alias-based processor requires the path_alias entity schema to be
       // installed, so we prevent it from being registered to the path processor
       // manager. We do this by removing the tags that the compiler pass looks
       // for. This means that the URL generator can safely be used within tests.
-      $definition = $container->getDefinition('path_processor_alias');
+      $definition = $container->getDefinition('path_alias.path_processor');
       $definition->clearTag('path_processor_inbound')->clearTag('path_processor_outbound');
     }
 

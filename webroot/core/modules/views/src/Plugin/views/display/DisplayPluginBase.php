@@ -363,9 +363,7 @@ abstract class DisplayPluginBase extends PluginBase implements DisplayPluginInte
    * {@inheritdoc}
    */
   public function acceptAttachments() {
-    // To be able to accept attachments this display have to be able to use
-    // attachments but at the same time, you cannot attach a display to itself.
-    if (!$this->usesAttachments() || ($this->definition['id'] == $this->view->current_display)) {
+    if (!$this->usesAttachments()) {
       return FALSE;
     }
 
@@ -2188,7 +2186,7 @@ abstract class DisplayPluginBase extends PluginBase implements DisplayPluginInte
    * @param array $element
    *   The render array with updated cacheability metadata.
    *
-   * @deprecated in Drupal 8.4.0, will be removed before Drupal 9.0. Use
+   * @deprecated in drupal:8.4.0 and is removed from drupal:9.0.0. Use
    *   DisplayPluginBase::applyDisplayCacheabilityMetadata instead.
    *
    * @see \Drupal\views\Plugin\views\display\DisplayPluginBase::applyDisplayCacheabilityMetadata()
@@ -2547,7 +2545,7 @@ abstract class DisplayPluginBase extends PluginBase implements DisplayPluginInte
             }
           }
           else {
-            if ($id != $key && $identifier == $handler->options['expose']['identifier']) {
+            if ($id != $key && isset($handler->options['expose']['identifier']) && $identifier == $handler->options['expose']['identifier']) {
               return FALSE;
             }
           }

@@ -11,7 +11,7 @@ use org\bovigo\vfs\vfsStream;
  * Tests InfoParser class and exception.
  *
  * Files for this test are stored in core/modules/system/tests/fixtures and end
- * with .info.txt instead of info.yml in order not not be considered as real
+ * with .info.txt instead of info.yml in order not to be considered as real
  * extensions.
  *
  * @coversDefaultClass \Drupal\Core\Extension\InfoParser
@@ -32,8 +32,8 @@ class InfoParserUnitTest extends UnitTestCase {
    */
   protected function setUp() {
     parent::setUp();
-
-    $this->infoParser = new InfoParser();
+    // Use a fake DRUPAL_ROOT.
+    $this->infoParser = new InfoParser('vfs:/');
   }
 
   /**
@@ -111,7 +111,6 @@ MISSINGKEYS;
   public function testMissingCoreCoreVersionRequirement() {
     $missing_core_and_core_version_requirement = <<<MISSING_CORE_AND_CORE_VERSION_REQUIREMENT
 # info.yml for testing core and core_version_requirement.
-package: Core
 version: VERSION
 type: module
 name: Skynet
@@ -139,6 +138,30 @@ MISSING_CORE_AND_CORE_VERSION_REQUIREMENT;
 
       $this->infoParser->parse(vfsStream::url('modules/fixtures/missing_core_and_core_version_requirement-duplicate.info.txt'));
     }
+  }
+
+  /**
+   * Tests that Testing package modules use a default core_version_requirement.
+   *
+   * @covers ::parse
+   */
+  public function testTestingPackageMissingCoreCoreVersionRequirement() {
+    $missing_core_and_core_version_requirement = <<<MISSING_CORE_AND_CORE_VERSION_REQUIREMENT
+# info.yml for testing core and core_version_requirement.
+package: Testing
+version: VERSION
+type: module
+name: Skynet
+MISSING_CORE_AND_CORE_VERSION_REQUIREMENT;
+
+    vfsStream::setup('modules');
+    vfsStream::create([
+      'fixtures' => [
+        'missing_core_and_core_version_requirement.info.txt' => $missing_core_and_core_version_requirement,
+      ],
+    ]);
+    $info_values = $this->infoParser->parse(vfsStream::url('modules/fixtures/missing_core_and_core_version_requirement.info.txt'));
+    $this->assertSame($info_values['core_version_requirement'], \Drupal::VERSION);
   }
 
   /**
@@ -349,7 +372,7 @@ MISSINGKEY;
    */
   public function testInfoParserCommonInfo() {
     $common = <<<COMMONTEST
-core: 8.x
+core_version_requirement: '*'
 name: common_test
 type: module
 description: 'testing info file parsing'
@@ -371,10 +394,35 @@ COMMONTEST;
       $this->assertEquals($info_values['simple_string'], 'A simple string', 'Simple string value was parsed correctly.');
       $this->assertEquals($info_values['version'], \Drupal::VERSION, 'Constant value was parsed correctly.');
       $this->assertEquals($info_values['double_colon'], 'dummyClassName::method', 'Value containing double-colon was parsed correctly.');
-      $this->assertSame('8.x', $info_values['core']);
-      $this->assertFalse(isset($info_values['core_version_requirement']));
       $this->assertFalse($info_values['core_incompatible']);
     }
+  }
+
+  /**
+   * Tests common info file.
+   *
+   * @covers ::parse
+   */
+  public function testInfoParserCoreInfo() {
+    $common = <<<CORETEST
+name: core_test
+type: module
+version: "VERSION"
+description: 'testing info file parsing'
+CORETEST;
+
+    vfsStream::setup('core');
+
+    $filename = "core_test.info.txt";
+    vfsStream::create([
+      'fixtures' => [
+        $filename => $common,
+      ],
+    ]);
+    $info_values = $this->infoParser->parse(vfsStream::url("core/fixtures/$filename"));
+    $this->assertEquals($info_values['version'], \Drupal::VERSION, 'Constant value was parsed correctly.');
+    $this->assertFalse($info_values['core_incompatible']);
+    $this->assertEquals(\Drupal::VERSION, $info_values['core_version_requirement']);
   }
 
   /**
@@ -439,12 +487,11 @@ CORE_INCOMPATIBILITY;
   }
 
   /**
-   * Test a profile info file with the 'core_version_requirement' key.
+   * Test a profile info file.
    */
-  public function testInvalidProfile() {
+  public function testProfile() {
     $profile = <<<PROFILE_TEST
-core: 8.x
-core_version_requirement: ^8
+core_version_requirement: '*'
 name: The Perfect Profile
 type: profile
 description: 'This profile makes Drupal perfect. You should have no complaints.'
@@ -456,9 +503,8 @@ PROFILE_TEST;
         'invalid_profile.info.txt' => $profile,
       ],
     ]);
-    $this->expectException('\Drupal\Core\Extension\InfoParserException');
-    $this->expectExceptionMessage("The 'core_version_requirement' key is not supported in profiles in vfs://profiles/fixtures/invalid_profile.info.txt");
-    $this->infoParser->parse(vfsStream::url('profiles/fixtures/invalid_profile.info.txt'));
+    $info = $this->infoParser->parse(vfsStream::url('profiles/fixtures/invalid_profile.info.txt'));
+    $this->assertFalse($info['core_incompatible']);
   }
 
   /**
@@ -483,8 +529,8 @@ UNPARSABLE_CORE_VERSION_REQUIREMENT;
         'unparsable_core_version_requirement.info.txt' => $unparsable_core_version_requirement,
       ],
     ]);
-    $this->expectException(\UnexpectedValueException::class);
-    $this->expectExceptionMessage('Could not parse version constraint not-this-version: Invalid version string "not-this-version"');
+    $this->expectException(InfoParserException::class);
+    $this->expectExceptionMessage("The 'core_version_requirement' constraint (not-this-version) is not a valid value in vfs://modules/fixtures/unparsable_core_version_requirement.info.txt");
     $this->infoParser->parse(vfsStream::url('modules/fixtures/unparsable_core_version_requirement.info.txt'));
   }
 

@@ -27,9 +27,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Creates a form to create media entities from uploaded files.
  *
  * @internal
- *   Media Library is an experimental module and its internal code may be
- *   subject to change in minor releases. External code should not instantiate
- *   or extend this class.
+ *   Form classes are internal.
  */
 class FileUploadForm extends AddFormBase {
 
@@ -109,6 +107,13 @@ class FileUploadForm extends AddFormBase {
   /**
    * {@inheritdoc}
    */
+  public function getFormId() {
+    return $this->getBaseFormId() . '_upload';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   protected function getMediaType(FormStateInterface $form_state) {
     if ($this->mediaType) {
       return $this->mediaType;
@@ -128,8 +133,6 @@ class FileUploadForm extends AddFormBase {
    * {@inheritdoc}
    */
   protected function buildInputElement(array $form, FormStateInterface $form_state) {
-    $form['#attributes']['class'][] = 'media-library-add-form--upload';
-
     // Create a file item to get the upload validators.
     $media_type = $this->getMediaType($form_state);
     $item = $this->createFileItem($media_type);
@@ -145,9 +148,6 @@ class FileUploadForm extends AddFormBase {
     // Add a container to group the input elements for styling purposes.
     $form['container'] = [
       '#type' => 'container',
-      '#attributes' => [
-        'class' => ['media-library-add-form__input-wrapper'],
-      ],
     ];
 
     $process = (array) $this->elementInfo->getInfoProperty('managed_file', '#process', []);
@@ -241,6 +241,52 @@ class FileUploadForm extends AddFormBase {
         ],
       ],
     ];
+    return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function buildEntityFormElement(MediaInterface $media, array $form, FormStateInterface $form_state, $delta) {
+    $element = parent::buildEntityFormElement($media, $form, $form_state, $delta);
+    $source_field = $this->getSourceFieldName($media->bundle->entity);
+    if (isset($element['fields'][$source_field])) {
+      $element['fields'][$source_field]['widget'][0]['#process'][] = [static::class, 'hideExtraSourceFieldComponents'];
+    }
+    return $element;
+  }
+
+  /**
+   * Processes an image or file source field element.
+   *
+   * @param array $element
+   *   The entity form source field element.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current form state.
+   * @param $form
+   *   The complete form.
+   *
+   * @return array
+   *   The processed form element.
+   */
+  public static function hideExtraSourceFieldComponents($element, FormStateInterface $form_state, $form) {
+    // Remove original button added by ManagedFile::processManagedFile().
+    if (!empty($element['remove_button'])) {
+      $element['remove_button']['#access'] = FALSE;
+    }
+    // Remove preview added by ImageWidget::process().
+    if (!empty($element['preview'])) {
+      $element['preview']['#access'] = FALSE;
+    }
+
+    $element['#title_display'] = 'none';
+    $element['#description_display'] = 'none';
+
+    // Remove the filename display.
+    foreach ($element['#files'] as $file) {
+      $element['file_' . $file->id()]['filename']['#access'] = FALSE;
+    }
+
     return $element;
   }
 

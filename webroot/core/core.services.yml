@@ -462,13 +462,12 @@ services:
     class: Drupal\Core\Queue\QueueDatabaseFactory
     arguments: ['@database']
   path.alias_whitelist:
-    class: Drupal\Core\Path\AliasWhitelist
-    tags:
-      - { name: needs_destruction }
-    arguments: [path_alias_whitelist, '@cache.bootstrap', '@lock', '@state', '@path.alias_storage']
+    alias: path_alias.whitelist
+    deprecated: 'The "%service_id%" service is deprecated. Use "path_alias.whitelist" instead. See https://drupal.org/node/3092086'
   path.alias_manager:
     class: Drupal\Core\Path\AliasManager
-    arguments: ['@path.alias_storage', '@path.alias_whitelist', '@language_manager', '@cache.data']
+    arguments: ['@path_alias.repository', '@path_alias.whitelist', '@language_manager', '@cache.data']
+    deprecated: 'The "%service_id%" service is deprecated. Use "path_alias.manager" instead. See https://drupal.org/node/3092086'
   path.current:
     class: Drupal\Core\Path\CurrentPathStack
     arguments: ['@request_stack']
@@ -642,6 +641,7 @@ services:
   plugin.manager.archiver:
     class: Drupal\Core\Archiver\ArchiverManager
     parent: default_plugin_manager
+    arguments: ['@file_system']
   plugin.manager.action:
     class: Drupal\Core\Action\ActionManager
     arguments: ['@container.namespaces', '@cache.discovery', '@module_handler']
@@ -740,15 +740,12 @@ services:
     arguments: ['@event_dispatcher', '@controller_resolver', '@request_stack', '@http_kernel.controller.argument_resolver']
   http_kernel.controller.argument_resolver:
     class: Symfony\Component\HttpKernel\Controller\ArgumentResolver
-    arguments: ['@http_kernel.controller.argument_metadata_factory', ['@argument_resolver.request_attribute', '@argument_resolver.raw_parameter', '@argument_resolver.request', '@argument_resolver.psr7_request', '@argument_resolver.route_match', '@argument_resolver.default']]
+    arguments: ['@http_kernel.controller.argument_metadata_factory', ['@argument_resolver.request_attribute', '@argument_resolver.request', '@argument_resolver.psr7_request', '@argument_resolver.route_match', '@argument_resolver.default']]
   http_kernel.controller.argument_metadata_factory:
     class: Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory
     public: false
   argument_resolver.request_attribute:
     class: Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeValueResolver
-    public: false
-  argument_resolver.raw_parameter:
-    class: Drupal\Core\Controller\ArgumentResolver\RawParameterValueResolver
     public: false
   argument_resolver.request:
     class: Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver
@@ -965,6 +962,7 @@ services:
     arguments: ['@database', '@module_handler', '@entity_type.manager']
     tags:
       - { name: backend_overridable }
+    deprecated: The "%service_id%" service is deprecated. Use the "path_alias.repository" service instead, or the entity storage handler for the "path_alias" entity type for CRUD methods. See https://www.drupal.org/node/3013865
   path.matcher:
     class: Drupal\Core\Path\PathMatcher
     arguments: ['@config.factory', '@current_route_match']
@@ -1218,9 +1216,8 @@ services:
       - { name: event_subscriber }
   path_subscriber:
     class: Drupal\Core\EventSubscriber\PathSubscriber
-    tags:
-      - { name: event_subscriber }
-    arguments: ['@path.alias_manager', '@path.current']
+    arguments: ['@path_alias.manager', '@path.current']
+    deprecated: 'The "%service_id%" service is deprecated. Use "path_alias.subscriber" instead. See https://drupal.org/node/3092086'
   route_access_response_subscriber:
     class: Drupal\Core\EventSubscriber\RouteAccessResponseSubscriber
     tags:
@@ -1353,10 +1350,8 @@ services:
       - { name: route_processor_outbound, priority: 200 }
   path_processor_alias:
     class: Drupal\Core\PathProcessor\PathProcessorAlias
-    tags:
-      - { name: path_processor_inbound, priority: 100 }
-      - { name: path_processor_outbound, priority: 300 }
-    arguments: ['@path.alias_manager']
+    arguments: ['@path_alias.manager']
+    deprecated: 'The "%service_id%" service is deprecated. Use "path_alias.path_processor" instead. See https://drupal.org/node/3092086'
   route_processor_csrf:
     class: Drupal\Core\Access\RouteProcessorCsrf
     tags:
@@ -1623,6 +1618,7 @@ services:
     arguments: ['@library.discovery', '@library.dependency_resolver', '@module_handler', '@theme.manager', '@language_manager', '@cache.data']
   info_parser:
     class: Drupal\Core\Extension\InfoParser
+    arguments: ['@app.root']
   twig:
     class: Drupal\Core\Template\TwigEnvironment
     arguments: ['@app.root', '@cache.default', '%twig_extension_hash%', '@state', '@twig.loader', '%twig.config%']

@@ -15,6 +15,11 @@ class PathautoMassDeleteTest extends BrowserTestBase {
   use PathautoTestHelperTrait;
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stable';
+
+  /**
    * Modules to enable.
    *
    * @var array
@@ -52,7 +57,7 @@ class PathautoMassDeleteTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     $permissions = [
@@ -71,7 +76,10 @@ class PathautoMassDeleteTest extends BrowserTestBase {
   /**
    * Tests the deletion of all the aliases.
    */
-  function testDeleteAll() {
+  public function testDeleteAll() {
+    /** @var \Drupal\pathauto\AliasStorageHelperInterface $alias_storage_helper */
+    $alias_storage_helper = \Drupal::service('pathauto.alias_storage_helper');
+
     // 1. Test that deleting all the aliases, of any type, works.
     $this->generateAliases();
     $edit = [
@@ -83,8 +91,7 @@ class PathautoMassDeleteTest extends BrowserTestBase {
     $this->assertUrl('admin/config/search/path/delete_bulk');
 
     // Make sure that all of them are actually deleted.
-    $aliases = \Drupal::database()->select('url_alias', 'ua')->fields('ua', [])->execute()->fetchAll();
-    $this->assertEmpty($aliases, "All the aliases have been deleted.");
+    $this->assertEquals(0, $alias_storage_helper->countAll(), 'All the aliases have been deleted.');
 
     // 2. Test deleting only specific (entity type) aliases.
     $manager = $this->container->get('plugin.manager.alias_type');
@@ -127,14 +134,16 @@ class PathautoMassDeleteTest extends BrowserTestBase {
 
     // Make sure that only custom aliases and aliases with no information about
     // their state still exist.
-    $aliases = \Drupal::database()->select('url_alias', 'ua')->fields('ua', ['source'])->execute()->fetchCol();
-    $this->assertEquals(['/node/101', '/node/104', '/node/105'], $aliases, 'Custom aliases still exist.');
+    $this->assertEquals(3, $alias_storage_helper->countAll(), 'Custom aliases still exist.');
+    $this->assertEquals('/node/101', $alias_storage_helper->loadBySource('/node/101', 'en')['source']);
+    $this->assertEquals('/node/104', $alias_storage_helper->loadBySource('/node/104', 'en')['source']);
+    $this->assertEquals('/node/105', $alias_storage_helper->loadBySource('/node/105', 'en')['source']);
   }
 
   /**
    * Helper function to generate aliases.
    */
-  function generateAliases() {
+  public function generateAliases() {
     // Delete all aliases to avoid duplicated aliases. They will be recreated
     // below.
     $this->deleteAllAliases();
@@ -172,7 +181,7 @@ class PathautoMassDeleteTest extends BrowserTestBase {
       }
     }
     else {
-      foreach ($this->accounts as $id => $account) {
+      foreach ($this->accounts as $account) {
         $account->save();
       }
     }

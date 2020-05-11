@@ -10,6 +10,7 @@ use Drupal\Core\Logger\RfcLogLevel;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\dblog\Controller\DbLogController;
+use Drupal\error_test\Controller\ErrorTestController;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -26,7 +27,19 @@ class DbLogTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['dblog', 'node', 'forum', 'help', 'block'];
+  public static $modules = [
+    'dblog',
+    'error_test',
+    'node',
+    'forum',
+    'help',
+    'block',
+  ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'classy';
 
   /**
    * A user with some relevant administrative permissions.
@@ -182,7 +195,7 @@ class DbLogTest extends BrowserTestBase {
 
     // Check row limit variable.
     $current_limit = $this->config('dblog.settings')->get('row_limit');
-    $this->assertTrue($current_limit == $row_limit, new FormattableMarkup('[Cache] Row limit variable of @count equals row limit of @limit', ['@count' => $current_limit, '@limit' => $row_limit]));
+    $this->assertEquals($current_limit, $row_limit, new FormattableMarkup('[Cache] Row limit variable of @count equals row limit of @limit', ['@count' => $current_limit, '@limit' => $row_limit]));
   }
 
   /**
@@ -341,7 +354,7 @@ class DbLogTest extends BrowserTestBase {
     $this->assertResponse(200);
     // Retrieve the user object.
     $user = user_load_by_name($name);
-    $this->assertTrue($user != NULL, new FormattableMarkup('User @name was loaded', ['@name' => $name]));
+    $this->assertNotNull($user, new FormattableMarkup('User @name was loaded', ['@name' => $name]));
     // pass_raw property is needed by drupalLogin.
     $user->passRaw = $pass;
     // Log in user.
@@ -354,7 +367,7 @@ class DbLogTest extends BrowserTestBase {
       $ids[] = $row->wid;
     }
     $count_before = (isset($ids)) ? count($ids) : 0;
-    $this->assertTrue($count_before > 0, new FormattableMarkup('DBLog contains @count records for @name', ['@count' => $count_before, '@name' => $user->getAccountName()]));
+    $this->assertGreaterThan(0, $count_before, new FormattableMarkup('DBLog contains @count records for @name', ['@count' => $count_before, '@name' => $user->getAccountName()]));
 
     // Log in the admin user.
     $this->drupalLogin($this->adminUser);
@@ -391,7 +404,7 @@ class DbLogTest extends BrowserTestBase {
       // Check for full message text on the details page.
       $this->assertRaw($message, 'DBLog event details was found: [delete user]');
     }
-    $this->assertTrue($link, 'DBLog event was recorded: [delete user]');
+    $this->assertNotEmpty($link, 'DBLog event was recorded: [delete user]');
     // Visit random URL (to generate page not found event).
     $not_found_url = $this->randomMachineName(60);
     $this->drupalGet($not_found_url);
@@ -424,7 +437,7 @@ class DbLogTest extends BrowserTestBase {
     $this->assertResponse(200);
     // Retrieve the node object.
     $node = $this->drupalGetNodeByTitle($title);
-    $this->assertTrue($node != NULL, new FormattableMarkup('Node @title was loaded', ['@title' => $title]));
+    $this->assertNotNull($node, new FormattableMarkup('Node @title was loaded', ['@title' => $title]));
     // Edit the node.
     $edit = $this->getContentUpdate($type);
     $this->drupalPostForm('node/' . $node->id() . '/edit', $edit, t('Save'));
@@ -786,6 +799,30 @@ class DbLogTest extends BrowserTestBase {
     $this->assertEquals($entries[0]['message'], 'Third Entry #0');
     $this->assertEquals($entries[1]['message'], 'Second Entry #0');
     $this->assertEquals($entries[2]['message'], 'First Entry #0');
+  }
+
+  /**
+   * Tests that the details page displays correctly backtrace.
+   */
+  public function testBacktrace() {
+    $this->drupalLogin($this->adminUser);
+    $this->drupalGet('/error-test/generate-warnings');
+
+    $wid = Database::getConnection()->query('SELECT MAX(wid) FROM {watchdog}')->fetchField();
+    $this->drupalGet('admin/reports/dblog/event/' . $wid);
+
+    $error_user_notice = [
+      '%type' => 'User warning',
+      '@message' => 'Drupal & awesome',
+      '%function' => ErrorTestController::class . '->generateWarnings()',
+      '%file' => drupal_get_path('module', 'error_test') . '/error_test.module',
+    ];
+
+    // Check if the full message displays on the details page and backtrace is a
+    // pre-formatted text.
+    $message = new FormattableMarkup('%type: @message in %function (line', $error_user_notice);
+    $this->assertRaw($message);
+    $this->assertRaw('<pre class="backtrace">');
   }
 
 }

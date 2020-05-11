@@ -164,12 +164,17 @@ abstract class KernelTestBase extends TestCase implements ServiceProviderInterfa
    * it extends, and so on up the class hierarchy. It is not necessary to
    * include modules in your list that a parent class has already declared.
    *
+   * The Path Alias module is always installed because the functionality has
+   * moved from core to a required module in Drupal 8.8.0. If a kernel test
+   * requires path alias functionality it is recommended to add the module to
+   * the test's own $modules property for Drupal 9 compatibility.
+   *
    * @see \Drupal\Tests\KernelTestBase::enableModules()
    * @see \Drupal\Tests\KernelTestBase::bootKernel()
    *
    * @var array
    */
-  protected static $modules = [];
+  protected static $modules = ['path_alias'];
 
   /**
    * The virtual filesystem root directory.
@@ -269,6 +274,9 @@ abstract class KernelTestBase extends TestCase implements ServiceProviderInterfa
     $settings = [
       'hash_salt' => get_class($this),
       'file_public_path' => $this->siteDirectory . '/files',
+      // Skip the "path_alias" schema check for kernel tests, since they do not
+      // rely on the full schema being installed.
+      'system.path_alias_schema_check' => FALSE,
       // Disable Twig template caching/dumping.
       'twig_cache' => FALSE,
       // @see \Drupal\KernelTests\KernelTestBase::register()
@@ -336,11 +344,12 @@ abstract class KernelTestBase extends TestCase implements ServiceProviderInterfa
     // Bootstrap the kernel. Do not use createFromRequest() to retain Settings.
     $kernel = new DrupalKernel('testing', $this->classLoader, FALSE);
     $kernel->setSitePath($this->siteDirectory);
-    // Boot a new one-time container from scratch. Ensure to set the module list
-    // upfront to avoid a subsequent rebuild.
-    if ($modules && $extensions = $this->getExtensionsForModules($modules)) {
-      $kernel->updateModules($extensions, $extensions);
-    }
+    // Boot a new one-time container from scratch. Set the module list upfront
+    // to avoid a subsequent rebuild or setting the kernel into the
+    // pre-installer mode.
+    $extensions = $modules ? $this->getExtensionsForModules($modules) : [];
+    $kernel->updateModules($extensions, $extensions);
+
     // DrupalKernel::boot() is not sufficient as it does not invoke preHandle(),
     // which is required to initialize legacy global variables.
     $request = Request::create('/');
@@ -538,12 +547,12 @@ abstract class KernelTestBase extends TestCase implements ServiceProviderInterfa
         ->addTag('event_subscriber');
     }
 
-    if ($container->hasDefinition('path_processor_alias')) {
+    if ($container->hasDefinition('path_alias.path_processor')) {
       // The alias-based processor requires the path_alias entity schema to be
       // installed, so we prevent it from being registered to the path processor
       // manager. We do this by removing the tags that the compiler pass looks
       // for. This means that the URL generator can safely be used within tests.
-      $container->getDefinition('path_processor_alias')
+      $container->getDefinition('path_alias.path_processor')
         ->clearTag('path_processor_inbound')
         ->clearTag('path_processor_outbound');
     }
@@ -605,9 +614,9 @@ abstract class KernelTestBase extends TestCase implements ServiceProviderInterfa
 
     // Remove all prefixed tables.
     $original_connection_info = Database::getConnectionInfo('simpletest_original_default');
-    $original_prefix = $original_connection_info['default']['prefix']['default'];
+    $original_prefix = $original_connection_info['default']['prefix']['default'] ?? NULL;
     $test_connection_info = Database::getConnectionInfo('default');
-    $test_prefix = $test_connection_info['default']['prefix']['default'];
+    $test_prefix = $test_connection_info['default']['prefix']['default'] ?? NULL;
     if ($original_prefix != $test_prefix) {
       $tables = Database::getConnection()->schema()->findTables('%');
       foreach ($tables as $table) {
@@ -1007,7 +1016,7 @@ abstract class KernelTestBase extends TestCase implements ServiceProviderInterfa
    * @see \Drupal\KernelTests\KernelTestBase::$runTestInSeparateProcess
    * @see https://github.com/sebastianbergmann/phpunit/pull/1350
    *
-   * @deprecated in Drupal 8.4.x, for removal before the Drupal 9.0.0 release.
+   * @deprecated in drupal:8.4.0 and is removed from drupal:9.0.0.
    *   KernelTestBase tests are always run in isolated processes.
    */
   protected function isTestInIsolation() {
@@ -1021,7 +1030,7 @@ abstract class KernelTestBase extends TestCase implements ServiceProviderInterfa
    * Test authors should follow the provided instructions and adjust their tests
    * accordingly.
    *
-   * @deprecated in Drupal 8.0.0, will be removed before Drupal 9.0.0.
+   * @deprecated in drupal:8.0.0 and is removed from drupal:9.0.0.
    */
   public function __get($name) {
     if (in_array($name, [

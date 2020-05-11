@@ -164,7 +164,7 @@ class SqlContentEntityStorage extends ContentEntityStorageBase implements SqlEnt
    *   The array of base field definitions for the entity type, keyed by field
    *   name.
    *
-   * @deprecated in Drupal 8.7.0, will be removed before Drupal 9.0.0.
+   * @deprecated in drupal:8.7.0 and is removed from drupal:9.0.0.
    *   Use \Drupal\Core\Entity\EntityFieldManagerInterface::getActiveFieldStorageDefinitions()
    *   instead.
    *
@@ -710,9 +710,8 @@ class SqlContentEntityStorage extends ContentEntityStorageBase implements SqlEnt
    * the class can be extended, and the default query can be constructed by
    * calling parent::buildQuery(). This is usually necessary when the object
    * being loaded needs to be augmented with additional data from another
-   * table, such as loading node type into comments or vocabulary machine name
-   * into terms, however it can also support $conditions on different tables.
-   * See Drupal\comment\CommentStorage::buildQuery() for an example.
+   * table, such as loading vocabulary machine name into terms, however it
+   * can also support $conditions on different tables.
    *
    * @param array|null $ids
    *   An array of entity IDs, or NULL to load all entities.
@@ -720,7 +719,7 @@ class SqlContentEntityStorage extends ContentEntityStorageBase implements SqlEnt
    *   The IDs of the revisions to load, or FALSE if this query is asking for
    *   the default revisions. Defaults to FALSE.
    *
-   * @return \Drupal\Core\Database\Query\Select
+   * @return \Drupal\Core\Database\Query\SelectInterface
    *   A SelectQuery object for loading the entity.
    */
   protected function buildQuery($ids, $revision_ids = FALSE) {
@@ -1820,7 +1819,7 @@ class SqlContentEntityStorage extends ContentEntityStorageBase implements SqlEnt
    * @return bool
    *   Whether the field has been already deleted.
    *
-   * @deprecated in Drupal 8.5.x, will be removed before Drupal 9.0.0. Use
+   * @deprecated in drupal:8.5.0 and is removed from drupal:9.0.0. Use
    *   \Drupal\Core\Field\FieldStorageDefinitionInterface::isDeleted() instead.
    *
    * @see https://www.drupal.org/node/2907785

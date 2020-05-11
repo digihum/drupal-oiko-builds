@@ -102,7 +102,7 @@ class LibraryDiscoveryParser {
     $libraries = $this->applyLibrariesOverride($libraries, $extension);
 
     foreach ($libraries as $id => &$library) {
-      if (!isset($library['js']) && !isset($library['css']) && !isset($library['drupalSettings'])) {
+      if (!isset($library['js']) && !isset($library['css']) && !isset($library['drupalSettings']) && !isset($library['dependencies'])) {
         throw new IncompleteLibraryDefinitionException(sprintf("Incomplete library definition for definition '%s' in extension '%s'", $id, $extension));
       }
       $library += ['dependencies' => [], 'js' => [], 'css' => []];
@@ -117,7 +117,7 @@ class LibraryDiscoveryParser {
           $library['version'] = \Drupal::VERSION;
         }
         // Remove 'v' prefix from external library versions.
-        elseif ($library['version'][0] === 'v') {
+        elseif (is_string($library['version']) && $library['version'][0] === 'v') {
           $library['version'] = substr($library['version'], 1);
         }
       }
@@ -410,7 +410,7 @@ class LibraryDiscoveryParser {
   /**
    * Wraps \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface::isValidUri().
    *
-   * @deprecated in drupal:8.8.0 and will be removed before drupal:9.0.0. Use
+   * @deprecated in drupal:8.8.0 and is removed from drupal:9.0.0. Use
    *   \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface::isValidUri()
    *   instead.
    */

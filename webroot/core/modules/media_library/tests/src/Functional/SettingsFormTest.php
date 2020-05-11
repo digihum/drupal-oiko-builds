@@ -9,9 +9,6 @@ use Drupal\Tests\BrowserTestBase;
  *
  * @coversDefaultClass \Drupal\media_library\Form\SettingsForm
  * @group media_library
- *
- * @todo Roll this test into
- *   https://www.drupal.org/project/drupal/issues/3087227
  */
 class SettingsFormTest extends BrowserTestBase {
 
@@ -19,6 +16,11 @@ class SettingsFormTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   protected static $modules = ['media_library'];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
 
   /**
    * Tests the Media Library settings form.

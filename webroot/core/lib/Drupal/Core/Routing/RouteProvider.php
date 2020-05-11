@@ -191,7 +191,7 @@ class RouteProvider implements CacheableRouteProviderInterface, PreloadableRoute
   }
 
   /**
-   * Find the route using the provided route name (and parameters).
+   * Find the route using the provided route name.
    *
    * @param string $name
    *   The route name to fetch
@@ -490,8 +490,8 @@ class RouteProvider implements CacheableRouteProviderInterface, PreloadableRoute
    */
   protected function getCurrentLanguageCacheIdPart() {
     // This must be in sync with the language logic in
-    // \Drupal\Core\PathProcessor\PathProcessorAlias::processInbound() and
-    // \Drupal\Core\Path\AliasManager::getPathByAlias().
+    // \Drupal\path_alias\PathProcessor\AliasPathProcessor::processInbound() and
+    // \Drupal\path_alias\AliasManager::getPathByAlias().
     // @todo Update this if necessary in https://www.drupal.org/node/1125428.
     return $this->languageManager->getCurrentLanguage(LanguageInterface::TYPE_URL)->getId();
   }

@@ -416,6 +416,13 @@ trait FunctionalTestSetupTrait {
     // Use the install profile to determine the default theme if configured and
     // not already specified.
     $profile = $container->getParameter('install_profile');
+
+    $default_sync_path = drupal_get_path('profile', $profile) . '/config/sync';
+    $profile_config_storage = new FileStorage($default_sync_path, StorageInterface::DEFAULT_COLLECTION);
+    if (!isset($this->defaultTheme) && $profile_config_storage->exists('system.theme')) {
+      $this->defaultTheme = $profile_config_storage->read('system.theme')['default'];
+    }
+
     $default_install_path = drupal_get_path('profile', $profile) . '/' . InstallStorage::CONFIG_INSTALL_DIRECTORY;
     $profile_config_storage = new FileStorage($default_install_path, StorageInterface::DEFAULT_COLLECTION);
     if (!isset($this->defaultTheme) && $profile_config_storage->exists('system.theme')) {
@@ -427,7 +434,7 @@ trait FunctionalTestSetupTrait {
       // For backwards compatibility, tests using the 'testing' install profile
       // on Drupal 8 automatically get 'classy' set, and other profiles use
       // 'stark'.
-      @trigger_error('Drupal\Tests\BrowserTestBase::$defaultTheme is required in drupal:9.0.0 when using an install profile that does not set a default theme. See https://www.drupal.org/node/2352949, which includes recommendations on which theme to use.', E_USER_DEPRECATED);
+      @trigger_error('Drupal\Tests\BrowserTestBase::$defaultTheme is required in drupal:9.0.0 when using an install profile that does not set a default theme. See https://www.drupal.org/node/3083055, which includes recommendations on which theme to use.', E_USER_DEPRECATED);
       $this->defaultTheme = $profile === 'testing' ? 'classy' : 'stark';
     }
 

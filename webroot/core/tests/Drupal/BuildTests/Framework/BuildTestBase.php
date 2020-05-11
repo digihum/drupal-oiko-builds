@@ -382,9 +382,11 @@ abstract class BuildTestBase extends TestCase {
       $this->stopServer();
     }
     // If there's not a server at this point, make one.
-    $this->serverProcess = $this->instantiateServer($this->getPortNumber(), $working_dir);
-    if ($this->serverProcess) {
-      $this->serverDocroot = $working_dir;
+    if (!$this->serverProcess || $this->serverProcess->isTerminated()) {
+      $this->serverProcess = $this->instantiateServer($this->getPortNumber(), $working_dir);
+      if ($this->serverProcess) {
+        $this->serverDocroot = $working_dir;
+      }
     }
   }
 
@@ -392,6 +394,10 @@ abstract class BuildTestBase extends TestCase {
    * Do the work of making a server process.
    *
    * Test authors should call visit() or assertVisit() instead.
+   *
+   * When initializing the server, if '.ht.router.php' exists in the root, it is
+   * leveraged. If testing with a version of Drupal before 8.5.x., this file
+   * does not exist.
    *
    * @param int $port
    *   The port number for the server.
@@ -415,6 +421,9 @@ abstract class BuildTestBase extends TestCase {
       '-t',
       $working_path,
     ];
+    if (file_exists($working_path . DIRECTORY_SEPARATOR . '.ht.router.php')) {
+      $server[] = $working_path . DIRECTORY_SEPARATOR . '.ht.router.php';
+    }
     $ps = new Process($server, $working_path);
     $ps->setIdleTimeout(30)
       ->setTimeout(30)
@@ -538,23 +547,38 @@ abstract class BuildTestBase extends TestCase {
     $working_path = $this->getWorkingPath($working_dir);
 
     if ($iterator === NULL) {
-      $finder = new Finder();
-      $finder->files()
-        ->in($this->getDrupalRoot())
-        ->exclude([
-          'sites/default/files',
-          'sites/simpletest',
-          'vendor',
-        ])
-        ->notPath('/sites\/default\/settings\..*php/')
-        ->ignoreDotFiles(FALSE)
-        ->ignoreVCS(FALSE);
-      $iterator = $finder->getIterator();
+      $iterator = $this->getCodebaseFinder()->getIterator();
     }
 
     $fs = new SymfonyFilesystem();
     $options = ['override' => TRUE, 'delete' => FALSE];
     $fs->mirror($this->getDrupalRoot(), $working_path, $iterator, $options);
+  }
+
+  /**
+   * Get a default Finder object for a Drupal codebase.
+   *
+   * This method can be used two ways:
+   * - Override this method and provide your own default Finder object for
+   *   copyCodebase().
+   * - Call the method to get a default Finder object which can then be
+   *   modified for other purposes.
+   *
+   * @return \Symfony\Component\Finder\Finder
+   *   A Finder object ready to iterate over core codebase.
+   */
+  public function getCodebaseFinder() {
+    $finder = new Finder();
+    $finder->files()
+      ->ignoreUnreadableDirs()
+      ->in($this->getDrupalRoot())
+      ->notPath('#^sites/default/files#')
+      ->notPath('#^sites/simpletest#')
+      ->notPath('#^vendor#')
+      ->notPath('#^sites/default/settings\..*php#')
+      ->ignoreDotFiles(FALSE)
+      ->ignoreVCS(FALSE);
+    return $finder;
   }
 
   /**
