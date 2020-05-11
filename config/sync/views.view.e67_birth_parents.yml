@@ -16,7 +16,6 @@ description: ''
 tag: ''
 base_table: cidoc_entity
 base_field: id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -158,6 +157,8 @@ display:
             remember_roles:
               authenticated: authenticated
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -199,6 +200,8 @@ display:
             remember_roles:
               authenticated: authenticated
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''

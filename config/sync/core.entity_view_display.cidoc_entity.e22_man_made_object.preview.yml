@@ -21,18 +21,28 @@ content:
   'cidoc_properties:range:p108_has_produced':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p12_occurred_in_the_presence_of':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p13_destroyed':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p16_used_specific_object':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p25_moved':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   citation:
     type: entity_reference_revisions_entity_view
     weight: 5
@@ -68,6 +78,8 @@ content:
   p12_present_at_entity_view_1:
     weight: 10
     region: content
+    settings: {  }
+    third_party_settings: {  }
   significance:
     type: entity_reference_label
     weight: 2
@@ -117,6 +129,7 @@ hidden:
   p7_took_place_at_map_entity_view_2: true
   p9__entity_view_1: true
   p9_forms_part_of_entity_view_1: true
+  search_api_excerpt: true
   timeline_link: true
   timeline_logo: true
   timeline_preselect_option: true

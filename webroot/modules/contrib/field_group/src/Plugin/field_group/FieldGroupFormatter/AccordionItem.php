@@ -3,6 +3,8 @@
 namespace Drupal\field_group\Plugin\field_group\FieldGroupFormatter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Xss;
+use Drupal\Core\Render\Markup;
 use Drupal\field_group\FieldGroupFormatterBase;
 
 /**
@@ -35,7 +37,7 @@ class AccordionItem extends FieldGroupFormatterBase {
     $element += [
       '#type' => 'field_group_accordion_item',
       '#effect' => $this->getSetting('effect'),
-      '#title' => $this->getLabel(),
+      '#title' => $this->getSetting('fieldset_label_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel())),
     ];
 
     if ($this->getSetting('id')) {

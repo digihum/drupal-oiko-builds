@@ -5,5 +5,4 @@ dependencies: {  }
 name: Mode
 vid: mode
 description: 'Mode of use'
-hierarchy: 0
 weight: 0

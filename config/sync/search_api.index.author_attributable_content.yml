@@ -73,39 +73,25 @@ field_settings:
     property_path: changed
     type: date
 processor_settings:
-  cidoc:
-    plugin_id: cidoc
-    settings: {  }
-  add_url:
-    plugin_id: add_url
-    settings: {  }
-  aggregated_field:
-    plugin_id: aggregated_field
-    settings: {  }
-  rendered_item:
-    plugin_id: rendered_item
-    settings: {  }
+  cidoc: {  }
+  add_url: {  }
+  aggregated_field: {  }
+  rendered_item: {  }
 options:
   index_directly: true
   cron_limit: 50
 datasource_settings:
   'entity:cidoc_entity':
-    plugin_id: 'entity:cidoc_entity'
-    settings:
-      bundles:
-        default: true
-        selected: {  }
+    bundles:
+      default: true
+      selected: {  }
   'entity:node':
-    plugin_id: 'entity:node'
-    settings:
-      bundles:
-        default: true
-        selected: {  }
-      languages:
-        default: true
-        selected: {  }
+    bundles:
+      default: true
+      selected: {  }
+    languages:
+      default: true
+      selected: {  }
 tracker_settings:
-  default:
-    plugin_id: default
-    settings: {  }
+  default: {  }
 server: db_search_backend

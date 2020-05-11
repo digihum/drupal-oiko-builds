@@ -220,6 +220,9 @@
                 "Fixes the API docs to include a missing hook": "https://www.drupal.org/files/issues/leaflet-add-hook_leaflet_map_info_alter-2746721-2.patch",
                 "Allows use of geometrycollection": "https://www.drupal.org/files/issues/leaflet-2799311-geometry-collection.patch",
                 "https://www.drupal.org/node/2858091#comment-11971355": "https://www.drupal.org/files/issues/leaflet-2858091-no-features-on-ajax.patch"
+            },
+            "drupal/field_group": {
+                "https://www.drupal.org/files/issues/2019-12-18/3024409-27.patch": "https://www.drupal.org/files/issues/2019-12-18/3024409-27.patch"
             }
         },
         "composer-version": "^1.8.4"

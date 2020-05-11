@@ -33,6 +33,7 @@ content:
       match_operator: STARTS_WITH
       size: '40'
       placeholder: 'Start typing to find a match or create new entity...'
+      match_limit: 10
     weight: 0
     third_party_settings: {  }
     region: content
@@ -43,6 +44,7 @@ content:
       match_operator: CONTAINS
       size: '20'
       placeholder: 'Husband, Faction, etc.'
+      match_limit: 10
     third_party_settings: {  }
     region: content
 hidden:

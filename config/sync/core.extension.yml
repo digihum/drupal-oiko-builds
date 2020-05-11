@@ -23,7 +23,6 @@ module:
   editor: 0
   edtf: 0
   entity_reference_revisions: 0
-  eu_cookie_compliance: 0
   eva: 0
   field: 0
   field_group: 0
@@ -62,6 +61,7 @@ module:
   oiko_timeline: 0
   options: 0
   path: 0
+  path_alias: 0
   r4032login: 0
   rdf: 0
   rest: 0
@@ -92,6 +92,7 @@ module:
   views: 10
   paragraphs: 11
   oiko_profile: 1000
+  eu_cookie_compliance: 1001
 theme:
   stable: 0
   classy: 0

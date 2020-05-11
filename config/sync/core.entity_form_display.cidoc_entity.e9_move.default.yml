@@ -26,6 +26,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_tabset:
       children:
         - group_temporal
@@ -42,6 +44,8 @@ third_party_settings:
         direction: vertical
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_where:
       children:
         - 'cidoc_properties:domain:p27_moved_from'
@@ -57,6 +61,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_descriptive_text:
       children:
         - content
@@ -70,6 +76,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_who:
       children:
         - 'cidoc_properties:domain:p14_carried_out_by'
@@ -85,6 +93,8 @@ third_party_settings:
         required_fields: true
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_influence:
       children:
         - 'cidoc_properties:domain:p15_was_influenced_by'
@@ -101,6 +111,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_other:
       children:
         - group_sequence
@@ -114,6 +126,8 @@ third_party_settings:
         direction: vertical
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_what:
       children:
         - 'cidoc_properties:domain:p25_moved'
@@ -129,6 +143,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_geo_temp:
       children:
         - 'cidoc_properties:domain:p9_consists_of'
@@ -147,6 +163,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_data:
       children:
         - group_main_deets
@@ -161,6 +179,8 @@ third_party_settings:
         direction: horizontal
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_main_deets:
       children:
         - name
@@ -178,6 +198,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_auxiliary_deets:
       children:
         - group_other
@@ -191,6 +213,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_sequence:
       children:
         - 'cidoc_properties:domain:p134_continued'
@@ -205,6 +229,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_oiko_world_settings:
       children:
         - status
@@ -221,7 +247,9 @@ third_party_settings:
         formatter: closed
         description: ''
         required_fields: true
+        fieldset_label_html: true
       label: 'Oiko.world settings'
+      region: content
 _core:
   default_config_hash: wy6wGXCXt2AqnVdVxorIQVb3dn0lnsNhSljZtN-XFv0
 id: cidoc_entity.e9_move.default
@@ -416,6 +444,7 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true

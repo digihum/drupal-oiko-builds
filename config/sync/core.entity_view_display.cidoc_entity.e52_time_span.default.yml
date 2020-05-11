@@ -24,6 +24,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_at_this_time:
       children: {  }
       parent_name: ''
@@ -40,6 +42,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_in_this_period:
       children: {  }
       parent_name: ''
@@ -55,6 +59,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_in_period:
       children: {  }
       parent_name: ''
@@ -70,6 +76,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
 id: cidoc_entity.e52_time_span.default
 targetEntityType: cidoc_entity
 bundle: e52_time_span
@@ -179,6 +187,7 @@ hidden:
   content: true
   field_date: true
   map_link: true
+  search_api_excerpt: true
   significance: true
   timeline_logo: true
   timeline_preselect_option: true

@@ -13,7 +13,6 @@ description: 'A list of people, sorted by the number of inbound references'
 tag: ''
 base_table: cidoc_reference
 base_field: id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -319,6 +318,8 @@ display:
             remember_roles:
               authenticated: authenticated
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''

@@ -27,6 +27,8 @@ third_party_settings:
         direction: horizontal
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_main_deets:
       children:
         - name
@@ -44,6 +46,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_aux_deets:
       children: {  }
       parent_name: group_main
@@ -56,6 +60,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_main_details:
       children:
         - group_appellations
@@ -71,6 +77,8 @@ third_party_settings:
         direction: vertical
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_appellations:
       children:
         - 'cidoc_properties:domain:p131_is_identified_by'
@@ -84,6 +92,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_formation:
       children:
         - 'cidoc_properties:range:p95_has_formed'
@@ -98,6 +108,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_people:
       children:
         - 'cidoc_properties:domain:p107_has_current_or_former_membe'
@@ -114,6 +126,8 @@ third_party_settings:
         required_fields: true
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_group_heirachy:
       children:
         - 'cidoc_properties:range:p107_has_current_or_former_membe'
@@ -126,7 +140,9 @@ third_party_settings:
         formatter: closed
         description: ''
         required_fields: true
+        fieldset_label_html: true
       label: 'Group Heirachy'
+      region: content
     group_oiko_world_settings:
       children:
         - status
@@ -143,7 +159,9 @@ third_party_settings:
         formatter: closed
         description: ''
         required_fields: true
+        fieldset_label_html: true
       label: 'Oiko.world settings'
+      region: content
     group_descriptive_text:
       children:
         - content
@@ -156,7 +174,9 @@ third_party_settings:
         formatter: closed
         description: ''
         required_fields: true
+        fieldset_label_html: true
       label: 'Descriptive text'
+      region: content
 _core:
   default_config_hash: HCRPe3rJQbJza05JUc-u_Y3QqAlaQFJcLRKT4OZ-4eQ
 id: cidoc_entity.e74_group.default
@@ -282,6 +302,7 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true

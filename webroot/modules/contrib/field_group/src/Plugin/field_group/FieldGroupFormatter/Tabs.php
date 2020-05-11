@@ -3,9 +3,11 @@
 namespace Drupal\field_group\Plugin\field_group\FieldGroupFormatter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Xss;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Element\VerticalTabs;
+use Drupal\Core\Render\Markup;
 use Drupal\field_group\Element\HorizontalTabs;
 use Drupal\field_group\FieldGroupFormatterBase;
 
@@ -46,7 +48,7 @@ class Tabs extends FieldGroupFormatterBase {
 
     // By default tabs don't have titles but you can override it in the theme.
     if ($this->getLabel()) {
-      $element['#title'] = $this->getLabel();
+      $element['#title'] = $this->getSetting('fieldset_label_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel()));
     }
 
     $element += [

@@ -25,7 +25,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        fieldset_label_html: true
       label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Also known as'
+      region: content
     group_influences:
       children:
         - 'cidoc_properties:range:p25_moved'
@@ -43,7 +45,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        fieldset_label_html: true
       label: '<span class="fa fa-exchange">&nbsp;&nbsp;</span>Influences'
+      region: content
     group_lifetime:
       children:
         - 'cidoc_properties:range:p108_has_produced'
@@ -60,7 +64,9 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+        fieldset_label_html: true
       label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Lifecycle'
+      region: content
     group_events:
       children:
         - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
@@ -79,7 +85,9 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+        fieldset_label_html: true
       label: '<span class="fa fa-calendar-o">&nbsp;&nbsp;</span>Events and Activities'
+      region: content
 id: cidoc_entity.e22_man_made_object.popup
 targetEntityType: cidoc_entity
 bundle: e22_man_made_object
@@ -234,6 +242,7 @@ hidden:
   person_death_entity_view_1: true
   person_killed_entity_view_1: true
   person_parents_entity_view_1: true
+  search_api_excerpt: true
   timeline_link: true
   timeline_logo: true
   timeline_preselect_option: true

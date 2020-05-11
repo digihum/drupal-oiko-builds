@@ -61,6 +61,7 @@ hidden:
   internal_name: true
   map_link: true
   p12_present_at_entity_view_1: true
+  search_api_excerpt: true
   significance: true
   timeline_link: true
   timeline_preselect_option: true

@@ -10,7 +10,6 @@ dependencies:
     - image.style.thumbnail
   module:
     - field_group
-    - geocoder_autocomplete
     - image
     - leaflet_widget
     - link
@@ -33,6 +32,8 @@ third_party_settings:
         direction: horizontal
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_main_deets:
       children:
         - name
@@ -50,6 +51,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_aux_deets:
       children:
         - content
@@ -63,6 +66,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_main_details:
       children:
         - group_appellations
@@ -76,9 +81,10 @@ third_party_settings:
         direction: vertical
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_appellations:
       children:
-        - field_location_lookup
         - field_pleiades_uri
         - field_geodata
       parent_name: group_main_details
@@ -91,6 +97,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_geodata:
       children: {  }
       parent_name: group_main_details
@@ -103,6 +111,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_hierarchy:
       children:
         - 'cidoc_properties:domain:p89_falls_within'
@@ -120,6 +130,8 @@ third_party_settings:
         formatter: closed
         description: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_oiko_world_settings:
       children:
         - status
@@ -136,7 +148,9 @@ third_party_settings:
         formatter: closed
         description: ''
         required_fields: true
+        fieldset_label_html: true
       label: 'Oiko.world settings'
+      region: content
 _core:
   default_config_hash: VxRWdj-0iwzs3U38Vo_QDcWLA4YyVB2KteXHYWkxZpM
 id: cidoc_entity.e53_place.default
@@ -223,15 +237,6 @@ content:
     third_party_settings: {  }
     type: leaflet_widget
     region: content
-  field_location_lookup:
-    weight: 22
-    settings:
-      size: '60'
-      placeholder: 'Start typing to find a location'
-      autocomplete_route_name: geocoder_autocomplete.autocomplete
-    third_party_settings: {  }
-    type: geocoder_autocomplete
-    region: content
   field_pleiades_uri:
     weight: 23
     settings:
@@ -298,6 +303,7 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
@@ -320,3 +326,4 @@ hidden:
   'cidoc_properties:range:p96_by_mother': true
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true
+  field_location_lookup: true

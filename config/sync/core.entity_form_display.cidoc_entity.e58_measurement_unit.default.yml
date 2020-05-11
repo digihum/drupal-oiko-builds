@@ -27,6 +27,8 @@ third_party_settings:
         direction: horizontal
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_main_deets:
       children:
         - name
@@ -44,6 +46,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_aux_deets:
       children:
         - group_other
@@ -57,6 +61,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_other:
       children:
         - group_influence
@@ -68,6 +74,8 @@ third_party_settings:
         direction: vertical
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_influence:
       children:
         - 'cidoc_properties:range:p15_was_influenced_by'
@@ -82,6 +90,8 @@ third_party_settings:
         classes: ''
         id: ''
         required_fields: true
+        fieldset_label_html: true
+      region: content
     group_oiko_world_settings:
       children:
         - status
@@ -98,7 +108,9 @@ third_party_settings:
         formatter: closed
         description: ''
         required_fields: true
+        fieldset_label_html: true
       label: 'Oiko.world settings'
+      region: content
 id: cidoc_entity.e58_measurement_unit.default
 targetEntityType: cidoc_entity
 bundle: e58_measurement_unit
@@ -197,6 +209,7 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true

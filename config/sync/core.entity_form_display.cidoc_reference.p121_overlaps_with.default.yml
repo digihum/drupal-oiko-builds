@@ -28,7 +28,11 @@ content:
   domain:
     type: squid_entity_reference_autocomplete_tags
     weight: 11
-    settings: {  }
+    settings:
+      match_limit: 10
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
     region: content
   langcode:
@@ -40,7 +44,11 @@ content:
   range:
     type: squid_entity_reference_autocomplete_tags
     weight: 12
-    settings: {  }
+    settings:
+      match_limit: 10
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
     region: content
 hidden:

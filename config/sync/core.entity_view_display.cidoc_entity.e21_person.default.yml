@@ -24,6 +24,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-lifespan
+        fieldset_label_html: true
+      region: content
     group_family:
       children: {  }
       parent_name: ''
@@ -40,6 +42,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-family
+        fieldset_label_html: true
+      region: content
     group_other_people:
       children: {  }
       parent_name: ''
@@ -56,6 +60,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-related-people
+        fieldset_label_html: true
+      region: content
     group_aka:
       children: {  }
       parent_name: ''
@@ -72,6 +78,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-aka
+        fieldset_label_html: true
+      region: content
     group_activities_and_places:
       children: {  }
       parent_name: ''
@@ -88,6 +96,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-places
+        fieldset_label_html: true
+      region: content
     group_continues:
       children: {  }
       parent_name: ''
@@ -104,6 +114,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-continues
+        fieldset_label_html: true
+      region: content
     group_influenced_by:
       children: {  }
       parent_name: ''
@@ -120,6 +132,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-influenced-by
+        fieldset_label_html: true
+      region: content
     group_period:
       children: {  }
       parent_name: ''
@@ -136,6 +150,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-period
+        fieldset_label_html: true
+      region: content
     group_activities:
       children: {  }
       parent_name: ''
@@ -152,6 +168,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-achievements
+        fieldset_label_html: true
+      region: content
     group_participated_in:
       children: {  }
       parent_name: ''
@@ -168,6 +186,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-participated-in
+        fieldset_label_html: true
+      region: content
 id: cidoc_entity.e21_person.default
 targetEntityType: cidoc_entity
 bundle: e21_person
@@ -231,6 +251,8 @@ content:
   'cidoc_properties:range:p143_joined':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p145_separated':
     weight: 25
     settings: {  }
@@ -386,6 +408,7 @@ hidden:
   content: true
   internal_name: true
   map_link: true
+  search_api_excerpt: true
   timeline_logo: true
   timeline_preselect_option: true
   user_id: true

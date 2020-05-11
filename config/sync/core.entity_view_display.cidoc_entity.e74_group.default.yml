@@ -23,6 +23,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_influenced:
       children: {  }
       parent_name: ''
@@ -38,6 +40,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_achievements:
       children: {  }
       parent_name: ''
@@ -53,6 +57,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_continues:
       children: {  }
       parent_name: ''
@@ -68,6 +74,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_influenced_by:
       children: {  }
       parent_name: ''
@@ -83,6 +91,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_people:
       children: {  }
       parent_name: ''
@@ -98,6 +108,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_places:
       children:
         - map_of_places_people_went_entity_view_1
@@ -114,6 +126,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_carried_out:
       children: {  }
       parent_name: ''
@@ -129,6 +143,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_formed:
       children:
         - p95_formed_entity_view_1
@@ -145,6 +161,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_dissolved:
       children:
         - p99_dissolved_entity_view_1
@@ -161,6 +179,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_aka:
       children: {  }
       parent_name: ''
@@ -176,6 +196,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
 id: cidoc_entity.e74_group.default
 targetEntityType: cidoc_entity
 bundle: e74_group
@@ -229,15 +251,23 @@ content:
   'cidoc_properties:range:p143_joined':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p144_joined_with':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p145_separated':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p146_separated_from':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p14_carried_out_by':
     weight: 21
     settings: {  }
@@ -362,6 +392,7 @@ hidden:
   content: true
   internal_name: true
   map_link: true
+  search_api_excerpt: true
   timeline_logo: true
   timeline_preselect_option: true
   user_id: true

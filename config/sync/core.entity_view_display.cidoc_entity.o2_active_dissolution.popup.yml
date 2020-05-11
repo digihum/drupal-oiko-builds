@@ -29,6 +29,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_occurred:
       children:
         - 'cidoc_properties:domain:p4_has_time_span'
@@ -46,6 +48,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_period:
       children:
         - 'cidoc_properties:domain:p10_falls_within'
@@ -64,6 +68,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_influences:
       children:
         - 'cidoc_properties:domain:p17_was_motivated_by'
@@ -84,6 +90,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_objects:
       children:
         - 'cidoc_properties:domain:p99_dissolved'
@@ -102,6 +110,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_forms:
       children:
         - 'cidoc_properties:domain:p9_consists_of'
@@ -124,6 +134,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_places:
       children:
         - 'cidoc_properties:domain:p7_took_place_at'
@@ -139,7 +151,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        fieldset_label_html: true
       label: '<span class="fa fa-map">&nbsp;&nbsp;</span>Places'
+      region: content
     group_appellations:
       children:
         - 'cidoc_properties:domain:p1_is_identified_by'
@@ -155,7 +169,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        fieldset_label_html: true
       label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Also known as'
+      region: content
 id: cidoc_entity.o2_active_dissolution.popup
 targetEntityType: cidoc_entity
 bundle: o2_active_dissolution
@@ -346,6 +362,7 @@ hidden:
   p9__entity_view_1: true
   p9_forms_part_of_entity_view_1: true
   people_entity_view_1: true
+  search_api_excerpt: true
   timeline_link: true
   timeline_logo: true
   timeline_preselect_option: true

@@ -25,6 +25,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-participants
+        fieldset_label_html: true
+      region: content
     group_occurred:
       children: {  }
       parent_name: ''
@@ -41,6 +43,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-occurred-on
+        fieldset_label_html: true
+      region: content
     group_people:
       children: {  }
       parent_name: ''
@@ -57,6 +61,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-related-people
+        fieldset_label_html: true
+      region: content
     group_carried_out_by:
       children:
         - p14_carried_out_by_entity_view_1
@@ -74,6 +80,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-carried-out-by
+        fieldset_label_html: true
+      region: content
     group_period:
       children: {  }
       parent_name: ''
@@ -90,6 +98,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-period
+        fieldset_label_html: true
+      region: content
     group_includes:
       children: {  }
       parent_name: ''
@@ -106,6 +116,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-includes
+        fieldset_label_html: true
+      region: content
     group_influences:
       children: {  }
       parent_name: ''
@@ -122,6 +134,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-influences
+        fieldset_label_html: true
+      region: content
     group_objects:
       children:
         - p16_used_specific_object_entity_view_1
@@ -139,6 +153,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-objects-used
+        fieldset_label_html: true
+      region: content
     group_influenced:
       children: {  }
       parent_name: ''
@@ -155,6 +171,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-influenced
+        fieldset_label_html: true
+      region: content
     group_continues:
       children: {  }
       parent_name: ''
@@ -171,6 +189,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-continues
+        fieldset_label_html: true
+      region: content
     group_continued_by:
       children: {  }
       parent_name: ''
@@ -187,6 +207,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-continued-by
+        fieldset_label_html: true
+      region: content
     group_forms:
       children: {  }
       parent_name: ''
@@ -203,6 +225,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-forms-part-of
+        fieldset_label_html: true
+      region: content
     group_sub_events:
       children: {  }
       parent_name: ''
@@ -219,6 +243,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: fg-constituent-events
+        fieldset_label_html: true
+      region: content
 id: cidoc_entity.e7_activity.default
 targetEntityType: cidoc_entity
 bundle: e7_activity
@@ -480,6 +506,7 @@ hidden:
   citation: true
   content: true
   map_link: true
+  search_api_excerpt: true
   timeline_logo: true
   timeline_preselect_option: true
   user_id: true

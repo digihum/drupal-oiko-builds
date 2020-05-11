@@ -30,6 +30,8 @@ content:
   links:
     weight: 101
     region: content
+    settings: {  }
+    third_party_settings: {  }
   taxonomy_forums:
     type: entity_reference_label
     weight: 10
@@ -41,3 +43,4 @@ content:
 hidden:
   comment_forum: true
   field_crm_entities: true
+  search_api_excerpt: true

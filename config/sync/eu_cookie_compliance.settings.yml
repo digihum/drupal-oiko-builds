@@ -28,3 +28,24 @@ popup_link_new_window: true
 popup_position: true
 popup_text_hex: ffffff
 popup_width: 100%
+method: default
+disagree_button_label: 'No, thanks'
+disabled_javascripts: ''
+whitelisted_cookies: ''
+consent_storage_method: do_not_store
+withdraw_message:
+  value: '<h2>We use cookies on this site to enhance your user experience</h2><p>You have given your consent for us to set cookies.</p>'
+  format: plain_text
+withdraw_action_button_label: 'Withdraw consent'
+withdraw_tab_button_label: 'Privacy settings'
+withdraw_enabled: false
+popup_info_template: legacy
+cookie_categories: ''
+enable_save_preferences_button: true
+save_preferences_button_label: 'Save preferences'
+accept_all_categories_button_label: 'Accept all cookies'
+fix_first_cookie_category: true
+select_all_categories_by_default: false
+withdraw_button_on_info_popup: false
+domain_all_sites: false
+uuid: 323a3968-8bf6-4e2a-895a-af9fb5e5cb76

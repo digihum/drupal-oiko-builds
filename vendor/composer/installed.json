@@ -3463,6 +3463,9 @@
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
                 }
+            },
+            "patches_applied": {
+                "https://www.drupal.org/files/issues/2019-12-18/3024409-27.patch": "https://www.drupal.org/files/issues/2019-12-18/3024409-27.patch"
             }
         },
         "installation-source": "dist",

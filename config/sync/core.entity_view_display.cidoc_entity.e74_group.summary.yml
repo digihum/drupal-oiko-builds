@@ -19,6 +19,8 @@ third_party_settings:
         description: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_influenced:
       children: {  }
       parent_name: ''
@@ -29,6 +31,8 @@ third_party_settings:
         description: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_achievements:
       children: {  }
       parent_name: ''
@@ -39,6 +43,8 @@ third_party_settings:
         description: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_continues:
       children: {  }
       parent_name: ''
@@ -49,6 +55,8 @@ third_party_settings:
         description: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_influenced_by:
       children: {  }
       parent_name: ''
@@ -59,6 +67,8 @@ third_party_settings:
         description: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_people:
       children: {  }
       parent_name: ''
@@ -69,6 +79,8 @@ third_party_settings:
         description: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_places:
       children: {  }
       parent_name: ''
@@ -79,6 +91,8 @@ third_party_settings:
         description: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_carried_out:
       children: {  }
       parent_name: ''
@@ -89,6 +103,8 @@ third_party_settings:
         description: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_formed:
       children:
         - p95_formed_entity_view_1
@@ -105,6 +121,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_dissolved:
       children:
         - p99_dissolved_entity_view_1
@@ -121,6 +139,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
 id: cidoc_entity.e74_group.summary
 targetEntityType: cidoc_entity
 bundle: e74_group
@@ -129,51 +149,83 @@ content:
   'cidoc_properties:domain:p107_has_current_or_former_membe':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p131_is_identified_by':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p1_is_identified_by':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p2_has_type':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p107_has_current_or_former_membe':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p11_had_participant':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p12_occurred_in_the_presence_of':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p143_joined':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p144_joined_with':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p145_separated':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p146_separated_from':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p14_carried_out_by':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p15_was_influenced_by':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p17_was_motivated_by':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p95_has_formed':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p99_dissolved':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   e6_destroyed_entity_view_1:
     weight: 10
     region: content
@@ -193,12 +245,18 @@ content:
   p108_produced_object_entity_view_1:
     weight: 10
     region: content
+    settings: {  }
+    third_party_settings: {  }
   p12_present_at_entity_view_1:
     weight: 10
     region: content
+    settings: {  }
+    third_party_settings: {  }
   p17_motivated_entity_view_1:
     weight: 10
     region: content
+    settings: {  }
+    third_party_settings: {  }
   p4_has_time_span_entity_view_1:
     weight: 1
     settings: {  }
@@ -217,6 +275,8 @@ content:
   timeline_link:
     weight: 0
     region: content
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   appelations_entity_view_1: true
   cidoc_admin_links: true
@@ -234,6 +294,7 @@ hidden:
   p11_participae_entity_view_1: true
   p15_was_influenced_by_entity_view_1: true
   people_entity_view_1: true
+  search_api_excerpt: true
   significance: true
   timeline_logo: true
   timeline_preselect_option: true

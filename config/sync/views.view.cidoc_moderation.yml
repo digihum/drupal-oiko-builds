@@ -13,7 +13,6 @@ description: ''
 tag: ''
 base_table: cidoc_entity
 base_field: id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -124,7 +123,7 @@ display:
           batch_size: 10
           form_step: true
           buttons: true
-          clear_on_exposed: 1
+          clear_on_exposed: true
           action_title: Action
           selected_actions:
             publish_cidoc: publish_cidoc
@@ -469,6 +468,8 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -514,6 +515,8 @@ display:
               moderator: '0'
               moderated_contributor: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -559,6 +562,8 @@ display:
               moderator: '0'
               moderated_contributor: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -603,6 +608,9 @@ display:
               forum_user: '0'
               moderator: '0'
               moderated_contributor: '0'
+            placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''

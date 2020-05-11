@@ -23,6 +23,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
 id: cidoc_entity.e67_birth.default
 targetEntityType: cidoc_entity
 bundle: e67_birth
@@ -228,6 +230,7 @@ hidden:
   p10_includes_entity_view_1: true
   p15_was_influenced_by_entity_view_1: true
   p9__entity_view_1: true
+  search_api_excerpt: true
   timeline_logo: true
   timeline_preselect_option: true
   user_id: true

@@ -126,3 +126,6 @@ field_group.field_group_formatter_plugin.base:
     id:
       type: string
       label: 'Html id of the fieldgroup'
+    fieldset_label_html:
+      type: boolean
+      label: 'Output the label as html'

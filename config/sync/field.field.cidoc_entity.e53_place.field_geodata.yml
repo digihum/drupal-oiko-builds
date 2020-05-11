@@ -14,10 +14,11 @@ field_name: field_geodata
 entity_type: cidoc_entity
 bundle: e53_place
 label: Geodata
-description: ''
+description: 'For a point use POINT(lat lon) pair e.g. POINT(-1.560908 52.380597). This field accepts WKT <a href="https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry#Geometric_objects" alt="wikipedia link">Well Known Text (WKT) Wikipedia article</a> '
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  backend: geofield_backend_default
 field_type: geofield

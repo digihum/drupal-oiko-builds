@@ -118,6 +118,7 @@ hidden:
   content: true
   internal_name: true
   map_link: true
+  search_api_excerpt: true
   timeline_logo: true
   timeline_preselect_option: true
   user_id: true

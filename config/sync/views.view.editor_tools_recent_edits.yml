@@ -11,7 +11,6 @@ description: ''
 tag: ''
 base_table: cidoc_entity
 base_field: id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -513,7 +512,7 @@ display:
       use_ajax: true
       title: 'Your CIDOC entities'
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -530,7 +529,7 @@ display:
       display_extenders: {  }
       display_description: ''
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'

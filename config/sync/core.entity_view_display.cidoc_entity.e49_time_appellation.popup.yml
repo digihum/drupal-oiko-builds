@@ -28,6 +28,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_forms:
       children:
         - 'cidoc_properties:range:p78_is_identified_by'
@@ -48,6 +50,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_appellations:
       children:
         - 'cidoc_properties:domain:p1_is_identified_by'
@@ -63,7 +67,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        fieldset_label_html: true
       label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Also known as'
+      region: content
 id: cidoc_entity.e49_time_appellation.popup
 targetEntityType: cidoc_entity
 bundle: e49_time_appellation
@@ -277,6 +283,7 @@ hidden:
   p9__entity_view_1: true
   p9_forms_part_of_entity_view_1: true
   people_entity_view_1: true
+  search_api_excerpt: true
   time_span_directly_linked_events_entity_view_1: true
   time_span_within_period_entity_view_1: true
   timeline_link: true

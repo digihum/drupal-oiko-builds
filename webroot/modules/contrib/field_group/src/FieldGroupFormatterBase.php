@@ -90,13 +90,21 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
     $form = [];
     $form['label'] = [
       '#type' => 'textfield',
-      '#title' => t('Field group label'),
+      '#title' => $this->t('Field group label'),
       '#default_value' => $this->label,
       '#weight' => -5,
     ];
 
+    $form['fieldset_label_html'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Output label as HTML'),
+      '#default_value' => $this->getSetting('fieldset_label_html'),
+      '#description' => $this->t('Not all HTML is valid, the title will be filtered to prevent cross-site scripting (XSS).'),
+      '#weight' => -2,
+    ];
+
     $form['id'] = [
-      '#title' => t('ID'),
+      '#title' => $this->t('ID'),
       '#type' => 'textfield',
       '#default_value' => $this->getSetting('id'),
       '#weight' => 10,
@@ -104,7 +112,7 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
     ];
 
     $form['classes'] = [
-      '#title' => t('Extra CSS classes'),
+      '#title' => $this->t('Extra CSS classes'),
       '#type' => 'textfield',
       '#default_value' => $this->getSetting('classes'),
       '#weight' => 11,
@@ -124,6 +132,11 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
 
     if ($this->getSetting('formatter')) {
       $summary[] = $this->pluginDefinition['label'] . ': ' . $this->getSetting('formatter');
+    }
+
+    if ($this->getSetting('fieldset_label_html')) {
+      $summary[] = $this->t('HTML: @fieldset_label_html',
+        ['@fieldset_label_html' => $this->getSetting('fieldset_label_html')]);
     }
 
     if ($this->getSetting('id')) {
@@ -149,6 +162,7 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
    */
   public static function defaultContextSettings($context) {
     return [
+      'fieldset_label_html' => FALSE,
       'classes' => '',
       'id' => '',
     ];

@@ -14,7 +14,6 @@ description: ''
 tag: ''
 base_table: cidoc_entity
 base_field: id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -26,7 +25,7 @@ display:
         type: none
         options: {  }
       cache:
-        type: tag
+        type: none
         options: {  }
       query:
         type: views_query

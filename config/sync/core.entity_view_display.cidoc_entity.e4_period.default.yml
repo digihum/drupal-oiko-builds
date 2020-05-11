@@ -20,6 +20,8 @@ third_party_settings:
         description: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_period:
       children:
         - p4_has_time_span_entity_view_1
@@ -31,6 +33,8 @@ third_party_settings:
         description: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
     group_people:
       children:
         - people_entity_view_1
@@ -42,6 +46,8 @@ third_party_settings:
         description: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
 id: cidoc_entity.e4_period.default
 targetEntityType: cidoc_entity
 bundle: e4_period
@@ -55,39 +61,63 @@ content:
   'cidoc_properties:domain:p10_falls_within':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p132_overlaps_with':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p133_is_separated_from':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p1_is_identified_by':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p2_has_type':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p4_has_time_span':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p7_took_place_at':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p9_consists_of':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p10_falls_within':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p15_was_influenced_by':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p17_was_motivated_by':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p9_consists_of':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_empire_outline:
     weight: 9
     label: above
@@ -148,6 +178,8 @@ content:
   timeline_link:
     weight: 0
     region: content
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   cidoc_admin_links: true
   cidoc_properties_transcript: true
@@ -155,6 +187,7 @@ hidden:
   citation: true
   content: true
   map_link: true
+  search_api_excerpt: true
   timeline_logo: true
   timeline_preselect_option: true
   user_id: true

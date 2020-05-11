@@ -26,6 +26,8 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
+        fieldset_label_html: true
+      region: content
     group_formation:
       children:
         - p95_formed_group_entity_view_1
@@ -42,6 +44,8 @@ third_party_settings:
         attributes: ''
         classes: ''
         id: ''
+        fieldset_label_html: true
+      region: content
 id: cidoc_entity.e68_dissolution.summary_without_map
 targetEntityType: cidoc_entity
 bundle: e68_dissolution
@@ -50,48 +54,78 @@ content:
   'cidoc_properties:domain:p10_falls_within':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p11_had_participant':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p12_occurred_in_the_presence_of':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p132_overlaps_with':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p133_is_separated_from':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p1_is_identified_by':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p2_has_type':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p4_has_time_span':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p7_took_place_at':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p99_dissolved':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p9_consists_of':
     weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p10_falls_within':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p15_was_influenced_by':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p17_was_motivated_by':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p9_consists_of':
     weight: 21
     region: content
+    settings: {  }
+    third_party_settings: {  }
   name:
     label: hidden
     type: string
@@ -103,6 +137,8 @@ content:
   p12_occurred_in_the_presence_of_entity_view_1:
     weight: 10
     region: content
+    settings: {  }
+    third_party_settings: {  }
   p14_carried_out_by_entity_view_1:
     weight: 5
     settings: {  }
@@ -111,9 +147,13 @@ content:
   p17_motivated_entity_view_1:
     weight: 10
     region: content
+    settings: {  }
+    third_party_settings: {  }
   p17_was_motivated_by_entity_view_1:
     weight: 10
     region: content
+    settings: {  }
+    third_party_settings: {  }
   p4_has_time_span_entity_view_1:
     weight: 2
     settings: {  }
@@ -137,6 +177,8 @@ content:
   timeline_link:
     weight: 0
     region: content
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   cidoc_admin_links: true
   cidoc_properties: true
@@ -161,6 +203,7 @@ hidden:
   p9__entity_view_1: true
   p9_forms_part_of_entity_view_1: true
   people_entity_view_1: true
+  search_api_excerpt: true
   significance: true
   timeline_logo: true
   timeline_preselect_option: true

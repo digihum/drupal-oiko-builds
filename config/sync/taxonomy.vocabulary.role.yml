@@ -5,5 +5,4 @@ dependencies: {  }
 name: Role
 vid: role
 description: 'In the role of'
-hierarchy: 0
 weight: 0

@@ -26,7 +26,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        fieldset_label_html: true
       label: '<span class="fa fa-clock-o">&nbsp;&nbsp;</span>Period'
+      region: content
     group_people:
       children:
         - 'cidoc_properties:domain:p14_carried_out_by'
@@ -44,7 +46,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        fieldset_label_html: true
       label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Participants'
+      region: content
     group_appellations:
       children:
         - 'cidoc_properties:domain:p1_is_identified_by'
@@ -60,7 +64,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        fieldset_label_html: true
       label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Also known as'
+      region: content
     group_places:
       children:
         - 'cidoc_properties:domain:p27_moved_from'
@@ -78,7 +84,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        fieldset_label_html: true
       label: '<span class="fa fa-map">&nbsp;&nbsp;</span>Places'
+      region: content
     group_objects_used:
       children:
         - 'cidoc_properties:domain:p25_moved'
@@ -95,7 +103,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        fieldset_label_html: true
       label: '<span class="fa fa-cubes">&nbsp;&nbsp;</span>Objects used'
+      region: content
     group_occurred:
       children:
         - 'cidoc_properties:domain:p4_has_time_span'
@@ -111,7 +121,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        fieldset_label_html: true
       label: '<span class="fa fa-calendar">&nbsp;&nbsp;</span>Occurred on'
+      region: content
     group_influences:
       children:
         - 'cidoc_properties:domain:p17_was_motivated_by'
@@ -130,7 +142,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        fieldset_label_html: true
       label: '<span class="fa fa-exchange">&nbsp;&nbsp;</span>Influences'
+      region: content
     group_event_structure:
       children:
         - 'cidoc_properties:domain:p9_consists_of'
@@ -151,7 +165,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        fieldset_label_html: true
       label: '<span class="fa fa-sitemap">&nbsp;&nbsp;</span>Event structure'
+      region: content
 id: cidoc_entity.e9_move.popup
 targetEntityType: cidoc_entity
 bundle: e9_move
@@ -368,6 +384,7 @@ hidden:
   p9__entity_view_1: true
   p9_forms_part_of_entity_view_1: true
   people_entity_view_1: true
+  search_api_excerpt: true
   timeline_link: true
   timeline_logo: true
   timeline_preselect_option: true
