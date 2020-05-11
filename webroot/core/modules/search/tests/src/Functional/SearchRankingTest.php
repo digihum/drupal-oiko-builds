@@ -5,9 +5,11 @@ namespace Drupal\Tests\search\Functional;
 use Drupal\comment\Plugin\Field\FieldType\CommentItemInterface;
 use Drupal\comment\Tests\CommentTestTrait;
 use Drupal\Core\Database\Database;
+use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\filter\Entity\FilterFormat;
 use Drupal\search\Entity\SearchPage;
+use Drupal\search\SearchIndexInterface;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\Traits\Core\CronRunTrait;
 
@@ -224,7 +226,7 @@ class SearchRankingTest extends BrowserTestBase {
     foreach ($shuffled_tags as $tag) {
       switch ($tag) {
         case 'a':
-          $settings['body'] = [['value' => \Drupal::l('Drupal Rocks', new Url('<front>')), 'format' => 'full_html']];
+          $settings['body'] = [['value' => Link::fromTextAndUrl('Drupal Rocks', Url::fromRoute('<front>'))->toString(), 'format' => 'full_html']];
           break;
         case 'notag':
           $settings['body'] = [['value' => 'Drupal Rocks']];
@@ -238,7 +240,8 @@ class SearchRankingTest extends BrowserTestBase {
 
     // Update the search index.
     $this->nodeSearch->getPlugin()->updateIndex();
-    search_update_totals();
+    $search_index = \Drupal::service('search.index');
+    assert($search_index instanceof SearchIndexInterface);
 
     $this->nodeSearch->getPlugin()->setSearch('rocks', [], []);
     // Do the search and assert the results.
@@ -263,7 +266,6 @@ class SearchRankingTest extends BrowserTestBase {
 
       // Update the search index.
       $this->nodeSearch->getPlugin()->updateIndex();
-      search_update_totals();
 
       $this->nodeSearch->getPlugin()->setSearch('rocks', [], []);
       // Do the search and assert the results.

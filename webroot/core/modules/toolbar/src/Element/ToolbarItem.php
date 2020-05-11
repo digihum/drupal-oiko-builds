@@ -56,6 +56,7 @@ class ToolbarItem extends RenderElement {
       // Provide attributes necessary for trays.
       $attributes += [
         'data-toolbar-tray' => $id . '-tray',
+        'aria-owns' => $id . '-tray',
         'role' => 'button',
         'aria-pressed' => 'false',
       ];

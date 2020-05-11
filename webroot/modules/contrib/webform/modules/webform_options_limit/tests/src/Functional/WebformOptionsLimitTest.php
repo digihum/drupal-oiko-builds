@@ -46,6 +46,18 @@ class WebformOptionsLimitTest extends WebformBrowserTestBase {
     // Check that option O is available.
     $this->assertRaw('<option value="O" selected="selected">O [1 remaining]</option>');
 
+    // Check that table select multiple is available.
+    $this->assertFieldById('edit-options-limit-tableselect-multiple-u', 'U');
+    $this->assertRaw('<input class="tableselect form-checkbox" data-drupal-selector="edit-options-limit-tableselect-multiple-u" type="checkbox" id="edit-options-limit-tableselect-multiple-u" name="options_limit_tableselect_multiple[U]" value="U" checked="checked" />');
+    $this->assertRaw('<td>U [1 remaining]</td>');
+
+    // Check that table select single is available.
+    $this->assertFieldById('edit-options-limit-tableselect-single-x', 'X');
+    $this->assertRaw('<input class="tableselect form-radio" data-drupal-selector="edit-options-limit-tableselect-single-x" type="radio" id="edit-options-limit-tableselect-single-x" name="options_limit_tableselect_single" value="X" checked="checked" />');
+    $this->assertPattern('#<th>options_limit_tableselect_single</th>\s+<th>Limits</th>#');
+    $this->assertRaw('<td>X</td>');
+    $this->assertRaw('<td> [1 remaining]</td>');
+
     // Post first submission.
     $sid_1 = $this->postSubmission($webform);
 
@@ -66,6 +78,15 @@ class WebformOptionsLimitTest extends WebformBrowserTestBase {
 
     // Check that option O was not changed but is not selected.
     $this->assertRaw('<option value="O">O [0 remaining]</option>');
+
+    // Check that table select multiple is NOT available.
+    $this->assertNoFieldById('edit-options-limit-tableselect-multiple-u', 'U');
+    $this->assertRaw('<td>U [0 remaining]</td>');
+
+    // Check that table select single is available.
+    $this->assertNoFieldById('edit-options-limit-tableselect-multiple-x', 'X');
+    $this->assertRaw('<td>X</td>');
+    $this->assertRaw('<td> [0 remaining]</td>');
 
     // Check that option O being selected triggers validation error.
     $this->postSubmission($webform, ['options_limit_select_none[]' => 'O']);
@@ -90,7 +111,7 @@ class WebformOptionsLimitTest extends WebformBrowserTestBase {
     // Login as an admin.
     $this->drupalLogin($this->rootUser);
 
-    // Check that random test values are only available options.
+    // Check that random test values are the only available options.
     $this->drupalGet('/webform/test_handler_options_limit/test');
     $this->assertRaw('<option value="J" selected="selected">J [Unlimited]</option>');
     $this->drupalGet('/webform/test_handler_options_limit/test');
@@ -107,6 +128,11 @@ class WebformOptionsLimitTest extends WebformBrowserTestBase {
     $this->assertRaw('<option value="H" selected="selected">H [0 remaining]</option>');
     $this->assertRaw('<option value="K" selected="selected">K [0 remaining]</option>');
     $this->assertRaw('<option value="O" selected="selected">O [0 remaining]</option>');
+
+    // Check that Options limit report is available.
+    $this->drupalLogin($this->rootUser);
+    $this->drupalGet('/admin/structure/webform/manage/test_handler_options_limit/results/options-limit');
+    $this->assertResponse(200);
 
     // Check handler element error messages.
     $webform->deleteElement('options_limit_default');

@@ -31,6 +31,7 @@ class MigrateUrlAliasTest extends MigrateDrupal6TestBase {
   protected function setUp() {
     parent::setUp();
     $this->installEntitySchema('node');
+    $this->installEntitySchema('path_alias');
     $this->installConfig(['node']);
     $this->installSchema('node', ['node_access']);
     $this->migrateUsers(FALSE);
@@ -75,7 +76,7 @@ class MigrateUrlAliasTest extends MigrateDrupal6TestBase {
     ];
     $path = \Drupal::service('path.alias_storage')->load($conditions);
     $this->assertPath('1', $conditions, $path);
-    $this->assertIdentical($id_map->lookupDestinationId([$path['pid']]), ['1'], "Test IdMap");
+    $this->assertIdentical($id_map->lookupDestinationIds([$path['pid']]), [['1']], "Test IdMap");
 
     $conditions = [
       'source' => '/node/2',

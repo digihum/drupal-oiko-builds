@@ -51,6 +51,11 @@ class MediaLibrarySelectForm extends FieldPluginBase {
       'class' => ['media-library-views-form', 'js-media-library-views-form'],
     ];
 
+    // Add an attribute that identifies the media type displayed in the form.
+    if (isset($this->view->args[0])) {
+      $form['#attributes']['data-drupal-media-type'] = $this->view->args[0];
+    }
+
     // Render checkboxes for all rows.
     $form[$this->options['id']]['#tree'] = TRUE;
     foreach ($this->view->result as $row_index => $row) {
@@ -82,6 +87,7 @@ class MediaLibrarySelectForm extends FieldPluginBase {
     // AJAX path like /views/ajax, which cannot process AJAX form submits.
     $query = $this->view->getRequest()->query->all();
     $query[FormBuilderInterface::AJAX_FORM_REQUEST] = TRUE;
+    $query['views_display_id'] = $this->view->getDisplay()->display['id'];
     $form['actions']['submit']['#ajax'] = [
       'url' => Url::fromRoute('media_library.ui'),
       'options' => [

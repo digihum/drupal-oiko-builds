@@ -26,7 +26,7 @@ elements: |
     '#selection_settings':
       target_bundles:
         page: page
-  
+
 css: ''
 javascript: ''
 settings:
@@ -140,6 +140,8 @@ settings:
   purge_days: null
   results_disabled: false
   results_disabled_ignore: false
+  results_customize: false
+  token_view: false
   token_update: false
 access:
   create:
@@ -202,6 +204,7 @@ handlers:
         _default_: 3
       limit_reached_message: '@name is not available'
       limit_source_entity: true
+      limit_user: false
       option_none_action: disable
       option_message_display: label
       option_multiple_message: '[@remaining remaining]'
@@ -209,3 +212,5 @@ handlers:
       option_unlimited_message: '[Unlimited]'
       option_none_message: '[@remaining remaining]'
       option_error_message: '@name: @label is unavailable.'
+      tableselect_header: ''
+variants: {  }

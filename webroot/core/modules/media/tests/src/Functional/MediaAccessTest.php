@@ -178,7 +178,7 @@ class MediaAccessTest extends MediaFunctionalTestBase {
     $this->drupalGet('admin/content');
     $assert_session->linkByHrefExists('/admin/content/media');
     $this->clickLink('Media');
-    $this->assertCacheContext('user.permissions');
+    $this->assertCacheContext('user');
     $assert_session->statusCodeEquals(200);
     $assert_session->elementExists('css', '.view-media');
     $assert_session->pageTextContains($this->loggedInUser->getDisplayName());
@@ -366,7 +366,7 @@ class MediaAccessTest extends MediaFunctionalTestBase {
     ]);
     $media_parent->save();
 
-    entity_get_display('media', $media_type->id(), 'full')
+    \Drupal::service('entity_display.repository')->getViewDisplay('media', $media_type->id(), 'full')
       ->set('content', [])
       ->setComponent('title', ['type' => 'string'])
       ->setComponent('field_reference', [

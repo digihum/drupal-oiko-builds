@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\system\Functional\Path;
 
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
@@ -25,8 +26,8 @@ class UrlAlterFunctionalTest extends BrowserTestBase {
    * Test that URL altering works and that it occurs in the correct order.
    */
   public function testUrlAlter() {
-    // Ensure that the url_alias table exists after Drupal installation.
-    $this->assertTrue(Database::getConnection()->schema()->tableExists('url_alias'), 'The url_alias table exists after Drupal installation.');
+    // Ensure that the path_alias table exists after Drupal installation.
+    $this->assertTrue(Database::getConnection()->schema()->tableExists('path_alias'), 'The path_alias table exists after Drupal installation.');
 
     // User names can have quotes and plus signs so we should ensure that URL
     // altering works with this.
@@ -49,7 +50,7 @@ class UrlAlterFunctionalTest extends BrowserTestBase {
     $this->assertUrlOutboundAlter("/user/$uid/test1", '/alias/test1');
 
     // Test adding an alias via the UI.
-    $edit = ['source' => "/user/$uid/edit", 'alias' => '/alias/test2'];
+    $edit = ['path[0][value]' => "/user/$uid/edit", 'alias[0][value]' => '/alias/test2'];
     $this->drupalPostForm('admin/config/search/path/add', $edit, t('Save'));
     $this->assertText(t('The alias has been saved.'));
     $this->drupalGet('alias/test2');
@@ -95,7 +96,7 @@ class UrlAlterFunctionalTest extends BrowserTestBase {
   protected function assertUrlOutboundAlter($original, $final) {
     // Test outbound altering.
     $result = $this->container->get('path_processor_manager')->processOutbound($original);
-    return $this->assertIdentical($result, $final, format_string('Altered outbound URL %original, expected %final, and got %result.', ['%original' => $original, '%final' => $final, '%result' => $result]));
+    return $this->assertIdentical($result, $final, new FormattableMarkup('Altered outbound URL %original, expected %final, and got %result.', ['%original' => $original, '%final' => $final, '%result' => $result]));
   }
 
   /**
@@ -112,7 +113,7 @@ class UrlAlterFunctionalTest extends BrowserTestBase {
   protected function assertUrlInboundAlter($original, $final) {
     // Test inbound altering.
     $result = $this->container->get('path.alias_manager')->getPathByAlias($original);
-    return $this->assertIdentical($result, $final, format_string('Altered inbound URL %original, expected %final, and got %result.', ['%original' => $original, '%final' => $final, '%result' => $result]));
+    return $this->assertIdentical($result, $final, new FormattableMarkup('Altered inbound URL %original, expected %final, and got %result.', ['%original' => $original, '%final' => $final, '%result' => $result]));
   }
 
 }

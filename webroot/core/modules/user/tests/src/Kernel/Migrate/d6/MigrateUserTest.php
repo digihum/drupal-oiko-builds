@@ -48,7 +48,7 @@ class MigrateUserTest extends MigrateDrupal6TestBase {
       'status' => FILE_STATUS_PERMANENT,
     ]);
     $file->enforceIsNew();
-    file_put_contents($file->getFileUri(), file_get_contents('core/modules/simpletest/files/image-1.png'));
+    file_put_contents($file->getFileUri(), file_get_contents('core/tests/fixtures/files/image-1.png'));
     $file->save();
 
     $file = File::create([
@@ -62,7 +62,7 @@ class MigrateUserTest extends MigrateDrupal6TestBase {
       'status' => FILE_STATUS_PERMANENT,
     ]);
     $file->enforceIsNew();
-    file_put_contents($file->getFileUri(), file_get_contents('core/modules/simpletest/files/image-2.jpg'));
+    file_put_contents($file->getFileUri(), file_get_contents('core/tests/fixtures/files/image-2.jpg'));
     $file->save();
 
     $this->executeMigration('language');
@@ -91,7 +91,7 @@ class MigrateUserTest extends MigrateDrupal6TestBase {
       $roles = [RoleInterface::AUTHENTICATED_ID];
       $id_map = $this->getMigration('d6_user_role')->getIdMap();
       foreach ($rids as $rid) {
-        $role = $id_map->lookupDestinationId([$rid]);
+        $role = $id_map->lookupDestinationIds([$rid])[0];
         $roles[] = reset($role);
       }
 

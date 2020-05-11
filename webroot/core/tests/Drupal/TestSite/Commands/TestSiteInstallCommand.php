@@ -114,6 +114,8 @@ class TestSiteInstallCommand extends Command {
         ['Site path', $this->siteDirectory],
       ]);
     }
+
+    return 0;
   }
 
   /**
@@ -198,6 +200,7 @@ class TestSiteInstallCommand extends Command {
     $this->initSettings();
     $container = $this->initKernel(\Drupal::request());
     $this->initConfig($container);
+    $this->installDefaultThemeFromClassProperty($container);
     $this->installModulesFromClassProperty($container);
     $this->rebuildAll();
   }

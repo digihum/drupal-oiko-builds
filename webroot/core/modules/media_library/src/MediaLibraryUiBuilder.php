@@ -162,7 +162,6 @@ class MediaLibraryUiBuilder {
       '#attributes' => [
         'id' => 'media-library-content',
         'class' => ['media-library-content'],
-        'tabindex' => -1,
       ],
       'form' => $this->buildMediaTypeAddForm($state),
       'view' => $this->buildMediaLibraryView($state),
@@ -331,7 +330,7 @@ class MediaLibraryUiBuilder {
     //   https://www.drupal.org/project/drupal/issues/2971209
     $view = $this->entityTypeManager->getStorage('view')->load('media_library');
     $view_executable = $this->viewsExecutableFactory->get($view);
-    $display_id = 'widget';
+    $display_id = $state->get('views_display_id', 'widget');
 
     // Make sure the state parameters are set in the request so the view can
     // pass the parameters along in the pager, filters etc.
