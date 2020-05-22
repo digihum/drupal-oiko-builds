@@ -1,0 +1,13 @@
+---
+label: EC2 Genre
+superclasses:
+  - e28_conceptual_object
+description: |
+  Literary genre, when possible, according to the thesaurus "Library of Congress Genre/Form Terms" (LCGFT), http://id.loc.gov/authorities/genreForms.html
+
+examples: |
+  * Tensos (ELC1)
+  * Crusading songs (ELC1)
+  * Romances (EC5)
+  * Epic Poetry (EC5)
+

@@ -1,0 +1,30 @@
+uuid: 89f339dd-38cc-4632-b572-280cf5497797
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: r6EEmAXl_hH9kcu_njSGjmnZ3X1_IuJSR-4UNNB60gE
+id: p26_moved_to
+label: 'P26 moved to'
+bidirectional: false
+reverse_label: 'P26 was destination of'
+friendly_label: 'Moved to'
+reverse_friendly_label: 'Was destination of'
+domain_bundles:
+  - e9_move
+range_bundles:
+  - e53_place
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: "\n\n"
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

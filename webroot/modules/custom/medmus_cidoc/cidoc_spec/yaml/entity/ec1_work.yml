@@ -1,0 +1,19 @@
+---
+label: EC1 Work
+superclasses:
+  - e33_linguistic_object
+properties:
+  - p72_has_language
+  - pc1_has_metrical_affinities_with
+  - pc2_is_contrafactum_of
+  - pc3_has_genre
+  - pc4_has_formal_feature
+  - pc5_has_expression
+  - pc7_has_music
+  - pc8_has_syllabic_scheme
+  - pc9_has_rhyme_scheme
+examples: |
+  * BdT 366.11
+  * Roman de Tristan en prose
+  * Il sabato del villaggio
+

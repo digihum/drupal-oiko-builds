@@ -1,0 +1,9 @@
+---
+label: PC1 has metrical affinities with
+bidirectional: true
+domain: ec1_work
+range: ec1_work
+description: |
+  A person or corporation (subject; e.g. an artist or group of artists) who is sponsored/favoured by a person or corporation (object).
+examples: |
+  * Peirol (E21) has patron Blacatz (E21)

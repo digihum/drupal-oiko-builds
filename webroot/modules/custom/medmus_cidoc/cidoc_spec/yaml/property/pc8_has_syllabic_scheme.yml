@@ -1,0 +1,10 @@
+---
+label: PC8 has syllabic scheme
+bidirectional: false
+reverse label: PC8 is syllabic scheme of
+domain: ec1_work
+range: ec4_syllabic_scheme
+description: |
+  This property links lyrics with its corresponding syllabic scheme.
+examples: |
+  * BdT 240,6 PC8 has syllabic scheme 8 7 8 8 7' 8 8 7' (EC4)

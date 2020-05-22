@@ -1,0 +1,26 @@
+uuid: a6ac7ab2-65bd-4c8c-9598-f4d182d9b157
+langcode: en
+status: true
+dependencies: {  }
+id: p108_has_produced
+label: 'P108 has produced'
+bidirectional: false
+reverse_label: 'P108 was produced by'
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  - e12_production
+range_bundles:
+  5: ec7_source
+  6: ec9_print
+  7: ec8_manuscript
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: "\n\n"
+autocomplete_description: {  }
+child_events: {  }

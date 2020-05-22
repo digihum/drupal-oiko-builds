@@ -1,0 +1,58 @@
+uuid: d0834ad5-add7-4099-894b-e1b80f5043bc
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: zv3Zg8kskkA3WfZgGaseyAuN3PW6SoFa-0yH-1w0XEU
+id: p2_has_type
+label: 'P2 has type'
+bidirectional: false
+reverse_label: 'P2 is type of'
+friendly_label: 'has type'
+reverse_friendly_label: 'Is type of'
+domain_bundles:
+  3: e52_time_span
+  4: e53_place
+  10: e5_event
+  13: e21_person
+  14: e74_group
+  17: e7_activity
+  23: e68_dissolution
+  24: e6_destruction
+  26: e69_death
+  27: e67_birth
+  28: e65_creation
+  29: e12_production
+  30: e66_formation
+  34: e9_move
+  46: e55_type
+  47: ec2_genre
+  51: e41_appellation
+  52: ec3_formal_feature
+  61: ec7_source
+  64: e56_language
+  65: e57_material
+  72: ec6_music
+  73: e35_title
+  78: e42_identifier
+  80: ec9_print
+  81: ec8_manuscript
+  86: ec1_work
+range_bundles:
+  0: e55_type
+  2: e56_language
+  3: e57_material
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: "\n\n"
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

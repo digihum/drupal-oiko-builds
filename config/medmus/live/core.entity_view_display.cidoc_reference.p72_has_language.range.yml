@@ -1,0 +1,28 @@
+uuid: bba94825-7f6c-4db1-97f2-7af94d24fc20
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p72_has_language
+    - core.entity_view_mode.cidoc_reference.range
+    - field.field.cidoc_reference.p72_has_language.domain
+    - field.field.cidoc_reference.p72_has_language.range
+id: cidoc_reference.p72_has_language.range
+targetEntityType: cidoc_reference
+bundle: p72_has_language
+mode: range
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  property: true
+  range: true
+  search_api_excerpt: true
+  user_id: true

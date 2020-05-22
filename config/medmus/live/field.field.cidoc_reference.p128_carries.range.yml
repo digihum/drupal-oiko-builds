@@ -1,0 +1,39 @@
+uuid: 38f738fb-c3b6-41f5-bad6-07d487a9eecd
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e35_title
+    - cidoc.cidoc_entity_bundle.e41_appellation
+    - cidoc.cidoc_entity_bundle.e42_identifier
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_entity_bundle.ec3_formal_feature
+    - cidoc.cidoc_entity_bundle.ec6_music
+    - cidoc.cidoc_property.p128_carries
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.p128_carries.range
+field_name: range
+entity_type: cidoc_reference
+bundle: p128_carries
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e41_appellation: e41_appellation
+      ec3_formal_feature: ec3_formal_feature
+      ec6_music: ec6_music
+      e35_title: e35_title
+      e42_identifier: e42_identifier
+      ec1_work: ec1_work
+    auto_create_bundle: e41_appellation
+field_type: entity_reference

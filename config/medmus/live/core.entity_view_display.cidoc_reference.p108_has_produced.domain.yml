@@ -1,0 +1,28 @@
+uuid: 301ab696-e2b3-4504-bb09-d1cede62ad41
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p108_has_produced
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.p108_has_produced.domain
+    - field.field.cidoc_reference.p108_has_produced.range
+id: cidoc_reference.p108_has_produced.domain
+targetEntityType: cidoc_reference
+bundle: p108_has_produced
+mode: domain
+content:
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  domain: true
+  property: true
+  search_api_excerpt: true
+  user_id: true

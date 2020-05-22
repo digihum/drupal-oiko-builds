@@ -1,0 +1,28 @@
+uuid: 88d0e415-7bf3-4e81-a3a7-092b9298fe0d
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc7_has_music
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pc7_has_music.domain
+    - field.field.cidoc_reference.pc7_has_music.range
+id: cidoc_reference.pc7_has_music.domain
+targetEntityType: cidoc_reference
+bundle: pc7_has_music
+mode: domain
+content:
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  domain: true
+  property: true
+  search_api_excerpt: true
+  user_id: true

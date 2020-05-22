@@ -1,0 +1,29 @@
+uuid: bee767be-5d4b-4d31-b913-754d744d1395
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec2_genre
+    - cidoc.cidoc_property.pc3_has_genre
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.pc3_has_genre.range
+field_name: range
+entity_type: cidoc_reference
+bundle: pc3_has_genre
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      ec2_genre: ec2_genre
+    auto_create_bundle: ec2_genre
+field_type: entity_reference

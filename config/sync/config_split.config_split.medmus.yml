@@ -1,0 +1,20 @@
+uuid: 9c857516-663f-43c9-9c37-a4c135ff896f
+langcode: en
+status: false
+dependencies: {  }
+id: medmus
+label: Medmus
+description: 'Configuration specific to Medmus only'
+folder: ../config/medmus/live
+module:
+  medmus_cidoc: 0
+theme: {  }
+blacklist:
+  - 'cidoc.*'
+  - 'core.entity_form_display.cidoc_entity.*'
+  - 'core.entity_view_display.cidoc_entity.*'
+  - 'field.field.cidoc_entity.*'
+graylist: {  }
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0

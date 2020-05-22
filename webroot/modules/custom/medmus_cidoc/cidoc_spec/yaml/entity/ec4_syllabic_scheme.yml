@@ -1,0 +1,11 @@
+---
+label: EC4 Syllabic Scheme
+superclasses:
+  - e62_string
+description: |
+  This class contains the count of syllables per line stanza until the last stressed syllable of a stanza in a EC1 Work. The presence of a last unstressed syllable (feminine rhyme) is defined by an apostrophe.
+
+examples: |
+  * 10 10 10 10 10 10 10
+  * 5’ 7 5’ 7 8 8 8 8
+

@@ -1,0 +1,37 @@
+uuid: 5f72ca95-a150-4c8e-b7cd-baa4d82c16bb
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_entity_bundle.ec7_source
+    - cidoc.cidoc_entity_bundle.ec8_manuscript
+    - cidoc.cidoc_entity_bundle.ec9_print
+    - cidoc.cidoc_property.p13_destroyed
+    - field.storage.cidoc_reference.range
+_core:
+  default_config_hash: mQkD17yznPvhGMAWAxzgEB1j4-FObC4xcEEYSrC1wfg
+id: cidoc_reference.p13_destroyed.range
+field_name: range
+entity_type: cidoc_reference
+bundle: p13_destroyed
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e21_person: e21_person
+      ec7_source: ec7_source
+      ec9_print: ec9_print
+      ec8_manuscript: ec8_manuscript
+    auto_create_bundle: e21_person
+field_type: entity_reference

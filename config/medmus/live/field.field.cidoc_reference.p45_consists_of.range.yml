@@ -1,0 +1,29 @@
+uuid: a179dead-4a68-4515-9e7a-31eab5f218bf
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e57_material
+    - cidoc.cidoc_property.p45_consists_of
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.p45_consists_of.range
+field_name: range
+entity_type: cidoc_reference
+bundle: p45_consists_of
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e57_material: e57_material
+    auto_create_bundle: e57_material
+field_type: entity_reference

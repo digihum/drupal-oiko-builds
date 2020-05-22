@@ -1,0 +1,13 @@
+---
+label: EC8 Manuscript
+superclasses:
+  - ec7_source
+properties:
+  - p45_consists_of
+
+description: |
+  This class comprises all identifiable physical object that carry linguistic (and/or visual) information written by hand.
+
+examples: |
+  * Manuscript A of the Troubadour repertoire (EC8)
+  * Paris, BnF, fr. 856

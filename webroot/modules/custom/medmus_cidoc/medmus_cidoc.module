@@ -1,0 +1,13 @@
+<?php
+
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_cidoc_sync_property_sync().
+ */
+function medmus_cidoc_cidoc_sync_property_sync(\Drupal\cidoc\Entity\CidocProperty $drupal_property, \ComputerMinds\CIDOC_CRM\Property $crm_property, $dry_run, $destructive) {
+  $yaml = Yaml::parse($crm_property->getCrmYaml());
+  if (!empty($yaml['bidirectional'])) {
+    $drupal_property->set('bidirectional', TRUE);
+  }
+}

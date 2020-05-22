@@ -1,0 +1,14 @@
+---
+label: PC4 has formal feature
+bidirectional: false
+reverse label: PC4 is formal feature of
+domain: ec1_work
+range: ec3_formal_feature
+description: |
+  Defines formal feature of an EC1 work, including general metrical features.
+examples: |
+  * BdT 366,1 PC4 has formal feature (is formal feature of) Strophic
+  * The Chanson de Roland PC4 has formal feature (is formal feature of) Laisses of assonating decasyllables
+  * The Roman de Tristan en prose PC4 has formal feature (is formal feature of) Prose
+
+

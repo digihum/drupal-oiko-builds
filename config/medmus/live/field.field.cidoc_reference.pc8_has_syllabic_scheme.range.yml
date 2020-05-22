@@ -1,0 +1,29 @@
+uuid: c46868e1-d348-442d-a5bb-28312d18744b
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec4_syllabic_scheme
+    - cidoc.cidoc_property.pc8_has_syllabic_scheme
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.pc8_has_syllabic_scheme.range
+field_name: range
+entity_type: cidoc_reference
+bundle: pc8_has_syllabic_scheme
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      ec4_syllabic_scheme: ec4_syllabic_scheme
+    auto_create_bundle: ec4_syllabic_scheme
+field_type: entity_reference

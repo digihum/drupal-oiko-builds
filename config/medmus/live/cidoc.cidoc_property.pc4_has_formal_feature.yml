@@ -1,0 +1,24 @@
+uuid: 5ec0c2b4-b691-4727-8fd3-048e2ff66624
+langcode: en
+status: true
+dependencies: {  }
+id: pc4_has_formal_feature
+label: 'PC4 has formal feature'
+bidirectional: false
+reverse_label: 'PC4 is formal feature of'
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  - ec1_work
+range_bundles:
+  - ec3_formal_feature
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: "<p>Defines formal feature of an EC1 work, including general metrical features.</p>\n<ul>\n<li>BdT 366,1 PC4 has formal feature (is formal feature of) Strophic</li>\n<li>The Chanson de Roland PC4 has formal feature (is formal feature of) Laisses of assonating decasyllables</li>\n<li>The Roman de Tristan en prose PC4 has formal feature (is formal feature of) Prose</li>\n</ul>\n"
+autocomplete_description: {  }
+child_events: {  }

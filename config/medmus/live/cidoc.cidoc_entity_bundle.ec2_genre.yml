@@ -1,0 +1,13 @@
+uuid: 81fa48e5-ff1a-4499-a73e-246fdc3e12c6
+langcode: en
+status: true
+dependencies: {  }
+crm_entity: ec2_genre
+id: ec2_genre
+label: 'EC2 Genre'
+friendly_label: null
+weight: 0
+group: auxiliary
+description: "<p>Literary genre, when possible, according to the thesaurus \"Library of Congress Genre/Form Terms\" (LCGFT), http://id.loc.gov/authorities/genreForms.html</p>\n"
+examples: "<ul>\n<li>Tensos (ELC1)</li>\n<li>Crusading songs (ELC1)</li>\n<li>Romances (EC5)</li>\n<li>Epic Poetry (EC5)</li>\n</ul>\n"
+geoserializers: {  }

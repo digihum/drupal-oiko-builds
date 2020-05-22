@@ -1,0 +1,10 @@
+---
+label: PC7 has music
+bidirectional: false
+reverse label: PC7 is music of
+domain: e65_creation
+range: e21_person
+description: |
+  This property links lyrics with one or more versions of its music
+examples: |
+  * BdT 366,2 has metrical affinities with the melody of 366,2 as preserved in ms. G of the troubadour tradition (EC6)

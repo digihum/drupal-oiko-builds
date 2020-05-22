@@ -1,0 +1,28 @@
+uuid: d0f933ca-c74f-4f01-be9a-80d64ff1b5cf
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc1_has_metrical_affinities_with
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pc1_has_metrical_affinities_with.domain
+    - field.field.cidoc_reference.pc1_has_metrical_affinities_with.range
+id: cidoc_reference.pc1_has_metrical_affinities_with.domain
+targetEntityType: cidoc_reference
+bundle: pc1_has_metrical_affinities_with
+mode: domain
+content:
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  domain: true
+  property: true
+  search_api_excerpt: true
+  user_id: true

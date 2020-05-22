@@ -1,0 +1,10 @@
+---
+label: EC6 Music
+superclasses:
+  - e73_information_object
+description: |
+  This class defines a music as a non-physical thing which is carried by one or more carriers.
+
+examples: |
+  * The music of 366,2 as attested by ms. G of the troubadour tradition
+  * The music of BdT 366,2 as attested by ms. R of the troubadour tradition

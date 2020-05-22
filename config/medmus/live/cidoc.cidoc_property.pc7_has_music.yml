@@ -1,0 +1,24 @@
+uuid: 11abfd66-67b4-4420-90c7-908e044d5d30
+langcode: en
+status: true
+dependencies: {  }
+id: pc7_has_music
+label: 'PC7 has music'
+bidirectional: false
+reverse_label: 'PC7 is music of'
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  - e65_creation
+range_bundles:
+  - e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: "<p>This property links lyrics with one or more versions of its music</p>\n<ul>\n<li>BdT 366,2 has metrical affinities with the melody of 366,2 as preserved in ms. G of the troubadour tradition (EC6)</li>\n</ul>\n"
+autocomplete_description: {  }
+child_events: {  }

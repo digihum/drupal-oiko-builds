@@ -1,2 +1,3 @@
 .drush-cache-rebuild
 webroot/sites/default/files/
+.idea

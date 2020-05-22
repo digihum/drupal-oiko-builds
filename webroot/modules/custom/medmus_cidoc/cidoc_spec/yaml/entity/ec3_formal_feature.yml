@@ -1,0 +1,12 @@
+---
+label: EC3 Formal Feature
+superclasses:
+  - e90_symbolic_object
+description: |
+  This class contains the rhyme scheme in a stanza of a EC1 Work.
+
+examples: |
+  * Strophic
+  * Prose
+  * Laisses of assonating decasyllables
+  * Couplets of octosyllables

@@ -1,0 +1,28 @@
+uuid: 7070622e-6d02-4050-bed0-905be0232d87
+langcode: en
+status: true
+dependencies: {  }
+id: p139_has_alternative_form
+label: 'P139 has alternative form'
+bidirectional: false
+reverse_label: 'P139 has alternative form'
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  0: e41_appellation
+  1: e35_title
+  6: e42_identifier
+range_bundles:
+  0: e41_appellation
+  1: e35_title
+  6: e42_identifier
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: "\n\n"
+autocomplete_description: {  }
+child_events: {  }

@@ -1,0 +1,53 @@
+uuid: 6c56bd7b-e1f0-49db-92c3-1465df324351
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 6kFpcVQxfsl1ZsVLa6tt-w6rulqlIS1H44QaCTXeM1E
+id: p12_occurred_in_the_presence_of
+label: 'P12 occurred in the presence of'
+bidirectional: false
+reverse_label: 'P12 was present at'
+friendly_label: 'Occurred in the presence of'
+reverse_friendly_label: 'Was present at'
+domain_bundles:
+  0: e5_event
+  3: e7_activity
+  4: e68_dissolution
+  5: e6_destruction
+  7: e69_death
+  8: e67_birth
+  9: e65_creation
+  10: e12_production
+  11: e66_formation
+  15: e9_move
+range_bundles:
+  5: e21_person
+  6: e74_group
+  16: e55_type
+  17: ec2_genre
+  21: e41_appellation
+  22: ec3_formal_feature
+  24: ec7_source
+  27: e56_language
+  28: e57_material
+  35: ec6_music
+  36: e35_title
+  41: e42_identifier
+  43: ec9_print
+  44: ec8_manuscript
+  49: ec1_work
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: "\n\n"
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

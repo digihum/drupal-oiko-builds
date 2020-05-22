@@ -1,0 +1,39 @@
+uuid: f05b897e-bf1e-4fdb-9ae2-aa7f6ac5a39f
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p72_has_language
+    - field.field.cidoc_reference.p72_has_language.domain
+    - field.field.cidoc_reference.p72_has_language.range
+id: cidoc_reference.p72_has_language.default
+targetEntityType: cidoc_reference
+bundle: p72_has_language
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    region: content
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  search_api_excerpt: true
+  user_id: true

@@ -1,0 +1,12 @@
+---
+label: EC9 Print
+superclasses:
+  - ec7_source
+description: |
+  This class comprises all identifiable physical object that carry linguistic and/or visual information printed.
+
+examples: |
+  * The specimen of the Editio Princeps of the Machiavelli’s Principe preserved in the Vatican Library.
+
+  This is should be distinct from the E33 Linguistic Object that is the text carried by EC9 Print, which is independent from the carrier itself (ex. “The text of Editio Princeps of Machiavelli’s De Principatibus”).
+

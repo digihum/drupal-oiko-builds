@@ -1,0 +1,39 @@
+uuid: 3c6f2f44-a8cf-4c36-9d12-61e227f01366
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e12_production
+    - cidoc.cidoc_entity_bundle.e65_creation
+    - cidoc.cidoc_entity_bundle.e66_formation
+    - cidoc.cidoc_entity_bundle.e7_activity
+    - cidoc.cidoc_entity_bundle.e9_move
+    - cidoc.cidoc_property.p14_carried_out_by
+    - field.storage.cidoc_reference.domain
+_core:
+  default_config_hash: fk7ec2ojbdp_tGkW3JB9gyyBimG-ksHVp5p5m9ycetU
+id: cidoc_reference.p14_carried_out_by.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: p14_carried_out_by
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e7_activity: e7_activity
+      e9_move: e9_move
+      e65_creation: e65_creation
+      e66_formation: e66_formation
+      e12_production: e12_production
+    auto_create_bundle: e7_activity
+field_type: entity_reference

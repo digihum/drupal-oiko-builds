@@ -1,0 +1,147 @@
+uuid: 76d11d9c-0ac6-40be-8ec5-a42af23ca853
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e68_dissolution
+    - core.entity_view_mode.cidoc_entity.summary
+id: cidoc_entity.e68_dissolution.summary
+targetEntityType: cidoc_entity
+bundle: e68_dissolution
+mode: summary
+content:
+  'cidoc_properties:domain:p10_falls_within':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p11_had_participant':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p12_occurred_in_the_presence_of':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p132_overlaps_with':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p133_is_separated_from':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p1_is_identified_by':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p2_has_type':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p4_has_time_span':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p7_took_place_at':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p99_dissolved':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p9_consists_of':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p10_falls_within':
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p15_was_influenced_by':
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p17_was_motivated_by':
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p9_consists_of':
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    settings:
+      link_to_entity: true
+    third_party_settings: {  }
+    region: content
+  p12_occurred_in_the_presence_of_entity_view_1:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  p4_has_time_span_entity_view_1:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  p7_took_place_at_map_entity_view_2:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  timeline_link:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  cidoc_admin_links: true
+  cidoc_properties: true
+  cidoc_properties_transcript: true
+  cidoc_temporal_summary: true
+  citation: true
+  content: true
+  duplicate_of_p134_continues_entity_view_1: true
+  duplicate_of_p15_influenced_entity_view_1: true
+  duplicate_of_p15_was_influenced_by_entity_view_1: true
+  internal_name: true
+  map_link: true
+  p108_has_produced_entity_view_1: true
+  p108_produced_by_entity_view_1: true
+  p10_falls_within_entity_view_1: true
+  p10_includes_entity_view_1: true
+  p11_has_participant_entity_view_1: true
+  p14_carried_out_by_entity_view_1: true
+  p15_influenced_entity_view_1: true
+  p15_was_influenced_by_entity_view_1: true
+  p16_used_specific_object_entity_view_1: true
+  p7_took_place_at_map_entity_view_1: true
+  p95_formed_group_entity_view_1: true
+  p99_dissov_group_entity_view_1: true
+  p9__entity_view_1: true
+  p9_forms_part_of_entity_view_1: true
+  people_entity_view_1: true
+  search_api_excerpt: true
+  significance: true
+  timeline_logo: true
+  timeline_preselect_option: true
+  user_id: true

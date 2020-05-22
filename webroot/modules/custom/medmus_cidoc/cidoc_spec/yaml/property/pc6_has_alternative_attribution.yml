@@ -1,0 +1,9 @@
+---
+label: PC6 has alternative attribution
+bidirectional: false
+reverse label: PC6 is alternative attribution of
+domain: e65_creation
+range: e21_person
+description: |
+  This property describes person who might be responsible for the creation of an entity [EC1 Literary work] but is different from the author mainly recognised as such by the scholarly community or the repertory.
+  This includes alternative attributions in different documents and sources (PC4.1 documented in: document) or proposed by scholars (PC4.2 according to: bibliographic reference).

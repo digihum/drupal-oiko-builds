@@ -1,0 +1,39 @@
+uuid: c667d871-aad3-4ffc-ad87-7b988d2283f9
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: OcT714zVohOZRkOPSJGacLlwZaAB4zZqD0Jb7bPlSLQ
+id: p7_took_place_at
+label: 'P7 took place at'
+bidirectional: false
+reverse_label: 'P7 witnessed'
+friendly_label: 'Took place at'
+reverse_friendly_label: Witnessed
+domain_bundles:
+  1: e5_event
+  4: e7_activity
+  5: e68_dissolution
+  6: e6_destruction
+  8: e69_death
+  9: e67_birth
+  10: e65_creation
+  11: e12_production
+  12: e66_formation
+  16: e9_move
+range_bundles:
+  - e53_place
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: "\n\n"
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

@@ -1,0 +1,28 @@
+uuid: 47733977-a3e9-4afc-9100-be3300c970fb
+langcode: en
+status: true
+dependencies: {  }
+id: p89_falls_within
+label: 'P89 falls within'
+bidirectional: false
+reverse_label: 'P89 contains'
+friendly_label: 'Falls within'
+reverse_friendly_label: Contains
+domain_bundles:
+  - e53_place
+range_bundles:
+  - e53_place
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: "\n\n"
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

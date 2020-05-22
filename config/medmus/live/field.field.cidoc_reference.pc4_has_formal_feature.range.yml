@@ -1,0 +1,29 @@
+uuid: 83d7f491-b033-49c1-817b-f787b536fcc8
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec3_formal_feature
+    - cidoc.cidoc_property.pc4_has_formal_feature
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.pc4_has_formal_feature.range
+field_name: range
+entity_type: cidoc_reference
+bundle: pc4_has_formal_feature
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      ec3_formal_feature: ec3_formal_feature
+    auto_create_bundle: ec3_formal_feature
+field_type: entity_reference

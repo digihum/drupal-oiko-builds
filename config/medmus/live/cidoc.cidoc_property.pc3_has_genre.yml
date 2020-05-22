@@ -1,0 +1,28 @@
+uuid: dc24746d-ca05-40a8-9d02-d73ecf07e6cb
+langcode: en
+status: true
+dependencies: {  }
+id: pc3_has_genre
+label: 'PC3 has genre'
+bidirectional: false
+reverse_label: 'PC3 is genre of'
+friendly_label: ''
+reverse_friendly_label: ''
+domain_bundles:
+  - ec1_work
+range_bundles:
+  - ec2_genre
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: "<p>Defines the literary genre of a literary work.</p>\n<ul>\n<li>BdT 366,1 has genre (is genre of) Love song</li>\n<li>The Chanson de Roland has genre (is genre of) Epic poetry</li>\n</ul>\n"
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

@@ -1,0 +1,31 @@
+uuid: 49bc7144-a4c6-4811-b34e-f02e8fcd041d
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e35_title
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_property.p72_has_language
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.p72_has_language.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: p72_has_language
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e35_title: e35_title
+      ec1_work: ec1_work
+    auto_create_bundle: e35_title
+field_type: entity_reference

@@ -1,0 +1,27 @@
+uuid: 50c146e9-226c-4f17-ba81-e7765a173137
+langcode: en
+status: true
+dependencies: {  }
+id: p45_consists_of
+label: 'P45 consists of'
+bidirectional: false
+reverse_label: 'P45 is incorporated in'
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  9: e21_person
+  11: ec7_source
+  12: ec9_print
+  13: ec8_manuscript
+range_bundles:
+  - e57_material
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: "\n\n"
+autocomplete_description: {  }
+child_events: {  }

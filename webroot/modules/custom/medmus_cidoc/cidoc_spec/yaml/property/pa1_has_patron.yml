@@ -1,0 +1,10 @@
+---
+label: PA1 has patron
+domain: e21_person
+range: e21_person
+reverse label: PA1 is patron of
+bidirectional: false
+description: |
+  A person or corporation (subject; e.g. an artist or group of artists) who is sponsored/favoured by a person or corporation (object).
+examples: |
+  * Peirol (E21) has patron Blacatz (E21)

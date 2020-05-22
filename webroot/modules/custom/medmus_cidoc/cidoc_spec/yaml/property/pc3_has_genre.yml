@@ -1,0 +1,12 @@
+---
+label: PC3 has genre
+bidirectional: false
+reverse label: PC3 is genre of
+domain: ec1_work
+range: ec2_genre
+description: |
+  Defines the literary genre of a literary work.
+examples: |
+  * BdT 366,1 has genre (is genre of) Love song
+  * The Chanson de Roland has genre (is genre of) Epic poetry
+

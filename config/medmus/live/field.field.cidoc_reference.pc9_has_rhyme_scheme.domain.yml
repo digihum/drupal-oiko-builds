@@ -1,0 +1,29 @@
+uuid: 0fc9cd7a-6f86-44f8-b830-ec85b376132f
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_property.pc9_has_rhyme_scheme
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.pc9_has_rhyme_scheme.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: pc9_has_rhyme_scheme
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      ec1_work: ec1_work
+    auto_create_bundle: ec1_work
+field_type: entity_reference

@@ -1,0 +1,28 @@
+uuid: 6a120009-d2c1-40d7-82f0-8391679c71fd
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc8_has_syllabic_scheme
+    - core.entity_view_mode.cidoc_reference.range
+    - field.field.cidoc_reference.pc8_has_syllabic_scheme.domain
+    - field.field.cidoc_reference.pc8_has_syllabic_scheme.range
+id: cidoc_reference.pc8_has_syllabic_scheme.range
+targetEntityType: cidoc_reference
+bundle: pc8_has_syllabic_scheme
+mode: range
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  property: true
+  range: true
+  search_api_excerpt: true
+  user_id: true

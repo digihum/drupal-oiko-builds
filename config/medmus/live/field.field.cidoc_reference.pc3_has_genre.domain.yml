@@ -1,0 +1,29 @@
+uuid: 1073afe9-605c-419a-954e-1b61c2c34994
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_property.pc3_has_genre
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.pc3_has_genre.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: pc3_has_genre
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      ec1_work: ec1_work
+    auto_create_bundle: ec1_work
+field_type: entity_reference

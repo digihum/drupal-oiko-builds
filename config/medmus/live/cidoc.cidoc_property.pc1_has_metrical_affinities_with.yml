@@ -1,0 +1,28 @@
+uuid: a5ff5f23-359a-46bb-8fa9-17f9e02a58ee
+langcode: en
+status: true
+dependencies: {  }
+id: pc1_has_metrical_affinities_with
+label: 'PC1 has metrical affinities with'
+bidirectional: true
+reverse_label: 'PC1 has metrical affinities with'
+friendly_label: ''
+reverse_friendly_label: ''
+domain_bundles:
+  - ec1_work
+range_bundles:
+  - ec1_work
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: "<p>A person or corporation (subject; e.g. an artist or group of artists) who is sponsored/favoured by a person or corporation (object).</p>\n<ul>\n<li>Peirol (E21) has patron Blacatz (E21)</li>\n</ul>\n"
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

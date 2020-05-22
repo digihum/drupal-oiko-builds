@@ -1,0 +1,21 @@
+---
+label: PC5 has expression
+bidirectional: false
+reverse label: PC4 is expression of
+domain: ec1_work
+range: ec1_work
+description: |
+  This property links works with their expression(s).
+  (cfr. F1 Work, F2 Expression, F3 Manifestation in LRMoo guidelines)
+
+  A EC1 Literary work may have different expressions, as it can be realized in different versions and different translations.
+  In the present data model an expression is always a EC1 Literary work. The hierarchisation between work and its expression is defined by the PC10 property rather than by different entities.
+  To specify that a EC1 Literary work is an expression, one may use P2 has type: E55 Type: Expression.
+
+
+  The present data model does not strictly distinguish between Work – Expression – Manifestation, but links directly the EC1 Work (= F1 Work)  with “EC7 Source” (which corresponds to “Manifestation” as intended in LRMoo guidelines: e.g. a Physical Object – in case of of a Manuscript or a Symbolic Object when we talk about Prints, when we refer to the prototype that was used to create all copies [= Items] of a specific edition). This compromise is necessary to guarantee the simplicity of data input for this specific project.
+examples: |
+  * The Navigatio Sancti Brendani P5 has expression (is expression of): The Anglo-Norman version, the Voyage de Saint Brendan by Benedeit
+  * The legend of Tristan and Iseult P5 has expression: The Tristan by Beroul
+
+

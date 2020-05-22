@@ -7,6 +7,7 @@ dependencies:
   module:
     - cidoc
     - user
+    - views_bulk_operations
 _core:
   default_config_hash: jnb4SVBTv_1IMaTiWQfu546DBtbCbMUlw9Mkk9vD7Rw
 id: cidoc_entities
@@ -41,9 +42,9 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
+          submit_button: 'Apply filters'
+          reset_button: true
+          reset_button_label: 'Reset filters'
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
@@ -71,9 +72,144 @@ display:
           quantity: 9
       style:
         type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          override: true
+          sticky: false
+          caption: ''
+          summary: ''
+          description: ''
+          columns:
+            views_bulk_operations_bulk_form: views_bulk_operations_bulk_form
+            name: name
+            internal_name: internal_name
+            bundle: bundle
+            name_1: name_1
+            status: status
+            operations: operations
+          info:
+            views_bulk_operations_bulk_form:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            name:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            internal_name:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            bundle:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            name_1:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            status:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            operations:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          default: '-1'
+          empty_table: true
       row:
         type: fields
       fields:
+        views_bulk_operations_bulk_form:
+          id: views_bulk_operations_bulk_form
+          table: views
+          field: views_bulk_operations_bulk_form
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Views bulk operations'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          batch: true
+          batch_size: 10
+          form_step: true
+          buttons: true
+          clear_on_exposed: false
+          action_title: Action
+          selected_actions:
+            publish_cidoc: 0
+            comment_delete_action: 0
+            views_bulk_operations_delete_entity: views_bulk_operations_delete_entity
+            pathauto_update_alias: 0
+            'entity:save_action:cidoc_entity': 0
+            'entity:unpublish_action:cidoc_entity': 'entity:unpublish_action:cidoc_entity'
+            'entity:publish_action:cidoc_entity': 'entity:publish_action:cidoc_entity'
+          preconfiguration:
+            views_bulk_operations_delete_entity:
+              label_override: ''
+            'entity:unpublish_action:cidoc_entity':
+              label_override: Unpublish
+            'entity:publish_action:cidoc_entity':
+              label_override: Publish
+          plugin_id: views_bulk_operations_bulk_form
         name:
           id: name
           table: cidoc_entity
@@ -694,7 +830,20 @@ display:
       title: 'CIDOC Entities'
       header: {  }
       footer: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content:
+            value: 'No CIDOC entities added. <a href="/cidoc-entity/add">Add some.</a>'
+            format: basic_html
+          plugin_id: text
       relationships:
         user_id:
           id: user_id
@@ -714,7 +863,7 @@ display:
         groups:
           1: AND
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -737,7 +886,7 @@ display:
         enabled: true
         expanded: false
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'

@@ -1,0 +1,28 @@
+uuid: 21172449-107f-4f28-b85d-2cc0a0ed7fa1
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc9_has_rhyme_scheme
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pc9_has_rhyme_scheme.domain
+    - field.field.cidoc_reference.pc9_has_rhyme_scheme.range
+id: cidoc_reference.pc9_has_rhyme_scheme.domain
+targetEntityType: cidoc_reference
+bundle: pc9_has_rhyme_scheme
+mode: domain
+content:
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  domain: true
+  property: true
+  search_api_excerpt: true
+  user_id: true

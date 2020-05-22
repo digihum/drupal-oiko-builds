@@ -1,0 +1,39 @@
+uuid: fd4d161a-5d4d-4674-8db2-3d78eeacc246
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc3_has_genre
+    - field.field.cidoc_reference.pc3_has_genre.domain
+    - field.field.cidoc_reference.pc3_has_genre.range
+id: cidoc_reference.pc3_has_genre.default
+targetEntityType: cidoc_reference
+bundle: pc3_has_genre
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    region: content
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  search_api_excerpt: true
+  user_id: true

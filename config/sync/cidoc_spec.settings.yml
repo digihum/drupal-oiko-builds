@@ -1,65 +1,64 @@
 enabled_entities:
-  - e4_period
   - e5_event
   - e6_destruction
   - e7_activity
   - e9_move
   - e12_production
   - e21_person
-  - e22_man_made_object
+  - e35_title
+  - e41_appellation
   - e42_identifier
-  - e49_time_appellation
   - e52_time_span
   - e53_place
-  - e54_dimension
-  - e58_measurement_unit
+  - e55_type
+  - e56_language
+  - e57_material
+  - e65_creation
   - e66_formation
   - e67_birth
   - e68_dissolution
   - e69_death
   - e74_group
-  - e82_actor_appellation
-  - e85_joining
-  - e86_leaving
-  - o1_killing
-  - o2_active_dissolution
-  - o3_active_destruction
+  - ec1_work
+  - ec2_genre
+  - ec3_formal_feature
+  - ec4_syllabic_scheme
+  - ec5_rhyme_scheme
+  - ec6_music
+  - ec7_source
+  - ec8_manuscript
+  - ec9_print
 enabled_properties:
   - p1_is_identified_by
   - p2_has_type
-  - p3_has_note
-  - p4_has_time_span
   - p7_took_place_at
-  - p9_consists_of
-  - p10_falls_within
   - p11_had_participant
   - p12_occurred_in_the_presence_of
   - p13_destroyed
   - p14_carried_out_by
-  - p15_was_influenced_by
-  - p16_used_specific_object
-  - p17_was_motivated_by
-  - p25_moved
   - p26_moved_to
   - p27_moved_from
-  - p78_is_identified_by
-  - p87_is_identified_by
+  - p45_consists_of
+  - p48_has_preferred_identifier
+  - p72_has_language
   - p89_falls_within
+  - p94_has_created
   - p95_has_formed
   - p96_by_mother
   - p97_from_father
   - p98_brought_into_life
   - p99_dissolved
   - p100_was_death_of
-  - p107_has_current_or_former_member
   - p108_has_produced
-  - p121_overlaps_with
-  - p122_borders_with
-  - p131_is_identified_by
-  - p132_overlaps_with
-  - p133_is_separated_from
-  - p134_continued
-  - p143_joined
-  - p144_joined_with
-  - p145_separated
-  - p146_separated_from
+  - p128_carries
+  - p139_has_alternative_form
+  - pa1_has_patron
+  - pc1_has_metrical_affinities_with
+  - pc2_is_contrafactum_of
+  - pc3_has_genre
+  - pc4_has_formal_feature
+  - pc5_has_expression
+  - pc6_has_alternative_attribution
+  - pc7_has_music
+  - pc8_has_syllabic_scheme
+  - pc9_has_rhyme_scheme

@@ -1,0 +1,15 @@
+---
+label: EC7 Source
+superclasses:
+  - e22_man_made_object
+properties:
+  - p128_carries
+
+description: |
+  This class comprises all identifiable physical human-made objects carriers of E33 Linguistic Object.
+
+examples: |
+  * Manuscript A of the Troubadour repertoire (EC8)
+  * Paris, BnF, fr. 20050 (EC8)
+  * The specimen of the Editio Princeps of the Machiavelli’s Principe preserved in the Vatican Library (EC9)
+

@@ -1,0 +1,13 @@
+uuid: 2336a0ce-5ac0-4a06-8818-ab237ed15bd2
+langcode: en
+status: true
+dependencies: {  }
+crm_entity: ec6_music
+id: ec6_music
+label: 'EC6 Music'
+friendly_label: null
+weight: 0
+group: auxiliary
+description: "<p>This class defines a music as a non-physical thing which is carried by one or more carriers.</p>\n"
+examples: "<ul>\n<li>The music of 366,2 as attested by ms. G of the troubadour tradition</li>\n<li>The music of BdT 366,2 as attested by ms. R of the troubadour tradition</li>\n</ul>\n"
+geoserializers: {  }

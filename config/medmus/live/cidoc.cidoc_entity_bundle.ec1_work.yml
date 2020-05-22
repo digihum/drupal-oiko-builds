@@ -1,0 +1,13 @@
+uuid: 02d0cf40-34f7-4599-be23-764021068430
+langcode: en
+status: true
+dependencies: {  }
+crm_entity: ec1_work
+id: ec1_work
+label: 'EC1 Work'
+friendly_label: null
+weight: 0
+group: auxiliary
+description: "\n"
+examples: "<ul>\n<li>BdT 366.11</li>\n<li>Roman de Tristan en prose</li>\n<li>Il sabato del villaggio</li>\n</ul>\n"
+geoserializers: {  }

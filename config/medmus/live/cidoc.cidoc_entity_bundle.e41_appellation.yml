@@ -1,0 +1,13 @@
+uuid: 7b9c1999-b59e-444c-8ad9-a9e3f49dc4d9
+langcode: en
+status: true
+dependencies: {  }
+crm_entity: e41_appellation
+id: e41_appellation
+label: 'E41 Appellation'
+friendly_label: null
+weight: 0
+group: auxiliary
+description: "<p>This class comprises all sequences of signs of any nature, either meaningful or not, that are\nused or can be used to refer to and identify a specific instance of some class within a certain\ncontext.</p>\n\n<p>Instances of E41 Appellation do not identify things by their meaning, even if they happen to\nhave one, but by convention, tradition, or agreement. Instances of E41 Appellation are cultural\nconstructs; as such, they have a context, a history, and a use in time and space by some group\nof users. A given instance of E41 Appellation can have alternative forms, i.e., other instances\nof E41 Appellation that are always regarded as equivalent independent from the thing it\ndenotes.</p>\n\n<p>Specific subclasses of E41 Appellation should be used when instances of E41 Appellation of a\ncharacteristic form are used for particular objects. Instances of E49 Time Appellation, for\nexample, which take the form of instances of E50 Date, can be easily recognised.</p>\n\n<p>E41 Appellation should not be confused with the act of naming something. Cf. E15 Identifier\nAssignment</p>\n"
+examples: "<ul>\n<li>\"Martin\"</li>\n<li>\"the Forth Bridge\"</li>\n<li>\"the Merchant of Venice\" (E35)</li>\n<li>\"Spigelia marilandica (L.) L.\" [not the species, just the name]</li>\n<li>\"information science\" [not the science itself, but the name through which we refer to it in\nan English-speaking context]</li>\n</ul>\n"
+geoserializers: {  }

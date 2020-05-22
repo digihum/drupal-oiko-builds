@@ -1,0 +1,23 @@
+name: 'Medmus - CIDOC'
+description: 'Extensions for the CIDOC suite of modules for Medmus.'
+type: module
+core: 8.x
+dependencies:
+  - cidoc
+  - color_field
+  - edtf
+  - field
+  - field_group
+  - geocoder_autocomplete
+  - geofield
+  - leaflet_widget
+  - link
+  - options
+  - paragraphs
+  - path
+  - squid_autocomplete
+  - taxonomy
+  - text
+  - user
+  - views
+package: Medmus

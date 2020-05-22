@@ -1,0 +1,29 @@
+uuid: 78f037d9-5475-430d-8d2f-bc7ad986f0fd
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_property.pc2_is_contrafactum_of
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.pc2_is_contrafactum_of.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: pc2_is_contrafactum_of
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      ec1_work: ec1_work
+    auto_create_bundle: ec1_work
+field_type: entity_reference

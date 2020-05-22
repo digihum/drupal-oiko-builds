@@ -1,0 +1,28 @@
+uuid: dea689a5-31ea-4c4a-b0f3-fa90957a8512
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p48_has_preferred_identifier
+    - core.entity_view_mode.cidoc_reference.range
+    - field.field.cidoc_reference.p48_has_preferred_identifier.domain
+    - field.field.cidoc_reference.p48_has_preferred_identifier.range
+id: cidoc_reference.p48_has_preferred_identifier.range
+targetEntityType: cidoc_reference
+bundle: p48_has_preferred_identifier
+mode: range
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  property: true
+  range: true
+  search_api_excerpt: true
+  user_id: true

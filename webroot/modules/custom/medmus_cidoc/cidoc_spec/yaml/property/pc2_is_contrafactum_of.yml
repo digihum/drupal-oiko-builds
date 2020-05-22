@@ -1,0 +1,11 @@
+---
+label: PC2 is contrafactum of
+bidirectional: false
+reverse label: PC2 is model of
+superproperties: pc1_has_metrical_affinities_with
+domain: ec1_work
+range: ec1_work
+description: |
+  Lyric which copied metrical and/or musical correspondence to a previous composition.
+examples: |
+  * BdT 434.21 is contrafactum of (is model of) BdT 366,9

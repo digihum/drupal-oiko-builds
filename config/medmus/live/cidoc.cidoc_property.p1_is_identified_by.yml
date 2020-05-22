@@ -1,0 +1,58 @@
+uuid: 1af90a33-ea88-4d83-a3a4-5fe4e1aa46b8
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: HuroJ4wtRFL5HT0FH7Vr1hCuyBtGnYhuC2UPRyrA23o
+id: p1_is_identified_by
+label: 'P1 is identified by'
+bidirectional: false
+reverse_label: 'P1 identifies'
+friendly_label: 'Identified by'
+reverse_friendly_label: Identifies
+domain_bundles:
+  3: e52_time_span
+  4: e53_place
+  10: e5_event
+  13: e21_person
+  14: e74_group
+  17: e7_activity
+  23: e68_dissolution
+  24: e6_destruction
+  26: e69_death
+  27: e67_birth
+  28: e65_creation
+  29: e12_production
+  30: e66_formation
+  34: e9_move
+  46: e55_type
+  47: ec2_genre
+  51: e41_appellation
+  52: ec3_formal_feature
+  61: ec7_source
+  64: e56_language
+  65: e57_material
+  72: ec6_music
+  73: e35_title
+  78: e42_identifier
+  80: ec9_print
+  81: ec8_manuscript
+  86: ec1_work
+range_bundles:
+  0: e41_appellation
+  1: e35_title
+  6: e42_identifier
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description:
+  domain: "\n\n"
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: domain
+  range: 0

@@ -1,0 +1,13 @@
+uuid: 8ec385bf-7dcd-4077-a9ba-309c80bba661
+langcode: en
+status: true
+dependencies: {  }
+crm_entity: ec5_rhyme_scheme
+id: ec5_rhyme_scheme
+label: 'EC5 Rhyme Scheme'
+friendly_label: null
+weight: 0
+group: auxiliary
+description: "<p>This class contains the rhyme scheme in a stanza of a EC1 Work.</p>\n"
+examples: "<ul>\n<li>a b a b a b b</li>\n<li>a a a a Z</li>\n</ul>\n"
+geoserializers: {  }
