@@ -1,3 +1,4 @@
 .drush-cache-rebuild
 webroot/sites/default/files/
+webroot/sites/default/settings.local.php
 .idea
