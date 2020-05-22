@@ -714,9 +714,6 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
  *
  * Keep this code block at the end of this file to take full effect.
  */
-if (file_exists(__DIR__ . '/settings.local.php')) {
-  include __DIR__ . '/settings.local.php';
-}
 $databases['default']['default'] = array (
   'database' => 'db_prod_2',
   'username' => 'drupal',
@@ -740,3 +737,7 @@ $settings['trusted_host_patterns'] = array(
 
 ini_set('memory_limit', '256M');
 ini_set('max_execution_time', 120);
+
+if (file_exists(__DIR__ . '/settings.local.php')) {
+  include __DIR__ . '/settings.local.php';
+}

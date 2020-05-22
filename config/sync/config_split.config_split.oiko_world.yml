@@ -1,0 +1,15 @@
+uuid: 197f5e13-206c-498d-b154-e66213305a8c
+langcode: en
+status: false
+dependencies: {  }
+id: oiko_world
+label: Oiko.world
+description: 'Settings specifically for the oiko.world instance.'
+folder: ../config/oiko/live
+module: {  }
+theme: {  }
+blacklist: {  }
+graylist: {  }
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0
