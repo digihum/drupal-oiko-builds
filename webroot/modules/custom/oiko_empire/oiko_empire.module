@@ -18,3 +18,8 @@ function oiko_empire_oiko_app_all_entities_query_alter(\Drupal\Core\Entity\Query
 function oiko_empire_oiko_app_own_entities_query_alter(\Drupal\Core\Entity\Query\QueryInterface $query) {
   $query->notExists('field_empire_outline');
 }
+
+
+function oiko_empire_oiko_app_main_map_alter(array &$map) {
+  $map['empires'] = TRUE;
+}

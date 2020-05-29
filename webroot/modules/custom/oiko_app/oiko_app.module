@@ -43,7 +43,6 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
   $map['pagestate'] = TRUE;
   $map['timeline'] = TRUE;
   $map['search'] = TRUE;
-  $map['empires'] = TRUE;
   $map['clustering'] = TRUE;
   $map['locate'] = TRUE;
   $map['settings']['layerControl'] = FALSE;
@@ -66,6 +65,8 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
   if (\Drupal::currentUser()->hasPermission('view own unpublished cidoc entities') || \Drupal::currentUser()->hasPermission('view unpublished cidoc entities')) {
     $map['data-url-per-user'] = Url::fromRoute('oiko_leaflet.map_page_controller_unpublishedEntities')->toString();
   }
+
+  \Drupal::moduleHandler()->alter('oiko_app_main_map', $map);
 
   $variables['map'] = leaflet_render_map($map, [], $height);
 
