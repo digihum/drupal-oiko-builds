@@ -54,11 +54,11 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
   $storage = Drupal::entityTypeManager()->getStorage('cidoc_entity');
 
   // Get the number of pages that are in the data set.
-  $count = $storage->getQuery()
-    ->notExists('field_empire_outline')
+  $query = $storage->getQuery()
     ->condition('status', 1)
-    ->count()
-    ->execute();
+    ->count();
+  \Drupal::moduleHandler()->invokeAll('oiko_app_all_entities_query_alter', [$query]);
+  $count = $query->execute();
   $map['data-url-number-pages'] = ceil($count / 100);
   $height = 'full';
 

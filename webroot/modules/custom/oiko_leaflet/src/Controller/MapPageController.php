@@ -69,15 +69,14 @@ class MapPageController extends ControllerBase {
     if ($this->lock->acquire($lock_name, 180)) {
       $storage = $this->entity_type_manager->getStorage('cidoc_entity');
 
-      $query = $storage->getQuery();
-      $results = $query
+      $query = $storage->getQuery()
         // We're essentially doing our own access checking so skip the built in stuff.
         ->accessCheck(FALSE)
-        ->notExists('field_empire_outline')
         ->condition('status', 1)
         ->range($page * $entities_per_page, $entities_per_page)
-        ->sort('id')
-        ->execute();
+        ->sort('id');
+      \Drupal::moduleHandler()->invokeAll('oiko_app_all_entities_query_alter', [$query]);
+      $results = $query->execute();
 
       // Get the entities.
       $entities = $storage->loadMultiple($results);
@@ -127,10 +126,11 @@ class MapPageController extends ControllerBase {
     if ($this->lock->acquire($lock_name, 180)) {
       $storage = $this->entity_type_manager->getStorage('cidoc_entity');
       $query = $storage->getQuery()
-        ->notExists('field_empire_outline')
         // Query for unpublished entities. Access checking takes care of limiting this to the correct entities.
         ->condition('status', 0)
         ->sort('id');
+
+      \Drupal::moduleHandler()->invokeAll('oiko_app_own_entities_query_alter', [$query]);
 
       // User can view all entities.
       if ($currentUser->hasPermission('view unpublished cidoc entities')) {

@@ -54,7 +54,7 @@
       drupalLeaflet.empires.empiresLayerHelper.addTo(map);
 
       // Go get the empire data.
-      var get = $.get('/oiko_leaflet/empires/list.json');
+      var get = $.get('/oiko_empire/empires/list.json');
       get.done(function(data) {
         data.forEach(function (empire) {
           var lFeature = drupalLeaflet.create_feature(empire);

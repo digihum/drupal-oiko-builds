@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\oiko_leaflet\Controller;
+namespace Drupal\oiko_empire\Controller;
 
 use Drupal\cidoc\Entity\CidocEntity;
 use Drupal\Core\Cache\CacheableJsonResponse;
@@ -99,14 +99,14 @@ class EmpireController extends ControllerBase {
       $definition = $this->entity_type_manager->getDefinition('cidoc_entity');
       $response->getCacheableMetadata()
         ->addCacheTags($definition->getListCacheTags());
-      
+
       $this->lock->release($lock_name);
       return $response;
     }
     else {
       // Get the browser to retry in a bit.
       $this->lock->wait($lock_name, 10);
-      return new RedirectResponse(Url::fromRoute('oiko_leaflet.empire_controller_listall')->toString(), 307);
+      return new RedirectResponse(Url::fromRoute('oiko_empire.empire_controller_listall')->toString(), 307);
     }
   }
 

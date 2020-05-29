@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * The Oiko empire module.
+ */
+
+/**
+ * Implements hook_query_TAG_alter().
+ */
+function oiko_empire_oiko_app_all_entities_query_alter(\Drupal\Core\Entity\Query\QueryInterface $query) {
+  $query->notExists('field_empire_outline');
+}
+
+/**
+ * Implements hook_query_TAG_alter().
+ */
+function oiko_empire_oiko_app_own_entities_query_alter(\Drupal\Core\Entity\Query\QueryInterface $query) {
+  $query->notExists('field_empire_outline');
+}

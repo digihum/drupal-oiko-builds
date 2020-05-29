@@ -1,0 +1,8 @@
+
+oiko_empire.empire_controller_listall:
+  path: '/oiko_empire/empires/list.json'
+  defaults:
+    _controller: '\Drupal\oiko_empire\Controller\EmpireController::listAll'
+    _title: 'List All Empires'
+  requirements:
+    _permission: 'access content'
