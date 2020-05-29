@@ -4691,6 +4691,7 @@
         "require": {
             "drupal/core": "~8.0"
         },
+        "time": "2019-09-21T23:41:49+00:00",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
@@ -4703,6 +4704,9 @@
                     "status": "not-covered",
                     "message": "Dev releases are not covered by Drupal security advisories."
                 }
+            },
+            "patches_applied": {
+                "https://www.drupal.org/files/issues/2020-02-27/shib_auth-admin-permissions.patch": "https://www.drupal.org/files/issues/2020-02-27/shib_auth-admin-permissions.patch"
             }
         },
         "installation-source": "source",
@@ -5229,31 +5233,33 @@
     },
     {
         "name": "drush/drush",
-        "version": "8.1.18",
-        "version_normalized": "8.1.18.0",
+        "version": "8.3.4",
+        "version_normalized": "8.3.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/drush-ops/drush.git",
-            "reference": "799e4135ad7161f1a4668164ff8a6e5bcd779fc7"
+            "reference": "bfe7f07edc560f9aecb439846dc426f9375f5dec"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/drush-ops/drush/zipball/799e4135ad7161f1a4668164ff8a6e5bcd779fc7",
-            "reference": "799e4135ad7161f1a4668164ff8a6e5bcd779fc7",
+            "url": "https://api.github.com/repos/drush-ops/drush/zipball/bfe7f07edc560f9aecb439846dc426f9375f5dec",
+            "reference": "bfe7f07edc560f9aecb439846dc426f9375f5dec",
             "shasum": ""
         },
         "require": {
-            "consolidation/annotated-command": "^2.9.1",
+            "consolidation/annotated-command": "^2.12.0",
             "consolidation/output-formatters": "~3",
             "pear/console_table": "~1.3.1",
             "php": ">=5.4.5",
             "psr/log": "~1.0",
             "psy/psysh": "~0.6",
-            "symfony/console": "~2.7|^3",
-            "symfony/event-dispatcher": "~2.7|^3",
-            "symfony/finder": "~2.7|^3",
-            "symfony/var-dumper": "~2.7|^3",
-            "symfony/yaml": "~2.3|^3",
+            "symfony/console": "~2.7|^3|^4.4",
+            "symfony/event-dispatcher": "~2.7|^3|^4.4",
+            "symfony/finder": "~2.7|^3|^4.4",
+            "symfony/process": "~2.7|^3|^4.4",
+            "symfony/var-dumper": "~2.7|^3|^4.4|^5",
+            "symfony/yaml": "~2.3|^3|^4.4",
+            "webflo/drupal-finder": "^1.1.0",
             "webmozart/path-util": "~2"
         },
         "require-dev": {
@@ -5262,14 +5268,14 @@
             "symfony/event-dispatcher": "~2.7",
             "symfony/finder": "~2.7",
             "symfony/process": "2.7.*",
-            "symfony/var-dumper": "~2.7",
+            "symfony/var-dumper": "2.8.*",
             "symfony/yaml": "~2.3"
         },
         "suggest": {
             "drush/config-extra": "Provides configuration workflow commands, such as config-merge.",
             "ext-pcntl": "*"
         },
-        "time": "2018-11-21T22:57:06+00:00",
+        "time": "2020-05-29T03:44:20+00:00",
         "bin": [
             "drush",
             "drush.launcher",
@@ -5279,7 +5285,7 @@
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "8.0.x-dev"
+                "dev-master": "8.3.x-dev"
             }
         },
         "installation-source": "dist",
@@ -5287,6 +5293,9 @@
             "psr-0": {
                 "Drush": "lib/",
                 "Consolidation": "lib/"
+            },
+            "psr-4": {
+                "Drush\\": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",

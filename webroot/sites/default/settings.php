@@ -742,6 +742,7 @@ $settings['config_readonly'] = TRUE;
 ini_set('memory_limit', '256M');
 ini_set('max_execution_time', 120);
 
+$config['config_split.config_split.oiko_world']['status'] = FALSE;
 $config['config_split.config_split.medmus']['status'] = FALSE;
 
 if (file_exists(__DIR__ . '/settings.local.php')) {

@@ -142,6 +142,7 @@ class ComposerStaticInit01be89b1f4c98a197e86d084890ea328
         ),
         'D' => 
         array (
+            'Drush\\' => 6,
             'Drupal\\Driver\\' => 14,
             'Drupal\\Core\\' => 12,
             'Drupal\\Console\\Core\\' => 20,
@@ -428,6 +429,10 @@ class ComposerStaticInit01be89b1f4c98a197e86d084890ea328
         'Egulias\\EmailValidator\\' => 
         array (
             0 => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator',
+        ),
+        'Drush\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/drush/drush/src',
         ),
         'Drupal\\Driver\\' => 
         array (

@@ -1,1 +1,4 @@
-../drupal/console/bin/drupal
+#!/usr/bin/env php
+<?php
+
+require 'drupal.php';

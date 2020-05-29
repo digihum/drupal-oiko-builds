@@ -36,12 +36,12 @@ function views_drush_command() {
 
   $items['views-dev'] = array(
     'description' => 'Set the Views settings to more developer-oriented values.',
-    'aliases' => array('vd'),
+    'aliases' => array('vd', 'views:dev'),
   ) + $base;
 
   $items['views-list'] = array(
     'description' => 'Get a list of all views in the system.',
-    'aliases' => array('vl'),
+    'aliases' => array('vl', 'views:list'),
     'options' => array(
       'name' => array(
         'description' => 'A string contained in the view\'s name to filter the results with.',
@@ -76,7 +76,7 @@ function views_drush_command() {
 
   $items['views-execute'] = array(
     'description' => 'Execute a view and get the results.',
-    'aliases' => array('vex'),
+    'aliases' => array('vex', 'views:execute'),
     'arguments' => array(
       'view' => 'The name of the view to execute.',
       'display' => 'The display ID to execute. If none specified, the default display will be used.',
@@ -107,7 +107,7 @@ function views_drush_command() {
   $items['views-analyze'] = array(
     'drupal dependencies' => array('views', 'views_ui'),
     'description' => 'Get a list of all Views analyze warnings',
-    'aliases' => array('va'),
+    'aliases' => array('va', 'views:analyze'),
     'options' => array(
       'format' => array(
         'description' => 'Define the output format. Known formats are: json, print_r, and export.',
@@ -121,7 +121,7 @@ function views_drush_command() {
       'views' => 'A space delimited list of view names.',
     ),
     'required-arguments' => 1,
-    'aliases' => array('ven'),
+    'aliases' => array('ven', 'views:enable'),
     'examples' => array(
       'drush ven frontpage taxonomy_term' => 'Enable the frontpage and taxonomy_term views.',
     ),
@@ -133,7 +133,7 @@ function views_drush_command() {
       'views' => 'A space delimited list of view names.',
     ),
     'required-arguments' => 1,
-    'aliases' => array('vdis'),
+    'aliases' => array('vdis', 'views:disable'),
     'examples' => array(
       'drush vdis frontpage taxonomy_term' => 'Disable the frontpage and taxonomy_term views.',
     ),
@@ -194,7 +194,7 @@ function drush_views_list() {
 
   $format = drush_get_option('format', FALSE);
 
-  $views = \Drupal::entityManager()->getStorage('view')->loadMultiple();
+  $views = \Drupal::entityTypeManager()->getStorage('view')->loadMultiple();
 
   // Get the --name option.
   $name = array_filter(drush_get_option_list('name'));
@@ -313,7 +313,7 @@ function drush_views_analyze() {
 
   $format = drush_get_option('format', FALSE);
 
-  $views = \Drupal::entityManager()->getStorage('view')->loadMultiple();
+  $views = \Drupal::entityTypeManager()->getStorage('view')->loadMultiple();
 
   if (!empty($views)) {
     $analyzer = \Drupal::service('views.analyzer');
@@ -376,7 +376,7 @@ function _views_drush_op($op = '', array $view_names = array()) {
 
   $view_names = array_combine($view_names, $view_names);
 
-  if ($views = \Drupal::entityManager()->getStorage('view')->loadMultiple($view_names)) {
+  if ($views = \Drupal::entityTypeManager()->getStorage('view')->loadMultiple($view_names)) {
     foreach ($views as $view) {
       $tokens = array('@view' => $view->id(), '@action' => $op_types[$op]['action']);
 
@@ -483,5 +483,5 @@ function views_views_disable_complete() {
  */
 function _drush_views_complete() {
   drush_bootstrap_max();
-  return array('values' => array_keys(\Drupal::entityManager()->getStorage('view')->loadMultiple()));
+  return array('values' => array_keys(\Drupal::entityTypeManager()->getStorage('view')->loadMultiple()));
 }

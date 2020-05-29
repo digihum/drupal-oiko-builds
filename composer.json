@@ -140,7 +140,7 @@
         "drupal/twig_xdebug": "^1",
         "drupal/views_bulk_operations": "^2.6.0",
         "drupal/webform": "^5.11",
-        "drush/drush": "~8.1.15",
+        "drush/drush": "^8.3.4",
         "leaflet/leaflet": "1.0.3",
         "leaflet/leaflet.draw": "^0.3.0",
         "oomphinc/composer-installers-extender": "dev-master",
@@ -225,6 +225,9 @@
             },
             "drupal/field_group": {
                 "https://www.drupal.org/files/issues/2019-12-18/3024409-27.patch": "https://www.drupal.org/files/issues/2019-12-18/3024409-27.patch"
+            },
+            "drupal/shib_auth": {
+                "https://www.drupal.org/files/issues/2020-02-27/shib_auth-admin-permissions.patch": "https://www.drupal.org/files/issues/2020-02-27/shib_auth-admin-permissions.patch"
             }
         },
         "composer-version": "^1.8.4"
