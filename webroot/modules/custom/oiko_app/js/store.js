@@ -31,7 +31,7 @@ class oikoApp {
       initialState,
       applyMiddleware(
          thunkMiddleware
-        // ,createLogger() // Add this back in if you want nice logging of state changes.
+         ,createLogger() // Add this back in if you want nice logging of state changes.
       )
     );
 
