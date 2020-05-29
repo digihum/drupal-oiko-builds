@@ -38,6 +38,7 @@
     }
     else {
       // There's nothing to load, so we're done here.
+      drupalLeaflet.add_features([]);
       Drupal.oiko.appModuleDoneLoading('marker-data');
     }
 
