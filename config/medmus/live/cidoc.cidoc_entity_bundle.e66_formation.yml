@@ -8,7 +8,7 @@ crm_entity: e66_formation
 id: e66_formation
 label: 'E66 Formation'
 friendly_label: Formation
-weight: -15
+weight: 0
 group: auxiliary
 description: "<p>This class comprises events that result in the formation of a formal or informal E74 Group of\npeople, such as a club, society, association, corporation or nation.</p>\n\n<p>E66 Formation does not include the arbitrary aggregation of people who do not act as a\ncollective.\nThe formation of an instance of E74 Group does not mean that the group is populated with\nmembers at the time of formation. In order to express the joining of members at the time of\nformation, the respective activity should be simultaneously an instance of both E66 Formation\nand E85 Joining.</p>\n"
 examples: "<ul>\n<li>the formation of the CIDOC CRM Special Interest Group</li>\n<li>the formation of the Soviet Union</li>\n<li>the conspiring of the murderers of Caesar</li>\n</ul>\n"

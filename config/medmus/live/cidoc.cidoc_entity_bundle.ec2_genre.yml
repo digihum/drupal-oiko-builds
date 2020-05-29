@@ -6,7 +6,7 @@ crm_entity: ec2_genre
 id: ec2_genre
 label: 'EC2 Genre'
 friendly_label: null
-weight: 0
+weight: 9
 group: auxiliary
 description: "<p>Literary genre, when possible, according to the thesaurus \"Library of Congress Genre/Form Terms\" (LCGFT), http://id.loc.gov/authorities/genreForms.html</p>\n"
 examples: "<ul>\n<li>Tensos (ELC1)</li>\n<li>Crusading songs (ELC1)</li>\n<li>Romances (EC5)</li>\n<li>Epic Poetry (EC5)</li>\n</ul>\n"

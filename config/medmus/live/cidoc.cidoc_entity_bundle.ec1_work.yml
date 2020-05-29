@@ -5,9 +5,11 @@ dependencies: {  }
 crm_entity: ec1_work
 id: ec1_work
 label: 'EC1 Work'
-friendly_label: null
-weight: 0
-group: auxiliary
-description: "\n"
-examples: "<ul>\n<li>BdT 366.11</li>\n<li>Roman de Tristan en prose</li>\n<li>Il sabato del villaggio</li>\n</ul>\n"
-geoserializers: {  }
+friendly_label: ''
+weight: -15
+group: main
+description: ''
+examples: "<ul>\r\n<li>BdT 366.11</li>\r\n<li>Roman de Tristan en prose</li>\r\n<li>Il sabato del villaggio</li>\r\n</ul>\r\n"
+geoserializers:
+  event: '0'
+  move: '0'

@@ -33,7 +33,8 @@ use Drupal\field\Entity\FieldConfig;
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",
- *     "uuid" = "uuid"
+ *     "uuid" = "uuid",
+ *     "weight" = "weight"
  *   },
  *   links = {
  *     "canonical" = "/admin/structure/cidoc-entity-classes/{cidoc_entity_bundle}",

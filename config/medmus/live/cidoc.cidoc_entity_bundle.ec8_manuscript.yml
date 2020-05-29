@@ -5,9 +5,11 @@ dependencies: {  }
 crm_entity: ec8_manuscript
 id: ec8_manuscript
 label: 'EC8 Manuscript'
-friendly_label: null
-weight: 0
-group: auxiliary
-description: "<p>This class comprises all identifiable physical object that carry linguistic (and/or visual) information written by hand.</p>\n"
-examples: "<ul>\n<li>Manuscript A of the Troubadour repertoire (EC8)</li>\n<li>Paris, BnF, fr. 856</li>\n</ul>\n"
-geoserializers: {  }
+friendly_label: ''
+weight: -12
+group: main
+description: "<p>This class comprises all identifiable physical object that carry linguistic (and/or visual) information written by hand.</p>\r\n"
+examples: "<ul>\r\n<li>Manuscript A of the Troubadour repertoire (EC8)</li>\r\n<li>Paris, BnF, fr. 856</li>\r\n</ul>\r\n"
+geoserializers:
+  event: '0'
+  move: '0'

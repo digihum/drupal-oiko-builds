@@ -6,7 +6,7 @@ crm_entity: ec4_syllabic_scheme
 id: ec4_syllabic_scheme
 label: 'EC4 Syllabic Scheme'
 friendly_label: null
-weight: 0
+weight: 11
 group: auxiliary
 description: "<p>This class contains the count of syllables per line stanza until the last stressed syllable of a stanza in a EC1 Work. The presence of a last unstressed syllable (feminine rhyme) is defined by an apostrophe.</p>\n"
 examples: "<ul>\n<li>10 10 10 10 10 10 10</li>\n<li>5’ 7 5’ 7 8 8 8 8</li>\n</ul>\n"
