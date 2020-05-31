@@ -5,6 +5,12 @@
 .cidoc-references-widget-referencemode label {
   display: inline;
 }
+
+.cidoc-references-widget-table {
+  display: block;
+  overflow: auto;
+}
+
 .cidoc-references-widget-cell {
   vertical-align: top;
 }

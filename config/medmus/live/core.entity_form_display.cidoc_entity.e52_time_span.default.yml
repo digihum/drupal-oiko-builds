@@ -25,7 +25,6 @@ third_party_settings:
       label: 'Main data entry'
       format_type: tabs
       format_settings:
-        label: 'Main data entry'
         direction: horizontal
         id: ''
         classes: ''
@@ -35,6 +34,7 @@ third_party_settings:
       children:
         - name
         - internal_name
+        - citation
         - field_date
         - group_main_details
       parent_name: group_main
@@ -69,18 +69,18 @@ third_party_settings:
         - group_relations
         - group_descriptive_text
       parent_name: group_main_deets
-      weight: 4
+      weight: 5
       label: 'Main details'
       format_type: tabs
       format_settings:
-        direction: vertical
-        classes: ''
-        id: ''
         fieldset_label_html: true
+        direction: horizontal
+        id: ''
+        classes: ''
       region: content
     group_appellations:
       children:
-        - 'cidoc_properties:domain:p78_is_identified_by'
+        - 'cidoc_properties:domain:p48_has_preferred_identifier'
       parent_name: group_main_details
       weight: 5
       label: 'Also known as'
@@ -111,6 +111,7 @@ third_party_settings:
     group_oiko_world_settings:
       children:
         - status
+        - significance
         - user_id
         - timeline_preselect_option
         - timeline_logo
@@ -125,7 +126,7 @@ third_party_settings:
         description: ''
         required_fields: true
         fieldset_label_html: true
-      label: 'Oiko.world settings'
+      label: 'Connecting Medieval Music settings'
       region: content
     group_descriptive_text:
       children:
@@ -154,6 +155,11 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p78_is_identified_by':
     weight: 6
     region: content
@@ -166,7 +172,7 @@ content:
     third_party_settings: {  }
   citation:
     type: entity_reference_paragraphs
-    weight: -1
+    weight: 3
     settings:
       title: Citation
       title_plural: Citations
@@ -191,7 +197,7 @@ content:
     third_party_settings: {  }
   field_date:
     type: edtf_default
-    weight: 3
+    weight: 4
     settings:
       size: 60
       placeholder: ''
@@ -215,13 +221,13 @@ content:
     region: content
   path:
     type: path
-    weight: 124
+    weight: 125
     settings: {  }
     third_party_settings: {  }
     region: content
   significance:
     type: options_select
-    weight: -1
+    weight: 121
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -234,7 +240,7 @@ content:
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 123
+    weight: 124
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -242,14 +248,14 @@ content:
     region: content
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 122
+    weight: 123
     settings:
       display_label: true
     third_party_settings: {  }
     region: content
   user_id:
     type: entity_reference_autocomplete
-    weight: 121
+    weight: 122
     region: content
     settings:
       match_operator: CONTAINS

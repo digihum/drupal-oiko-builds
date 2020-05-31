@@ -8,8 +8,8 @@ label: 'EC7 Source'
 friendly_label: ''
 weight: -13
 group: main
-description: "<p>This class comprises all identifiable physical human-made objects carriers of E33 Linguistic Object.</p>\r\n"
-examples: "<ul>\r\n<li>Manuscript A of the Troubadour repertoire (EC8)</li>\r\n<li>Paris, BnF, fr. 20050 (EC8)</li>\r\n<li>The specimen of the Editio Princeps of the Machiavelli’s Principe preserved in the Vatican Library (EC9)</li>\r\n</ul>\r\n"
+description: "<p>This class comprises all identifiable physical human-made objects carriers of E33 Linguistic Object.</p>\n"
+examples: "<ul>\n<li>Manuscript A of the Troubadour repertoire (EC8)</li>\n<li>Paris, BnF, fr. 20050 (EC8)</li>\n<li>The specimen of the Editio Princeps of the Machiavelli’s Principe preserved in the Vatican Library (EC9)</li>\n</ul>\n"
 geoserializers:
   event: '0'
   move: '0'

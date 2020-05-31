@@ -8,8 +8,8 @@ label: 'EC1 Work'
 friendly_label: ''
 weight: -15
 group: main
-description: ''
-examples: "<ul>\r\n<li>BdT 366.11</li>\r\n<li>Roman de Tristan en prose</li>\r\n<li>Il sabato del villaggio</li>\r\n</ul>\r\n"
+description: "\n"
+examples: "<ul>\n<li>BdT 366.11</li>\n<li>Roman de Tristan en prose</li>\n<li>Il sabato del villaggio</li>\n</ul>\n"
 geoserializers:
   event: '0'
   move: '0'

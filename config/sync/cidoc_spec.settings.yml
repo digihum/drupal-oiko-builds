@@ -31,6 +31,7 @@ enabled_entities:
 enabled_properties:
   - p1_is_identified_by
   - p2_has_type
+  - p4_has_time_span
   - p7_took_place_at
   - p11_had_participant
   - p12_occurred_in_the_presence_of

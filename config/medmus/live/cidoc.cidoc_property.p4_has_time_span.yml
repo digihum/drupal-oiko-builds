@@ -1,0 +1,32 @@
+uuid: c7da92b4-e898-4a2e-be7d-ac06703f6375
+langcode: en
+status: true
+dependencies: {  }
+id: p4_has_time_span
+label: 'P4 has time-span'
+bidirectional: false
+reverse_label: 'P4 is time-span of'
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  3: e5_event
+  6: e7_activity
+  7: e68_dissolution
+  8: e6_destruction
+  10: e69_death
+  11: e67_birth
+  12: e65_creation
+  13: e12_production
+  14: e66_formation
+  18: e9_move
+range_bundles:
+  - e52_time_span
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain: false
+  range: false
+widget_description: {  }
+autocomplete_description: {  }
+child_events: {  }

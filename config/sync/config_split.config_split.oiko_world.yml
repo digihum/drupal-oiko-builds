@@ -8,7 +8,12 @@ description: 'Settings specifically for the oiko.world instance.'
 folder: ../config/oiko/live
 module: {  }
 theme: {  }
-blacklist: {  }
+blacklist:
+  - system.site
+  - 'cidoc.*'
+  - 'core.entity_form_display.cidoc_entity.*'
+  - 'core.entity_view_display.cidoc_entity.*'
+  - 'field.field.cidoc_entity.*'
 graylist: {  }
 graylist_dependents: true
 graylist_skip_equal: true

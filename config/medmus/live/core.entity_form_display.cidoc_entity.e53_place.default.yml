@@ -28,7 +28,6 @@ third_party_settings:
       label: 'Main data entry'
       format_type: tabs
       format_settings:
-        label: 'Main data entry'
         direction: horizontal
         id: ''
         classes: ''
@@ -39,7 +38,6 @@ third_party_settings:
         - name
         - internal_name
         - citation
-        - significance
         - group_main_details
       parent_name: group_main
       weight: 4
@@ -78,15 +76,17 @@ third_party_settings:
       label: 'Main details'
       format_type: tabs
       format_settings:
-        direction: vertical
-        classes: ''
-        id: ''
         fieldset_label_html: true
+        direction: horizontal
+        id: ''
+        classes: ''
       region: content
     group_appellations:
       children:
+        - field_location_lookup
         - field_pleiades_uri
         - field_geodata
+        - 'cidoc_properties:domain:p48_has_preferred_identifier'
       parent_name: group_main_details
       weight: 5
       label: 'Also known as'
@@ -117,14 +117,11 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:p89_falls_within'
         - 'cidoc_properties:range:p89_falls_within'
-        - 'cidoc_properties:domain:p121_overlaps_with'
-        - 'cidoc_properties:domain:p122_borders_with'
       parent_name: group_main_details
       weight: 6
       label: Hierarchy
       format_type: tab
       format_settings:
-        label: Hierarchy
         id: ''
         classes: ''
         formatter: closed
@@ -135,6 +132,7 @@ third_party_settings:
     group_oiko_world_settings:
       children:
         - status
+        - significance
         - user_id
         - timeline_preselect_option
         - timeline_logo
@@ -149,7 +147,7 @@ third_party_settings:
         description: ''
         required_fields: true
         fieldset_label_html: true
-      label: 'Oiko.world settings'
+      label: 'Connecting Medieval Music settings'
       region: content
 _core:
   default_config_hash: VxRWdj-0iwzs3U38Vo_QDcWLA4YyVB2KteXHYWkxZpM
@@ -173,6 +171,11 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p87_is_identified_by':
     weight: 20
     settings: {  }
@@ -219,7 +222,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_geodata:
-    weight: 24
+    weight: 2
     settings:
       map:
         leaflet_map: 'Ancient Terrain'
@@ -237,8 +240,16 @@ content:
     third_party_settings: {  }
     type: leaflet_widget
     region: content
+  field_location_lookup:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_pleiades_uri:
-    weight: 23
+    weight: 1
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -263,13 +274,13 @@ content:
     region: content
   path:
     type: path
-    weight: 124
+    weight: 125
     settings: {  }
     third_party_settings: {  }
     region: content
   significance:
     type: options_select
-    weight: 4
+    weight: 121
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -282,7 +293,7 @@ content:
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 123
+    weight: 124
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -290,14 +301,14 @@ content:
     region: content
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 122
+    weight: 123
     settings:
       display_label: true
     third_party_settings: {  }
     region: content
   user_id:
     type: entity_reference_autocomplete
-    weight: 121
+    weight: 122
     region: content
     settings:
       match_operator: CONTAINS
@@ -326,4 +337,3 @@ hidden:
   'cidoc_properties:range:p96_by_mother': true
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true
-  field_location_lookup: true

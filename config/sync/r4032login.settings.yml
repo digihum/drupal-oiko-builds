@@ -7,3 +7,5 @@ default_redirect_code: 302
 match_noredirect_pages: ''
 _core:
   default_config_hash: 8KH8twieoab8UCR9Tpd8WhkfhJp-G_gXX4yUq7ZO3Ck
+redirect_to_destination: false
+destination_parameter_override: ''

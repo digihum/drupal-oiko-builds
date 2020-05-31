@@ -1,0 +1,28 @@
+uuid: 794b681d-5bf9-4972-8cd1-e6e21022ad14
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p4_has_time_span
+    - core.entity_view_mode.cidoc_reference.range
+    - field.field.cidoc_reference.p4_has_time_span.domain
+    - field.field.cidoc_reference.p4_has_time_span.range
+id: cidoc_reference.p4_has_time_span.range
+targetEntityType: cidoc_reference
+bundle: p4_has_time_span
+mode: range
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  property: true
+  range: true
+  search_api_excerpt: true
+  user_id: true

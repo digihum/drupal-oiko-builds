@@ -1,9 +1,9 @@
-uuid: bb7d0b2b-eae3-4ac9-8620-9383a7e251d5
+uuid: bb7d0b2b-eae3-4ac9-crea-9383a7e251d5
 langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_entity_bundle.e7_activity
+    - cidoc.cidoc_entity_bundle.e65_creation
     - image.style.thumbnail
   module:
     - field_group
@@ -32,7 +32,6 @@ third_party_settings:
       children:
         - group_temporal
         - group_where
-        - group_also_known_as
         - group_who
         - group_what
         - group_descriptive_text
@@ -63,6 +62,7 @@ third_party_settings:
       region: content
     group_descriptive_text:
       children:
+        - 'cidoc_properties:domain:p48_has_preferred_identifier'
         - content
       parent_name: group_tabset
       weight: 9
@@ -81,7 +81,7 @@ third_party_settings:
         - 'cidoc_properties:domain:p14_carried_out_by'
         - 'cidoc_properties:domain:p11_had_participant'
       parent_name: group_tabset
-      weight: 7
+      weight: 6
       label: People/groups
       format_type: tab
       format_settings:
@@ -94,9 +94,11 @@ third_party_settings:
       region: content
     group_what:
       children:
+        - 'cidoc_properties:domain:p94_has_created'
+        - 'cidoc_properties:domain:pc7_has_music'
         - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
       parent_name: group_tabset
-      weight: 8
+      weight: 7
       label: Things
       format_type: tab
       format_settings:
@@ -126,6 +128,7 @@ third_party_settings:
         - name
         - internal_name
         - citation
+        - significance
         - group_tabset
       parent_name: group_data
       weight: 3
@@ -142,7 +145,6 @@ third_party_settings:
     group_oiko_world_settings:
       children:
         - status
-        - significance
         - user_id
         - timeline_preselect_option
         - timeline_logo
@@ -159,26 +161,11 @@ third_party_settings:
         fieldset_label_html: true
       label: 'Connecting Medieval Music settings'
       region: content
-    group_also_known_as:
-      children:
-        - 'cidoc_properties:domain:p48_has_preferred_identifier'
-      parent_name: group_tabset
-      weight: 6
-      format_type: tab
-      region: content
-      format_settings:
-        fieldset_label_html: false
-        id: ''
-        classes: ''
-        description: ''
-        formatter: closed
-        required_fields: true
-      label: 'Also known as'
 _core:
   default_config_hash: MCecFoOh1b0B-sp83OJ4_942EIMUo6UJjL0R5-XB0xk
-id: cidoc_entity.e7_activity.default
+id: cidoc_entity.e65_creation.default
 targetEntityType: cidoc_entity
-bundle: e7_activity
+bundle: e65_creation
 mode: default
 content:
   'cidoc_properties:domain:p10_falls_within':
@@ -192,7 +179,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p12_occurred_in_the_presence_of':
-    weight: 21
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -246,8 +233,18 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:p94_has_created':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p9_consists_of':
     weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc7_has_music':
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -295,7 +292,7 @@ content:
     third_party_settings: {  }
   content:
     type: text_textarea
-    weight: 0
+    weight: 21
     settings:
       rows: 5
       placeholder: ''
@@ -319,13 +316,13 @@ content:
     region: content
   path:
     type: path
-    weight: 125
+    weight: 124
     region: content
     settings: {  }
     third_party_settings: {  }
   significance:
     type: options_select
-    weight: 121
+    weight: 4
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -338,7 +335,7 @@ content:
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 124
+    weight: 123
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -346,14 +343,14 @@ content:
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 123
+    weight: 122
     settings:
       display_label: true
     region: content
     third_party_settings: {  }
   user_id:
     type: entity_reference_autocomplete
-    weight: 122
+    weight: 121
     region: content
     settings:
       match_operator: CONTAINS

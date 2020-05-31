@@ -35,16 +35,16 @@ third_party_settings:
         - group_who
         - group_what
         - group_descriptive_text
+        - group_also_known_as
       parent_name: group_main_deets
       weight: 5
       label: 'Main details'
       format_type: tabs
       format_settings:
-        label: 'Main details'
-        direction: vertical
+        fieldset_label_html: true
+        direction: horizontal
         id: ''
         classes: ''
-        fieldset_label_html: true
       region: content
     group_where:
       children:
@@ -65,7 +65,7 @@ third_party_settings:
       children:
         - content
       parent_name: group_tabset
-      weight: 9
+      weight: 8
       label: 'Descriptive text'
       format_type: tab
       format_settings:
@@ -85,51 +85,16 @@ third_party_settings:
       label: People/groups
       format_type: tab
       format_settings:
-        label: People/groups
         formatter: closed
         description: ''
         required_fields: true
         id: ''
         classes: ''
-        fieldset_label_html: true
-      region: content
-    group_influence:
-      children:
-        - 'cidoc_properties:domain:p15_was_influenced_by'
-        - 'cidoc_properties:range:p15_was_influenced_by'
-        - 'cidoc_properties:domain:p17_was_motivated_by'
-        - 'cidoc_properties:range:p17_was_motivated_by'
-      parent_name: group_other
-      weight: 9
-      label: 'Influence and motivation'
-      format_type: tab
-      format_settings:
-        formatter: closed
-        description: ''
-        classes: ''
-        id: ''
-        required_fields: true
-        fieldset_label_html: true
-      region: content
-    group_other:
-      children:
-        - group_sequence
-        - group_influence
-        - group_geo_temp
-      parent_name: group_auxiliary_deets
-      weight: 5
-      label: 'Other details'
-      format_type: tabs
-      format_settings:
-        direction: vertical
-        classes: ''
-        id: ''
         fieldset_label_html: true
       region: content
     group_what:
       children:
         - 'cidoc_properties:domain:p108_has_produced'
-        - 'cidoc_properties:domain:p16_used_specific_object'
         - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
       parent_name: group_tabset
       weight: 7
@@ -143,37 +108,15 @@ third_party_settings:
         required_fields: true
         fieldset_label_html: true
       region: content
-    group_geo_temp:
-      children:
-        - 'cidoc_properties:domain:p9_consists_of'
-        - 'cidoc_properties:range:p9_consists_of'
-        - 'cidoc_properties:domain:p10_falls_within'
-        - 'cidoc_properties:range:p10_falls_within'
-        - 'cidoc_properties:domain:p132_overlaps_with'
-        - 'cidoc_properties:domain:p133_is_separated_from'
-      parent_name: group_other
-      weight: 10
-      label: 'Geo-temporal relationships'
-      format_type: tab
-      format_settings:
-        formatter: closed
-        description: ''
-        classes: ''
-        id: ''
-        required_fields: true
-        fieldset_label_html: true
-      region: content
     group_data:
       children:
         - group_main_deets
-        - group_auxiliary_deets
         - group_oiko_world_settings
       parent_name: ''
       weight: 3
       label: 'Main data entry'
       format_type: tabs
       format_settings:
-        label: 'Main data entry'
         direction: horizontal
         id: ''
         classes: ''
@@ -184,7 +127,6 @@ third_party_settings:
         - name
         - internal_name
         - citation
-        - significance
         - group_tabset
       parent_name: group_data
       weight: 3
@@ -198,40 +140,10 @@ third_party_settings:
         required_fields: true
         fieldset_label_html: true
       region: content
-    group_auxiliary_deets:
-      children:
-        - group_other
-      parent_name: group_data
-      weight: 4
-      label: 'Auxiliary details'
-      format_type: tab
-      format_settings:
-        formatter: closed
-        description: ''
-        classes: ''
-        id: ''
-        required_fields: true
-        fieldset_label_html: true
-      region: content
-    group_sequence:
-      children:
-        - 'cidoc_properties:domain:p134_continued'
-        - 'cidoc_properties:range:p134_continued'
-      parent_name: group_other
-      weight: 8
-      label: Sequence
-      format_type: tab
-      format_settings:
-        formatter: closed
-        description: ''
-        classes: ''
-        id: ''
-        required_fields: true
-        fieldset_label_html: true
-      region: content
     group_oiko_world_settings:
       children:
         - status
+        - significance
         - timeline_preselect_option
         - timeline_logo
         - user_id
@@ -246,8 +158,23 @@ third_party_settings:
         description: ''
         required_fields: true
         fieldset_label_html: true
-      label: 'Oiko.world settings'
+      label: 'Connecting Medieval Music settings'
       region: content
+    group_also_known_as:
+      children:
+        - 'cidoc_properties:domain:p48_has_preferred_identifier'
+      parent_name: group_tabset
+      weight: 9
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: 'Also known as'
 _core:
   default_config_hash: MCecFoOh1b0B-sp83OJ4_942EIMUo6UJjL0R5-XB0xk
 id: cidoc_entity.e12_production.default
@@ -307,6 +234,11 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:p17_was_motivated_by':
     weight: 24
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -393,13 +325,13 @@ content:
     region: content
   path:
     type: path
-    weight: 124
+    weight: 125
     region: content
     settings: {  }
     third_party_settings: {  }
   significance:
     type: options_select
-    weight: 4
+    weight: 121
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -412,7 +344,7 @@ content:
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 122
+    weight: 123
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -420,14 +352,14 @@ content:
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 121
+    weight: 122
     settings:
       display_label: true
     region: content
     third_party_settings: {  }
   user_id:
     type: entity_reference_autocomplete
-    weight: 123
+    weight: 124
     region: content
     settings:
       match_operator: CONTAINS

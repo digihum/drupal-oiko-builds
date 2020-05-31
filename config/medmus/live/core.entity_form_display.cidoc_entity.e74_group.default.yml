@@ -23,7 +23,6 @@ third_party_settings:
       label: 'Main data entry'
       format_type: tabs
       format_settings:
-        label: 'Main data entry'
         direction: horizontal
         id: ''
         classes: ''
@@ -34,7 +33,6 @@ third_party_settings:
         - name
         - internal_name
         - citation
-        - significance
         - group_main_details
       parent_name: group_main
       weight: 4
@@ -48,22 +46,9 @@ third_party_settings:
         required_fields: true
         fieldset_label_html: true
       region: content
-    group_aux_deets:
-      children: {  }
-      parent_name: group_main
-      weight: 5
-      label: 'Auxiliary details'
-      format_type: tab
-      format_settings:
-        formatter: closed
-        description: ''
-        classes: ''
-        id: ''
-        required_fields: true
-        fieldset_label_html: true
-      region: content
     group_main_details:
       children:
+        - group_activities
         - group_appellations
         - group_formation
         - group_people
@@ -74,16 +59,16 @@ third_party_settings:
       label: 'Main details'
       format_type: tabs
       format_settings:
-        direction: vertical
-        classes: ''
-        id: ''
         fieldset_label_html: true
+        direction: horizontal
+        id: ''
+        classes: ''
       region: content
     group_appellations:
       children:
-        - 'cidoc_properties:domain:p131_is_identified_by'
+        - 'cidoc_properties:domain:p48_has_preferred_identifier'
       parent_name: group_main_details
-      weight: 5
+      weight: 21
       label: 'Also known as'
       format_type: tab
       format_settings:
@@ -99,7 +84,7 @@ third_party_settings:
         - 'cidoc_properties:range:p95_has_formed'
         - 'cidoc_properties:range:p99_dissolved'
       parent_name: group_main_details
-      weight: 6
+      weight: 22
       label: Formation/disolution
       format_type: tab
       format_settings:
@@ -112,15 +97,15 @@ third_party_settings:
       region: content
     group_people:
       children:
-        - 'cidoc_properties:domain:p107_has_current_or_former_membe'
         - 'cidoc_properties:range:p144_joined_with'
         - 'cidoc_properties:range:p146_separated_from'
+        - 'cidoc_properties:range:p143_joined'
+        - 'cidoc_properties:range:p145_separated'
       parent_name: group_main_details
-      weight: 7
+      weight: 23
       label: Membership
       format_type: tab
       format_settings:
-        label: Membership
         formatter: closed
         description: ''
         required_fields: true
@@ -129,10 +114,9 @@ third_party_settings:
         fieldset_label_html: true
       region: content
     group_group_heirachy:
-      children:
-        - 'cidoc_properties:range:p107_has_current_or_former_membe'
+      children: {  }
       parent_name: group_main_details
-      weight: 8
+      weight: 24
       format_type: tab
       format_settings:
         id: ''
@@ -146,6 +130,7 @@ third_party_settings:
     group_oiko_world_settings:
       children:
         - status
+        - significance
         - user_id
         - timeline_preselect_option
         - timeline_logo
@@ -160,13 +145,13 @@ third_party_settings:
         description: ''
         required_fields: true
         fieldset_label_html: true
-      label: 'Oiko.world settings'
+      label: 'Connecting Medieval Music settings'
       region: content
     group_descriptive_text:
       children:
         - content
       parent_name: group_main_details
-      weight: 9
+      weight: 25
       format_type: tab
       format_settings:
         id: ''
@@ -177,6 +162,23 @@ third_party_settings:
         fieldset_label_html: true
       label: 'Descriptive text'
       region: content
+    group_activities:
+      children:
+        - 'cidoc_properties:range:p14_carried_out_by'
+        - 'cidoc_properties:range:p11_had_participant'
+        - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
+      parent_name: group_main_details
+      weight: 20
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: Activities
 _core:
   default_config_hash: HCRPe3rJQbJza05JUc-u_Y3QqAlaQFJcLRKT4OZ-4eQ
 id: cidoc_entity.e74_group.default
@@ -194,8 +196,28 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p107_has_current_or_former_membe':
     weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p11_had_participant':
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p12_occurred_in_the_presence_of':
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p143_joined':
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -204,8 +226,18 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:range:p145_separated':
+    weight: 24
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p146_separated_from':
     weight: 22
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p14_carried_out_by':
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -262,13 +294,13 @@ content:
     region: content
   path:
     type: path
-    weight: 124
+    weight: 125
     settings: {  }
     third_party_settings: {  }
     region: content
   significance:
     type: options_select
-    weight: 4
+    weight: 121
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -281,7 +313,7 @@ content:
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 123
+    weight: 124
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -289,14 +321,14 @@ content:
     region: content
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 122
+    weight: 123
     settings:
       display_label: true
     third_party_settings: {  }
     region: content
   user_id:
     type: entity_reference_autocomplete
-    weight: 121
+    weight: 122
     region: content
     settings:
       match_operator: CONTAINS
@@ -308,12 +340,7 @@ hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:range:p100_was_death_of': true
-  'cidoc_properties:range:p11_had_participant': true
-  'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p13_destroyed': true
-  'cidoc_properties:range:p143_joined': true
-  'cidoc_properties:range:p145_separated': true
-  'cidoc_properties:range:p14_carried_out_by': true
   'cidoc_properties:range:p15_was_influenced_by': true
   'cidoc_properties:range:p16_used_specific_object': true
   'cidoc_properties:range:p17_was_motivated_by': true
