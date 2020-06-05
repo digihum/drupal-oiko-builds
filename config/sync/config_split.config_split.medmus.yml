@@ -10,6 +10,8 @@ module:
   medmus_cidoc: 0
 theme: {  }
 blacklist:
+  - metatag.metatag_defaults.front
+  - metatag.metatag_defaults.global
   - system.site
   - 'cidoc.*'
   - 'core.entity_form_display.cidoc_entity.*'

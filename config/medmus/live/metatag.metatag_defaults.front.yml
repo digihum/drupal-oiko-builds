@@ -1,0 +1,12 @@
+uuid: 0c913619-7be2-4b60-a965-895787843b45
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: yBqw6UD3j0MM1yoDSVDif7nw4SNdoS2e385nw--3ysk
+id: front
+label: 'Front page'
+tags:
+  shortlink: '[site:url]'
+  title: 'Connecting Medieval Music'
+  canonical_url: '[site:url]'

@@ -1,0 +1,12 @@
+uuid: 80988550-7e64-403b-b308-7aaa5c5c8922
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 5rOnjIF_aDyGBmfXNhJnkPXxQMlem0CmVmggV-TF3Fg
+id: global
+label: Global
+tags:
+  title: '[current-page:title] | [site:name]'
+  og_type: database
+  og_site_name: 'Connecting Medieval Music'
