@@ -5,7 +5,7 @@ set -e
 
 alias="@$1.$2"
 
-drush "$alias" updb -y --entity-updates --cache-clear=0
+drush "$alias" updatedb -y --entity-updates --cache-clear=0
 
 # The outer drush thread from the previous command would incorrectly overwrite
 # the newly-rebuilt cache of hook implementations that its inner thread(s)
@@ -15,8 +15,8 @@ drush "$alias" updb -y --entity-updates --cache-clear=0
 drush "$alias" -y cache-rebuild
 
 # Revert config.
-drush "$alias" cmci -y
+drush "$alias" config-import -y
 
-drush "$alias" updb -y --entity-updates
+drush "$alias" updatedb -y --entity-updates
 
 drush "$alias" cache-rebuild -y
