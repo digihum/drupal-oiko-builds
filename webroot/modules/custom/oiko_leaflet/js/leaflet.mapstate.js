@@ -36,9 +36,7 @@
         }
 
         // Allow plugins to do things after features have been added.
-        if (features.length) {
-          $(document).trigger('leaflet.features', [initial || false, this])
-        }
+        $(document).trigger('leaflet.features', [initial || false, this])
 
         // Fit bounds after adding features.
         this.fitbounds();
