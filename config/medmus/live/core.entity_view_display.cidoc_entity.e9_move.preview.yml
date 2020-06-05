@@ -15,9 +15,9 @@ mode: preview
 content:
   cidoc_properties:
     weight: 4
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   citation:
     type: entity_reference_revisions_entity_view
     weight: 5
@@ -35,10 +35,10 @@ content:
     third_party_settings: {  }
     region: content
   e9_move_map_entity_view_1:
-    weight: 10
+    weight: 6
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   internal_name:
     label: above
     type: string
@@ -80,6 +80,7 @@ hidden:
   'cidoc_properties:domain:p26_moved_to': true
   'cidoc_properties:domain:p27_moved_from': true
   'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p48_has_preferred_identifier': true
   'cidoc_properties:domain:p4_has_time_span': true
   'cidoc_properties:domain:p7_took_place_at': true
   'cidoc_properties:domain:p9_consists_of': true

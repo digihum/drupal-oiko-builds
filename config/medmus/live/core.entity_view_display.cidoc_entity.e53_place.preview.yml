@@ -17,50 +17,50 @@ bundle: e53_place
 mode: preview
 content:
   cidoc_properties:
+    region: content
     weight: 4
     settings: {  }
     third_party_settings: {  }
-    region: content
   citation:
+    region: content
     type: entity_reference_revisions_entity_view
-    weight: 5
     label: above
     settings:
       view_mode: default
       link: ''
+    weight: 5
     third_party_settings: {  }
-    region: content
   content:
+    region: content
     type: text_default
-    weight: 3
     label: visually_hidden
     settings: {  }
+    weight: 3
     third_party_settings: {  }
-    region: content
   internal_name:
+    region: content
+    type: string
     label: above
-    type: string
+    settings:
+      link_to_entity: false
     weight: 1
-    settings:
-      link_to_entity: false
     third_party_settings: {  }
-    region: content
   name:
-    label: hidden
+    region: content
     type: string
-    weight: 0
+    label: hidden
     settings:
       link_to_entity: false
+    weight: 0
     third_party_settings: {  }
-    region: content
   significance:
+    region: content
     type: entity_reference_label
-    weight: 2
     label: above
     settings:
       link: true
+    weight: 2
     third_party_settings: {  }
-    region: content
 hidden:
   cidoc_admin_links: true
   'cidoc_properties:domain:p10_falls_within': true
@@ -77,6 +77,7 @@ hidden:
   'cidoc_properties:domain:p17_was_motivated_by': true
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p48_has_preferred_identifier': true
   'cidoc_properties:domain:p4_has_time_span': true
   'cidoc_properties:domain:p7_took_place_at': true
   'cidoc_properties:domain:p89_falls_within': true

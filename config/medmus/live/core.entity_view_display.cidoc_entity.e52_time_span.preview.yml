@@ -17,56 +17,56 @@ mode: preview
 content:
   cidoc_properties:
     weight: 5
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   citation:
+    region: content
     type: entity_reference_revisions_entity_view
-    weight: 6
     label: above
     settings:
       view_mode: default
       link: ''
+    weight: 6
     third_party_settings: {  }
-    region: content
   content:
+    region: content
     type: text_default
-    weight: 4
     label: visually_hidden
     settings: {  }
+    weight: 4
     third_party_settings: {  }
-    region: content
   field_date:
     type: edtf_human_readable_formatter
     weight: 2
+    region: content
     label: above
     settings: {  }
     third_party_settings: {  }
-    region: content
   internal_name:
+    region: content
+    type: string
     label: above
-    type: string
+    settings:
+      link_to_entity: false
     weight: 1
-    settings:
-      link_to_entity: false
     third_party_settings: {  }
-    region: content
   name:
-    label: hidden
+    region: content
     type: string
-    weight: 0
+    label: hidden
     settings:
       link_to_entity: false
+    weight: 0
     third_party_settings: {  }
-    region: content
   significance:
+    region: content
     type: entity_reference_label
-    weight: 3
     label: above
     settings:
       link: true
+    weight: 3
     third_party_settings: {  }
-    region: content
 hidden:
   cidoc_admin_links: true
   'cidoc_properties:domain:p10_falls_within': true
@@ -81,6 +81,7 @@ hidden:
   'cidoc_properties:domain:p17_was_motivated_by': true
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p48_has_preferred_identifier': true
   'cidoc_properties:domain:p4_has_time_span': true
   'cidoc_properties:domain:p78_is_identified_by': true
   'cidoc_properties:domain:p7_took_place_at': true
