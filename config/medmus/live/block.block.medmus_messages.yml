@@ -1,15 +1,13 @@
-uuid: 44728ced-acf8-44cf-9b13-4aa17ccc9bb1
+uuid: bacff016-1826-43ab-adbf-d34e2da5947c
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bartik
-_core:
-  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
-id: bartik_messages
-theme: bartik
+    - medmus
+id: medmus_messages
+theme: medmus
 region: highlighted
 weight: 0
 provider: null

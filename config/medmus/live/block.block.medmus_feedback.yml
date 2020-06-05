@@ -1,0 +1,25 @@
+uuid: a3b50b3a-e80c-44f4-b2d6-caeff5a397e8
+langcode: en
+status: true
+dependencies:
+  config:
+    - webform.webform.feedback
+  module:
+    - webform
+  theme:
+    - medmus
+id: medmus_feedback
+theme: medmus
+region: user_header
+weight: -11
+provider: null
+plugin: webform_block
+settings:
+  id: webform_block
+  label: Feedback
+  provider: webform
+  label_display: visible
+  webform_id: feedback
+  default_data: ''
+  redirect: false
+visibility: {  }

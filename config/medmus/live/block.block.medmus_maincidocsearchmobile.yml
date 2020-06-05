@@ -1,0 +1,26 @@
+uuid: 5298804e-441f-46bf-8b0e-1e1871b73af3
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_app
+  theme:
+    - medmus
+id: medmus_maincidocsearchmobile
+theme: medmus
+region: mobile_search_header
+weight: 0
+provider: null
+plugin: main_cidoc_search
+settings:
+  id: main_cidoc_search
+  label: 'Main cidoc search'
+  provider: oiko_app
+  label_display: '0'
+  placeholder_map: 'Search events'
+  no_search_map: 'Search for events, people, groups, places or objects e.g. ''The battle of Milvian Bridge'' or ''the Xiongnu''.'
+  placeholder_timeline: 'Search groups and people'
+  no_search_timeline: 'Search for communities, empires or groups to compare on your timeline e.g. ''The Roman Empire'' or ''the Han''.'
+  no_results_text: 'No results found.'
+  searching_text: 'Searching through known space and time...'
+visibility: {  }

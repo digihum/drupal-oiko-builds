@@ -1,0 +1,20 @@
+uuid: b47d99cb-df12-4807-be90-26cbddb85056
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_cidoc
+  theme:
+    - medmus
+id: medmus_editor_tools_mobile
+theme: medmus
+region: mobile_user_header
+weight: 0
+provider: null
+plugin: editor_tools
+settings:
+  id: editor_tools
+  label: 'Editor Tools'
+  provider: oiko_cidoc
+  label_display: visible
+visibility: {  }

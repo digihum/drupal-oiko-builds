@@ -45,11 +45,11 @@
 #}
 <div id="main" role="main" class="clearfix l-main page--bare">
     <div class="oiko-sidebar mobile-only">
-        {% include directory ~ '/templates/layout/header--bare--mobile.html.twig' %}
+        {% include '@oiko/layout/header--bare--mobile.html.twig' %}
     </div>
     <div class="l-sidebar oiko-sidebar desktop-only">
         <div class="l-sidebar-upper">
-            {% include directory ~ '/templates/layout/header.html.twig' %}
+            {% include '@oiko/layout/header.html.twig' %}
             {{ page.sidebar_upper }}
             <ul class="sidebar-tabs tabs vertical">
                 <li class="tabs-title"><a href="#" data-pane-id="main-menu"><i class="fa fa-bars" title="Main menu"></i></a></li>
@@ -59,7 +59,7 @@
         </div>
         <div class="l-sidebar-lower">
             {{ page.sidebar_lower }}
-            {% include directory ~ '/templates/layout/footer.html.twig' %}
+            {% include '@oiko/layout/footer.html.twig' %}
         </div>
     </div>
     <div class="l-content-container">
@@ -69,7 +69,7 @@
         </div>
         <div class="l-main-content">
             <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
-            {% include directory ~ '/templates/layout/sidebar-content.html.twig' %}
+            {% include '@oiko/layout/sidebar-content.html.twig' %}
             {{ page.highlighted }}
             {{ page.content }}
         </div>

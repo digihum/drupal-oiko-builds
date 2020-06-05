@@ -1,0 +1,12 @@
+.site-slogan {
+  -ms-transform: rotate(90deg) translateX(-100%);
+      transform: rotate(90deg) translateX(-100%);
+  -ms-transform-origin: bottom left;
+      transform-origin: bottom left;
+  font-size: 24px;
+  text-align: left;
+  text-transform: none;
+  margin-bottom: 75px;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSwrQ0FBMEM7TUFBMUMsMkNBQTBDO0VBQzFDLGtDQUE2QjtNQUE3Qiw4QkFBNkI7RUFDN0IsZ0JBQWU7RUFDZixpQkFBZ0I7RUFDaEIscUJBQW9CO0VBQ3BCLG9CQUFtQjtDQUNwQiIsImZpbGUiOiJzdHlsZS5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuc2l0ZS1zbG9nYW4ge1xuICB0cmFuc2Zvcm06IHJvdGF0ZSg5MGRlZykgdHJhbnNsYXRlWCgtMTAwJSk7XG4gIHRyYW5zZm9ybS1vcmlnaW46IGJvdHRvbSBsZWZ0O1xuICBmb250LXNpemU6IDI0cHg7XG4gIHRleHQtYWxpZ246IGxlZnQ7XG4gIHRleHQtdHJhbnNmb3JtOiBub25lO1xuICBtYXJnaW4tYm90dG9tOiA3NXB4O1xufVxuIl19 */

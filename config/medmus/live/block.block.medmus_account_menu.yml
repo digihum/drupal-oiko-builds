@@ -1,0 +1,25 @@
+uuid: 2deba04d-2961-44d3-8fb2-6031bbe7a8c3
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.account
+  module:
+    - system
+  theme:
+    - medmus
+id: medmus_account_menu
+theme: medmus
+region: primary_menu
+weight: -3
+provider: null
+plugin: 'system_menu_block:account'
+settings:
+  id: 'system_menu_block:account'
+  label: 'User account menu'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 1
+  expand_all_items: false
+visibility: {  }

@@ -1,15 +1,13 @@
-uuid: 85bd42da-6b7c-4e5d-bbb1-dc623688a86c
+uuid: efcaedd8-81fb-460c-8680-4181aba22845
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bartik
-_core:
-  default_config_hash: oXUb3JZR2WW5VOdw4HrhRicCsq51mCgLfRyvheG68ck
-id: bartik_breadcrumbs
-theme: bartik
+    - medmus
+id: medmus_breadcrumbs
+theme: medmus
 region: breadcrumb
 weight: 0
 provider: null

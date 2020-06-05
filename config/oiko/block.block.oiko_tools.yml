@@ -1,19 +1,17 @@
-uuid: fef27aa0-0a4b-441d-af45-f9f27a9bb21c
+uuid: ffe1b0ea-39b2-4973-a812-58df311a3543
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - system.menu.tools
   module:
     - system
   theme:
-    - bartik
-_core:
-  default_config_hash: NeHSoqm4XFqA7_0bDmR429ZZQt3LRbZMNRJTMsFyOfI
-id: bartik_tools
-theme: bartik
-region: sidebar_first
-weight: 0
+    - oiko
+id: oiko_tools
+theme: oiko
+region: primary_menu
+weight: -4
 provider: null
 plugin: 'system_menu_block:tools'
 settings:

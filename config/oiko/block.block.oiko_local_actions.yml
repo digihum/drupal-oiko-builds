@@ -1,15 +1,13 @@
-uuid: cfc9e248-f93e-4a68-a8d5-5015d60cff92
+uuid: bdb5b671-29bb-4d9f-bb5a-18e9adc1e562
 langcode: en
 status: true
 dependencies:
   theme:
-    - bartik
-_core:
-  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
-id: bartik_local_actions
-theme: bartik
+    - oiko
+id: oiko_local_actions
+theme: oiko
 region: content
-weight: -20
+weight: -5
 provider: null
 plugin: local_actions_block
 settings:

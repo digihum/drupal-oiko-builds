@@ -1,17 +1,15 @@
-uuid: ba86ab6f-365a-434e-bc30-30b5d7058b93
+uuid: d88ba9a8-294f-43d5-9eb5-97b26117b75c
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bartik
-_core:
-  default_config_hash: 9EoWV2Lot6FVSr50t4hoKgiz1LIXYWNG-IIPYsWxBqo
-id: bartik_content
-theme: bartik
+    - medmus
+id: medmus_content
+theme: medmus
 region: content
-weight: 0
+weight: -2
 provider: null
 plugin: system_main_block
 settings:

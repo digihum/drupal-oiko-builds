@@ -1,17 +1,15 @@
-uuid: 221957cf-8fa7-43ab-a563-fec236107ef0
+uuid: 2a4d239a-dcbc-4775-a282-ef725493ff39
 langcode: en
 status: true
 dependencies:
   module:
     - help
   theme:
-    - bartik
-_core:
-  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
-id: bartik_help
-theme: bartik
+    - oiko
+id: oiko_help
+theme: oiko
 region: content
-weight: -30
+weight: -7
 provider: null
 plugin: help_block
 settings:

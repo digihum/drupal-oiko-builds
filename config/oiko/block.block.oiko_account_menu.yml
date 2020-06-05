@@ -1,19 +1,17 @@
-uuid: 41bbe07f-fcf8-4fd9-9310-617d602768af
+uuid: 112fe839-1492-43d1-92c3-a698dff527ec
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - system.menu.account
   module:
     - system
   theme:
-    - bartik
-_core:
-  default_config_hash: DweBpscQZdG0-fHkSpUzdYucrNH45G_KF7Z82V-oyQM
-id: bartik_account_menu
-theme: bartik
-region: secondary_menu
-weight: 0
+    - oiko
+id: oiko_account_menu
+theme: oiko
+region: primary_menu
+weight: -3
 provider: null
 plugin: 'system_menu_block:account'
 settings:

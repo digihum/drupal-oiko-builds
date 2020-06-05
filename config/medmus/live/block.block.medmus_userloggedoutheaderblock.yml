@@ -1,0 +1,20 @@
+uuid: 20e88bd3-df36-43a3-b1da-b5cb04317e3c
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_forum
+  theme:
+    - medmus
+id: medmus_userloggedoutheaderblock
+theme: medmus
+region: user_header
+weight: 0
+provider: null
+plugin: user_logged_out
+settings:
+  id: user_logged_out
+  label: 'User login/register'
+  provider: oiko_forum
+  label_display: visible
+visibility: {  }

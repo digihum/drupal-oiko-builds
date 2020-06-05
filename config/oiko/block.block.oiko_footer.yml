@@ -1,19 +1,17 @@
-uuid: 06c30749-5c90-4e94-ab72-848a379cf54e
+uuid: 4d0cac8a-88ba-438a-aafd-a1ef049079c5
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - system.menu.footer
   module:
     - system
   theme:
-    - bartik
-_core:
-  default_config_hash: kkISXE1LT2FJEoYnqCrCpeFB-2pmGmMxMklVk7rQcfg
-id: bartik_footer
-theme: bartik
-region: footer_fifth
-weight: 0
+    - oiko
+id: oiko_footer
+theme: oiko
+region: primary_menu
+weight: -6
 provider: null
 plugin: 'system_menu_block:footer'
 settings:

@@ -1,0 +1,23 @@
+uuid: 20512db0-f5b1-47ec-b5fc-ff92920a2fa2
+langcode: en
+status: true
+dependencies:
+  config:
+    - sharemessage.sharemessage.share_links_block
+  module:
+    - sharemessage
+  theme:
+    - medmus
+id: medmus_sharemessage
+theme: medmus
+region: sidebar_share
+weight: -7
+provider: null
+plugin: sharemessage_block
+settings:
+  id: sharemessage_block
+  label: Share
+  provider: sharemessage
+  label_display: '0'
+  sharemessage: share_links_block
+visibility: {  }

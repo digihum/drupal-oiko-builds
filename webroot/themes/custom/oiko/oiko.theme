@@ -1,4 +1,6 @@
 <?php
+
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Block\MainContentBlockPluginInterface;
 use Drupal\Core\Block\MessagesBlockPluginInterface;
@@ -141,6 +143,9 @@ function oiko_preprocess_page(&$variables) {
       $variables['page']['sidebardemo'] = $view_builder->view($entity, 'popup');
     }
   }
+
+  // Add in the stylised site name.
+  $variables['site_slogan'] = new FormattableMarkup('<span class="first">Oiko</span><br><span class="second">.world</span>', []);
 }
 
 /**
@@ -244,6 +249,7 @@ function oiko_theme_suggestions_block_alter(array &$suggestions, array $variable
     $block = Block::load($variables['elements']['#id']);
     if ($block->getRegion() == 'user_header') {
       $suggestions[] = 'block__' . $block->getRegion();
+      $suggestions[] = 'block__' . $block->getRegion() . '__' . str_replace('oiko_', '', $variables['elements']['#id']);
       $suggestions[] = 'block__' . $block->getRegion() . '__' . $variables['elements']['#id'];
     }
 
@@ -424,4 +430,11 @@ function oiko_preprocess_views_view(&$variables) {
  */
 function oiko_preprocess_block__system_messages_block(&$variables) {
   $variables['content']['#include_fallback'] = FALSE;
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function oiko_preprocess_user_login_form(&$variables) {
+  $variables['site_name'] = \Drupal::config('system.site')->get('name');
 }

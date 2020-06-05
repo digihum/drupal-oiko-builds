@@ -11,6 +11,28 @@ var webpack = require('webpack');
 var gulpWebpack = require('webpack2-stream-watch');
 var mergeStream = require('merge-stream');
 
+gulp.task('compile:sass:medmus', function () {
+  var sassOptions = {
+    errLogToConsole: true,
+    outputStyle: 'expanded',
+    includePaths: [
+      'node_modules/foundation-sites/scss',
+    ],
+    eyeglass: {
+      enableImportOnce: false,
+    }
+  };
+
+  return gulp
+      .src('webroot/themes/custom/medmus/scss/**/*.scss')
+      .pipe(sourcemaps.init())
+      .pipe(sass(eyeglass(sassOptions)).on("error", sass.logError))
+      .pipe(postcss([ autoprefixer({ browsers: ['last 2 versions', 'ie >= 9'] }) ]))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('webroot/themes/custom/medmus/css'))
+      .pipe(browserSync.reload({stream: true}));
+});
+
 gulp.task('compile:sass:oiko', function () {
   var sassOptions = {
     errLogToConsole: true,
@@ -33,7 +55,7 @@ gulp.task('compile:sass:oiko', function () {
     .pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('compile:sass', ['compile:sass:oiko']);
+gulp.task('compile:sass', ['compile:sass:oiko', 'compile:sass:medmus']);
 
 gulp.task('compile:js', function () {
   // For now, just copy a file out of the node modules folder.
@@ -72,7 +94,7 @@ gulp.task('watch:twig', function (done) {
 // Main compile task.
 gulp.task('compile', ['compile:sass', 'compile:js', 'compile:webpack']);
 
-gulp.task('browsersync', ['compile:js', 'compile:webpack'], function(){
+gulp.task('browsersync', ['compile:js', 'compile:webpack', 'compile:sass'], function(){
   // Watch CSS and JS files
   var files = [
     'css/*css',

@@ -1,0 +1,20 @@
+uuid: 2f1b9ae1-021e-4774-978c-4458ebe9c9ed
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_forum
+  theme:
+    - medmus
+id: medmus_discussionnotificationsblock_mobile
+theme: medmus
+region: mobile_user_header
+weight: -11
+provider: null
+plugin: discussion_notifcations
+settings:
+  id: discussion_notifcations
+  label: Discussions
+  provider: oiko_forum
+  label_display: visible
+visibility: {  }

@@ -1,17 +1,15 @@
-uuid: 2db0c024-9874-4d32-bedc-63304acdabea
+uuid: ea82091c-1feb-4cd5-9fb8-b1446244823b
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
   theme:
-    - bartik
-_core:
-  default_config_hash: jQQUUWN2Uxr5qZtc9zcJKBCxpKY8orN1u2HPqYYRQDI
-id: bartik_powered
-theme: bartik
-region: footer_fifth
-weight: 10
+    - medmus
+id: medmus_powered
+theme: medmus
+region: primary_menu
+weight: -5
 provider: null
 plugin: system_powered_by_block
 settings:

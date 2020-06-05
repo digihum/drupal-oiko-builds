@@ -1,10 +1,10 @@
-name: Oiko
+name: Medmus
 type: theme
-description: A theme for the Oikoumene website.
+description: A theme for the Connecting Medieval Music website.
 core: 8.x
-base theme: stable
+base theme: oiko
 libraries:
-  - oiko/global-styling
+  - medmus/global-styling
 regions:
   primary_menu: 'Primary menu'
   secondary_menu: 'Secondary menu'

@@ -1,0 +1,25 @@
+uuid: ebef8260-015e-4560-8984-2a50d2020236
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - medmus
+id: medmus_page_title
+theme: medmus
+region: content
+weight: -6
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: true
+    context_mapping: {  }

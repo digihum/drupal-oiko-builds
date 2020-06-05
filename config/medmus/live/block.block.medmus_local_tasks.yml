@@ -1,0 +1,20 @@
+uuid: 4d71e123-a4d6-4d03-aeb5-964881bbf7a5
+langcode: en
+status: true
+dependencies:
+  theme:
+    - medmus
+id: medmus_local_tasks
+theme: medmus
+region: content
+weight: -4
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Tabs
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: true
+visibility: {  }
