@@ -15,7 +15,7 @@ drush "$alias" updb -y --entity-updates --cache-clear=0
 drush "$alias" -y cache-rebuild
 
 # Revert config.
-#drush "@$alias" cmci -y
+drush "$alias" cmci -y
 
 drush "$alias" updb -y --entity-updates
 
