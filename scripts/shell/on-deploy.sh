@@ -15,7 +15,7 @@ drush "$alias" updatedb -y --entity-updates --cache-clear=0
 drush "$alias" -y cache-rebuild
 
 # Revert config.
-drush "$alias" config-import -y
+#drush "$alias" config-import -y
 
 drush "$alias" updatedb -y --entity-updates
 

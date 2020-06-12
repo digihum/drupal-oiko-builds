@@ -109,34 +109,41 @@ function oiko_app_views_pre_build(ViewExecutable $view) {
  */
 function oiko_app_toolbar() {
   $items = [];
+
   $items['welcome_modal'] = [
     '#cache' => [
-      'contexts' => [
-        'user.permissions',
+      'tags' => [
+        'block.welcomeblock',
       ],
     ],
   ];
-
-  if (!\Drupal::currentUser()->hasPermission('reshow welcome modal')) {
-    return $items;
+  if ($block = \Drupal\block\Entity\Block::load('welcomeblock')) {
+    $items['welcome_modal']['#cache']['contexts'] = [
+      'user.roles',
+      'theme',
+    ];
+    if (!\Drupal::currentUser()->hasPermission('reshow welcome modal')) {
+      return $items;
+    }
+    if ($block->getTheme() == \Drupal::service('theme.manager')->getActiveTheme()->getName()) {
+      $items['welcome_modal'] += [
+        '#type' => 'toolbar_item',
+        'tab' => [
+          '#type' => 'html_tag',
+          '#tag' => 'button',
+          '#value' => t('Welcome modal'),
+          '#attributes' => [
+            'class' => ['toolbar-icon', 'toolbar-icon-system-admin-content'],
+            'aria-pressed' => 'false',
+          ],
+        ],
+        '#wrapper_attributes' => [
+          'class' => ['tour-toolbar-tab'],
+          'data-open' => 'block-welcomeblock',
+        ],
+      ];
+    }
   }
-
-  $items['welcome_modal'] += array(
-    '#type' => 'toolbar_item',
-    'tab' => array(
-      '#type' => 'html_tag',
-      '#tag' => 'button',
-      '#value' => t('Welcome modal'),
-      '#attributes' => array(
-        'class' => array('toolbar-icon', 'toolbar-icon-system-admin-content'),
-        'aria-pressed' => 'false',
-      ),
-    ),
-    '#wrapper_attributes' => array(
-      'class' => array('tour-toolbar-tab'),
-      'data-open' => 'block-welcomeblock',
-    ),
-  );
 
   return $items;
 }
