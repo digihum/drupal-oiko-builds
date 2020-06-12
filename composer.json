@@ -124,6 +124,7 @@
         "drupal/geofield": "^1.6",
         "drupal/google_analytics": "^2.1",
         "drupal/honeypot": "^1.24",
+        "drupal/http_auth": "^1.0",
         "drupal/leaflet": "1.x-dev#a3274e4",
         "drupal/leaflet_widget": "dev-8.x-2.x",
         "drupal/metatag": "^1.0",
