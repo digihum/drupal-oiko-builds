@@ -25,22 +25,30 @@
           $source.append($banner_wrapper);
 
           // Attach an event to the change of the source.
-          $source.find(':input').on('keyup.oiko_pleiades keypress.oiko_pleiades change.oiko_pleiades', function() {
-            var $textfield = $(this);
-            var sourceval = $textfield.val();
+          $source
+            .find(':input')
+            .on('keyup.oiko_pleiades keypress.oiko_pleiades change.oiko_pleiades', function() {
+              var $textfield = $(this);
+              var sourceval = $textfield.val();
 
-            // Offer to lookup if the URI is a Pleiades URL.
-            if (sourceval.match(re)) {
-              // Update the message.
-              $banner_message.text(Drupal.t(''));
-              $banner_button.text(Drupal.t('Attempt lat/lng lookup'));
-              $banner_wrapper.show();
-            }
-            else {
-              $banner_wrapper.hide();
-            }
+              // Offer to lookup if the URI is a Pleiades URL.
+              if (sourceval.match(re)) {
+                // Update the message.
+                $banner_message.text(Drupal.t(''));
+                $banner_button.text(Drupal.t('Attempt lat/lng lookup'));
+                $banner_wrapper.show();
+              }
+              else {
+                $banner_wrapper.hide();
+              }
 
-          }).trigger('change');
+            })
+            .on('keypress.oiko_pleiades', function(e) {
+              if (e.which === 13) {
+                $banner_button.trigger('click');
+              }
+            })
+            .trigger('change');
 
 
           // Hook into the banner button being clicked

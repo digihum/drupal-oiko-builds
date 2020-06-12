@@ -3,6 +3,9 @@
 namespace Drupal\oiko_pleiades\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\geocoder\DumperPluginManager;
+use Drupal\geocoder\Geocoder;
+use Drupal\geocoder\ProviderPluginManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,19 +26,45 @@ class PleiadesLookupController extends ControllerBase {
    * @var Client
    */
   protected $http_client;
+
   /**
    * {@inheritdoc}
    */
-  public function __construct(Client $http_client) {
+  public function __construct(
+    Client $http_client,
+    Geocoder $geocoder,
+    ProviderPluginManager $provider_plugin_manager,
+    DumperPluginManager $dumper_plugin_manager
+  ) {
     $this->http_client = $http_client;
+    $this->geocoder = $geocoder;
+    $this->providerPluginManager = $provider_plugin_manager;
+    $this->dumperPluginManager = $dumper_plugin_manager;
   }
+
+  /**
+   * The provider plugin manager service.
+   *
+   * @var \Drupal\geocoder\ProviderPluginManager
+   */
+  protected $providerPluginManager;
+
+  /**
+   * The dumper plugin manager service.
+   *
+   * @var \Drupal\geocoder\DumperPluginManager
+   */
+  protected $dumperPluginManager;
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('http_client')
+      $container->get('http_client'),
+      $container->get('geocoder'),
+      $container->get('plugin.manager.geocoder.provider'),
+      $container->get('plugin.manager.geocoder.dumper')
     );
   }
 
@@ -65,21 +94,38 @@ class PleiadesLookupController extends ControllerBase {
   public function geocoderLookup(Request $request) {
     $location = $request->query->get('location');
 
-    $plugins = array('googlemaps');
-    $options = array(
-//      'geonames' => array(), // array of options
-      'googlemaps' => array(), // array of options
-//      'bingmaps' => array(), // array of options
-    );
-    $dumper_manager = \Drupal::service('plugin.manager.geocoder.dumper');
-    /** @var \Drupal\geocoder\DumperInterface $dumper */
-    $dumper = $dumper_manager->createInstance('wkt');
+    $plugins = $this->getEnabledProviderPlugins();
+    $dumper = $this->dumperPluginManager->createInstance('wkt');
 
-    if ($addressCollection = \Drupal::service('geocoder')->geocode($location, $plugins, $options)) {
+    if ($addressCollection = $this->geocoder->geocode($location, array_keys($plugins))) {
       return new JsonResponse(['wkt' => $dumper->dump($addressCollection->first())]);
     }
 
     throw new NotFoundHttpException();
+  }
+
+  /**
+   * Get the list of enabled Provider plugins.
+   *
+   * @return array
+   *   Provider plugin IDs and their properties (id, name, arguments...).
+   */
+  protected function getEnabledProviderPlugins() {
+    $geocoder_plugins = $this->providerPluginManager->getPlugins();
+    $provider_plugin_ids = array(
+      'googlemaps',
+      'openstreetmap',
+    );
+
+    $provider_plugin_ids = array_combine($provider_plugin_ids, $provider_plugin_ids);
+
+    foreach ($geocoder_plugins as $plugin) {
+      if (isset($provider_plugin_ids[$plugin['id']])) {
+        $provider_plugin_ids[$plugin['id']] = $plugin;
+      }
+    }
+
+    return $provider_plugin_ids;
   }
 
 }
