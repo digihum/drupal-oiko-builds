@@ -25,14 +25,15 @@ class oikoApp {
     // Work out what the initial state of our app should be.
     const initialState = oikoAppReducers({}, updateLocation(history.location));
 
+    let middleware = [thunkMiddleware]
+    if (process.env.NODE_ENV !== 'production') {
+      middleware = [...middleware, createLogger()]
+    }
 
     this.store = createStore(
       oikoAppReducers,
       initialState,
-      applyMiddleware(
-         thunkMiddleware
-         // ,createLogger() // Add this back in if you want nice logging of state changes.
-      )
+      applyMiddleware(...middleware)
     );
 
     connectHistory(history, this.store);

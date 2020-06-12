@@ -28,7 +28,7 @@ Drupal.oiko.getAppState = () => {
   return app.getStore().getState();
 };
 
-if (drupalSettings.ajaxPageState.theme === 'oiko') {
+if (['oiko', 'medmus'].indexOf(drupalSettings.ajaxPageState.theme) > -1) {
 
 // @TODO: START: Move all of this elsewhere.
 
