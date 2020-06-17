@@ -1,0 +1,6 @@
+---
+label: pa7_has_sibling
+domain: e21_person
+range: e21_person
+superproperty: 
+  - pa14_has_relative

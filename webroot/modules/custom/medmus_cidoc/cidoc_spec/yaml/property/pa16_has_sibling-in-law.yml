@@ -1,0 +1,6 @@
+---
+label: pa16_has_sibling-in-law
+domain: e21_person
+range: e21_person
+superproperty: 
+  - pa14_has_relative

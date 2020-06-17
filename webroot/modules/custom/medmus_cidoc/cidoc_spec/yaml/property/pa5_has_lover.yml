@@ -1,0 +1,7 @@
+---
+label: pa5_has_lover
+domain: e21_person
+range: e21_person
+superproperty: 
+  - pa2_has_acquaintance
+

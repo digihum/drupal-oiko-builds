@@ -1,0 +1,6 @@
+---
+label: pa4_has_muse
+domain: e21_person
+range: e21_person
+superproperties:
+reverse_label: pa4_is_muse_of

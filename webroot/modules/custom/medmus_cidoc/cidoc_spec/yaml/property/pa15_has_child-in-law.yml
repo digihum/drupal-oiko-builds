@@ -1,0 +1,7 @@
+---
+label: pa15_has_child-in-law
+domain: e21_person
+range: e21_person
+superproperty: 
+  - pa14_has_relative
+reverse_label: pa3_has_parent-in-law

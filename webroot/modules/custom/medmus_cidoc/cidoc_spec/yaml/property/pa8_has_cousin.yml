@@ -1,0 +1,6 @@
+---
+label: pa8_has_cousin
+domain: e21_person
+superproperty: 
+  - pa14_has_relative
+range: e21_person

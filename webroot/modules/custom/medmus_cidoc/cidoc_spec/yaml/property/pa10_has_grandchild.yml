@@ -1,0 +1,8 @@
+---
+label: pa10_has_grandchild
+domain: e21_person
+range: e21_person
+superproperty: 
+  - pa14_has_relative
+  - pa11_has_ancestor
+reverse_label: pa10_has_grandparent
