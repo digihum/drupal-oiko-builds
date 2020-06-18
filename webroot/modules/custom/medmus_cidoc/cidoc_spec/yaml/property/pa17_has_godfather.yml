@@ -1,0 +1,7 @@
+---
+label: pa17_has_godfather
+domain: e21_person
+range: e21_person
+superproperty: 
+  - pa14_has_relative
+reverse_label: pa17_is_godfather_of
