@@ -80,20 +80,17 @@ function cidoc_sync_sync_entity_bundle_callback($dry_run, $destructive, $crm_ent
   /** @var \ComputerMinds\CIDOC_CRM\EntityTraversal $crm_entity_traversal */
   $crm_entity_traversal = $container->get('cidoc_spec.entity_traversal');
 
-  $all_properties = array();
-  $overridden_properties = array();
+  $properties_on_this_entity = array();
   $superclasses = array_merge(array($crm_entity_name), $crm_entity_traversal->getAllSuperclasses($crm_entity));
-  foreach ($superclasses as $superclass_entity_name) {
-    foreach ($crm_entity_factory->getEntity($superclass_entity_name)->properties() as $crm_property_name) {
-      // Exclude this property if we've met it before.
-      if (!isset($overridden_properties[$crm_property_name])) {
-        $all_properties[$crm_property_name] = $crm_property_name;
-      }
+  // We need to find all CRM properties that have any of these $superclasses as a domain.
+  foreach ($crm_property_factory->listProperties() as $crm_property_name) {
+    if (in_array($crm_property_factory->getProperty($crm_property_name)->domain(), $superclasses)) {
+      $properties_on_this_entity[] = $crm_property_name;
     }
   }
 
   // Need to process the properties on the Entity and any parent Entity classes.
-  foreach ($all_properties as $crm_property_name) {
+  foreach ($properties_on_this_entity as $crm_property_name) {
     // If this property isn't enabled, just skip it.
     if (!$drupal_manager->isCRMPropertyEnabled($crm_property_name)) {
       $drupal_property_name = $drupal_manager->convertCRMNameToDrupalIdentifier($crm_property_name);
