@@ -1,7 +1,7 @@
 ---
-label: pa12_has_adoptive_child
+label: PA12 has adoptive child
 domain: e21_person
 range: e21_person
 superproperty: 
   - pa14_has_relative
-reverse_label: pa12_has_adoptive_parent
+reverse_label: PA12 has adoptive parent
