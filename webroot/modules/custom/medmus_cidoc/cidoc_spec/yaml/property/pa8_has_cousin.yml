@@ -1,5 +1,5 @@
 ---
-label: pa8_has_cousin
+label: PA8 has cousin
 domain: e21_person
 superproperty: 
   - pa14_has_relative
