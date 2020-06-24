@@ -1,7 +1,7 @@
 ---
-label: pa9_has_aunt_or_uncle
+label: PA9 has aunt or uncle
 domain: e21_person
 range: e21_person
 superproperty: 
   - pa14_has_relative
-reverse_label: pa9_has_niece_or_nephew
+reverse_label: PA9 has niece or nephew
