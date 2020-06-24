@@ -1,6 +1,6 @@
 ---
-label: pa6_has_murder_victim
+label: PA6 has murder victim
 domain: e21_person
 range: e21_person
 superproperties:
-reverse_label: pa6_has_murderer
+reverse_label: PA6 has murderer
