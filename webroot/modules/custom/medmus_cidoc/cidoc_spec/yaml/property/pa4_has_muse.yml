@@ -1,6 +1,6 @@
 ---
-label: pa4_has_muse
+label: PA4 has muse
 domain: e21_person
 range: e21_person
 superproperties:
-reverse_label: pa4_is_muse_of
+reverse_label: PA4 is muse of
