@@ -491,7 +491,7 @@ class CidocEntityForm extends ContentEntityForm {
                 $reference_bundle = $this->entityManager->getStorage('cidoc_entity_bundle')->load($autocreate_bundle);
                 $title = (string) format_string($element['#timesubwidget_title_template'], array(
                   '@target_name' => $form_state->getValue('name')[0]['value'],
-                  '@bundle_name' => $reference_bundle->label(),
+                  '@bundle_name' => $reference_bundle->getFriendlyLabel(),
                 ));
                 $new_entity = $handler->createNewEntity($element['#target_type'], $element['#autocreate']['bundle'], $title, $element['#autocreate']['uid']);
                 $property_bundle = $this->entityManager->getStorage('cidoc_property')->load($element['#timesubwidget_property']);
