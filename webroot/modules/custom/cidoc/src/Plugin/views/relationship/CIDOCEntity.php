@@ -153,8 +153,9 @@ class CIDOCEntity extends RelationshipPluginBase {
       'adjusted' => TRUE
     );
 
-    $second['type'] = 'INNER';
-
+    if (!empty($this->options['required'])) {
+      $second['type'] = 'INNER';
+    }
     if (!empty($def['join_id'])) {
       $id = $def['join_id'];
     }
@@ -179,7 +180,9 @@ class CIDOCEntity extends RelationshipPluginBase {
       'adjusted' => TRUE
     );
 
-    $third['type'] = 'INNER';
+    if (!empty($this->options['required'])) {
+      $third['type'] = 'INNER';
+    }
 
     if (!empty(array_filter($this->options['limit_types']))) {
       // Add a limit on the bundles that can be referenced.
