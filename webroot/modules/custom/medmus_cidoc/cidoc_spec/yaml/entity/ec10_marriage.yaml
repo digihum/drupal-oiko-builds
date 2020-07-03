@@ -1,0 +1,7 @@
+---
+label: EC10 Marriage
+superclasses:
+  - e7_activity
+properties:
+examples: |
+  * 
