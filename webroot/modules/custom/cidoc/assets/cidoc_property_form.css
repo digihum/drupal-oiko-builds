@@ -7,6 +7,7 @@
   display: inline-block;
   padding-right: 10px;
   width: 40%;
+  vertical-align: top;
 }
 
 .cidoc-property-form-items-columns .form-item:last-child,

@@ -4,6 +4,9 @@
  * @file
  * Install, update and uninstall functions for the CIDOC module.
  */
+
+use Drupal\cidoc\Entity\CidocProperty;
+use Drupal\cidoc\Entity\CidocPropertyInterface;
 use Drupal\cidoc\Entity\CidocReference;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Field\BaseFieldDefinition;
@@ -377,4 +380,33 @@ function cidoc_update_8403() {
   db_update('cidoc_reference')
     ->fields(array('status' => TRUE))
     ->execute();
+}
+
+/**
+ * Update the config format of subwidgets.
+ */
+function cidoc_update_8404() {
+  $properties = \Drupal::entityQuery('cidoc_property')
+    ->execute();
+  foreach ($properties as $property) {
+    if ($entity = CidocProperty::load($property)) {
+      $old_settings = $entity->timesubwidget;
+      $new_settings = [
+        'domain' => [
+          'type' => CidocPropertyInterface::SubWidgetTypeNormal,
+        ],
+        'range' => [
+          'type' => CidocPropertyInterface::SubWidgetTypeNormal,
+        ],
+      ];
+      if (!empty($old_settings['domain'])) {
+        $new_settings['domain']['type'] = CidocPropertyInterface::SubWidgetTypeTime;
+      }
+      if (!empty($old_settings['range'])) {
+        $new_settings['range']['type'] = CidocPropertyInterface::SubWidgetTypeTime;
+      }
+      $entity->timesubwidget = $new_settings;
+      $entity->save();
+    }
+  }
 }

@@ -2,7 +2,9 @@
 
 namespace Drupal\cidoc\Form;
 
+use Drupal\cidoc\Entity\CidocEntityBundle;
 use Drupal\cidoc\Entity\CidocProperty;
+use Drupal\cidoc\Entity\CidocPropertyInterface;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Field\FieldFilteredMarkup;
 use Drupal\Core\Form\FormStateInterface;
@@ -170,37 +172,101 @@ class CidocPropertyForm extends EntityForm {
       }
     }
 
-    $form['endpoints']['timesubwidget'] = array(
-      '#type' => 'checkboxes',
-      '#title' => $this->t('Use a time subwidget for the endpoints'),
-      '#options' => array(
-        'domain' => $this->t('Domain'),
-        'range' => $this->t('Range'),
-      ),
-      '#description' => $this->t('You may allow editors to reference a time span rather than having to create the intermediate entity.'),
-      '#default_value' => array(),
-      '#attributes' => array(
-        'class' => array('cidoc-property-form-items-columns'),
-      ),
+    $form['endpoints']['subwidgets'] = array(
+      '#tree' => 'TRUE',
     );
-    foreach ($form['endpoints']['timesubwidget']['#options'] as $endpoint => $endpoint_label) {
-      if ($cidoc_property->isTimeSubwidget($endpoint)) {
-        $form['endpoints']['timesubwidget']['#default_value'][] = $endpoint;
+
+    foreach (['domain' => 'Domain', 'range' => 'Range'] as $endpoint => $endpoint_human) {
+      $t_params = [
+        '@endpoint' => $endpoint,
+        '@endpoint_human' => $endpoint_human,
+      ];
+      $form['endpoints']['subwidgets'][$endpoint] = [
+        '#type' => 'fieldset',
+        '#title' => $this->t('@endpoint_human Subwidget', $t_params),
+        '#states' => [
+          'visible' => [
+            ':input[name="editability[' . $endpoint . ']"]' => ['checked' => TRUE],
+          ],
+        ],
+        '#attributes' => [
+          'class' => [
+            'form-composite',
+            'cidoc-property-form-composite-column',
+          ],
+        ],
+      ];
+
+      $form['endpoints']['subwidgets'][$endpoint]['type'] = [
+        '#type' => 'radios',
+        '#title' => $this->t('Use a subwidget for the @endpoint_human endpoint.', $t_params),
+        '#options' => [
+          CidocPropertyInterface::SubWidgetTypeNormal => $this->t('No'),
+          CidocPropertyInterface::SubWidgetTypeTime => $this->t('Time specific subwidget'),
+          CidocPropertyInterface::SubWidgetTypeGeneric => $this->t('Generic subwidget'),
+        ],
+        '#description' => $this->t('You may allow editors to reference a e.g. time span rather than having to create the intermediate entity. Note that the Generic subwidget is more flexible in use but more restrictive in the types of properties it can be used on.'),
+        '#default_value' => $cidoc_property->getSubwidgetType($endpoint),
+      ];
+      // We only allow these options if there's a single domain/range option.
+      $bundles_variable_name = $endpoint . '_bundles';
+      $inverse_bundles_name = ($endpoint == 'domain' ? 'range' : 'domain') . '_bundles';
+      if (count($$inverse_bundles_name) != 1) {
+        $form['endpoints']['subwidgets'][$endpoint]['type'][CidocPropertyInterface::SubWidgetTypeGeneric]['#disabled'] = TRUE;
       }
-      $form['endpoints']['timesubwidget'][$endpoint]['#states'] = array(
-        'visible' => array(
-          ':input[name="editability[' . $endpoint .  ']"]' => array('checked' => TRUE),
-        ),
-      );
+
+      // We want a list of all the properties on the single domain class.
+      $subwidget_subproperties = [];
+      if ($bundle_entity = CidocEntityBundle::load(reset($$inverse_bundles_name))) {
+        if ($applicable_properties = $bundle_entity->getAllEditableProperties($endpoint == 'domain')) {
+          foreach ($applicable_properties as $property_name => $property_entity) {
+            $subwidget_subproperties[$property_name] = $property_entity->label();
+          }
+        }
+      }
+
+      $timesubwidget_data = $cidoc_property->get('timesubwidget');
+
+      $form['endpoints']['subwidgets'][$endpoint]['sub_property'] = [
+        '#type' => 'radios',
+        '#title' => t('Sub property'),
+        '#description' => t('Select the property the entity that is referenced/created will be added to.'),
+        '#options' => $subwidget_subproperties,
+        '#default_value' => $cidoc_property->getSubwidgetSubProperty($endpoint),
+        '#states' => [
+          'visible' => [
+            ':input[name="subwidgets[' . $endpoint . '][type]"]' => ['value' => CidocPropertyInterface::SubWidgetTypeGeneric],
+          ],
+        ],
+      ];
+      $form['endpoints']['subwidgets'][$endpoint]['title_template'] = [
+        '#type' => 'textfield',
+        '#title' => t('Intermediate entity title template'),
+        '#description' => t('When the intermediate entity is created, define a template for its title.<br>You may use the following tokens: @bundle_name, @target_name.'),
+        '#default_value' => $cidoc_property->getSubwidgetTitleTemplate($endpoint),
+        '#states' => [
+          'visible' => [
+            ':input[name="subwidgets[' . $endpoint . '][type]"]' => [
+              ['value' => CidocPropertyInterface::SubWidgetTypeTime],
+              ['value' => CidocPropertyInterface::SubWidgetTypeGeneric],
+            ],
+          ],
+        ],
+      ];
     }
-    $form['endpoints']['child_events'] = array(
-      '#type' => 'checkboxes',
+
+    $form['endpoints']['child'] = [
+      '#type' => 'fieldset',
       '#title' => $this->t('Child event data'),
+    ];
+    $form['endpoints']['child']['child_events'] = array(
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Process for events'),
       '#options' => array(
         'domain' => $this->t('Domain'),
         'range' => $this->t('Range'),
       ),
-      '#description' => $this->t('Select whether the domain or range lead to child events.'),
+      '#description' => $this->t('Select whether the domain or range lead to child events. This helps the system traverse the graph of data looking for entities with geo-temporal data.'),
       '#default_value' => array(),
       '#attributes' => array(
         'class' => array('cidoc-property-form-items-columns'),
@@ -318,11 +384,24 @@ class CidocPropertyForm extends EntityForm {
 
     // Get to an array of allowed endpoint strings mapped to boolean values.
     $entity->editability = array_map('boolval', $form_state->getValue('editability'));
-    // Get to an array of allowed endpoint strings mapped to boolean values.
-    $entity->timesubwidget = array_map('boolval', $form_state->getValue('timesubwidget'));
     // Just copy the descriptions in directly.
     $entity->widget_description = $form_state->getValue('widget_description');
     $entity->autocomplete_description = $form_state->getValue('autocomplete_description');
+
+    // Process the subwidget data.
+    $entity->timesubwidget = $form_state->getValue('subwidgets');
+    foreach (['domain', 'range'] as $endpoint){
+      switch ($entity->timesubwidget[$endpoint]['type']) {
+        case CidocPropertyInterface::SubWidgetTypeNormal:
+          unset($entity->timesubwidget[$endpoint]['sub_property']);
+          unset($entity->timesubwidget[$endpoint]['title_template']);
+          break;
+
+        case CidocPropertyInterface::SubWidgetTypeTime:
+          unset($entity->timesubwidget[$endpoint]['sub_property']);
+          break;
+      }
+    }
   }
 
   /**

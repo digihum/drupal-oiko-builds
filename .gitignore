@@ -1,5 +1,5 @@
 .drush-cache-rebuild
-webroot/sites/default/files/
-webroot/sites/default/settings.local.php
+webroot/sites/*/files/
+webroot/sites/*/settings.local.php
 .idea
 node_modules/

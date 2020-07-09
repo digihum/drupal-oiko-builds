@@ -63,7 +63,7 @@ use Drupal\field\Entity\FieldStorageConfig;
  *   }
  * )
  */
-class CidocProperty extends ConfigEntityBundleBase implements RevisionableEntityBundleInterface {
+class CidocProperty extends ConfigEntityBundleBase implements RevisionableEntityBundleInterface, CidocPropertyInterface {
 
   use StringTranslationTrait;
 
@@ -369,8 +369,8 @@ class CidocProperty extends ConfigEntityBundleBase implements RevisionableEntity
   public static function preCreate(EntityStorageInterface $storage, array &$values) {
     $values['editability']['domain'] = TRUE;
     $values['editability']['range'] = TRUE;
-    $values['timesubwidget']['domain'] = FALSE;
-    $values['timesubwidget']['range'] = FALSE;
+    $values['timesubwidget']['domain']['type'] = CidocPropertyInterface::SubWidgetTypeNormal;
+    $values['timesubwidget']['range']['type'] = CidocPropertyInterface::SubWidgetTypeNormal;
   }
 
   /**
@@ -405,6 +405,8 @@ class CidocProperty extends ConfigEntityBundleBase implements RevisionableEntity
 
   /**
    * Get whether the property should use a time subwidget.
+   *
+   * @deprecated Use ::getSubwidgetType instead.
    */
   public function isTimeSubwidget($endpoint) {
     $usage = FALSE;
@@ -415,6 +417,37 @@ class CidocProperty extends ConfigEntityBundleBase implements RevisionableEntity
         break;
     }
     return $usage;
+  }
+
+  /**
+   * Get the type of subwidget for this property.
+   */
+  public function getSubwidgetType($endpoint) {
+    return !empty($this->timesubwidget[$endpoint]['type']) ? $this->timesubwidget[$endpoint]['type'] : 'no';
+  }
+
+  /**
+   * Get the type of subwidget for this property.
+   */
+  public function getSubwidgetTitleTemplate($endpoint) {
+    return !empty($this->timesubwidget[$endpoint]['title_template']) ? $this->timesubwidget[$endpoint]['title_template'] : '@bundle_name of @target_name';
+  }
+
+  /**
+   * Get the type of subwidget for this property.
+   */
+  public function getSubwidgetSubProperty($endpoint) {
+    return !empty($this->timesubwidget[$endpoint]['sub_property']) ? $this->timesubwidget[$endpoint]['sub_property'] : NULL;
+  }
+
+  /**
+   * Get the options for the subwidget.
+   */
+  public function getSubwidgetOptions($endpoint) {
+    return [
+      'sub_property' => !empty($this->timesubwidget[$endpoint . '_subwidget']['sub_property']) ? $this->timesubwidget[$endpoint . '_subwidget']['sub_property'] : '',
+      'title_template' => !empty($this->timesubwidget[$endpoint . '_subwidget']['title_template']) ? $this->timesubwidget[$endpoint . '_subwidget']['title_template'] : '@bundle_name of @target_name',
+    ];
   }
 
   /**

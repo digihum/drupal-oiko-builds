@@ -76,11 +76,26 @@ cidoc.cidoc_property.*:
       label: 'Which endpoint widget will use the time subwidget.'
       mapping:
         domain:
-          type: boolean
-          label: 'Use on domain entities'
+          type: mapping
+          label: 'Domain subwidget settings'
+          mapping:
+            type:
+              type: string
+            title_template:
+              type: string
+            sub_property:
+              type: string
+
         range:
-          type: boolean
-          label: 'Use on range entities'
+          type: mapping
+          label: 'Range subwidget settings'
+          mapping:
+            type:
+              type: string
+            title_template:
+              type: string
+            sub_property:
+              type: string
     bidirectional:
       type: boolean
       label: 'Whether this property is symmetric.'

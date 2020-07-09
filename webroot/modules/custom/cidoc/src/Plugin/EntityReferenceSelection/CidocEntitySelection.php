@@ -192,7 +192,11 @@ class CidocEntitySelection extends DefaultSelection {
         return $query;
       }
       else {
-        $query->condition($entity_type->getKey('bundle'), $handler_settings['target_bundles'], 'IN');
+        $allowed_bundles = $handler_settings['target_bundles'];
+        if (!empty($handler_settings['auto_create_bundle'])) {
+          $allowed_bundles[] = $handler_settings['auto_create_bundle'];
+        }
+        $query->condition($entity_type->getKey('bundle'), array_unique($allowed_bundles), 'IN');
       }
     }
 
