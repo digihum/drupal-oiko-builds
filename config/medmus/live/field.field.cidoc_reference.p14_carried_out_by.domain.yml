@@ -33,11 +33,11 @@ settings:
       direction: ASC
     target_bundles:
       e7_activity: e7_activity
+      e9_move: e9_move
+      e12_production: e12_production
       e65_creation: e65_creation
       e66_formation: e66_formation
       e85_joining: e85_joining
       e86_leaving: e86_leaving
-      e9_move: e9_move
-      e12_production: e12_production
     auto_create_bundle: e7_activity
 field_type: entity_reference

@@ -9,19 +9,19 @@ reverse_label: 'P102 is title of'
 friendly_label: Title
 reverse_friendly_label: 'Is title of'
 domain_bundles:
+  - e35_title
+  - e41_appellation
+  - e42_identifier
   - e55_type
-  - ec2_genre
-  - ec7_source
   - e56_language
   - e57_material
-  - e41_appellation
+  - ec1_work
+  - ec2_genre
   - ec3_formal_feature
+  - ec6_music
+  - ec7_source
   - ec8_manuscript
   - ec9_print
-  - ec6_music
-  - e35_title
-  - e42_identifier
-  - ec1_work
 range_bundles:
   - e35_title
 editability:

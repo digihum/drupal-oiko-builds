@@ -11,16 +11,16 @@ reverse_friendly_label: 'Was created by'
 domain_bundles:
   - e65_creation
 range_bundles:
+  - e35_title
+  - e41_appellation
+  - e42_identifier
   - e55_type
-  - ec2_genre
   - e56_language
   - e57_material
-  - e41_appellation
+  - ec1_work
+  - ec2_genre
   - ec3_formal_feature
   - ec6_music
-  - e35_title
-  - e42_identifier
-  - ec1_work
 editability:
   domain: true
   range: true

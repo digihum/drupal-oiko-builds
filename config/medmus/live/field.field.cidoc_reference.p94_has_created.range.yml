@@ -33,15 +33,15 @@ settings:
       field: name
       direction: ASC
     target_bundles:
+      e35_title: e35_title
+      e41_appellation: e41_appellation
+      e42_identifier: e42_identifier
       e55_type: e55_type
-      ec2_genre: ec2_genre
       e56_language: e56_language
       e57_material: e57_material
-      e41_appellation: e41_appellation
+      ec1_work: ec1_work
+      ec2_genre: ec2_genre
       ec3_formal_feature: ec3_formal_feature
       ec6_music: ec6_music
-      e35_title: e35_title
-      e42_identifier: e42_identifier
-      ec1_work: ec1_work
-    auto_create_bundle: e55_type
+    auto_create_bundle: e35_title
 field_type: entity_reference

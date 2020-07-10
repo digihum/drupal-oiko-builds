@@ -12,12 +12,12 @@ friendly_label: 'Carried out by'
 reverse_friendly_label: Performed
 domain_bundles:
   - e7_activity
+  - e9_move
+  - e12_production
   - e65_creation
   - e66_formation
   - e85_joining
   - e86_leaving
-  - e9_move
-  - e12_production
 range_bundles:
   - e21_person
   - e74_group

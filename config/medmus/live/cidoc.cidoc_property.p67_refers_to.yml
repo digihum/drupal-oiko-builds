@@ -9,39 +9,39 @@ reverse_label: 'P67 is referred to by'
 friendly_label: 'Refers to'
 reverse_friendly_label: 'Is referred to by'
 domain_bundles:
-  - ec6_music
   - e35_title
   - ec1_work
+  - ec6_music
 range_bundles:
+  - e5_event
+  - e6_destruction
+  - e7_activity
+  - e9_move
+  - e12_production
+  - e21_person
+  - e35_title
+  - e41_appellation
+  - e42_identifier
   - e52_time_span
   - e53_place
-  - e5_event
-  - e21_person
-  - e74_group
-  - e7_activity
-  - e12_production
+  - e55_type
+  - e56_language
+  - e57_material
   - e65_creation
   - e66_formation
   - e67_birth
   - e68_dissolution
   - e69_death
-  - e6_destruction
+  - e74_group
   - e85_joining
   - e86_leaving
-  - e9_move
-  - e55_type
+  - ec1_work
   - ec2_genre
-  - e41_appellation
   - ec3_formal_feature
-  - ec7_source
-  - e56_language
-  - e57_material
-  - e35_title
-  - e42_identifier
   - ec6_music
+  - ec7_source
   - ec8_manuscript
   - ec9_print
-  - ec1_work
 editability:
   domain: true
   range: true

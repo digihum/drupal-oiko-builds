@@ -29,11 +29,11 @@ settings:
       field: name
       direction: ASC
     target_bundles:
-      e41_appellation: e41_appellation
-      ec3_formal_feature: ec3_formal_feature
       e35_title: e35_title
+      e41_appellation: e41_appellation
       e42_identifier: e42_identifier
-      ec6_music: ec6_music
       ec1_work: ec1_work
-    auto_create_bundle: e41_appellation
+      ec3_formal_feature: ec3_formal_feature
+      ec6_music: ec6_music
+    auto_create_bundle: e35_title
 field_type: entity_reference

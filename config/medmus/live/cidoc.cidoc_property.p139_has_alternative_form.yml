@@ -9,12 +9,12 @@ reverse_label: 'P139 has alternative form'
 friendly_label: 'Alternative form'
 reverse_friendly_label: 'Alternative form'
 domain_bundles:
-  - e41_appellation
   - e35_title
+  - e41_appellation
   - e42_identifier
 range_bundles:
-  - e41_appellation
   - e35_title
+  - e41_appellation
   - e42_identifier
 editability:
   domain: true

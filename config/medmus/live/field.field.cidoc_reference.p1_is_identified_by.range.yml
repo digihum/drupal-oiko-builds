@@ -28,8 +28,8 @@ settings:
       field: name
       direction: ASC
     target_bundles:
-      e41_appellation: e41_appellation
       e35_title: e35_title
+      e41_appellation: e41_appellation
       e42_identifier: e42_identifier
-    auto_create_bundle: e41_appellation
+    auto_create_bundle: e35_title
 field_type: entity_reference

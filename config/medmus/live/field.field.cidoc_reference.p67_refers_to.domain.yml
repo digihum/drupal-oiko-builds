@@ -26,8 +26,8 @@ settings:
       field: name
       direction: ASC
     target_bundles:
-      ec6_music: ec6_music
       e35_title: e35_title
       ec1_work: ec1_work
-    auto_create_bundle: ec6_music
+      ec6_music: ec6_music
+    auto_create_bundle: e35_title
 field_type: entity_reference

@@ -13,12 +13,12 @@ domain_bundles:
   - ec8_manuscript
   - ec9_print
 range_bundles:
-  - e41_appellation
-  - ec3_formal_feature
   - e35_title
+  - e41_appellation
   - e42_identifier
-  - ec6_music
   - ec1_work
+  - ec3_formal_feature
+  - ec6_music
 editability:
   domain: true
   range: true

@@ -12,17 +12,17 @@ friendly_label: 'Took place at'
 reverse_friendly_label: Witnessed
 domain_bundles:
   - e5_event
+  - e6_destruction
   - e7_activity
+  - e9_move
   - e12_production
   - e65_creation
   - e66_formation
   - e67_birth
   - e68_dissolution
   - e69_death
-  - e6_destruction
   - e85_joining
   - e86_leaving
-  - e9_move
 range_bundles:
   - e53_place
 editability:
