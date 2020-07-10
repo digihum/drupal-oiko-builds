@@ -9,9 +9,9 @@ reverse_label: 'PA10 has grandparent'
 friendly_label: Granchild
 reverse_friendly_label: Grandparent
 domain_bundles:
-  e21_person: e21_person
+  - e21_person
 range_bundles:
-  e21_person: e21_person
+  - e21_person
 editability:
   domain: true
   range: true

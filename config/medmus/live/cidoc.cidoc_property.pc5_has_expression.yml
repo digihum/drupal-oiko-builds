@@ -9,11 +9,11 @@ reverse_label: 'PC4 is expression of'
 friendly_label: 'Has expression'
 reverse_friendly_label: 'Is expression of'
 domain_bundles:
-  ec1_work: ec1_work
-  ec6_music: ec6_music
+  - ec1_work
+  - ec6_music
 range_bundles:
-  ec1_work: ec1_work
-  ec6_music: ec6_music
+  - ec1_work
+  - ec6_music
 editability:
   domain: true
   range: true

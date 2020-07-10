@@ -9,16 +9,16 @@ reverse_label: 'P128 is carried by'
 friendly_label: Contains
 reverse_friendly_label: Source
 domain_bundles:
-  ec7_source: ec7_source
-  ec8_manuscript: ec8_manuscript
-  ec9_print: ec9_print
+  - ec7_source
+  - ec8_manuscript
+  - ec9_print
 range_bundles:
-  e41_appellation: e41_appellation
-  ec3_formal_feature: ec3_formal_feature
-  e35_title: e35_title
-  e42_identifier: e42_identifier
-  ec6_music: ec6_music
-  ec1_work: ec1_work
+  - e41_appellation
+  - ec3_formal_feature
+  - e35_title
+  - e42_identifier
+  - ec6_music
+  - ec1_work
 editability:
   domain: true
   range: true

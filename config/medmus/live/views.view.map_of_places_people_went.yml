@@ -335,8 +335,8 @@ display:
           entity_type: cidoc_entity
           entity_field: bundle
           plugin_id: bundle
-        property:
-          id: property
+        property_1:
+          id: property_1
           table: cidoc_reference
           field: property
           relationship: reverse__cidoc_reference__range
@@ -377,6 +377,86 @@ display:
           entity_type: cidoc_reference
           entity_field: property
           plugin_id: bundle
+        property:
+          id: property
+          table: cidoc_reference
+          field: property
+          relationship: reverse__cidoc_reference__range
+          group_type: group
+          admin_label: ''
+          operator: in
+          value:
+            p67_refers_to: p67_refers_to
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: cidoc_reference
+          entity_field: property
+          plugin_id: bundle
+        field_don_t_show_in_map_value:
+          id: field_don_t_show_in_map_value
+          table: cidoc_reference__field_don_t_show_in_map
+          field: field_don_t_show_in_map_value
+          relationship: reverse__cidoc_reference__range
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: boolean
       sorts: {  }
       header: {  }
       footer: {  }
@@ -464,6 +544,11 @@ display:
           entity_field: id
           plugin_id: numeric
       display_extenders: {  }
+      filter_groups:
+        operator: OR
+        groups:
+          1: AND
+          2: AND
     cache_metadata:
       max-age: -1
       contexts:

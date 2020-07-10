@@ -9,9 +9,9 @@ reverse_label: 'PA18 is godmother pf'
 friendly_label: Godmother
 reverse_friendly_label: 'Godmother of'
 domain_bundles:
-  e21_person: e21_person
+  - e21_person
 range_bundles:
-  e21_person: e21_person
+  - e21_person
 editability:
   domain: true
   range: true

@@ -9,9 +9,9 @@ reverse_label: 'PA11 has descendant'
 friendly_label: Ancestor
 reverse_friendly_label: Descendant
 domain_bundles:
-  e21_person: e21_person
+  - e21_person
 range_bundles:
-  e21_person: e21_person
+  - e21_person
 editability:
   domain: true
   range: true

@@ -11,18 +11,18 @@ reverse_label: 'P7 witnessed'
 friendly_label: 'Took place at'
 reverse_friendly_label: Witnessed
 domain_bundles:
-  1: e5_event
-  4: e7_activity
-  5: e12_production
-  6: e65_creation
-  7: e66_formation
-  8: e67_birth
-  10: e68_dissolution
-  11: e69_death
-  12: e6_destruction
-  16: e85_joining
-  17: e86_leaving
-  20: e9_move
+  - e5_event
+  - e7_activity
+  - e12_production
+  - e65_creation
+  - e66_formation
+  - e67_birth
+  - e68_dissolution
+  - e69_death
+  - e6_destruction
+  - e85_joining
+  - e86_leaving
+  - e9_move
 range_bundles:
   - e53_place
 editability:

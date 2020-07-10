@@ -9,18 +9,18 @@ reverse_label: 'P94 was created by'
 friendly_label: Created
 reverse_friendly_label: 'Was created by'
 domain_bundles:
-  e65_creation: e65_creation
+  - e65_creation
 range_bundles:
-  e55_type: e55_type
-  ec2_genre: ec2_genre
-  e56_language: e56_language
-  e57_material: e57_material
-  e41_appellation: e41_appellation
-  ec3_formal_feature: ec3_formal_feature
-  ec6_music: ec6_music
-  e35_title: e35_title
-  e42_identifier: e42_identifier
-  ec1_work: ec1_work
+  - e55_type
+  - ec2_genre
+  - e56_language
+  - e57_material
+  - e41_appellation
+  - ec3_formal_feature
+  - ec6_music
+  - e35_title
+  - e42_identifier
+  - ec1_work
 editability:
   domain: true
   range: true

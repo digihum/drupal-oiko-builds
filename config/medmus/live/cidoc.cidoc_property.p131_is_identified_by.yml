@@ -9,10 +9,10 @@ reverse_label: 'P131 identifies'
 friendly_label: Appellation
 reverse_friendly_label: Identifies
 domain_bundles:
-  e21_person: e21_person
-  e74_group: e74_group
+  - e21_person
+  - e74_group
 range_bundles:
-  e41_appellation: e41_appellation
+  - e41_appellation
 editability:
   domain: true
   range: true

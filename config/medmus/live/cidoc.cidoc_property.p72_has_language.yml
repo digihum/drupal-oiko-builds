@@ -9,16 +9,16 @@ reverse_label: 'P72 is language of'
 friendly_label: Language
 reverse_friendly_label: 'Is language of'
 domain_bundles:
-  e21_person: e21_person
-  e35_title: e35_title
-  e41_appellation: e41_appellation
-  e53_place: e53_place
-  ec1_work: ec1_work
-  ec7_source: ec7_source
-  ec8_manuscript: ec8_manuscript
-  ec9_print: ec9_print
+  - e21_person
+  - e35_title
+  - e41_appellation
+  - e53_place
+  - ec1_work
+  - ec7_source
+  - ec8_manuscript
+  - ec9_print
 range_bundles:
-  e56_language: e56_language
+  - e56_language
 editability:
   domain: true
   range: true

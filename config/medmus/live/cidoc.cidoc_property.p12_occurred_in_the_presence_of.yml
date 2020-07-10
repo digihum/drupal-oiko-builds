@@ -11,34 +11,34 @@ reverse_label: 'P12 was present at'
 friendly_label: 'Occurred in the presence of'
 reverse_friendly_label: 'Was present at'
 domain_bundles:
-  0: e5_event
-  3: e7_activity
-  4: e12_production
-  5: e65_creation
-  6: e66_formation
-  7: e67_birth
-  9: e68_dissolution
-  10: e69_death
-  11: e6_destruction
-  15: e85_joining
-  16: e86_leaving
-  19: e9_move
+  - e5_event
+  - e7_activity
+  - e12_production
+  - e65_creation
+  - e66_formation
+  - e67_birth
+  - e68_dissolution
+  - e69_death
+  - e6_destruction
+  - e85_joining
+  - e86_leaving
+  - e9_move
 range_bundles:
-  3: e21_person
-  4: e74_group
-  15: e55_type
-  17: ec2_genre
-  20: e41_appellation
-  22: ec3_formal_feature
-  24: ec7_source
-  25: e56_language
-  26: e57_material
-  31: e35_title
-  32: e42_identifier
-  42: ec6_music
-  43: ec8_manuscript
-  44: ec9_print
-  52: ec1_work
+  - e21_person
+  - e74_group
+  - e55_type
+  - ec2_genre
+  - e41_appellation
+  - ec3_formal_feature
+  - ec7_source
+  - e56_language
+  - e57_material
+  - e35_title
+  - e42_identifier
+  - ec6_music
+  - ec8_manuscript
+  - ec9_print
+  - ec1_work
 editability:
   domain: true
   range: true

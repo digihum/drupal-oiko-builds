@@ -9,10 +9,10 @@ reverse_label: 'P45 is incorporated in'
 friendly_label: Material
 reverse_friendly_label: 'Is material of'
 domain_bundles:
-  9: e21_person
-  11: ec7_source
-  12: ec8_manuscript
-  13: ec9_print
+  - e21_person
+  - ec7_source
+  - ec8_manuscript
+  - ec9_print
 range_bundles:
   - e57_material
 editability:

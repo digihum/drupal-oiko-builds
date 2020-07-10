@@ -9,9 +9,9 @@ reverse_label: 'PC7 is music of'
 friendly_label: Music
 reverse_friendly_label: 'Is music of'
 domain_bundles:
-  ec1_work: ec1_work
+  - ec1_work
 range_bundles:
-  ec6_music: ec6_music
+  - ec6_music
 editability:
   domain: true
   range: true

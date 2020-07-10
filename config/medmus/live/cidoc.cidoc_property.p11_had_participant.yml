@@ -11,21 +11,21 @@ reverse_label: 'P11 participated in'
 friendly_label: 'Had participant'
 reverse_friendly_label: 'Participated in'
 domain_bundles:
-  0: e5_event
-  3: e7_activity
-  4: e12_production
-  5: e65_creation
-  6: e66_formation
-  7: e67_birth
-  9: e68_dissolution
-  10: e69_death
-  11: e6_destruction
-  15: e85_joining
-  16: e86_leaving
-  19: e9_move
+  - e5_event
+  - e7_activity
+  - e12_production
+  - e65_creation
+  - e66_formation
+  - e67_birth
+  - e68_dissolution
+  - e69_death
+  - e6_destruction
+  - e85_joining
+  - e86_leaving
+  - e9_move
 range_bundles:
-  1: e21_person
-  2: e74_group
+  - e21_person
+  - e74_group
 editability:
   domain: true
   range: true

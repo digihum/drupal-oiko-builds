@@ -45,6 +45,7 @@ third_party_settings:
     group_main_deets:
       children:
         - name
+        - internal_name
         - significance
         - group_main_details
       parent_name: group_data
@@ -193,7 +194,7 @@ third_party_settings:
         - group_descriptive_text
         - citation
       parent_name: group_main_deets
-      weight: 23
+      weight: 24
       format_type: tabs
       region: content
       format_settings:
@@ -440,6 +441,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
     region: content
+  internal_name:
+    type: string_textfield
+    weight: 22
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   name:
     type: string_textfield
     weight: 21
@@ -456,7 +465,7 @@ content:
     third_party_settings: {  }
   significance:
     type: options_select
-    weight: 22
+    weight: 23
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -498,4 +507,3 @@ hidden:
   'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
-  internal_name: true

@@ -21,7 +21,7 @@ timesubwidget:
   range:
     type: 'no'
 widget_description:
-  domain: "<p>A person or corporation (subject; e.g. an artist or group of artists) who is sponsored/favoured by a person or corporation (object).</p>\r\n<ul>\r\n<li>Peirol (E21) has patron Blacatz (E21)</li>\r\n</ul>\r\n"
+  domain: ''
   range: ''
 autocomplete_description:
   domain: ''

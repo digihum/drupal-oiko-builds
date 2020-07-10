@@ -9,9 +9,9 @@ reverse_label: pa6_has_murder_victim
 friendly_label: ''
 reverse_friendly_label: ''
 domain_bundles:
-  e21_person: e21_person
+  - e21_person
 range_bundles:
-  e21_person: e21_person
+  - e21_person
 editability:
   domain: true
   range: true

@@ -9,9 +9,9 @@ reverse_label: pa14_has_relative
 friendly_label: Relative
 reverse_friendly_label: ''
 domain_bundles:
-  e21_person: e21_person
+  - e21_person
 range_bundles:
-  e21_person: e21_person
+  - e21_person
 editability:
   domain: true
   range: false

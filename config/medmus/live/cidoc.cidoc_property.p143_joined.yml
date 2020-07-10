@@ -11,8 +11,8 @@ reverse_friendly_label: 'was joined by'
 domain_bundles:
   - e85_joining
 range_bundles:
-  1: e21_person
-  2: e74_group
+  - e21_person
+  - e74_group
 editability:
   domain: true
   range: true

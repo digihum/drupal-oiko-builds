@@ -9,9 +9,9 @@ reverse_label: 'PA17 is godfather of'
 friendly_label: Godfather
 reverse_friendly_label: 'Godfather of'
 domain_bundles:
-  e21_person: e21_person
+  - e21_person
 range_bundles:
-  e21_person: e21_person
+  - e21_person
 editability:
   domain: true
   range: true

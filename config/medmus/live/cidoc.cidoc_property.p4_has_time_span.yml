@@ -9,18 +9,18 @@ reverse_label: 'P4 is time-span of'
 friendly_label: 'Has time-span'
 reverse_friendly_label: 'Is time-span of'
 domain_bundles:
-  3: e5_event
-  6: e7_activity
-  7: e12_production
-  8: e65_creation
-  9: e66_formation
-  10: e67_birth
-  12: e68_dissolution
-  13: e69_death
-  14: e6_destruction
-  18: e85_joining
-  19: e86_leaving
-  22: e9_move
+  - e5_event
+  - e7_activity
+  - e12_production
+  - e65_creation
+  - e66_formation
+  - e67_birth
+  - e68_dissolution
+  - e69_death
+  - e6_destruction
+  - e85_joining
+  - e86_leaving
+  - e9_move
 range_bundles:
   - e52_time_span
 editability:

@@ -9,37 +9,37 @@ reverse_label: 'P48 is preferred identifier of'
 friendly_label: Identifier
 reverse_friendly_label: 'Is preferred identifier'
 domain_bundles:
-  e52_time_span: e52_time_span
-  e53_place: e53_place
-  e5_event: e5_event
-  e21_person: e21_person
-  e74_group: e74_group
-  e7_activity: e7_activity
-  e12_production: e12_production
-  e65_creation: e65_creation
-  e66_formation: e66_formation
-  e67_birth: e67_birth
-  e68_dissolution: e68_dissolution
-  e69_death: e69_death
-  e6_destruction: e6_destruction
-  e85_joining: e85_joining
-  e86_leaving: e86_leaving
-  e9_move: e9_move
-  e55_type: e55_type
-  ec2_genre: ec2_genre
-  e41_appellation: e41_appellation
-  ec3_formal_feature: ec3_formal_feature
-  ec7_source: ec7_source
-  e56_language: e56_language
-  e57_material: e57_material
-  e35_title: e35_title
-  e42_identifier: e42_identifier
-  ec6_music: ec6_music
-  ec8_manuscript: ec8_manuscript
-  ec9_print: ec9_print
-  ec1_work: ec1_work
+  - e52_time_span
+  - e53_place
+  - e5_event
+  - e21_person
+  - e74_group
+  - e7_activity
+  - e12_production
+  - e65_creation
+  - e66_formation
+  - e67_birth
+  - e68_dissolution
+  - e69_death
+  - e6_destruction
+  - e85_joining
+  - e86_leaving
+  - e9_move
+  - e55_type
+  - ec2_genre
+  - e41_appellation
+  - ec3_formal_feature
+  - ec7_source
+  - e56_language
+  - e57_material
+  - e35_title
+  - e42_identifier
+  - ec6_music
+  - ec8_manuscript
+  - ec9_print
+  - ec1_work
 range_bundles:
-  e42_identifier: e42_identifier
+  - e42_identifier
 editability:
   domain: true
   range: true

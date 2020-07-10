@@ -11,16 +11,16 @@ reverse_label: 'P14 performed'
 friendly_label: 'Carried out by'
 reverse_friendly_label: Performed
 domain_bundles:
-  0: e7_activity
-  4: e65_creation
-  5: e66_formation
-  6: e85_joining
-  7: e86_leaving
-  10: e9_move
-  14: e12_production
+  - e7_activity
+  - e65_creation
+  - e66_formation
+  - e85_joining
+  - e86_leaving
+  - e9_move
+  - e12_production
 range_bundles:
-  1: e21_person
-  2: e74_group
+  - e21_person
+  - e74_group
 editability:
   domain: true
   range: true

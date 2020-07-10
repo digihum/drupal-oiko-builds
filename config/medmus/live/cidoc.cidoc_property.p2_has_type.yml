@@ -11,35 +11,35 @@ reverse_label: 'P2 is type of'
 friendly_label: Type
 reverse_friendly_label: 'Is type of'
 domain_bundles:
-  2: e52_time_span
-  3: e53_place
-  10: e5_event
-  11: e21_person
-  12: e74_group
-  17: e7_activity
-  23: e12_production
-  24: e65_creation
-  25: e66_formation
-  26: e67_birth
-  28: e68_dissolution
-  29: e69_death
-  30: e6_destruction
-  34: e85_joining
-  35: e86_leaving
-  38: e9_move
-  45: e55_type
-  47: ec2_genre
-  50: e41_appellation
-  52: ec3_formal_feature
-  61: ec7_source
-  62: e56_language
-  63: e57_material
-  68: e35_title
-  69: e42_identifier
-  79: ec6_music
-  80: ec8_manuscript
-  81: ec9_print
-  89: ec1_work
+  - e52_time_span
+  - e53_place
+  - e5_event
+  - e21_person
+  - e74_group
+  - e7_activity
+  - e12_production
+  - e65_creation
+  - e66_formation
+  - e67_birth
+  - e68_dissolution
+  - e69_death
+  - e6_destruction
+  - e85_joining
+  - e86_leaving
+  - e9_move
+  - e55_type
+  - ec2_genre
+  - e41_appellation
+  - ec3_formal_feature
+  - ec7_source
+  - e56_language
+  - e57_material
+  - e35_title
+  - e42_identifier
+  - ec6_music
+  - ec8_manuscript
+  - ec9_print
+  - ec1_work
 range_bundles:
   - e55_type
   - e56_language

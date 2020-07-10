@@ -11,9 +11,9 @@ reverse_friendly_label: 'Was produced by'
 domain_bundles:
   - e12_production
 range_bundles:
-  5: ec7_source
-  6: ec8_manuscript
-  7: ec9_print
+  - ec7_source
+  - ec8_manuscript
+  - ec9_print
 editability:
   domain: true
   range: true
