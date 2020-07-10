@@ -389,10 +389,13 @@ class CidocProperty extends ConfigEntityBundleBase implements RevisionableEntity
     }
 
     if (!empty($this->domain_bundles)) {
+      natsort($this->domain_bundles);
       $this->domain_bundles = array_values($this->domain_bundles);
     }
     if (!empty($this->range_bundles)) {
+      natsort($this->range_bundles);
       $this->range_bundles = array_values($this->range_bundles);
+
     }
   }
 
