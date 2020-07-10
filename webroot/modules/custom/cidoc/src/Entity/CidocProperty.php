@@ -353,14 +353,14 @@ class CidocProperty extends ConfigEntityBundleBase implements RevisionableEntity
     $bundles = array();
 
     if ((!$direction || $direction == self::DOMAIN_ENDPOINT) && is_array($this->domain_bundles)) {
-      $bundles += $this->domain_bundles;
+      $bundles = array_merge($bundles, $this->domain_bundles);
     }
 
     if ((!$direction || $direction == self::RANGE_ENDPOINT) && is_array($this->range_bundles)) {
-      $bundles += $this->range_bundles;
+      $bundles = array_merge($bundles, $this->range_bundles);
     }
 
-    return $bundles;
+    return array_unique($bundles);
   }
 
   /**
@@ -386,6 +386,13 @@ class CidocProperty extends ConfigEntityBundleBase implements RevisionableEntity
     // If no reverse label is specified, fill it with the label.
     if (empty($this->reverse_label)) {
       $this->reverse_label = $this->label;
+    }
+
+    if (!empty($this->domain_bundles)) {
+      $this->domain_bundles = array_values($this->domain_bundles);
+    }
+    if (!empty($this->range_bundles)) {
+      $this->range_bundles = array_values($this->range_bundles);
     }
   }
 
