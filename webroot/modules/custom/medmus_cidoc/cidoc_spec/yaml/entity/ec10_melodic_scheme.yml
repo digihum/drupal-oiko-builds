@@ -1,0 +1,11 @@
+
+---
+label: EC10 Melodic Scheme
+superclasses:
+  - e62_string
+properties:
+
+description: |
+  This class contains the melodic scheme in a stanza of a EC6 Music.
+examples: |
+  * A B A B C C
