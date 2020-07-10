@@ -1,0 +1,39 @@
+uuid: 2a3a9ce0-a86d-4afc-9559-27fb14a79395
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa12_has_adoptive_child
+    - field.field.cidoc_reference.pa12_has_adoptive_child.domain
+    - field.field.cidoc_reference.pa12_has_adoptive_child.range
+id: cidoc_reference.pa12_has_adoptive_child.default
+targetEntityType: cidoc_reference
+bundle: pa12_has_adoptive_child
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    region: content
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  search_api_excerpt: true
+  user_id: true

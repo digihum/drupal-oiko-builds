@@ -8,7 +8,7 @@ id: p96_by_mother
 label: 'P96 by mother'
 bidirectional: false
 reverse_label: 'P96 gave birth'
-friendly_label: 'By mother'
+friendly_label: Mother
 reverse_friendly_label: 'Gave birth'
 domain_bundles:
   - e67_birth
@@ -18,10 +18,13 @@ editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
 widget_description:
-  domain: "\n\n"
+  domain: "\r\n"
+  range: ''
 autocomplete_description:
   domain: ''
   range: ''

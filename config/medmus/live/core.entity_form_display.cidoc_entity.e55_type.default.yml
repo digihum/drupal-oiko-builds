@@ -33,7 +33,7 @@ third_party_settings:
         - group_main_deets
         - group_oiko_world_settings
       parent_name: ''
-      weight: 3
+      weight: 1
       label: 'Main data entry'
       format_type: tabs
       format_settings:
@@ -382,7 +382,9 @@ content:
       match_limit: 10
     third_party_settings: {  }
 hidden:
+  'cidoc_properties:domain:p102_has_title': true
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
+  'cidoc_properties:range:p67_refers_to': true

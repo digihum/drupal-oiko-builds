@@ -1,0 +1,43 @@
+uuid: 3a9bbdd3-031f-4841-a260-fec6c0427f5c
+langcode: en
+status: true
+dependencies: {  }
+id: p102_has_title
+label: 'P102 has title'
+bidirectional: false
+reverse_label: 'P102 is title of'
+friendly_label: Title
+reverse_friendly_label: 'Is title of'
+domain_bundles:
+  e55_type: e55_type
+  ec2_genre: ec2_genre
+  ec7_source: ec7_source
+  e56_language: e56_language
+  e57_material: e57_material
+  e41_appellation: e41_appellation
+  ec3_formal_feature: ec3_formal_feature
+  ec8_manuscript: ec8_manuscript
+  ec9_print: ec9_print
+  ec6_music: ec6_music
+  e35_title: e35_title
+  e42_identifier: e42_identifier
+  ec1_work: ec1_work
+range_bundles:
+  e35_title: e35_title
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

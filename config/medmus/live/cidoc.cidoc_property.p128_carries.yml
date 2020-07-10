@@ -6,26 +6,33 @@ id: p128_carries
 label: 'P128 carries'
 bidirectional: false
 reverse_label: 'P128 is carried by'
-friendly_label: null
-reverse_friendly_label: null
+friendly_label: Contains
+reverse_friendly_label: Source
 domain_bundles:
-  5: ec7_source
-  6: ec9_print
-  7: ec8_manuscript
+  ec7_source: ec7_source
+  ec8_manuscript: ec8_manuscript
+  ec9_print: ec9_print
 range_bundles:
-  2: e41_appellation
-  3: ec3_formal_feature
-  8: ec6_music
-  9: e35_title
-  14: e42_identifier
-  20: ec1_work
+  e41_appellation: e41_appellation
+  ec3_formal_feature: ec3_formal_feature
+  e35_title: e35_title
+  e42_identifier: e42_identifier
+  ec6_music: ec6_music
+  ec1_work: ec1_work
 editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
 widget_description:
-  domain: "\n\n"
-autocomplete_description: {  }
-child_events: {  }
+  domain: '<p>Sources <i>carry</i> one or more literary works. List a <i>EC1 Work</i> carried in this Source.</p>'
+  range: '<p>Primary sources (Mss. or Prints) carriers of the work or the information.</p>'
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

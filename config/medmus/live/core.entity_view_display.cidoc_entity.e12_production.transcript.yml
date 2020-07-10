@@ -13,6 +13,16 @@ targetEntityType: cidoc_entity
 bundle: e12_production
 mode: transcript
 content:
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p67_refers_to':
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   cidoc_properties_transcript:
     weight: 3
     region: content
@@ -40,12 +50,12 @@ content:
     settings: {  }
     third_party_settings: {  }
   name:
-    label: hidden
+    label: above
     type: string
     weight: 0
     region: content
     settings:
-      link_to_entity: false
+      link_to_entity: true
     third_party_settings: {  }
   significance:
     type: entity_reference_entity_view

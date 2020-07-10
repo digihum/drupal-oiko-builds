@@ -12,10 +12,12 @@ friendly_label: 'Carried out by'
 reverse_friendly_label: Performed
 domain_bundles:
   0: e7_activity
-  4: e9_move
-  6: e65_creation
-  9: e66_formation
-  21: e12_production
+  4: e65_creation
+  5: e66_formation
+  6: e85_joining
+  7: e86_leaving
+  10: e9_move
+  14: e12_production
 range_bundles:
   1: e21_person
   2: e74_group
@@ -23,8 +25,10 @@ editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
 widget_description:
   domain: "\n\n"
 autocomplete_description:

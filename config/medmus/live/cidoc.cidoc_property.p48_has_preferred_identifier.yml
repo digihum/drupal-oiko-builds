@@ -6,45 +6,54 @@ id: p48_has_preferred_identifier
 label: 'P48 has preferred identifier'
 bidirectional: false
 reverse_label: 'P48 is preferred identifier of'
-friendly_label: null
-reverse_friendly_label: null
+friendly_label: Identifier
+reverse_friendly_label: 'Is preferred identifier'
 domain_bundles:
-  3: e52_time_span
-  4: e53_place
-  10: e5_event
-  13: e21_person
-  14: e74_group
-  17: e7_activity
-  23: e68_dissolution
-  24: e6_destruction
-  26: e69_death
-  27: e67_birth
-  28: e65_creation
-  29: e12_production
-  30: e66_formation
-  34: e9_move
-  46: e55_type
-  47: ec2_genre
-  51: e41_appellation
-  52: ec3_formal_feature
-  61: ec7_source
-  64: e56_language
-  65: e57_material
-  72: ec6_music
-  73: e35_title
-  78: e42_identifier
-  80: ec9_print
-  81: ec8_manuscript
-  86: ec1_work
+  e52_time_span: e52_time_span
+  e53_place: e53_place
+  e5_event: e5_event
+  e21_person: e21_person
+  e74_group: e74_group
+  e7_activity: e7_activity
+  e12_production: e12_production
+  e65_creation: e65_creation
+  e66_formation: e66_formation
+  e67_birth: e67_birth
+  e68_dissolution: e68_dissolution
+  e69_death: e69_death
+  e6_destruction: e6_destruction
+  e85_joining: e85_joining
+  e86_leaving: e86_leaving
+  e9_move: e9_move
+  e55_type: e55_type
+  ec2_genre: ec2_genre
+  e41_appellation: e41_appellation
+  ec3_formal_feature: ec3_formal_feature
+  ec7_source: ec7_source
+  e56_language: e56_language
+  e57_material: e57_material
+  e35_title: e35_title
+  e42_identifier: e42_identifier
+  ec6_music: ec6_music
+  ec8_manuscript: ec8_manuscript
+  ec9_print: ec9_print
+  ec1_work: ec1_work
 range_bundles:
-  - e42_identifier
+  e42_identifier: e42_identifier
 editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
 widget_description:
-  domain: "\n\n"
-autocomplete_description: {  }
-child_events: {  }
+  domain: ''
+  range: 'Specify Identifier. (Ex. BdT 355.1;   BnVent;   Paris BnF fr. 22540;  Frank 544:1)'
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

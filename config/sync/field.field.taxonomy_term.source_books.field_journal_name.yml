@@ -1,0 +1,19 @@
+uuid: 44c19415-90ae-4960-b287-b7558049c2ad
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_journal_name
+    - taxonomy.vocabulary.source_books
+id: taxonomy_term.source_books.field_journal_name
+field_name: field_journal_name
+entity_type: taxonomy_term
+bundle: source_books
+label: 'Journal Name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

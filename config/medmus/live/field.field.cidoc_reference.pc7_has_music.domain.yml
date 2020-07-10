@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_entity_bundle.e65_creation
+    - cidoc.cidoc_entity_bundle.ec1_work
     - cidoc.cidoc_property.pc7_has_music
     - field.storage.cidoc_reference.domain
 id: cidoc_reference.pc7_has_music.domain
@@ -24,6 +24,6 @@ settings:
       field: name
       direction: ASC
     target_bundles:
-      e65_creation: e65_creation
-    auto_create_bundle: e65_creation
+      ec1_work: ec1_work
+    auto_create_bundle: ec1_work
 field_type: entity_reference

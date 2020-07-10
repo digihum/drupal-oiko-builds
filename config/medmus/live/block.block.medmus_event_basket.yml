@@ -9,7 +9,7 @@ dependencies:
 id: medmus_event_basket
 theme: medmus
 region: user_header
-weight: -9
+weight: -11
 provider: null
 plugin: event_basket
 settings:

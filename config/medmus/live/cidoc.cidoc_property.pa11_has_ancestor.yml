@@ -1,0 +1,31 @@
+uuid: 7a89b35d-00c2-49a0-bf79-9d63016bf1ef
+langcode: en
+status: true
+dependencies: {  }
+id: pa11_has_ancestor
+label: 'PA11 has ancestor'
+bidirectional: false
+reverse_label: 'PA11 has descendant'
+friendly_label: Ancestor
+reverse_friendly_label: Descendant
+domain_bundles:
+  e21_person: e21_person
+range_bundles:
+  e21_person: e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

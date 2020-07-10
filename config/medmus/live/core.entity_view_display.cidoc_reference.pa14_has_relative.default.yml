@@ -1,0 +1,39 @@
+uuid: 236bdfad-0ca5-4045-9307-3c050d55a4dc
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa14_has_relative
+    - field.field.cidoc_reference.pa14_has_relative.domain
+    - field.field.cidoc_reference.pa14_has_relative.range
+id: cidoc_reference.pa14_has_relative.default
+targetEntityType: cidoc_reference
+bundle: pa14_has_relative
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    region: content
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  search_api_excerpt: true
+  user_id: true

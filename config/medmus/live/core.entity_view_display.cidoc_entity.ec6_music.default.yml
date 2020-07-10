@@ -1,0 +1,105 @@
+uuid: 09f19725-9817-440e-9825-2d5fc9428f50
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec6_music
+id: cidoc_entity.ec6_music.default
+targetEntityType: cidoc_entity
+bundle: ec6_music
+mode: default
+content:
+  'cidoc_properties:domain:p102_has_title':
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p1_is_identified_by':
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p2_has_type':
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p67_refers_to':
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc5_has_expression':
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p128_carries':
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p12_occurred_in_the_presence_of':
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p67_refers_to':
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p94_has_created':
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pc5_has_expression':
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pc7_has_music':
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  internal_name:
+    label: inline
+    type: string
+    weight: 1
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  timeline_link:
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  cidoc_admin_links: true
+  cidoc_properties: true
+  cidoc_properties_transcript: true
+  cidoc_temporal_summary: true
+  citation: true
+  content: true
+  map_link: true
+  search_api_excerpt: true
+  significance: true
+  timeline_logo: true
+  timeline_preselect_option: true
+  user_id: true

@@ -8,6 +8,7 @@
 use Drupal\cidoc\Entity\CidocProperty;
 use Drupal\cidoc\Entity\CidocPropertyInterface;
 use Drupal\cidoc\Entity\CidocReference;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Field\BaseFieldDefinition;
 
@@ -386,6 +387,9 @@ function cidoc_update_8403() {
  * Update the config format of subwidgets.
  */
 function cidoc_update_8404() {
+  foreach (Cache::getBins() as $bin) {
+    $bin->deleteAll();
+  }
   $properties = \Drupal::entityQuery('cidoc_property')
     ->execute();
   foreach ($properties as $property) {

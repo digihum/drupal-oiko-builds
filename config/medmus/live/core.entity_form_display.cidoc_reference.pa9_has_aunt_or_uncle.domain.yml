@@ -1,0 +1,42 @@
+uuid: 4454a61d-1a46-4e3e-a522-cfb93cbf4aa9
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa9_has_aunt_or_uncle
+    - core.entity_form_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pa9_has_aunt_or_uncle.domain
+    - field.field.cidoc_reference.pa9_has_aunt_or_uncle.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+id: cidoc_reference.pa9_has_aunt_or_uncle.domain
+targetEntityType: cidoc_reference
+bundle: pa9_has_aunt_or_uncle
+mode: domain
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    region: content
+    third_party_settings: {  }
+  range:
+    type: squid_entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: '60'
+      placeholder: 'Start typing to find a match or create new entity...'
+      match_limit: 10
+    weight: 26
+    third_party_settings: {  }
+    region: content
+hidden:
+  domain: true
+  langcode: true
+  user_id: true

@@ -1,0 +1,29 @@
+uuid: 4ba17440-adde-4f8b-bddf-f071af5a106a
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_property.pa14_has_relative
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.pa14_has_relative.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: pa14_has_relative
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e21_person: e21_person
+    auto_create_bundle: e21_person
+field_type: entity_reference

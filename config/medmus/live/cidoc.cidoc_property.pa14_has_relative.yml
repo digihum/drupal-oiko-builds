@@ -1,0 +1,31 @@
+uuid: 230b21cd-6132-4ebe-8a91-f48b5e19a596
+langcode: en
+status: true
+dependencies: {  }
+id: pa14_has_relative
+label: 'PA14 has relative'
+bidirectional: true
+reverse_label: pa14_has_relative
+friendly_label: Relative
+reverse_friendly_label: ''
+domain_bundles:
+  e21_person: e21_person
+range_bundles:
+  e21_person: e21_person
+editability:
+  domain: true
+  range: false
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

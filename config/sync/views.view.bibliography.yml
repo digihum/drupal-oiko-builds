@@ -1,6 +1,6 @@
 uuid: b54e0dc4-50a9-4697-b1b1-16ebd02d65dc
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - field.storage.taxonomy_term.field_source_type
@@ -12,7 +12,7 @@ dependencies:
     - taxonomy
     - user
 id: bibliography
-label: Bibliography
+label: 'Bibliography (old)'
 module: views
 description: ''
 tag: ''
@@ -121,7 +121,7 @@ display:
           click_sort_column: value
           type: string
           settings:
-            link_to_entity: false
+            link_to_entity: true
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -319,6 +319,7 @@ display:
         title: Bibliography
         menu_name: main
         weight: -49
+        enabled: false
       fields: {  }
       sorts: {  }
       filters:

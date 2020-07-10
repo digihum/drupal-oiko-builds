@@ -15,7 +15,7 @@ entity_type: cidoc_entity
 bundle: e52_time_span
 label: Date
 description: "<p>Start by entering a human readable string, like '200' or '3rd century'.<br/>We will try and generate an EDTF format date for you as you type. Examples of valid human readable strings can be viewed <a href=\"http://edtfy.barbotte.net/\">on a demo page.</a></p>\r\n\r\n<p>EDTF dates can include characters to describe uncertainty (?) and approximate (~) elements in the date. You may also use X to mean an unspecified element in your date, for example: 2XX means, some unspecified year in the range 200-299.</p>\r\n"
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''

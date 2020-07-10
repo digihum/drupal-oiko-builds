@@ -7,15 +7,43 @@ dependencies:
     - core.entity_view_mode.cidoc_entity.preview
   module:
     - entity_reference_revisions
+    - field_group
     - text
+third_party_settings:
+  field_group:
+    group_e57_meterial:
+      children:
+        - name
+        - internal_name
+        - significance
+        - content
+        - cidoc_properties
+        - citation
+        - user_id
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: 'style="border-bottom: 2px solid #657986;"'
+        effect: none
+        speed: fast
+      label: 'E57 Material'
 id: cidoc_entity.e57_material.preview
 targetEntityType: cidoc_entity
 bundle: e57_material
 mode: preview
 content:
   cidoc_properties:
+    weight: 5
     region: content
-    weight: 4
     settings: {  }
     third_party_settings: {  }
   citation:
@@ -25,14 +53,14 @@ content:
     settings:
       view_mode: default
       link: ''
-    weight: 5
+    weight: 6
     third_party_settings: {  }
   content:
     region: content
     type: text_default
     label: visually_hidden
     settings: {  }
-    weight: 3
+    weight: 4
     third_party_settings: {  }
   internal_name:
     region: content
@@ -40,7 +68,7 @@ content:
     label: above
     settings:
       link_to_entity: false
-    weight: 1
+    weight: 2
     third_party_settings: {  }
   name:
     region: content
@@ -48,7 +76,7 @@ content:
     label: hidden
     settings:
       link_to_entity: false
-    weight: 0
+    weight: 1
     third_party_settings: {  }
   significance:
     region: content
@@ -56,10 +84,19 @@ content:
     label: above
     settings:
       link: true
-    weight: 2
+    weight: 3
+    third_party_settings: {  }
+  user_id:
+    type: entity_reference_label
+    weight: 7
+    region: content
+    label: above
+    settings:
+      link: true
     third_party_settings: {  }
 hidden:
   cidoc_admin_links: true
+  'cidoc_properties:domain:p102_has_title': true
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:domain:p48_has_preferred_identifier': true
@@ -75,6 +112,7 @@ hidden:
   'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p2_has_type': true
   'cidoc_properties:range:p45_consists_of': true
+  'cidoc_properties:range:p67_refers_to': true
   'cidoc_properties:range:p94_has_created': true
   'cidoc_properties:range:pc2_is_contrafactum_of': true
   'cidoc_properties:range:pc5_has_expression': true
@@ -85,4 +123,3 @@ hidden:
   timeline_link: true
   timeline_logo: true
   timeline_preselect_option: true
-  user_id: true

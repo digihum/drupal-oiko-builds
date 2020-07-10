@@ -17,7 +17,7 @@ third_party_settings:
       children:
         - content
       parent_name: group_main_deets
-      weight: 11
+      weight: 8
       label: 'Descriptive text'
       format_type: fieldset
       format_settings:
@@ -47,11 +47,8 @@ third_party_settings:
         - name
         - internal_name
         - citation
-        - 'cidoc_properties:range:p1_is_identified_by'
-        - 'cidoc_properties:domain:p48_has_preferred_identifier'
+        - 'cidoc_properties:range:p102_has_title'
         - 'cidoc_properties:domain:p72_has_language'
-        - 'cidoc_properties:range:p94_has_created'
-        - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
         - 'cidoc_properties:domain:p139_has_alternative_form'
         - 'cidoc_properties:range:p128_carries'
         - group_descriptive_text
@@ -125,7 +122,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p139_has_alternative_form':
-    weight: 9
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -164,18 +161,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 5
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p4_has_time_span':
     weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p72_has_language':
-    weight: 6
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -224,18 +216,18 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:range:p102_has_title':
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p10_falls_within':
     weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p128_carries':
-    weight: 10
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:range:p12_occurred_in_the_presence_of':
-    weight: 8
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -254,11 +246,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p1_is_identified_by':
-    weight: 4
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:range:p2_has_type':
     weight: 5
     region: content
@@ -271,11 +258,6 @@ content:
     third_party_settings: {  }
   'cidoc_properties:range:p72_has_language':
     weight: 4
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:range:p94_has_created':
-    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -395,8 +377,16 @@ content:
       match_limit: 10
     third_party_settings: {  }
 hidden:
+  'cidoc_properties:domain:p102_has_title': true
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p48_has_preferred_identifier': true
+  'cidoc_properties:domain:p67_refers_to': true
+  'cidoc_properties:range:p12_occurred_in_the_presence_of': true
+  'cidoc_properties:range:p131_is_identified_by': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
   'cidoc_properties:range:p139_has_alternative_form': true
+  'cidoc_properties:range:p1_is_identified_by': true
+  'cidoc_properties:range:p67_refers_to': true
+  'cidoc_properties:range:p94_has_created': true

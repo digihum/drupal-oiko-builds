@@ -1,0 +1,19 @@
+uuid: 8997c671-e7af-4758-8de6-8a6feecee2ae
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_issue_fascicule
+    - taxonomy.vocabulary.source_books
+id: taxonomy_term.source_books.field_issue_fascicule
+field_name: field_issue_fascicule
+entity_type: taxonomy_term
+bundle: source_books
+label: 'Issue / Fascicule'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

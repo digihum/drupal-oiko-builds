@@ -1,0 +1,29 @@
+uuid: ebc8919c-6970-4320-93fa-92bcc2b29515
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p1_is_identified_by
+    - field.storage.cidoc_reference.field_language
+    - taxonomy.vocabulary.language
+id: cidoc_reference.p1_is_identified_by.field_language
+field_name: field_language
+entity_type: cidoc_reference
+bundle: p1_is_identified_by
+label: Language
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      language: language
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

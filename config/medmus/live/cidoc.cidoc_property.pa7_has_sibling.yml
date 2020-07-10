@@ -1,0 +1,31 @@
+uuid: c7b0fb56-cb3a-4f7a-bc79-dcb58b8ae359
+langcode: en
+status: true
+dependencies: {  }
+id: pa7_has_sibling
+label: 'PA7 has sibling'
+bidirectional: true
+reverse_label: pa7_has_sibling
+friendly_label: Sibling
+reverse_friendly_label: ''
+domain_bundles:
+  e21_person: e21_person
+range_bundles:
+  e21_person: e21_person
+editability:
+  domain: true
+  range: false
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

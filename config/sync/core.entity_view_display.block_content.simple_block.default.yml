@@ -1,0 +1,23 @@
+uuid: dd152be0-1e24-4cb2-a49d-ed1f9418988e
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.simple_block
+    - field.field.block_content.simple_block.body
+  module:
+    - text
+id: block_content.simple_block.default
+targetEntityType: block_content
+bundle: simple_block
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  search_api_excerpt: true

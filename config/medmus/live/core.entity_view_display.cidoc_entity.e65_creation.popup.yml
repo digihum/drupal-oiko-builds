@@ -1,0 +1,126 @@
+uuid: 9d84c7d9-29d6-4e93-ac77-934801fbd078
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e65_creation
+    - core.entity_view_mode.cidoc_entity.popup
+  module:
+    - text
+id: cidoc_entity.e65_creation.popup
+targetEntityType: cidoc_entity
+bundle: e65_creation
+mode: popup
+content:
+  cidoc_admin_links:
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p11_had_participant':
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p12_occurred_in_the_presence_of':
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p14_carried_out_by':
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p2_has_type':
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p4_has_time_span':
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p7_took_place_at':
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p94_has_created':
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc6_has_alternative_attribution':
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc7_has_music':
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p67_refers_to':
+    weight: 15
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  cidoc_temporal_summary:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  content:
+    region: content
+    label: hidden
+    type: text_default
+    weight: 16
+    settings: {  }
+    third_party_settings: {  }
+  duplicate_of_p7_took_place_at_entity_view_3:
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    region: content
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    weight: 0
+    third_party_settings: {  }
+  p7_took_place_at_map_entity_view_1:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  significance:
+    region: content
+    type: entity_reference_entity_view
+    label: visually_hidden
+    settings:
+      view_mode: primary_historical_significance_pill
+      link: false
+    weight: 2
+    third_party_settings: {  }
+hidden:
+  cidoc_properties: true
+  'cidoc_properties:domain:p1_is_identified_by': true
+  cidoc_properties_transcript: true
+  citation: true
+  duplicate_of_p7_took_place_at_entity_view_1: true
+  internal_name: true
+  map_link: true
+  search_api_excerpt: true
+  timeline_link: true
+  timeline_logo: true
+  timeline_preselect_option: true
+  user_id: true

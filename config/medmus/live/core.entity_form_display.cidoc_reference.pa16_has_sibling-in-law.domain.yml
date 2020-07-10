@@ -1,0 +1,42 @@
+uuid: 2ea9468a-e04e-40cc-b763-25f887bb9564
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa16_has_sibling-in-law
+    - core.entity_form_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pa16_has_sibling-in-law.domain
+    - field.field.cidoc_reference.pa16_has_sibling-in-law.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+id: cidoc_reference.pa16_has_sibling-in-law.domain
+targetEntityType: cidoc_reference
+bundle: pa16_has_sibling-in-law
+mode: domain
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    region: content
+    third_party_settings: {  }
+  range:
+    type: squid_entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: '60'
+      placeholder: 'Start typing to find a match or create new entity...'
+      match_limit: 10
+    weight: 26
+    third_party_settings: {  }
+    region: content
+hidden:
+  domain: true
+  langcode: true
+  user_id: true

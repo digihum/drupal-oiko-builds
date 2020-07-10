@@ -16,7 +16,7 @@ third_party_settings:
     group_descriptive_text:
       children:
         - content
-      parent_name: group_main_deets
+      parent_name: group_data
       weight: 8
       label: 'Descriptive text'
       format_type: fieldset
@@ -31,9 +31,11 @@ third_party_settings:
     group_data:
       children:
         - group_main_deets
+        - group_descriptive_text
         - group_oiko_world_settings
+        - group_auxiliary_details
       parent_name: ''
-      weight: 3
+      weight: 1
       label: 'Main data entry'
       format_type: tabs
       format_settings:
@@ -46,14 +48,10 @@ third_party_settings:
       children:
         - name
         - internal_name
-        - citation
         - 'cidoc_properties:range:p128_carries'
-        - 'cidoc_properties:range:p94_has_created'
-        - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
-        - 'cidoc_properties:domain:p48_has_preferred_identifier'
-        - group_descriptive_text
+        - citation
       parent_name: group_data
-      weight: 3
+      weight: 6
       label: 'Main details'
       format_type: tab
       format_settings:
@@ -73,7 +71,7 @@ third_party_settings:
         - timeline_logo
         - path
       parent_name: group_data
-      weight: 5
+      weight: 9
       format_type: tab
       format_settings:
         id: ''
@@ -84,6 +82,25 @@ third_party_settings:
         fieldset_label_html: true
       label: 'Connecting Medieval Music settings'
       region: content
+    group_auxiliary_details:
+      children:
+        - 'cidoc_properties:domain:p48_has_preferred_identifier'
+        - 'cidoc_properties:domain:p67_refers_to'
+        - 'cidoc_properties:domain:p102_has_title'
+        - 'cidoc_properties:range:p94_has_created'
+        - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
+      parent_name: group_data
+      weight: 7
+      format_type: tab
+      region: hidden
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: 'Auxiliary details'
 _core:
   default_config_hash: wy6wGXCXt2AqnVdVxorIQVb3dn0lnsNhSljZtN-XFv0
 id: cidoc_entity.ec6_music.default
@@ -91,6 +108,11 @@ targetEntityType: cidoc_entity
 bundle: ec6_music
 mode: default
 content:
+  'cidoc_properties:domain:p102_has_title':
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
     weight: 8
     region: content
@@ -157,12 +179,17 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 7
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p4_has_time_span':
     weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p67_refers_to':
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -222,12 +249,12 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p128_carries':
-    weight: 4
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p12_occurred_in_the_presence_of':
-    weight: 6
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -247,7 +274,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p94_has_created':
-    weight: 5
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -271,6 +298,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:range:pc7_has_music':
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:pc8_has_syllabic_scheme':
     weight: 4
     region: content
@@ -283,7 +315,7 @@ content:
     third_party_settings: {  }
   citation:
     type: entity_reference_paragraphs
-    weight: 3
+    weight: 4
     settings:
       title: Citation
       title_plural: Citations
@@ -324,7 +356,7 @@ content:
     region: content
   path:
     type: path
-    weight: 17
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -371,3 +403,4 @@ hidden:
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
+  'cidoc_properties:range:p67_refers_to': true

@@ -1,0 +1,58 @@
+uuid: 38002d0b-08dd-4c7b-a9b8-b25ee2a57536
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p67_refers_to
+    - field.field.cidoc_reference.p67_refers_to.domain
+    - field.field.cidoc_reference.p67_refers_to.field_don_t_show_in_map
+    - field.field.cidoc_reference.p67_refers_to.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+id: cidoc_reference.p67_refers_to.default
+targetEntityType: cidoc_reference
+bundle: p67_refers_to
+mode: default
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    region: content
+    third_party_settings: {  }
+  domain:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 26
+    settings:
+      match_limit: 10
+    third_party_settings: {  }
+    region: content
+  field_don_t_show_in_map:
+    weight: 28
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  langcode:
+    type: language_select
+    weight: 10
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  range:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 27
+    settings:
+      match_limit: 10
+    third_party_settings: {  }
+    region: content
+hidden:
+  user_id: true

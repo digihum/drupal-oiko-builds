@@ -19,7 +19,7 @@ third_party_settings:
       parent_name: group_main_deets
       weight: 10
       label: 'Descriptive text'
-      format_type: fieldset
+      format_type: tab
       format_settings:
         description: ''
         formatter: open
@@ -33,7 +33,7 @@ third_party_settings:
         - group_main_deets
         - group_oiko_world_settings
       parent_name: ''
-      weight: 3
+      weight: 1
       label: 'Main data entry'
       format_type: tabs
       format_settings:
@@ -47,12 +47,11 @@ third_party_settings:
         - name
         - internal_name
         - citation
-        - 'cidoc_properties:domain:p128_carries'
-        - 'cidoc_properties:domain:p45_consists_of'
-        - 'cidoc_properties:range:p108_has_produced'
-        - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
-        - 'cidoc_properties:range:p13_destroyed'
         - 'cidoc_properties:domain:p48_has_preferred_identifier'
+        - 'cidoc_properties:domain:p45_consists_of'
+        - group_dates
+        - group_activities
+        - group_works_contained
         - group_descriptive_text
       parent_name: group_data
       weight: 3
@@ -86,6 +85,52 @@ third_party_settings:
         fieldset_label_html: true
       label: 'Connecting Medieval Music settings'
       region: content
+    group_dates:
+      children:
+        - 'cidoc_properties:range:p108_has_produced'
+        - 'cidoc_properties:range:p13_destroyed'
+      parent_name: group_main_deets
+      weight: 6
+      format_type: tab
+      region: content
+      format_settings:
+        description: 'Type in the DATES of production and, if applicabile, destruction. An event "Production" and "Destruction" will be automatically generated.'
+        formatter: closed
+        required_fields: true
+        id: ''
+        classes: ''
+        fieldset_label_html: false
+      label: Dates
+    group_activities:
+      children:
+        - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
+      parent_name: group_main_deets
+      weight: 7
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: Activities
+    group_works_contained:
+      children:
+        - 'cidoc_properties:domain:p128_carries'
+      parent_name: group_main_deets
+      weight: 8
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: 'Works contained'
 _core:
   default_config_hash: wy6wGXCXt2AqnVdVxorIQVb3dn0lnsNhSljZtN-XFv0
 id: cidoc_entity.ec9_print.default
@@ -104,7 +149,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p128_carries':
-    weight: 4
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -169,17 +214,12 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 9
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p4_has_time_span':
     weight: 4
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:domain:p72_has_language':
-    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -244,7 +284,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p12_occurred_in_the_presence_of':
-    weight: 7
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -254,7 +294,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p13_destroyed':
-    weight: 8
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -389,7 +429,10 @@ content:
       match_limit: 10
     third_party_settings: {  }
 hidden:
+  'cidoc_properties:domain:p102_has_title': true
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p72_has_language': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
+  'cidoc_properties:range:p67_refers_to': true

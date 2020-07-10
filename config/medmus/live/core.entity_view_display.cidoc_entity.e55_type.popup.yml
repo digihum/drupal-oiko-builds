@@ -1,0 +1,101 @@
+uuid: 11fc11f9-ba4c-406c-8ba4-4160e85be45e
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e55_type
+    - core.entity_view_mode.cidoc_entity.popup
+  module:
+    - text
+id: cidoc_entity.e55_type.popup
+targetEntityType: cidoc_entity
+bundle: e55_type
+mode: popup
+content:
+  cidoc_admin_links:
+    region: content
+    type: text_default
+    settings: {  }
+    weight: 3
+    third_party_settings: {  }
+  'cidoc_properties:domain:p102_has_title':
+    region: content
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p1_is_identified_by':
+    region: content
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p2_has_type':
+    region: content
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    region: content
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p12_occurred_in_the_presence_of':
+    region: content
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p2_has_type':
+    region: content
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p67_refers_to':
+    region: content
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p94_has_created':
+    region: content
+    weight: 12
+    settings: {  }
+    third_party_settings: {  }
+  cidoc_temporal_summary:
+    region: content
+    type: string
+    settings: {  }
+    weight: 1
+    third_party_settings: {  }
+  content:
+    region: content
+    label: hidden
+    type: text_default
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    region: content
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    weight: 0
+    third_party_settings: {  }
+  significance:
+    region: content
+    type: entity_reference_entity_view
+    label: visually_hidden
+    settings:
+      view_mode: primary_historical_significance_pill
+      link: false
+    weight: 2
+    third_party_settings: {  }
+hidden:
+  cidoc_properties: true
+  cidoc_properties_transcript: true
+  citation: true
+  internal_name: true
+  map_link: true
+  search_api_excerpt: true
+  timeline_link: true
+  timeline_logo: true
+  timeline_preselect_option: true
+  user_id: true

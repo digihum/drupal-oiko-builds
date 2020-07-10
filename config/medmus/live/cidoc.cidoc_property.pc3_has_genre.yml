@@ -6,8 +6,8 @@ id: pc3_has_genre
 label: 'PC3 has genre'
 bidirectional: false
 reverse_label: 'PC3 is genre of'
-friendly_label: ''
-reverse_friendly_label: ''
+friendly_label: Genre
+reverse_friendly_label: 'Genre of'
 domain_bundles:
   - ec1_work
 range_bundles:
@@ -16,10 +16,13 @@ editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
 widget_description:
-  domain: "<p>Defines the literary genre of a literary work.</p>\n<ul>\n<li>BdT 366,1 has genre (is genre of) Love song</li>\n<li>The Chanson de Roland has genre (is genre of) Epic poetry</li>\n</ul>\n"
+  domain: "<p>Defines the literary genre of a literary work.</p>\r\n<ul>\r\n<li>BdT 366,1 has genre (is genre of) Love song</li>\r\n<li>The Chanson de Roland has genre (is genre of) Epic poetry</li>\r\n</ul>\r\n"
+  range: ''
 autocomplete_description:
   domain: ''
   range: ''

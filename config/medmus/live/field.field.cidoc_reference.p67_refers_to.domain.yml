@@ -1,0 +1,33 @@
+uuid: d5c4c8df-2804-42e2-b066-3ed2af38dafe
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e35_title
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_entity_bundle.ec6_music
+    - cidoc.cidoc_property.p67_refers_to
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.p67_refers_to.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: p67_refers_to
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      ec6_music: ec6_music
+      e35_title: e35_title
+      ec1_work: ec1_work
+    auto_create_bundle: ec6_music
+field_type: entity_reference

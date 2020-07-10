@@ -1,0 +1,31 @@
+uuid: 3878e6a3-f14f-4d5f-b8b3-074bf7392eeb
+langcode: en
+status: true
+dependencies: {  }
+id: pa13_has_illegitimate_child
+label: 'PA13 has illegitimate child'
+bidirectional: false
+reverse_label: 'PA13 has illegitimate parent'
+friendly_label: ''
+reverse_friendly_label: ''
+domain_bundles:
+  e21_person: e21_person
+range_bundles:
+  e21_person: e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

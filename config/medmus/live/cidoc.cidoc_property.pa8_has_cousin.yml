@@ -1,0 +1,31 @@
+uuid: 8a176977-fb3d-4f6b-9306-18a4a39a2260
+langcode: en
+status: true
+dependencies: {  }
+id: pa8_has_cousin
+label: 'PA8 has cousin'
+bidirectional: true
+reverse_label: pa8_has_cousin
+friendly_label: Cousin
+reverse_friendly_label: ''
+domain_bundles:
+  e21_person: e21_person
+range_bundles:
+  e21_person: e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

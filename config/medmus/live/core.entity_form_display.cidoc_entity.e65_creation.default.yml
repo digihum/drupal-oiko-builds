@@ -79,18 +79,19 @@ third_party_settings:
     group_who:
       children:
         - 'cidoc_properties:domain:p14_carried_out_by'
+        - 'cidoc_properties:domain:pc6_has_alternative_attribution'
         - 'cidoc_properties:domain:p11_had_participant'
       parent_name: group_tabset
       weight: 6
-      label: People/groups
+      label: 'Author(s) and People involved'
       format_type: tab
       format_settings:
+        description: "- use <strong>P14 CARRIED OUT BY</strong> to associate the Author(s) to the work created.<br/>\r\n- use <strong>P11 PARTICIPATED IN</strong> to specify any other person who had an indirect role in the creation of the work (as a sponsor, dedicatee, muse, audience)."
         formatter: closed
-        description: ''
+        fieldset_label_html: true
         required_fields: true
         id: ''
         classes: ''
-        fieldset_label_html: true
       region: content
     group_what:
       children:
@@ -114,7 +115,7 @@ third_party_settings:
         - group_main_deets
         - group_oiko_world_settings
       parent_name: ''
-      weight: 3
+      weight: 1
       label: 'Main data entry'
       format_type: tabs
       format_settings:
@@ -174,7 +175,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p11_had_participant':
-    weight: 14
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -240,6 +241,11 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:p9_consists_of':
     weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc6_has_alternative_attribution':
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -363,3 +369,4 @@ hidden:
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
+  'cidoc_properties:range:p67_refers_to': true

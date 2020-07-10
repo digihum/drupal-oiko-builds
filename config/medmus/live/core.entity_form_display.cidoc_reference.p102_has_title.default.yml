@@ -1,0 +1,49 @@
+uuid: 0cf1ac80-7d47-47ce-9e67-b226d8f53e79
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p102_has_title
+    - field.field.cidoc_reference.p102_has_title.domain
+    - field.field.cidoc_reference.p102_has_title.range
+  module:
+    - oiko_citation
+id: cidoc_reference.p102_has_title.default
+targetEntityType: cidoc_reference
+bundle: p102_has_title
+mode: default
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    region: content
+    third_party_settings: {  }
+  domain:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 26
+    settings:
+      match_limit: 10
+    third_party_settings: {  }
+    region: content
+  langcode:
+    type: language_select
+    weight: 10
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  range:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 27
+    settings:
+      match_limit: 10
+    third_party_settings: {  }
+    region: content
+hidden:
+  user_id: true

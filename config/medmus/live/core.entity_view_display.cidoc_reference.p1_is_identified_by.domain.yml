@@ -6,6 +6,7 @@ dependencies:
     - cidoc.cidoc_property.p1_is_identified_by
     - core.entity_view_mode.cidoc_reference.domain
     - field.field.cidoc_reference.p1_is_identified_by.domain
+    - field.field.cidoc_reference.p1_is_identified_by.field_language
     - field.field.cidoc_reference.p1_is_identified_by.range
 _core:
   default_config_hash: WYnDzR3wM7Zn3vR-1Z-H9uRPmSzwSypQptkoD8YToec
@@ -25,5 +26,7 @@ content:
 hidden:
   citation: true
   domain: true
+  field_language: true
   property: true
+  search_api_excerpt: true
   user_id: true

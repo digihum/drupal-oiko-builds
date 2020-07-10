@@ -33,7 +33,7 @@ third_party_settings:
         - group_main_deets
         - group_oiko_world_settings
       parent_name: ''
-      weight: 3
+      weight: 1
       label: 'Main data entry'
       format_type: tabs
       format_settings:
@@ -47,10 +47,7 @@ third_party_settings:
         - name
         - internal_name
         - citation
-        - 'cidoc_properties:range:p2_has_type'
         - 'cidoc_properties:domain:p48_has_preferred_identifier'
-        - 'cidoc_properties:range:p94_has_created'
-        - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
         - 'cidoc_properties:range:p45_consists_of'
         - group_descriptive_text
       parent_name: group_data
@@ -227,11 +224,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p12_occurred_in_the_presence_of':
-    weight: 7
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:range:p134_continued':
     weight: 21
     region: content
@@ -247,18 +239,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p2_has_type':
-    weight: 4
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:range:p45_consists_of':
     weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p94_has_created':
-    weight: 6
+  'cidoc_properties:range:p67_refers_to':
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -378,7 +365,11 @@ content:
       match_limit: 10
     third_party_settings: {  }
 hidden:
+  'cidoc_properties:domain:p102_has_title': true
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
+  'cidoc_properties:range:p2_has_type': true
+  'cidoc_properties:range:p94_has_created': true

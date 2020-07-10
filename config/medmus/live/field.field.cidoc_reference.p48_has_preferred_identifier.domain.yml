@@ -22,6 +22,8 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e6_destruction
     - cidoc.cidoc_entity_bundle.e74_group
     - cidoc.cidoc_entity_bundle.e7_activity
+    - cidoc.cidoc_entity_bundle.e85_joining
+    - cidoc.cidoc_entity_bundle.e86_leaving
     - cidoc.cidoc_entity_bundle.e9_move
     - cidoc.cidoc_entity_bundle.ec1_work
     - cidoc.cidoc_entity_bundle.ec2_genre
@@ -56,13 +58,15 @@ settings:
       e21_person: e21_person
       e74_group: e74_group
       e7_activity: e7_activity
-      e68_dissolution: e68_dissolution
-      e6_destruction: e6_destruction
-      e69_death: e69_death
-      e67_birth: e67_birth
-      e65_creation: e65_creation
       e12_production: e12_production
+      e65_creation: e65_creation
       e66_formation: e66_formation
+      e67_birth: e67_birth
+      e68_dissolution: e68_dissolution
+      e69_death: e69_death
+      e6_destruction: e6_destruction
+      e85_joining: e85_joining
+      e86_leaving: e86_leaving
       e9_move: e9_move
       e55_type: e55_type
       ec2_genre: ec2_genre
@@ -71,11 +75,11 @@ settings:
       ec7_source: ec7_source
       e56_language: e56_language
       e57_material: e57_material
-      ec6_music: ec6_music
       e35_title: e35_title
       e42_identifier: e42_identifier
-      ec9_print: ec9_print
+      ec6_music: ec6_music
       ec8_manuscript: ec8_manuscript
+      ec9_print: ec9_print
       ec1_work: ec1_work
     auto_create_bundle: e52_time_span
 field_type: entity_reference

@@ -1,0 +1,49 @@
+uuid: bef6a8d1-6c22-410d-a0e9-3fd052f19c08
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa8_has_cousin
+    - field.field.cidoc_reference.pa8_has_cousin.domain
+    - field.field.cidoc_reference.pa8_has_cousin.range
+  module:
+    - oiko_citation
+id: cidoc_reference.pa8_has_cousin.default
+targetEntityType: cidoc_reference
+bundle: pa8_has_cousin
+mode: default
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    region: content
+    third_party_settings: {  }
+  domain:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 26
+    settings:
+      match_limit: 10
+    third_party_settings: {  }
+    region: content
+  langcode:
+    type: language_select
+    weight: 10
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  range:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 27
+    settings:
+      match_limit: 10
+    third_party_settings: {  }
+    region: content
+hidden:
+  user_id: true

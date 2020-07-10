@@ -353,15 +353,13 @@ display:
       bundles:
         - e12_production
         - e5_event
+        - e65_creation
         - e66_formation
         - e67_birth
         - e68_dissolution
         - e69_death
         - e6_destruction
         - e7_activity
-        - o1_killing
-        - o2_active_dissolution
-        - o3_active_destruction
       display_description: ''
       fields:
         id:
@@ -487,6 +485,7 @@ display:
       bundles:
         - e12_production
         - e5_event
+        - e65_creation
         - e66_formation
         - e67_birth
         - e68_dissolution
@@ -494,9 +493,6 @@ display:
         - e6_destruction
         - e7_activity
         - e9_move
-        - o1_killing
-        - o2_active_dissolution
-        - o3_active_destruction
       style:
         type: default
         options:

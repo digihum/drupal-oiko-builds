@@ -12,6 +12,8 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e69_death
     - cidoc.cidoc_entity_bundle.e6_destruction
     - cidoc.cidoc_entity_bundle.e7_activity
+    - cidoc.cidoc_entity_bundle.e85_joining
+    - cidoc.cidoc_entity_bundle.e86_leaving
     - cidoc.cidoc_entity_bundle.e9_move
     - cidoc.cidoc_property.p4_has_time_span
     - field.storage.cidoc_reference.domain
@@ -35,13 +37,15 @@ settings:
     target_bundles:
       e5_event: e5_event
       e7_activity: e7_activity
-      e68_dissolution: e68_dissolution
-      e6_destruction: e6_destruction
-      e69_death: e69_death
-      e67_birth: e67_birth
-      e65_creation: e65_creation
       e12_production: e12_production
+      e65_creation: e65_creation
       e66_formation: e66_formation
+      e67_birth: e67_birth
+      e68_dissolution: e68_dissolution
+      e69_death: e69_death
+      e6_destruction: e6_destruction
+      e85_joining: e85_joining
+      e86_leaving: e86_leaving
       e9_move: e9_move
     auto_create_bundle: e5_event
 field_type: entity_reference

@@ -1,0 +1,170 @@
+uuid: d198974b-9194-41e9-876d-e021647b0f94
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec8_manuscript
+    - core.entity_view_mode.cidoc_entity.popup
+  module:
+    - field_group
+    - text
+third_party_settings:
+  field_group:
+    group_production:
+      children:
+        - production_info_entity_view_1
+        - production_info_entity_view_2
+        - production_info_entity_view_3
+        - 'cidoc_properties:domain:p45_consists_of'
+        - 'cidoc_properties:range:p13_destroyed'
+      parent_name: ''
+      weight: 12
+      format_type: html_element
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Production
+    group_contains:
+      children:
+        - 'cidoc_properties:domain:p128_carries'
+      parent_name: ''
+      weight: 13
+      format_type: html_element
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Works
+id: cidoc_entity.ec8_manuscript.popup
+targetEntityType: cidoc_entity
+bundle: ec8_manuscript
+mode: popup
+content:
+  cidoc_admin_links:
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p102_has_title':
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p128_carries':
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p1_is_identified_by':
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p2_has_type':
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p45_consists_of':
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p72_has_language':
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p12_occurred_in_the_presence_of':
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p13_destroyed':
+    weight: 15
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p67_refers_to':
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  cidoc_temporal_summary:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  content:
+    region: content
+    label: hidden
+    type: text_default
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    region: content
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    weight: 0
+    third_party_settings: {  }
+  production_info_entity_view_1:
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  production_info_entity_view_2:
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  production_info_entity_view_3:
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  significance:
+    region: content
+    type: entity_reference_entity_view
+    label: visually_hidden
+    settings:
+      view_mode: primary_historical_significance_pill
+      link: false
+    weight: 2
+    third_party_settings: {  }
+hidden:
+  cidoc_properties: true
+  'cidoc_properties:range:p108_has_produced': true
+  cidoc_properties_transcript: true
+  citation: true
+  internal_name: true
+  map_link: true
+  search_api_excerpt: true
+  timeline_link: true
+  timeline_logo: true
+  timeline_preselect_option: true
+  user_id: true

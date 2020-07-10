@@ -1,0 +1,28 @@
+uuid: 097f138d-14b1-44bb-ba4b-211d4f1f1876
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa4_has_muse
+    - core.entity_view_mode.cidoc_reference.range
+    - field.field.cidoc_reference.pa4_has_muse.domain
+    - field.field.cidoc_reference.pa4_has_muse.range
+id: cidoc_reference.pa4_has_muse.range
+targetEntityType: cidoc_reference
+bundle: pa4_has_muse
+mode: range
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  property: true
+  range: true
+  search_api_excerpt: true
+  user_id: true

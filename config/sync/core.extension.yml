@@ -38,6 +38,7 @@ module:
   help: 0
   history: 0
   honeypot: 0
+  http_auth: 0
   image: 0
   inside_iframe: 0
   leaflet: 0

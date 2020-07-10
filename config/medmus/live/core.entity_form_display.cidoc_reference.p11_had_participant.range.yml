@@ -6,6 +6,7 @@ dependencies:
     - cidoc.cidoc_property.p11_had_participant
     - core.entity_form_mode.cidoc_reference.range
     - field.field.cidoc_reference.p11_had_participant.domain
+    - field.field.cidoc_reference.p11_had_participant.field_in_the_role_of
     - field.field.cidoc_reference.p11_had_participant.range
   module:
     - oiko_citation
@@ -39,6 +40,7 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  field_in_the_role_of: true
   langcode: true
   range: true
   user_id: true

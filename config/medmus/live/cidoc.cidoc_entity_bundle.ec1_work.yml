@@ -5,8 +5,8 @@ dependencies: {  }
 crm_entity: ec1_work
 id: ec1_work
 label: 'EC1 Work'
-friendly_label: ''
-weight: -15
+friendly_label: Work
+weight: -14
 group: main
 description: "\n"
 examples: "<ul>\n<li>BdT 366.11</li>\n<li>Roman de Tristan en prose</li>\n<li>Il sabato del villaggio</li>\n</ul>\n"

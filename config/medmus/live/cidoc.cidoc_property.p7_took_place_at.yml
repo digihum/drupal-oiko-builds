@@ -13,22 +13,26 @@ reverse_friendly_label: Witnessed
 domain_bundles:
   1: e5_event
   4: e7_activity
-  5: e68_dissolution
-  6: e6_destruction
-  8: e69_death
-  9: e67_birth
-  10: e65_creation
-  11: e12_production
-  12: e66_formation
-  16: e9_move
+  5: e12_production
+  6: e65_creation
+  7: e66_formation
+  8: e67_birth
+  10: e68_dissolution
+  11: e69_death
+  12: e6_destruction
+  16: e85_joining
+  17: e86_leaving
+  20: e9_move
 range_bundles:
   - e53_place
 editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
 widget_description:
   domain: "\n\n"
 autocomplete_description:

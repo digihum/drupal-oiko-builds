@@ -1,0 +1,29 @@
+uuid: fefc9ad3-08b7-43a2-998d-d9cd371bc855
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_property.pa1_has_patron
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.pa1_has_patron.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: pa1_has_patron
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e21_person: e21_person
+    auto_create_bundle: e21_person
+field_type: entity_reference

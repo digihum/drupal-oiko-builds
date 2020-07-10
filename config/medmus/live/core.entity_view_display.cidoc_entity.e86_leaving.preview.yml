@@ -1,0 +1,106 @@
+uuid: e588fc41-d5dc-4d2e-a5ca-63b8d0f6c1dc
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e86_leaving
+    - core.entity_view_mode.cidoc_entity.preview
+  module:
+    - field_group
+    - text
+third_party_settings:
+  field_group:
+    group_e:
+      children:
+        - name
+        - internal_name
+        - significance
+        - content
+        - cidoc_properties
+        - user_id
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: 'style="border-bottom: 2px solid #657986;"'
+        effect: none
+        speed: fast
+      label: 'E86 Leaving'
+id: cidoc_entity.e86_leaving.preview
+targetEntityType: cidoc_entity
+bundle: e86_leaving
+mode: preview
+content:
+  cidoc_properties:
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  content:
+    type: text_default
+    weight: 4
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+  internal_name:
+    label: inline
+    type: string
+    weight: 2
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: 1
+    region: content
+    settings:
+      link_to_entity: true
+    third_party_settings: {  }
+  significance:
+    type: entity_reference_label
+    weight: 3
+    region: content
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+  user_id:
+    type: entity_reference_label
+    weight: 6
+    region: content
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+hidden:
+  cidoc_admin_links: true
+  'cidoc_properties:domain:p11_had_participant': true
+  'cidoc_properties:domain:p12_occurred_in_the_presence_of': true
+  'cidoc_properties:domain:p145_separated': true
+  'cidoc_properties:domain:p146_separated_from': true
+  'cidoc_properties:domain:p14_carried_out_by': true
+  'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p48_has_preferred_identifier': true
+  'cidoc_properties:domain:p4_has_time_span': true
+  'cidoc_properties:domain:p7_took_place_at': true
+  'cidoc_properties:range:p67_refers_to': true
+  cidoc_properties_transcript: true
+  cidoc_temporal_summary: true
+  citation: true
+  map_link: true
+  search_api_excerpt: true
+  timeline_link: true
+  timeline_logo: true
+  timeline_preselect_option: true

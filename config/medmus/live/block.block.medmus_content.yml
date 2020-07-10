@@ -9,7 +9,7 @@ dependencies:
 id: medmus_content
 theme: medmus
 region: content
-weight: -2
+weight: -12
 provider: null
 plugin: system_main_block
 settings:

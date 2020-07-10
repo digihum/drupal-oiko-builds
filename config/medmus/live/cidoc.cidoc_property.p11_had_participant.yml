@@ -13,14 +13,16 @@ reverse_friendly_label: 'Participated in'
 domain_bundles:
   0: e5_event
   3: e7_activity
-  4: e68_dissolution
-  5: e6_destruction
-  7: e69_death
-  8: e67_birth
-  9: e65_creation
-  10: e12_production
-  11: e66_formation
-  15: e9_move
+  4: e12_production
+  5: e65_creation
+  6: e66_formation
+  7: e67_birth
+  9: e68_dissolution
+  10: e69_death
+  11: e6_destruction
+  15: e85_joining
+  16: e86_leaving
+  19: e9_move
 range_bundles:
   1: e21_person
   2: e74_group
@@ -28,8 +30,10 @@ editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
 widget_description:
   domain: "\n\n"
 autocomplete_description:

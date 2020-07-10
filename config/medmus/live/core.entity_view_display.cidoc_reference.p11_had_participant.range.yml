@@ -6,6 +6,7 @@ dependencies:
     - cidoc.cidoc_property.p11_had_participant
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p11_had_participant.domain
+    - field.field.cidoc_reference.p11_had_participant.field_in_the_role_of
     - field.field.cidoc_reference.p11_had_participant.range
 _core:
   default_config_hash: EKDZjlOsXCgHW2hL7PkQi3SJAxGzH5Co8zjYO_A7O4o
@@ -24,6 +25,8 @@ content:
     region: content
 hidden:
   citation: true
+  field_in_the_role_of: true
   property: true
   range: true
+  search_api_excerpt: true
   user_id: true

@@ -9,7 +9,7 @@ dependencies:
 id: medmus_userloggedinheaderblock
 theme: medmus
 region: user_header
-weight: 0
+weight: -8
 provider: null
 plugin: user_logged_in
 settings:

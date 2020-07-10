@@ -1,0 +1,25 @@
+uuid: 972d00a6-ad2a-4996-af45-849741922d23
+langcode: en
+status: true
+dependencies: {  }
+id: pa15_has_child-in-law
+label: pa15_has_child-in-law
+bidirectional: false
+reverse_label: pa15_has_child-in-law
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  - e21_person
+range_bundles:
+  - e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description: {  }
+autocomplete_description: {  }
+child_events: {  }

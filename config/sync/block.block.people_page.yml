@@ -1,0 +1,25 @@
+uuid: bfe01987-a527-42df-80fa-94a79cabdea4
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:simple_block:0d124045-1270-4f52-a6e4-09262cfa148f'
+  module:
+    - block_content
+  theme:
+    - medmus
+id: people_page
+theme: medmus
+region: user_header
+weight: -16
+provider: null
+plugin: 'block_content:0d124045-1270-4f52-a6e4-09262cfa148f'
+settings:
+  id: 'block_content:0d124045-1270-4f52-a6e4-09262cfa148f'
+  label: People
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

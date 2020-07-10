@@ -6,28 +6,35 @@ id: p94_has_created
 label: 'P94 has created'
 bidirectional: false
 reverse_label: 'P94 was created by'
-friendly_label: null
-reverse_friendly_label: null
+friendly_label: Created
+reverse_friendly_label: 'Was created by'
 domain_bundles:
-  - e65_creation
+  e65_creation: e65_creation
 range_bundles:
-  3: e55_type
-  4: ec2_genre
-  7: e41_appellation
-  8: ec3_formal_feature
-  10: e56_language
-  11: e57_material
-  16: ec6_music
-  17: e35_title
-  22: e42_identifier
-  28: ec1_work
+  e55_type: e55_type
+  ec2_genre: ec2_genre
+  e56_language: e56_language
+  e57_material: e57_material
+  e41_appellation: e41_appellation
+  ec3_formal_feature: ec3_formal_feature
+  ec6_music: ec6_music
+  e35_title: e35_title
+  e42_identifier: e42_identifier
+  ec1_work: ec1_work
 editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: time
 widget_description:
-  domain: "\n\n"
-autocomplete_description: {  }
-child_events: {  }
+  domain: ''
+  range: 'CAREFUL: Type here the DATE of composition or a generic time span (not the author). Ex. 1121 or XII Century'
+autocomplete_description:
+  domain: ''
+  range: '<p>New date of composition (this will generate a new creation event)</p>'
+child_events:
+  domain: domain
+  range: 0

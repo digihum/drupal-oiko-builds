@@ -1,0 +1,29 @@
+uuid: a1bffe32-9a83-4efd-a42d-168d19e6021a
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p11_had_participant
+    - field.storage.cidoc_reference.field_in_the_role_of
+    - taxonomy.vocabulary.role
+id: cidoc_reference.p11_had_participant.field_in_the_role_of
+field_name: field_in_the_role_of
+entity_type: cidoc_reference
+bundle: p11_had_participant
+label: 'In the role of'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      role: role
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

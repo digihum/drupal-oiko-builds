@@ -1,0 +1,19 @@
+uuid: 4d1dfa1d-3812-4c4b-8865-55ef9025144b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_publisher
+    - taxonomy.vocabulary.source_books
+id: taxonomy_term.source_books.field_publisher
+field_name: field_publisher
+entity_type: taxonomy_term
+bundle: source_books
+label: Publisher
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

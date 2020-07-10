@@ -9,7 +9,7 @@ dependencies:
 id: medmus_page_title
 theme: medmus
 region: content
-weight: -6
+weight: -15
 provider: null
 plugin: page_title_block
 settings:

@@ -1,0 +1,31 @@
+uuid: 0aa42b6e-0081-4c0c-912d-bf36c9fa7759
+langcode: en
+status: true
+dependencies: {  }
+id: pa1_has_patron
+label: 'PA1 has patron'
+bidirectional: false
+reverse_label: 'PA1 is patron of'
+friendly_label: Patron
+reverse_friendly_label: 'Is patron of'
+domain_bundles:
+  e21_person: e21_person
+range_bundles:
+  e21_person: e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

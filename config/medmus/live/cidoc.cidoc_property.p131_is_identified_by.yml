@@ -1,0 +1,32 @@
+uuid: 73d2b6fa-b72f-4791-aee6-5649175846a8
+langcode: en
+status: true
+dependencies: {  }
+id: p131_is_identified_by
+label: 'P131 is identified by'
+bidirectional: false
+reverse_label: 'P131 identifies'
+friendly_label: Appellation
+reverse_friendly_label: Identifies
+domain_bundles:
+  e21_person: e21_person
+  e74_group: e74_group
+range_bundles:
+  e41_appellation: e41_appellation
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

@@ -6,6 +6,7 @@ dependencies:
     - cidoc.cidoc_property.p48_has_preferred_identifier
     - core.entity_view_mode.cidoc_reference.range
     - field.field.cidoc_reference.p48_has_preferred_identifier.domain
+    - field.field.cidoc_reference.p48_has_preferred_identifier.field_identifier_type
     - field.field.cidoc_reference.p48_has_preferred_identifier.range
 id: cidoc_reference.p48_has_preferred_identifier.range
 targetEntityType: cidoc_reference
@@ -22,6 +23,7 @@ content:
     region: content
 hidden:
   citation: true
+  field_identifier_type: true
   property: true
   range: true
   search_api_excerpt: true

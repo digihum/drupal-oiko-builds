@@ -1,0 +1,18 @@
+uuid: c7a89514-26e0-4a35-83e1-b135c7319ba5
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_reference.field_don_t_show_in_map
+field_name: field_don_t_show_in_map
+entity_type: cidoc_reference
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

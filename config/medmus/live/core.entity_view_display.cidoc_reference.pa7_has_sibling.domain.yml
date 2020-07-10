@@ -1,0 +1,28 @@
+uuid: 0868ec8c-648f-41f7-b37a-fb95e6057360
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa7_has_sibling
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pa7_has_sibling.domain
+    - field.field.cidoc_reference.pa7_has_sibling.range
+id: cidoc_reference.pa7_has_sibling.domain
+targetEntityType: cidoc_reference
+bundle: pa7_has_sibling
+mode: domain
+content:
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  domain: true
+  property: true
+  search_api_excerpt: true
+  user_id: true

@@ -31,9 +31,9 @@ settings:
     target_bundles:
       e41_appellation: e41_appellation
       ec3_formal_feature: ec3_formal_feature
-      ec6_music: ec6_music
       e35_title: e35_title
       e42_identifier: e42_identifier
+      ec6_music: ec6_music
       ec1_work: ec1_work
     auto_create_bundle: e41_appellation
 field_type: entity_reference

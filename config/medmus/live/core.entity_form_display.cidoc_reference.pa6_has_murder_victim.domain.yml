@@ -1,0 +1,42 @@
+uuid: 34f5bd67-fba2-4bc4-b305-87947b52097d
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa6_has_murder_victim
+    - core.entity_form_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pa6_has_murder_victim.domain
+    - field.field.cidoc_reference.pa6_has_murder_victim.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+id: cidoc_reference.pa6_has_murder_victim.domain
+targetEntityType: cidoc_reference
+bundle: pa6_has_murder_victim
+mode: domain
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    region: content
+    third_party_settings: {  }
+  range:
+    type: squid_entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: '60'
+      placeholder: 'Start typing to find a match or create new entity...'
+      match_limit: 10
+    weight: 26
+    third_party_settings: {  }
+    region: content
+hidden:
+  domain: true
+  langcode: true
+  user_id: true

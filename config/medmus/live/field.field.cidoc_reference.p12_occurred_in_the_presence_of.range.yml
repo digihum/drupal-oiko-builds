@@ -49,11 +49,11 @@ settings:
       ec7_source: ec7_source
       e56_language: e56_language
       e57_material: e57_material
-      ec6_music: ec6_music
       e35_title: e35_title
       e42_identifier: e42_identifier
-      ec9_print: ec9_print
+      ec6_music: ec6_music
       ec8_manuscript: ec8_manuscript
+      ec9_print: ec9_print
       ec1_work: ec1_work
     auto_create_bundle: e21_person
 field_type: entity_reference

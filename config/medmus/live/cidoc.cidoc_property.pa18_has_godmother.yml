@@ -1,0 +1,31 @@
+uuid: c6dba8e5-1439-47c1-a1a3-7e850f5ccd65
+langcode: en
+status: true
+dependencies: {  }
+id: pa18_has_godmother
+label: 'PA18 has godmother'
+bidirectional: false
+reverse_label: 'PA18 is godmother pf'
+friendly_label: Godmother
+reverse_friendly_label: 'Godmother of'
+domain_bundles:
+  e21_person: e21_person
+range_bundles:
+  e21_person: e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

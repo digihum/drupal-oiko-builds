@@ -1,0 +1,19 @@
+uuid: b23525fd-8e80-45e2-9458-6a0cb0b9963a
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy
+id: taxonomy_term.field_collective_work
+field_name: field_collective_work
+entity_type: taxonomy_term
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

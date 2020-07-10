@@ -1,0 +1,8 @@
+uuid: 6d934f70-6110-4991-ba0a-75bdcf61cf10
+langcode: en
+status: true
+dependencies: {  }
+id: simple_block
+label: 'Simple block'
+revision: 0
+description: ''

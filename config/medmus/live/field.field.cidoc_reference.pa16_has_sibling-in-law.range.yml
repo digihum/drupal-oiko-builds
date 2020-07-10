@@ -1,0 +1,29 @@
+uuid: fe6cb62a-c388-43f0-9b43-23508a5a10be
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_property.pa16_has_sibling-in-law
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.pa16_has_sibling-in-law.range
+field_name: range
+entity_type: cidoc_reference
+bundle: pa16_has_sibling-in-law
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e21_person: e21_person
+    auto_create_bundle: e21_person
+field_type: entity_reference

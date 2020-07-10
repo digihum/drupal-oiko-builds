@@ -1,0 +1,42 @@
+uuid: ffbc01fd-9990-410d-bc87-28f514c47b67
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa5_has_lover
+    - core.entity_form_mode.cidoc_reference.range
+    - field.field.cidoc_reference.pa5_has_lover.domain
+    - field.field.cidoc_reference.pa5_has_lover.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+id: cidoc_reference.pa5_has_lover.range
+targetEntityType: cidoc_reference
+bundle: pa5_has_lover
+mode: range
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    region: content
+    third_party_settings: {  }
+  domain:
+    type: squid_entity_reference_autocomplete_tags
+    settings:
+      match_operator: STARTS_WITH
+      size: '60'
+      placeholder: 'Start typing to find a match or create new entity...'
+      match_limit: 10
+    weight: 26
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true
+  range: true
+  user_id: true

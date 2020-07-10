@@ -6,6 +6,8 @@ dependencies:
     - cidoc.cidoc_property.p94_has_created
     - field.field.cidoc_reference.p94_has_created.domain
     - field.field.cidoc_reference.p94_has_created.range
+  module:
+    - cidoc
 id: cidoc_reference.p94_has_created.default
 targetEntityType: cidoc_reference
 bundle: p94_has_created
@@ -15,12 +17,13 @@ content:
     label: inline
     type: entity_reference_label
     weight: -3
-    settings: {  }
+    settings:
+      link: true
     third_party_settings: {  }
     region: content
   property:
     label: inline
-    type: entity_reference_label
+    type: cidoc_reference_label
     weight: -4
     settings:
       link: false
@@ -30,7 +33,8 @@ content:
     label: inline
     type: entity_reference_label
     weight: -2
-    settings: {  }
+    settings:
+      link: true
     third_party_settings: {  }
     region: content
 hidden:

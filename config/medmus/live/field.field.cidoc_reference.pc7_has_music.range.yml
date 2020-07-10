@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_entity_bundle.ec6_music
     - cidoc.cidoc_property.pc7_has_music
     - field.storage.cidoc_reference.range
 id: cidoc_reference.pc7_has_music.range
@@ -24,6 +24,6 @@ settings:
       field: name
       direction: ASC
     target_bundles:
-      e21_person: e21_person
-    auto_create_bundle: e21_person
+      ec6_music: ec6_music
+    auto_create_bundle: ec6_music
 field_type: entity_reference

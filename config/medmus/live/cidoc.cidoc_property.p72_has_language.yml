@@ -6,20 +6,33 @@ id: p72_has_language
 label: 'P72 has language'
 bidirectional: false
 reverse_label: 'P72 is language of'
-friendly_label: null
-reverse_friendly_label: null
+friendly_label: Language
+reverse_friendly_label: 'Is language of'
 domain_bundles:
-  1: e35_title
-  3: ec1_work
+  e21_person: e21_person
+  e35_title: e35_title
+  e41_appellation: e41_appellation
+  e53_place: e53_place
+  ec1_work: ec1_work
+  ec7_source: ec7_source
+  ec8_manuscript: ec8_manuscript
+  ec9_print: ec9_print
 range_bundles:
-  - e56_language
+  e56_language: e56_language
 editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
 widget_description:
-  domain: "\n\n"
-autocomplete_description: {  }
-child_events: {  }
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

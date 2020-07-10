@@ -1,0 +1,49 @@
+uuid: a790bd50-5aef-4561-9e4b-f63ab41d827a
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa5_has_lover
+    - field.field.cidoc_reference.pa5_has_lover.domain
+    - field.field.cidoc_reference.pa5_has_lover.range
+  module:
+    - oiko_citation
+id: cidoc_reference.pa5_has_lover.default
+targetEntityType: cidoc_reference
+bundle: pa5_has_lover
+mode: default
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    region: content
+    third_party_settings: {  }
+  domain:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 26
+    settings:
+      match_limit: 10
+    third_party_settings: {  }
+    region: content
+  langcode:
+    type: language_select
+    weight: 10
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  range:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 27
+    settings:
+      match_limit: 10
+    third_party_settings: {  }
+    region: content
+hidden:
+  user_id: true

@@ -1,0 +1,31 @@
+uuid: 2f9801c3-94bf-4cbc-856e-1745b8992e0e
+langcode: en
+status: true
+dependencies: {  }
+id: pa10_has_grandchild
+label: 'PA10 has grandchild'
+bidirectional: false
+reverse_label: 'PA10 has grandparent'
+friendly_label: Granchild
+reverse_friendly_label: Grandparent
+domain_bundles:
+  e21_person: e21_person
+range_bundles:
+  e21_person: e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

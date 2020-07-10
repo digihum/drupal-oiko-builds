@@ -16,7 +16,6 @@ third_party_settings:
     group_main:
       children:
         - group_main_deets
-        - group_aux_deets
         - group_oiko_world_settings
       parent_name: ''
       weight: 1
@@ -66,6 +65,7 @@ third_party_settings:
       region: content
     group_appellations:
       children:
+        - 'cidoc_properties:domain:p131_is_identified_by'
         - 'cidoc_properties:domain:p48_has_preferred_identifier'
       parent_name: group_main_details
       weight: 21
@@ -192,12 +192,12 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p131_is_identified_by':
-    weight: 4
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 20
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -345,6 +345,7 @@ hidden:
   'cidoc_properties:range:p16_used_specific_object': true
   'cidoc_properties:range:p17_was_motivated_by': true
   'cidoc_properties:range:p25_moved': true
+  'cidoc_properties:range:p67_refers_to': true
   'cidoc_properties:range:p96_by_mother': true
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true

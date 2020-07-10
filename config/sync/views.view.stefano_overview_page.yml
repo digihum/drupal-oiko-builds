@@ -1,11 +1,11 @@
-uuid: 36c39199-cd4c-4d7a-90b4-bd9529efbdf2
+uuid: 8038fdd5-4bb4-4ff2-98b4-474da6f80dc2
 langcode: en
 status: true
 dependencies:
   module:
     - cidoc
-id: incorrect_time_spans_
-label: 'Incorrect Time Spans '
+id: stefano_overview_page
+label: 'Stefano Overview page'
 module: views
 description: ''
 tag: ''
@@ -45,7 +45,7 @@ display:
       pager:
         type: mini
         options:
-          items_per_page: 10
+          items_per_page: 100
           offset: 0
           id: 0
           total_pages: null
@@ -62,18 +62,8 @@ display:
             next: ››
       style:
         type: default
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          uses_fields: false
       row:
-        type: fields
-        options:
-          inline: {  }
-          separator: ''
-          hide_empty: false
-          default_field_elements: true
+        type: 'entity:cidoc_entity'
       fields:
         operations:
           table: cidoc_entity
@@ -126,15 +116,42 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          destination: true
-      filters: {  }
+          destination: false
+      filters:
+        status:
+          value: '1'
+          table: cidoc_entity
+          field: status
+          plugin_id: boolean
+          entity_type: cidoc_entity
+          entity_field: status
+          id: status
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+          group: 1
       sorts: {  }
+      title: 'Stefano Overview page'
       header: {  }
       footer: {  }
       empty: {  }
       relationships: {  }
       arguments: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url.query_args
+      tags: {  }
+  page_1:
+    display_plugin: page
+    id: page_1
+    display_title: Page
+    position: 1
+    display_options:
       display_extenders: {  }
+      path: stefano-overview-page
     cache_metadata:
       max-age: -1
       contexts:

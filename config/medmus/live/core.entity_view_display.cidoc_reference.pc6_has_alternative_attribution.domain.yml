@@ -1,0 +1,28 @@
+uuid: d45d3fcf-398e-4174-8c0d-759b4495c73f
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc6_has_alternative_attribution
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pc6_has_alternative_attribution.domain
+    - field.field.cidoc_reference.pc6_has_alternative_attribution.range
+id: cidoc_reference.pc6_has_alternative_attribution.domain
+targetEntityType: cidoc_reference
+bundle: pc6_has_alternative_attribution
+mode: domain
+content:
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  domain: true
+  property: true
+  search_api_excerpt: true
+  user_id: true

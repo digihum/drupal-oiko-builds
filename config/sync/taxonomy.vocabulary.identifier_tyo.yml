@@ -1,0 +1,8 @@
+uuid: bd3c8d26-292a-422f-8744-873ab735eb94
+langcode: en
+status: true
+dependencies: {  }
+name: 'Identifier Type'
+vid: identifier_tyo
+description: ''
+weight: 0

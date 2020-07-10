@@ -1,0 +1,50 @@
+uuid: fbacabc2-75fc-41d9-9cc0-9053edc84794
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p67_refers_to
+    - field.field.cidoc_reference.p67_refers_to.domain
+    - field.field.cidoc_reference.p67_refers_to.field_don_t_show_in_map
+    - field.field.cidoc_reference.p67_refers_to.range
+id: cidoc_reference.p67_refers_to.default
+targetEntityType: cidoc_reference
+bundle: p67_refers_to
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_don_t_show_in_map:
+    weight: -1
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    region: content
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  search_api_excerpt: true
+  user_id: true

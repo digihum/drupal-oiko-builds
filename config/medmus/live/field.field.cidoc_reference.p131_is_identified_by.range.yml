@@ -1,0 +1,29 @@
+uuid: 8e6f7e7a-9b67-41e9-b253-564d3d1b6986
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e41_appellation
+    - cidoc.cidoc_property.p131_is_identified_by
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.p131_is_identified_by.range
+field_name: range
+entity_type: cidoc_reference
+bundle: p131_is_identified_by
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e41_appellation: e41_appellation
+    auto_create_bundle: e41_appellation
+field_type: entity_reference

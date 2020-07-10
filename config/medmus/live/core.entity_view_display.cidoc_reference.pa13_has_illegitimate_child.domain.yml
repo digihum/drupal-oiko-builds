@@ -1,0 +1,28 @@
+uuid: 14a5f9a9-3ca6-40df-8c9c-0d9c7066615a
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa13_has_illegitimate_child
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pa13_has_illegitimate_child.domain
+    - field.field.cidoc_reference.pa13_has_illegitimate_child.range
+id: cidoc_reference.pa13_has_illegitimate_child.domain
+targetEntityType: cidoc_reference
+bundle: pa13_has_illegitimate_child
+mode: domain
+content:
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  domain: true
+  property: true
+  search_api_excerpt: true
+  user_id: true

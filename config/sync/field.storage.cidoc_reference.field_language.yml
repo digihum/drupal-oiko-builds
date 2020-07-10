@@ -1,0 +1,20 @@
+uuid: a232a910-e4aa-45c6-8492-1c9e41e28028
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+    - taxonomy
+id: cidoc_reference.field_language
+field_name: field_language
+entity_type: cidoc_reference
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

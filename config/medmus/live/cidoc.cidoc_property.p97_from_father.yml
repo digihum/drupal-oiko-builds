@@ -8,7 +8,7 @@ id: p97_from_father
 label: 'P97 by father'
 bidirectional: false
 reverse_label: 'P97 was father for'
-friendly_label: 'By father'
+friendly_label: Father
 reverse_friendly_label: 'Was father for'
 domain_bundles:
   - e67_birth
@@ -18,10 +18,13 @@ editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
 widget_description:
-  domain: "\n\n"
+  domain: ''
+  range: ''
 autocomplete_description:
   domain: ''
   range: ''

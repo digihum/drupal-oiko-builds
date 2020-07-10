@@ -5,6 +5,7 @@ dependencies:
   config:
     - cidoc.cidoc_property.p48_has_preferred_identifier
     - field.field.cidoc_reference.p48_has_preferred_identifier.domain
+    - field.field.cidoc_reference.p48_has_preferred_identifier.field_identifier_type
     - field.field.cidoc_reference.p48_has_preferred_identifier.range
 id: cidoc_reference.p48_has_preferred_identifier.default
 targetEntityType: cidoc_reference
@@ -17,6 +18,14 @@ content:
     weight: -3
     settings: {  }
     third_party_settings: {  }
+    region: content
+  field_identifier_type:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
     region: content
   property:
     label: inline

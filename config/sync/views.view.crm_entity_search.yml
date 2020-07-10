@@ -753,22 +753,22 @@ display:
           group: 1
           exposed: false
           expose:
-            operator_id: ''
-            label: ''
-            description: ''
+            operator_id: child_events_op
+            label: 'Child event count'
+            description: null
             use_operator: false
-            operator: ''
-            identifier: ''
+            operator: child_events_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: child_events
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
-            placeholder: ''
-            min_placeholder: ''
-            max_placeholder: ''
-            operator_limit_selection: false
-            operator_list: {  }
+            placeholder: null
+            min_placeholder: null
+            max_placeholder: null
           is_grouped: false
           group_info:
             label: ''

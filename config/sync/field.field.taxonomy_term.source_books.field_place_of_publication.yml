@@ -1,0 +1,19 @@
+uuid: 1ee41813-df1e-4901-aa4d-b8606783056f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_place_of_publication
+    - taxonomy.vocabulary.source_books
+id: taxonomy_term.source_books.field_place_of_publication
+field_name: field_place_of_publication
+entity_type: taxonomy_term
+bundle: source_books
+label: 'Place of Publication'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,28 @@
+uuid: fdd9c79e-8881-4d44-9127-46e8183b5cd5
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p102_has_title
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.p102_has_title.domain
+    - field.field.cidoc_reference.p102_has_title.range
+id: cidoc_reference.p102_has_title.domain
+targetEntityType: cidoc_reference
+bundle: p102_has_title
+mode: domain
+content:
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  domain: true
+  property: true
+  search_api_excerpt: true
+  user_id: true

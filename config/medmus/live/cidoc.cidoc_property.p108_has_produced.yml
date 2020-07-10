@@ -6,21 +6,28 @@ id: p108_has_produced
 label: 'P108 has produced'
 bidirectional: false
 reverse_label: 'P108 was produced by'
-friendly_label: null
-reverse_friendly_label: null
+friendly_label: Produced
+reverse_friendly_label: 'Was produced by'
 domain_bundles:
   - e12_production
 range_bundles:
   5: ec7_source
-  6: ec9_print
-  7: ec8_manuscript
+  6: ec8_manuscript
+  7: ec9_print
 editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: time
 widget_description:
-  domain: "\n\n"
-autocomplete_description: {  }
-child_events: {  }
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: '<p>DATE of production. (An event <i>Production</i> with this Time-span will be automatically generated)</p>'
+child_events:
+  domain: domain
+  range: 0

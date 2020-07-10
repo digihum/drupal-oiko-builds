@@ -9,7 +9,7 @@ dependencies:
 id: medmus_editor_tools
 theme: medmus
 region: user_header
-weight: 0
+weight: -10
 provider: null
 plugin: editor_tools
 settings:

@@ -1,0 +1,39 @@
+uuid: 64e78d35-8879-4eba-b01a-02fb29e0dbf1
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p131_is_identified_by
+    - field.field.cidoc_reference.p131_is_identified_by.domain
+    - field.field.cidoc_reference.p131_is_identified_by.range
+id: cidoc_reference.p131_is_identified_by.default
+targetEntityType: cidoc_reference
+bundle: p131_is_identified_by
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    region: content
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  search_api_excerpt: true
+  user_id: true

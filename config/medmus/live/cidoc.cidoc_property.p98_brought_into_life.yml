@@ -11,20 +11,23 @@ reverse_label: 'P98 was born'
 friendly_label: 'Brought into life'
 reverse_friendly_label: 'Was born'
 domain_bundles:
-  - e67_birth
+  e67_birth: e67_birth
 range_bundles:
-  - e21_person
+  e21_person: e21_person
 editability:
   domain: true
   range: true
 timesubwidget:
-  range: true
-  domain: false
+  domain:
+    type: 'no'
+  range:
+    type: time
 widget_description:
-  domain: "\n\n"
-autocomplete_description:
   domain: ''
   range: ''
+autocomplete_description:
+  domain: ''
+  range: 'Date of birth <i>(Ex. 1221; 1200-1220; 13th century; post 1220)</i>'
 child_events:
   domain: domain
   range: 0

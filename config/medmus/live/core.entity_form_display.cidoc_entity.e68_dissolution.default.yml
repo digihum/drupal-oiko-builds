@@ -32,10 +32,10 @@ third_party_settings:
       children:
         - group_temporal
         - group_where
+        - group_also_known_as
         - group_who
         - group_what
         - group_descriptive_text
-        - group_also_known_as
       parent_name: group_main_deets
       weight: 5
       label: 'Main details'
@@ -65,7 +65,7 @@ third_party_settings:
       children:
         - content
       parent_name: group_tabset
-      weight: 8
+      weight: 9
       label: 'Descriptive text'
       format_type: tab
       format_settings:
@@ -81,7 +81,7 @@ third_party_settings:
         - 'cidoc_properties:domain:p99_dissolved'
         - 'cidoc_properties:domain:p11_had_participant'
       parent_name: group_tabset
-      weight: 6
+      weight: 7
       label: People/groups
       format_type: tab
       format_settings:
@@ -124,7 +124,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
       parent_name: group_tabset
-      weight: 7
+      weight: 8
       label: Things
       format_type: tab
       format_settings:
@@ -155,7 +155,7 @@ third_party_settings:
         - group_auxiliary_deets
         - group_oiko_world_settings
       parent_name: ''
-      weight: 3
+      weight: 1
       label: 'Main data entry'
       format_type: tabs
       format_settings:
@@ -219,9 +219,10 @@ third_party_settings:
       region: content
     group_also_known_as:
       children:
+        - 'cidoc_properties:domain:p1_is_identified_by'
         - 'cidoc_properties:domain:p48_has_preferred_identifier'
       parent_name: group_tabset
-      weight: 9
+      weight: 6
       format_type: tab
       region: content
       format_settings:
@@ -264,8 +265,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:p1_is_identified_by':
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 20
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -395,7 +401,7 @@ content:
       match_limit: 10
     third_party_settings: {  }
 hidden:
-  'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
+  'cidoc_properties:range:p67_refers_to': true

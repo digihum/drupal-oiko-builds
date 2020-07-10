@@ -1,0 +1,28 @@
+uuid: 664703c2-d87a-4fb4-aa4e-94cd32e1a8da
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa10_has_grandchild
+    - core.entity_view_mode.cidoc_reference.range
+    - field.field.cidoc_reference.pa10_has_grandchild.domain
+    - field.field.cidoc_reference.pa10_has_grandchild.range
+id: cidoc_reference.pa10_has_grandchild.range
+targetEntityType: cidoc_reference
+bundle: pa10_has_grandchild
+mode: range
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  property: true
+  range: true
+  search_api_excerpt: true
+  user_id: true

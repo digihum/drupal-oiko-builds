@@ -1,0 +1,39 @@
+uuid: ac25d69c-87dd-47b8-9599-c85744798557
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa11_has_ancestor
+    - field.field.cidoc_reference.pa11_has_ancestor.domain
+    - field.field.cidoc_reference.pa11_has_ancestor.range
+id: cidoc_reference.pa11_has_ancestor.default
+targetEntityType: cidoc_reference
+bundle: pa11_has_ancestor
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    region: content
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  search_api_excerpt: true
+  user_id: true

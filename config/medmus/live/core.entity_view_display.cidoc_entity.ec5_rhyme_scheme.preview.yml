@@ -7,40 +7,74 @@ dependencies:
     - core.entity_view_mode.cidoc_entity.preview
   module:
     - entity_reference_revisions
+    - field_group
     - text
+third_party_settings:
+  field_group:
+    group_ec_rhyme_scheme:
+      children:
+        - name
+        - internal_name
+        - significance
+        - content
+        - cidoc_properties
+        - citation
+        - user_id
+        - cidoc_admin_links
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: 'style="border-bottom: 2px solid #657986;"'
+        effect: none
+        speed: fast
+      label: 'EC Rhyme Scheme'
 id: cidoc_entity.ec5_rhyme_scheme.preview
 targetEntityType: cidoc_entity
 bundle: ec5_rhyme_scheme
 mode: preview
 content:
-  cidoc_properties:
+  cidoc_admin_links:
+    weight: 8
     region: content
-    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  cidoc_properties:
+    weight: 5
+    region: content
     settings: {  }
     third_party_settings: {  }
   citation:
     region: content
     type: entity_reference_revisions_entity_view
-    label: above
+    label: inline
     settings:
       view_mode: default
       link: ''
-    weight: 5
+    weight: 6
     third_party_settings: {  }
   content:
     region: content
     type: text_default
     label: visually_hidden
     settings: {  }
-    weight: 3
+    weight: 4
     third_party_settings: {  }
   internal_name:
     region: content
     type: string
-    label: above
+    label: inline
     settings:
       link_to_entity: false
-    weight: 1
+    weight: 2
     third_party_settings: {  }
   name:
     region: content
@@ -48,18 +82,25 @@ content:
     label: hidden
     settings:
       link_to_entity: false
-    weight: 0
+    weight: 1
     third_party_settings: {  }
   significance:
     region: content
     type: entity_reference_label
-    label: above
+    label: inline
     settings:
       link: true
-    weight: 2
+    weight: 3
+    third_party_settings: {  }
+  user_id:
+    type: entity_reference_label
+    weight: 7
+    region: content
+    label: inline
+    settings:
+      link: true
     third_party_settings: {  }
 hidden:
-  cidoc_admin_links: true
   'cidoc_properties:range:pc9_has_rhyme_scheme': true
   cidoc_properties_transcript: true
   cidoc_temporal_summary: true
@@ -68,4 +109,3 @@ hidden:
   timeline_link: true
   timeline_logo: true
   timeline_preselect_option: true
-  user_id: true

@@ -1,0 +1,39 @@
+uuid: 11aba687-1bfc-4fd2-9a4e-99d83ff5d5b2
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa16_has_sibling-in-law
+    - field.field.cidoc_reference.pa16_has_sibling-in-law.domain
+    - field.field.cidoc_reference.pa16_has_sibling-in-law.range
+id: cidoc_reference.pa16_has_sibling-in-law.default
+targetEntityType: cidoc_reference
+bundle: pa16_has_sibling-in-law
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    region: content
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  search_api_excerpt: true
+  user_id: true

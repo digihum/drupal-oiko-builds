@@ -11,20 +11,23 @@ reverse_label: 'P100 died in'
 friendly_label: 'Was death of'
 reverse_friendly_label: 'Died in'
 domain_bundles:
-  - e69_death
+  e69_death: e69_death
 range_bundles:
-  - e21_person
+  e21_person: e21_person
 editability:
   domain: true
   range: true
 timesubwidget:
-  range: true
-  domain: false
+  domain:
+    type: 'no'
+  range:
+    type: time
 widget_description:
-  domain: "\n\n"
-autocomplete_description:
   domain: ''
   range: ''
+autocomplete_description:
+  domain: ''
+  range: 'Date of death <i>(Ex. 1221; 1200-1220; 13th century; post 1220)</i>'
 child_events:
   domain: domain
   range: 0

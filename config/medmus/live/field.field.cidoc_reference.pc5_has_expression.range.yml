@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_entity_bundle.ec6_music
     - cidoc.cidoc_property.pc5_has_expression
     - field.storage.cidoc_reference.range
 id: cidoc_reference.pc5_has_expression.range
@@ -25,5 +26,6 @@ settings:
       direction: ASC
     target_bundles:
       ec1_work: ec1_work
+      ec6_music: ec6_music
     auto_create_bundle: ec1_work
 field_type: entity_reference

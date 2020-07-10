@@ -1,0 +1,30 @@
+uuid: 18a1da7e-b5ab-44b9-8243-9ebe0086e3af
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.stefano_list_of_sources
+  module:
+    - system
+    - views
+  theme:
+    - medmus
+id: views_block__stefano_list_of_sources_block_2
+theme: medmus
+region: content
+weight: -10
+provider: null
+plugin: 'views_block:stefano_list_of_sources-block_2'
+settings:
+  id: 'views_block:stefano_list_of_sources-block_2'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: '40'
+visibility:
+  request_path:
+    id: request_path
+    pages: /content/sources
+    negate: false
+    context_mapping: {  }

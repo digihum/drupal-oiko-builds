@@ -15,19 +15,22 @@ domain_bundles:
 range_bundles:
   9: e21_person
   11: ec7_source
-  12: ec9_print
-  13: ec8_manuscript
+  12: ec8_manuscript
+  13: ec9_print
 editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: time
 widget_description:
-  domain: "\n\n"
-autocomplete_description:
   domain: ''
   range: ''
+autocomplete_description:
+  domain: ''
+  range: '<p>DATE of destruction (an event <i>Destruction</i> with this Time-span will be automatically generated)</p>'
 child_events:
   domain: domain
   range: 0

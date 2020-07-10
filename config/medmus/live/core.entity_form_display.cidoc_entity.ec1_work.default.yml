@@ -16,13 +16,13 @@ third_party_settings:
     group_descriptive_text:
       children:
         - content
-      parent_name: group_main_deets
-      weight: 18
+      parent_name: group_main_details
+      weight: 12
       label: 'Descriptive text'
-      format_type: fieldset
+      format_type: tab
       format_settings:
         description: ''
-        formatter: open
+        formatter: closed
         fieldset_label_html: true
         required_fields: true
         id: ''
@@ -33,7 +33,7 @@ third_party_settings:
         - group_main_deets
         - group_oiko_world_settings
       parent_name: ''
-      weight: 3
+      weight: 1
       label: 'Main data entry'
       format_type: tabs
       format_settings:
@@ -45,46 +45,31 @@ third_party_settings:
     group_main_deets:
       children:
         - name
-        - internal_name
-        - citation
-        - 'cidoc_properties:domain:pc1_has_metrical_affinities_with'
-        - 'cidoc_properties:domain:pc2_is_contrafactum_of'
-        - 'cidoc_properties:domain:pc3_has_genre'
-        - 'cidoc_properties:domain:pc4_has_formal_feature'
-        - 'cidoc_properties:domain:pc5_has_expression'
-        - 'cidoc_properties:domain:pc8_has_syllabic_scheme'
-        - 'cidoc_properties:domain:pc9_has_rhyme_scheme'
-        - 'cidoc_properties:domain:p72_has_language'
-        - 'cidoc_properties:range:p128_carries'
-        - 'cidoc_properties:range:p94_has_created'
-        - 'cidoc_properties:range:pc2_is_contrafactum_of'
-        - 'cidoc_properties:range:pc5_has_expression'
-        - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
-        - 'cidoc_properties:domain:p48_has_preferred_identifier'
-        - group_descriptive_text
+        - significance
+        - group_main_details
       parent_name: group_data
       weight: 3
       label: 'Main details'
       format_type: tab
       format_settings:
+        fieldset_label_html: true
+        direction: horizontal
+        id: ''
+        classes: ''
         formatter: closed
         description: ''
-        classes: ''
-        id: ''
         required_fields: true
-        fieldset_label_html: true
       region: content
     group_oiko_world_settings:
       children:
         - status
-        - significance
         - user_id
         - timeline_preselect_option
         - timeline_logo
         - path
       parent_name: group_data
       weight: 5
-      format_type: tab
+      format_type: tabs
       format_settings:
         id: ''
         classes: ''
@@ -92,8 +77,147 @@ third_party_settings:
         description: ''
         required_fields: true
         fieldset_label_html: true
+        direction: vertical
       label: 'Connecting Medieval Music settings'
       region: content
+    group_metrical_and_formal_featur:
+      children:
+        - 'cidoc_properties:domain:p72_has_language'
+        - 'cidoc_properties:domain:pc3_has_genre'
+        - 'cidoc_properties:domain:pc4_has_formal_feature'
+        - 'cidoc_properties:domain:pc2_is_contrafactum_of'
+        - 'cidoc_properties:range:pc2_is_contrafactum_of'
+        - 'cidoc_properties:domain:pc1_has_metrical_affinities_with'
+        - 'cidoc_properties:domain:pc9_has_rhyme_scheme'
+        - 'cidoc_properties:domain:pc8_has_syllabic_scheme'
+      parent_name: group_main_details
+      weight: 7
+      format_type: tab
+      region: content
+      format_settings:
+        description: ''
+        formatter: closed
+        required_fields: true
+        id: ''
+        classes: ''
+        fieldset_label_html: false
+      label: 'Formal and Metrical Features'
+    group_sources:
+      children:
+        - 'cidoc_properties:range:p128_carries'
+      parent_name: group_main_details
+      weight: 8
+      format_type: tab
+      region: content
+      format_settings:
+        direction: vertical
+        id: ''
+        classes: ''
+        fieldset_label_html: false
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: Sources
+    group_expression:
+      children:
+        - 'cidoc_properties:domain:pc5_has_expression'
+        - 'cidoc_properties:range:pc5_has_expression'
+      parent_name: group_main_details
+      weight: 11
+      format_type: tab
+      region: content
+      format_settings:
+        direction: vertical
+        id: ''
+        classes: ''
+        fieldset_label_html: false
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: Expression
+    group_music:
+      children:
+        - 'cidoc_properties:domain:pc7_has_music'
+      parent_name: group_main_details
+      weight: 10
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: Music
+    group_appellation:
+      children:
+        - 'cidoc_properties:domain:p102_has_title'
+        - 'cidoc_properties:domain:p48_has_preferred_identifier'
+      parent_name: group_main_details
+      weight: 5
+      format_type: tab
+      region: content
+      format_settings:
+        description: "Insert incipit or title in the field <strong>P102 Has title</strong>.<br/>\r\nInsert an alphanumeric identifier from a repertoire in the field <strong>P48 Has preferred identifier</strong> <i>(Ex. BdT 366.6; IBAT 182.1)</i>."
+        formatter: open
+        required_fields: true
+        id: ''
+        classes: ''
+        fieldset_label_html: false
+      label: Appellation
+    group_date:
+      children:
+        - 'cidoc_properties:range:p94_has_created'
+      parent_name: group_main_details
+      weight: 6
+      format_type: tab
+      region: content
+      format_settings:
+        description: "<h4>Start creating a Creation event by typing a DATE OF COMPOSITION. </h4><br/>\r\nAn event E65 Creation with this Time-Span will be automatically generated. <br/>\r\nTo edit this date later, click on <i>Edit this E65 Creation</i> and click on the tab <i>When</i>. Then edit the Time-Span.\r\n"
+        formatter: closed
+        required_fields: true
+        id: ''
+        classes: ''
+        fieldset_label_html: false
+      label: 'Creation (DATE)'
+    group_main_details:
+      children:
+        - group_appellation
+        - group_date
+        - group_metrical_and_formal_featur
+        - group_sources
+        - group_references
+        - group_music
+        - group_expression
+        - group_descriptive_text
+        - citation
+      parent_name: group_main_deets
+      weight: 23
+      format_type: tabs
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        direction: horizontal
+      label: 'Main details'
+    group_references:
+      children:
+        - 'cidoc_properties:domain:p67_refers_to'
+        - 'cidoc_properties:range:p67_refers_to'
+      parent_name: group_main_details
+      weight: 9
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: 'Insert Persons, Places, Works, Appellations (like senhals) etc, mentioned by this work.'
+        formatter: closed
+        required_fields: true
+      label: References
 _core:
   default_config_hash: wy6wGXCXt2AqnVdVxorIQVb3dn0lnsNhSljZtN-XFv0
 id: cidoc_entity.ec1_work.default
@@ -101,6 +225,11 @@ targetEntityType: cidoc_entity
 bundle: ec1_work
 mode: default
 content:
+  'cidoc_properties:domain:p102_has_title':
+    weight: 23
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
     weight: 8
     region: content
@@ -167,7 +296,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 17
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -176,8 +305,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:p67_refers_to':
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p72_has_language':
-    weight: 11
+    weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -192,37 +326,42 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pc1_has_metrical_affinities_with':
-    weight: 4
+    weight: 30
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pc2_is_contrafactum_of':
-    weight: 5
+    weight: 28
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pc3_has_genre':
-    weight: 6
+    weight: 26
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pc4_has_formal_feature':
-    weight: 7
+    weight: 27
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pc5_has_expression':
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc7_has_music':
     weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pc8_has_syllabic_scheme':
-    weight: 9
+    weight: 32
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pc9_has_rhyme_scheme':
-    weight: 10
+    weight: 31
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -232,12 +371,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p128_carries':
-    weight: 12
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:range:p12_occurred_in_the_presence_of':
-    weight: 16
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -256,8 +390,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:range:p67_refers_to':
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p94_has_created':
-    weight: 13
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -267,18 +406,18 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:pc2_is_contrafactum_of':
-    weight: 14
+    weight: 29
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:pc5_has_expression':
-    weight: 15
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   citation:
     type: entity_reference_paragraphs
-    weight: 3
+    weight: 13
     settings:
       title: Citation
       title_plural: Citations
@@ -295,23 +434,15 @@ content:
     third_party_settings: {  }
   content:
     type: text_textarea
-    weight: 0
+    weight: 11
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
     region: content
-  internal_name:
-    type: string_textfield
-    weight: 2
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    region: content
   name:
     type: string_textfield
-    weight: 1
+    weight: 21
     settings:
       size: 60
       placeholder: ''
@@ -325,7 +456,7 @@ content:
     third_party_settings: {  }
   significance:
     type: options_select
-    weight: 13
+    weight: 22
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -364,5 +495,7 @@ content:
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
+  internal_name: true

@@ -8,48 +8,53 @@ id: p2_has_type
 label: 'P2 has type'
 bidirectional: false
 reverse_label: 'P2 is type of'
-friendly_label: 'has type'
+friendly_label: Type
 reverse_friendly_label: 'Is type of'
 domain_bundles:
-  3: e52_time_span
-  4: e53_place
+  2: e52_time_span
+  3: e53_place
   10: e5_event
-  13: e21_person
-  14: e74_group
+  11: e21_person
+  12: e74_group
   17: e7_activity
-  23: e68_dissolution
-  24: e6_destruction
-  26: e69_death
-  27: e67_birth
-  28: e65_creation
-  29: e12_production
-  30: e66_formation
-  34: e9_move
-  46: e55_type
+  23: e12_production
+  24: e65_creation
+  25: e66_formation
+  26: e67_birth
+  28: e68_dissolution
+  29: e69_death
+  30: e6_destruction
+  34: e85_joining
+  35: e86_leaving
+  38: e9_move
+  45: e55_type
   47: ec2_genre
-  51: e41_appellation
+  50: e41_appellation
   52: ec3_formal_feature
   61: ec7_source
-  64: e56_language
-  65: e57_material
-  72: ec6_music
-  73: e35_title
-  78: e42_identifier
-  80: ec9_print
-  81: ec8_manuscript
-  86: ec1_work
+  62: e56_language
+  63: e57_material
+  68: e35_title
+  69: e42_identifier
+  79: ec6_music
+  80: ec8_manuscript
+  81: ec9_print
+  89: ec1_work
 range_bundles:
-  0: e55_type
-  2: e56_language
-  3: e57_material
+  - e55_type
+  - e56_language
+  - e57_material
 editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
 widget_description:
-  domain: "\n\n"
+  domain: ''
+  range: ''
 autocomplete_description:
   domain: ''
   range: ''

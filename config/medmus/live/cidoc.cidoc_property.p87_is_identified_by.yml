@@ -1,0 +1,31 @@
+uuid: e4427068-ffaa-494b-b065-8680cdcec28e
+langcode: en
+status: true
+dependencies: {  }
+id: p87_is_identified_by
+label: 'P87 is identified by'
+bidirectional: false
+reverse_label: 'P87 identifies'
+friendly_label: 'Is identified by'
+reverse_friendly_label: Identifies
+domain_bundles:
+  e53_place: e53_place
+range_bundles:
+  e41_appellation: e41_appellation
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: 'Alternative appellation, such modern appellation or translation. (Acre;  Akko)'
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

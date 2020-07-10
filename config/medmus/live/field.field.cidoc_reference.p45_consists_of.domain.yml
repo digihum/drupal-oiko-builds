@@ -29,7 +29,7 @@ settings:
     target_bundles:
       e21_person: e21_person
       ec7_source: ec7_source
-      ec9_print: ec9_print
       ec8_manuscript: ec8_manuscript
+      ec9_print: ec9_print
     auto_create_bundle: e21_person
 field_type: entity_reference

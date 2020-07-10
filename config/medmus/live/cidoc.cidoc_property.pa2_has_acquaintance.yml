@@ -1,0 +1,31 @@
+uuid: 6f4df78f-20dd-4022-a9a6-82cc0d18ff95
+langcode: en
+status: true
+dependencies: {  }
+id: pa2_has_acquaintance
+label: 'PA2 has acquaintance'
+bidirectional: true
+reverse_label: pa2_has_acquaintance
+friendly_label: ''
+reverse_friendly_label: ''
+domain_bundles:
+  e21_person: e21_person
+range_bundles:
+  e21_person: e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

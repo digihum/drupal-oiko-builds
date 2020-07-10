@@ -1,0 +1,29 @@
+uuid: 7c96e7d6-2a0b-4517-ac84-0b9af6a8aad3
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_property.pa18_has_godmother
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.pa18_has_godmother.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: pa18_has_godmother
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e21_person: e21_person
+    auto_create_bundle: e21_person
+field_type: entity_reference

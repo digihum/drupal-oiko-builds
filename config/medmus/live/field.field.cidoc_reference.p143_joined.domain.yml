@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - cidoc.cidoc_entity_bundle.e85_joining
     - cidoc.cidoc_property.p143_joined
     - field.storage.cidoc_reference.domain
 id: cidoc_reference.p143_joined.domain
@@ -22,6 +23,7 @@ settings:
     sort:
       field: name
       direction: ASC
-    target_bundles: {  }
-    auto_create_bundle: null
+    target_bundles:
+      e85_joining: e85_joining
+    auto_create_bundle: e85_joining
 field_type: entity_reference

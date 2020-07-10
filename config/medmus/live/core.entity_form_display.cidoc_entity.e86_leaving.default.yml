@@ -1,0 +1,174 @@
+uuid: 973574f1-85fd-4e68-9629-4c556d4284e1
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e86_leaving
+    - image.style.thumbnail
+  module:
+    - field_group
+    - image
+    - paragraphs
+    - path
+third_party_settings:
+  field_group:
+    group_when:
+      children:
+        - 'cidoc_properties:domain:p7_took_place_at'
+      parent_name: ''
+      weight: 7
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: When
+    group_where:
+      children:
+        - 'cidoc_properties:domain:p4_has_time_span'
+      parent_name: ''
+      weight: 8
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: Where
+    group_pe:
+      children:
+        - 'cidoc_properties:domain:p145_separated'
+        - 'cidoc_properties:domain:p146_separated_from'
+        - 'cidoc_properties:domain:p14_carried_out_by'
+        - 'cidoc_properties:domain:p11_had_participant'
+        - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
+      parent_name: ''
+      weight: 9
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: 'People / Groups'
+id: cidoc_entity.e86_leaving.default
+targetEntityType: cidoc_entity
+bundle: e86_leaving
+mode: default
+content:
+  'cidoc_properties:domain:p11_had_participant':
+    weight: 16
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p12_occurred_in_the_presence_of':
+    weight: 17
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p145_separated':
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p146_separated_from':
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p14_carried_out_by':
+    weight: 15
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p2_has_type':
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p4_has_time_span':
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p7_took_place_at':
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  citation:
+    type: entity_reference_paragraphs
+    weight: 3
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: button
+      form_display_mode: default
+      default_paragraph_type: ''
+    region: content
+    third_party_settings: {  }
+  class_description:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  significance:
+    type: options_select
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 11
+    region: content
+    third_party_settings: {  }
+  timeline_logo:
+    type: image_image
+    weight: 5
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    region: content
+    third_party_settings: {  }
+  timeline_preselect_option:
+    type: boolean_checkbox
+    weight: 4
+    settings:
+      display_label: true
+    region: content
+    third_party_settings: {  }
+hidden:
+  'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:p48_has_preferred_identifier': true
+  'cidoc_properties:range:p67_refers_to': true
+  content: true
+  internal_name: true
+  user_id: true

@@ -1,0 +1,30 @@
+uuid: 62bece02-c3a4-42bf-af73-81b7f76fad1a
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.stefano_map_of_manuscripts_production
+  module:
+    - system
+    - views
+  theme:
+    - medmus
+id: views_block__stefano_map_of_manuscripts_production_block_1_2
+theme: medmus
+region: content
+weight: -11
+provider: null
+plugin: 'views_block:stefano_map_of_manuscripts_production-block_1'
+settings:
+  id: 'views_block:stefano_map_of_manuscripts_production-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: /content/sources
+    negate: false
+    context_mapping: {  }

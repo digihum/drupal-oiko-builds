@@ -1,0 +1,29 @@
+uuid: f30a5826-38af-4fe9-8cad-ab93f24441b9
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_property.pa17_has_godfather
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.pa17_has_godfather.range
+field_name: range
+entity_type: cidoc_reference
+bundle: pa17_has_godfather
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e21_person: e21_person
+    auto_create_bundle: e21_person
+field_type: entity_reference

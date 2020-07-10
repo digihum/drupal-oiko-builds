@@ -9,7 +9,7 @@ dependencies:
 id: medmus_discussionnotificationsblock
 theme: medmus
 region: user_header
-weight: -10
+weight: -12
 provider: null
 plugin: discussion_notifcations
 settings:

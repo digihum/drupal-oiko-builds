@@ -223,6 +223,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  'cidoc_properties:domain:p45_consists_of':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p100_was_death_of':
     weight: 24
     settings: {  }
@@ -295,6 +305,11 @@ content:
     region: content
   'cidoc_properties:range:p98_brought_into_life':
     weight: 18
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:pc7_has_music':
+    weight: 21
     settings: {  }
     third_party_settings: {  }
     region: content

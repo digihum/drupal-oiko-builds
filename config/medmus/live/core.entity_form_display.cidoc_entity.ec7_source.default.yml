@@ -33,7 +33,7 @@ third_party_settings:
         - group_main_deets
         - group_oiko_world_settings
       parent_name: ''
-      weight: 3
+      weight: 1
       label: 'Main data entry'
       format_type: tabs
       format_settings:
@@ -93,6 +93,11 @@ targetEntityType: cidoc_entity
 bundle: ec7_source
 mode: default
 content:
+  'cidoc_properties:domain:p102_has_title':
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
     weight: 8
     region: content
@@ -175,11 +180,6 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:p4_has_time_span':
     weight: 4
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:domain:p72_has_language':
-    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -391,5 +391,7 @@ content:
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p72_has_language': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
+  'cidoc_properties:range:p67_refers_to': true

@@ -1,0 +1,28 @@
+uuid: 5f124385-0db0-41d1-a02e-37c21ca37155
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa9_has_aunt_or_uncle
+    - core.entity_view_mode.cidoc_reference.range
+    - field.field.cidoc_reference.pa9_has_aunt_or_uncle.domain
+    - field.field.cidoc_reference.pa9_has_aunt_or_uncle.range
+id: cidoc_reference.pa9_has_aunt_or_uncle.range
+targetEntityType: cidoc_reference
+bundle: pa9_has_aunt_or_uncle
+mode: range
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  property: true
+  range: true
+  search_api_excerpt: true
+  user_id: true

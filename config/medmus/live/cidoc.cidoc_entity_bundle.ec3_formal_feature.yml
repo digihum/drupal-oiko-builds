@@ -5,9 +5,11 @@ dependencies: {  }
 crm_entity: ec3_formal_feature
 id: ec3_formal_feature
 label: 'EC3 Formal Feature'
-friendly_label: null
-weight: 10
+friendly_label: 'Formal features'
+weight: 8
 group: auxiliary
 description: "<p>This class contains the rhyme scheme in a stanza of a EC1 Work.</p>\n"
 examples: "<ul>\n<li>Strophic</li>\n<li>Prose</li>\n<li>Laisses of assonating decasyllables</li>\n<li>Couplets of octosyllables</li>\n</ul>\n"
-geoserializers: {  }
+geoserializers:
+  event: '0'
+  move: '0'

@@ -33,10 +33,8 @@ third_party_settings:
     group_main_deets:
       children:
         - name
-        - internal_name
-        - citation
         - field_date
-        - group_main_details
+        - 'cidoc_properties:range:p4_has_time_span'
       parent_name: group_main
       weight: 4
       label: 'Main details'
@@ -50,9 +48,12 @@ third_party_settings:
         fieldset_label_html: true
       region: content
     group_aux_deets:
-      children: {  }
+      children:
+        - group_appellations
+        - group_descriptive_text
+        - citation
       parent_name: group_main
-      weight: 5
+      weight: 6
       label: 'Auxiliary details'
       format_type: tab
       format_settings:
@@ -64,12 +65,9 @@ third_party_settings:
         fieldset_label_html: true
       region: content
     group_main_details:
-      children:
-        - group_appellations
-        - group_relations
-        - group_descriptive_text
-      parent_name: group_main_deets
-      weight: 5
+      children: {  }
+      parent_name: ''
+      weight: 2
       label: 'Main details'
       format_type: tabs
       format_settings:
@@ -80,8 +78,9 @@ third_party_settings:
       region: content
     group_appellations:
       children:
+        - internal_name
         - 'cidoc_properties:domain:p48_has_preferred_identifier'
-      parent_name: group_main_details
+      parent_name: group_aux_deets
       weight: 5
       label: 'Also known as'
       format_type: tab
@@ -94,19 +93,18 @@ third_party_settings:
         fieldset_label_html: true
       region: content
     group_relations:
-      children:
-        - 'cidoc_properties:range:p4_has_time_span'
-      parent_name: group_main_details
-      weight: 6
+      children: {  }
+      parent_name: ''
+      weight: 3
       label: Relations
       format_type: tab
       format_settings:
-        formatter: closed
         description: ''
-        classes: ''
-        id: ''
-        required_fields: true
+        formatter: open
         fieldset_label_html: true
+        required_fields: true
+        id: ''
+        classes: ''
       region: content
     group_oiko_world_settings:
       children:
@@ -117,7 +115,7 @@ third_party_settings:
         - timeline_logo
         - path
       parent_name: group_main
-      weight: 20
+      weight: 7
       format_type: tab
       format_settings:
         id: ''
@@ -131,7 +129,7 @@ third_party_settings:
     group_descriptive_text:
       children:
         - content
-      parent_name: group_main_details
+      parent_name: group_aux_deets
       weight: 7
       format_type: tab
       format_settings:
@@ -156,7 +154,7 @@ content:
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 4
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -166,13 +164,13 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p4_has_time_span':
-    weight: 7
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   citation:
     type: entity_reference_paragraphs
-    weight: 3
+    weight: 8
     settings:
       title: Citation
       title_plural: Citations
@@ -197,7 +195,7 @@ content:
     third_party_settings: {  }
   field_date:
     type: edtf_default
-    weight: 4
+    weight: 2
     settings:
       size: 60
       placeholder: ''
@@ -221,13 +219,13 @@ content:
     region: content
   path:
     type: path
-    weight: 125
+    weight: 11
     settings: {  }
     third_party_settings: {  }
     region: content
   significance:
     type: options_select
-    weight: 121
+    weight: 7
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -235,12 +233,12 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 120
+    weight: 6
     region: content
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 124
+    weight: 10
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -248,14 +246,14 @@ content:
     region: content
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 123
+    weight: 9
     settings:
       display_label: true
     third_party_settings: {  }
     region: content
   user_id:
     type: entity_reference_autocomplete
-    weight: 122
+    weight: 8
     region: content
     settings:
       match_operator: CONTAINS
@@ -275,6 +273,7 @@ hidden:
   'cidoc_properties:range:p16_used_specific_object': true
   'cidoc_properties:range:p17_was_motivated_by': true
   'cidoc_properties:range:p25_moved': true
+  'cidoc_properties:range:p67_refers_to': true
   'cidoc_properties:range:p96_by_mother': true
   'cidoc_properties:range:p97_from_father': true
   'cidoc_properties:range:p98_brought_into_life': true

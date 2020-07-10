@@ -21,7 +21,6 @@ third_party_settings:
     group_main:
       children:
         - group_main_deets
-        - group_aux_deets
         - group_oiko_world_settings
       parent_name: ''
       weight: 1
@@ -53,9 +52,10 @@ third_party_settings:
       region: content
     group_aux_deets:
       children:
+        - 'cidoc_properties:range:p7_took_place_at'
         - content
-      parent_name: group_main
-      weight: 5
+      parent_name: group_main_details
+      weight: 7
       label: 'Auxiliary details'
       format_type: tab
       format_settings:
@@ -70,6 +70,7 @@ third_party_settings:
       children:
         - group_appellations
         - group_hierarchy
+        - group_aux_deets
         - group_geodata
       parent_name: group_main_deets
       weight: 5
@@ -86,7 +87,8 @@ third_party_settings:
         - field_location_lookup
         - field_pleiades_uri
         - field_geodata
-        - 'cidoc_properties:domain:p48_has_preferred_identifier'
+        - 'cidoc_properties:domain:p87_is_identified_by'
+        - 'cidoc_properties:domain:p2_has_type'
       parent_name: group_main_details
       weight: 5
       label: 'Also known as'
@@ -102,7 +104,7 @@ third_party_settings:
     group_geodata:
       children: {  }
       parent_name: group_main_details
-      weight: 7
+      weight: 8
       label: Geodata
       format_type: tab
       format_settings:
@@ -131,6 +133,7 @@ third_party_settings:
       region: content
     group_oiko_world_settings:
       children:
+        - 'cidoc_properties:domain:p48_has_preferred_identifier'
         - status
         - significance
         - user_id
@@ -138,7 +141,7 @@ third_party_settings:
         - timeline_logo
         - path
       parent_name: group_main
-      weight: 20
+      weight: 7
       format_type: tab
       format_settings:
         id: ''
@@ -171,16 +174,21 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  'cidoc_properties:domain:p2_has_type':
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p48_has_preferred_identifier':
     weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p87_is_identified_by':
-    weight: 20
+    weight: 3
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p88_consists_of':
     weight: 20
     settings: {  }
@@ -188,6 +196,11 @@ content:
     region: content
   'cidoc_properties:domain:p89_falls_within':
     weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p7_took_place_at':
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -215,7 +228,7 @@ content:
     third_party_settings: {  }
   content:
     type: text_textarea
-    weight: 0
+    weight: 1
     region: content
     settings:
       rows: 5
@@ -274,13 +287,13 @@ content:
     region: content
   path:
     type: path
-    weight: 125
+    weight: 9
     settings: {  }
     third_party_settings: {  }
     region: content
   significance:
     type: options_select
-    weight: 121
+    weight: 5
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -288,12 +301,12 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 120
+    weight: 4
     region: content
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 124
+    weight: 8
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -301,14 +314,14 @@ content:
     region: content
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 123
+    weight: 7
     settings:
       display_label: true
     third_party_settings: {  }
     region: content
   user_id:
     type: entity_reference_autocomplete
-    weight: 122
+    weight: 6
     region: content
     settings:
       match_operator: CONTAINS
@@ -318,7 +331,7 @@ content:
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
-  'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p72_has_language': true
   'cidoc_properties:range:p100_was_death_of': true
   'cidoc_properties:range:p11_had_participant': true
   'cidoc_properties:range:p121_overlaps_with': true
@@ -332,7 +345,7 @@ hidden:
   'cidoc_properties:range:p25_moved': true
   'cidoc_properties:range:p26_moved_to': true
   'cidoc_properties:range:p27_moved_from': true
-  'cidoc_properties:range:p7_took_place_at': true
+  'cidoc_properties:range:p67_refers_to': true
   'cidoc_properties:range:p88_consists_of': true
   'cidoc_properties:range:p96_by_mother': true
   'cidoc_properties:range:p97_from_father': true

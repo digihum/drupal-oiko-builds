@@ -7,7 +7,7 @@ dependencies:
 id: medmus_local_actions
 theme: medmus
 region: content
-weight: -5
+weight: -14
 provider: null
 plugin: local_actions_block
 settings:

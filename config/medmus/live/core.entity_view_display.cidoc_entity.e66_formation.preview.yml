@@ -7,59 +7,100 @@ dependencies:
     - core.entity_view_mode.cidoc_entity.preview
   module:
     - entity_reference_revisions
+    - field_group
     - text
+third_party_settings:
+  field_group:
+    group_e66_:
+      children:
+        - name
+        - internal_name
+        - significance
+        - content
+        - cidoc_properties
+        - citation
+        - user_id
+        - cidoc_admin_links
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: 'style="border-bottom: 2px solid #657986;"'
+        effect: none
+        speed: fast
+      label: 'E66 Formation'
 id: cidoc_entity.e66_formation.preview
 targetEntityType: cidoc_entity
 bundle: e66_formation
 mode: preview
 content:
-  cidoc_properties:
+  cidoc_admin_links:
+    weight: 8
     region: content
-    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  cidoc_properties:
+    weight: 5
+    region: content
     settings: {  }
     third_party_settings: {  }
   citation:
     region: content
     type: entity_reference_revisions_entity_view
-    label: above
+    label: inline
     settings:
       view_mode: default
       link: ''
-    weight: 5
+    weight: 6
     third_party_settings: {  }
   content:
     region: content
     type: text_default
     label: visually_hidden
     settings: {  }
-    weight: 3
+    weight: 4
     third_party_settings: {  }
   internal_name:
     region: content
     type: string
-    label: above
+    label: inline
     settings:
       link_to_entity: false
-    weight: 1
+    weight: 2
     third_party_settings: {  }
   name:
     region: content
     type: string
     label: hidden
     settings:
-      link_to_entity: false
-    weight: 0
+      link_to_entity: true
+    weight: 1
     third_party_settings: {  }
   significance:
     region: content
     type: entity_reference_label
-    label: above
+    label: inline
     settings:
       link: true
-    weight: 2
+    weight: 3
+    third_party_settings: {  }
+  user_id:
+    type: entity_reference_label
+    weight: 7
+    region: content
+    label: inline
+    settings:
+      link: true
     third_party_settings: {  }
 hidden:
-  cidoc_admin_links: true
   'cidoc_properties:domain:p10_falls_within': true
   'cidoc_properties:domain:p11_had_participant': true
   'cidoc_properties:domain:p12_occurred_in_the_presence_of': true
@@ -81,6 +122,7 @@ hidden:
   'cidoc_properties:range:p134_continued': true
   'cidoc_properties:range:p15_was_influenced_by': true
   'cidoc_properties:range:p17_was_motivated_by': true
+  'cidoc_properties:range:p67_refers_to': true
   'cidoc_properties:range:p9_consists_of': true
   cidoc_properties_transcript: true
   cidoc_temporal_summary: true
@@ -107,4 +149,3 @@ hidden:
   timeline_link: true
   timeline_logo: true
   timeline_preselect_option: true
-  user_id: true

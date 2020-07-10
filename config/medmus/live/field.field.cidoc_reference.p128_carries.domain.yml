@@ -27,7 +27,7 @@ settings:
       direction: ASC
     target_bundles:
       ec7_source: ec7_source
-      ec9_print: ec9_print
       ec8_manuscript: ec8_manuscript
+      ec9_print: ec9_print
     auto_create_bundle: ec7_source
 field_type: entity_reference

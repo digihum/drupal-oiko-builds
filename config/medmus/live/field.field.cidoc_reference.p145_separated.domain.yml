@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - cidoc.cidoc_entity_bundle.e86_leaving
     - cidoc.cidoc_property.p145_separated
     - field.storage.cidoc_reference.domain
 id: cidoc_reference.p145_separated.domain
@@ -22,6 +23,7 @@ settings:
     sort:
       field: name
       direction: ASC
-    target_bundles: {  }
-    auto_create_bundle: null
+    target_bundles:
+      e86_leaving: e86_leaving
+    auto_create_bundle: e86_leaving
 field_type: entity_reference

@@ -1,0 +1,28 @@
+uuid: b67b0435-3227-479a-b9ed-831c85fae472
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa8_has_cousin
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pa8_has_cousin.domain
+    - field.field.cidoc_reference.pa8_has_cousin.range
+id: cidoc_reference.pa8_has_cousin.domain
+targetEntityType: cidoc_reference
+bundle: pa8_has_cousin
+mode: domain
+content:
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  domain: true
+  property: true
+  search_api_excerpt: true
+  user_id: true

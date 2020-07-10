@@ -1,0 +1,23 @@
+uuid: e42c61f0-7c7b-4184-81fe-afcbe048af36
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.p67_refers_to
+    - field.storage.cidoc_reference.field_don_t_show_in_map
+id: cidoc_reference.p67_refers_to.field_don_t_show_in_map
+field_name: field_don_t_show_in_map
+entity_type: cidoc_reference
+bundle: p67_refers_to
+label: 'Link to places'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

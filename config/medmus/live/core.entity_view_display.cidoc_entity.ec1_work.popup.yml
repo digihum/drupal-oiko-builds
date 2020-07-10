@@ -1,0 +1,155 @@
+uuid: b965cb3f-b6d6-4cf2-8a77-06fe5374fd5e
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - core.entity_view_mode.cidoc_entity.popup
+  module:
+    - text
+id: cidoc_entity.ec1_work.popup
+targetEntityType: cidoc_entity
+bundle: ec1_work
+mode: popup
+content:
+  cidoc_admin_links:
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p102_has_title':
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p2_has_type':
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p67_refers_to':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p72_has_language':
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc1_has_metrical_affinities_with':
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc3_has_genre':
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc4_has_formal_feature':
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc5_has_expression':
+    weight: 18
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc8_has_syllabic_scheme':
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc9_has_rhyme_scheme':
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p12_occurred_in_the_presence_of':
+    weight: 22
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p67_refers_to':
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pc5_has_expression':
+    weight: 19
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  cidoc_temporal_summary:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  content:
+    region: content
+    label: hidden
+    type: text_default
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  creation_of_work_info_entity_view_1:
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    region: content
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    weight: 0
+    third_party_settings: {  }
+  significance:
+    region: content
+    type: entity_reference_entity_view
+    label: visually_hidden
+    settings:
+      view_mode: primary_historical_significance_pill
+      link: false
+    weight: 2
+    third_party_settings: {  }
+  sources_of_work_entity_view_1:
+    weight: 23
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  work_contrafactum_of_entity_view_1:
+    weight: 15
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  work_model_of_entity_view_1:
+    weight: 16
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  cidoc_properties: true
+  'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:pc2_is_contrafactum_of': true
+  'cidoc_properties:domain:pc7_has_music': true
+  'cidoc_properties:range:p128_carries': true
+  'cidoc_properties:range:p94_has_created': true
+  'cidoc_properties:range:pc2_is_contrafactum_of': true
+  cidoc_properties_transcript: true
+  citation: true
+  internal_name: true
+  map_link: true
+  search_api_excerpt: true
+  timeline_link: true
+  timeline_logo: true
+  timeline_preselect_option: true
+  user_id: true

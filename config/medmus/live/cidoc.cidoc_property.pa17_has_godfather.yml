@@ -1,0 +1,31 @@
+uuid: 33015942-b53b-48ff-a554-8384fa650014
+langcode: en
+status: true
+dependencies: {  }
+id: pa17_has_godfather
+label: 'PA17 has godfather'
+bidirectional: false
+reverse_label: 'PA17 is godfather of'
+friendly_label: Godfather
+reverse_friendly_label: 'Godfather of'
+domain_bundles:
+  e21_person: e21_person
+range_bundles:
+  e21_person: e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

@@ -19,6 +19,8 @@ enabled_entities:
   - e68_dissolution
   - e69_death
   - e74_group
+  - e85_joining
+  - e86_leaving
   - ec1_work
   - ec2_genre
   - ec3_formal_feature
@@ -28,6 +30,7 @@ enabled_entities:
   - ec7_source
   - ec8_manuscript
   - ec9_print
+  - ec10_marriage
 enabled_properties:
   - p1_is_identified_by
   - p2_has_type
@@ -41,7 +44,10 @@ enabled_properties:
   - p27_moved_from
   - p45_consists_of
   - p48_has_preferred_identifier
+  - p67_refers_to
   - p72_has_language
+  - p78_is_identified_by
+  - p87_is_identified_by
   - p89_falls_within
   - p94_has_created
   - p95_has_formed
@@ -50,10 +56,29 @@ enabled_properties:
   - p98_brought_into_life
   - p99_dissolved
   - p100_was_death_of
+  - p102_has_title
   - p108_has_produced
   - p128_carries
+  - p131_is_identified_by
   - p139_has_alternative_form
   - pa1_has_patron
+  - pa2_has_acquaintance
+  - pa3_has_friend
+  - pa4_has_muse
+  - pa5_has_lover
+  - pa6_has_murder_victim
+  - pa7_has_sibling
+  - pa8_has_cousin
+  - pa9_has_aunt_or_uncle
+  - pa10_has_grandchild
+  - pa11_has_ancestor
+  - pa12_has_adoptive_child
+  - pa13_has_illegitimate_child
+  - pa14_has_relative
+  - pa15_has_child-in-law
+  - pa16_has_sibling-in-law
+  - pa17_has_godfather
+  - pa18_has_godmother
   - pc1_has_metrical_affinities_with
   - pc2_is_contrafactum_of
   - pc3_has_genre

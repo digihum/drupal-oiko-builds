@@ -5,6 +5,7 @@ dependencies:
   config:
     - cidoc.cidoc_property.p11_had_participant
     - field.field.cidoc_reference.p11_had_participant.domain
+    - field.field.cidoc_reference.p11_had_participant.field_in_the_role_of
     - field.field.cidoc_reference.p11_had_participant.range
 _core:
   default_config_hash: ZALVL-oBY2AJ2hI91ZzOG2dyN1WyASMDyLHwbSucpmI
@@ -19,6 +20,14 @@ content:
     weight: -3
     settings: {  }
     third_party_settings: {  }
+    region: content
+  field_in_the_role_of:
+    weight: 0
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
     region: content
   property:
     label: inline
@@ -37,4 +46,5 @@ content:
     region: content
 hidden:
   citation: true
+  search_api_excerpt: true
   user_id: true

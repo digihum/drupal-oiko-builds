@@ -1,0 +1,25 @@
+uuid: cc196e3a-f084-4ffd-95f9-b7157b2fbbbf
+langcode: en
+status: true
+dependencies: {  }
+id: pa12_has_adoptive_child
+label: pa12_has_adoptive_child
+bidirectional: false
+reverse_label: pa12_has_adoptive_child
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  - e21_person
+range_bundles:
+  - e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description: {  }
+autocomplete_description: {  }
+child_events: {  }

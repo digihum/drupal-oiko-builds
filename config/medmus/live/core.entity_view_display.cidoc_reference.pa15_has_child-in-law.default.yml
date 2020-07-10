@@ -1,0 +1,39 @@
+uuid: af9ebc29-7d2d-45bd-9091-ffc9c57ef025
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pa15_has_child-in-law
+    - field.field.cidoc_reference.pa15_has_child-in-law.domain
+    - field.field.cidoc_reference.pa15_has_child-in-law.range
+id: cidoc_reference.pa15_has_child-in-law.default
+targetEntityType: cidoc_reference
+bundle: pa15_has_child-in-law
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    region: content
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  search_api_excerpt: true
+  user_id: true

@@ -1,0 +1,25 @@
+uuid: 3f6f7351-3399-4367-a7f7-593d6adf11d8
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:simple_block:0264ea9c-656b-4926-ae6e-3a014c40cbdf'
+  module:
+    - block_content
+  theme:
+    - medmus
+id: sources
+theme: medmus
+region: user_header
+weight: -15
+provider: null
+plugin: 'block_content:0264ea9c-656b-4926-ae6e-3a014c40cbdf'
+settings:
+  id: 'block_content:0264ea9c-656b-4926-ae6e-3a014c40cbdf'
+  label: Sources
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

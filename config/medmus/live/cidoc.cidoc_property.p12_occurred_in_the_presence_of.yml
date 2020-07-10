@@ -13,38 +13,43 @@ reverse_friendly_label: 'Was present at'
 domain_bundles:
   0: e5_event
   3: e7_activity
-  4: e68_dissolution
-  5: e6_destruction
-  7: e69_death
-  8: e67_birth
-  9: e65_creation
-  10: e12_production
-  11: e66_formation
-  15: e9_move
+  4: e12_production
+  5: e65_creation
+  6: e66_formation
+  7: e67_birth
+  9: e68_dissolution
+  10: e69_death
+  11: e6_destruction
+  15: e85_joining
+  16: e86_leaving
+  19: e9_move
 range_bundles:
-  5: e21_person
-  6: e74_group
-  16: e55_type
+  3: e21_person
+  4: e74_group
+  15: e55_type
   17: ec2_genre
-  21: e41_appellation
+  20: e41_appellation
   22: ec3_formal_feature
   24: ec7_source
-  27: e56_language
-  28: e57_material
-  35: ec6_music
-  36: e35_title
-  41: e42_identifier
-  43: ec9_print
-  44: ec8_manuscript
-  49: ec1_work
+  25: e56_language
+  26: e57_material
+  31: e35_title
+  32: e42_identifier
+  42: ec6_music
+  43: ec8_manuscript
+  44: ec9_print
+  52: ec1_work
 editability:
   domain: true
   range: true
 timesubwidget:
-  domain: false
-  range: false
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
 widget_description:
-  domain: "\n\n"
+  domain: "\r\n"
+  range: ''
 autocomplete_description:
   domain: ''
   range: ''

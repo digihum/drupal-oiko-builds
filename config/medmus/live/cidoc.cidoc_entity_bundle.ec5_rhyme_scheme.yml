@@ -5,9 +5,11 @@ dependencies: {  }
 crm_entity: ec5_rhyme_scheme
 id: ec5_rhyme_scheme
 label: 'EC5 Rhyme Scheme'
-friendly_label: null
-weight: 12
+friendly_label: 'Rhyme scheme'
+weight: 10
 group: auxiliary
 description: "<p>This class contains the rhyme scheme in a stanza of a EC1 Work.</p>\n"
 examples: "<ul>\n<li>a b a b a b b</li>\n<li>a a a a Z</li>\n</ul>\n"
-geoserializers: {  }
+geoserializers:
+  event: '0'
+  move: '0'
