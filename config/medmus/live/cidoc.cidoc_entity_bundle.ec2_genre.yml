@@ -8,8 +8,8 @@ label: 'EC2 Genre'
 friendly_label: Genre
 weight: 7
 group: auxiliary
-description: "<p>Literary genre, when possible, according to the thesaurus \"Library of Congress Genre/Form Terms\" (LCGFT), http://id.loc.gov/authorities/genreForms.html</p>\n"
-examples: "<ul>\n<li>Tensos (ELC1)</li>\n<li>Crusading songs (ELC1)</li>\n<li>Romances (EC5)</li>\n<li>Epic Poetry (EC5)</li>\n</ul>\n"
+description: '<p>Literary genre, when possible, according to the thesaurus "Library of Congress Genre/Form Terms" (LCGFT), http://id.loc.gov/authorities/genreForms.html</p>'
+examples: "<ul>\r\n<li>Tensos (ELC1)</li>\r\n<li>Crusading songs (ELC1)</li>\r\n<li>Romances (EC5)</li>\r\n<li>Epic Poetry (EC5)</li>\r\n</ul>"
 geoserializers:
   event: '0'
   move: '0'

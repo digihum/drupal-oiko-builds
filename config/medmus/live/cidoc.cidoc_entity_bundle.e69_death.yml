@@ -10,8 +10,8 @@ label: 'E69 Death'
 friendly_label: Death
 weight: -3
 group: auxiliary
-description: "<p>This class comprises the deaths of human beings.</p>\n\n<p>If a person is killed, their death should be instantiated as E69 Death and as E7 Activity. The\ndeath or perishing of other living beings should be documented using E64 End of Existence.</p>\n"
-examples: "<ul>\n<li>the murder of Julius Caesar (E69,E7)</li>\n<li>the death of Senator Paul Wellstone</li>\n</ul>\n"
+description: "<p>This class comprises the deaths of human beings.</p>\r\n\r\n<p>If a person is killed, their death should be instantiated as E69 Death and as E7 Activity. The\r\ndeath or perishing of other living beings should be documented using E64 End of Existence.</p>"
+examples: "<ul>\r\n<li>the murder of Julius Caesar (E69,E7)</li>\r\n<li>the death of Senator Paul Wellstone</li>\r\n</ul>"
 geoserializers:
   event: event
   move: '0'

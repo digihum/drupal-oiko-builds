@@ -8,8 +8,8 @@ label: 'E86 Leaving'
 friendly_label: Leaving
 weight: 0
 group: auxiliary
-description: "<p>This class comprises the activities that result in an instance of E39 Actor to be disassociated\r\nfrom an instance of E74 Group. This class does not imply initiative by either party.\r\nTypical scenarios include the termination of membership in a social organisation, ending the\r\nemployment at a company, divorce, and the end of tenure of somebody in an official position.</p>\r\n"
-examples: "<ul>\r\n<li>The end of Sir Isaac Newton’s duty as Member of Parliament for the University of\r\nCambridge to the Convention Parliament in 1702</li>\r\n<li>George Washington’s leaving office in 1797</li>\r\n<li>The implementation of the treaty regulating the termination of Greenland’s membership in\r\nEU between EU, Denmark and Greenland February 1. 1985</li>\r\n</ul>\r\n"
+description: "<p>This class comprises the activities that result in an instance of E39 Actor to be disassociated\r\nfrom an instance of E74 Group. This class does not imply initiative by either party.\r\nTypical scenarios include the termination of membership in a social organisation, ending the\r\nemployment at a company, divorce, and the end of tenure of somebody in an official position.</p>"
+examples: "<ul>\r\n<li>The end of Sir Isaac Newton’s duty as Member of Parliament for the University of\r\nCambridge to the Convention Parliament in 1702</li>\r\n<li>George Washington’s leaving office in 1797</li>\r\n<li>The implementation of the treaty regulating the termination of Greenland’s membership in\r\nEU between EU, Denmark and Greenland February 1. 1985</li>\r\n</ul>"
 geoserializers:
   event: event
   move: '0'

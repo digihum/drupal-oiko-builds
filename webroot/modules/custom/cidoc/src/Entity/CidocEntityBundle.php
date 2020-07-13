@@ -294,11 +294,11 @@ class CidocEntityBundle extends ConfigEntityBundleBase implements RevisionableEn
     parent::preSave($storage);
 
     if (!empty($this->description)) {
-      $this->description = preg_replace('/\r\n|\r|\n/', "\r\n", $this->description);
+      $this->description = preg_replace('/\r\n|\r|\n/', "\r\n", trim($this->description));
     }
 
     if (!empty($this->examples)) {
-      $this->examples = preg_replace('/\r\n|\r|\n/', "\r\n", $this->examples);
+      $this->examples = preg_replace('/\r\n|\r|\n/', "\r\n", trim($this->examples));
     }
   }
 

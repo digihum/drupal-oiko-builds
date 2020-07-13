@@ -5,6 +5,7 @@
  * Install, update and uninstall functions for the CIDOC module.
  */
 
+use Drupal\cidoc\Entity\CidocEntityBundle;
 use Drupal\cidoc\Entity\CidocProperty;
 use Drupal\cidoc\Entity\CidocPropertyInterface;
 use Drupal\cidoc\Entity\CidocReference;
@@ -410,6 +411,22 @@ function cidoc_update_8404() {
         $new_settings['range']['type'] = CidocPropertyInterface::SubWidgetTypeTime;
       }
       $entity->timesubwidget = $new_settings;
+      $entity->save();
+    }
+  }
+}
+
+/**
+ * Update the config format entity bundles.
+ */
+function cidoc_update_8405() {
+  foreach (Cache::getBins() as $bin) {
+    $bin->deleteAll();
+  }
+  $bundles = \Drupal::entityQuery('cidoc_entity_bundle')
+    ->execute();
+  foreach ($bundles as $bundle) {
+    if ($entity = CidocEntityBundle::load($bundle)) {
       $entity->save();
     }
   }

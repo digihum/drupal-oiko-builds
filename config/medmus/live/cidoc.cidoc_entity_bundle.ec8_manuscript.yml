@@ -8,8 +8,8 @@ label: 'EC8 Manuscript'
 friendly_label: Manuscript
 weight: -13
 group: auxiliary
-description: "<p>This class comprises all identifiable physical object that carry linguistic (and/or visual) information written by hand.</p>\n"
-examples: "<ul>\n<li>Manuscript A of the Troubadour repertoire (EC8)</li>\n<li>Paris, BnF, fr. 856</li>\n</ul>\n"
+description: '<p>This class comprises all identifiable physical object that carry linguistic (and/or visual) information written by hand.</p>'
+examples: "<ul>\r\n<li>Manuscript A of the Troubadour repertoire (EC8)</li>\r\n<li>Paris, BnF, fr. 856</li>\r\n</ul>"
 geoserializers:
   event: '0'
   move: '0'

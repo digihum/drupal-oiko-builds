@@ -9,7 +9,7 @@ friendly_label: Work
 weight: -14
 group: main
 description: ''
-examples: "<ul>\r\n<li>BdT 366.11</li>\r\n<li>Roman de Tristan en prose</li>\r\n<li>Il sabato del villaggio</li>\r\n</ul>\r\n"
+examples: "<ul>\r\n<li>BdT 366.11</li>\r\n<li>Roman de Tristan en prose</li>\r\n<li>Il sabato del villaggio</li>\r\n</ul>"
 geoserializers:
   event: event
   move: '0'
