@@ -7,12 +7,14 @@ dependencies:
     - field.field.taxonomy_term.source_books.field_collective_work
     - field.field.taxonomy_term.source_books.field_editor
     - field.field.taxonomy_term.source_books.field_issue_fascicule
+    - field.field.taxonomy_term.source_books.field_journal
     - field.field.taxonomy_term.source_books.field_journal_name
     - field.field.taxonomy_term.source_books.field_place_of_publication
     - field.field.taxonomy_term.source_books.field_pp_
     - field.field.taxonomy_term.source_books.field_publisher
     - field.field.taxonomy_term.source_books.field_source_type
     - field.field.taxonomy_term.source_books.field_title
+    - field.field.taxonomy_term.source_books.field_title_long
     - field.field.taxonomy_term.source_books.field_year
     - taxonomy.vocabulary.source_books
   module:
@@ -26,7 +28,7 @@ content:
   description:
     label: hidden
     type: text_default
-    weight: 11
+    weight: 10
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -62,13 +64,13 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_journal_name:
+  field_journal:
     weight: 4
     label: inline
     settings:
-      link_to_entity: false
+      link: true
     third_party_settings: {  }
-    type: string
+    type: entity_reference_label
     region: content
   field_place_of_publication:
     weight: 7
@@ -79,7 +81,7 @@ content:
     type: string
     region: content
   field_pp_:
-    weight: 10
+    weight: 9
     label: inline
     settings:
       link_to_entity: false
@@ -101,16 +103,15 @@ content:
     third_party_settings: {  }
     type: list_default
     region: content
-  field_title:
+  field_title_long:
     weight: 3
     label: inline
-    settings:
-      link_to_entity: false
+    settings: {  }
     third_party_settings: {  }
-    type: string
+    type: text_default
     region: content
   field_year:
-    weight: 12
+    weight: 11
     label: inline
     settings:
       link_to_entity: false
@@ -118,4 +119,6 @@ content:
     type: string
     region: content
 hidden:
+  field_journal_name: true
+  field_title: true
   search_api_excerpt: true

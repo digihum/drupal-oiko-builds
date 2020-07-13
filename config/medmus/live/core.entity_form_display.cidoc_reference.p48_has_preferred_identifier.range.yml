@@ -34,20 +34,11 @@ content:
       size: '60'
       placeholder: 'Start typing to find a match or create new entity...'
       match_limit: 10
-    weight: 2
-    third_party_settings: {  }
-    region: content
-  field_identifier_type:
-    type: entity_reference_autocomplete
     weight: 1
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 20
-      placeholder: ''
     third_party_settings: {  }
+    region: content
 hidden:
+  field_identifier_type: true
   langcode: true
   range: true
   user_id: true

@@ -4,8 +4,6 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e55_type
-    - cidoc.cidoc_entity_bundle.e56_language
-    - cidoc.cidoc_entity_bundle.e57_material
     - cidoc.cidoc_property.p2_has_type
     - field.storage.cidoc_reference.range
 _core:
@@ -29,7 +27,5 @@ settings:
       direction: ASC
     target_bundles:
       e55_type: e55_type
-      e56_language: e56_language
-      e57_material: e57_material
     auto_create_bundle: e55_type
 field_type: entity_reference

@@ -1,19 +1,21 @@
-uuid: 4713e29e-f056-4245-a07e-da57d4352612
+uuid: 493311f6-b163-496a-adef-3598f72e3f01
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.taxonomy_term.field_title
+    - field.storage.taxonomy_term.field_title_long
     - taxonomy.vocabulary.source_books
-id: taxonomy_term.source_books.field_title
-field_name: field_title
+  module:
+    - text
+id: taxonomy_term.source_books.field_title_long
+field_name: field_title_long
 entity_type: taxonomy_term
 bundle: source_books
 label: Title
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: string
+field_type: text_long

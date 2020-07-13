@@ -21,6 +21,9 @@ third_party_settings:
     group_main:
       children:
         - group_main_deets
+        - group_appellations
+        - group_hierarchy
+        - group_aux_deets
         - group_oiko_world_settings
       parent_name: ''
       weight: 1
@@ -53,9 +56,10 @@ third_party_settings:
     group_aux_deets:
       children:
         - 'cidoc_properties:range:p7_took_place_at'
+        - 'cidoc_properties:range:p67_refers_to'
         - content
-      parent_name: group_main_details
-      weight: 7
+      parent_name: group_main
+      weight: 8
       label: 'Auxiliary details'
       format_type: tab
       format_settings:
@@ -68,12 +72,13 @@ third_party_settings:
       region: content
     group_main_details:
       children:
-        - group_appellations
-        - group_hierarchy
-        - group_aux_deets
         - group_geodata
+        - field_location_lookup
+        - 'cidoc_properties:domain:p2_has_type'
+        - field_pleiades_uri
+        - field_geodata
       parent_name: group_main_deets
-      weight: 5
+      weight: 4
       label: 'Main details'
       format_type: tabs
       format_settings:
@@ -84,12 +89,9 @@ third_party_settings:
       region: content
     group_appellations:
       children:
-        - field_location_lookup
-        - field_pleiades_uri
-        - field_geodata
         - 'cidoc_properties:domain:p87_is_identified_by'
-        - 'cidoc_properties:domain:p2_has_type'
-      parent_name: group_main_details
+        - 'cidoc_properties:domain:p48_has_preferred_identifier'
+      parent_name: group_main
       weight: 5
       label: 'Also known as'
       format_type: tab
@@ -104,7 +106,7 @@ third_party_settings:
     group_geodata:
       children: {  }
       parent_name: group_main_details
-      weight: 8
+      weight: 5
       label: Geodata
       format_type: tab
       format_settings:
@@ -119,8 +121,8 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:p89_falls_within'
         - 'cidoc_properties:range:p89_falls_within'
-      parent_name: group_main_details
-      weight: 6
+      parent_name: group_main
+      weight: 7
       label: Hierarchy
       format_type: tab
       format_settings:
@@ -133,7 +135,6 @@ third_party_settings:
       region: content
     group_oiko_world_settings:
       children:
-        - 'cidoc_properties:domain:p48_has_preferred_identifier'
         - status
         - significance
         - user_id
@@ -141,7 +142,7 @@ third_party_settings:
         - timeline_logo
         - path
       parent_name: group_main
-      weight: 7
+      weight: 9
       format_type: tab
       format_settings:
         id: ''
@@ -175,12 +176,12 @@ content:
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p2_has_type':
-    weight: 4
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 3
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -195,7 +196,12 @@ content:
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p89_falls_within':
-    weight: 21
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p67_refers_to':
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -205,7 +211,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p89_falls_within':
-    weight: 22
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -228,14 +234,14 @@ content:
     third_party_settings: {  }
   content:
     type: text_textarea
-    weight: 1
+    weight: 2
     region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
   field_geodata:
-    weight: 2
+    weight: 9
     settings:
       map:
         leaflet_map: 'Ancient Terrain'
@@ -255,14 +261,14 @@ content:
     region: content
   field_location_lookup:
     type: string_textfield
-    weight: 0
+    weight: 6
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
   field_pleiades_uri:
-    weight: 1
+    weight: 8
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -345,7 +351,6 @@ hidden:
   'cidoc_properties:range:p25_moved': true
   'cidoc_properties:range:p26_moved_to': true
   'cidoc_properties:range:p27_moved_from': true
-  'cidoc_properties:range:p67_refers_to': true
   'cidoc_properties:range:p88_consists_of': true
   'cidoc_properties:range:p96_by_mother': true
   'cidoc_properties:range:p97_from_father': true

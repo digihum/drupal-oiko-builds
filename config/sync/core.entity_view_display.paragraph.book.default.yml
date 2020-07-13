@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.book.field_book
     - field.field.paragraph.book.field_pages
+    - field.field.paragraph.book.field_volume
     - paragraphs.paragraphs_type.book
 _core:
   default_config_hash: nK3ZRswVq9Zh9phYomt9rWqHoFxI7ud7kmZLnL9ztq4
@@ -22,8 +23,16 @@ content:
     type: entity_reference_label
     region: content
   field_pages:
-    weight: 1
+    weight: 2
     label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_volume:
+    weight: 3
+    label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -31,4 +40,5 @@ content:
     region: content
 hidden:
   created: true
+  search_api_excerpt: true
   uid: true

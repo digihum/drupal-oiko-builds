@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.book.field_book
     - field.field.paragraph.book.field_pages
+    - field.field.paragraph.book.field_volume
     - paragraphs.paragraphs_type.book
   module:
     - squid_autocomplete
@@ -26,13 +27,21 @@ content:
     type: squid_entity_reference_autocomplete
     region: content
   field_pages:
-    weight: 1
+    weight: 2
     settings:
       size: 60
-      placeholder: 'e.g. p6 or pp65-87'
+      placeholder: '6 or 265-287'
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_volume:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: 'I, II...'
+    third_party_settings: {  }
 hidden:
   created: true
   status: true

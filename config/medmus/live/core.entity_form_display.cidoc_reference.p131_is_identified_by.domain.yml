@@ -17,7 +17,7 @@ mode: domain
 content:
   citation:
     type: entity_reference_citations
-    weight: 1
+    weight: 0
     settings:
       title: Citation
       title_plural: Citations
@@ -33,7 +33,7 @@ content:
       size: '60'
       placeholder: 'Start typing to find a match or create new entity...'
       match_limit: 10
-    weight: 26
+    weight: 2
     third_party_settings: {  }
     region: content
 hidden:

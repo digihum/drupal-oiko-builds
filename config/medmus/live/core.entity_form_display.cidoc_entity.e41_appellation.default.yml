@@ -17,12 +17,12 @@ third_party_settings:
       children:
         - content
       parent_name: group_main_deets
-      weight: 8
+      weight: 7
       label: 'Descriptive text'
-      format_type: fieldset
+      format_type: tab
       format_settings:
         description: ''
-        formatter: open
+        formatter: closed
         fieldset_label_html: true
         required_fields: true
         id: ''
@@ -33,7 +33,7 @@ third_party_settings:
         - group_main_deets
         - group_oiko_world_settings
       parent_name: ''
-      weight: 2
+      weight: 1
       label: 'Main data entry'
       format_type: tabs
       format_settings:
@@ -47,8 +47,6 @@ third_party_settings:
         - name
         - internal_name
         - citation
-        - 'cidoc_properties:domain:p139_has_alternative_form'
-        - 'cidoc_properties:range:p128_carries'
         - group_person_or_group_
         - group_place_identified
         - group_descriptive_text
@@ -57,12 +55,12 @@ third_party_settings:
       label: 'Main details'
       format_type: tab
       format_settings:
-        formatter: closed
         description: ''
-        classes: ''
-        id: ''
-        required_fields: true
+        formatter: open
         fieldset_label_html: true
+        required_fields: true
+        id: ''
+        classes: ''
       region: content
     group_oiko_world_settings:
       children:
@@ -88,11 +86,11 @@ third_party_settings:
       children:
         - 'cidoc_properties:range:p87_is_identified_by'
       parent_name: group_main_deets
-      weight: 7
+      weight: 5
       format_type: tab
       region: content
       format_settings:
-        description: "This property links an E41 Appellation to a E53 Place. <br/>\r\nCAREFULL: <i>P87 IDENTIFIES (IS IDENTIFIED BY) is different from its generic superproperty P1 IDENTIFIES (IS IDENTIFIED BY) and from P131 IDENTIFIES (IS IDENTIFIED BY) which links a E41 Appellation with a E21 Person or E74 Group.</i>"
+        description: "This property links an E41 Appellation to a E53 Place. <br/>\r\nCAREFUL: <i>P87 IDENTIFIES is different from its generic superproperty P1 IDENTIFIES and from P131 IDENTIFIES  which links a E41 Appellation with a E21 Person or E74 Group.</i>"
         formatter: closed
         required_fields: true
         id: ''
@@ -103,11 +101,11 @@ third_party_settings:
       children:
         - 'cidoc_properties:range:p131_is_identified_by'
       parent_name: group_main_deets
-      weight: 6
+      weight: 4
       format_type: tab
       region: content
       format_settings:
-        description: "This property links an E41 Appellation to a E53 Place. <br/>\r\nCAREFULL: <i>P131 IDENTIFIES (IS IDENTIFIED BY) is different from its generic superproperty P1 IDENTIFIES (IS IDENTIFIED BY) and from P87 IDENTIFIES (IS IDENTIFIED BY) which links a E41 Appellation with a E53 Place.</i>"
+        description: "This property links an E41 Appellation to a P21 Person or a E74 Group. <br/>\r\nCAREFUL: <i><u>P131</u> IDENTIFIES is different from its generic superproperty P1 IDENTIFIES and from <u><P87></u> IDENTIFIES which links a E41 Appellation with a E53 Place.</i>"
         formatter: closed
         required_fields: true
         id: ''
@@ -152,7 +150,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p139_has_alternative_form':
-    weight: 4
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -197,7 +195,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p72_has_language':
-    weight: 5
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -252,7 +250,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p128_carries':
-    weight: 5
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -339,7 +337,7 @@ content:
     third_party_settings: {  }
     region: content
   class_description:
-    weight: 1
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }

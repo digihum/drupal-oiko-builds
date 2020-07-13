@@ -1,6 +1,6 @@
-uuid: 50568f1c-fe6e-479b-90e0-a9fe3fca2770
+uuid: 00c13b60-2845-44c0-bb62-15a07d2e216d
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e21_person
@@ -17,8 +17,8 @@ dependencies:
     - leaflet_views
 _core:
   default_config_hash: Rt6OZqKBsekM-g2vS665X1aUkdo__WD1e7ejqx0qm1Q
-id: map_of_places_people_went_references_
-label: 'Map of places people went (working)'
+id: map_of_places_people_went_backup_
+label: 'Map of places people went (backup)'
 module: views
 description: ''
 tag: ''

@@ -150,14 +150,14 @@ display:
           separator: ''
           hide_empty: false
       fields:
-        views_bulk_operations_bulk_form:
-          id: views_bulk_operations_bulk_form
+        views_bulk_operations_bulk_form_1:
+          id: views_bulk_operations_bulk_form_1
           table: views
           field: views_bulk_operations_bulk_form
           relationship: none
           group_type: group
           admin_label: ''
-          label: Operation
+          label: 'Views bulk operations'
           exclude: false
           alter:
             alter_text: false
@@ -190,7 +190,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true

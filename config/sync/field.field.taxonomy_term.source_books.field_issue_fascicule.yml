@@ -9,7 +9,7 @@ id: taxonomy_term.source_books.field_issue_fascicule
 field_name: field_issue_fascicule
 entity_type: taxonomy_term
 bundle: source_books
-label: 'Issue / Fascicule'
+label: Issue/Fascicule
 description: ''
 required: false
 translatable: false

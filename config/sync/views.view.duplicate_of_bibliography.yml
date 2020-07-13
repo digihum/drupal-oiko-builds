@@ -7,6 +7,7 @@ dependencies:
     - field.storage.taxonomy_term.field_collective_work
     - field.storage.taxonomy_term.field_editor
     - field.storage.taxonomy_term.field_issue_fascicule
+    - field.storage.taxonomy_term.field_journal
     - field.storage.taxonomy_term.field_journal_name
     - field.storage.taxonomy_term.field_place_of_publication
     - field.storage.taxonomy_term.field_pp_
@@ -14,6 +15,7 @@ dependencies:
     - field.storage.taxonomy_term.field_single_color
     - field.storage.taxonomy_term.field_source_type
     - field.storage.taxonomy_term.field_title
+    - field.storage.taxonomy_term.field_title_long
     - field.storage.taxonomy_term.field_year
     - system.menu.main
     - taxonomy.vocabulary.source_books
@@ -22,6 +24,7 @@ dependencies:
     - color_field
     - options
     - taxonomy
+    - text
     - user
 id: duplicate_of_bibliography
 label: Bibliography
@@ -63,41 +66,110 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
-        type: none
+        type: some
         options:
+          items_per_page: 100
           offset: 0
       style:
         type: html_list
         options:
           grouping:
             -
-              field: name
+              field: field_source_type_1
               rendered: false
+              rendered_strip: false
+            -
+              field: name
+              rendered: true
               rendered_strip: false
           row_class: ''
           default_row_class: true
           type: ul
-          wrapper_class: ''
+          wrapper_class: item-list
           class: ''
       row:
         type: fields
         options:
           default_field_elements: true
           inline:
-            edit_taxonomy_term: edit_taxonomy_term
             field_editor: field_editor
             field_author: field_author
             field_title: field_title
+            field_title_long: field_title_long
             field_journal_name: field_journal_name
+            field_journal: field_journal
             field_issue_fascicule: field_issue_fascicule
             field_collective_work: field_collective_work
             field_place_of_publication: field_place_of_publication
             field_publisher: field_publisher
             field_year: field_year
             field_pp_: field_pp_
+            edit_taxonomy_term: edit_taxonomy_term
           separator: ''
           hide_empty: true
       fields:
+        field_source_type:
+          id: field_source_type
+          table: taxonomy_term__field_source_type
+          field: field_source_type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: list_default
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
         tid:
           id: tid
           table: taxonomy_term_field_data
@@ -296,18 +368,18 @@ display:
           entity_type: taxonomy_term
           entity_field: name
           plugin_id: term_name
-        field_source_type:
-          id: field_source_type
-          table: taxonomy_term__field_source_type
-          field: field_source_type
+        field_journal_1:
+          id: field_journal_1
+          table: taxonomy_term__field_journal
+          field: field_journal
           relationship: none
           group_type: group
           admin_label: ''
           label: ''
           exclude: true
           alter:
-            alter_text: true
-            text: '{{ field_source_type }}s'
+            alter_text: false
+            text: ''
             make_link: false
             path: ''
             absolute: false
@@ -341,7 +413,70 @@ display:
           element_wrapper_class: ''
           element_default_classes: true
           empty: ''
-          hide_empty: true
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+        field_source_type_1:
+          id: field_source_type_1
+          table: taxonomy_term__field_source_type
+          field: field_source_type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: true
+            text: "{% if field_source_type_1 == 'Primary source' %}<h2>Primary sources</h2>\r\n{% else %}<br/>&nbsp;<h2>Secondary sources</h2>\r\n{% endif %}"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
@@ -708,7 +843,7 @@ display:
             more_link_text: ''
             more_link_path: ''
             strip_tags: false
-            trim: false
+            trim: true
             preserve_tags: ''
             html: false
           element_type: ''
@@ -749,7 +884,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '{{field_author}},'
+            text: "{{field_author}},\r\n"
             make_link: false
             path: ''
             absolute: false
@@ -785,7 +920,7 @@ display:
           empty: ''
           hide_empty: true
           empty_zero: false
-          hide_alter_empty: true
+          hide_alter_empty: false
           click_sort_column: target_id
           type: cidoc_reference_label
           settings:
@@ -816,10 +951,10 @@ display:
           group_type: group
           admin_label: ''
           label: ''
-          exclude: false
+          exclude: true
           alter:
             alter_text: true
-            text: "{% if field_journal_name or field_contained_in_collective_work %}'{{field_title}}',\r\n{% else %}<em>{{field_title}}</em>,\r\n{% endif %}"
+            text: "{% if field_source_type == 'Primary source' %}{{field_title}}\r\n{% elseif field_journal_1 or field_collective_work_1 %}'{{field_title}}',\r\n{% else %}<em>{{field_title}}</em>\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -871,6 +1006,68 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        field_title_long:
+          id: field_title_long
+          table: taxonomy_term__field_title_long
+          field: field_title_long
+          relationship: none
+          group_type: group
+          admin_label: title_long
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: "{% if field_source_type == 'Primary source' %}{{field_title_long|striptags('<em>, '<i>'')|raw}}\r\n{% elseif field_journal_1 or field_collective_work_1 %}'{{field_title_long|striptags('<em>')|raw}}',\r\n{% else %}{% set LongTitle = field_title_long|striptags('<em>')|replace({'<em>': '</em>', '</em>': \"<em>\"}) %}<em>{{LongTitle|raw}}</em>\r\n{% endif %}"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: text_default
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
         field_journal_name:
           id: field_journal_name
           table: taxonomy_term__field_journal_name
@@ -882,7 +1079,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '{{field_journal_name}},'
+            text: "<em>{{field_journal_name}}</em>,\r\n"
             make_link: false
             path: ''
             absolute: false
@@ -934,6 +1131,69 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        field_journal:
+          id: field_journal
+          table: taxonomy_term__field_journal
+          field: field_journal
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: "<em>{{field_journal}}</em>,\r\n"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
         field_issue_fascicule:
           id: field_issue_fascicule
           table: taxonomy_term__field_issue_fascicule
@@ -945,7 +1205,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '{{field_issue_fascicule}},'
+            text: "{{field_issue_fascicule}}\r\n"
             make_link: false
             path: ''
             absolute: false
@@ -1008,7 +1268,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "in <a href=\"#{{tid_1}}\">{{field_collective_work}}</a>{% if field_pp._ %},\r\n{% else %}.\r\n{% endif %}"
+            text: "in <a href=\"#{{tid_1}}\">{{field_collective_work}}</a>{% if  field_pp_ %},\r\n{% else %}.\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -1044,7 +1304,7 @@ display:
           empty: ''
           hide_empty: true
           empty_zero: false
-          hide_alter_empty: true
+          hide_alter_empty: false
           click_sort_column: target_id
           type: entity_reference_label
           settings:
@@ -1071,7 +1331,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '{{field_place_of_publication}},'
+            text: "({{field_place_of_publication}}:\r\n"
             make_link: false
             path: ''
             absolute: false
@@ -1134,7 +1394,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '{{field_publisher}},'
+            text: "{% if field_place_of_publication %}{{field_publisher}},\r\n{% else %}({{field_publisher}},\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -1197,7 +1457,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "{% if field_collective_work %}\r\n{% elseif field_pp_ %}{{field_year}},\r\n{% else %}{{field_year}}.\r\n{% endif %}"
+            text: "{% if field_collective_work %}\r\n{% elseif field_journal and field_pp__1 %}({{field_year}}),\r\n{% elseif field_journal or field_source_type == 'Primary source' %}({{field_year}}).\r\n{% elseif field_place_of_publication or field_publisher %}{{field_year}}).\r\n{% else %}{{field_year}}.\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -1233,7 +1493,7 @@ display:
           empty: ''
           hide_empty: false
           empty_zero: false
-          hide_alter_empty: true
+          hide_alter_empty: false
           click_sort_column: value
           type: string
           settings:
@@ -1260,7 +1520,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '{{field_pp.}}.'
+            text: "{{field_pp_}}.\r\n"
             make_link: false
             path: ''
             absolute: false
@@ -1323,7 +1583,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '{{edit_taxonomy_term}}'
+            text: "\r\n {{edit_taxonomy_term}}"
             make_link: false
             path: ''
             absolute: false
@@ -1359,7 +1619,7 @@ display:
           empty: ''
           hide_empty: true
           empty_zero: false
-          hide_alter_empty: true
+          hide_alter_empty: false
           text: Edit
           output_url_as_text: false
           absolute: false
@@ -1525,6 +1785,16 @@ display:
           admin_label: 'field_collective_work: Taxonomy term'
           required: false
           plugin_id: standard
+        reverse__taxonomy_term__field_journal:
+          id: reverse__taxonomy_term__field_journal
+          table: taxonomy_term_field_data
+          field: reverse__taxonomy_term__field_journal
+          relationship: none
+          group_type: group
+          admin_label: field_journal
+          required: false
+          entity_type: taxonomy_term
+          plugin_id: entity_reverse
       arguments: {  }
       display_extenders: {  }
       group_by: false
@@ -1540,6 +1810,7 @@ display:
         - 'config:field.storage.taxonomy_term.field_collective_work'
         - 'config:field.storage.taxonomy_term.field_editor'
         - 'config:field.storage.taxonomy_term.field_issue_fascicule'
+        - 'config:field.storage.taxonomy_term.field_journal'
         - 'config:field.storage.taxonomy_term.field_journal_name'
         - 'config:field.storage.taxonomy_term.field_place_of_publication'
         - 'config:field.storage.taxonomy_term.field_pp_'
@@ -1547,6 +1818,7 @@ display:
         - 'config:field.storage.taxonomy_term.field_single_color'
         - 'config:field.storage.taxonomy_term.field_source_type'
         - 'config:field.storage.taxonomy_term.field_title'
+        - 'config:field.storage.taxonomy_term.field_title_long'
         - 'config:field.storage.taxonomy_term.field_year'
   global_listing:
     display_plugin: page
@@ -1619,6 +1891,7 @@ display:
         - 'config:field.storage.taxonomy_term.field_collective_work'
         - 'config:field.storage.taxonomy_term.field_editor'
         - 'config:field.storage.taxonomy_term.field_issue_fascicule'
+        - 'config:field.storage.taxonomy_term.field_journal'
         - 'config:field.storage.taxonomy_term.field_journal_name'
         - 'config:field.storage.taxonomy_term.field_place_of_publication'
         - 'config:field.storage.taxonomy_term.field_pp_'
@@ -1626,4 +1899,5 @@ display:
         - 'config:field.storage.taxonomy_term.field_single_color'
         - 'config:field.storage.taxonomy_term.field_source_type'
         - 'config:field.storage.taxonomy_term.field_title'
+        - 'config:field.storage.taxonomy_term.field_title_long'
         - 'config:field.storage.taxonomy_term.field_year'

@@ -32,13 +32,8 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p67_refers_to':
-    weight: 20
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p72_has_language':
-    weight: 9
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -58,7 +53,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pc5_has_expression':
-    weight: 18
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -83,7 +78,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:pc5_has_expression':
-    weight: 19
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -100,7 +95,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   creation_of_work_info_entity_view_1:
-    weight: 8
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -112,6 +107,11 @@ content:
       link_to_entity: false
     weight: 0
     third_party_settings: {  }
+  refers_to_appellation_and_identified_person_place_etc__entity_view_1:
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   significance:
     region: content
     type: entity_reference_entity_view
@@ -122,7 +122,7 @@ content:
     weight: 2
     third_party_settings: {  }
   sources_of_work_entity_view_1:
-    weight: 23
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -139,6 +139,7 @@ content:
 hidden:
   cidoc_properties: true
   'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:p67_refers_to': true
   'cidoc_properties:domain:pc2_is_contrafactum_of': true
   'cidoc_properties:domain:pc7_has_music': true
   'cidoc_properties:range:p128_carries': true

@@ -42,8 +42,6 @@ domain_bundles:
   - ec9_print
 range_bundles:
   - e55_type
-  - e56_language
-  - e57_material
 editability:
   domain: true
   range: true

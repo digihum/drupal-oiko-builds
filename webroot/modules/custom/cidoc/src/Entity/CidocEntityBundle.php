@@ -290,5 +290,17 @@ class CidocEntityBundle extends ConfigEntityBundleBase implements RevisionableEn
     return TRUE;
   }
 
+  public function preSave(EntityStorageInterface $storage) {
+    parent::preSave($storage);
+
+    if (!empty($this->description)) {
+      $this->description = preg_replace('/\r\n|\r|\n/', "\r\n", $this->description);
+    }
+
+    if (!empty($this->examples)) {
+      $this->examples = preg_replace('/\r\n|\r|\n/', "\r\n", $this->examples);
+    }
+  }
+
 
 }

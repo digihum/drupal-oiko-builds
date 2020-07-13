@@ -15,7 +15,8 @@ content:
     label: inline
     type: entity_reference_label
     weight: -3
-    settings: {  }
+    settings:
+      link: true
     third_party_settings: {  }
     region: content
   property:
@@ -30,7 +31,8 @@ content:
     label: inline
     type: entity_reference_label
     weight: -2
-    settings: {  }
+    settings:
+      link: true
     third_party_settings: {  }
     region: content
 hidden:

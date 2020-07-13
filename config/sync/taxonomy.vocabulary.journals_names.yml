@@ -1,0 +1,8 @@
+uuid: cb73a81b-6af9-4bc4-8341-9ad98f98147b
+langcode: en
+status: true
+dependencies: {  }
+name: 'Journal names'
+vid: journals_names
+description: ''
+weight: 0

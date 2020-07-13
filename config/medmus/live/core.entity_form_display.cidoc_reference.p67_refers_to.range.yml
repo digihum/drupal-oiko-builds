@@ -39,7 +39,7 @@ content:
     region: content
   field_don_t_show_in_map:
     type: boolean_checkbox
-    weight: 2
+    weight: 3
     region: content
     settings:
       display_label: true

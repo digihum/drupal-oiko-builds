@@ -5,11 +5,13 @@ dependencies:
   config:
     - field.storage.taxonomy_term.field_source_type
     - field.storage.taxonomy_term.field_title
+    - field.storage.taxonomy_term.field_title_long
     - taxonomy.vocabulary.scholars
   module:
     - eva
     - options
     - taxonomy
+    - text
     - user
 id: duplicate_of_works_of_scholar
 label: 'Works of scholar'
@@ -82,6 +84,7 @@ display:
           inline:
             name_2: name_2
             field_title_1: field_title_1
+            field_title_long: field_title_long
           separator: ''
           hide_empty: true
       fields:
@@ -93,9 +96,9 @@ display:
           group_type: group
           admin_label: ''
           label: ''
-          exclude: false
+          exclude: true
           alter:
-            alter_text: true
+            alter_text: false
             text: '<strong>Works by {{name}}:</strong>'
             make_link: false
             path: ''
@@ -223,9 +226,9 @@ display:
           field: field_title
           relationship: reverse__taxonomy_term__field_author
           group_type: group
-          admin_label: ''
+          admin_label: 'titolo vecchio'
           label: ''
-          exclude: false
+          exclude: true
           alter:
             alter_text: true
             text: '({{field_title_1}})'
@@ -269,6 +272,68 @@ display:
           type: string
           settings:
             link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+        field_title_long:
+          id: field_title_long
+          table: taxonomy_term__field_title_long
+          field: field_title_long
+          relationship: reverse__taxonomy_term__field_author
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: '({{field_title_long|trim|raw}})'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: true
+            trim: false
+            preserve_tags: '<em>'
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: text_default
+          settings: {  }
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -374,7 +439,7 @@ display:
           empty: false
           tokenize: true
           content:
-            value: '<strong>Works by {{name}}</strong>'
+            value: '<strong>Works by {{name}}:</strong>'
             format: basic_html
           plugin_id: text
       footer: {  }
@@ -409,6 +474,15 @@ display:
           required: false
           entity_type: taxonomy_term
           plugin_id: entity_reverse
+        field_author:
+          id: field_author
+          table: taxonomy_term__field_author
+          field: field_author
+          relationship: none
+          group_type: group
+          admin_label: 'field_author: Taxonomy term'
+          required: false
+          plugin_id: standard
       arguments:
         tid:
           id: tid
@@ -458,6 +532,7 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.taxonomy_term.field_title'
+        - 'config:field.storage.taxonomy_term.field_title_long'
   entity_view_1:
     display_plugin: entity_view
     id: entity_view_1
@@ -470,6 +545,69 @@ display:
         - scholars
       show_title: true
       fields:
+        field_title_1:
+          id: field_title_1
+          table: taxonomy_term__field_title
+          field: field_title
+          relationship: reverse__taxonomy_term__field_author
+          group_type: group
+          admin_label: 'old title'
+          label: ''
+          exclude: true
+          alter:
+            alter_text: true
+            text: '({{field_title_1}})'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
         name:
           id: name
           table: taxonomy_term_field_data
@@ -602,25 +740,25 @@ display:
           entity_type: taxonomy_term
           entity_field: name
           plugin_id: term_name
-        field_title_1:
-          id: field_title_1
-          table: taxonomy_term__field_title
-          field: field_title
+        field_title_long:
+          id: field_title_long
+          table: taxonomy_term__field_title_long
+          field: field_title_long
           relationship: reverse__taxonomy_term__field_author
           group_type: group
-          admin_label: ''
+          admin_label: 'Title long'
           label: ''
           exclude: false
           alter:
             alter_text: true
-            text: '({{field_title_1}})'
+            text: '({{field_title_long|trim|raw}})'
             make_link: false
             path: ''
             absolute: false
             external: false
             replace_spaces: false
             path_case: none
-            trim_whitespace: false
+            trim_whitespace: true
             alt: ''
             rel: ''
             link_class: ''
@@ -634,9 +772,9 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
-            preserve_tags: ''
+            preserve_tags: '<em>'
             html: false
           element_type: ''
           element_class: ''
@@ -645,15 +783,14 @@ display:
           element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
+          click_sort_column: format
+          type: text_default
+          settings: {  }
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -755,4 +892,5 @@ display:
       tags:
         - 'config:field.storage.taxonomy_term.field_source_type'
         - 'config:field.storage.taxonomy_term.field_title'
+        - 'config:field.storage.taxonomy_term.field_title_long'
     deleted: false

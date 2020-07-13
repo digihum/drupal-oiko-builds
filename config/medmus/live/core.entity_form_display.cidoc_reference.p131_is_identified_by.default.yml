@@ -8,6 +8,7 @@ dependencies:
     - field.field.cidoc_reference.p131_is_identified_by.range
   module:
     - oiko_citation
+    - squid_autocomplete
 id: cidoc_reference.p131_is_identified_by.default
 targetEntityType: cidoc_reference
 bundle: p131_is_identified_by
@@ -15,7 +16,7 @@ mode: default
 content:
   citation:
     type: entity_reference_citations
-    weight: 1
+    weight: 0
     settings:
       title: Citation
       title_plural: Citations
@@ -26,23 +27,29 @@ content:
     third_party_settings: {  }
   domain:
     type: squid_entity_reference_autocomplete_tags
-    weight: 26
+    weight: 2
     settings:
       match_limit: 10
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
     region: content
   langcode:
     type: language_select
-    weight: 10
+    weight: 1
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   range:
     type: squid_entity_reference_autocomplete_tags
-    weight: 27
+    weight: 4
     settings:
       match_limit: 10
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
     region: content
 hidden:
