@@ -1,6 +1,7 @@
 ---
 label: PA8 has cousin
 domain: e21_person
-superproperty: 
+bidirectional: true
+superproperty:
   - pa14_has_relative
 range: e21_person

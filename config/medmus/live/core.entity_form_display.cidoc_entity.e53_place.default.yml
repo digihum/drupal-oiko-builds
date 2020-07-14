@@ -337,7 +337,7 @@ content:
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p48_has_preferred_identifier': true
-  'cidoc_properties:domain:p72_has_language': true
+  'cidoc_properties:domain:pa19_has_language': true
   'cidoc_properties:range:p100_was_death_of': true
   'cidoc_properties:range:p11_had_participant': true
   'cidoc_properties:range:p121_overlaps_with': true

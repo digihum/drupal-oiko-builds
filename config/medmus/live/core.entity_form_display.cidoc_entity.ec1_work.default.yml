@@ -83,7 +83,7 @@ third_party_settings:
       region: content
     group_metrical_and_formal_featur:
       children:
-        - 'cidoc_properties:domain:p72_has_language'
+        - 'cidoc_properties:domain:pa19_has_language'
         - 'cidoc_properties:domain:pc3_has_genre'
         - 'cidoc_properties:domain:pc4_has_formal_feature'
         - 'cidoc_properties:domain:pc2_is_contrafactum_of'
@@ -311,7 +311,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p72_has_language':
+  'cidoc_properties:domain:pa19_has_language':
     weight: 25
     region: content
     settings: {  }

@@ -3,6 +3,7 @@ label: E35 Title
 superclasses:
   - e33_linguistic_object
   - e41_appellation
+  - ec13_thing_with_language
 description: |
   This class comprises the names assigned to works, such as texts, artworks or pieces of music.
 

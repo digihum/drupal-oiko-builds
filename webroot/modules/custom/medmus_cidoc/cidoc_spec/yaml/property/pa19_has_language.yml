@@ -1,0 +1,5 @@
+---
+label: PA19 has language
+domain: ec13_thing_with_language
+range: e56_language
+reverse label: PA19 is language of

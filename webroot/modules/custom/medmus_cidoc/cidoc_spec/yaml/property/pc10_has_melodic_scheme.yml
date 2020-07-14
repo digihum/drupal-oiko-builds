@@ -2,5 +2,5 @@
 label: PC10 has melodic scheme
 domain: e6_music
 range: ec10_melodic_scheme
-superproperty: 
-reverse_label: PC 10 is melodic scheme of
+superproperty:
+reverse label: PC 10 is melodic scheme of

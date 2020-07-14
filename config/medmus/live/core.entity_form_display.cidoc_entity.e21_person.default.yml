@@ -575,7 +575,7 @@ content:
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p45_consists_of': true
-  'cidoc_properties:domain:p72_has_language': true
+  'cidoc_properties:domain:pa19_has_language': true
   'cidoc_properties:domain:pa12_has_adoptive_child': true
   'cidoc_properties:domain:pa13_has_illegitimate_child': true
   'cidoc_properties:domain:pa15_has_child-in-law': true

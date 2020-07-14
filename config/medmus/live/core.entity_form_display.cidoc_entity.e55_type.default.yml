@@ -166,7 +166,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p72_has_language':
+  'cidoc_properties:domain:pa19_has_language':
     weight: 5
     region: content
     settings: {  }
@@ -256,7 +256,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p72_has_language':
+  'cidoc_properties:range:pa19_has_language':
     weight: 4
     region: content
     settings: {  }

@@ -2,6 +2,6 @@
 label: PA13 has illegitimate child
 domain: e21_person
 range: e21_person
-superproperty: 
+superproperty:
   - pa14_has_relative
-reverse_label: PA13 has has illegitimate parent
+reverse label: PA13 has illegitimate parent

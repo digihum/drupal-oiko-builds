@@ -1,4 +1,4 @@
-uuid: 49bc7144-a4c6-4811-b34e-f02e8fcd041d
+uuid: ce208dc4-5e95-456f-8c87-a812c1f25251
 langcode: en
 status: true
 dependencies:
@@ -6,17 +6,18 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e21_person
     - cidoc.cidoc_entity_bundle.e35_title
     - cidoc.cidoc_entity_bundle.e41_appellation
+    - cidoc.cidoc_entity_bundle.e42_identifier
     - cidoc.cidoc_entity_bundle.e53_place
     - cidoc.cidoc_entity_bundle.ec1_work
     - cidoc.cidoc_entity_bundle.ec7_source
     - cidoc.cidoc_entity_bundle.ec8_manuscript
     - cidoc.cidoc_entity_bundle.ec9_print
-    - cidoc.cidoc_property.p72_has_language
+    - cidoc.cidoc_property.pa19_has_language
     - field.storage.cidoc_reference.domain
-id: cidoc_reference.p72_has_language.domain
+id: cidoc_reference.pa19_has_language.domain
 field_name: domain
 entity_type: cidoc_reference
-bundle: p72_has_language
+bundle: pa19_has_language
 label: From
 description: ''
 required: false
@@ -34,6 +35,7 @@ settings:
       e21_person: e21_person
       e35_title: e35_title
       e41_appellation: e41_appellation
+      e42_identifier: e42_identifier
       e53_place: e53_place
       ec1_work: ec1_work
       ec7_source: ec7_source

@@ -5,7 +5,7 @@ dependencies: {  }
 id: pa6_has_murder_victim
 label: 'PA6 has murder victim'
 bidirectional: true
-reverse_label: pa6_has_murder_victim
+reverse_label: 'PA6 has murderer'
 friendly_label: ''
 reverse_friendly_label: ''
 domain_bundles:

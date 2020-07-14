@@ -5,7 +5,7 @@ dependencies: {  }
 id: pa18_has_godmother
 label: 'PA18 has godmother'
 bidirectional: false
-reverse_label: 'PA18 is godmother pf'
+reverse_label: 'PA18 is godmother of'
 friendly_label: Godmother
 reverse_friendly_label: 'Godmother of'
 domain_bundles:

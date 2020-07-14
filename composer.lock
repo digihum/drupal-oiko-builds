@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34ec5601ce1bcfa2449fcb06b85d55b3",
+    "content-hash": "7a6f85acdb7aeff6897d61d13ebb6ea5",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1760,7 +1760,8 @@
             "homepage": "https://www.drupal.org/project/add_to_head",
             "support": {
                 "source": "https://git.drupalcode.org/project/add_to_head"
-            }
+            },
+            "time": "2016-12-30T18:11:10+00:00"
         },
         {
             "name": "drupal/admin_toolbar",
@@ -2073,7 +2074,8 @@
             "homepage": "https://www.drupal.org/project/config_devel",
             "support": {
                 "source": "https://git.drupalcode.org/project/config_devel"
-            }
+            },
+            "time": "2016-06-21T08:20:33+00:00"
         },
         {
             "name": "drupal/config_filter",
@@ -2323,7 +2325,8 @@
             "homepage": "https://www.drupal.org/project/config_update",
             "support": {
                 "source": "https://git.drupalcode.org/project/config_update"
-            }
+            },
+            "time": "2016-08-31T19:41:53+00:00"
         },
         {
             "name": "drupal/console",
@@ -3037,7 +3040,8 @@
                 "source": "http://cgit.drupalcode.org/devel",
                 "issues": "http://drupal.org/project/devel",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
-            }
+            },
+            "time": "2019-01-29T21:22:48+00:00"
         },
         {
             "name": "drupal/entity_reference_revisions",
@@ -3817,7 +3821,8 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/leaflet",
                 "issues": "https://www.drupal.org/project/issues/leaflet"
-            }
+            },
+            "time": "2016-04-04T21:22:53+00:00"
         },
         {
             "name": "drupal/leaflet_widget",
@@ -3830,7 +3835,8 @@
             "require": {
                 "composer/installers": "^1.0.21"
             },
-            "type": "drupal-module"
+            "type": "drupal-module",
+            "time": "2016-09-20T10:25:00+00:00"
         },
         {
             "name": "drupal/metatag",
@@ -4255,7 +4261,8 @@
             "homepage": "https://www.drupal.org/project/r4032login",
             "support": {
                 "source": "https://git.drupalcode.org/project/r4032login"
-            }
+            },
+            "time": "2018-07-20T09:54:11+00:00"
         },
         {
             "name": "drupal/search_api",
@@ -9187,7 +9194,8 @@
             "homepage": "https://www.drupal.org/project/drush_entity",
             "support": {
                 "source": "https://git.drupalcode.org/project/drush_entity"
-            }
+            },
+            "time": "2017-03-17T19:07:55+00:00"
         },
         {
             "name": "fabpot/goutte",
@@ -9482,9 +9490,12 @@
     },
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-json": "*"
+    },
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.2"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }

@@ -1,17 +1,18 @@
-uuid: dd85cae1-7495-4438-8b24-fec2a9f966c6
+uuid: f3510fbe-d583-4c82-a904-2daab212ed05
 langcode: en
 status: true
 dependencies: {  }
-id: p72_has_language
-label: 'P72 has language'
+id: pa19_has_language
+label: 'PA19 has language'
 bidirectional: false
-reverse_label: 'P72 is language of'
+reverse_label: 'PA19 is language of'
 friendly_label: Language
 reverse_friendly_label: 'Is language of'
 domain_bundles:
   - e21_person
   - e35_title
   - e41_appellation
+  - e42_identifier
   - e53_place
   - ec1_work
   - ec7_source

@@ -2,8 +2,8 @@
 label: PC5 has expression
 bidirectional: false
 reverse label: PC5 is expression of
-domain: ec1_work
-range: ec1_work
+domain: ec12_expression
+range: ec12_expression
 description: |
   This property links works with their expression(s).
   (cfr. F1 Work, F2 Expression, F3 Manifestation in LRMoo guidelines)

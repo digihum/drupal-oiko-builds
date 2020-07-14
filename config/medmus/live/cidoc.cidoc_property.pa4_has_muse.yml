@@ -3,9 +3,9 @@ langcode: en
 status: true
 dependencies: {  }
 id: pa4_has_muse
-label: pa4_has_muse
+label: 'PA4 has muse'
 bidirectional: false
-reverse_label: pa4_has_muse
+reverse_label: 'PA4 is muse of'
 friendly_label: null
 reverse_friendly_label: null
 domain_bundles:

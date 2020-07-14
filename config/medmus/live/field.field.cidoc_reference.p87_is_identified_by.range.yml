@@ -3,7 +3,9 @@ langcode: en
 status: true
 dependencies:
   config:
+    - cidoc.cidoc_entity_bundle.e35_title
     - cidoc.cidoc_entity_bundle.e41_appellation
+    - cidoc.cidoc_entity_bundle.e42_identifier
     - cidoc.cidoc_property.p87_is_identified_by
     - field.storage.cidoc_reference.range
 id: cidoc_reference.p87_is_identified_by.range
@@ -24,6 +26,8 @@ settings:
       field: name
       direction: ASC
     target_bundles:
+      e35_title: e35_title
       e41_appellation: e41_appellation
-    auto_create_bundle: e41_appellation
+      e42_identifier: e42_identifier
+    auto_create_bundle: e35_title
 field_type: entity_reference

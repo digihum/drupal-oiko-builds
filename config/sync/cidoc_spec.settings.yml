@@ -30,7 +30,6 @@ enabled_entities:
   - ec7_source
   - ec8_manuscript
   - ec9_print
-  - ec10_marriage
 enabled_properties:
   - p1_is_identified_by
   - p2_has_type
@@ -45,7 +44,6 @@ enabled_properties:
   - p45_consists_of
   - p48_has_preferred_identifier
   - p67_refers_to
-  - p72_has_language
   - p78_is_identified_by
   - p87_is_identified_by
   - p89_falls_within
@@ -61,6 +59,10 @@ enabled_properties:
   - p128_carries
   - p131_is_identified_by
   - p139_has_alternative_form
+  - p143_joined
+  - p144_joined_with
+  - p145_separated
+  - p146_separated_from
   - pa1_has_patron
   - pa2_has_acquaintance
   - pa3_has_friend
@@ -79,6 +81,7 @@ enabled_properties:
   - pa16_has_sibling-in-law
   - pa17_has_godfather
   - pa18_has_godmother
+  - pa19_has_language
   - pc1_has_metrical_affinities_with
   - pc2_is_contrafactum_of
   - pc3_has_genre

@@ -5,7 +5,7 @@ dependencies: {  }
 id: pa5_has_lover
 label: 'PA5 has lover'
 bidirectional: true
-reverse_label: pa5_has_lover
+reverse_label: 'PA5 has lover'
 friendly_label: Lover
 reverse_friendly_label: ''
 domain_bundles:

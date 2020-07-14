@@ -391,7 +391,7 @@ content:
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
-  'cidoc_properties:domain:p72_has_language': true
+  'cidoc_properties:domain:pa19_has_language': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
   'cidoc_properties:range:p67_refers_to': true

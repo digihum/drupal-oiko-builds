@@ -1,15 +1,15 @@
-uuid: bba94825-7f6c-4db1-97f2-7af94d24fc20
+uuid: 18f7887a-472c-4b24-8875-ac508bea703e
 langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_property.p72_has_language
+    - cidoc.cidoc_property.pa19_has_language
     - core.entity_view_mode.cidoc_reference.range
-    - field.field.cidoc_reference.p72_has_language.domain
-    - field.field.cidoc_reference.p72_has_language.range
-id: cidoc_reference.p72_has_language.range
+    - field.field.cidoc_reference.pa19_has_language.domain
+    - field.field.cidoc_reference.pa19_has_language.range
+id: cidoc_reference.pa19_has_language.range
 targetEntityType: cidoc_reference
-bundle: p72_has_language
+bundle: pa19_has_language
 mode: range
 content:
   domain:

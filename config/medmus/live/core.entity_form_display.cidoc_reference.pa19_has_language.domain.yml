@@ -1,19 +1,19 @@
-uuid: e31292d2-3c8f-422c-a087-3305e5801f79
+uuid: 9256c7e1-ac32-4a7f-9695-386c916d7c13
 langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_property.p72_has_language
-    - core.entity_form_mode.cidoc_reference.range
-    - field.field.cidoc_reference.p72_has_language.domain
-    - field.field.cidoc_reference.p72_has_language.range
+    - cidoc.cidoc_property.pa19_has_language
+    - core.entity_form_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pa19_has_language.domain
+    - field.field.cidoc_reference.pa19_has_language.range
   module:
     - oiko_citation
     - squid_autocomplete
-id: cidoc_reference.p72_has_language.range
+id: cidoc_reference.pa19_has_language.domain
 targetEntityType: cidoc_reference
-bundle: p72_has_language
-mode: range
+bundle: pa19_has_language
+mode: domain
 content:
   citation:
     type: entity_reference_citations
@@ -26,7 +26,7 @@ content:
       form_display_mode: default
     region: content
     third_party_settings: {  }
-  domain:
+  range:
     type: squid_entity_reference_autocomplete_tags
     settings:
       match_operator: STARTS_WITH
@@ -37,6 +37,6 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  domain: true
   langcode: true
-  range: true
   user_id: true

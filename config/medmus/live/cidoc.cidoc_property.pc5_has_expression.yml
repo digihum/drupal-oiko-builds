@@ -5,7 +5,7 @@ dependencies: {  }
 id: pc5_has_expression
 label: 'PC5 has expression'
 bidirectional: false
-reverse_label: 'PC4 is expression of'
+reverse_label: 'PC5 is expression of'
 friendly_label: 'Has expression'
 reverse_friendly_label: 'Is expression of'
 domain_bundles:

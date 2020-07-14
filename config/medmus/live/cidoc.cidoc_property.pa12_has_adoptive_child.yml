@@ -3,9 +3,9 @@ langcode: en
 status: true
 dependencies: {  }
 id: pa12_has_adoptive_child
-label: pa12_has_adoptive_child
+label: 'PA12 has adoptive child'
 bidirectional: false
-reverse_label: pa12_has_adoptive_child
+reverse_label: 'PA12 has adoptive parent'
 friendly_label: null
 reverse_friendly_label: null
 domain_bundles:

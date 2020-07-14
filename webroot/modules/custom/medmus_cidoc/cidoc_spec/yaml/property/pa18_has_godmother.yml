@@ -2,7 +2,7 @@
 label: PA18 has godmother
 domain: e21_person
 range: e21_person
-superproperty: 
+superproperty:
   - pa14_has_relative
-reverse_label: PA18 is godmother of
+reverse label: PA18 is godmother of
 

@@ -1,15 +1,15 @@
-uuid: 645540a5-c400-4e57-90c6-0fb8ae8c588c
+uuid: 6c616b54-6e78-432c-9a09-432b6dd7664f
 langcode: en
 status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e56_language
-    - cidoc.cidoc_property.p72_has_language
+    - cidoc.cidoc_property.pa19_has_language
     - field.storage.cidoc_reference.range
-id: cidoc_reference.p72_has_language.range
+id: cidoc_reference.pa19_has_language.range
 field_name: range
 entity_type: cidoc_reference
-bundle: p72_has_language
+bundle: pa19_has_language
 label: To
 description: ''
 required: false

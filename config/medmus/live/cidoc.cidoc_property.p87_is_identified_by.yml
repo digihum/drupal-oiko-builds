@@ -11,7 +11,9 @@ reverse_friendly_label: Identifies
 domain_bundles:
   - e53_place
 range_bundles:
+  - e35_title
   - e41_appellation
+  - e42_identifier
 editability:
   domain: true
   range: true

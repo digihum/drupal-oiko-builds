@@ -1,16 +1,16 @@
-uuid: 0bd934ed-c640-4729-b31e-791444876751
+uuid: ec1f60ce-9306-4331-8c6c-e4feff50ac41
 langcode: en
 status: true
 dependencies:
   config:
-    - cidoc.cidoc_property.p72_has_language
-    - field.field.cidoc_reference.p72_has_language.domain
-    - field.field.cidoc_reference.p72_has_language.range
+    - cidoc.cidoc_property.pa19_has_language
+    - field.field.cidoc_reference.pa19_has_language.domain
+    - field.field.cidoc_reference.pa19_has_language.range
   module:
     - oiko_citation
-id: cidoc_reference.p72_has_language.default
+id: cidoc_reference.pa19_has_language.default
 targetEntityType: cidoc_reference
-bundle: p72_has_language
+bundle: pa19_has_language
 mode: default
 content:
   citation:

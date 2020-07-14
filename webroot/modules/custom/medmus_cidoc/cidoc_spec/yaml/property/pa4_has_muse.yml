@@ -2,5 +2,4 @@
 label: PA4 has muse
 domain: e21_person
 range: e21_person
-superproperties:
-reverse_label: PA4 is muse of
+reverse label: PA4 is muse of

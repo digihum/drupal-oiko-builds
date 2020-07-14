@@ -2,6 +2,7 @@
 label: EC8 Manuscript
 superclasses:
   - ec7_source
+  - ec13_thing_with_language
 properties:
   - p45_consists_of
 

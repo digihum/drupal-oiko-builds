@@ -5,7 +5,7 @@ dependencies: {  }
 id: pa3_has_friend
 label: 'PA3 has friend'
 bidirectional: true
-reverse_label: pa3_has_friend
+reverse_label: 'PA3 has friend'
 friendly_label: ''
 reverse_friendly_label: ''
 domain_bundles:

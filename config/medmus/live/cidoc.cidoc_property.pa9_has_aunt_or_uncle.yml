@@ -5,7 +5,7 @@ dependencies: {  }
 id: pa9_has_aunt_or_uncle
 label: 'PA9 has aunt or uncle'
 bidirectional: false
-reverse_label: 'PA9 has nephew'
+reverse_label: 'PA9 has niece or nephew'
 friendly_label: 'Aunt or uncle'
 reverse_friendly_label: Nephew
 domain_bundles:

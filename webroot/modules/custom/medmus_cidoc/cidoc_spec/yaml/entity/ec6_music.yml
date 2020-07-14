@@ -1,8 +1,7 @@
 ---
 label: EC6 Music
 superclasses:
-  - e73_information_object
-properties: pc10_has_melodic_scheme
+  - ec12_expression
 description: |
   This class defines a music as a non-physical thing which is carried by one or more carriers.
 

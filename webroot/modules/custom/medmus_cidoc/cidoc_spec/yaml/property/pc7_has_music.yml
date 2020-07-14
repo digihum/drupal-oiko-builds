@@ -2,8 +2,8 @@
 label: PC7 has music
 bidirectional: false
 reverse label: PC7 is music of
-domain: e65_creation
-range: e21_person
+domain: ec1_work
+range: ec6_music
 description: |
   This property links lyrics with one or more versions of its music
 examples: |

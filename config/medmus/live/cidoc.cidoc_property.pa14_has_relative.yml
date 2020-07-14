@@ -5,7 +5,7 @@ dependencies: {  }
 id: pa14_has_relative
 label: 'PA14 has relative'
 bidirectional: true
-reverse_label: pa14_has_relative
+reverse_label: 'PA14 has relative'
 friendly_label: Relative
 reverse_friendly_label: ''
 domain_bundles:

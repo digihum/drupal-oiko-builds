@@ -5,7 +5,7 @@ dependencies: {  }
 id: pa2_has_acquaintance
 label: 'PA2 has acquaintance'
 bidirectional: true
-reverse_label: pa2_has_acquaintance
+reverse_label: 'PA2 has acquaintance'
 friendly_label: ''
 reverse_friendly_label: ''
 domain_bundles:

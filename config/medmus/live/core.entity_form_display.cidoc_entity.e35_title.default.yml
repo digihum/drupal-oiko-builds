@@ -48,7 +48,7 @@ third_party_settings:
         - internal_name
         - citation
         - 'cidoc_properties:range:p102_has_title'
-        - 'cidoc_properties:domain:p72_has_language'
+        - 'cidoc_properties:domain:pa19_has_language'
         - 'cidoc_properties:domain:p139_has_alternative_form'
         - 'cidoc_properties:range:p128_carries'
         - group_descriptive_text
@@ -166,7 +166,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p72_has_language':
+  'cidoc_properties:domain:pa19_has_language':
     weight: 5
     region: content
     settings: {  }
@@ -256,7 +256,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p72_has_language':
+  'cidoc_properties:range:pa19_has_language':
     weight: 4
     region: content
     settings: {  }

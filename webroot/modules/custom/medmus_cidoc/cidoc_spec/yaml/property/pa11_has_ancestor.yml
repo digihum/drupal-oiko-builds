@@ -2,6 +2,6 @@
 label: PA11 has ancestor
 domain: e21_person
 range: e21_person
-superproperty: 
+superproperty:
   - pa14_has_relative
-reverse_label: PA11 has offspring
+reverse label: PA11 has offspring

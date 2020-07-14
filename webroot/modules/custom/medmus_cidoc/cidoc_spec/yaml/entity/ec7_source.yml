@@ -2,6 +2,7 @@
 label: EC7 Source
 superclasses:
   - e22_man_made_object
+  - ec13_thing_with_language
 properties:
   - p128_carries
 

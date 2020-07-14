@@ -5,7 +5,7 @@ dependencies: {  }
 id: pa8_has_cousin
 label: 'PA8 has cousin'
 bidirectional: true
-reverse_label: pa8_has_cousin
+reverse_label: 'PA8 has cousin'
 friendly_label: Cousin
 reverse_friendly_label: ''
 domain_bundles:

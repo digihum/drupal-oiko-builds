@@ -3,9 +3,9 @@ langcode: en
 status: true
 dependencies: {  }
 id: pa16_has_sibling-in-law
-label: pa16_has_sibling-in-law
+label: 'PA16 has sibling-in-law'
 bidirectional: false
-reverse_label: pa16_has_sibling-in-law
+reverse_label: 'PA16 has sibling-in-law'
 friendly_label: null
 reverse_friendly_label: null
 domain_bundles:

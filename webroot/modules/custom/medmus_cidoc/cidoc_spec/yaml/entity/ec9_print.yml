@@ -2,6 +2,7 @@
 label: EC9 Print
 superclasses:
   - ec7_source
+  - ec13_thing_with_language
 description: |
   This class comprises all identifiable physical object that carry linguistic and/or visual information printed.
 
