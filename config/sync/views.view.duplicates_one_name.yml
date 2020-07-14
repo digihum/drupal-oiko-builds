@@ -322,11 +322,11 @@ display:
           relationship: related_entities
           group_type: group
           admin_label: ''
-          label: ''
+          label: References
           exclude: false
           alter:
-            alter_text: true
-            text: 'References: {{name_1}}'
+            alter_text: false
+            text: '{{name_1}}'
             make_link: false
             path: ''
             absolute: false
@@ -387,10 +387,10 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Is referenced from'
           exclude: false
           alter:
-            alter_text: true
+            alter_text: false
             text: 'Is referenced from: {{name_2}}'
             make_link: false
             path: ''

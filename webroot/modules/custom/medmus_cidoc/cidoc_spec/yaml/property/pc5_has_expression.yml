@@ -1,7 +1,7 @@
 ---
 label: PC5 has expression
 bidirectional: false
-reverse label: PC4 is expression of
+reverse label: PC5 is expression of
 domain: ec1_work
 range: ec1_work
 description: |

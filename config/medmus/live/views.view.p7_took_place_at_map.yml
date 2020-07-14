@@ -345,7 +345,7 @@ display:
   entity_view_1:
     display_plugin: entity_view
     id: entity_view_1
-    display_title: 'EVA Map'
+    display_title: 'EVA Map (label:name of event)'
     position: 2
     display_options:
       display_extenders: {  }
@@ -467,6 +467,7 @@ display:
           separator: ''
           hide_empty: false
           default_field_elements: true
+      enabled: false
     cache_metadata:
       max-age: -1
       contexts:
@@ -656,6 +657,34 @@ display:
           entity_field: name
           plugin_id: field
       display_description: ''
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+      tags:
+        - 'config:field.storage.cidoc_entity.field_geodata'
+  entity_view_3:
+    display_plugin: entity_view
+    id: entity_view_3
+    display_title: 'EVA 3'
+    position: 3
+    display_options:
+      display_extenders: {  }
+      entity_type: cidoc_entity
+      bundles:
+        - e12_production
+        - e5_event
+        - e65_creation
+        - e66_formation
+        - e67_birth
+        - e68_dissolution
+        - e69_death
+        - e6_destruction
+        - e7_activity
+        - e85_joining
+        - e86_leaving
     cache_metadata:
       max-age: -1
       contexts:

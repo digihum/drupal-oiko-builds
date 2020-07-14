@@ -13,77 +13,75 @@ bundle: e85_joining
 mode: popup
 content:
   cidoc_admin_links:
-    region: content
-    type: text_default
-    settings: {  }
     weight: 3
+    region: content
+    settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p11_had_participant':
+    weight: 6
     region: content
-    weight: 5
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p12_occurred_in_the_presence_of':
+    weight: 7
     region: content
-    weight: 6
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p143_joined':
+    weight: 8
     region: content
-    weight: 7
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p144_joined_with':
+    weight: 9
     region: content
-    weight: 8
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p14_carried_out_by':
+    weight: 10
     region: content
-    weight: 9
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p1_is_identified_by':
+    weight: 11
     region: content
-    weight: 10
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p2_has_type':
+    weight: 12
     region: content
-    weight: 11
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 13
     region: content
-    weight: 12
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p4_has_time_span':
+    weight: 14
     region: content
-    weight: 13
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p7_took_place_at':
+    weight: 15
     region: content
-    weight: 14
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p67_refers_to':
+    weight: 16
     region: content
-    weight: 15
     settings: {  }
     third_party_settings: {  }
   cidoc_temporal_summary:
-    region: content
-    type: string
-    settings: {  }
     weight: 1
+    region: content
+    settings: {  }
     third_party_settings: {  }
   content:
     region: content
     label: hidden
     type: text_default
-    weight: 4
+    weight: 5
     settings: {  }
     third_party_settings: {  }
   name:
@@ -93,6 +91,11 @@ content:
     settings:
       link_to_entity: false
     weight: 0
+    third_party_settings: {  }
+  p7_took_place_at_map_entity_view_3:
+    weight: 4
+    region: content
+    settings: {  }
     third_party_settings: {  }
   significance:
     region: content

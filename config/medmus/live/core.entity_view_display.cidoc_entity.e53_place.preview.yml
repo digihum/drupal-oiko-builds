@@ -24,6 +24,7 @@ third_party_settings:
         - citation
         - user_id
         - cidoc_admin_links
+        - map_of_places_experiments__entity_view_4
       parent_name: ''
       weight: 0
       format_type: html_element
@@ -79,6 +80,11 @@ content:
       link_to_entity: false
     weight: 2
     third_party_settings: {  }
+  map_of_places_experiments__entity_view_4:
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   name:
     region: content
     type: string
@@ -120,6 +126,7 @@ hidden:
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:domain:p48_has_preferred_identifier': true
   'cidoc_properties:domain:p4_has_time_span': true
+  'cidoc_properties:domain:p72_has_language': true
   'cidoc_properties:domain:p7_took_place_at': true
   'cidoc_properties:domain:p87_is_identified_by': true
   'cidoc_properties:domain:p89_falls_within': true
@@ -139,6 +146,7 @@ hidden:
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
   events_at_this_location_entity_view_1: true
+  events_witnessed_by_place_sort_ts__entity_view_1: true
   field_geodata: true
   field_location_lookup: true
   field_pleiades_uri: true

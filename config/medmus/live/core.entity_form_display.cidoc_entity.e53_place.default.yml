@@ -39,7 +39,7 @@ third_party_settings:
       children:
         - name
         - internal_name
-        - citation
+        - 'cidoc_properties:domain:p2_has_type'
         - group_main_details
       parent_name: group_main
       weight: 4
@@ -73,10 +73,7 @@ third_party_settings:
     group_main_details:
       children:
         - group_geodata
-        - field_location_lookup
-        - 'cidoc_properties:domain:p2_has_type'
-        - field_pleiades_uri
-        - field_geodata
+        - citation
       parent_name: group_main_deets
       weight: 4
       label: 'Main details'
@@ -90,9 +87,8 @@ third_party_settings:
     group_appellations:
       children:
         - 'cidoc_properties:domain:p87_is_identified_by'
-        - 'cidoc_properties:domain:p48_has_preferred_identifier'
       parent_name: group_main
-      weight: 5
+      weight: 6
       label: 'Also known as'
       format_type: tab
       format_settings:
@@ -104,18 +100,26 @@ third_party_settings:
         fieldset_label_html: true
       region: content
     group_geodata:
-      children: {  }
+      children:
+        - field_location_lookup
+        - field_pleiades_uri
+        - field_geodata
       parent_name: group_main_details
-      weight: 5
+      weight: 10
       label: Geodata
-      format_type: tab
+      format_type: html_element
       format_settings:
-        formatter: closed
-        description: ''
-        classes: ''
-        id: ''
+        element: div
+        show_label: true
+        label_element: h1
+        label_element_classes: ''
         required_fields: true
-        fieldset_label_html: true
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+        fieldset_label_html: false
       region: content
     group_hierarchy:
       children:
@@ -176,12 +180,7 @@ content:
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p2_has_type':
-    weight: 7
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 4
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -217,7 +216,7 @@ content:
     third_party_settings: {  }
   citation:
     type: entity_reference_paragraphs
-    weight: 3
+    weight: 11
     settings:
       title: Citation
       title_plural: Citations
@@ -241,7 +240,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_geodata:
-    weight: 9
+    weight: 13
     settings:
       map:
         leaflet_map: 'Ancient Terrain'
@@ -261,14 +260,14 @@ content:
     region: content
   field_location_lookup:
     type: string_textfield
-    weight: 6
+    weight: 11
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
   field_pleiades_uri:
-    weight: 8
+    weight: 12
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -337,6 +336,7 @@ content:
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:p48_has_preferred_identifier': true
   'cidoc_properties:domain:p72_has_language': true
   'cidoc_properties:range:p100_was_death_of': true
   'cidoc_properties:range:p11_had_participant': true

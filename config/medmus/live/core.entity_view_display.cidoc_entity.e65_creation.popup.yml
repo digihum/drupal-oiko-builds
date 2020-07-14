@@ -43,7 +43,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p4_has_time_span':
-    weight: 13
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -53,7 +53,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p94_has_created':
-    weight: 14
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -68,7 +68,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p67_refers_to':
-    weight: 15
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -81,7 +81,7 @@ content:
     region: content
     label: hidden
     type: text_default
-    weight: 16
+    weight: 15
     settings: {  }
     third_party_settings: {  }
   duplicate_of_p7_took_place_at_entity_view_3:
@@ -98,6 +98,11 @@ content:
     weight: 0
     third_party_settings: {  }
   p7_took_place_at_map_entity_view_1:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  p7_took_place_at_map_entity_view_3:
     weight: 4
     region: content
     settings: {  }
@@ -119,6 +124,7 @@ hidden:
   duplicate_of_p7_took_place_at_entity_view_1: true
   internal_name: true
   map_link: true
+  p7_took_place_at_map_entity_view_2: true
   search_api_excerpt: true
   timeline_link: true
   timeline_logo: true

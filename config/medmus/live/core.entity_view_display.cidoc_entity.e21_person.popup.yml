@@ -13,7 +13,7 @@ third_party_settings:
     group_activities_and_places:
       children: {  }
       parent_name: ''
-      weight: 11
+      weight: 10
       label: '<span class="fa fa-calendar">&nbsp;&nbsp;</span>Key activities and places'
       format_type: html_element
       format_settings:
@@ -32,7 +32,7 @@ third_party_settings:
         - 'cidoc_properties:domain:p131_is_identified_by'
         - 'cidoc_properties:domain:p48_has_preferred_identifier'
       parent_name: ''
-      weight: 6
+      weight: 5
       format_type: html_element
       format_settings:
         id: ''
@@ -49,7 +49,7 @@ third_party_settings:
     group_influences:
       children: {  }
       parent_name: ''
-      weight: 9
+      weight: 8
       format_type: html_element
       format_settings:
         id: ''
@@ -68,7 +68,7 @@ third_party_settings:
         - was_born_in__entity_view_2
         - childrens_with_entity_view_1
       parent_name: ''
-      weight: 8
+      weight: 7
       format_type: html_element
       format_settings:
         element: div
@@ -87,7 +87,7 @@ third_party_settings:
         - was_born_in__entity_view_1
         - died_in_entity_view_1
       parent_name: ''
-      weight: 7
+      weight: 6
       format_type: html_element
       format_settings:
         element: div
@@ -108,7 +108,7 @@ third_party_settings:
         - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
         - 'cidoc_properties:range:p13_destroyed'
       parent_name: ''
-      weight: 12
+      weight: 11
       format_type: html_element
       format_settings:
         element: div
@@ -126,7 +126,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:range:p145_separated'
       parent_name: ''
-      weight: 13
+      weight: 12
       format_type: html_element
       format_settings:
         element: div
@@ -144,7 +144,7 @@ third_party_settings:
       children:
         - creation_info_entity_view_1
       parent_name: ''
-      weight: 10
+      weight: 9
       format_type: html_element
       region: content
       format_settings:
@@ -213,7 +213,7 @@ content:
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p45_consists_of':
-    weight: 15
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -223,97 +223,97 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p72_has_language':
-    weight: 18
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:domain:pa10_has_grandchild':
-    weight: 23
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:domain:pa11_has_ancestor':
-    weight: 22
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:domain:pa12_has_adoptive_child':
-    weight: 21
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:domain:pa13_has_illegitimate_child':
-    weight: 20
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:domain:pa14_has_relative':
-    weight: 19
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:domain:pa15_has_child-in-law':
-    weight: 16
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:domain:pa16_has_sibling-in-law':
-    weight: 24
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:domain:pa17_has_godfather':
-    weight: 14
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:domain:pa18_has_godmother':
     weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:pa1_has_patron':
-    weight: 33
+  'cidoc_properties:domain:pa10_has_grandchild':
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:pa2_has_acquaintance':
+  'cidoc_properties:domain:pa11_has_ancestor':
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa12_has_adoptive_child':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa13_has_illegitimate_child':
+    weight: 19
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa14_has_relative':
+    weight: 18
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa15_has_child-in-law':
+    weight: 15
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa16_has_sibling-in-law':
+    weight: 23
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa17_has_godfather':
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa18_has_godmother':
+    weight: 16
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa1_has_patron':
     weight: 32
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:pa3_has_friend':
+  'cidoc_properties:domain:pa2_has_acquaintance':
     weight: 31
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:pa4_has_muse':
+  'cidoc_properties:domain:pa3_has_friend':
     weight: 30
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:pa5_has_lover':
+  'cidoc_properties:domain:pa4_has_muse':
     weight: 29
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:pa6_has_murder_victim':
+  'cidoc_properties:domain:pa5_has_lover':
     weight: 28
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:pa7_has_sibling':
+  'cidoc_properties:domain:pa6_has_murder_victim':
     weight: 27
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:pa8_has_cousin':
+  'cidoc_properties:domain:pa7_has_sibling':
     weight: 26
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:pa9_has_aunt_or_uncle':
+  'cidoc_properties:domain:pa8_has_cousin':
     weight: 25
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa9_has_aunt_or_uncle':
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -333,7 +333,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p143_joined':
-    weight: 46
+    weight: 45
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -363,52 +363,52 @@ content:
     third_party_settings: {  }
     region: content
   'cidoc_properties:range:p67_refers_to':
-    weight: 47
+    weight: 46
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:pa10_has_grandchild':
-    weight: 45
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:range:pa11_has_ancestor':
     weight: 44
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:pa12_has_adoptive_child':
+  'cidoc_properties:range:pa11_has_ancestor':
     weight: 43
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:pa13_has_illegitimate_child':
+  'cidoc_properties:range:pa12_has_adoptive_child':
     weight: 42
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:pa15_has_child-in-law':
+  'cidoc_properties:range:pa13_has_illegitimate_child':
     weight: 41
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:pa16_has_sibling-in-law':
+  'cidoc_properties:range:pa15_has_child-in-law':
     weight: 40
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:pa17_has_godfather':
-    weight: 36
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:range:pa18_has_godmother':
+  'cidoc_properties:range:pa16_has_sibling-in-law':
     weight: 39
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:pa1_has_patron':
+  'cidoc_properties:range:pa17_has_godfather':
+    weight: 35
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa18_has_godmother':
     weight: 38
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa1_has_patron':
+    weight: 37
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -423,7 +423,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:pa4_has_muse':
-    weight: 37
+    weight: 36
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -433,12 +433,12 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:pa9_has_aunt_or_uncle':
-    weight: 35
+    weight: 34
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:pc6_has_alternative_attribution':
-    weight: 34
+    weight: 33
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -454,7 +454,7 @@ content:
     third_party_settings: {  }
   content:
     type: text_default
-    weight: 5
+    weight: 47
     label: hidden
     settings: {  }
     third_party_settings: {  }
