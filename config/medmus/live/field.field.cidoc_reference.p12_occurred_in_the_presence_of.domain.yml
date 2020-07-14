@@ -15,6 +15,7 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e85_joining
     - cidoc.cidoc_entity_bundle.e86_leaving
     - cidoc.cidoc_entity_bundle.e9_move
+    - cidoc.cidoc_entity_bundle.ec10_marriage
     - cidoc.cidoc_property.p12_occurred_in_the_presence_of
     - field.storage.cidoc_reference.domain
 _core:
@@ -49,5 +50,6 @@ settings:
       e69_death: e69_death
       e85_joining: e85_joining
       e86_leaving: e86_leaving
+      ec10_marriage: ec10_marriage
     auto_create_bundle: e5_event
 field_type: entity_reference

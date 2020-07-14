@@ -1,4 +1,4 @@
-uuid: 3c6f2f44-a8cf-4c36-9d12-61e227f01366
+uuid: fe901c13-0d4d-4234-8f37-c22af8ddc385
 langcode: en
 status: true
 dependencies:
@@ -11,15 +11,13 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e86_leaving
     - cidoc.cidoc_entity_bundle.e9_move
     - cidoc.cidoc_entity_bundle.ec10_marriage
-    - cidoc.cidoc_property.p14_carried_out_by
-    - field.storage.cidoc_reference.domain
-_core:
-  default_config_hash: fk7ec2ojbdp_tGkW3JB9gyyBimG-ksHVp5p5m9ycetU
-id: cidoc_reference.p14_carried_out_by.domain
-field_name: domain
+    - cidoc.cidoc_property.p134_continued
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.p134_continued.range
+field_name: range
 entity_type: cidoc_reference
-bundle: p14_carried_out_by
-label: From
+bundle: p134_continued
+label: To
 description: ''
 required: false
 translatable: true

@@ -1,0 +1,49 @@
+uuid: b3706944-b4c8-4b03-ac62-24ccec008eba
+langcode: en
+status: true
+dependencies: {  }
+id: p9_consists_of
+label: 'P9 consists of'
+bidirectional: false
+reverse_label: 'P9 forms part of'
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  - e5_event
+  - e6_destruction
+  - e7_activity
+  - e9_move
+  - e12_production
+  - e65_creation
+  - e66_formation
+  - e67_birth
+  - e68_dissolution
+  - e69_death
+  - e85_joining
+  - e86_leaving
+  - ec10_marriage
+range_bundles:
+  - e5_event
+  - e6_destruction
+  - e7_activity
+  - e9_move
+  - e12_production
+  - e65_creation
+  - e66_formation
+  - e67_birth
+  - e68_dissolution
+  - e69_death
+  - e85_joining
+  - e86_leaving
+  - ec10_marriage
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description: {  }
+autocomplete_description: {  }
+child_events: {  }

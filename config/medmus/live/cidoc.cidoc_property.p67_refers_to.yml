@@ -42,6 +42,7 @@ range_bundles:
   - ec7_source
   - ec8_manuscript
   - ec9_print
+  - ec10_marriage
 editability:
   domain: true
   range: true

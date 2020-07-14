@@ -30,11 +30,15 @@ enabled_entities:
   - ec7_source
   - ec8_manuscript
   - ec9_print
+  - ec10_marriage
+  - ec11_melodic_scheme
 enabled_properties:
   - p1_is_identified_by
   - p2_has_type
   - p4_has_time_span
   - p7_took_place_at
+  - p9_consists_of
+  - p10_falls_within
   - p11_had_participant
   - p12_occurred_in_the_presence_of
   - p13_destroyed
@@ -58,6 +62,7 @@ enabled_properties:
   - p108_has_produced
   - p128_carries
   - p131_is_identified_by
+  - p134_continued
   - p139_has_alternative_form
   - p143_joined
   - p144_joined_with
@@ -91,3 +96,4 @@ enabled_properties:
   - pc7_has_music
   - pc8_has_syllabic_scheme
   - pc9_has_rhyme_scheme
+  - pc10_has_melodic_scheme

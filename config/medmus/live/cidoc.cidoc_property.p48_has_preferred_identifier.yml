@@ -38,6 +38,7 @@ domain_bundles:
   - ec7_source
   - ec8_manuscript
   - ec9_print
+  - ec10_marriage
 range_bundles:
   - e42_identifier
 editability:

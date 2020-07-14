@@ -25,6 +25,7 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e85_joining
     - cidoc.cidoc_entity_bundle.e86_leaving
     - cidoc.cidoc_entity_bundle.e9_move
+    - cidoc.cidoc_entity_bundle.ec10_marriage
     - cidoc.cidoc_entity_bundle.ec1_work
     - cidoc.cidoc_entity_bundle.ec2_genre
     - cidoc.cidoc_entity_bundle.ec3_formal_feature
@@ -83,5 +84,6 @@ settings:
       ec7_source: ec7_source
       ec8_manuscript: ec8_manuscript
       ec9_print: ec9_print
+      ec10_marriage: ec10_marriage
     auto_create_bundle: e5_event
 field_type: entity_reference

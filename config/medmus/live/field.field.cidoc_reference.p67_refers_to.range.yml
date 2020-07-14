@@ -81,5 +81,6 @@ settings:
       ec7_source: ec7_source
       ec8_manuscript: ec8_manuscript
       ec9_print: ec9_print
+      ec10_marriage: ec10_marriage
     auto_create_bundle: e5_event
 field_type: entity_reference

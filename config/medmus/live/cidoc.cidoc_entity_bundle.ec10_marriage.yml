@@ -1,0 +1,13 @@
+uuid: 66d4d6e8-6641-4ca2-92ff-9557031c2f16
+langcode: en
+status: true
+dependencies: {  }
+crm_entity: ec10_marriage
+id: ec10_marriage
+label: 'EC10 Marriage'
+friendly_label: null
+weight: 0
+group: auxiliary
+description: ''
+examples: "<ul>\r\n<li></li>\r\n</ul>"
+geoserializers: {  }

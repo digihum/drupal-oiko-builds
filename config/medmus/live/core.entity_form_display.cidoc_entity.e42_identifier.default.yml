@@ -166,6 +166,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:range:p87_is_identified_by':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   citation:
     type: entity_reference_paragraphs
     weight: 5

@@ -1,0 +1,49 @@
+uuid: a55a2d70-d875-4a7b-91dd-5a20a4b120b0
+langcode: en
+status: true
+dependencies: {  }
+id: p10_falls_within
+label: 'P10 falls within'
+bidirectional: false
+reverse_label: 'P10 contains'
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  - e5_event
+  - e6_destruction
+  - e7_activity
+  - e9_move
+  - e12_production
+  - e65_creation
+  - e66_formation
+  - e67_birth
+  - e68_dissolution
+  - e69_death
+  - e85_joining
+  - e86_leaving
+  - ec10_marriage
+range_bundles:
+  - e5_event
+  - e6_destruction
+  - e7_activity
+  - e9_move
+  - e12_production
+  - e65_creation
+  - e66_formation
+  - e67_birth
+  - e68_dissolution
+  - e69_death
+  - e85_joining
+  - e86_leaving
+  - ec10_marriage
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description: {  }
+autocomplete_description: {  }
+child_events: {  }

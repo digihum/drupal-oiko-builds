@@ -23,6 +23,7 @@ domain_bundles:
   - e69_death
   - e85_joining
   - e86_leaving
+  - ec10_marriage
 range_bundles:
   - e53_place
 editability:

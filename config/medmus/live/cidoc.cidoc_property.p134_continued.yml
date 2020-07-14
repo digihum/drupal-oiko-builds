@@ -1,0 +1,39 @@
+uuid: 99319d69-1bc7-430c-aee3-9ad67e10dba8
+langcode: en
+status: true
+dependencies: {  }
+id: p134_continued
+label: 'P134 continued'
+bidirectional: false
+reverse_label: 'P134 was continued by'
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  - e7_activity
+  - e9_move
+  - e12_production
+  - e65_creation
+  - e66_formation
+  - e85_joining
+  - e86_leaving
+  - ec10_marriage
+range_bundles:
+  - e7_activity
+  - e9_move
+  - e12_production
+  - e65_creation
+  - e66_formation
+  - e85_joining
+  - e86_leaving
+  - ec10_marriage
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description: {  }
+autocomplete_description: {  }
+child_events: {  }

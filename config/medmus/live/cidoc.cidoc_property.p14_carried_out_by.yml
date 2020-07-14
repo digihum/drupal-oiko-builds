@@ -18,6 +18,7 @@ domain_bundles:
   - e66_formation
   - e85_joining
   - e86_leaving
+  - ec10_marriage
 range_bundles:
   - e21_person
   - e74_group

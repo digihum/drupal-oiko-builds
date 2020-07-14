@@ -1,0 +1,13 @@
+uuid: 2a6b3084-cca1-4af9-a967-23e87b90f043
+langcode: en
+status: true
+dependencies: {  }
+crm_entity: ec11_melodic_scheme
+id: ec11_melodic_scheme
+label: 'EC11 Melodic Scheme'
+friendly_label: null
+weight: 0
+group: auxiliary
+description: '<p>This class contains the melodic scheme in a stanza of a EC6 Music.</p>'
+examples: "<ul>\r\n<li>A B A B C C</li>\r\n</ul>"
+geoserializers: {  }

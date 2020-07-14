@@ -311,11 +311,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:pa19_has_language':
-    weight: 25
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p7_took_place_at':
     weight: 2
     region: content
@@ -323,6 +318,11 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:p9_consists_of':
     weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa19_has_language':
+    weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }
