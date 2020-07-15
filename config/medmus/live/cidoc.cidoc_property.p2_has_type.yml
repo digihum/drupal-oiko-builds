@@ -36,11 +36,14 @@ domain_bundles:
   - ec1_work
   - ec2_genre
   - ec3_formal_feature
+  - ec4_syllabic_scheme
+  - ec5_rhyme_scheme
   - ec6_music
   - ec7_source
   - ec8_manuscript
   - ec9_print
   - ec10_marriage
+  - ec11_melodic_scheme
 range_bundles:
   - e55_type
   - e56_language

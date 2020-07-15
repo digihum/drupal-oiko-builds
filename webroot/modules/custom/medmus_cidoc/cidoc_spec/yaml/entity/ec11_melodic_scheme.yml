@@ -2,6 +2,7 @@
 label: EC11 Melodic Scheme
 superclasses:
   - e62_string
+  - e1_crm_entity
 properties:
 
 description: |

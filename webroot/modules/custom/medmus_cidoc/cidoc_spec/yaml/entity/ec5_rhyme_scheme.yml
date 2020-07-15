@@ -2,9 +2,7 @@
 label: EC5 Rhyme Scheme
 superclasses:
   - e62_string
-properties:
-  - p48_has_preferred_identifier
-
+  - e1_crm_entity
 description: |
   This class contains the rhyme scheme in a stanza of a EC1 Work.
 examples: |
