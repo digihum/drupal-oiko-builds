@@ -33,7 +33,7 @@ timesubwidget:
   range:
     type: 'no'
 widget_description:
-  domain: ''
+  domain: 'Use this property is work has multiple titles'
   range: ''
 autocomplete_description:
   domain: ''
