@@ -1,0 +1,7 @@
+---
+label: PC10 has spouse
+domain: ec10_marriage
+range: e21_person
+superproperty:
+  - p14_carried_out_by
+reverse label: PA17 is spouse in
