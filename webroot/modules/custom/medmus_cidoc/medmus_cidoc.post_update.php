@@ -36,7 +36,7 @@ function medmus_cidoc_post_update_pa19_convert_redux(&$sandbox) {
     'cidoc_reference_revision__field_type' => 'bundle',
     'cidoc_reference_revision__range' => 'bundle',
   ];
-  foreach ($tables as $table => $column) {
+  foreach (array_filter($tables, 'db_table_exists', ARRAY_FILTER_USE_KEY) as $table => $column) {
     db_update($table)
       ->fields(array(
         $column => 'pa19_has_language',
