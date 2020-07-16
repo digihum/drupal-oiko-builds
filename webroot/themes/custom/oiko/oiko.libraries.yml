@@ -69,8 +69,11 @@ fonts:
       url: http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web
   css:
     theme:
-      //maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css:
-        external: true
       //fonts.googleapis.com/css?family=Gilda+Display|Roboto&subset=latin-ext:
         type: external
+  js:
+    # This is a kit for Oiko/Medmus under the steven.jones@computerminds.co.uk account.
+    https://kit.fontawesome.com/3be47d83a7.js:
+      external: true
+      crossorigin: anonymous
 
