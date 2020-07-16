@@ -59,7 +59,6 @@ function medmus_cidoc_post_update_pa19_convert_redux2(&$sandbox) {
     'cidoc_reference__field_language' => 'bundle',
     'cidoc_reference__field_type' => 'bundle',
     'cidoc_reference__range' => 'bundle',
-    'cidoc_reference_r__e4e45fb70d' => 'bundle',
     'cidoc_reference_revision__citation' => 'bundle',
     'cidoc_reference_revision__domain' => 'bundle',
     'cidoc_reference_revision__field_identifier_type' => 'bundle',
