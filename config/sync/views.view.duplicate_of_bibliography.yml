@@ -8,13 +8,11 @@ dependencies:
     - field.storage.taxonomy_term.field_editor
     - field.storage.taxonomy_term.field_issue_fascicule
     - field.storage.taxonomy_term.field_journal
-    - field.storage.taxonomy_term.field_journal_name
     - field.storage.taxonomy_term.field_place_of_publication
     - field.storage.taxonomy_term.field_pp_
     - field.storage.taxonomy_term.field_publisher
     - field.storage.taxonomy_term.field_single_color
     - field.storage.taxonomy_term.field_source_type
-    - field.storage.taxonomy_term.field_title
     - field.storage.taxonomy_term.field_title_long
     - field.storage.taxonomy_term.field_year
     - system.menu.main
@@ -621,69 +619,6 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
-        field_journal_name_1:
-          id: field_journal_name_1
-          table: taxonomy_term__field_journal_name
-          field: field_journal_name
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          plugin_id: field
         field_collective_work_1:
           id: field_collective_work_1
           table: taxonomy_term__field_collective_work
@@ -943,69 +878,6 @@ display:
           prefix: ''
           suffix: ''
           plugin_id: field
-        field_title:
-          id: field_title
-          table: taxonomy_term__field_title
-          field: field_title
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: true
-          alter:
-            alter_text: true
-            text: "{% if field_source_type == 'Primary source' %}{{field_title}}\r\n{% elseif field_journal_1 or field_collective_work_1 %}'{{field_title}}',\r\n{% else %}<em>{{field_title}}</em>\r\n{% endif %}"
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: true
-          empty_zero: false
-          hide_alter_empty: false
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          plugin_id: field
         field_title_long:
           id: field_title_long
           table: taxonomy_term__field_title_long
@@ -1057,69 +929,6 @@ display:
           click_sort_column: value
           type: text_default
           settings: {  }
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          plugin_id: field
-        field_journal_name:
-          id: field_journal_name
-          table: taxonomy_term__field_journal_name
-          field: field_journal_name
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: false
-          alter:
-            alter_text: true
-            text: "<em>{{field_journal_name}}</em>,\r\n"
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: true
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -1726,9 +1535,6 @@ display:
             group_items: {  }
           fields:
             name: name
-            field_journal_name_1: field_journal_name_1
-            field_title: field_title
-            field_journal_name: field_journal_name
             field_year: field_year
           plugin_id: combine
       sorts:
@@ -1811,13 +1617,11 @@ display:
         - 'config:field.storage.taxonomy_term.field_editor'
         - 'config:field.storage.taxonomy_term.field_issue_fascicule'
         - 'config:field.storage.taxonomy_term.field_journal'
-        - 'config:field.storage.taxonomy_term.field_journal_name'
         - 'config:field.storage.taxonomy_term.field_place_of_publication'
         - 'config:field.storage.taxonomy_term.field_pp_'
         - 'config:field.storage.taxonomy_term.field_publisher'
         - 'config:field.storage.taxonomy_term.field_single_color'
         - 'config:field.storage.taxonomy_term.field_source_type'
-        - 'config:field.storage.taxonomy_term.field_title'
         - 'config:field.storage.taxonomy_term.field_title_long'
         - 'config:field.storage.taxonomy_term.field_year'
   global_listing:
@@ -1892,12 +1696,10 @@ display:
         - 'config:field.storage.taxonomy_term.field_editor'
         - 'config:field.storage.taxonomy_term.field_issue_fascicule'
         - 'config:field.storage.taxonomy_term.field_journal'
-        - 'config:field.storage.taxonomy_term.field_journal_name'
         - 'config:field.storage.taxonomy_term.field_place_of_publication'
         - 'config:field.storage.taxonomy_term.field_pp_'
         - 'config:field.storage.taxonomy_term.field_publisher'
         - 'config:field.storage.taxonomy_term.field_single_color'
         - 'config:field.storage.taxonomy_term.field_source_type'
-        - 'config:field.storage.taxonomy_term.field_title'
         - 'config:field.storage.taxonomy_term.field_title_long'
         - 'config:field.storage.taxonomy_term.field_year'

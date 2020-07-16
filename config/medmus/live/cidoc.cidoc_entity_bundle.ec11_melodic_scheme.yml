@@ -6,7 +6,7 @@ crm_entity: ec11_melodic_scheme
 id: ec11_melodic_scheme
 label: 'EC11 Melodic Scheme'
 friendly_label: null
-weight: 0
+weight: 15
 group: auxiliary
 description: '<p>This class contains the melodic scheme in a stanza of a EC6 Music.</p>'
 examples: "<ul>\r\n<li>A B A B C C</li>\r\n</ul>"

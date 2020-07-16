@@ -35,6 +35,7 @@ third_party_settings:
         - group_also_known_as
         - group_who
         - group_what
+        - group_hierarchy
         - group_descriptive_text
       parent_name: group_main_deets
       weight: 5
@@ -65,7 +66,7 @@ third_party_settings:
       children:
         - content
       parent_name: group_tabset
-      weight: 9
+      weight: 10
       label: 'Descriptive text'
       format_type: tab
       format_settings:
@@ -148,7 +149,7 @@ third_party_settings:
         - timeline_logo
         - path
       parent_name: group_data
-      weight: 20
+      weight: 4
       format_type: tab
       format_settings:
         id: ''
@@ -173,6 +174,26 @@ third_party_settings:
         formatter: closed
         required_fields: true
       label: 'Also known as'
+    group_hierarchy:
+      children:
+        - 'cidoc_properties:domain:p9_consists_of'
+        - 'cidoc_properties:range:p9_consists_of'
+        - 'cidoc_properties:domain:p10_falls_within'
+        - 'cidoc_properties:range:p10_falls_within'
+        - 'cidoc_properties:domain:p134_continued'
+        - 'cidoc_properties:range:p134_continued'
+      parent_name: group_tabset
+      weight: 9
+      format_type: tab
+      region: hidden
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: Hierarchy
 _core:
   default_config_hash: MCecFoOh1b0B-sp83OJ4_942EIMUo6UJjL0R5-XB0xk
 id: cidoc_entity.e7_activity.default
@@ -206,7 +227,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p134_continued':
-    weight: 20
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -251,7 +272,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p134_continued':
-    weight: 21
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }

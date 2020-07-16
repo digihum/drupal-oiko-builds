@@ -1,0 +1,23 @@
+uuid: edcb40cc-cbdf-489c-a9f7-49933e853ca9
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e53_place
+    - field.storage.cidoc_entity.field_level_2
+  module:
+    - options
+id: cidoc_entity.e53_place.field_level_2
+field_name: field_level_2
+entity_type: cidoc_entity
+bundle: e53_place
+label: Level
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings: {  }
+field_type: list_integer

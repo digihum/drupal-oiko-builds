@@ -5,6 +5,7 @@ dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e53_place
     - field.field.cidoc_entity.e53_place.field_geodata
+    - field.field.cidoc_entity.e53_place.field_level_2
     - field.field.cidoc_entity.e53_place.field_location_lookup
     - field.field.cidoc_entity.e53_place.field_pleiades_uri
     - image.style.thumbnail
@@ -139,6 +140,7 @@ third_party_settings:
       region: content
     group_oiko_world_settings:
       children:
+        - field_level_2
         - status
         - significance
         - user_id
@@ -258,6 +260,12 @@ content:
     third_party_settings: {  }
     type: leaflet_widget
     region: content
+  field_level_2:
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   field_location_lookup:
     type: string_textfield
     weight: 11
@@ -292,13 +300,13 @@ content:
     region: content
   path:
     type: path
-    weight: 9
+    weight: 32
     settings: {  }
     third_party_settings: {  }
     region: content
   significance:
     type: options_select
-    weight: 5
+    weight: 28
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -306,12 +314,12 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 4
+    weight: 27
     region: content
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 8
+    weight: 31
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -319,14 +327,14 @@ content:
     region: content
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 7
+    weight: 30
     settings:
       display_label: true
     third_party_settings: {  }
     region: content
   user_id:
     type: entity_reference_autocomplete
-    weight: 6
+    weight: 29
     region: content
     settings:
       match_operator: CONTAINS

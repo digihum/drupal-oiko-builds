@@ -6,7 +6,7 @@ crm_entity: e56_language
 id: e56_language
 label: 'E56 Language'
 friendly_label: Language
-weight: 5
+weight: 6
 group: auxiliary
 description: "<p>This class is a specialization of E55 Type and comprises the natural languages in the sense of\r\nconcepts.</p>\r\n\r\n<p>This type is used categorically in the model without reference to instances of it, i.e. the Model\r\ndoes not foresee the description of instances of instances of E56 Language, e.g.: “instances of\r\nMandarin Chinese”.</p>\r\n\r\n<p>It is recommended that internationally or nationally agreed codes and terminology are used to\r\ndenote instances of E56 Language, such as those defined in ISO 639:1988.</p>"
 examples: "<ul>\r\n<li>el [Greek]</li>\r\n<li>en [English]</li>\r\n<li>eo [Esperanto]</li>\r\n<li>es [Spanish]</li>\r\n<li>fr [French]</li>\r\n</ul>"

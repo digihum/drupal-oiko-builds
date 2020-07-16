@@ -8,12 +8,10 @@ dependencies:
     - field.field.taxonomy_term.source_books.field_editor
     - field.field.taxonomy_term.source_books.field_issue_fascicule
     - field.field.taxonomy_term.source_books.field_journal
-    - field.field.taxonomy_term.source_books.field_journal_name
     - field.field.taxonomy_term.source_books.field_place_of_publication
     - field.field.taxonomy_term.source_books.field_pp_
     - field.field.taxonomy_term.source_books.field_publisher
     - field.field.taxonomy_term.source_books.field_source_type
-    - field.field.taxonomy_term.source_books.field_title
     - field.field.taxonomy_term.source_books.field_title_long
     - field.field.taxonomy_term.source_books.field_year
     - taxonomy.vocabulary.source_books
@@ -119,6 +117,4 @@ content:
     type: string
     region: content
 hidden:
-  field_journal_name: true
-  field_title: true
   search_api_excerpt: true

@@ -6,8 +6,8 @@ id: p134_continued
 label: 'P134 continued'
 bidirectional: false
 reverse_label: 'P134 was continued by'
-friendly_label: null
-reverse_friendly_label: null
+friendly_label: ''
+reverse_friendly_label: ''
 domain_bundles:
   - e7_activity
   - e9_move
@@ -34,6 +34,12 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
-widget_description: {  }
-autocomplete_description: {  }
-child_events: {  }
+widget_description:
+  domain: '</p> Name of E7 Activity that continued this E7 Activity.<p>'
+  range: '</p> Name of E7 Activity of which this E7 Activity is a continuation.<p>'
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

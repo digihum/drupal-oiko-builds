@@ -767,26 +767,26 @@ display:
           entity_type: cidoc_entity
           entity_field: bundle
           plugin_id: bundle
-        populated:
-          id: populated
-          table: cidoc_entity
-          field: populated
+        combine:
+          id: combine
+          table: views
+          field: combine
           relationship: none
           group_type: group
           admin_label: ''
-          operator: '='
-          value: All
+          operator: contains
+          value: ''
           group: 1
           exposed: true
           expose:
-            operator_id: ''
-            label: 'Content populated'
+            operator_id: combine_op
+            label: 'Name or Internal name'
             description: ''
             use_operator: false
-            operator: populated_op
+            operator: combine_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: populated
+            identifier: combine
             required: false
             remember: false
             multiple: false
@@ -798,50 +798,7 @@ display:
               forum_user: '0'
               moderator: '0'
               moderated_contributor: '0'
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: populated
-          plugin_id: boolean
-        name:
-          id: name
-          table: cidoc_entity
-          field: name
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: word
-          value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: name_op
-            label: 'Entity Name'
-            description: ''
-            use_operator: false
-            operator: name_op
-            identifier: name
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              content_editor: '0'
             placeholder: ''
-            operator_limit_selection: false
-            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -854,9 +811,10 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
+          fields:
+            name: name
+            internal_name: internal_name
+          plugin_id: combine
         uid:
           id: uid
           table: users_field_data
@@ -946,6 +904,52 @@ display:
             group_items: {  }
           entity_type: cidoc_entity
           entity_field: status
+          plugin_id: boolean
+        populated:
+          id: populated
+          table: cidoc_entity
+          field: populated
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: All
+          group: 1
+          exposed: true
+          expose:
+            operator_id: ''
+            label: 'Content populated'
+            description: ''
+            use_operator: false
+            operator: populated_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: populated
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              content_editor: '0'
+              forum_user: '0'
+              moderator: '0'
+              moderated_contributor: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: cidoc_entity
+          entity_field: populated
           plugin_id: boolean
       sorts:
         changed:

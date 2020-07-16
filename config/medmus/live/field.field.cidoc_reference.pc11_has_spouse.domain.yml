@@ -1,0 +1,29 @@
+uuid: bebdf246-1a53-4df4-a6a1-181456d8260e
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec10_marriage
+    - cidoc.cidoc_property.pc11_has_spouse
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.pc11_has_spouse.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: pc11_has_spouse
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      ec10_marriage: ec10_marriage
+    auto_create_bundle: ec10_marriage
+field_type: entity_reference

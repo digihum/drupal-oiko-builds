@@ -6,6 +6,7 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e53_place
     - core.entity_view_mode.cidoc_entity.timeline_preselection
     - field.field.cidoc_entity.e53_place.field_geodata
+    - field.field.cidoc_entity.e53_place.field_level_2
     - field.field.cidoc_entity.e53_place.field_location_lookup
     - field.field.cidoc_entity.e53_place.field_pleiades_uri
     - image.style.comparative_timeline_logo
@@ -17,6 +18,26 @@ targetEntityType: cidoc_entity
 bundle: e53_place
 mode: timeline_preselection
 content:
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p87_is_identified_by':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:pa19_has_language':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p67_refers_to':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   cidoc_temporal_summary:
     weight: 1
     settings: {  }
@@ -28,6 +49,16 @@ content:
     label: hidden
     settings:
       trim_length: 120
+    third_party_settings: {  }
+    region: content
+  events_witnessed_by_place_sort_ts__entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  map_of_places_experiments__entity_view_4:
+    weight: 10
+    settings: {  }
     third_party_settings: {  }
     region: content
   name:
@@ -64,6 +95,7 @@ hidden:
   cidoc_properties_transcript: true
   citation: true
   field_geodata: true
+  field_level_2: true
   field_location_lookup: true
   field_pleiades_uri: true
   internal_name: true

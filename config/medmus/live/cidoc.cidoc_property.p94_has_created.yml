@@ -28,13 +28,15 @@ timesubwidget:
   domain:
     type: 'no'
   range:
-    type: time
+    type: generic
+    sub_property: p14_carried_out_by
+    title_template: '@bundle_name of @target_name'
 widget_description:
   domain: ''
-  range: 'CAREFUL: Type here the DATE of composition or a generic time span (not the author). Ex. 1121 or XII Century'
+  range: ''
 autocomplete_description:
   domain: ''
-  range: '<p>New date of composition (this will generate a new creation event)</p>'
+  range: '<p>Name of the author (this will generate a new E65 Creation event)</p>'
 child_events:
-  domain: domain
+  domain: 0
   range: 0

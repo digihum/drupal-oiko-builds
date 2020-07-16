@@ -20,13 +20,15 @@ timesubwidget:
   domain:
     type: 'no'
   range:
-    type: 'no'
+    type: generic
+    sub_property: p146_separated_from
+    title_template: '@bundle_name of @target_name'
 widget_description:
   domain: ''
   range: ''
 autocomplete_description:
   domain: ''
-  range: ''
+  range: '<p>Name of the group left. This generates a Leaving event.</p>'
 child_events:
   domain: 0
   range: 0

@@ -8,7 +8,7 @@ crm_entity: e68_dissolution
 id: e68_dissolution
 label: 'E68 Dissolution'
 friendly_label: Dissolution
-weight: -2
+weight: -4
 group: auxiliary
 description: "<p>This class comprises the events that result in the formal or informal termination of an E74\r\nGroup of people.\r\nIf the dissolution was deliberate, the Dissolution event should also be instantiated as an E7\r\nActivity.</p>"
 examples: "<ul>\r\n<li>the fall of the Roman Empire</li>\r\n<li>the liquidation of Enron Corporation</li>\r\n</ul>"

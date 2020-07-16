@@ -6,7 +6,7 @@ crm_entity: ec1_work
 id: ec1_work
 label: 'EC1 Work'
 friendly_label: Work
-weight: -14
+weight: -16
 group: main
 description: ''
 examples: "<ul>\r\n<li>BdT 366.11</li>\r\n<li>Roman de Tristan en prose</li>\r\n<li>Il sabato del villaggio</li>\r\n</ul>"

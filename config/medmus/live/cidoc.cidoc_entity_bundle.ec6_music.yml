@@ -6,7 +6,7 @@ crm_entity: ec6_music
 id: ec6_music
 label: 'EC6 Music'
 friendly_label: Music
-weight: 11
+weight: 12
 group: auxiliary
 description: '<p>This class defines a music as a non-physical thing which is carried by one or more carriers.</p>'
 examples: "<ul>\r\n<li>The music of 366,2 as attested by ms. G of the troubadour tradition</li>\r\n<li>The music of BdT 366,2 as attested by ms. R of the troubadour tradition</li>\r\n</ul>"

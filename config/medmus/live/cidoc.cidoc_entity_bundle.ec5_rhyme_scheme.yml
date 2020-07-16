@@ -6,7 +6,7 @@ crm_entity: ec5_rhyme_scheme
 id: ec5_rhyme_scheme
 label: 'EC5 Rhyme Scheme'
 friendly_label: 'Rhyme scheme'
-weight: 10
+weight: 11
 group: auxiliary
 description: '<p>This class contains the rhyme scheme in a stanza of a EC1 Work.</p>'
 examples: "<ul>\r\n<li>a b a b a b b</li>\r\n<li>a a a a Z</li>\r\n</ul>"

@@ -107,11 +107,13 @@ hidden:
   'cidoc_properties:domain:p48_has_preferred_identifier': true
   'cidoc_properties:domain:p67_refers_to': true
   'cidoc_properties:domain:p72_has_language': true
+  'cidoc_properties:domain:pa19_has_language': true
   'cidoc_properties:domain:pc1_has_metrical_affinities_with': true
   'cidoc_properties:domain:pc2_is_contrafactum_of': true
   'cidoc_properties:domain:pc3_has_genre': true
   'cidoc_properties:domain:pc4_has_formal_feature': true
   'cidoc_properties:domain:pc5_has_expression': true
+  'cidoc_properties:domain:pc7_has_music': true
   'cidoc_properties:domain:pc8_has_syllabic_scheme': true
   'cidoc_properties:domain:pc9_has_rhyme_scheme': true
   'cidoc_properties:range:p128_carries': true
@@ -122,7 +124,10 @@ hidden:
   'cidoc_properties:range:pc5_has_expression': true
   cidoc_properties_transcript: true
   cidoc_temporal_summary: true
+  creation_of_work_info_entity_view_1: true
   map_link: true
+  map_of_places_referred_to_by_work_entity_view_1: true
+  refers_to_appellation_and_identified_person_place_etc__entity_view_1: true
   search_api_excerpt: true
   sources_of_work_entity_view_1: true
   timeline_link: true

@@ -1,0 +1,28 @@
+uuid: 3feb2a55-4f08-4345-843a-623ae8fa9238
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc11_has_spouse
+    - core.entity_view_mode.cidoc_reference.range
+    - field.field.cidoc_reference.pc11_has_spouse.domain
+    - field.field.cidoc_reference.pc11_has_spouse.range
+id: cidoc_reference.pc11_has_spouse.range
+targetEntityType: cidoc_reference
+bundle: pc11_has_spouse
+mode: range
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  property: true
+  range: true
+  search_api_excerpt: true
+  user_id: true

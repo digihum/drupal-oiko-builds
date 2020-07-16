@@ -597,6 +597,7 @@ display:
       entity_type: cidoc_entity
       bundles:
         - ec1_work
+      enabled: true
     cache_metadata:
       max-age: -1
       contexts:

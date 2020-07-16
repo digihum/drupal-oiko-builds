@@ -6,7 +6,7 @@ crm_entity: ec7_source
 id: ec7_source
 label: 'EC7 Source'
 friendly_label: Source
-weight: 12
+weight: 13
 group: auxiliary
 description: '<p>This class comprises all identifiable physical human-made objects carriers of E33 Linguistic Object.</p>'
 examples: "<ul>\r\n<li>Manuscript A of the Troubadour repertoire (EC8)</li>\r\n<li>Paris, BnF, fr. 20050 (EC8)</li>\r\n<li>The specimen of the Editio Princeps of the Machiavelli’s Principe preserved in the Vatican Library (EC9)</li>\r\n</ul>"

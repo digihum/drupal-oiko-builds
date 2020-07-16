@@ -1,0 +1,39 @@
+uuid: d5bfcaec-38f7-42a0-a257-70843f647563
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc11_has_spouse
+    - field.field.cidoc_reference.pc11_has_spouse.domain
+    - field.field.cidoc_reference.pc11_has_spouse.range
+id: cidoc_reference.pc11_has_spouse.default
+targetEntityType: cidoc_reference
+bundle: pc11_has_spouse
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    region: content
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  search_api_excerpt: true
+  user_id: true

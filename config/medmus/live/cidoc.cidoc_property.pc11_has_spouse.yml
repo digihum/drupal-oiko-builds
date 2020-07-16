@@ -1,0 +1,25 @@
+uuid: 0bb6b5f1-32ce-451d-b538-f314c4ff994e
+langcode: en
+status: true
+dependencies: {  }
+id: pc11_has_spouse
+label: 'PC11 has spouse'
+bidirectional: false
+reverse_label: 'PC11 is spouse in'
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  - ec10_marriage
+range_bundles:
+  - e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description: {  }
+autocomplete_description: {  }
+child_events: {  }

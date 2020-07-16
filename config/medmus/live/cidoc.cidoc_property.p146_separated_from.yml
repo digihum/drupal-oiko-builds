@@ -19,13 +19,15 @@ timesubwidget:
   domain:
     type: 'no'
   range:
-    type: 'no'
+    type: generic
+    sub_property: p145_separated
+    title_template: '@bundle_name of @target_name'
 widget_description:
   domain: ''
   range: ''
 autocomplete_description:
   domain: ''
-  range: ''
+  range: '<p>Name of person (or group) who separeted from the group. This generates a Leaving event.'
 child_events:
   domain: 0
   range: 0

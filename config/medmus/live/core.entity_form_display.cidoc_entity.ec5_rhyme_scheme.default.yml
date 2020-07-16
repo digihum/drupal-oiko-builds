@@ -17,7 +17,7 @@ third_party_settings:
       children:
         - content
       parent_name: group_main_deets
-      weight: 5
+      weight: 6
       label: 'Descriptive text'
       format_type: fieldset
       format_settings:
@@ -33,7 +33,7 @@ third_party_settings:
         - group_main_deets
         - group_oiko_world_settings
       parent_name: ''
-      weight: 3
+      weight: 1
       label: 'Main data entry'
       format_type: tabs
       format_settings:
@@ -47,6 +47,7 @@ third_party_settings:
         - name
         - internal_name
         - citation
+        - 'cidoc_properties:domain:p48_has_preferred_identifier'
         - 'cidoc_properties:range:pc9_has_rhyme_scheme'
         - group_descriptive_text
       parent_name: group_data
@@ -264,7 +265,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:pc9_has_rhyme_scheme':
-    weight: 4
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -358,3 +359,4 @@ hidden:
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
+  'cidoc_properties:range:p67_refers_to': true

@@ -1304,6 +1304,7 @@ display:
           plugin_id: field
       defaults:
         fields: false
+      enabled: true
     cache_metadata:
       max-age: -1
       contexts:

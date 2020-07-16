@@ -97,3 +97,4 @@ enabled_properties:
   - pc8_has_syllabic_scheme
   - pc9_has_rhyme_scheme
   - pc10_has_melodic_scheme
+  - pc11_has_spouse

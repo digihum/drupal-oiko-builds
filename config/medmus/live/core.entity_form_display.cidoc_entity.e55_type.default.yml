@@ -48,9 +48,6 @@ third_party_settings:
         - internal_name
         - citation
         - 'cidoc_properties:range:p2_has_type'
-        - 'cidoc_properties:domain:p48_has_preferred_identifier'
-        - 'cidoc_properties:range:p94_has_created'
-        - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
         - group_descriptive_text
       parent_name: group_data
       weight: 3
@@ -156,11 +153,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 6
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p4_has_time_span':
     weight: 4
     region: content
@@ -226,11 +218,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p12_occurred_in_the_presence_of':
-    weight: 8
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:range:p134_continued':
     weight: 21
     region: content
@@ -253,11 +240,6 @@ content:
     third_party_settings: {  }
   'cidoc_properties:range:p45_consists_of':
     weight: 8
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:range:p94_has_created':
-    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -385,6 +367,9 @@ hidden:
   'cidoc_properties:domain:p102_has_title': true
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p48_has_preferred_identifier': true
+  'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
   'cidoc_properties:range:p67_refers_to': true
+  'cidoc_properties:range:p94_has_created': true

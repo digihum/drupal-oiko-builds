@@ -10,7 +10,7 @@ field_name: field_collective_work
 entity_type: taxonomy_term
 bundle: source_books
 label: 'Contained in Collective work'
-description: "Refers to collective monographs, conference procedures etc. in which the article is included.\r\nUse an American Style citation and edit the Collective Work as a separate bibliographic product.\r\n"
+description: "Use an American Style citation and edit the Collective Work as a separate bibliographic product.\r\nRefers to collective monographs, conference procedures etc. in which the article is included.<br/>\r\n(ex. Di Luca - Grimaldi 2017; AIEO 1993)\r\n"
 required: false
 translatable: false
 default_value: {  }

@@ -8,7 +8,7 @@ crm_entity: e74_group
 id: e74_group
 label: 'E74 Group'
 friendly_label: Group
-weight: -1
+weight: -3
 group: auxiliary
 description: "<p>This class comprises any gatherings or organizations of two or more people that act\r\ncollectively or in a similar way due to any form of unifying relationship. In the wider sense\r\nthis class also comprises official positions which used to be regarded in certain contexts as\r\none actor, independent of the current holder of the office, such as the president of a country.</p>\r\n\r\n<p>A gathering of people becomes an E74 Group when it exhibits organizational characteristics\r\nusually typified by a set of ideas or beliefs held in common, or actions performed together.\r\nThese might be communication, creating some common artifact, a common purpose such as\r\nstudy, worship, business, sports, etc. Nationality can be modeled as membership in an E74\r\nGroup (cf. HumanML markup). Married couples and other concepts of family are regarded as\r\nparticular examples of E74 Group.</p>"
 examples: "<ul>\r\n<li>the impressionists</li>\r\n<li>the Navajo</li>\r\n<li>the Greeks</li>\r\n<li>the peace protestors in New York City on February 15 2003</li>\r\n<li>Exxon-Mobil</li>\r\n<li>King Solomon and his wives</li>\r\n<li>The President of the Swiss Confederation</li>\r\n</ul>"

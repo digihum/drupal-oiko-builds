@@ -6,6 +6,7 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e53_place
     - core.entity_view_mode.cidoc_entity.popup
     - field.field.cidoc_entity.e53_place.field_geodata
+    - field.field.cidoc_entity.e53_place.field_level_2
     - field.field.cidoc_entity.e53_place.field_location_lookup
     - field.field.cidoc_entity.e53_place.field_pleiades_uri
   module:
@@ -133,6 +134,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:pa19_has_language':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p100_was_death_of':
     weight: 9
     settings: {  }
@@ -285,6 +291,7 @@ hidden:
   e6_destroyed_entity_view_1: true
   events_at_this_location_entity_view_1: true
   field_geodata: true
+  field_level_2: true
   field_location_lookup: true
   field_pleiades_uri: true
   internal_name: true
