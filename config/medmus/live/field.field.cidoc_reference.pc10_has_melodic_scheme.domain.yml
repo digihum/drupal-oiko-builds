@@ -1,0 +1,29 @@
+uuid: 6d128044-881d-41b7-ba8c-26d8c57c6009
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec6_music
+    - cidoc.cidoc_property.pc10_has_melodic_scheme
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.pc10_has_melodic_scheme.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: pc10_has_melodic_scheme
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      ec6_music: ec6_music
+    auto_create_bundle: ec6_music
+field_type: entity_reference

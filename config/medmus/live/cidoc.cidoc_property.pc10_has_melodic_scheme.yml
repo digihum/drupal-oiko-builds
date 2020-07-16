@@ -1,0 +1,25 @@
+uuid: 45c64a59-65c3-4289-ac4b-a92994fbf53c
+langcode: en
+status: true
+dependencies: {  }
+id: pc10_has_melodic_scheme
+label: 'PC10 has melodic scheme'
+bidirectional: false
+reverse_label: 'PC10 is melodic scheme of'
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  - ec6_music
+range_bundles:
+  - ec11_melodic_scheme
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description: {  }
+autocomplete_description: {  }
+child_events: {  }
