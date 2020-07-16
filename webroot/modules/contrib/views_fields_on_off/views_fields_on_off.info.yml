@@ -1,0 +1,11 @@
+type: module
+name: 'Views Fields On/Off'
+description: 'Exposed form to allow users to switch fields in a View on or off.'
+core: '8.x'
+core_version_requirement: ^8 || ^9
+package: 'Views'
+
+# Information added by Drupal.org packaging script on 2020-05-06
+version: '8.x-1.0-alpha5'
+project: 'views_fields_on_off'
+datestamp: 1588741528
