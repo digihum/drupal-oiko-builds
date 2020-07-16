@@ -242,7 +242,8 @@ class CidocPropertyForm extends EntityForm {
       $form['endpoints']['subwidgets'][$endpoint]['title_template'] = [
         '#type' => 'textfield',
         '#title' => t('Intermediate entity title template'),
-        '#description' => t('When the intermediate entity is created, define a template for its title.<br>You may use the following tokens: @bundle_name, @target_name.'),
+        '#description' => t('When the intermediate entity is created, define a template for its title.<br>You may use the following tokens:<ul>
+<li>@source_name - The value entered by the editor.</li><li>@bundle_name - The name of the type of intermediate entity.</li><li>@target_name - The name of the entity being edited.</li></ul>'),
         '#default_value' => $cidoc_property->getSubwidgetTitleTemplate($endpoint),
         '#states' => [
           'visible' => [
