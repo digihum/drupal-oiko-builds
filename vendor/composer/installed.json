@@ -3070,6 +3070,60 @@
         "description": "Drupal is an open source content management platform powering millions of websites and applications."
     },
     {
+        "name": "drupal/css_editor",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/css_editor.git",
+            "reference": "8.x-1.2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/css_editor-8.x-1.2.zip",
+            "reference": "8.x-1.2",
+            "shasum": "e7e54ec3781420ead909e51a8864174a253fce26"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "drupal": {
+                "version": "8.x-1.2",
+                "datestamp": "1510935485",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "caiosba",
+                "homepage": "https://www.drupal.org/user/1774198"
+            },
+            {
+                "name": "encelado",
+                "homepage": "https://www.drupal.org/user/701446"
+            },
+            {
+                "name": "infojunkie",
+                "homepage": "https://www.drupal.org/user/48424"
+            }
+        ],
+        "description": "Customize your CSS directly from the browser.",
+        "homepage": "https://www.drupal.org/project/css_editor",
+        "support": {
+            "source": "https://git.drupalcode.org/project/css_editor"
+        }
+    },
+    {
         "name": "drupal/csv_serialization",
         "version": "1.0.0-alpha1",
         "version_normalized": "1.0.0.0-alpha1",
@@ -3347,6 +3401,52 @@
         "homepage": "https://www.drupal.org/project/drush_entity",
         "support": {
             "source": "https://git.drupalcode.org/project/drush_entity"
+        }
+    },
+    {
+        "name": "drupal/editor_file",
+        "version": "1.5.0",
+        "version_normalized": "1.5.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/editor_file.git",
+            "reference": "8.x-1.5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/editor_file-8.x-1.5.zip",
+            "reference": "8.x-1.5",
+            "shasum": "a547ce592365c08a18919f84f38e0f9451dc5950"
+        },
+        "require": {
+            "drupal/core": "^8 || ^9"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "drupal": {
+                "version": "8.x-1.5",
+                "datestamp": "1588768044",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "DuaelFr",
+                "homepage": "https://www.drupal.org/user/931394"
+            }
+        ],
+        "description": "Allow users to link uploaded files in the text Editor.",
+        "homepage": "https://www.drupal.org/project/editor_file",
+        "support": {
+            "source": "https://git.drupalcode.org/project/editor_file"
         }
     },
     {
