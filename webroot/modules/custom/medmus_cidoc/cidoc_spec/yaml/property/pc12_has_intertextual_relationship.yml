@@ -3,3 +3,4 @@ label: PC12 has intertextual relationship
 domain: ec1_work
 range: ec1_work
 reverse_label: PC12 has intertextual relationship
+bidirectional: true
