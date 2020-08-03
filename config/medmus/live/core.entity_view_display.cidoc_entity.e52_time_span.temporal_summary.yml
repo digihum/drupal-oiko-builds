@@ -13,6 +13,16 @@ targetEntityType: cidoc_entity
 bundle: e52_time_span
 mode: temporal_summary
 content:
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p67_refers_to':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   duplicate_of_p15_influenced_entity_view_1:
     weight: 6
     settings: {  }
@@ -76,6 +86,7 @@ hidden:
   internal_name: true
   map_link: true
   name: true
+  search_api_excerpt: true
   significance: true
   timeline_link: true
   timeline_logo: true

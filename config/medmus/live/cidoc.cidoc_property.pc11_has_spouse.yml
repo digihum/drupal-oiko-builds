@@ -6,8 +6,8 @@ id: pc11_has_spouse
 label: 'PC11 has spouse'
 bidirectional: false
 reverse_label: 'PC11 is spouse in'
-friendly_label: null
-reverse_friendly_label: null
+friendly_label: Spouse
+reverse_friendly_label: Spouse
 domain_bundles:
   - ec10_marriage
 range_bundles:
@@ -19,7 +19,15 @@ timesubwidget:
   domain:
     type: 'no'
   range:
-    type: 'no'
-widget_description: {  }
-autocomplete_description: {  }
-child_events: {  }
+    type: generic
+    sub_property: pc11_has_spouse
+    title_template: 'Marriage of @target_name and @source_name'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: '<p>Name of spouse. This will generate a Marriage event</p>'
+child_events:
+  domain: 0
+  range: 0

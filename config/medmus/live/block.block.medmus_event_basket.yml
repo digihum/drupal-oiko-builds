@@ -1,6 +1,6 @@
 uuid: a79b2a89-e54a-46b3-b1f7-f42c73d959ed
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - oiko_event_basket
@@ -9,7 +9,7 @@ dependencies:
 id: medmus_event_basket
 theme: medmus
 region: user_header
-weight: -11
+weight: -7
 provider: null
 plugin: event_basket
 settings:

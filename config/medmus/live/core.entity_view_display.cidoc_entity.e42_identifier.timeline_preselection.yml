@@ -5,6 +5,7 @@ dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e42_identifier
     - core.entity_view_mode.cidoc_entity.timeline_preselection
+    - field.field.cidoc_entity.e42_identifier.field_exclude_from_duplicates_
     - image.style.comparative_timeline_logo
   module:
     - image
@@ -14,6 +15,61 @@ targetEntityType: cidoc_entity
 bundle: e42_identifier
 mode: timeline_preselection
 content:
+  'cidoc_properties:domain:p102_has_title':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p139_has_alternative_form':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:pa19_has_language':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p128_carries':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p131_is_identified_by':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p139_has_alternative_form':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p48_has_preferred_identifier':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p67_refers_to':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p87_is_identified_by':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p94_has_created':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   cidoc_temporal_summary:
     weight: 1
     settings: {  }
@@ -56,6 +112,7 @@ hidden:
   'cidoc_properties:range:p1_is_identified_by': true
   cidoc_properties_transcript: true
   citation: true
+  field_exclude_from_duplicates_: true
   internal_name: true
   map_link: true
   search_api_excerpt: true

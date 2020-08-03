@@ -15,8 +15,8 @@ third_party_settings:
     group_when:
       children:
         - 'cidoc_properties:domain:p7_took_place_at'
-      parent_name: ''
-      weight: 7
+      parent_name: group_main_d
+      weight: 5
       format_type: tab
       region: content
       format_settings:
@@ -30,8 +30,8 @@ third_party_settings:
     group_where:
       children:
         - 'cidoc_properties:domain:p4_has_time_span'
-      parent_name: ''
-      weight: 8
+      parent_name: group_main_d
+      weight: 6
       format_type: tab
       region: content
       format_settings:
@@ -49,8 +49,8 @@ third_party_settings:
         - 'cidoc_properties:domain:p14_carried_out_by'
         - 'cidoc_properties:domain:p11_had_participant'
         - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
-      parent_name: ''
-      weight: 9
+      parent_name: group_main_d
+      weight: 7
       format_type: tab
       region: content
       format_settings:
@@ -61,6 +61,92 @@ third_party_settings:
         formatter: closed
         required_fields: true
       label: 'People / Groups'
+    group_hierarchy:
+      children:
+        - 'cidoc_properties:domain:p9_consists_of'
+        - 'cidoc_properties:range:p9_consists_of'
+        - 'cidoc_properties:domain:p134_continued'
+        - 'cidoc_properties:range:p134_continued'
+      parent_name: group_main_d
+      weight: 9
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: Hierarchy
+    group_main_:
+      children:
+        - class_description
+        - name
+        - significance
+        - group_main_d
+        - citation
+      parent_name: ''
+      weight: 0
+      format_type: tabs
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        direction: horizontal
+      label: 'Main details'
+    group_connectin:
+      children:
+        - timeline_logo
+        - timeline_preselect_option
+        - path
+        - status
+      parent_name: group_main_d
+      weight: 10
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: 'Connecting Medieval Music'
+    group_tyoe:
+      children:
+        - 'cidoc_properties:domain:p2_has_type'
+      parent_name: group_main_d
+      weight: 8
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: Type
+    group_main_d:
+      children:
+        - group_when
+        - group_where
+        - group_pe
+        - group_tyoe
+        - group_hierarchy
+        - group_connectin
+      parent_name: group_main_
+      weight: 4
+      format_type: tabs
+      region: content
+      format_settings:
+        direction: horizontal
+        id: ''
+        classes: ''
+        fieldset_label_html: false
+      label: 'Main details'
 id: cidoc_entity.e86_leaving.default
 targetEntityType: cidoc_entity
 bundle: e86_leaving
@@ -73,6 +159,11 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:p12_occurred_in_the_presence_of':
     weight: 17
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p134_continued':
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -92,7 +183,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p2_has_type':
-    weight: 6
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -102,13 +193,28 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p7_took_place_at':
-    weight: 10
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p9_consists_of':
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p134_continued':
+    weight: 16
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p9_consists_of':
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
   citation:
     type: entity_reference_paragraphs
-    weight: 3
+    weight: 5
     settings:
       title: Citation
       title_plural: Citations
@@ -119,13 +225,13 @@ content:
     region: content
     third_party_settings: {  }
   class_description:
-    weight: 0
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
   name:
     type: string_textfield
-    weight: 1
+    weight: 2
     region: content
     settings:
       size: 60
@@ -133,13 +239,13 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 10
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   significance:
     type: options_select
-    weight: 2
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -147,12 +253,12 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 11
+    weight: 6
     region: content
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 5
+    weight: 3
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -166,8 +272,10 @@ content:
     region: content
     third_party_settings: {  }
 hidden:
+  'cidoc_properties:domain:p10_falls_within': true
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p48_has_preferred_identifier': true
+  'cidoc_properties:range:p10_falls_within': true
   'cidoc_properties:range:p67_refers_to': true
   content: true
   internal_name: true

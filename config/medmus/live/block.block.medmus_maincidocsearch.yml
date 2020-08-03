@@ -9,7 +9,7 @@ dependencies:
 id: medmus_maincidocsearch
 theme: medmus
 region: search_header
-weight: 0
+weight: -16
 provider: null
 plugin: main_cidoc_search
 settings:
@@ -18,9 +18,9 @@ settings:
   provider: oiko_app
   label_display: '0'
   placeholder_map: Search
-  no_search_map: 'Search for events, people, groups, places or objects e.g. ''The battle of Milvian Bridge'' or ''the Xiongnu''.'
+  no_search_map: 'Search for events, people, groups, places, manuscripts...'
   placeholder_timeline: 'Search groups and people'
-  no_search_timeline: 'Search for communities, empires or groups to compare on your timeline e.g. ''The Roman Empire'' or ''the Han''.'
+  no_search_timeline: 'Search for events, people, groups, places, manuscripts...'
   no_results_text: 'No results found.'
-  searching_text: 'Searching through known space and time...'
+  searching_text: Searching...
 visibility: {  }

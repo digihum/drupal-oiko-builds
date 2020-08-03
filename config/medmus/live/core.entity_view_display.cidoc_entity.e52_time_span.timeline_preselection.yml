@@ -15,6 +15,16 @@ targetEntityType: cidoc_entity
 bundle: e52_time_span
 mode: timeline_preselection
 content:
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p67_refers_to':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   cidoc_temporal_summary:
     weight: 1
     settings: {  }

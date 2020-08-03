@@ -1,0 +1,10 @@
+uuid: 4d278efd-1685-43e1-a3e5-728ad9d79a4a
+langcode: en
+status: true
+dependencies: {  }
+id: pure_html_user
+label: 'Pure HTML user'
+weight: 7
+is_admin: null
+permissions:
+  - 'use text format pure_html'

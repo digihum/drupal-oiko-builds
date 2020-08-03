@@ -1,0 +1,42 @@
+uuid: 3496ae3b-a19a-437f-826d-b46fbe060767
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+    - search_api
+  config:
+    - search_api.server.db_search_backend
+id: public_index
+name: 'Public Index'
+description: ''
+read_only: false
+field_settings:
+  name:
+    label: Name
+    datasource_id: 'entity:cidoc_entity'
+    property_path: name
+    type: string
+    dependencies:
+      module:
+        - cidoc
+datasource_settings:
+  'entity:cidoc_entity':
+    bundles:
+      default: false
+      selected:
+        - e21_person
+        - e74_group
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  cidoc: {  }
+  language_with_fallback: {  }
+  rendered_item: {  }
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  index_directly: true
+  cron_limit: 50
+server: db_search_backend

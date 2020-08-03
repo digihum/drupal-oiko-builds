@@ -11,7 +11,7 @@ dependencies:
 id: places_list
 theme: medmus
 region: user_header
-weight: -14
+weight: -13
 provider: null
 plugin: 'block_content:cb9b1053-fda1-4921-89e9-96d402fe31b8'
 settings:

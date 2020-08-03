@@ -35,6 +35,7 @@ third_party_settings:
         - group_also_known_as
         - group_who
         - group_what
+        - group_hierarchy
         - group_descriptive_text
       parent_name: group_main_deets
       weight: 5
@@ -65,7 +66,7 @@ third_party_settings:
       children:
         - content
       parent_name: group_tabset
-      weight: 26
+      weight: 27
       label: 'Descriptive text'
       format_type: tab
       format_settings:
@@ -173,6 +174,22 @@ third_party_settings:
         formatter: closed
         required_fields: true
       label: 'Also known as'
+    group_hierarchy:
+      children:
+        - 'cidoc_properties:domain:p9_consists_of'
+        - 'cidoc_properties:range:p9_consists_of'
+      parent_name: group_tabset
+      weight: 26
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: Hierarchy
 _core:
   default_config_hash: ilxxf1HlXfDSYXRWUNJEpKwhM6Rhk8EyjsA3ypAioV4
 id: cidoc_entity.e5_event.default
@@ -180,18 +197,13 @@ targetEntityType: cidoc_entity
 bundle: e5_event
 mode: default
 content:
-  'cidoc_properties:domain:p10_falls_within':
-    weight: 8
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p11_had_participant':
     weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p12_occurred_in_the_presence_of':
-    weight: 13
+    weight: 38
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -222,11 +234,6 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:p9_consists_of':
     weight: 6
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:range:p10_falls_within':
-    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -331,8 +338,10 @@ content:
       match_limit: 10
     third_party_settings: {  }
 hidden:
+  'cidoc_properties:domain:p10_falls_within': true
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:range:p10_falls_within': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
   'cidoc_properties:range:p67_refers_to': true

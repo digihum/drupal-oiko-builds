@@ -25,7 +25,6 @@ third_party_settings:
         - citation
         - user_id
         - cidoc_admin_links
-        - map_of_places_experiments__entity_view_4
       parent_name: ''
       weight: 0
       format_type: html_element
@@ -57,11 +56,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:pa19_has_language':
-    weight: 20
-    settings: {  }
-    third_party_settings: {  }
-    region: content
   citation:
     region: content
     type: entity_reference_revisions_entity_view
@@ -85,6 +79,11 @@ content:
     settings:
       link_to_entity: false
     weight: 2
+    third_party_settings: {  }
+  map_of_places_experiments__entity_view_2:
+    weight: 1
+    region: content
+    settings: {  }
     third_party_settings: {  }
   map_of_places_experiments__entity_view_4:
     weight: 9
@@ -137,6 +136,7 @@ hidden:
   'cidoc_properties:domain:p87_is_identified_by': true
   'cidoc_properties:domain:p89_falls_within': true
   'cidoc_properties:domain:p9_consists_of': true
+  'cidoc_properties:domain:pa19_has_language': true
   'cidoc_properties:range:p10_falls_within': true
   'cidoc_properties:range:p134_continued': true
   'cidoc_properties:range:p15_was_influenced_by': true

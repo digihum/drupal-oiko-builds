@@ -432,7 +432,7 @@ display:
           entity_field: id
           plugin_id: numeric
       display_extenders: {  }
-      group_by: false
+      group_by: true
     cache_metadata:
       max-age: -1
       contexts:
@@ -633,11 +633,11 @@ display:
           type: leaflet_formatter_default
           settings:
             leaflet_map: 'Ancient Terrain'
-            zoom: '7'
-            minZoom: '3'
+            zoom: '5'
+            minZoom: '0'
             maxZoom: '18'
             height: '400'
-            popup: 0
+            popup: 1
             icon:
               icon_url: ''
               shadow_url: ''
@@ -677,6 +677,113 @@ display:
         - 'config:field.storage.cidoc_entity.field_geodata'
         - 'config:field.storage.cidoc_reference.domain'
         - 'config:field.storage.cidoc_reference.range'
+    deleted: false
+  entity_view_2:
+    display_plugin: entity_view
+    id: entity_view_2
+    display_title: 'EVA 3'
+    position: 3
+    display_options:
+      display_extenders: {  }
+      entity_type: cidoc_entity
+      bundles:
+        - e53_place
+      display_description: ''
+      fields:
+        field_geodata:
+          id: field_geodata
+          table: cidoc_entity__field_geodata
+          field: field_geodata
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
+          click_sort_column: value
+          type: leaflet_formatter_default
+          settings:
+            leaflet_map: 'Ancient Terrain'
+            zoom: '5'
+            minZoom: '0'
+            maxZoom: '18'
+            height: '400'
+            popup: 1
+            icon:
+              icon_url: ''
+              shadow_url: ''
+              icon_size:
+                x: '0'
+                'y': '0'
+              icon_anchor:
+                x: '0'
+                'y': '0'
+              shadow_anchor:
+                x: '0'
+                'y': '0'
+              popup_anchor:
+                x: '0'
+                'y': '0'
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+      defaults:
+        fields: false
+      enabled: true
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+      tags:
+        - 'config:field.storage.cidoc_entity.field_geodata'
     deleted: false
   entity_view_4:
     display_plugin: entity_view
@@ -1000,6 +1107,7 @@ display:
       entity_type: cidoc_entity
       bundles:
         - e53_place
+      enabled: false
     cache_metadata:
       max-age: -1
       contexts:

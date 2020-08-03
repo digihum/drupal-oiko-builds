@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e53_place
+    - system.menu.main
     - views.view.stefano_splaces
   module:
     - cidoc
@@ -3010,6 +3011,15 @@ display:
       path: places_list
       defaults:
         fields: true
+      menu:
+        type: normal
+        title: Places
+        description: ''
+        expanded: false
+        parent: ''
+        weight: -47
+        context: '0'
+        menu_name: main
     cache_metadata:
       max-age: -1
       contexts:

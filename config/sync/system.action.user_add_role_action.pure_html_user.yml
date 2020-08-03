@@ -1,0 +1,14 @@
+uuid: 75c44675-ce38-4b7e-8ed7-fd0e329a16c2
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.pure_html_user
+  module:
+    - user
+id: user_add_role_action.pure_html_user
+label: 'Add the Pure HTML user role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: pure_html_user

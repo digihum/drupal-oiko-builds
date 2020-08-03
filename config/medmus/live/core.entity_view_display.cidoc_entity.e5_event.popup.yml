@@ -13,7 +13,7 @@ third_party_settings:
     group_period:
       children: {  }
       parent_name: ''
-      weight: 9
+      weight: 8
       label: '<span class="fa fa-clock-o">&nbsp;&nbsp;</span>Period'
       format_type: html_element
       format_settings:
@@ -31,7 +31,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:p4_has_time_span'
       parent_name: ''
-      weight: 10
+      weight: 9
       label: '<span class="fa fa-calendar">&nbsp;&nbsp;</span>Occurred on'
       format_type: html_element
       format_settings:
@@ -46,9 +46,13 @@ third_party_settings:
         fieldset_label_html: true
       region: content
     group_sub_events:
-      children: {  }
+      children:
+        - 'cidoc_properties:domain:p9_consists_of'
+        - 'cidoc_properties:range:p9_consists_of'
+        - 'cidoc_properties:domain:p10_falls_within'
+        - 'cidoc_properties:range:p10_falls_within'
       parent_name: ''
-      weight: 13
+      weight: 12
       label: '<span class="fa fa-sitemap">&nbsp;&nbsp;</span>Event structure'
       format_type: html_element
       format_settings:
@@ -65,7 +69,7 @@ third_party_settings:
     group_influences:
       children: {  }
       parent_name: ''
-      weight: 8
+      weight: 7
       label: '<span class="fa fa-exchange">&nbsp;&nbsp;</span>Influences'
       format_type: html_element
       format_settings:
@@ -83,7 +87,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:p11_had_participant'
       parent_name: ''
-      weight: 12
+      weight: 11
       label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Participants'
       format_type: html_element
       format_settings:
@@ -101,7 +105,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
       parent_name: ''
-      weight: 11
+      weight: 10
       label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Occurred in the presence of'
       format_type: html_element
       format_settings:
@@ -119,7 +123,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:p1_is_identified_by'
       parent_name: ''
-      weight: 6
+      weight: 5
       format_type: html_element
       format_settings:
         id: ''
@@ -137,7 +141,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:p7_took_place_at'
       parent_name: ''
-      weight: 7
+      weight: 6
       format_type: html_element
       format_settings:
         fieldset_label_html: true
@@ -163,7 +167,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
-    weight: 23
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -192,11 +196,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 14
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p4_has_time_span':
     weight: 20
     region: content
@@ -208,12 +207,12 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p9_consists_of':
-    weight: 18
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p10_falls_within':
-    weight: 24
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -228,12 +227,12 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p67_refers_to':
-    weight: 15
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p9_consists_of':
-    weight: 19
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -244,7 +243,7 @@ content:
     third_party_settings: {  }
   content:
     type: text_default
-    weight: 5
+    weight: 14
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -289,6 +288,7 @@ content:
 hidden:
   cidoc_properties: true
   'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p48_has_preferred_identifier': true
   cidoc_properties_transcript: true
   citation: true
   duplicate_of_p134_continues_entity_view_1: true

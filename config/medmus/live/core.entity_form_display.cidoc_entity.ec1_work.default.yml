@@ -4,6 +4,8 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.ec1_work
+    - field.field.cidoc_entity.ec1_work.field_completed
+    - field.field.cidoc_entity.ec1_work.field_exclude_from_duplicates_
     - image.style.thumbnail
   module:
     - field_group
@@ -17,7 +19,7 @@ third_party_settings:
       children:
         - content
       parent_name: group_main_details
-      weight: 12
+      weight: 13
       label: 'Descriptive text'
       format_type: tab
       format_settings:
@@ -33,7 +35,7 @@ third_party_settings:
         - group_main_deets
         - group_oiko_world_settings
       parent_name: ''
-      weight: 1
+      weight: 0
       label: 'Main data entry'
       format_type: tabs
       format_settings:
@@ -49,7 +51,7 @@ third_party_settings:
         - significance
         - group_main_details
       parent_name: group_data
-      weight: 3
+      weight: 6
       label: 'Main details'
       format_type: tab
       format_settings:
@@ -64,13 +66,15 @@ third_party_settings:
     group_oiko_world_settings:
       children:
         - status
+        - field_completed
         - user_id
         - timeline_preselect_option
         - timeline_logo
+        - field_exclude_from_duplicates_
         - path
       parent_name: group_data
-      weight: 5
-      format_type: tabs
+      weight: 7
+      format_type: tab
       format_settings:
         id: ''
         classes: ''
@@ -160,7 +164,7 @@ third_party_settings:
       format_type: tab
       region: content
       format_settings:
-        description: "Insert incipit or title in the field <strong>P102 Has title</strong>.<br/>\r\nInsert an alphanumeric identifier from a repertoire in the field <strong>P48 Has preferred identifier</strong> <i>(Ex. BdT 366.6; IBAT 182.1)</i>."
+        description: "If work has multiple names, insert the incipit or title in the field <strong>P102 Has title</strong>.<br/>\r\nInsert an alphanumeric identifier from a repertoire in the field <strong>P48 Has preferred identifier</strong> <i>(Ex. BdT 366.6; IBAT 182.1)</i>.\r\n"
         formatter: open
         required_fields: true
         id: ''
@@ -194,7 +198,7 @@ third_party_settings:
         - group_descriptive_text
         - citation
       parent_name: group_main_deets
-      weight: 24
+      weight: 10
       format_type: tabs
       region: content
       format_settings:
@@ -227,7 +231,7 @@ bundle: ec1_work
 mode: default
 content:
   'cidoc_properties:domain:p102_has_title':
-    weight: 23
+    weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -297,7 +301,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 24
+    weight: 26
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -418,7 +422,7 @@ content:
     third_party_settings: {  }
   citation:
     type: entity_reference_paragraphs
-    weight: 13
+    weight: 14
     settings:
       title: Citation
       title_plural: Citations
@@ -428,11 +432,6 @@ content:
       default_paragraph_type: ''
     third_party_settings: {  }
     region: content
-  class_description:
-    weight: 0
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   content:
     type: text_textarea
     weight: 11
@@ -441,9 +440,21 @@ content:
       placeholder: ''
     third_party_settings: {  }
     region: content
+  field_completed:
+    weight: 13
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_exclude_from_duplicates_:
+    weight: 17
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   internal_name:
     type: string_textfield
-    weight: 22
+    weight: 8
     region: content
     settings:
       size: 60
@@ -451,7 +462,7 @@ content:
     third_party_settings: {  }
   name:
     type: string_textfield
-    weight: 21
+    weight: 7
     settings:
       size: 60
       placeholder: ''
@@ -459,13 +470,13 @@ content:
     region: content
   path:
     type: path
-    weight: 17
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
   significance:
     type: options_select
-    weight: 23
+    weight: 9
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -507,3 +518,4 @@ hidden:
   'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
+  class_description: true

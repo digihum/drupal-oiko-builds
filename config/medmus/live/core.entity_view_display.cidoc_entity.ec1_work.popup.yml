@@ -5,8 +5,117 @@ dependencies:
   config:
     - cidoc.cidoc_entity_bundle.ec1_work
     - core.entity_view_mode.cidoc_entity.popup
+    - field.field.cidoc_entity.ec1_work.field_completed
+    - field.field.cidoc_entity.ec1_work.field_exclude_from_duplicates_
   module:
+    - field_group
     - text
+third_party_settings:
+  field_group:
+    group_formal_:
+      children:
+        - 'cidoc_properties:domain:pa19_has_language'
+        - 'cidoc_properties:domain:pc3_has_genre'
+        - 'cidoc_properties:domain:pc4_has_formal_feature'
+        - 'cidoc_properties:domain:pc8_has_syllabic_scheme'
+        - 'cidoc_properties:domain:pc9_has_rhyme_scheme'
+      parent_name: ''
+      weight: 9
+      format_type: html_element
+      region: content
+      format_settings:
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+        fieldset_label_html: false
+      label: 'Formal features'
+    group_imitations:
+      children:
+        - work_model_of_entity_view_1
+        - work_contrafactum_of_entity_view_1
+        - 'cidoc_properties:domain:pc1_has_metrical_affinities_with'
+      parent_name: ''
+      weight: 10
+      format_type: html_element
+      region: content
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+        fieldset_label_html: false
+      label: Imitations
+    group_creation:
+      children:
+        - creation_of_work_info_entity_view_1
+        - creation_of_work_info_entity_view_2
+      parent_name: ''
+      weight: 8
+      format_type: html_element
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Creation
+    group_sources:
+      children:
+        - sources_of_work_entity_view_1
+      parent_name: ''
+      weight: 13
+      format_type: html_element
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Sources
+    group_refere:
+      children:
+        - refers_to_appellation_and_identified_person_place_etc__entity_view_1
+        - 'cidoc_properties:range:p67_refers_to'
+        - map_of_places_referred_to_by_work_entity_view_1
+      parent_name: ''
+      weight: 14
+      format_type: html_element
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: References
 id: cidoc_entity.ec1_work.popup
 targetEntityType: cidoc_entity
 bundle: ec1_work
@@ -18,7 +127,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p102_has_title':
-    weight: 5
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -28,7 +137,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 7
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -37,48 +146,53 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:pa19_has_language':
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:pc1_has_metrical_affinities_with':
-    weight: 14
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pc3_has_genre':
-    weight: 10
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pc4_has_formal_feature':
-    weight: 11
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pc5_has_expression':
-    weight: 17
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pc8_has_syllabic_scheme':
-    weight: 12
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pc9_has_rhyme_scheme':
-    weight: 13
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p12_occurred_in_the_presence_of':
-    weight: 22
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p67_refers_to':
-    weight: 21
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:pc5_has_expression':
-    weight: 18
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -91,11 +205,21 @@ content:
     region: content
     label: hidden
     type: text_default
-    weight: 4
+    weight: 16
     settings: {  }
     third_party_settings: {  }
   creation_of_work_info_entity_view_1:
     weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  creation_of_work_info_entity_view_2:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  map_of_places_referred_to_by_work_entity_view_1:
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -108,7 +232,7 @@ content:
     weight: 0
     third_party_settings: {  }
   refers_to_appellation_and_identified_person_place_etc__entity_view_1:
-    weight: 20
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -122,17 +246,17 @@ content:
     weight: 2
     third_party_settings: {  }
   sources_of_work_entity_view_1:
-    weight: 19
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
   work_contrafactum_of_entity_view_1:
-    weight: 15
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
   work_model_of_entity_view_1:
-    weight: 16
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -147,6 +271,8 @@ hidden:
   'cidoc_properties:range:pc2_is_contrafactum_of': true
   cidoc_properties_transcript: true
   citation: true
+  field_completed: true
+  field_exclude_from_duplicates_: true
   internal_name: true
   map_link: true
   search_api_excerpt: true

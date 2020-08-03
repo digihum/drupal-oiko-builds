@@ -6,6 +6,7 @@ dependencies:
     - cidoc.cidoc_entity_bundle.e21_person
   module:
     - field_group
+    - paragraphs
     - path
     - text
 third_party_settings:
@@ -48,10 +49,10 @@ third_party_settings:
         - group_type
         - group_activities
         - group_relationships
-        - group_descriptive_text
         - group_joining_leaving
+        - group_descriptive_text
       parent_name: group_main_deets
-      weight: 3
+      weight: 4
       label: 'Main details'
       format_type: tabs
       format_settings:
@@ -100,23 +101,25 @@ third_party_settings:
       weight: 27
       format_type: tab
       format_settings:
-        description: "Use this field to describe the event of a E21 Person joining or leaving a E47 Group.<br/>\r\n<i>(Ex. Raimbaut de Vaqueiras' joining of the Court of Malaspina; Joining of the Crusading Army)</i>\r\n"
+        description: "\r\n"
         formatter: closed
         fieldset_label_html: true
         required_fields: true
         id: ''
         classes: ''
       label: Joining/Leaving
-      region: hidden
+      region: content
     group_oiko_world_settings:
       children:
+        - class_description
         - internal_name
         - status
         - user_id
         - timeline_preselect_option
         - path
+        - citation
       parent_name: group_main
-      weight: 6
+      weight: 5
       format_type: tab
       format_settings:
         id: ''
@@ -136,7 +139,7 @@ third_party_settings:
       format_type: tab
       region: content
       format_settings:
-        description: "<strong>CAREFUL: use the right property to create the right events!</strong><br/>\r\n- use <strong>P14 PERFORMED</strong> only to create <u>E7 Activity, EC10 Marriage or E9 Move</u>.<br/>\r\nHere you can describe a marriage, you will then be able to associate the other people involved, a place and a time span. CAREFUL: \"Marriage of X and Y\" describes the relationship between spouses, not the wedding festivities (in which case, create an E7 Activity and call it \"Wedding of X and Y\").<br/>\r\n       (Ex. Reign of Richard I [E7];   Journey to Jerusalem [E9]; Marriage of Blanche of Castile and Luis VIII [E7])<br/>\r\n- use <strong>P11 PARTICIPATED IN</strong> only to create <u>E5 Event</u>. Use if the person does not have a specific role in the event.<br/>   \r\n   (Ex. Battle of Bouvines;  Copaccio Conspiracy; Earthquake of Canterbury;   Shipwreck of the White Ship)"
+        description: "- use <strong>P14 PERFORMED</strong> only to create <u>E7 Activity or E9 Move</u>.<br/>\r\n       (Ex. Richard I is King of England; Jaufre Rudel's journey to Jerusalem)<br/>\r\n- use <strong>P11 PARTICIPATED IN</strong> only to create <u>E5 Event</u>. Use if the person does not have a specific role in the event.<br/>   \r\n   (Ex. Battle of Bouvines;  Copaccio Conspiracy; Earthquake of Canterbury;   Shipwreck of the White Ship)"
         formatter: closed
         required_fields: true
         id: ''
@@ -160,6 +163,7 @@ third_party_settings:
       label: 'Descriptive text'
     group_relationships:
       children:
+        - group_spouse
         - group_children
         - group_patron_
         - group_friendship
@@ -174,7 +178,7 @@ third_party_settings:
       format_type: tab
       region: content
       format_settings:
-        description: 'CAREFUL: to describe a relationship through marriage you need to create a E7 Activity: go in the tab "Activities" and fill the field "P14 performed".'
+        description: ''
         formatter: closed
         required_fields: true
         id: ''
@@ -198,7 +202,7 @@ third_party_settings:
         - 'cidoc_properties:range:pa4_has_muse'
         - 'cidoc_properties:range:pc6_has_alternative_attribution'
       parent_name: ''
-      weight: 15
+      weight: 10
       format_type: tab
       region: hidden
       format_settings:
@@ -216,7 +220,7 @@ third_party_settings:
         - 'cidoc_properties:range:pa17_has_godfather'
         - 'cidoc_properties:range:pa18_has_godmother'
       parent_name: group_relationships
-      weight: 6
+      weight: 25
       format_type: tab
       region: content
       format_settings:
@@ -233,7 +237,7 @@ third_party_settings:
         - 'cidoc_properties:range:pa9_has_aunt_or_uncle'
         - 'cidoc_properties:domain:pa8_has_cousin'
       parent_name: group_relationships
-      weight: 7
+      weight: 26
       format_type: tab
       region: content
       format_settings:
@@ -249,7 +253,7 @@ third_party_settings:
         - 'cidoc_properties:domain:pa1_has_patron'
         - 'cidoc_properties:range:pa1_has_patron'
       parent_name: group_relationships
-      weight: 3
+      weight: 22
       format_type: tab
       region: content
       format_settings:
@@ -264,7 +268,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:pa5_has_lover'
       parent_name: group_relationships
-      weight: 5
+      weight: 24
       format_type: tab
       region: content
       format_settings:
@@ -282,7 +286,7 @@ third_party_settings:
         - 'cidoc_properties:domain:pa11_has_ancestor'
         - 'cidoc_properties:range:pa11_has_ancestor'
       parent_name: group_relationships
-      weight: 9
+      weight: 28
       format_type: tab
       region: content
       format_settings:
@@ -297,7 +301,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:pa7_has_sibling'
       parent_name: group_relationships
-      weight: 8
+      weight: 27
       format_type: tab
       region: content
       format_settings:
@@ -312,7 +316,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:pa14_has_relative'
       parent_name: group_relationships
-      weight: 10
+      weight: 29
       format_type: tab
       region: content
       format_settings:
@@ -323,20 +327,6 @@ third_party_settings:
         formatter: closed
         required_fields: true
       label: 'Relatives (unspecified)'
-    group_wedding:
-      children: {  }
-      parent_name: ''
-      weight: 14
-      format_type: tab
-      region: hidden
-      format_settings:
-        description: "Describe the wedding as a <u>E7 Activity</u> (do NOT specify the name of the spouse).\r\nYou will then be able to populate this Activity by specifying participants, place and time. "
-        formatter: closed
-        required_fields: true
-        id: ''
-        classes: ''
-        fieldset_label_html: false
-      label: Wedding
     group_type:
       children:
         - 'cidoc_properties:domain:p2_has_type'
@@ -357,7 +347,7 @@ third_party_settings:
         - 'cidoc_properties:range:p96_by_mother'
         - 'cidoc_properties:range:p97_from_father'
       parent_name: group_relationships
-      weight: 2
+      weight: 21
       format_type: tab
       region: content
       format_settings:
@@ -372,7 +362,7 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:pa3_has_friend'
       parent_name: group_relationships
-      weight: 4
+      weight: 23
       format_type: tab
       region: content
       format_settings:
@@ -383,6 +373,21 @@ third_party_settings:
         classes: ''
         fieldset_label_html: false
       label: Friend
+    group_spouse:
+      children:
+        - 'cidoc_properties:range:pc11_has_spouse'
+      parent_name: group_relationships
+      weight: 20
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: Spouse
 _core:
   default_config_hash: Aj22CJLv9ahqROhzHE69hCdT6k8DeOQz5tCzmv1GFiE
 id: cidoc_entity.e21_person.default
@@ -431,12 +436,12 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pa17_has_godfather':
-    weight: 21
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pa18_has_godmother':
-    weight: 22
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -541,12 +546,12 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:pa17_has_godfather':
-    weight: 23
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:pa18_has_godmother':
-    weight: 24
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -565,6 +570,23 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:range:pc11_has_spouse':
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  citation:
+    type: entity_reference_paragraphs
+    weight: 6
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
   class_description:
     weight: 0
     region: content
@@ -580,7 +602,7 @@ content:
     third_party_settings: {  }
   internal_name:
     type: string_textfield
-    weight: 0
+    weight: 1
     region: content
     settings:
       size: 60
@@ -596,7 +618,7 @@ content:
     region: content
   path:
     type: path
-    weight: 4
+    weight: 5
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -610,19 +632,19 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 1
+    weight: 2
     region: content
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 3
+    weight: 4
     settings:
       display_label: true
     third_party_settings: {  }
     region: content
   user_id:
     type: entity_reference_autocomplete
-    weight: 2
+    weight: 3
     region: content
     settings:
       match_operator: CONTAINS
@@ -660,5 +682,4 @@ hidden:
   'cidoc_properties:range:pa8_has_cousin': true
   'cidoc_properties:range:pc6_has_alternative_attribution': true
   'cidoc_properties:range:pc7_has_music': true
-  citation: true
   timeline_logo: true

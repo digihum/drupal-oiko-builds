@@ -1,0 +1,14 @@
+uuid: 642b26ca-262a-44e8-bd89-de9600de2fa5
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.pure_html_user
+  module:
+    - user
+id: user_remove_role_action.pure_html_user
+label: 'Remove the Pure HTML user role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: pure_html_user

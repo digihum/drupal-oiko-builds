@@ -6,8 +6,8 @@ id: p10_falls_within
 label: 'P10 falls within'
 bidirectional: false
 reverse_label: 'P10 contains'
-friendly_label: ''
-reverse_friendly_label: ''
+friendly_label: 'Falls within'
+reverse_friendly_label: Contains
 domain_bundles:
   - e5_event
   - e6_destruction

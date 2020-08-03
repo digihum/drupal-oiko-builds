@@ -89,7 +89,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '<strong>Contrafactum of:</strong> {{name}}'
+            text: '{% if name %}<strong>Contrafactum of:</strong> {{name}}{% endif %}'
             make_link: false
             path: ''
             absolute: false
@@ -200,7 +200,20 @@ display:
           entity_field: bundle
           plugin_id: cidoc_bundle
       sorts: {  }
-      header: {  }
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content:
+            value: '<h3>Imitations</h3>'
+            format: basic_html
+          plugin_id: text
       footer: {  }
       empty: {  }
       relationships:

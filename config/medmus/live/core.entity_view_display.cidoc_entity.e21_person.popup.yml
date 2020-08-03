@@ -158,7 +158,7 @@ third_party_settings:
         speed: fast
         id: ''
         classes: ''
-      label: '<span class="fa fa-book" aria-hidden="true">&nbsp;&nbsp;</span>Works'
+      label: '<span class="fa fa-pen-nib" aria-hidden="true">&nbsp;&nbsp;</span>Works'
     group_birth:
       children: {  }
       parent_name: ''
@@ -269,6 +269,11 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:pa18_has_godmother':
     weight: 16
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa19_has_language':
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -434,6 +439,11 @@ content:
     third_party_settings: {  }
   'cidoc_properties:range:pa9_has_aunt_or_uncle':
     weight: 34
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pc11_has_spouse':
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }

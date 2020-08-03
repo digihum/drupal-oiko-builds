@@ -22,7 +22,7 @@ timesubwidget:
   range:
     type: generic
     sub_property: p146_separated_from
-    title_template: '@bundle_name of @target_name'
+    title_template: '@source_name leaves @target_name'
 widget_description:
   domain: ''
   range: ''

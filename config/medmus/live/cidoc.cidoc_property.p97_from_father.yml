@@ -29,7 +29,7 @@ widget_description:
   range: ''
 autocomplete_description:
   domain: ''
-  range: '<p>Name of son/daughter of which this <strong>person</strong> is father. This generates an event Birth.</p>'
+  range: '<p>Name of son/daughter of which this person is <strong>father</strong>. This generates an event Birth.</p>'
 child_events:
   domain: 0
   range: 0

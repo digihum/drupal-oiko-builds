@@ -1,6 +1,6 @@
 uuid: 205b25e4-5196-4a60-ab47-45ba693ab186
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - field.storage.taxonomy_term.field_source_type
@@ -739,6 +739,7 @@ display:
       defaults:
         fields: false
         sorts: false
+        relationships: false
       display_description: ''
       sorts:
         field_year_value:
@@ -752,6 +753,26 @@ display:
           exposed: false
           expose:
             label: ''
+          plugin_id: standard
+      relationships:
+        reverse__taxonomy_term__field_author:
+          id: reverse__taxonomy_term__field_author
+          table: taxonomy_term_field_data
+          field: reverse__taxonomy_term__field_author
+          relationship: none
+          group_type: group
+          admin_label: field_author
+          required: false
+          entity_type: taxonomy_term
+          plugin_id: entity_reverse
+        field_author:
+          id: field_author
+          table: taxonomy_term__field_author
+          field: field_author
+          relationship: none
+          group_type: group
+          admin_label: 'field_author: Taxonomy term'
+          required: false
           plugin_id: standard
     cache_metadata:
       max-age: -1

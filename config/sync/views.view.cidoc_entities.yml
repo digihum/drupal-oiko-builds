@@ -85,9 +85,11 @@ display:
             views_bulk_operations_bulk_form: views_bulk_operations_bulk_form
             name: name
             internal_name: internal_name
+            id: id
             bundle: bundle
             name_1: name_1
             status: status
+            populated: populated
             operations: operations
           info:
             views_bulk_operations_bulk_form:
@@ -96,35 +98,49 @@ display:
               empty_column: false
               responsive: ''
             name:
-              sortable: false
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
             internal_name:
-              sortable: false
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            id:
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
             bundle:
-              sortable: false
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
             name_1:
-              sortable: false
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
             status:
-              sortable: false
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            populated:
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''

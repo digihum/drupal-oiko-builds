@@ -6,7 +6,7 @@ crm_entity: ec10_marriage
 id: ec10_marriage
 label: 'EC10 Marriage'
 friendly_label: ''
-weight: 1
+weight: -1
 group: auxiliary
 description: ''
 examples: "<ul>\r\n<li></li>\r\n</ul>"

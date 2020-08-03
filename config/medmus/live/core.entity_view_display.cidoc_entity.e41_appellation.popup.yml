@@ -5,6 +5,7 @@ dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e41_appellation
     - core.entity_view_mode.cidoc_entity.popup
+    - field.field.cidoc_entity.e41_appellation.field_exclude_from_duplicates_
   module:
     - text
 id: cidoc_entity.e41_appellation.popup
@@ -43,6 +44,11 @@ content:
     weight: 9
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:pa19_has_language':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p128_carries':
     region: content
     weight: 10
@@ -117,6 +123,7 @@ hidden:
   cidoc_properties: true
   cidoc_properties_transcript: true
   citation: true
+  field_exclude_from_duplicates_: true
   internal_name: true
   map_link: true
   search_api_excerpt: true

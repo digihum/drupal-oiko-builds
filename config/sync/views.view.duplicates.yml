@@ -7,9 +7,10 @@ dependencies:
     - user.role.content_editor
   module:
     - cidoc
+    - options
     - user
 id: duplicates
-label: Duplicates
+label: 'Check duplicates'
 module: views
 description: ''
 tag: ''
@@ -102,7 +103,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '<a href="/dupl/{{name_2 |url_encode}}" target="_blank">{{name_2}}</a>'
+            text: "<a href=\"/dupl/{{name_2|raw|url_encode|replace({\"%26%23039%3B\":\"\\'\"})}}\" target=\"_blank\">{{name_2|replace({'’': \"'\"})|raw}}</a>\r\n\r\n"
             make_link: false
             path: ''
             absolute: false
@@ -167,7 +168,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '{{name}} ENTITIES WITH THIS NAME'
+            text: '{{name|replace({''’'': "\''"})}} ENTITIES WITH THIS NAME'
             make_link: false
             path: ''
             absolute: false
@@ -277,6 +278,55 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: string
+        field_exclude_from_duplicates__value:
+          id: field_exclude_from_duplicates__value
+          table: cidoc_entity__field_exclude_from_duplicates_
+          field: field_exclude_from_duplicates__value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: not
+          value:
+            'yes': 'yes'
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          plugin_id: list_field
+        combine:
+          id: combine
+          table: views
+          field: combine
+          plugin_id: combine
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
       sorts:
         name:
           id: name
@@ -318,7 +368,7 @@ display:
           empty: false
           tokenize: false
           content:
-            value: '<div data-align="right" style="position:sticky !important;"><a href="/admin/cidoc/cidoc-entities" target="_blank"><h3>Search All entities</h3></a></div>'
+            value: "<div data-align=\"right\" style=\"position:sticky !important;\"><a href=\"/admin/cidoc/cidoc-entities\" target=\"_blank\"><h3>Search All entities</h3></a></div>\r\n<div>If you find that two contents need to have the same name, you can edit one of them by changing its \"exclude from duplicates\" option. NB: not all classes have this feature.<div>"
             format: basic_html
           plugin_id: text
       footer: {  }
@@ -327,6 +377,11 @@ display:
       arguments: {  }
       display_extenders: {  }
       group_by: true
+      filter_groups:
+        operator: OR
+        groups:
+          1: AND
+          2: OR
     cache_metadata:
       max-age: -1
       contexts:

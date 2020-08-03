@@ -6,7 +6,7 @@ dependencies:
     - cidoc
     - eva
 id: childrens_with
-label: 'Childrens with'
+label: 'Has children with'
 module: views
 description: ''
 tag: ''

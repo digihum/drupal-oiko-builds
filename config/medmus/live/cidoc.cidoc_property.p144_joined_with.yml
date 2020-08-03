@@ -21,9 +21,9 @@ timesubwidget:
   range:
     type: generic
     sub_property: p143_joined
-    title_template: '@bundle_name of @target_name'
+    title_template: '@target_name joins @source_name'
 widget_description:
-  domain: ''
+  domain: '<p>Group joined by person (or group).</p>'
   range: ''
 autocomplete_description:
   domain: ''

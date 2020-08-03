@@ -1,0 +1,23 @@
+uuid: b8d09467-a252-4544-9f3c-7bde5b7c1d4b
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e41_appellation
+    - field.storage.cidoc_entity.field_exclude_from_duplicates_
+  module:
+    - options
+id: cidoc_entity.e41_appellation.field_exclude_from_duplicates_
+field_name: field_exclude_from_duplicates_
+entity_type: cidoc_entity
+bundle: e41_appellation
+label: 'Exclude from duplicates'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 'no'
+default_value_callback: ''
+settings: {  }
+field_type: list_string

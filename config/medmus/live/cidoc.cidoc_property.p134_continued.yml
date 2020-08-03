@@ -6,8 +6,8 @@ id: p134_continued
 label: 'P134 continued'
 bidirectional: false
 reverse_label: 'P134 was continued by'
-friendly_label: ''
-reverse_friendly_label: ''
+friendly_label: Continued
+reverse_friendly_label: 'Was continued by'
 domain_bundles:
   - e7_activity
   - e9_move

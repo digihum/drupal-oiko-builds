@@ -1,0 +1,5 @@
+enabled: 0
+plaintext_enabled: 0
+autopreview_enabled: 0
+css: '#css-editor-preview {height: 800px;}'
+path: 'public://css_editor/seven.css'

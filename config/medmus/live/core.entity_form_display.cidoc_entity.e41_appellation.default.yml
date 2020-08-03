@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e41_appellation
+    - field.field.cidoc_entity.e41_appellation.field_exclude_from_duplicates_
     - image.style.thumbnail
   module:
     - field_group
@@ -70,6 +71,7 @@ third_party_settings:
         - timeline_preselect_option
         - timeline_logo
         - path
+        - field_exclude_from_duplicates_
       parent_name: group_data
       weight: 7
       format_type: tab
@@ -349,6 +351,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     region: content
+  field_exclude_from_duplicates_:
+    weight: 18
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   internal_name:
     type: string_textfield
     weight: 2
@@ -367,7 +375,7 @@ content:
     region: content
   path:
     type: path
-    weight: 18
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -386,7 +394,7 @@ content:
     third_party_settings: {  }
   timeline_logo:
     type: image_image
-    weight: 17
+    weight: 16
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -394,14 +402,14 @@ content:
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
-    weight: 16
+    weight: 15
     settings:
       display_label: true
     region: content
     third_party_settings: {  }
   user_id:
     type: entity_reference_autocomplete
-    weight: 15
+    weight: 14
     region: content
     settings:
       match_operator: CONTAINS

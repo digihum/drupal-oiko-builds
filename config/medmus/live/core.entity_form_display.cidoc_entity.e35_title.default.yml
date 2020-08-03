@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e35_title
+    - field.field.cidoc_entity.e35_title.field_exclude_from_duplicates_
     - image.style.thumbnail
   module:
     - field_group
@@ -72,6 +73,7 @@ third_party_settings:
         - timeline_preselect_option
         - timeline_logo
         - path
+        - field_exclude_from_duplicates_
       parent_name: group_data
       weight: 5
       format_type: tab
@@ -256,11 +258,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p87_is_identified_by':
-    weight: 21
-    settings: {  }
-    third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p9_consists_of':
     weight: 7
     region: content
@@ -320,6 +317,12 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
+    region: content
+  field_exclude_from_duplicates_:
+    weight: 18
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   internal_name:
     type: string_textfield
@@ -394,4 +397,5 @@ hidden:
   'cidoc_properties:range:p139_has_alternative_form': true
   'cidoc_properties:range:p1_is_identified_by': true
   'cidoc_properties:range:p67_refers_to': true
+  'cidoc_properties:range:p87_is_identified_by': true
   'cidoc_properties:range:p94_has_created': true

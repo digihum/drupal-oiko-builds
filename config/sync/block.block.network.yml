@@ -1,0 +1,25 @@
+uuid: a7119cf8-c71c-4bbf-9077-11403ac78157
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:simple_block:647ad45a-b2f4-47cb-a38f-1624644e9005'
+  module:
+    - block_content
+  theme:
+    - medmus
+id: network
+theme: medmus
+region: user_header
+weight: -12
+provider: null
+plugin: 'block_content:647ad45a-b2f4-47cb-a38f-1624644e9005'
+settings:
+  id: 'block_content:647ad45a-b2f4-47cb-a38f-1624644e9005'
+  label: Network
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

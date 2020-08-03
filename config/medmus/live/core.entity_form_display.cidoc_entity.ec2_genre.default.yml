@@ -48,6 +48,7 @@ third_party_settings:
         - internal_name
         - citation
         - 'cidoc_properties:range:pc3_has_genre'
+        - 'cidoc_properties:domain:p1_is_identified_by'
         - 'cidoc_properties:domain:p48_has_preferred_identifier'
         - 'cidoc_properties:range:p94_has_created'
         - group_descriptive_text
@@ -90,11 +91,6 @@ targetEntityType: cidoc_entity
 bundle: ec2_genre
 mode: default
 content:
-  'cidoc_properties:domain:p102_has_title':
-    weight: 2
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
     weight: 8
     region: content
@@ -145,6 +141,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:p1_is_identified_by':
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p25_moved':
     weight: 20
     region: content
@@ -161,7 +162,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 5
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -246,7 +247,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p94_has_created':
-    weight: 6
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -371,7 +372,7 @@ content:
       match_limit: 10
     third_party_settings: {  }
 hidden:
-  'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:p102_has_title': true
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:range:p12_occurred_in_the_presence_of': true
   'cidoc_properties:range:p132_overlaps_with': true

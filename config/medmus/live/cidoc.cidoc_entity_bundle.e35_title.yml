@@ -6,7 +6,7 @@ crm_entity: e35_title
 id: e35_title
 label: 'E35 Title'
 friendly_label: Title
-weight: -2
+weight: 0
 group: auxiliary
 description: "<p>This class comprises the names assigned to works, such as texts, artworks or pieces of music.</p>\r\n\r\n<p>Titles are proper noun phrases or verbal phrases, and should not be confused with generic\r\nobject names such as “chair”, “painting” or “book” (the latter are common nouns that stand for\r\ninstances of E55 Type). Titles may be assigned by the creator of the work itself, or by a social\r\ngroup.</p>\r\n\r\n<p>This class also comprises the translations of titles that are used as surrogates for the original\r\ntitles in different social contexts.</p>"
 examples: "<ul>\r\n<li>“The Merchant of Venice”</li>\r\n<li>“Mona Lisa”</li>\r\n<li>“La Pie or The Magpie”</li>\r\n<li>“Lucy in the Sky with Diamonds”</li>\r\n</ul>"

@@ -1,6 +1,6 @@
 uuid: 3807893e-e1fc-4026-8f67-27a43182f063
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - system.menu.main
@@ -11,7 +11,7 @@ dependencies:
 id: medmus_main_menu
 theme: medmus
 region: primary_menu
-weight: -6
+weight: -11
 provider: null
 plugin: 'system_menu_block:main'
 settings:

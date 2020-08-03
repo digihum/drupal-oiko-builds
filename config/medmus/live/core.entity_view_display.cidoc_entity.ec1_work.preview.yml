@@ -5,6 +5,8 @@ dependencies:
   config:
     - cidoc.cidoc_entity_bundle.ec1_work
     - core.entity_view_mode.cidoc_entity.preview
+    - field.field.cidoc_entity.ec1_work.field_completed
+    - field.field.cidoc_entity.ec1_work.field_exclude_from_duplicates_
   module:
     - entity_reference_revisions
     - field_group
@@ -125,6 +127,9 @@ hidden:
   cidoc_properties_transcript: true
   cidoc_temporal_summary: true
   creation_of_work_info_entity_view_1: true
+  creation_of_work_info_entity_view_2: true
+  field_completed: true
+  field_exclude_from_duplicates_: true
   map_link: true
   map_of_places_referred_to_by_work_entity_view_1: true
   refers_to_appellation_and_identified_person_place_etc__entity_view_1: true

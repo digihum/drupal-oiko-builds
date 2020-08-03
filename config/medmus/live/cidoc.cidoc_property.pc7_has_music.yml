@@ -21,7 +21,7 @@ timesubwidget:
   range:
     type: 'no'
 widget_description:
-  domain: "<p>This property links lyrics with one or more versions of its music</p>\r\n<ul>\r\n<li>BdT 366,2 Has music Melody of BdT 366.2 (EC6)</li>\r\n<li>BdT 366,2 Has music Melody of BdT 366.2 as preserved in ms. Occitan G (EC6)</li>\r\n</ul>\r\n"
+  domain: "<p>This property links lyrics with one or more versions of its music</p>\r\n<ul>\r\n<li>Ex. \"Melody of BdT 366.2\"</li>\r\n</ul>\r\n"
   range: ''
 autocomplete_description:
   domain: ''

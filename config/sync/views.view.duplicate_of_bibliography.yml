@@ -64,10 +64,26 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
-        type: some
+        type: full
         options:
-          items_per_page: 100
+          items_per_page: 50
           offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: '‹ Previous'
+            next: 'Next ›'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
       style:
         type: html_list
         options:
@@ -889,14 +905,14 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "{% if field_source_type == 'Primary source' %}{{field_title_long|striptags('<em>, '<i>'')|raw}}\r\n{% elseif field_journal_1 or field_collective_work_1 %}'{{field_title_long|striptags('<em>')|raw}}',\r\n{% else %}{% set LongTitle = field_title_long|striptags('<em>')|replace({'<em>': '</em>', '</em>': \"<em>\"}) %}<em>{{LongTitle|raw}}</em>\r\n{% endif %}"
+            text: "{% if field_source_type == 'Primary source'  and not field_author and not field_editor%}{{field_title_long|striptags('<em><i>')|raw|trim|trim(\" \\t\\n\\r\\0\\x0B\\xC2\\xA0\")}}\r\n{% elseif field_journal_1 or field_collective_work_1 %}‘{{field_title_long|striptags('<em><i>')|trim|trim(\" \\t\\n\\r\\0\\x0B\\xC2\\xA0\")|raw}}’,\r\n{% else %}{% set LongTitle = field_title_long|striptags('<em><i>')|replace({'<em>': '</em>', '</em>': '<em>','<i>': '</em>', '</i>': '<em>'}) %}<em>{{LongTitle|raw|trim|trim(\" \\t\\n\\r\\0\\x0B\\xC2\\xA0\")}}</em>\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
             external: false
             replace_spaces: false
             path_case: none
-            trim_whitespace: false
+            trim_whitespace: true
             alt: ''
             rel: ''
             link_class: ''
@@ -912,7 +928,7 @@ display:
             more_link_path: ''
             strip_tags: false
             trim: false
-            preserve_tags: ''
+            preserve_tags: '<em>'
             html: false
           element_type: ''
           element_class: ''
@@ -1077,7 +1093,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "in <a href=\"#{{tid_1}}\">{{field_collective_work}}</a>{% if  field_pp_ %},\r\n{% else %}.\r\n{% endif %}"
+            text: "in <a href=\"#{{tid_1}}\">{{field_collective_work}}</a>{% if  field_pp__1 %},\r\n{% else %}.\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -1140,7 +1156,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "({{field_place_of_publication}}:\r\n"
+            text: "({{field_place_of_publication|replace({'Roma': \"Rome\", 'Firenze': \"Florence\", 'Venezia': \"Venice\", 'Milano': \"Milan\"})}}:\r\n"
             make_link: false
             path: ''
             absolute: false
@@ -1266,7 +1282,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "{% if field_collective_work %}\r\n{% elseif field_journal and field_pp__1 %}({{field_year}}),\r\n{% elseif field_journal or field_source_type == 'Primary source' %}({{field_year}}).\r\n{% elseif field_place_of_publication or field_publisher %}{{field_year}}).\r\n{% else %}{{field_year}}.\r\n{% endif %}"
+            text: "{% if field_collective_work %}\r\n{% elseif field_journal and field_pp__1 %}({{field_year}}),\r\n{% elseif field_journal or field_source_type == 'Primary source' and not field_place_of_publication and not field_publisher %}({{field_year}}).\r\n{% elseif field_place_of_publication or field_publisher %}{{field_year}}).\r\n{% else %}{{field_year}}.\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -1520,6 +1536,7 @@ display:
               forum_user: '0'
               moderator: '0'
               moderated_contributor: '0'
+              pure_html_user: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -1535,6 +1552,9 @@ display:
             group_items: {  }
           fields:
             name: name
+            field_title_long: field_title_long
+            field_journal: field_journal
+            field_publisher: field_publisher
             field_year: field_year
           plugin_id: combine
       sorts:
@@ -1610,6 +1630,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
         - user.permissions
       tags:
         - 'config:field.storage.taxonomy_term.field_author'
@@ -1636,7 +1657,7 @@ display:
         type: normal
         title: Bibliography
         menu_name: main
-        weight: -49
+        weight: -46
       fields: {  }
       sorts: {  }
       filters:
@@ -1689,6 +1710,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
         - user.permissions
       tags:
         - 'config:field.storage.taxonomy_term.field_author'

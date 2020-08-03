@@ -1,0 +1,125 @@
+uuid: 9afaca0f-a6a3-4737-9734-e927b08a705e
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e41_appellation
+    - field.field.cidoc_entity.e41_appellation.field_exclude_from_duplicates_
+  module:
+    - options
+id: cidoc_entity.e41_appellation.default
+targetEntityType: cidoc_entity
+bundle: e41_appellation
+mode: default
+content:
+  'cidoc_properties:domain:p102_has_title':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p139_has_alternative_form':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p1_is_identified_by':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p2_has_type':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:pa19_has_language':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p128_carries':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p12_occurred_in_the_presence_of':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p131_is_identified_by':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p139_has_alternative_form':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p1_is_identified_by':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p67_refers_to':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p87_is_identified_by':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p94_has_created':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_exclude_from_duplicates_:
+    weight: 22
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  internal_name:
+    label: inline
+    type: string
+    weight: -3
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: -4
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  timeline_link:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  cidoc_admin_links: true
+  cidoc_properties: true
+  cidoc_properties_transcript: true
+  cidoc_temporal_summary: true
+  citation: true
+  content: true
+  map_link: true
+  search_api_excerpt: true
+  significance: true
+  timeline_logo: true
+  timeline_preselect_option: true
+  user_id: true

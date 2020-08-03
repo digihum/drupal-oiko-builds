@@ -154,7 +154,7 @@ content:
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 3
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -196,11 +196,11 @@ content:
   field_date:
     type: edtf_default
     weight: 2
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
   internal_name:
     type: string_textfield
     weight: 2

@@ -330,7 +330,7 @@ display:
           empty: false
           tokenize: false
           content:
-            value: '<strong>Sources:</strong>'
+            value: '<h3>Sources:</h3>'
             format: basic_html
           plugin_id: text
       footer: {  }

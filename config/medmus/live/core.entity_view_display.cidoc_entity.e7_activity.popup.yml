@@ -163,10 +163,10 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p10_falls_within':
-    weight: 20
+    weight: 16
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p11_had_participant':
     weight: 23
     region: content
@@ -188,10 +188,10 @@ content:
     third_party_settings: {  }
     region: content
   'cidoc_properties:domain:p134_continued':
-    weight: 29
+    weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p14_carried_out_by':
     weight: 20
     region: content
@@ -233,25 +233,25 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p9_consists_of':
-    weight: 27
+    weight: 18
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p10_falls_within':
-    weight: 21
+    weight: 17
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p133_is_separated_from':
     weight: 13
     settings: {  }
     third_party_settings: {  }
     region: content
   'cidoc_properties:range:p134_continued':
-    weight: 30
+    weight: 21
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p15_was_influenced_by':
     weight: 27
     settings: {  }
@@ -268,10 +268,10 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p9_consists_of':
-    weight: 28
+    weight: 19
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   cidoc_temporal_summary:
     weight: 1
     region: content
@@ -284,6 +284,11 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  maps_of_things_happened_in_activity_entity_view_1:
+    weight: 22
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   name:
     type: string
     weight: 0

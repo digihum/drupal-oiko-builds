@@ -12,7 +12,7 @@ dependencies:
 id: views_block__stefano_map_of_manuscripts_production_block_1
 theme: medmus
 region: content_header
-weight: -14
+weight: -16
 provider: null
 plugin: 'views_block:stefano_map_of_manuscripts_production-block_1'
 settings:

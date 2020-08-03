@@ -178,14 +178,12 @@ third_party_settings:
       children:
         - 'cidoc_properties:domain:p9_consists_of'
         - 'cidoc_properties:range:p9_consists_of'
-        - 'cidoc_properties:domain:p10_falls_within'
-        - 'cidoc_properties:range:p10_falls_within'
         - 'cidoc_properties:domain:p134_continued'
         - 'cidoc_properties:range:p134_continued'
       parent_name: group_tabset
       weight: 9
       format_type: tab
-      region: hidden
+      region: content
       format_settings:
         fieldset_label_html: false
         id: ''
@@ -201,11 +199,6 @@ targetEntityType: cidoc_entity
 bundle: e7_activity
 mode: default
 content:
-  'cidoc_properties:domain:p10_falls_within':
-    weight: 8
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:domain:p11_had_participant':
     weight: 14
     region: content
@@ -263,11 +256,6 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:p9_consists_of':
     weight: 6
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  'cidoc_properties:range:p10_falls_within':
-    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -377,9 +365,11 @@ content:
       match_limit: 10
     third_party_settings: {  }
 hidden:
+  'cidoc_properties:domain:p10_falls_within': true
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:domain:p48_has_preferred_identifier': true
+  'cidoc_properties:range:p10_falls_within': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
   'cidoc_properties:range:p67_refers_to': true

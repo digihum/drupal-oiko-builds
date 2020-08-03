@@ -10,8 +10,8 @@ dependencies:
     - medmus
 id: medmus_sharemessage
 theme: medmus
-region: sidebar_share
-weight: -7
+region: content_header
+weight: -15
 provider: null
 plugin: sharemessage_block
 settings:

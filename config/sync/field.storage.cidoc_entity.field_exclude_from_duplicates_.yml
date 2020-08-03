@@ -1,0 +1,27 @@
+uuid: dff12df4-8f95-42ed-afac-8a54a618ca5e
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+    - options
+id: cidoc_entity.field_exclude_from_duplicates_
+field_name: field_exclude_from_duplicates_
+entity_type: cidoc_entity
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'no'
+      label: 'no'
+    -
+      value: 'yes'
+      label: 'yes'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

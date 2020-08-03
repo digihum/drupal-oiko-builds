@@ -17,7 +17,7 @@ third_party_settings:
       children:
         - content
       parent_name: group_main_deets
-      weight: 10
+      weight: 11
       label: 'Descriptive text'
       format_type: fieldset
       format_settings:
@@ -47,6 +47,7 @@ third_party_settings:
         - name
         - internal_name
         - citation
+        - 'cidoc_properties:domain:p2_has_type'
         - 'cidoc_properties:domain:p128_carries'
         - 'cidoc_properties:domain:p45_consists_of'
         - 'cidoc_properties:range:p108_has_produced'
@@ -109,7 +110,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p128_carries':
-    weight: 4
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -168,13 +169,18 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:p2_has_type':
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:p45_consists_of':
-    weight: 5
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 9
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -229,7 +235,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p108_has_produced':
-    weight: 6
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -244,7 +250,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p12_occurred_in_the_presence_of':
-    weight: 8
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -254,7 +260,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p13_destroyed':
-    weight: 7
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -390,7 +396,6 @@ content:
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
-  'cidoc_properties:domain:p2_has_type': true
   'cidoc_properties:domain:pa19_has_language': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true

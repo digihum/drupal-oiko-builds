@@ -5,6 +5,7 @@ dependencies:
   config:
     - cidoc.cidoc_entity_bundle.e42_identifier
     - core.entity_view_mode.cidoc_entity.preview
+    - field.field.cidoc_entity.e42_identifier.field_exclude_from_duplicates_
   module:
     - entity_reference_revisions
     - field_group
@@ -52,6 +53,16 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:pa19_has_language':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p87_is_identified_by':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   citation:
     region: content
     type: entity_reference_revisions_entity_view
@@ -137,6 +148,7 @@ hidden:
   cidoc_temporal_summary: true
   duplicate_of_p15_influenced_entity_view_1: true
   duplicate_of_p15_was_influenced_by_entity_view_1: true
+  field_exclude_from_duplicates_: true
   map_link: true
   p10_falls_within_entity_view_1: true
   p10_includes_entity_view_1: true

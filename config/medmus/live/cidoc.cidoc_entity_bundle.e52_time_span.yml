@@ -8,7 +8,7 @@ crm_entity: e52_time_span
 id: e52_time_span
 label: 'E52 Time-Span'
 friendly_label: Time-Span
-weight: 4
+weight: 3
 group: auxiliary
 description: "<p>This class comprises abstract temporal extents, in the sense of Galilean physics, having a\r\nbeginning, an end and a duration.</p>\r\n\r\n<p>Time Span has no other semantic connotations. Time-Spans are used to define the temporal\r\nextent of instances of E4 Period, E5 Event and any other phenomena valid for a certain time.\r\nAn E52 Time-Span may be identified by one or more instances of E49 Time Appellation.</p>\r\n\r\n<p>Since our knowledge of history is imperfect, instances of E52 Time-Span can best be\r\nconsidered as approximations of the actual Time-Spans of temporal entities. The properties of\r\nE52 Time-Span are intended to allow these approximations to be expressed precisely. An\r\nextreme case of approximation, might, for example, define an E52 Time-Span having\r\nunknown beginning, end and duration. Used as a common E52 Time-Span for two events, it\r\nwould nevertheless define them as being simultaneous, even if nothing else was known.</p>\r\n\r\n<p>Automatic processing and querying of instances of E52 Time-Span is facilitated if data can be\r\nparsed into an E61 Time Primitive.</p>"
 examples: "<ul>\r\n<li>1961</li>\r\n<li>From 12-17-1993 to 12-8-1996</li>\r\n<li>14h30 – 16h22 4th July 1945</li>\r\n<li>9.30 am 1.1.1999 to 2.00 pm 1.1.1999</li>\r\n<li>duration of the Ming Dynasty</li>\r\n</ul>"

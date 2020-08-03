@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.ec8_manuscript
+    - field.field.cidoc_entity.ec8_manuscript.field_exclude_from_duplicates_
     - image.style.thumbnail
   module:
     - field_group
@@ -73,6 +74,7 @@ third_party_settings:
         - timeline_preselect_option
         - timeline_logo
         - path
+        - field_exclude_from_duplicates_
       parent_name: group_data
       weight: 8
       format_type: tab
@@ -367,6 +369,12 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
+    region: content
+  field_exclude_from_duplicates_:
+    weight: 18
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   internal_name:
     type: string_textfield

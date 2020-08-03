@@ -30,7 +30,7 @@ timesubwidget:
   range:
     type: generic
     sub_property: p14_carried_out_by
-    title_template: '@bundle_name of @target_name'
+    title_template: '@bundle_name of @target_name (@source_name)'
 widget_description:
   domain: ''
   range: ''

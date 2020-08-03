@@ -173,7 +173,21 @@ display:
           entity_type: cidoc_entity
           entity_field: bundle
           plugin_id: cidoc_bundle
-      sorts: {  }
+      sorts:
+        bundle:
+          id: bundle
+          table: cidoc_entity
+          field: bundle
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: bundle
+          plugin_id: standard
       title: 'Map of Manuscripts production'
       header: {  }
       footer: {  }

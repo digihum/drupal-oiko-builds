@@ -36,6 +36,7 @@ third_party_settings:
         - group_what
         - group_descriptive_text
         - group_also_known_as
+        - group_hierarchy
       parent_name: group_main_deets
       weight: 5
       label: 'Main details'
@@ -175,6 +176,24 @@ third_party_settings:
         formatter: closed
         required_fields: true
       label: 'Also known as'
+    group_hierarchy:
+      children:
+        - 'cidoc_properties:domain:p9_consists_of'
+        - 'cidoc_properties:range:p9_consists_of'
+        - 'cidoc_properties:domain:p134_continued'
+        - 'cidoc_properties:range:p134_continued'
+      parent_name: group_tabset
+      weight: 10
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: Hierarchy
 _core:
   default_config_hash: MCecFoOh1b0B-sp83OJ4_942EIMUo6UJjL0R5-XB0xk
 id: cidoc_entity.e66_formation.default
@@ -183,7 +202,7 @@ bundle: e66_formation
 mode: default
 content:
   'cidoc_properties:domain:p10_falls_within':
-    weight: 8
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -208,7 +227,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:p134_continued':
-    weight: 20
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -257,13 +276,8 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p10_falls_within':
-    weight: 9
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   'cidoc_properties:range:p134_continued':
-    weight: 21
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -370,6 +384,7 @@ content:
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true
   'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:range:p10_falls_within': true
   'cidoc_properties:range:p132_overlaps_with': true
   'cidoc_properties:range:p133_is_separated_from': true
   'cidoc_properties:range:p67_refers_to': true

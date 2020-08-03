@@ -1,0 +1,30 @@
+uuid: 05c3a2f9-43ee-478c-9711-93830d80ab4b
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+    - options
+id: cidoc_entity.field_completed
+field_name: field_completed
+entity_type: cidoc_entity
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: Uncomplete
+      label: Uncomplete
+    -
+      value: 'Partially complete'
+      label: 'Partially complete'
+    -
+      value: Complete
+      label: Complete
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

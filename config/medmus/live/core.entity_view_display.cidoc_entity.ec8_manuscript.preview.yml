@@ -5,6 +5,7 @@ dependencies:
   config:
     - cidoc.cidoc_entity_bundle.ec8_manuscript
     - core.entity_view_mode.cidoc_entity.preview
+    - field.field.cidoc_entity.ec8_manuscript.field_exclude_from_duplicates_
   module:
     - entity_reference_revisions
     - field_group
@@ -18,6 +19,7 @@ third_party_settings:
         - significance
         - content
         - cidoc_properties
+        - ms_language_entity_view_1
         - citation
         - user_id
         - cidoc_admin_links
@@ -43,7 +45,7 @@ bundle: ec8_manuscript
 mode: preview
 content:
   cidoc_admin_links:
-    weight: 8
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -59,7 +61,7 @@ content:
     settings:
       view_mode: default
       link: ''
-    weight: 6
+    weight: 7
     third_party_settings: {  }
   content:
     region: content
@@ -75,6 +77,11 @@ content:
     settings:
       link_to_entity: false
     weight: 2
+    third_party_settings: {  }
+  ms_language_entity_view_1:
+    weight: 6
+    region: content
+    settings: {  }
     third_party_settings: {  }
   name:
     region: content
@@ -94,7 +101,7 @@ content:
     third_party_settings: {  }
   user_id:
     type: entity_reference_label
-    weight: 7
+    weight: 8
     region: content
     label: inline
     settings:
@@ -108,6 +115,7 @@ hidden:
   'cidoc_properties:domain:p45_consists_of': true
   'cidoc_properties:domain:p48_has_preferred_identifier': true
   'cidoc_properties:domain:p72_has_language': true
+  'cidoc_properties:domain:pa19_has_language': true
   'cidoc_properties:domain:pc1_has_metrical_affinities_with': true
   'cidoc_properties:domain:pc2_is_contrafactum_of': true
   'cidoc_properties:domain:pc3_has_genre': true
@@ -125,7 +133,11 @@ hidden:
   'cidoc_properties:range:pc5_has_expression': true
   cidoc_properties_transcript: true
   cidoc_temporal_summary: true
+  field_exclude_from_duplicates_: true
   map_link: true
+  production_info_entity_view_1: true
+  production_info_entity_view_2: true
+  production_info_entity_view_3: true
   search_api_excerpt: true
   timeline_link: true
   timeline_logo: true

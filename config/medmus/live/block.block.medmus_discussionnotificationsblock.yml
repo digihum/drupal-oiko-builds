@@ -1,6 +1,6 @@
 uuid: 78da2c43-2691-43e1-a9d0-8d4bfda2f9fa
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - oiko_forum
@@ -9,7 +9,7 @@ dependencies:
 id: medmus_discussionnotificationsblock
 theme: medmus
 region: user_header
-weight: -12
+weight: -8
 provider: null
 plugin: discussion_notifcations
 settings:

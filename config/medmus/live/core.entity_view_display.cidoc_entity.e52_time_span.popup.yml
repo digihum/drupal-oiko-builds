@@ -134,6 +134,11 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p4_has_time_span':
     weight: 6
     settings: {  }
@@ -180,6 +185,11 @@ content:
     third_party_settings: {  }
     region: content
   'cidoc_properties:range:p4_has_time_span':
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p67_refers_to':
     weight: 21
     settings: {  }
     third_party_settings: {  }

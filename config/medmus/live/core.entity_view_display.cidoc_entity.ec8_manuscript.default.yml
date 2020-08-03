@@ -4,6 +4,9 @@ status: true
 dependencies:
   config:
     - cidoc.cidoc_entity_bundle.ec8_manuscript
+    - field.field.cidoc_entity.ec8_manuscript.field_exclude_from_duplicates_
+  module:
+    - options
 id: cidoc_entity.ec8_manuscript.default
 targetEntityType: cidoc_entity
 bundle: ec8_manuscript
@@ -14,6 +17,18 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:pa19_has_language':
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_exclude_from_duplicates_:
+    weight: 10
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
   internal_name:
     label: inline
     type: string

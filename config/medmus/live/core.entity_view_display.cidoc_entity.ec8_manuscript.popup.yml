@@ -5,6 +5,7 @@ dependencies:
   config:
     - cidoc.cidoc_entity_bundle.ec8_manuscript
     - core.entity_view_mode.cidoc_entity.popup
+    - field.field.cidoc_entity.ec8_manuscript.field_exclude_from_duplicates_
   module:
     - field_group
     - text
@@ -97,6 +98,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:pa19_has_language':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:range:p12_occurred_in_the_presence_of':
     weight: 9
     region: content
@@ -122,6 +128,11 @@ content:
     label: hidden
     type: text_default
     weight: 4
+    settings: {  }
+    third_party_settings: {  }
+  ms_language_entity_view_1:
+    weight: 10
+    region: content
     settings: {  }
     third_party_settings: {  }
   name:
@@ -161,6 +172,7 @@ hidden:
   'cidoc_properties:range:p108_has_produced': true
   cidoc_properties_transcript: true
   citation: true
+  field_exclude_from_duplicates_: true
   internal_name: true
   map_link: true
   search_api_excerpt: true

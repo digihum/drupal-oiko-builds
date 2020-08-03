@@ -75,9 +75,8 @@ display:
       row:
         type: fields
         options:
-          default_field_elements: true
-          inline:
-            name: name
+          default_field_elements: false
+          inline: {  }
           separator: ''
           hide_empty: true
       fields:
@@ -92,7 +91,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '{{name}}'
+            text: '{% if name %}<strong>Model of:</strong> {{name}}{% endif %}'
             make_link: false
             path: ''
             absolute: false
@@ -203,20 +202,7 @@ display:
           entity_field: bundle
           plugin_id: cidoc_bundle
       sorts: {  }
-      header:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          empty: false
-          tokenize: false
-          content:
-            value: '<strong>Model of: </strong>'
-            format: full_html
-          plugin_id: text
+      header: {  }
       footer: {  }
       empty: {  }
       relationships:
@@ -384,6 +370,21 @@ display:
       display_description: ''
       defaults:
         title: true
+        header: false
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: true
+          content:
+            value: '<h3>Imitations</h3>'
+            format: full_html
+          plugin_id: text
     cache_metadata:
       max-age: -1
       contexts:

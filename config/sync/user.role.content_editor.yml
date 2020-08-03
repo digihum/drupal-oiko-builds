@@ -31,6 +31,7 @@ permissions:
   - 'delete terms in empire'
   - 'edit any content_page content'
   - 'edit cidoc entities'
+  - 'edit own cidoc entities'
   - 'edit own content_page content'
   - 'edit terms in empire'
   - 'edit terms in source_books'
@@ -41,4 +42,3 @@ permissions:
   - 'view own unpublished cidoc entities'
   - 'view published cidoc entities'
   - 'view the administration theme'
-  - 'view unpublished cidoc entities'

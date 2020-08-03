@@ -1,6 +1,6 @@
 uuid: 46796bfc-bfdc-4869-87f9-19fb76fa1077
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - oiko_cidoc
@@ -9,7 +9,7 @@ dependencies:
 id: medmus_editor_tools
 theme: medmus
 region: user_header
-weight: -10
+weight: -6
 provider: null
 plugin: editor_tools
 settings:

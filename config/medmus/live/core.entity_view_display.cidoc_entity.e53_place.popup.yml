@@ -36,7 +36,7 @@ third_party_settings:
     group_influences:
       children: {  }
       parent_name: ''
-      weight: 7
+      weight: 6
       format_type: html_element
       format_settings:
         id: ''
@@ -56,7 +56,7 @@ third_party_settings:
         - 'cidoc_properties:range:p26_moved_to'
         - events_witnessed_by_place_sort_ts__entity_view_1
       parent_name: ''
-      weight: 9
+      weight: 8
       format_type: html_element
       format_settings:
         element: div
@@ -75,7 +75,7 @@ third_party_settings:
         - 'cidoc_properties:range:p89_falls_within'
         - 'cidoc_properties:domain:p89_falls_within'
       parent_name: ''
-      weight: 8
+      weight: 7
       format_type: html_element
       format_settings:
         id: ''
@@ -135,10 +135,10 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:domain:pa19_has_language':
-    weight: 20
+    weight: 11
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p100_was_death_of':
     weight: 9
     settings: {  }
@@ -205,7 +205,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   'cidoc_properties:range:p67_refers_to':
-    weight: 10
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -236,13 +236,23 @@ content:
     third_party_settings: {  }
   content:
     type: text_default
-    weight: 11
+    weight: 10
     label: hidden
     settings: {  }
     third_party_settings: {  }
     region: content
   events_witnessed_by_place_sort_ts__entity_view_1:
     weight: 23
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  map_of_places_experiments__entity_view_1:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  map_of_places_experiments__entity_view_2:
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
