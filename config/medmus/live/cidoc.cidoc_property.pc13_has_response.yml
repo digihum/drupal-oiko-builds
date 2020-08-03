@@ -1,0 +1,25 @@
+uuid: db3f1108-3604-4222-a033-196894a91e27
+langcode: en
+status: true
+dependencies: {  }
+id: pc13_has_response
+label: 'PC13 has response'
+bidirectional: false
+reverse_label: 'PC13 has response'
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  - ec1_work
+range_bundles:
+  - ec1_work
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description: {  }
+autocomplete_description: {  }
+child_events: {  }

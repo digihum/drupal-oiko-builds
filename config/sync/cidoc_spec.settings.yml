@@ -98,3 +98,5 @@ enabled_properties:
   - pc9_has_rhyme_scheme
   - pc10_has_melodic_scheme
   - pc11_has_spouse
+  - pc12_has_intertextual_relationship
+  - pc13_has_response

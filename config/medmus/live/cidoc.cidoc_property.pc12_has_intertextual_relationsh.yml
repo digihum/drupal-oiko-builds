@@ -1,0 +1,25 @@
+uuid: 1dc03626-0d58-4d06-a508-3b68a0465b4a
+langcode: en
+status: true
+dependencies: {  }
+id: pc12_has_intertextual_relationsh
+label: 'PC12 has intertextual relationship'
+bidirectional: true
+reverse_label: 'PC12 has intertextual relationship'
+friendly_label: null
+reverse_friendly_label: null
+domain_bundles:
+  - ec1_work
+range_bundles:
+  - ec1_work
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description: {  }
+autocomplete_description: {  }
+child_events: {  }

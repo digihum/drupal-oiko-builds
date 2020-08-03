@@ -1,0 +1,29 @@
+uuid: 5898d8fc-0b49-4782-962c-9a4e99c714ba
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_property.pc13_has_response
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.pc13_has_response.range
+field_name: range
+entity_type: cidoc_reference
+bundle: pc13_has_response
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      ec1_work: ec1_work
+    auto_create_bundle: ec1_work
+field_type: entity_reference

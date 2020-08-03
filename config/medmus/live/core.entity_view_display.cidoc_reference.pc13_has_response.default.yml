@@ -1,0 +1,39 @@
+uuid: e6178a7d-f0d5-4fdc-ad78-019ceb258116
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc13_has_response
+    - field.field.cidoc_reference.pc13_has_response.domain
+    - field.field.cidoc_reference.pc13_has_response.range
+id: cidoc_reference.pc13_has_response.default
+targetEntityType: cidoc_reference
+bundle: pc13_has_response
+mode: default
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: -3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  property:
+    label: inline
+    type: entity_reference_label
+    weight: -4
+    settings:
+      link: false
+    region: content
+    third_party_settings: {  }
+  range:
+    label: inline
+    type: entity_reference_label
+    weight: -2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  search_api_excerpt: true
+  user_id: true
