@@ -1,0 +1,50 @@
+uuid: 5760fb00-0bb3-4dce-aaf5-e7a257a31f81
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+    - search_api
+  config:
+    - search_api.server.db_search_backend
+id: persons_and_groups
+name: 'Persons and Groups'
+description: ''
+read_only: false
+field_settings:
+  bundle:
+    label: Class
+    datasource_id: 'entity:cidoc_entity'
+    property_path: bundle
+    type: string
+    dependencies:
+      module:
+        - cidoc
+  name:
+    label: Name
+    datasource_id: 'entity:cidoc_entity'
+    property_path: name
+    type: string
+    dependencies:
+      module:
+        - cidoc
+datasource_settings:
+  'entity:cidoc_entity':
+    bundles:
+      default: false
+      selected:
+        - e21_person
+        - e74_group
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  cidoc: {  }
+  language_with_fallback: {  }
+  rendered_item: {  }
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  index_directly: true
+  cron_limit: 50
+server: db_search_backend

@@ -195,6 +195,7 @@ third_party_settings:
         - group_references
         - group_music
         - group_expression
+        - group_intertextual_relationships
         - group_descriptive_text
         - citation
       parent_name: group_main_deets
@@ -223,6 +224,23 @@ third_party_settings:
         formatter: closed
         required_fields: true
       label: References
+    group_intertextual_relationships:
+      children:
+        - 'cidoc_properties:domain:pc12_has_intertextual_relationsh'
+        - 'cidoc_properties:domain:pc13_has_response'
+        - 'cidoc_properties:range:pc13_has_response'
+      parent_name: group_main_details
+      weight: 12
+      format_type: tab
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        description: ''
+        formatter: closed
+        required_fields: true
+      label: 'Intertextual relationships'
 _core:
   default_config_hash: wy6wGXCXt2AqnVdVxorIQVb3dn0lnsNhSljZtN-XFv0
 id: cidoc_entity.ec1_work.default
@@ -330,6 +348,16 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  'cidoc_properties:domain:pc12_has_intertextual_relationsh':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc13_has_response':
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   'cidoc_properties:domain:pc1_has_metrical_affinities_with':
     weight: 30
     region: content
@@ -407,6 +435,11 @@ content:
     third_party_settings: {  }
   'cidoc_properties:range:p9_consists_of':
     weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pc13_has_response':
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }

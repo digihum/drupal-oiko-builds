@@ -11,7 +11,7 @@ dependencies:
 id: medmus_account_menu
 theme: medmus
 region: primary_menu
-weight: -12
+weight: -11
 provider: null
 plugin: 'system_menu_block:account'
 settings:

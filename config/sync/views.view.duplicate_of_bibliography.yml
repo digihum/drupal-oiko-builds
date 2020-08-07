@@ -835,7 +835,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "{{field_author}},\r\n"
+            text: "{{field_author|trim|raw}},\r\n"
             make_link: false
             path: ''
             absolute: false
@@ -905,7 +905,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "{% if field_source_type == 'Primary source'  and not field_author and not field_editor%}{{field_title_long|striptags('<em><i>')|raw|trim|trim(\" \\t\\n\\r\\0\\x0B\\xC2\\xA0\")}}\r\n{% elseif field_journal_1 or field_collective_work_1 %}‘{{field_title_long|striptags('<em><i>')|trim|trim(\" \\t\\n\\r\\0\\x0B\\xC2\\xA0\")|raw}}’,\r\n{% else %}{% set LongTitle = field_title_long|striptags('<em><i>')|replace({'<em>': '</em>', '</em>': '<em>','<i>': '</em>', '</i>': '<em>'}) %}<em>{{LongTitle|raw|trim|trim(\" \\t\\n\\r\\0\\x0B\\xC2\\xA0\")}}</em>\r\n{% endif %}"
+            text: "{% if field_source_type == 'Primary source'  and not field_author and not field_editor%}{{field_title_long|striptags('<em><i>')|raw|trim|trim(\" \\t\\n\\r\\0\\x0B\\xC2\\xA0\")}}\r\n{% elseif field_journal_1 or field_collective_work_1 %}‘{{field_title_long|striptags('<em><i>')|trim|trim(\" \\t\\n\\r\\0\\x0B\\xC2\\xA0\")|raw}}’,\r\n{% else %}{% set LongTitle = field_title_long|striptags('<em><i>')|replace({'<em>': '</em>', '</em>': '<em>','<i>': '</em>', '</i>': '<em>'}) %}<em>{{LongTitle|trim|trim(\" \\t\\n\\r\\0\\x0B\\xC2\\xA0\")|raw}}</em>\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -1657,7 +1657,7 @@ display:
         type: normal
         title: Bibliography
         menu_name: main
-        weight: -46
+        weight: -44
       fields: {  }
       sorts: {  }
       filters:

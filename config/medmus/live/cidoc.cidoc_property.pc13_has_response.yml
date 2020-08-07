@@ -5,9 +5,9 @@ dependencies: {  }
 id: pc13_has_response
 label: 'PC13 has response'
 bidirectional: false
-reverse_label: 'PC13 has response'
-friendly_label: null
-reverse_friendly_label: null
+reverse_label: 'PC13 is response to'
+friendly_label: 'Has response'
+reverse_friendly_label: 'Is response to'
 domain_bundles:
   - ec1_work
 range_bundles:
@@ -20,6 +20,12 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
-widget_description: {  }
-autocomplete_description: {  }
-child_events: {  }
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0
