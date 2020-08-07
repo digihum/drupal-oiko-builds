@@ -1,0 +1,28 @@
+uuid: 1fd11bed-af28-46fc-ae13-2341a04513c5
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc14_has_indirect_source
+    - core.entity_view_mode.cidoc_reference.range
+    - field.field.cidoc_reference.pc14_has_indirect_source.domain
+    - field.field.cidoc_reference.pc14_has_indirect_source.range
+id: cidoc_reference.pc14_has_indirect_source.range
+targetEntityType: cidoc_reference
+bundle: pc14_has_indirect_source
+mode: range
+content:
+  domain:
+    label: inline
+    type: entity_reference_label
+    weight: 0
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+hidden:
+  citation: true
+  property: true
+  range: true
+  search_api_excerpt: true
+  user_id: true

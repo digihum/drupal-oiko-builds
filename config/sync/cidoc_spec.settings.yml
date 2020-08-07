@@ -100,3 +100,4 @@ enabled_properties:
   - pc11_has_spouse
   - pc12_has_intertextual_relationship
   - pc13_has_response
+  - pc14_has_indirect_source

@@ -1,0 +1,29 @@
+uuid: 424f4a33-9011-4e72-ac62-a701cecfcc46
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_property.pc14_has_indirect_source
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.pc14_has_indirect_source.range
+field_name: range
+entity_type: cidoc_reference
+bundle: pc14_has_indirect_source
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      ec1_work: ec1_work
+    auto_create_bundle: ec1_work
+field_type: entity_reference
