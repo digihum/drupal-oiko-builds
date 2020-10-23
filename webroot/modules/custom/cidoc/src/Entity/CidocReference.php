@@ -124,6 +124,10 @@ class CidocReference extends EditorialContentEntityBase implements CidocReferenc
         'created',
         'property',
         'user_id',
+        'revision_id',
+        'revision_user_id',
+        'revision_created',
+        'revision_log_message',
       ));
       $fields = array_diff_key($fields, $skip);
 

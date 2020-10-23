@@ -517,5 +517,13 @@ class CidocProperty extends ConfigEntityBundleBase implements RevisionableEntity
     return $property_properties;
   }
 
+  /**
+   * Is this property bidirectional.
+   *
+   * @return bool
+   */
+  public function isBidirectional() {
+    return $this->bidirectional;
+  }
 
 }
