@@ -20,10 +20,15 @@ function oiko_forum_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $for
 }
 
 function oiko_forum_user_is_external($account) {
-  $db = \Drupal::service('database');
-  return (bool) $db->select('shib_authmap')
-    ->condition('uid', $account->id())
-    ->countQuery()
-    ->execute()
-    ->fetchField();
+  if (!\Drupal::moduleHandler()->moduleExists('shib_auth')) {
+    return FALSE;
+  }
+  else {
+    $db = \Drupal::service('database');
+    return (bool) $db->select('shib_authmap')
+      ->condition('uid', $account->id())
+      ->countQuery()
+      ->execute()
+      ->fetchField();
+  }
 }
