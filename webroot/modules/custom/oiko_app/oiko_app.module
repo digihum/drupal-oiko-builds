@@ -49,16 +49,7 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
   $map['settings']['zoomControl'] = FALSE;
   $map['zoomControl'] = 'bottomright';
   $map['data-url'] = Url::fromRoute('oiko_leaflet.map_page_controller_allEntities')->toString();
-  // Compute the number of pages we'll need to fetch.
-  $storage = Drupal::entityTypeManager()->getStorage('cidoc_entity');
-
-  // Get the number of pages that are in the data set.
-  $query = $storage->getQuery()
-    ->condition('status', 1)
-    ->count();
-  \Drupal::moduleHandler()->invokeAll('oiko_app_all_entities_query_alter', [$query]);
-  $count = $query->execute();
-  $map['data-url-number-pages'] = ceil($count / 100);
+  $map['data-url-number-pages'] = 1;
   $height = 'full';
 
   // @TODO: Bubble the cache metadata.
