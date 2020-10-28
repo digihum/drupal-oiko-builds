@@ -76,3 +76,13 @@ function medmus_cidoc_post_update_pa19_convert_redux2(&$sandbox) {
       ->execute();
   }
 }
+
+/**
+ * Path alias being reported incorrectly as needing an update.
+ */
+function medmus_cidoc_post_update_wrangle_path_alias(&$sandbox) {
+  $entityTypeManager = \Drupal::entityTypeManager();
+  $entity_type = $entityTypeManager->getDefinition('path_alias');
+  $entityDefinitionUpdateManager = \Drupal::service('entity.definition_update_manager');
+  $entityDefinitionUpdateManager->updateEntityType($entity_type);
+}
