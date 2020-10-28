@@ -1,0 +1,7 @@
+name: Entity share notifier
+type: module
+description: Allows an entity share server to notify remote websites.
+core: 8.x
+package: Web services
+dependencies:
+  - entity_share:entity_share_server

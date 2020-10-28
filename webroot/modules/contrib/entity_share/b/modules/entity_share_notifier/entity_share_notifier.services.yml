@@ -1,0 +1,4 @@
+services:
+  logger.channel.entity_share_notifier:
+    parent: logger.channel_base
+    arguments: ['entity_share_notifier']

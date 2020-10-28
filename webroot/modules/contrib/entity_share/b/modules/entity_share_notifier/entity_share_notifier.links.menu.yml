@@ -1,0 +1,6 @@
+# Entity share subscriber menu items definition.
+entity.entity_share_subscriber.collection:
+  title: 'Subscribers'
+  route_name: entity.entity_share_subscriber.collection
+  description: 'List Entity share subscriber'
+  parent: entity_share.admin_config_page

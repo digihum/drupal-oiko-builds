@@ -1,0 +1,6 @@
+name: 'Entity Share Entity Test'
+description: 'Provides entity types to use during tests.'
+type: module
+package: 'Testing'
+dependencies:
+  - drupal:entity_test

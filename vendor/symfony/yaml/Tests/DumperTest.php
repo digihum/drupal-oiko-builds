@@ -289,7 +289,6 @@ EOF;
             'double-quote' => ['"', "'\"'"],
             'slash' => ['/', '/'],
             'backslash' => ['\\', '\\'],
-            'del' => ["\x7f", '"\x7f"'],
             'next-line' => ["\xC2\x85", '"\\N"'],
             'non-breaking-space' => ["\xc2\xa0", '"\\_"'],
             'line-separator' => ["\xE2\x80\xA8", '"\\L"'],
@@ -554,39 +553,6 @@ YAML;
         $this->assertSame($expected, $this->dumper->dump($data, 2));
     }
 
-    public function testDumpingMultiLineStringAsScalarBlockTaggedValue()
-    {
-        $data = [
-            'foo' => new TaggedValue('bar', "foo\nline with trailing spaces:\n  \nbar\ninteger like line:\n123456789\nempty line:\n\nbaz"),
-        ];
-        $expected = <<<YAML
-foo: !bar |
-    foo
-    line with trailing spaces:
-      
-    bar
-    integer like line:
-    123456789
-    empty line:
-    
-    baz
-
-YAML;
-
-        $this->assertSame($expected, $this->dumper->dump($data, 2, 0, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK));
-    }
-
-    public function testDumpingInlinedMultiLineIfRnBreakLineInTaggedValue()
-    {
-        $data = [
-            'data' => [
-                'foo' => new TaggedValue('bar', "foo\r\nline with trailing spaces:\n  \nbar\ninteger like line:\n123456789\nempty line:\n\nbaz"),
-            ],
-        ];
-
-        $this->assertSame(file_get_contents(__DIR__.'/Fixtures/multiple_lines_as_literal_block_for_tagged_values.yml'), $this->dumper->dump($data, 2, 0, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK));
-    }
-
     public function testDumpMultiLineStringAsScalarBlock()
     {
         $data = [
@@ -614,24 +580,9 @@ YAML;
         $this->assertSame(file_get_contents(__DIR__.'/Fixtures/multiple_lines_as_literal_block_leading_space_in_first_line.yml'), $this->dumper->dump($data, 2, 0, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK));
     }
 
-    public function testCarriageReturnFollowedByNewlineIsMaintainedWhenDumpingAsMultiLineLiteralBlock()
+    public function testCarriageReturnIsMaintainedWhenDumpingAsMultiLineLiteralBlock()
     {
         $this->assertSame("- \"a\\r\\nb\\nc\"\n", $this->dumper->dump(["a\r\nb\nc"], 2, 0, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK));
-    }
-
-    public function testCarriageReturnNotFollowedByNewlineIsPreservedWhenDumpingAsMultiLineLiteralBlock()
-    {
-        $expected = <<<'YAML'
-parent:
-    foo: "bar\n\rbaz: qux"
-
-YAML;
-
-        $this->assertSame($expected, $this->dumper->dump([
-            'parent' => [
-                'foo' => "bar\n\rbaz: qux",
-            ],
-        ], 4, 0, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK));
     }
 
     public function testZeroIndentationThrowsException()

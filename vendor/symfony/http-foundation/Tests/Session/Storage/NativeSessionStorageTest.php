@@ -36,7 +36,7 @@ class NativeSessionStorageTest extends TestCase
     protected function setUp()
     {
         $this->iniSet('session.save_handler', 'files');
-        $this->iniSet('session.save_path', $this->savePath = sys_get_temp_dir().'/sftest');
+        $this->iniSet('session.save_path', $this->savePath = sys_get_temp_dir().'/sf2test');
         if (!is_dir($this->savePath)) {
             mkdir($this->savePath);
         }
@@ -123,19 +123,6 @@ class NativeSessionStorageTest extends TestCase
         $this->assertEquals(11, $storage->getBag('attributes')->get('legs'));
     }
 
-    public function testRegenerateWithCustomLifetime()
-    {
-        $storage = $this->getStorage();
-        $storage->start();
-        $id = $storage->getId();
-        $lifetime = 999999;
-        $storage->getBag('attributes')->set('legs', 11);
-        $storage->regenerate(false, $lifetime);
-        $this->assertNotEquals($id, $storage->getId());
-        $this->assertEquals(11, $storage->getBag('attributes')->get('legs'));
-        $this->assertEquals($lifetime, ini_get('session.cookie_lifetime'));
-    }
-
     public function testSessionGlobalIsUpToDateAfterIdRegeneration()
     {
         $storage = $this->getStorage();
@@ -180,10 +167,6 @@ class NativeSessionStorageTest extends TestCase
             'cookie_httponly' => false,
         ];
 
-        if (\PHP_VERSION_ID >= 70300) {
-            $options['cookie_samesite'] = 'lax';
-        }
-
         $this->getStorage($options);
         $temp = session_get_cookie_params();
         $gco = [];
@@ -191,6 +174,8 @@ class NativeSessionStorageTest extends TestCase
         foreach ($temp as $key => $value) {
             $gco['cookie_'.$key] = $value;
         }
+
+        unset($gco['cookie_samesite']);
 
         $this->assertEquals($options, $gco);
     }

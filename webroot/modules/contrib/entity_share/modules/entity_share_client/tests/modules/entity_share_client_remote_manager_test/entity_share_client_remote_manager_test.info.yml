@@ -1,0 +1,6 @@
+name: 'Entity Share Client Remote Manager Test'
+description: 'Provides an override of the Remote manager service to use during tests.'
+type: module
+package: 'Testing'
+dependencies:
+  - entity_share:entity_share_client

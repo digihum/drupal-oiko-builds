@@ -1,0 +1,6 @@
+name: 'Entity Share'
+type: module
+description: 'Provides an UI to share entities.'
+core_version_requirement: ^8.8 || ^9
+package: 'Web services'
+configure: entity_share.admin_config_page

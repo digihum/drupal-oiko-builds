@@ -1,0 +1,9 @@
+name: 'Entity Share Client'
+type: module
+description: 'Provides an UI to share entities.'
+core_version_requirement: ^8 || ^9
+package: 'Web services'
+configure: entity.remote.collection
+dependencies:
+  - drupal:jsonapi
+  - entity_share:entity_share

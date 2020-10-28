@@ -1,0 +1,7 @@
+name: 'Entity Share Async'
+type: module
+description: 'Provides asynchronous import of entities.'
+core_version_requirement: ^8 || ^9
+package: 'Web services'
+dependencies:
+  - entity_share:entity_share_client

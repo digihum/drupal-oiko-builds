@@ -327,6 +327,8 @@ class ErrorHandlerTest extends TestCase
         $handler = new ErrorHandler();
         $handler->setDefaultLogger($logger);
         @$handler->handleError(E_USER_DEPRECATED, 'Foo deprecation', __FILE__, __LINE__, []);
+
+        restore_error_handler();
     }
 
     /**

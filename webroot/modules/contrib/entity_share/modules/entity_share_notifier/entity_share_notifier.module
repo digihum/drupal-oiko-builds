@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for the entity share notifier module.
+ */
+
+declare(strict_types = 1);
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\entity_share_notifier\HookHandler\EntityHookHandler;
+
+/**
+ * Implements hook_entity_insert().
+ */
+function entity_share_notifier_entity_insert(EntityInterface $entity) {
+  \Drupal::service('class_resolver')
+    ->getInstanceFromDefinition(EntityHookHandler::class)
+    ->process($entity);
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function entity_share_notifier_entity_update(EntityInterface $entity) {
+  \Drupal::service('class_resolver')
+    ->getInstanceFromDefinition(EntityHookHandler::class)
+    ->process($entity);
+}
