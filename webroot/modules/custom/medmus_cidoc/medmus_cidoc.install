@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * Enable the key auth, entity share modules we need.
+ */
+function medmus_cidoc_update_8101() {
+  \Drupal::service('module_installer')->install(['key_auth', 'entity_share_server', 'entity_share_notifier', 'entity_share_async']);
+}
+
+/**
+ * Create a replicator user with a known uuid.
+ */
+function medmus_cidoc_update_8103() {
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+  $user = \Drupal\user\Entity\User::create(['uuid' => MEDMUS_CIDOC_REPLICATOR_USER_UUID]);
+  $user->setPassword(\Drupal\Component\Utility\Crypt::randomBytesBase64(64));
+  $user->enforceIsNew();
+  $user->setEmail('replicator@example.com');
+  $user->setUsername('replicator');
+  $user->set("init", 'mail');
+  $user->set("langcode", $language);
+  $user->set("preferred_langcode", $language);
+  $user->set("preferred_admin_langcode", $language);
+  $user->activate();
+
+  $user->set('api_key', MEDMUS_CIDOC_REPLICATOR_USER_API_KEY);
+
+  //Save user account
+  $user->save();
+}

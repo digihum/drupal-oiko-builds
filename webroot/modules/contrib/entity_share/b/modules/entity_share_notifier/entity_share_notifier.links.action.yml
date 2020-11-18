@@ -1,5 +1,0 @@
-entity.entity_share_subscriber.add_form:
-  route_name: entity.entity_share_subscriber.add_form
-  title: 'Add Entity share subscriber'
-  appears_on:
-    - entity.entity_share_subscriber.collection

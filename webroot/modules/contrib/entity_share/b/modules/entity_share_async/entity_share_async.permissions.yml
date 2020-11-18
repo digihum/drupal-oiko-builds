@@ -1,3 +1,0 @@
-entity_share_async_access_endpoint:
-  title: 'Access async endpoint'
-  description: 'Allows to register entities to be pulled later.'

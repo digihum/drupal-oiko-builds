@@ -61,6 +61,19 @@ interface StateInformationInterface {
   public function getStatusInfo(array $data);
 
   /**
+   * {@inheritdoc}
+   *
+   * @param string $status_info_id
+   *   An identifier of the status info (the value of 'INFO_ID_...' constant).
+   *
+   * @return array
+   *   Keyed by status ID, values containing:
+   *     - label,
+   *     - CSS class suffix.
+   */
+  public function getStatusDefinition(string $status_info_id);
+
+  /**
    * Creates a dedicated "Entity import status" entity for imported entity.
    *
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity

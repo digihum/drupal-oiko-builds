@@ -8,7 +8,6 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Url;
 use Drupal\entity_share_server\Event\ChannelListEvent;
-use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -64,52 +63,54 @@ class EntryPoint extends ControllerBase {
       'field_mappings' => $this->getFieldMappings(),
     ];
 
+    $uuid = 'anonymous';
+    if ($this->currentUser()->isAuthenticated()) {
+      // Load the user to ensure with have a user entity.
+      /** @var \Drupal\user\UserInterface $account */
+      $account = $this->entityTypeManager()->getStorage('user')->load($this->currentUser()->id());
+      if (!is_null($account)) {
+        $uuid = $account->uuid();
+      }
+    }
+
     /** @var \Drupal\entity_share_server\Entity\ChannelInterface[] $channels */
     $channels = $this->entityTypeManager()
       ->getStorage('channel')
       ->loadMultiple();
 
     $languages = $this->languageManager()->getLanguages(LanguageInterface::STATE_ALL);
+    foreach ($channels as $channel) {
+      // Check access for this user.
+      if (in_array($uuid, $channel->get('authorized_users'))) {
+        $channel_entity_type = $channel->get('channel_entity_type');
+        $channel_bundle = $channel->get('channel_bundle');
+        $channel_langcode = $channel->get('channel_langcode');
+        $route_name = sprintf('jsonapi.%s--%s.collection', $channel_entity_type, $channel_bundle);
+        $url = Url::fromRoute($route_name)
+          ->setOption('language', $languages[$channel_langcode])
+          ->setOption('absolute', TRUE)
+          ->setOption('query', $this->channelManipulator->getQuery($channel));
 
-    /** @var \Drupal\Core\Session\AccountProxyInterface $current_user */
-    $current_user = $this->currentUser();
-    $current_user = $current_user->getAccount();
-    if ($current_user instanceof UserInterface) {
-      $uuid = $current_user->uuid();
+        // Prepare an URL to get only the UUIDs.
+        $url_uuid = clone($url);
+        $query = $url_uuid->getOption('query');
+        $query = (!is_null($query)) ? $query : [];
+        $url_uuid->setOption('query',
+          $query + [
+            'fields' => [
+              $channel_entity_type . '--' . $channel_bundle => 'changed',
+            ],
+          ]
+        );
 
-      foreach ($channels as $channel) {
-        // Check access for this user.
-        if (in_array($uuid, $channel->get('authorized_users'))) {
-          $channel_entity_type = $channel->get('channel_entity_type');
-          $channel_bundle = $channel->get('channel_bundle');
-          $channel_langcode = $channel->get('channel_langcode');
-          $route_name = sprintf('jsonapi.%s--%s.collection', $channel_entity_type, $channel_bundle);
-          $url = Url::fromRoute($route_name)
-            ->setOption('language', $languages[$channel_langcode])
-            ->setOption('absolute', TRUE)
-            ->setOption('query', $this->channelManipulator->getQuery($channel));
-
-          // Prepare an URL to get only the UUIDs.
-          $url_uuid = clone($url);
-          $query = $url_uuid->getOption('query');
-          $query = (!is_null($query)) ? $query : [];
-          $url_uuid->setOption('query',
-            $query + [
-              'fields' => [
-                $channel_entity_type . '--' . $channel_bundle => 'changed',
-              ],
-            ]
-          );
-
-          $data['channels'][$channel->id()] = [
-            'label' => $channel->label(),
-            'url' => $url->toString(),
-            'url_uuid' => $url_uuid->toString(),
-            'channel_entity_type' => $channel_entity_type,
-            'channel_bundle' => $channel_bundle,
-            'search_configuration' => $this->channelManipulator->getSearchConfiguration($channel),
-          ];
-        }
+        $data['channels'][$channel->id()] = [
+          'label' => $channel->label(),
+          'url' => $url->toString(),
+          'url_uuid' => $url_uuid->toString(),
+          'channel_entity_type' => $channel_entity_type,
+          'channel_bundle' => $channel_bundle,
+          'search_configuration' => $this->channelManipulator->getSearchConfiguration($channel),
+        ];
       }
     }
 

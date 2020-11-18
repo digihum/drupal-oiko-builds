@@ -5,12 +5,13 @@ declare(strict_types = 1);
 namespace Drupal\Tests\entity_share_client\Functional;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\entity_share\EntityShareUtility;
+use Drupal\entity_share_client\ClientAuthorization\ClientAuthorizationInterface;
+use Drupal\entity_share_client\Entity\RemoteInterface;
 use Drupal\entity_share_client\ImportContext;
 use Drupal\entity_share_test\EntityFieldHelperTrait;
 use Drupal\node\NodeInterface;
@@ -24,7 +25,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\RequestOptions;
 
 /**
- * Base class for Entity Share Server functional tests.
+ * Base class for Entity Share Client functional tests.
  */
 abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
 
@@ -176,6 +177,20 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
   protected $entityDefinitions;
 
   /**
+   * The client authorization manager service.
+   *
+   * @var \Drupal\entity_share_client\ClientAuthorization\ClientAuthorizationPluginManager
+   */
+  protected $authPluginManager;
+
+  /**
+   * The key value store to use.
+   *
+   * @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface
+   */
+  protected $keyValueStore;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp() {
@@ -196,6 +211,8 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
     $this->entityDefinitions = $this->entityTypeManager->getDefinitions();
     $this->importService = $this->container->get('entity_share_client.import_service');
     $this->remoteManager = $this->container->get('entity_share_client.remote_manager');
+    $this->authPluginManager = $this->container->get('plugin.manager.entity_share_client_authorization');
+    $this->keyValueStore = $this->container->get('keyvalue')->get(ClientAuthorizationInterface::LOCAL_STORAGE_KEY_VALUE_COLLECTION);
     $this->faker = Factory::create();
     // Add French phone number.
     $this->faker->addProvider(new PhoneNumber($this->faker));
@@ -266,7 +283,7 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
    * Helper function to create the remote that point to the site itself.
    *
    * @param \Drupal\user\UserInterface $user
-   *   The user which credential will be used for the remote.
+   *   The user whose credentials will be used for the remote.
    */
   protected function createRemote(UserInterface $user) {
     $remote_storage = $this->entityTypeManager->getStorage('remote');
@@ -274,11 +291,42 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
       'id' => $this->randomMachineName(),
       'label' => $this->randomString(),
       'url' => $this->buildUrl('<front>'),
-      'basic_auth_username' => $user->getAccountName(),
-      'basic_auth_password' => $user->passRaw,
     ]);
+    $plugin = $this->createAuthenticationPlugin($user, $remote);
+    $remote->mergePluginConfig($plugin);
+    // Save the "Remote" config entity.
     $remote->save();
     $this->remote = $remote;
+  }
+
+  /**
+   * Helper function to create the authentication plugin.
+   *
+   * @param \Drupal\user\UserInterface $user
+   *   The user whose credentials will be used for the plugin.
+   * @param \Drupal\entity_share_client\Entity\RemoteInterface $remote
+   *   The "Remote" entity.
+   *
+   * @return \Drupal\entity_share_client\ClientAuthorization\ClientAuthorizationInterface
+   *   The Entity share Authorization plugin.
+   */
+  protected function createAuthenticationPlugin(UserInterface $user, RemoteInterface $remote) {
+    // By default, create "Basic Auth" plugin for authorization.
+    $plugin = $this->authPluginManager->createInstance('basic_auth');
+    $configuration = $plugin->getConfiguration();
+    $credentials = [
+      'username' => $user->getAccountName(),
+      'password' => $user->passRaw,
+    ];
+    // We are using key value store for local credentials storage.
+    $storage_key = $configuration['uuid'];
+    $this->keyValueStore->set($storage_key, $credentials);
+    $configuration['data'] = [
+      'credential_provider' => 'entity_share',
+      'storage_key' => $storage_key,
+    ];
+    $plugin->setConfiguration($configuration);
+    return $plugin;
   }
 
   /**
@@ -573,6 +621,26 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
   }
 
   /**
+   * Helper function to delete all (prepared or imported) content.
+   *
+   * This function doesn't assert the deletion of entities.
+   */
+  protected function resetImportedContent() {
+    $entity_type_ids = array_keys($this->getEntitiesDataArray());
+    foreach ($entity_type_ids as $entity_type_id) {
+      $entity_storage = $this->entityTypeManager->getStorage($entity_type_id);
+      $entities = $entity_storage->loadByProperties();
+      if ($entities) {
+        foreach ($entities as $entity) {
+          $entity->delete();
+        }
+      }
+    }
+    $this->entities = [];
+    $this->importService->getRuntimeImportContext()->clearImportedEntities();
+  }
+
+  /**
    * Helper function that test that the entities had been recreated.
    */
   protected function checkCreatedEntities() {
@@ -640,6 +708,28 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
     $batch =& batch_get();
     $batch['progressive'] = FALSE;
     batch_process();
+  }
+
+  /**
+   * Helper function.
+   *
+   * Imports selected entities.
+   *
+   * @param string[] $selected_entities
+   *   Array of entity UUIDs.
+   * @param string $channel_id
+   *   Identifier of the import channel.
+   */
+  protected function importSelectedEntities(array $selected_entities, string $channel_id = NULL) {
+    // Generate the remote URL.
+    // Unless overridden by parameter, pull from the default channel.
+    $channel_id = $channel_id ?: static::$entityTypeId . '_' . static::$entityBundleId . '_' . static::$entityLangcode;
+    $prepared_url = $this->prepareUrlFilteredOnUuids($selected_entities, $channel_id);
+    // Prepare import context.
+    $import_context = new ImportContext($this->remote->id(), 'node_es_test_en', $this::IMPORT_CONFIG_ID);
+    $this->importService->prepareImport($import_context);
+    // Imports data from the remote URL.
+    $this->importService->importFromUrl($prepared_url);
   }
 
   /**
@@ -863,19 +953,7 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
   protected function prepareUrlFilteredOnUuids(array $selected_entities, $channel_id) {
     $channel_infos = $this->remoteManager->getChannelsInfos($this->remote);
     $channel_url = $channel_infos[$channel_id]['url'];
-    $parsed_url = UrlHelper::parse($channel_url);
-    $query = $parsed_url['query'];
-    $query['filter']['uuid-filter'] = [
-      'condition' => [
-        'path' => 'id',
-        'operator' => 'IN',
-        'value' => array_values($selected_entities),
-      ],
-    ];
-    $query = UrlHelper::buildQuery($query);
-    $prepared_url = $parsed_url['path'] . '?' . $query;
-
-    return $prepared_url;
+    return EntityShareUtility::prepareUuidsFilteredUrl($channel_url, array_values($selected_entities));
   }
 
   /**
@@ -923,6 +1001,32 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
       ];
     }
     return $files_entities_data;
+  }
+
+  /**
+   * Common parts between FileTest and MediaEntityReferenceTest classes.
+   *
+   * Common parts in testBasicPull() method to avoid code duplication.
+   */
+  protected function commonBasicPull() {
+    foreach (static::$filesData as $file_data) {
+      $this->assertFalse(file_exists($file_data['uri']), 'The physical file ' . $file_data['filename'] . ' has been deleted.');
+    }
+
+    $this->pullEveryChannels();
+    $this->checkCreatedEntities();
+
+    foreach (static::$filesData as $file_uuid => $file_data) {
+      $this->assertTrue(file_exists($file_data['uri']), 'The physical file ' . $file_data['filename'] . ' has been pulled and recreated.');
+      if (isset($file_data['file_content'])) {
+        $recreated_file_data = file_get_contents($file_data['uri']);
+        $this->assertEquals($file_data['file_content'], $recreated_file_data, 'The recreated physical file ' . $file_data['filename'] . ' has the same content.');
+      }
+
+      if (isset($this->filesSize[$file_uuid])) {
+        $this->assertEquals($this->filesSize[$file_uuid], filesize($file_data['uri']), 'The recreated physical file ' . $file_data['filename'] . ' has the same size as the original.');
+      }
+    }
   }
 
 }

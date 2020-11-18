@@ -1,2 +1,0 @@
-route_callbacks:
-  - '\Drupal\entity_share_async\Routing\Routes::entryPoint'

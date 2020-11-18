@@ -119,37 +119,32 @@ class ImportService implements ImportServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function importEntities(ImportContext $context, array $uuids) {
+  public function importEntities(ImportContext $context, array $uuids, bool $is_batched = TRUE) {
     if (!$this->prepareImport($context)) {
-      return;
+      return [];
     }
     // Add the selected UUIDs to the URL.
     // We do not handle offset or limit as we provide a maximum of 50 UUIDs.
     $url = $this->runtimeImportContext->getChannelUrl();
-    $parsed_url = UrlHelper::parse($url);
-    $query = $parsed_url['query'];
-    $query['filter']['uuid-filter'] = [
-      'condition' => [
-        'path' => 'id',
-        'operator' => 'IN',
-        'value' => $uuids,
-      ],
-    ];
-    $query = UrlHelper::buildQuery($query);
-    $prepared_url = $parsed_url['path'] . '?' . $query;
+    $prepared_url = EntityShareUtility::prepareUuidsFilteredUrl($url, $uuids);
 
-    $batch = [
-      'title' => $this->t('Import entities'),
-      'operations' => [
-        [
-          '\Drupal\entity_share_client\ImportBatchHelper::importUrlBatch',
-          [$context, $prepared_url],
+    if ($is_batched) {
+      $batch = [
+        'title' => $this->t('Import entities'),
+        'operations' => [
+          [
+            '\Drupal\entity_share_client\ImportBatchHelper::importUrlBatch',
+            [$context, $prepared_url],
+          ],
         ],
-      ],
-      'finished' => '\Drupal\entity_share_client\ImportBatchHelper::importUrlBatchFinished',
-    ];
+        'finished' => '\Drupal\entity_share_client\ImportBatchHelper::importUrlBatchFinished',
+      ];
 
-    batch_set($batch);
+      batch_set($batch);
+    }
+    else {
+      return $this->importFromUrl($prepared_url);
+    }
   }
 
   /**
@@ -166,7 +161,7 @@ class ImportService implements ImportServiceInterface {
     ];
 
     $channel_count = $context->getRemoteChannelCount();
-    // Check how much content are in the channel if the count as not been
+    // Check how much content is in the channel if the count has not been
     // provided before.
     if (empty($channel_count)) {
       $url_uuid = $this->runtimeImportContext->getChannelUrlUuid();
@@ -237,11 +232,14 @@ class ImportService implements ImportServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function importChannelPage(ImportContext $context) {
-    if (!$this->prepareImport($context)) {
-      return;
+  public function importFromUrl(string $url) {
+    $response = $this->jsonApiRequest('GET', $url);
+    $json = Json::decode((string) $response->getBody());
+    if (!isset($json['data'])) {
+      return [];
     }
-
+    $entity_list_data = EntityShareUtility::prepareData($json['data']);
+    return $this->importEntityListData($entity_list_data);
   }
 
   /**

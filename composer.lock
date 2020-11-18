@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca3c6032f43141aeac327b48273a3eee",
+    "content-hash": "abeb18188e700aefbf989974c753729d",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -2522,6 +2522,86 @@
             }
         },
         {
+            "name": "drupal/entity_share",
+            "version": "3.0.0-beta1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/entity_share.git",
+                "reference": "8.x-3.0-beta1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/entity_share-8.x-3.0-beta1.zip",
+                "reference": "8.x-3.0-beta1",
+                "shasum": "116332be7b19dcb7c97f7c62245b1cf45b9f03dc"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9",
+                "league/oauth2-client": "^2.4"
+            },
+            "conflict": {
+                "drupal/jsonapi": "1.*"
+            },
+            "require-dev": {
+                "drupal/block_field": "~1.0",
+                "drupal/dynamic_entity_reference": "~2.0",
+                "drupal/entity_share_client": "*",
+                "drupal/field_group": "~3.0",
+                "drupal/jsonapi_extras": "~3.14",
+                "drupal/key": "~1.14",
+                "drupal/metatag": "~1.0",
+                "drupal/paragraphs": "~1.0",
+                "drupal/pathauto": "~1.0",
+                "drupal/simple_oauth": "~4.5",
+                "fzaninotto/faker": "^1.7"
+            },
+            "suggest": {
+                "drupal/key": "Provides ability to manage keys for Authentication plugins.",
+                "drupal/simple_oauth": "Allows to setup server for OAuth plugin."
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-3.0-beta1",
+                    "datestamp": "1602777020",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Beta releases are not covered by Drupal security advisories."
+                    }
+                },
+                "patches_applied": {
+                    "Allow notification of entity changes": "https://www.drupal.org/files/issues/2020-07-30/entity_share-automatic_synchronization-WIP-3080629-11.patch"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Grimreaper",
+                    "homepage": "https://www.drupal.org/user/2388214"
+                },
+                {
+                    "name": "ithom",
+                    "homepage": "https://www.drupal.org/user/3175403"
+                },
+                {
+                    "name": "ivan.vujovic",
+                    "homepage": "https://www.drupal.org/user/382945"
+                },
+                {
+                    "name": "yarik.lutsiuk",
+                    "homepage": "https://www.drupal.org/user/3212333"
+                }
+            ],
+            "description": "Provides an UI to share entities.",
+            "homepage": "https://www.drupal.org/project/entity_share",
+            "support": {
+                "source": "https://git.drupalcode.org/project/entity_share"
+            }
+        },
+        {
             "name": "drupal/eu_cookie_compliance",
             "version": "1.8.0",
             "source": {
@@ -3128,6 +3208,50 @@
             "homepage": "https://www.drupal.org/project/http_auth",
             "support": {
                 "source": "https://git.drupalcode.org/project/http_auth"
+            }
+        },
+        {
+            "name": "drupal/key_auth",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/key_auth.git",
+                "reference": "8.x-1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/key_auth-8.x-1.1.zip",
+                "reference": "8.x-1.1",
+                "shasum": "8fa825060956ca251f2fc54e083411dbaed34b01"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.1",
+                    "datestamp": "1590498044",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "mstef",
+                    "homepage": "https://www.drupal.org/user/107190"
+                }
+            ],
+            "description": "Provides an authentication provider based on per-user API keys.",
+            "homepage": "https://www.drupal.org/project/key_auth",
+            "support": {
+                "source": "https://git.drupalcode.org/project/key_auth"
             }
         },
         {
@@ -5178,6 +5302,72 @@
                 "write"
             ],
             "time": "2015-11-02T07:36:25+00:00"
+        },
+        {
+            "name": "league/oauth2-client",
+            "version": "2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/oauth2-client.git",
+                "reference": "badb01e62383430706433191b82506b6df24ad98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/badb01e62383430706433191b82506b6df24ad98",
+                "reference": "badb01e62383430706433191b82506b6df24ad98",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0 || ^7.0",
+                "paragonie/random_compat": "^1 || ^2 || ^9.99",
+                "php": "^5.6 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpunit/phpunit": "^5.7 || ^6.0 || ^9.3",
+                "squizlabs/php_codesniffer": "^2.3 || ^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-2.x": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\OAuth2\\Client\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Bilbie",
+                    "email": "hello@alexbilbie.com",
+                    "homepage": "http://www.alexbilbie.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Woody Gilk",
+                    "homepage": "https://github.com/shadowhand",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "OAuth 2.0 Client Library",
+            "keywords": [
+                "Authentication",
+                "SSO",
+                "authorization",
+                "identity",
+                "idp",
+                "oauth",
+                "oauth2",
+                "single sign on"
+            ],
+            "time": "2020-10-28T02:03:40+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -7916,6 +8106,7 @@
         "drupal/config_devel": 20,
         "drupal/config_update": 20,
         "drupal/devel": 20,
+        "drupal/entity_share": 10,
         "drupal/leaflet": 20,
         "drupal/leaflet_widget": 20,
         "drupal/paragraphs": 5,

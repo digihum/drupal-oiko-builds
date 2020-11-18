@@ -7,3 +7,8 @@ configure: entity.remote.collection
 dependencies:
   - drupal:jsonapi
   - entity_share:entity_share
+
+# Information added by Drupal.org packaging script on 2020-10-15
+version: '8.x-3.0-beta1'
+project: 'entity_share'
+datestamp: 1602777023

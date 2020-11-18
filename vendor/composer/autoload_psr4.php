@@ -44,6 +44,7 @@ return array(
     'OomphInc\\ComposerInstallersExtender\\' => array($vendorDir . '/oomphinc/composer-installers-extender/src'),
     'Michelf\\' => array($vendorDir . '/michelf/php-markdown/Michelf'),
     'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
+    'League\\OAuth2\\Client\\' => array($vendorDir . '/league/oauth2-client/src'),
     'League\\Csv\\' => array($vendorDir . '/league/csv/src'),
     'Laminas\\ZendFrameworkBridge\\' => array($vendorDir . '/laminas/laminas-zendframework-bridge/src'),
     'Laminas\\Stdlib\\' => array($vendorDir . '/laminas/laminas-stdlib/src'),

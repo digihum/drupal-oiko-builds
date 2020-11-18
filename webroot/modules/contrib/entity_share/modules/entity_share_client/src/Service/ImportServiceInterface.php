@@ -20,8 +20,14 @@ interface ImportServiceInterface {
    *   The import context.
    * @param array $uuids
    *   The list of UUID's to import.
+   * @param bool $is_batched
+   *   Whether to import using batch API.
+   *
+   * @return array|void
+   *   The list of entity IDs imported keyed by UUIDs, if not batched.
+   *   If batched, the method doesn't return.
    */
-  public function importEntities(ImportContext $context, array $uuids);
+  public function importEntities(ImportContext $context, array $uuids, bool $is_batched = TRUE);
 
   /**
    * Import all the entities on a channel.
@@ -32,12 +38,15 @@ interface ImportServiceInterface {
   public function importChannel(ImportContext $context);
 
   /**
-   * Import the entities on a specific channel's page.
+   * Import the entities from a prepared JSON:API URL.
    *
-   * @param \Drupal\entity_share_client\ImportContext $context
-   *   The import context.
+   * @param string $url
+   *   The JSON:API URL.
+   *
+   * @return int[]
+   *   The list of entity IDs imported keyed by UUIDs.
    */
-  public function importChannelPage(ImportContext $context);
+  public function importFromUrl(string $url);
 
   /**
    * Use data from the JSON:API to import content.

@@ -1,4 +1,0 @@
-administer_entity_share_subscriber_entity:
-  title: 'Administer entity share subscriber entity'
-  description: 'Allows to administer the subscribers.'
-  restrict access: true

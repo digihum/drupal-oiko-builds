@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\entity_share_client\Controller;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\diff\Controller\PluginRevisionController;
@@ -95,17 +94,7 @@ class DiffController extends PluginRevisionController {
 
     // Get the right/remote revision.
     $url = $channels_infos[$channel_id]['url'];
-    $parsed_url = UrlHelper::parse($url);
-    $query = $parsed_url['query'];
-    $query['filter']['uuid-filter'] = [
-      'condition' => [
-        'path' => 'id',
-        'operator' => 'IN',
-        'value' => array_values([$uuid]),
-      ],
-    ];
-    $query = UrlHelper::buildQuery($query);
-    $prepared_url = $parsed_url['path'] . '?' . $query;
+    $prepared_url = EntityShareUtility::prepareUuidsFilteredUrl($url, [$uuid]);
 
     $response = $this->remoteManager->jsonApiRequest($remote, 'GET', $prepared_url);
     $json = Json::decode((string) $response->getBody());

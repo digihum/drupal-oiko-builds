@@ -1,6 +1,18 @@
 <?php
 
+use Drupal\cidoc\Entity\CidocPropertyInterface;
+use Drupal\Core\Language\LanguageInterface;
 use Symfony\Component\Yaml\Yaml;
+
+/**
+ * We create a specific user with a specific UUID.
+ */
+define('MEDMUS_CIDOC_REPLICATOR_USER_UUID', 'd045948c-d47c-4fcc-83c9-c91a1439995a');
+
+/**
+ * We create a specific user with a specific API Key.
+ */
+define('MEDMUS_CIDOC_REPLICATOR_USER_API_KEY', 'a9834c8c6cfff8d46d0af0e9021c8bb0');
 
 /**
  * Implements hook_cidoc_sync_property_sync().
@@ -11,3 +23,154 @@ function medmus_cidoc_cidoc_sync_property_sync(\Drupal\cidoc\Entity\CidocPropert
     $drupal_property->set('bidirectional', TRUE);
   }
 }
+
+/**
+ * Implements hook_entity_delete().
+ */
+function medmus_cidoc_entity_delete(Drupal\Core\Entity\EntityInterface $entity) {
+  medmus_cidoc_entity_ensure_channels($entity);
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function medmus_cidoc_entity_insert(Drupal\Core\Entity\EntityInterface $entity) {
+  medmus_cidoc_entity_ensure_channels($entity);
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function medmus_cidoc_entity_update(Drupal\Core\Entity\EntityInterface $entity) {
+  medmus_cidoc_entity_ensure_channels($entity);
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function medmus_cidoc_entity_ensure_channels(Drupal\Core\Entity\EntityInterface $entity) {
+  $entity_bundles_to_sync = [
+    'cidoc_property',
+    'cidoc_entity_bundle',
+  ];
+
+  if (in_array($entity->getEntityTypeId(), $entity_bundles_to_sync)) {
+    $bundled_entity_type_id = $entity->getEntityType()->getBundleOf();
+    medmus_cidoc_entity_share_sync_channels($entity->getEntityTypeId(), $bundled_entity_type_id, $entity->id());
+  }
+}
+
+function medmus_cidoc_entity_share_sync_channels($bundle_entity_type_id, $sync_entity_type_id, $updated_bundle = NULL) {
+  if (\Drupal::moduleHandler()->moduleExists('entity_share_server')) {
+
+    /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager */
+    $entity_type_manager = \Drupal::service('entity_type.manager');
+
+    // We need to ensure that there are channels for all the CIDOC properties.
+    $bundles = $entity_type_manager
+    ->getStorage($bundle_entity_type_id)
+    ->loadMultiple();
+
+    $bundles = array_combine(array_map(function ($bundle_id) use($sync_entity_type_id) {
+      return $sync_entity_type_id . '__' . $bundle_id;
+    }, array_keys($bundles)), $bundles);
+
+    /** @var \Drupal\entity_share_server\Entity\ChannelInterface[] $channels */
+    $channel_ids = $entity_type_manager
+      ->getStorage('channel')
+      ->getQuery()
+      ->condition('channel_entity_type', $sync_entity_type_id)
+      ->execute();
+    $channels = $entity_type_manager
+      ->getStorage('channel')
+      ->loadMultiple($channel_ids);
+
+    $channels_to_create = array_diff_key($bundles, $channels);
+    $channels_to_update = array_intersect_key($bundles, $channels);
+    $channels_to_remove = array_diff_key($channels, $bundles);
+
+    foreach ($channels_to_create as $bundle) {
+      $channel = new \Drupal\entity_share_server\Entity\Channel([], 'channel');
+      medmus_cidoc_ensure_channel_settings($channel, $sync_entity_type_id, $bundle);
+      $channel->save();
+    }
+
+    foreach ($channels_to_remove as $channel) {
+      // This is a list of strings, and not a correct one at that.
+      $channel->delete();
+    }
+
+    // If we updated a bundle, ensure that that bundle is updated.
+    if (isset($updated_bundle) && isset($channels_to_update[$sync_entity_type_id . '__' . $updated_bundle])) {
+      $channel = $channels[$sync_entity_type_id . '__' . $updated_bundle];
+      medmus_cidoc_ensure_channel_settings($channel, $sync_entity_type_id, $channels_to_update[$sync_entity_type_id . '__' . $updated_bundle]);
+      $channel->save();
+    }
+  }
+}
+
+function medmus_cidoc_ensure_channel_settings(\Drupal\entity_share_server\Entity\ChannelInterface $channel, $sync_entity_type_id, $bundle) {
+  $channel->set('id', $sync_entity_type_id . '__' . $bundle->id());
+  $channel->set('label', $bundle->label());
+  $channel->set('channel_langcode', LanguageInterface::LANGCODE_NOT_SPECIFIED);
+  $channel->set('channel_sorts', [
+    'changed' => [
+      'path' => 'changed',
+      'direction' => 'DESC',
+      'weight' => 0,
+    ],
+  ]);
+  $channel->set('authorized_users', [
+    MEDMUS_CIDOC_REPLICATOR_USER_UUID => MEDMUS_CIDOC_REPLICATOR_USER_UUID,
+  ]);
+  $channel->set('channel_entity_type', $sync_entity_type_id);
+  $channel->set('channel_bundle', $bundle->id());
+}
+
+/**
+ * Implements hook_channel_update().
+ */
+function medmus_cidoc_channel_update() {
+  // Use this as a chance to ensure that all entity share channels are up to date.
+  medmus_cidoc_entity_notifier_sync_channels();
+}
+
+/**
+ * Implements hook_channel_insert().
+ */
+function medmus_cidoc_channel_insert() {
+  // Use this as a chance to ensure that all entity share channels are up to date.
+  medmus_cidoc_entity_notifier_sync_channels();
+}
+
+/**
+ * Implements hook_channel_delete().
+ */
+function medmus_cidoc_channel_delete() {
+  // Use this as a chance to ensure that all entity share channels are up to date.
+  medmus_cidoc_entity_notifier_sync_channels();
+}
+
+/**
+ * Ensure that all channels are synced by the remote site notifier.
+ */
+function medmus_cidoc_entity_notifier_sync_channels() {
+
+  if (\Drupal::moduleHandler()->moduleExists('entity_share_notifier')) {
+    /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager */
+    $entity_type_manager = \Drupal::service('entity_type.manager');
+
+    $remote_site = $entity_type_manager
+      ->getStorage('entity_share_subscriber')
+      ->load('remote_site');
+    if ($remote_site) {
+      // @TODO: Be smarter about needing to save.
+      $remote_site->set('channel_ids', array_keys($entity_type_manager
+        ->getStorage('channel')
+        ->loadMultiple()));
+      $remote_site->save();
+    }
+  }
+}
+
+

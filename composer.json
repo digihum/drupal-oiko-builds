@@ -119,6 +119,7 @@
         "drupal/devel": "1.x-dev",
         "drupal/devel_entity_updates": "^3.0",
         "drupal/editor_file": "^1.5",
+        "drupal/entity_share": "^3.0@beta",
         "drupal/eu_cookie_compliance": "^1.0",
         "drupal/eva": "^2.0",
         "drupal/field_group": "^3.0.0",
@@ -128,6 +129,7 @@
         "drupal/google_analytics": "^2.1",
         "drupal/honeypot": "^1.24",
         "drupal/http_auth": "^1.0",
+        "drupal/key_auth": "^1.1",
         "drupal/leaflet": "1.x-dev#a3274e4",
         "drupal/leaflet_widget": "dev-8.x-2.x",
         "drupal/metatag": "^1.0",
@@ -215,6 +217,9 @@
             },
             "drupal/shib_auth": {
                 "https://www.drupal.org/files/issues/2020-02-27/shib_auth-admin-permissions.patch": "https://www.drupal.org/files/issues/2020-02-27/shib_auth-admin-permissions.patch"
+            },
+            "drupal/entity_share": {
+                "Allow notification of entity changes": "https://www.drupal.org/files/issues/2020-07-30/entity_share-automatic_synchronization-WIP-3080629-11.patch"
             }
         },
         "composer-version": "^1.8.4"

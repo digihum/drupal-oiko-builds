@@ -32,6 +32,13 @@ class FileTest extends EntityShareClientFunctionalTestBase {
   protected static $entityLangcode = 'en';
 
   /**
+   * Drupal's file system service.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
+
+  /**
    * An array of data to generate physical files.
    *
    * @var array
@@ -79,6 +86,9 @@ class FileTest extends EntityShareClientFunctionalTestBase {
    */
   protected function setUp() {
     parent::setUp();
+
+    $this->fileSystem = $this->container->get('file_system');
+
     $this->getTestFiles('image');
     // Special case for the images created using native helper method.
     if (isset(static::$filesData['public_jpg'])) {
@@ -112,10 +122,8 @@ class FileTest extends EntityShareClientFunctionalTestBase {
     $this->populateRequestService();
 
     // Delete the physical file after populating the request service.
-    /** @var \Drupal\Core\File\FileSystemInterface $file_system */
-    $file_system = \Drupal::service('file_system');
     foreach (static::$filesData as $file_data) {
-      $file_system->delete($file_data['uri']);
+      $this->fileSystem->delete($file_data['uri']);
     }
 
     $this->deleteContent();
@@ -311,31 +319,12 @@ class FileTest extends EntityShareClientFunctionalTestBase {
    * Test basic pull feature.
    */
   public function testBasicPull() {
-    foreach (static::$filesData as $file_data) {
-      $this->assertFalse(file_exists($file_data['uri']), 'The physical file ' . $file_data['filename'] . ' has been deleted.');
-    }
+    $this->commonBasicPull();
 
-    $this->pullEveryChannels();
-    $this->checkCreatedEntities();
-
-    foreach (static::$filesData as $file_uuid => $file_data) {
-      $this->assertTrue(file_exists($file_data['uri']), 'The physical file ' . $file_data['filename'] . ' has been pulled and recreated.');
-      if (isset($file_data['file_content'])) {
-        $recreated_file_data = file_get_contents($file_data['uri']);
-        $this->assertEquals($file_data['file_content'], $recreated_file_data, 'The recreated physical file ' . $file_data['filename'] . ' has the same content.');
-      }
-
-      if (isset($this->filesSize[$file_uuid])) {
-        $this->assertEquals($this->filesSize[$file_uuid], filesize($file_data['uri']), 'The recreated physical file ' . $file_data['filename'] . ' has the same size has the original.');
-      }
-    }
-  }
-
-  /**
-   * Test basic pull feature without the import plugin "Physical file".
-   */
-  public function testBasicPullWithoutPlugin() {
+    // Test again without the import plugin "Physical file".
     $this->removePluginFromImportConfig('physical_file');
+    // Need to remove all imported content (and files) prior to that.
+    $this->resetImportedContent();
 
     foreach (static::$filesData as $file_data) {
       $this->assertFalse(file_exists($file_data['uri']), 'The physical file ' . $file_data['filename'] . ' has been deleted.');
@@ -349,7 +338,6 @@ class FileTest extends EntityShareClientFunctionalTestBase {
     foreach (static::$filesData as $file_data) {
       $this->assertFalse(file_exists($file_data['uri']), 'The physical file ' . $file_data['filename'] . ' has not been pulled and recreated.');
     }
-
   }
 
   /**

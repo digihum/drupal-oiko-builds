@@ -4,10 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\entity_share_async\Plugin\QueueWorker;
 
-use Drupal\Component\Serialization\Json;
-use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\State\StateInterface;
-use Drupal\entity_share\EntityShareUtility;
 use Drupal\entity_share_async\Service\QueueHelperInterface;
 use Drupal\entity_share_client\ImportContext;
 use Drupal\entity_share_client\Service\ImportServiceInterface;
@@ -85,30 +82,9 @@ class EntityShareAsyncWorker extends QueueWorkerBase implements ContainerFactory
   public function processItem($item) {
     $async_states = $this->stateStorage->get(QueueHelperInterface::STATE_ID, []);
 
-    $import_context = new ImportContext($item['remote_id'], $item['channel_id'], $item['import_config_id']);
-    $this->importService->prepareImport($import_context);
-
-    $url = $this->importService->getRuntimeImportContext()->getChannelUrl();
-    $parsed_url = UrlHelper::parse($url);
-    $query = $parsed_url['query'];
-    $query['filter']['uuid-filter'] = [
-      'condition' => [
-        'path' => 'id',
-        'operator' => 'IN',
-        'value' => [$item['uuid']],
-      ],
-    ];
-    $query = UrlHelper::buildQuery($query);
-    $prepared_url = $parsed_url['path'] . '?' . $query;
-
-    // Get the entity json data.
-    $response = $this->importService->jsonApiRequest('GET', $prepared_url);
-    $json = Json::decode((string) $response->getBody());
-
     // Import the entity.
-    // Can not use the importService::importEntities() method directly because
-    // batch causes problem when used inside CRON.
-    $ids = $this->importService->importEntityListData(EntityShareUtility::prepareData($json['data']));
+    $import_context = new ImportContext($item['remote_id'], $item['channel_id'], $item['import_config_id']);
+    $ids = $this->importService->importEntities($import_context, [$item['uuid']], FALSE);
 
     if (empty($ids)) {
       $this->logger->warning(

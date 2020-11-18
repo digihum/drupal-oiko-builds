@@ -38,4 +38,43 @@ class TestRemoteManager extends RemoteManager {
     return parent::doRequest($client, $method, $url);
   }
 
+  /**
+   * Clear the response mapping.
+   *
+   * This is useful if it is needed to emulate a runtime change of content
+   * on server.
+   */
+  public function resetResponseMapping() {
+    $this->responseMapping = [];
+  }
+
+  /**
+   * Clear the HTTP clients caching.
+   *
+   * This is useful if it is needed to emulate a runtime change of remote.
+   *
+   * @param string $type
+   *   Whether to reset JSON:API or regular HTTP clients cache.
+   */
+  public function resetHttpClientsCache(string $type) {
+    switch ($type) {
+      case 'json_api':
+        $this->jsonApiHttpClients = [];
+        break;
+
+      default:
+        $this->httpClients = [];
+        break;
+    }
+  }
+
+  /**
+   * Clear the remote info caching.
+   *
+   * This is useful if it is needed to emulate a runtime change of remote.
+   */
+  public function resetRemoteInfos() {
+    $this->remoteInfos = [];
+  }
+
 }

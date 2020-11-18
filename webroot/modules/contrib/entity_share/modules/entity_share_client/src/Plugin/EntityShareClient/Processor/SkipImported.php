@@ -63,7 +63,7 @@ class SkipImported extends ImportProcessorPluginBase {
     if ($resource_type->hasField('langcode')) {
       $langcode_public_name = $resource_type->getPublicName('langcode');
     }
-    $langcode = $entity_data['attributes'][$langcode_public_name] ?? FALSE;
+    $langcode = $entity_data['attributes'][$langcode_public_name] ?? NULL;
     // Get the information of the last import of this entity.
     $import_status_entity = $this->stateInformation->getImportStatusByParameters($entity_uuid, $entity_type_id, $langcode);
     // If there is no information on when this entity was last imported, it

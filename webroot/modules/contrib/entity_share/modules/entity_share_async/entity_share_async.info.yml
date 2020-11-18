@@ -5,3 +5,8 @@ core_version_requirement: ^8 || ^9
 package: 'Web services'
 dependencies:
   - entity_share:entity_share_client
+
+# Information added by Drupal.org packaging script on 2020-10-15
+version: '8.x-3.0-beta1'
+project: 'entity_share'
+datestamp: 1602777023

@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\entity_share;
 
+use Drupal\Component\Utility\UrlHelper;
+
 /**
  * Contains helper methods for Entity Share.
  */
@@ -69,6 +71,31 @@ class EntityShareUtility {
       $entity_changed_time = $changed_datetime->getTimestamp();
     }
     return $entity_changed_time;
+  }
+
+  /**
+   * Alters the JSON:API URL by applying filtering by UUID's.
+   *
+   * @param string $url
+   *   URL to request.
+   * @param string[] $uuids
+   *   Array of entity UUID's.
+   *
+   * @return string
+   *   The URL with UUID filter.
+   */
+  public static function prepareUuidsFilteredUrl(string $url, array $uuids) {
+    $parsed_url = UrlHelper::parse($url);
+    $query = $parsed_url['query'];
+    $query['filter']['uuid-filter'] = [
+      'condition' => [
+        'path' => 'id',
+        'operator' => 'IN',
+        'value' => $uuids,
+      ],
+    ];
+    $query = UrlHelper::buildQuery($query);
+    return $parsed_url['path'] . '?' . $query;
   }
 
 }

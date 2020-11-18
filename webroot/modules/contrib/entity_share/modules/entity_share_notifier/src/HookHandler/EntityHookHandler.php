@@ -190,16 +190,8 @@ class EntityHookHandler implements ContainerInjectionInterface {
 
       $remote_id = $subscriber->get('remote_id');
       $remote_config_id = $subscriber->get('remote_config_id');
-      $http_client = $this->clientFactory->fromOptions([
-        'base_uri' => $subscriber->get('subscriber_url') . '/',
-        'auth' => [
-          $subscriber->get('basic_auth_username'),
-          $subscriber->get('basic_auth_password'),
-        ],
-        'headers' => [
-          'Content-type' => 'application/json',
-        ],
-      ]);
+
+      $http_client = $subscriber->getHttpClient(TRUE);
 
       foreach ($channels_to_notify_for_subscriber as $channel_id) {
         try {

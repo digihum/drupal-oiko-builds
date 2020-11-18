@@ -141,7 +141,9 @@ class EntityReference extends ImportProcessorPluginBase implements PluginFormInt
           // Import referenced entities.
           elseif (isset($field_data['links']['related']['href'])) {
             $referenced_entities_ids = $this->importUrl($runtime_import_context, $field_data['links']['related']['href']);
-            // It is possible that some entities have been skipped from import, but do exist, so ensure that those are available to the mapping code below.
+            // It is possible that some entities have been skipped from import,
+            // but do exist, so ensure that those are available to the
+            // mapping code below.
             $referenced_entities_ids = $this->getExistingEntities($prepared_field_data) + $referenced_entities_ids;
           }
 

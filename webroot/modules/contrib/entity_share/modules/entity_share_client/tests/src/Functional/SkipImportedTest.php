@@ -88,19 +88,21 @@ class SkipImportedTest extends EntityShareClientFunctionalTestBase {
   }
 
   /**
-   * Test basic pull feature.
+   * Test the "Skip imported" Import Processor plugin.
    *
-   * Test that entities can be pulled with plugin "Skip imported" enabled.
+   * Test in enabled and disabled state.
    */
-  public function testBasicPull() {
+  public function testSkipImportedPlugin() {
+    // Test that entities can be pulled with plugin "Skip imported" enabled.
     $this->pullEveryChannels();
     $this->checkCreatedEntities();
-  }
 
-  /**
-   * Test if plugin "Skip imported" skips entities not modified on remote.
-   */
-  public function testSkipped() {
+    // Clean up imported content.
+    $this->importService->getRuntimeImportContext()->clearImportedEntities();
+    $recreated_node = $this->loadEntity('node', 'es_test');
+    $recreated_node->delete();
+
+    // Test if plugin "Skip imported" skips entities not modified on remote.
     // Initial pull should import all entities (ie. one entity).
     $this->pullChannel('node_es_test_en');
     $imported_entities = $this->importService->getRuntimeImportContext()->getImportedEntities();
@@ -114,12 +116,13 @@ class SkipImportedTest extends EntityShareClientFunctionalTestBase {
     $imported_entities = $this->importService->getRuntimeImportContext()->getImportedEntities();
     $imported_entities_en = $imported_entities['en'] ?? [];
     $this->assertEqual(count($imported_entities_en), 0);
-  }
 
-  /**
-   * Test behavior when plugin "Skip imported" is not enabled.
-   */
-  public function testSkippedWithoutPlugin() {
+    // Clean up imported content.
+    $this->importService->getRuntimeImportContext()->clearImportedEntities();
+    $recreated_node = $this->loadEntity('node', 'es_test');
+    $recreated_node->delete();
+
+    // Test behavior when plugin "Skip imported" is not enabled.
     $this->removePluginFromImportConfig('skip_imported');
 
     // Initial pull should import all entities (ie. one entity).

@@ -85,20 +85,16 @@ class MultilingualTest extends EntityShareClientFunctionalTestBase {
   }
 
   /**
-   * Test basic pull feature.
-   *
-   * Test that it is possible to pull the same entity in several languages
-   * during the same process.
+   * Test several scenarios of importing the multilingual entities.
    */
-  public function testBasicPull() {
+  public function testMultilingualImport() {
+    // Test that it is possible to pull the same entity in several languages
+    // during the same process.
     $this->pullEveryChannels();
     $this->checkCreatedEntities();
-  }
+    $this->deleteAllEntities();
 
-  /**
-   * Test pulling content in its default translation first.
-   */
-  public function testDefaultTranslationFirstPull() {
+    // Test pulling content in its default translation first.
     $this->pullChannel('node_es_test_en');
     $this->pullChannel('node_es_test_fr');
     $this->checkCreatedEntities();
@@ -107,12 +103,9 @@ class MultilingualTest extends EntityShareClientFunctionalTestBase {
     $node = $this->loadEntity('node', 'es_test');
     $node_translation = $node->getTranslation('en');
     $this->assertTrue($node_translation->isDefaultTranslation(), 'The node default translation is the same as the initial one as it had been pulled in its default language first.');
-  }
+    $this->deleteAllEntities();
 
-  /**
-   * Test pulling content NOT in its default translation first.
-   */
-  public function testNonDefaultTranslationFirstPull() {
+    // Test pulling content NOT in its default translation first.
     $this->pullChannel('node_es_test_fr');
     $this->pullChannel('node_es_test_en');
     $this->checkCreatedEntities();
@@ -121,12 +114,9 @@ class MultilingualTest extends EntityShareClientFunctionalTestBase {
     $node = $this->loadEntity('node', 'es_test');
     $node_translation = $node->getTranslation('fr');
     $this->assertTrue($node_translation->isDefaultTranslation(), 'The node default translation has changed as it had been pulled in another language first.');
-  }
+    $this->deleteAllEntities();
 
-  /**
-   * Test state information.
-   */
-  public function testComparison() {
+    // Test state information.
     // 1: No import: en and fr channels data should indicate a new entity.
     $this->expectedState(StateInformationInterface::INFO_ID_NEW, StateInformationInterface::INFO_ID_NEW);
 
@@ -160,6 +150,22 @@ class MultilingualTest extends EntityShareClientFunctionalTestBase {
     $this->pullChannel('node_es_test_fr');
     $this->importService->getRuntimeImportContext()->clearImportedEntities();
     $this->expectedState(StateInformationInterface::INFO_ID_SYNCHRONIZED, StateInformationInterface::INFO_ID_SYNCHRONIZED);
+  }
+
+  /**
+   * Helper function to delete all (prepared or imported) content.
+   *
+   * This function doesn't assert the deletion of entities.
+   */
+  protected function deleteAllEntities() {
+    $entity_storage = $this->entityTypeManager->getStorage('node');
+    $entities = $entity_storage->loadByProperties();
+    if ($entities) {
+      foreach ($entities as $entity) {
+        $entity->delete();
+      }
+    }
+    $this->entities = [];
   }
 
   /**

@@ -11,12 +11,25 @@ entity_share_notifier.entity_share_subscriber.*:
     subscriber_url:
       type: string
       label: 'URL'
-    basic_auth_username:
-      type: string
-      label: 'Basic auth username'
-    basic_auth_password:
-      type: string
-      label: 'Basic auth password'
+    auth:
+      type: mapping
+      mapping:
+        pid:
+          label: 'Plugin ID'
+          type: string
+        uuid:
+          label: 'UUID'
+          type: string
+        data:
+          type: mapping
+          label: 'Credential data'
+          mapping:
+            credential_provider:
+              type: string
+              label: 'Credential provider'
+            storage_key:
+              type: string
+              label: 'Storage key'
     remote_id:
       type: string
       label: 'Remote ID'

@@ -93,7 +93,7 @@ function cidoc_post_update_make_cidoc_reference_revisionable(&$sandbox) {
 function cidoc_post_update_bidirectional_properties2(&$sandbox) {
   // Allow bidirectional properties.
   \Drupal::state()->set('cidoc.maintain_reverse_relationships', 1);
-  
+
   // Get a list of bidirectional properties.
   $properties = array_filter(\Drupal\cidoc\Entity\CidocProperty::loadMultiple(NULL), function ($property) {
     return $property->isBidirectional();

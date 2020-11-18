@@ -4,9 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\entity_share_client\Functional;
 
-use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\entity_share\EntityShareUtility;
 use Drupal\entity_share_client\ImportContext;
 use Drupal\user\UserInterface;
 
@@ -99,12 +97,11 @@ class TaxonomyEntityReferenceTest extends EntityShareClientFunctionalTestBase {
       'es_test_taxonomy_reference',
     ];
     $prepared_url = $this->prepareUrlFilteredOnUuids($selected_entities, 'node_es_test_en');
-
-    $response = $this->remoteManager->jsonApiRequest($this->remote, 'GET', $prepared_url);
-    $json = Json::decode((string) $response->getBody());
+    // Prepare import context.
     $import_context = new ImportContext($this->remote->id(), 'node_es_test_en', $this::IMPORT_CONFIG_ID);
     $this->importService->prepareImport($import_context);
-    $this->importService->importEntityListData(EntityShareUtility::prepareData($json['data']));
+    // Imports data from the remote URL.
+    $this->importService->importFromUrl($prepared_url);
 
     $this->checkCreatedEntities();
   }

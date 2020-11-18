@@ -103,6 +103,7 @@ class ComposerStaticInite2cb2abed408c64b9f306078a7c9469a
         ),
         'L' => 
         array (
+            'League\\OAuth2\\Client\\' => 21,
             'League\\Csv\\' => 11,
             'Laminas\\ZendFrameworkBridge\\' => 28,
             'Laminas\\Stdlib\\' => 15,
@@ -304,6 +305,10 @@ class ComposerStaticInite2cb2abed408c64b9f306078a7c9469a
         'Masterminds\\' => 
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
+        'League\\OAuth2\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/oauth2-client/src',
         ),
         'League\\Csv\\' => 
         array (

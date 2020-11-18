@@ -8,6 +8,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\Exception\UndefinedLinkTemplateException;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\entity_share\EntityShareUtility;
 use Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface;
@@ -65,13 +66,7 @@ class StateInformation implements StateInformationInterface {
    * {@inheritdoc}
    */
   public function getStatusInfo(array $data) {
-    $status_info = [
-      'label' => $this->t('Undefined'),
-      'class' => 'entity-share-undefined',
-      'info_id' => StateInformationInterface::INFO_ID_UNDEFINED,
-      'local_entity_link' => NULL,
-      'local_revision_id' => NULL,
-    ];
+    $status_info = $this->statusInfoArray(StateInformationInterface::INFO_ID_UNDEFINED);
 
     // Get the entity type and entity storage.
     $parsed_type = explode('--', $data['type']);
@@ -80,13 +75,7 @@ class StateInformation implements StateInformationInterface {
       $entity_storage = $this->entityTypeManager->getStorage($entity_type_id);
     }
     catch (\Exception $exception) {
-      $status_info = [
-        'label' => $this->t('Unknown entity type'),
-        'class' => 'entity-share-undefined',
-        'info_id' => StateInformationInterface::INFO_ID_UNKNOWN,
-        'local_entity_link' => NULL,
-        'local_revision_id' => NULL,
-      ];
+      $status_info = $this->statusInfoArray(StateInformationInterface::INFO_ID_UNKNOWN);
       return $status_info;
     }
 
@@ -95,13 +84,7 @@ class StateInformation implements StateInformationInterface {
       ->loadByProperties(['uuid' => $data['id']]);
 
     if (empty($existing_entities)) {
-      $status_info = [
-        'label' => $this->t('New entity'),
-        'class' => 'entity-share-new',
-        'info_id' => StateInformationInterface::INFO_ID_NEW,
-        'local_entity_link' => NULL,
-        'local_revision_id' => NULL,
-      ];
+      $status_info = $this->statusInfoArray(StateInformationInterface::INFO_ID_NEW);
     }
     // An entity already exists.
     // Check if the entity type has a changed date.
@@ -135,59 +118,95 @@ class StateInformation implements StateInformationInterface {
 
             // Existing entity.
             if ($this->entityHasChanged($existing_translation, $entity_changed_time)) {
-              $status_info = [
-                'label' => $this->t('Entities not synchronized'),
-                'class' => 'entity-share-changed',
-                'info_id' => StateInformationInterface::INFO_ID_CHANGED,
-                'local_entity_link' => $existing_entity->toUrl(),
-                'local_revision_id' => $existing_entity->getRevisionId(),
-              ];
+              $status_info = $this->statusInfoArray(StateInformationInterface::INFO_ID_CHANGED, $existing_entity);
             }
             else {
-              $status_info = [
-                'label' => $this->t('Entities synchronized'),
-                'class' => 'entity-share-up-to-date',
-                'info_id' => StateInformationInterface::INFO_ID_SYNCHRONIZED,
-                'local_entity_link' => $existing_entity->toUrl(),
-                'local_revision_id' => $existing_entity->getRevisionId(),
-              ];
+              $status_info = $this->statusInfoArray(StateInformationInterface::INFO_ID_SYNCHRONIZED, $existing_entity);
             }
           }
           else {
-            $status_info = [
-              'label' => $this->t('New translation'),
-              'class' => 'entity-share-new',
-              'info_id' => StateInformationInterface::INFO_ID_NEW_TRANSLATION,
-              'local_entity_link' => $existing_entity->toUrl(),
-              'local_revision_id' => $existing_entity->getRevisionId(),
-            ];
+            $status_info = $this->statusInfoArray(StateInformationInterface::INFO_ID_NEW_TRANSLATION, $existing_entity);
           }
         }
         // Case of untranslatable entity.
         else {
           // Existing entity.
           if ($this->entityHasChanged($existing_entity, $entity_changed_time)) {
-            $status_info = [
-              'label' => $this->t('Entities not synchronized'),
-              'class' => 'entity-share-changed',
-              'info_id' => StateInformationInterface::INFO_ID_CHANGED,
-              'local_entity_link' => $existing_entity->toUrl(),
-              'local_revision_id' => $existing_entity->getRevisionId(),
-            ];
+            $status_info = $this->statusInfoArray(StateInformationInterface::INFO_ID_CHANGED, $existing_entity);
           }
           else {
-            $status_info = [
-              'label' => $this->t('Entities synchronized'),
-              'class' => 'entity-share-up-to-date',
-              'info_id' => StateInformationInterface::INFO_ID_SYNCHRONIZED,
-              'local_entity_link' => $existing_entity->toUrl(),
-              'local_revision_id' => $existing_entity->getRevisionId(),
-            ];
+            $status_info = $this->statusInfoArray(StateInformationInterface::INFO_ID_SYNCHRONIZED, $existing_entity);
           }
         }
       }
     }
 
+    return $status_info;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getStatusDefinition(string $status_info_id) {
+    $definitions = [
+      StateInformationInterface::INFO_ID_UNDEFINED => [
+        'label' => $this->t('Undefined'),
+        'class' => 'undefined',
+      ],
+      StateInformationInterface::INFO_ID_UNKNOWN => [
+        'label' => $this->t('Unknown entity type'),
+        'class' => 'undefined',
+      ],
+      StateInformationInterface::INFO_ID_NEW => [
+        'label' => $this->t('New entity'),
+        'class' => 'new',
+      ],
+      StateInformationInterface::INFO_ID_NEW_TRANSLATION => [
+        'label' => $this->t('New translation'),
+        'class' => 'new',
+      ],
+      StateInformationInterface::INFO_ID_CHANGED => [
+        'label' => $this->t('Entities not synchronized'),
+        'class' => 'changed',
+      ],
+      StateInformationInterface::INFO_ID_SYNCHRONIZED => [
+        'label' => $this->t('Entities synchronized'),
+        'class' => 'up-to-date',
+      ],
+    ];
+    return $definitions[$status_info_id] ?? $definitions[StateInformationInterface::INFO_ID_UNDEFINED];
+  }
+
+  /**
+   * Helper function: generates status information for a known status ID.
+   *
+   * @param string $status_info_id
+   *   An identifier of the status info (the value of 'INFO_ID_...' constant).
+   * @param \Drupal\Core\Entity\ContentEntityInterface $entity
+   *   A Drupal content entity.
+   *
+   * @return array
+   *   The same as return value of getStatusInfo().
+   */
+  protected function statusInfoArray(string $status_info_id, ContentEntityInterface $entity = NULL) {
+    $status_definition = $this->getStatusDefinition($status_info_id);
+    $status_info = [
+      'label' => $status_definition['label'],
+      'class' => 'entity-share-' . $status_definition['class'],
+      'info_id' => $status_info_id,
+      'local_entity_link' => NULL,
+      'local_revision_id' => NULL,
+    ];
+    if ($entity instanceof ContentEntityInterface) {
+      try {
+        $status_info['local_entity_link'] = $entity->toUrl();
+      }
+      catch (UndefinedLinkTemplateException $exception) {
+        // Do nothing, the link remains NULL.
+      }
+      // If entity type is not revisionable, this will remain NULL.
+      $status_info['local_revision_id'] = $entity->getRevisionId();
+    }
     return $status_info;
   }
 
@@ -292,11 +311,17 @@ class StateInformation implements StateInformationInterface {
     if (in_array($entity->getEntityTypeId(), ['user', 'entity_import_status'])) {
       return;
     }
+    if (!$entity->uuid()) {
+      return;
+    }
     $entity_storage = $this->entityTypeManager->getStorage('entity_import_status');
     $search_criteria = [
-      'entity_uuid' => $entity->uuid(),
+      'entity_id' => $entity->id(),
       'entity_type_id' => $entity->getEntityTypeId(),
     ];
+    if ($entity_storage->getEntityType()->hasKey('uuid')) {
+      $search_criteria['entity_uuid'] = $entity->uuid();
+    }
     if ($langcode && $entity_storage->getEntityType()->hasKey('langcode')) {
       $search_criteria['langcode'] = $langcode;
     }

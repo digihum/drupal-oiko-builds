@@ -11,6 +11,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\Exception\UndefinedLinkTemplateException;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\entity_share_client\Entity\EntityImportStatus;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -132,8 +133,14 @@ class EntityImportStatusListBuilder extends EntityListBuilder {
     $row['entity_id'] = $entity->entity_id->value;
     $row['langcode'] = $this->languageManager->getLanguage($entity->langcode->value)->getName();
     // Label and link to entity should respect the language.
+    /** @var \Drupal\Core\Entity\ContentEntityInterface $imported_entity_translation */
     $imported_entity_translation = $imported_entity->getTranslation($entity->langcode->value);
-    $row['entity_label'] = $imported_entity_translation->toLink($imported_entity_translation->label());
+    try {
+      $row['entity_label'] = $imported_entity_translation->toLink($imported_entity_translation->label());
+    }
+    catch (UndefinedLinkTemplateException $exception) {
+      $row['entity_label'] = $imported_entity_translation->label();
+    }
     // Label of entity type.
     $row['entity_type_id'] = $imported_entity_storage->getEntityType()->getLabel();
     // Imported entity's bundle.
