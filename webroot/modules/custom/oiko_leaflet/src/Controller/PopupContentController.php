@@ -54,8 +54,13 @@ class PopupContentController extends ControllerBase {
 
     $response = new AjaxResponse();
     $response->addCommand(new HtmlCommand('.sidebar-information-content-content', $content));
-    // Add in the GA response too.
-    $response->addCommand(new GAEventCommand('pageview', ['dimension1' => $cidoc_entity->getOwner()->id()]));
+    if (!empty($cidoc_entity->getOwner())) {
+      // Add in the GA response too.
+      $response->addCommand(new GAEventCommand('pageview', [
+        'dimension1' => $cidoc_entity->getOwner()
+          ->id()
+      ]));
+    }
     // Add a response for our event history block.
     $response->addCommand(new EventHistoryAddCommand($cidoc_entity->id(), $cidoc_entity->label()));
 
