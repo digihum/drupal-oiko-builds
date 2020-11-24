@@ -49,7 +49,7 @@ class OikoTimelineHookImplementations {
           'settings' => array(
           ),
         ))
-        ->setDefaultValue(FALSE)
+        ->setDefaultValue(NULL)
         ->setDisplayConfigurable('view', TRUE);
 
       return $fields;
