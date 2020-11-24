@@ -4,3 +4,7 @@ medmus_ciodc.aysnc_queue_runner:
     _controller: '\Drupal\medmus_cidoc\Controller\MedmusCidocQueueRunnerController::runQueue'
   requirements:
     _permission: 'run cidoc sync queue'
+  options:
+    no_cache: 'TRUE'
+    _auth: ['key_auth', 'cookie']
+
