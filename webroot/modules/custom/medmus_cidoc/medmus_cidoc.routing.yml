@@ -1,0 +1,6 @@
+medmus_ciodc.aysnc_queue_runner:
+  path: '/medmus_cidoc/async_queue_runner'
+  defaults:
+    _controller: '\Drupal\medmus_cidoc\Controller\MedmusCidocQueueRunnerController::runQueue'
+  requirements:
+    _permission: 'run cidoc sync queue'

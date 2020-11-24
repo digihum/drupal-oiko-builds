@@ -1,0 +1,2 @@
+run cidoc sync queue:
+  title: 'Run CIDOC sync queue'
