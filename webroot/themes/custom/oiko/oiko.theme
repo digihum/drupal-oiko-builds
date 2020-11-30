@@ -134,13 +134,18 @@ function oiko_preprocess_page(&$variables) {
       ->sort('name');
 
     $place_ids = $cidoc_entity_query->execute();
-    $id = array_rand($place_ids, 1);
-    $loaded = \Drupal::service('entity_type.manager')->getStorage('cidoc_entity')->loadMultiple([$place_ids[$id]]);
+    if (!empty($place_ids)) {
+      $id = array_rand($place_ids, 1);
+      $loaded = \Drupal::service('entity_type.manager')
+        ->getStorage('cidoc_entity')
+        ->loadMultiple([$place_ids[$id]]);
 
-    $view_builder = \Drupal::service('entity_type.manager')->getViewBuilder('cidoc_entity');
+      $view_builder = \Drupal::service('entity_type.manager')
+        ->getViewBuilder('cidoc_entity');
 
-    foreach ($loaded as $entity) {
-      $variables['page']['sidebardemo'] = $view_builder->view($entity, 'popup');
+      foreach ($loaded as $entity) {
+        $variables['page']['sidebardemo'] = $view_builder->view($entity, 'popup');
+      }
     }
   }
 
