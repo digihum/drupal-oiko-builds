@@ -119,6 +119,11 @@ class EntityHookHandler implements ContainerInjectionInterface {
    *   The entity.
    */
   public function process(EntityInterface $entity) {
+    // Hack in a big killswitch, do not process entities if we are the anon user.
+    if (\Drupal::currentUser()->isAnonymous()) {
+      return;
+    }
+
     $channels_to_notify = [];
     /** @var \Drupal\entity_share_server\Entity\ChannelInterface[] $channels */
     $channels = $this->entityTypeManager
