@@ -12,6 +12,7 @@ use Drupal\Core\Http\ClientFactory;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\entity_share_server\Service\ChannelManipulatorInterface;
+use Drupal\user\Entity\User;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Psr\Log\LoggerInterface;
@@ -122,6 +123,13 @@ class EntityHookHandler implements ContainerInjectionInterface {
     // Hack in a big killswitch, do not process entities if we are the anon user.
     if (\Drupal::currentUser()->isAnonymous()) {
       return;
+    }
+
+    // Hack in a big killswitch, do not process entities if we are the replicator user.
+    if ($user = User::load(\Drupal::currentUser()->id())) {
+      if ($user->uuid() == MEDMUS_CIDOC_REPLICATOR_USER_UUID) {
+        return;
+      }
     }
 
     $channels_to_notify = [];

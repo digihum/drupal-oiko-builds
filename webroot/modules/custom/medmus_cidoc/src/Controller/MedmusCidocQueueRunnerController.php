@@ -3,6 +3,7 @@
 namespace Drupal\medmus_cidoc\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Queue\QueueGarbageCollectionInterface;
 use Drupal\Core\Queue\QueueWorkerManager;
 use Drupal\Core\Queue\RequeueException;
 use Drupal\Core\Queue\SuspendQueueException;
@@ -36,6 +37,7 @@ class MedmusCidocQueueRunnerController extends ControllerBase {
    * @param string $queueName
    */
   public function runQueue($queueName = 'entity_share_async_import') {
+    $this->garbageCollect($queueName);
     $this->run($queueName);
 
     // HTTP 204 is "No content", meaning "I did what you asked and we're done."
@@ -47,6 +49,13 @@ class MedmusCidocQueueRunnerController extends ControllerBase {
    */
   public function getQueue($name) {
     return \Drupal::queue($name);
+  }
+
+  protected function garbageCollect($name) {
+    $queue = $this->getQueue($name);
+    if ($queue instanceof QueueGarbageCollectionInterface) {
+      $queue->garbageCollection();
+    }
   }
 
   /**
