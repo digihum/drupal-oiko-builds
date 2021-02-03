@@ -1,6 +1,8 @@
 <div class="main-search-wrapper js-main-search-wrapper">
-    <input class="main-search-box js-input" type="text" placeholder="Search" data-toggle-focus="{{ attributes.id }}" data-placeholder-map="{{ placeholder_map }}" data-placeholder-timeline="{{ placeholder_timeline }}" />
-    <input class="main-search-submit js-submit" type="submit" value="">
+    <label for="cidoc-search" class="show-for-sr">Search phrase</label>
+    <input id="cidoc-search" class="main-search-box js-input" type="text" placeholder="Search" data-toggle-focus="{{ attributes.id }}" data-placeholder-map="{{ placeholder_map }}" data-placeholder-timeline="{{ placeholder_timeline }}" />
+    <label for="cidoc-search" class="show-for-sr">Run Search</label>
+    <input id="cidoc-search-submit"  class="main-search-submit js-submit" type="submit" value="">
     <div id="{{ attributes.id }}" class="main-search__dropdown dropdown-pane" data-toggler="is-open">
         <div class="main-search__no-search-text is-hidden js-no-search-text--map">{{ no_search_map }}</div>
         <div class="main-search__no-search-text is-hidden js-no-search-text--timeline">{{ no_search_timeline }}</div>
