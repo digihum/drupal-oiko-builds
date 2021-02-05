@@ -1,0 +1,6 @@
+oiko_leaflet.leaflet_settings_form:
+  title: 'Leaflet settings'
+  route_name: oiko_leaflet.leaflet_settings_form
+  description: 'Settings for the Leaflet maps'
+  parent: system.admin_config_ui
+  weight: 99

@@ -41,3 +41,13 @@ oiko_leaflet.map_page_controller_unpublishedEntities:
   requirements:
      # @TODO: Sort the permissions here.
     _permission: 'view published cidoc entities'
+
+oiko_leaflet.leaflet_settings_form:
+  path: '/admin/config/oiko_leaflet/leafletsettings'
+  defaults:
+    _form: '\Drupal\oiko_leaflet\Form\LeafletSettingsForm'
+    _title: 'Leaflet Settings'
+  requirements:
+    _permission: 'administer leaflet'
+  options:
+    _admin_route: TRUE

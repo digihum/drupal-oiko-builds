@@ -64,6 +64,7 @@ function oiko_leaflet_library_info_alter(array &$libraries, $module) {
  * @return array
  */
 function oiko_leaflet_leaflet_map_info() {
+  $config = \Drupal::config('oiko_leaflet.settings');
   return array(
     'Ancient Terrain' =>
       array(
@@ -85,9 +86,9 @@ function oiko_leaflet_leaflet_map_info() {
         ),
         'layers' => array(
           'earth' => array(
-            'urlTemplate' => 'https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=XXRCYpWanbCshocHeiE0',
+            'urlTemplate' => $config->get('url_template'),
             'options' => array(
-              'attribution' => 'Powered by <a href="http://leafletjs.com/">Leaflet</a> and <a href="https://www.mapbox.com/">Mapbox</a>. Map base by <a title="Ancient World Mapping Center (UNC-CH)" href="http://awmc.unc.edu">AWMC</a>, 2014 (cc-by-nc).'
+              'attribution' => $config->get('attribution')
             )
           ),
         ),
