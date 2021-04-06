@@ -173,4 +173,10 @@ function medmus_cidoc_entity_notifier_sync_channels() {
   }
 }
 
-
+/**
+ * Implements hook_queue_info_alter().
+ */
+function medmus_cidoc_queue_info_alter(&$queues) {
+  // Prevent the entity share queue running on normal cron.
+  unset($queues[\Drupal\medmus_cidoc\Controller\MedmusCidocQueueRunnerController::$queueName]['cron']);
+}

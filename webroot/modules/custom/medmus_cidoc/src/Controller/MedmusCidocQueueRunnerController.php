@@ -31,14 +31,14 @@ class MedmusCidocQueueRunnerController extends ControllerBase {
     return new static($container->get('plugin.manager.queue_worker'));
   }
 
+  public static $queueName = 'entity_share_async_import';
+
   /**
    * Main controller method, run the queue.
-   *
-   * @param string $queueName
    */
-  public function runQueue($queueName = 'entity_share_async_import') {
-    $this->garbageCollect($queueName);
-    $this->run($queueName);
+  public function runQueue() {
+    $this->garbageCollect(self::$queueName);
+    $this->run(self::$queueName);
 
     // HTTP 204 is "No content", meaning "I did what you asked and we're done."
     return new Response('', 204);
