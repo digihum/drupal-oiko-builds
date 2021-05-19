@@ -2,44 +2,34 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\entity_share_client\Entity;
+namespace Drupal\medmus_share\Entity;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityChangedInterface;
 
 /**
  * Provides an interface for defining Entity import status entities.
  */
-interface EntityImportStatusInterface extends ContentEntityInterface {
+interface DeletedRemoteEntityInterface extends ContentEntityInterface {
 
   /**
    * Denotes the default entity import policy.
    */
-  const IMPORT_POLICY_DEFAULT = 0;
+  const DECISION_UNDECIDED = 0;
 
   /**
    * Denotes the skip entity import policy.
    */
-  const IMPORT_POLICY_SKIP = 1;
+  const DECISION_KEEP = 1;
 
   /**
-   * Returns the last import time.
-   *
-   * @return int
-   *   The timestamp of entity's last import.
+   * Denotes the skip entity import policy.
    */
-  public function getLastImport();
+  const DECISION_DELETE = 2;
 
   /**
-   * Updates the last import time.
-   *
-   * @param int $timestamp
-   *   The timestamp of import.
-   *
-   * @return $this
-   *   The class instance that this method is called on.
+   * Denotes the deleted automatically entity import policy.
    */
-  public function setLastImport($timestamp);
+  const DECISION_DELETE_AUTOMATICALLY = 3;
 
   /**
    * Gets the timestamp of the last entity change.
@@ -65,7 +55,7 @@ interface EntityImportStatusInterface extends ContentEntityInterface {
    * @return int
    *   The import policy.
    */
-  public function getPolicy();
+  public function getDecision();
 
   /**
    * Sets the import policy of entity.
@@ -76,14 +66,19 @@ interface EntityImportStatusInterface extends ContentEntityInterface {
    * @return $this
    *   The class instance that this method is called on.
    */
-  public function setPolicy($policy);
+  public function setDecision($policy);
 
   /**
+   * @return ContentEntityInterface
+   */
+  public function getLocalEntity();
+
+    /**
    * Gets all implemented import policies.
    *
    * @return array
    *   Keys are raw policy values, values are human-readable labels.
    */
-  public static function getAvailablePolicies();
+  public static function getAvailableDecisions(): array;
 
 }

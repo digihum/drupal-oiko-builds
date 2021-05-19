@@ -1,0 +1,27 @@
+<?php
+
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\medmus_share\Utility\MedmusShareEntityDeleteHandler;
+use Drupal\medmus_share\Utility\MedmusShareRemoteEntityStatusAutomatedActions;
+use Drupal\medmus_share\Utility\MedmusShareRemoteEntityStatusFetcher;
+
+/**
+ * Implements hook_cron().
+ */
+function medmus_share_cron() {
+  /* @var MedmusShareRemoteEntityStatusFetcher $automated_actions */
+  $status_fetcher = \Drupal::classResolver(MedmusShareRemoteEntityStatusFetcher::class);
+  $status_fetcher->fetchEntities();
+  /* @var MedmusShareRemoteEntityStatusAutomatedActions $automated_actions */
+  $automated_actions = \Drupal::classResolver(MedmusShareRemoteEntityStatusAutomatedActions::class);
+  $automated_actions->autoDeleteLocalEntities();
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function medmus_share_entity_delete(Drupal\Core\Entity\EntityInterface $entity) {
+  /* @var MedmusShareEntityDeleteHandler $handler */
+  $handler = \Drupal::classResolver(MedmusShareEntityDeleteHandler::class);
+  $handler->handleEntityDelete($entity);
+}

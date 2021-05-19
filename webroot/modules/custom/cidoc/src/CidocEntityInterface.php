@@ -4,6 +4,7 @@ namespace Drupal\cidoc;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
+use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\user\EntityOwnerInterface;
 
 /**
@@ -11,7 +12,7 @@ use Drupal\user\EntityOwnerInterface;
  *
  * @ingroup cidoc
  */
-interface CidocEntityInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
+interface CidocEntityInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface, EntityPublishedInterface {
 
   /**
    * Gets the CIDOC entity's name, using the internal name where available.
@@ -59,27 +60,6 @@ interface CidocEntityInterface extends ContentEntityInterface, EntityChangedInte
    *   The called CIDOC entity.
    */
   public function setCreatedTime($timestamp);
-
-  /**
-   * Returns the CIDOC entity published status indicator.
-   *
-   * Unpublished CIDOC entity are only visible to restricted users.
-   *
-   * @return bool
-   *   TRUE if the CIDOC entity is published.
-   */
-  public function isPublished();
-
-  /**
-   * Sets the published status of a CIDOC entity.
-   *
-   * @param bool $published
-   *   TRUE to set this CIDOC entity to published, FALSE to set it to unpublished.
-   *
-   * @return \Drupal\cidoc\CidocEntityInterface
-   *   The called CIDOC entity.
-   */
-  public function setPublished($published);
 
   /**
    * Gets property references from/to the CIDOC entity, indexed by property.

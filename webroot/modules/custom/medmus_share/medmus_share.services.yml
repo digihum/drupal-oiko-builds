@@ -1,0 +1,4 @@
+services:
+  logger.channel.medmus_share:
+    parent: logger.channel_base
+    arguments: [ 'medmus_share' ]

@@ -1,0 +1,20 @@
+<?php
+
+use Drupal\Core\Field\BaseFieldDefinition;
+
+/**
+ * Change the base field.
+ */
+function medmus_share_update_8101() {
+  $old_field = \Drupal::entityDefinitionUpdateManager()
+    ->getFieldStorageDefinition('remote_website', 'medmus_deleted_remote_entity');
+  \Drupal::entityDefinitionUpdateManager()
+    ->uninstallFieldStorageDefinition($old_field);
+
+  $storage_definition = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(t('Remote website'))
+    ->setDescription(t('The identifier of the remote website.'))
+    ->setSetting('target_type', 'remote');
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('remote_website', 'medmus_deleted_remote_entity', 'medmus_share', $storage_definition);
+}

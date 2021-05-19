@@ -1,6 +1,8 @@
 <?php
 
 use Drupal\cidoc\Entity\CidocPropertyInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Symfony\Component\Yaml\Yaml;
 
@@ -179,4 +181,14 @@ function medmus_cidoc_entity_notifier_sync_channels() {
 function medmus_cidoc_queue_info_alter(&$queues) {
   // Prevent the entity share queue running on normal cron.
   unset($queues[\Drupal\medmus_cidoc\Controller\MedmusCidocQueueRunnerController::$queueName]['cron']);
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function medmus_cidoc_module_implements_alter(&$implementations, $hook) {
+  // We remove the entity_delete
+  if ($hook == 'entity_delete') {
+    unset($implementations['entity_share_client']);
+  }
 }

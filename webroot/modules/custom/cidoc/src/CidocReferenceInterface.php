@@ -4,6 +4,7 @@ namespace Drupal\cidoc;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
+use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\user\EntityOwnerInterface;
 
 /**
@@ -11,7 +12,7 @@ use Drupal\user\EntityOwnerInterface;
  *
  * @ingroup cidoc
  */
-interface CidocReferenceInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
+interface CidocReferenceInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface, EntityPublishedInterface {
   /**
    * Gets the CIDOC property.
    *

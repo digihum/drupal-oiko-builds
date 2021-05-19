@@ -7,6 +7,8 @@
 
 declare(strict_types = 1);
 
+use Drupal\Core\Entity\ContentEntityUpdater;
+use Drupal\entity_share_client\Entity\EntityImportStatusInterface;
 use Drupal\entity_share_client\Entity\ImportConfig;
 
 /**
@@ -51,4 +53,22 @@ function entity_share_client_post_update_create_default_import_config() {
     ->save();
 
   \Drupal::messenger()->addStatus(t('A default import config had been created. It is recommended to check it to ensure it matches your needs.'));
+}
+
+/**
+ * Set the changed time on entity import statuses.
+ */
+function entity_share_client_post_update_compute_remote_import_changed_time(&$sandbox) {
+  \Drupal::classResolver(ContentEntityUpdater::class)->update($sandbox, 'entity_import_status', function (EntityImportStatusInterface $status) {
+    $needs_saving = FALSE;
+    if (empty($status->getChangedTime())) {
+      // Use the last import time if we have it, otherwise we'll use the current request
+      // time.
+      if (!empty($status->getLastImport())) {
+        $status->setChangedTime($status->getLastImport());
+      }
+      $needs_saving = TRUE;
+    }
+    return $needs_saving;
+  });
 }

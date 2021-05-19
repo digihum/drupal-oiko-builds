@@ -5,6 +5,9 @@ declare(strict_types = 1);
 namespace Drupal\entity_share_client\Entity;
 
 use Drupal\Core\Entity\ContentEntityBase;
+use Drupal\Core\Entity\EntityChangedInterface;
+use Drupal\Core\Entity\EntityChangedTrait;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 
@@ -29,6 +32,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *     "form" = {
  *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
  *     },
+ *     "views_data" = "Drupal\entity_share_client\EntityImportStatusViewsData",
  *   },
  *   admin_permission = "administer_import_status_entities",
  *   links = {
@@ -72,6 +76,10 @@ class EntityImportStatus extends ContentEntityBase implements EntityImportStatus
       ->setLabel(t('Channel'))
       ->setDescription(t('The identifier of the import channel.'));
 
+    $fields['changed'] = BaseFieldDefinition::create('changed')
+      ->setLabel(t('Changed'))
+      ->setDescription(t('The time that the import status was last edited.'));
+
     // The fields containing the actual information about import.
     $fields['last_import'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Last import'))
@@ -83,6 +91,20 @@ class EntityImportStatus extends ContentEntityBase implements EntityImportStatus
       ->setDefaultValue(EntityImportStatusInterface::IMPORT_POLICY_DEFAULT);
 
     return $fields;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function preSave(EntityStorageInterface $storage) {
+    if (isset($this->overideChangedTime)) {
+      $this->set('changed', $this->overideChangedTime);
+    }
+    else {
+      $this->set('changed', \Drupal::service('datetime.time')->getRequestTime());
+    }
+
+    parent::preSave($storage);
   }
 
   /**
@@ -116,12 +138,42 @@ class EntityImportStatus extends ContentEntityBase implements EntityImportStatus
   }
 
   /**
+   * Gets the timestamp of the last entity change.
+   *
+   * @return int
+   *   The timestamp of the last entity save operation.
+   */
+  public function getChangedTime() {
+    if (isset($this->overideChangedTime)) {
+      return $this->overideChangedTime;
+    }
+    else {
+      return $this->get('changed')->value;
+    }
+  }
+
+  /**
+   * Sets the timestamp of the last entity change.
+   *
+   * @param int $timestamp
+   *   The timestamp of the last entity save operation.
+   *
+   * @return $this
+   */
+  public function setChangedTime($timestamp) {
+    $this->overideChangedTime = $timestamp;
+    return $this;
+  }
+
+  protected $overideChangedTime;
+
+  /**
    * {@inheritdoc}
    */
   public static function getAvailablePolicies() {
-    // @todo allow modules to register other policies.
     return [
       EntityImportStatusInterface::IMPORT_POLICY_DEFAULT => t('Default'),
+      EntityImportStatusInterface::IMPORT_POLICY_SKIP => t('Skip'),
     ];
   }
 

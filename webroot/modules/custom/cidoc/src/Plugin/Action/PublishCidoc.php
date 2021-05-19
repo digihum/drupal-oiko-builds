@@ -26,7 +26,7 @@ class PublishCidoc extends ViewsBulkOperationsActionBase {
    * {@inheritdoc}
    */
   public function execute($entity = NULL) {
-    $entity->setPublished(TRUE);
+    $entity->setPublished();
     $entity->save();
     return $this->t('Published @label', ['@label' => $entity->label()]);
   }

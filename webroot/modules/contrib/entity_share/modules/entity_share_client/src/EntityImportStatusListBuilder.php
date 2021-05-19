@@ -132,14 +132,18 @@ class EntityImportStatusListBuilder extends EntityListBuilder {
     $row['entity_uuid'] = $entity->entity_uuid->value;
     $row['entity_id'] = $entity->entity_id->value;
     $row['langcode'] = $this->languageManager->getLanguage($entity->langcode->value)->getName();
-    // Label and link to entity should respect the language.
-    /** @var \Drupal\Core\Entity\ContentEntityInterface $imported_entity_translation */
-    $imported_entity_translation = $imported_entity->getTranslation($entity->langcode->value);
-    try {
-      $row['entity_label'] = $imported_entity_translation->toLink($imported_entity_translation->label());
+    if ($imported_entity) {
+      // Label and link to entity should respect the language.
+      /** @var \Drupal\Core\Entity\ContentEntityInterface $imported_entity_translation */
+      $imported_entity_translation = $imported_entity->getTranslation($entity->langcode->value);
+      try {
+        $row['entity_label'] = $imported_entity_translation->toLink($imported_entity_translation->label());
+      } catch (UndefinedLinkTemplateException $exception) {
+        $row['entity_label'] = $imported_entity_translation->label();
+      }
     }
-    catch (UndefinedLinkTemplateException $exception) {
-      $row['entity_label'] = $imported_entity_translation->label();
+    else {
+      $row['entity_label'] = t('Deleted');
     }
     // Label of entity type.
     $row['entity_type_id'] = $imported_entity_storage->getEntityType()->getLabel();

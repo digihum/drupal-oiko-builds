@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 use Drupal\Core\Config\Entity\ConfigEntityType;
 use Drupal\Core\Entity\ContentEntityType;
+use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\entity_share_client\ClientAuthorization\ClientAuthorizationInterface;
 use Drupal\entity_share_client\Entity\Remote;
@@ -97,3 +98,16 @@ function entity_share_client_update_8201() {
     $remote->save();
   }
 }
+
+/**
+ * Add a 'changed' field to entity_import_status entities.
+ */
+function entity_share_client_update_8303() {
+  $field_storage_definition = BaseFieldDefinition::create('changed')
+    ->setLabel(t('Changed'))
+    ->setDescription(t('The time that the import status was last edited.'));
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('changed', 'entity_import_status', 'entity_share_client', $field_storage_definition);
+}
+
