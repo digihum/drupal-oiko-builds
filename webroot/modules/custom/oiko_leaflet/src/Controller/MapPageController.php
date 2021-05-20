@@ -144,7 +144,7 @@ class MapPageController extends ControllerBase {
    *   Return Hello string.
    */
   public function allEntitiesForMap() {
-    $entities_per_page = 100;
+    $entities_per_page = $this->entitiesPerInternalRestPage();
     $count_of_pages = $this->getCountOfEntityPages($entities_per_page);
 
     // Query for all these pages from cache.
@@ -175,9 +175,9 @@ class MapPageController extends ControllerBase {
       // Merge in the data for rendering.
       $data['features'] = array_merge($data['features'], $this_page['data']['features']);
 
-      // If we have been executing for more than 2 seconds, redirect.
-      if (Timer::read('entityPageGeneration') > 2000) {
-        return new RedirectResponse(Url::fromRoute('oiko_leaflet.map_page_controller_allEntities')->toString(), 307);
+      // If we have been executing for more than 10 seconds, redirect.
+      if (Timer::read('entityPageGeneration') > 10000) {
+        return new RedirectResponse(Url::fromRoute('oiko_leaflet.map_page_controller_allEntities')->toString(), 307, ['X-Oiko-Cache-Pages-Left-To-Generate' => count($uncached_cids)]);
       }
     }
 
@@ -188,6 +188,39 @@ class MapPageController extends ControllerBase {
 
     $response = new JsonResponse($data);
     return $response;
+  }
+
+  protected function entitiesPerInternalRestPage() {
+    return 200;
+  }
+
+  /**
+   * Sometimes the pages aren't generated, so give things a little helping hand.
+   */
+  public function computePagesOnCron() {
+    $entities_per_page = $this->entitiesPerInternalRestPage();
+    $count_of_pages = $this->getCountOfEntityPages($entities_per_page);
+
+    // Query for all these pages from cache.
+    $pages = range(0, $count_of_pages - 1);
+    $cids = array_combine(array_map(function ($num) use ($entities_per_page) {
+      return 'oiko_leaflet:MapPageController:allEntitiesForMap:' . $entities_per_page . ':' . $num;
+    }, $pages), $pages);
+    $uncached_cids = array_keys($cids);
+    $this->cacheBin->getMultiple($uncached_cids);
+
+    // If we have multiple threads regenerating these pages we don't mind them doing it in parallel, but we might as well get them to rebuild the pages in a random order so that hopefully they can complete some different pages each before redirecting and then spotting that the other thread has done some work too.
+    shuffle($uncached_cids);
+
+    // If there are uncached pages: compute those now.
+    while (!empty($uncached_cids)) {
+      $cid = array_shift($uncached_cids);
+      $page = $cids[$cid];
+
+      $this_page = $this->getEntityDataForSinglePage($page, $entities_per_page);
+      // Store in the cache.
+      $this->cacheBin->set($cid, $this_page['data'], Cache::PERMANENT, $this_page['cacheabilityMetadata']->getCacheTags());
+    }
   }
 
   /**

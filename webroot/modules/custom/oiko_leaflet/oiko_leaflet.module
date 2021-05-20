@@ -5,6 +5,7 @@
  * Intergration with leaflet for the Oiko project.
  */
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\oiko_leaflet\Controller\MapPageController;
 
 /**
  * Implements hook_library_info_alter().
@@ -176,6 +177,15 @@ function oiko_leaflet_entity_extra_field_info() {
  */
 function oiko_leaflet_entity_view_alter(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display) {
   return \Drupal::service('oiko_leaflet.hook_implementations')->entity_view_alter($build, $entity, $display);
+}
+
+/**
+ * Implements hook_cron().
+ */
+function oiko_leaflet_cron() {
+  /* @var MapPageController $map_page_controller */
+  $map_page_controller = \Drupal::classResolver(MapPageController::class);
+  $map_page_controller->computePagesOnCron();
 }
 
 //function oiko_leaflet_add_to_displays() {
