@@ -1,5 +1,5 @@
 import { UPDATE_LOCATION } from './vendor/redux-history';
-import { changeQueryString, fetchQueryStringElements } from './plumbing/querystring-helpers';
+import { fetchQueryStringElements } from './plumbing/querystring-helpers';
 
 import { QUERYSTRING_VARIABLE_SIDEBAR_CIDOC_ENTITY } from './querystring-definitions';
 
@@ -83,42 +83,6 @@ function fetchCidocEntity(id) {
   }
 }
 
-/**
- * Determine if we should fetch the specified CIDOC entity.
- *
- * @param state
- * @param id
- * @returns {boolean}
- */
-function shouldFetchCidocEntity(state, id) {
-  const cidocState = state.cidocEntity;
-  if (!cidocState) {
-    return true
-  }
-  else if (cidocState.isFetching) {
-    return false
-  }
-  else {
-    return cidocState.id != id;
-  }
-}
-
-/**
- * Fetch the given CIDOC entity if we need to.
- *
- * @param id
- * @returns {function(*, *)}
- */
-export function fetchFetchCidocEntityIfNeeded(id) {
-  return (dispatch, getState) => {
-    if (shouldFetchCidocEntity(getState(), id)) {
-      // Dispatch a thunk from thunk!
-      return dispatch(fetchCidocEntity(id))
-    }
-  }
-}
-
-
 function cidoc(state = {
   isFetching: false,
   id: 0
@@ -133,7 +97,7 @@ function cidoc(state = {
       return Object.assign({}, state, {
         isFetching: false,
         lastUpdated: action.failedAt,
-        id: action.id
+        id: null
       });
     case RECEIVE_CIDOC_ENTITY:
       return Object.assign({}, state, {

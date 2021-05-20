@@ -66,7 +66,6 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
     '#pagestate' => TRUE,
   );
 
-
   $variables['js'] = [
     '#attached' => array(
       'library' =>  array(
