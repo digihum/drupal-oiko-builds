@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Site\Settings;
 
 /**
  * Change the base field.
@@ -17,4 +18,18 @@ function medmus_share_update_8101() {
     ->setSetting('target_type', 'remote');
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('remote_website', 'medmus_deleted_remote_entity', 'medmus_share', $storage_definition);
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function medmus_share_requirements($phase) {
+  if ($phase == 'runtime') {
+    $requirements['medmus_share_auto_delete'] = [
+      'title' => t('Medmus Share'),
+      'value' => Settings::get('medmus_share_auto_delete_enabled', FALSE) ? t('Unpublished CIDOC entities that were synced from remote sites and then deleted on those sites will be additionally deleted on this site.') : t('Automatic unpublished CIDOC entity deletion is not enabled. Add <code>$settings[\'medmus_share_auto_delete_enabled\'] = TRUE;</code> to settings.php to enable.'),
+      'severity' => REQUIREMENT_INFO,
+    ];
+    return $requirements;
+  }
 }

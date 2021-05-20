@@ -1,6 +1,5 @@
 <?php
 
-use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\medmus_share\Utility\MedmusShareEntityDeleteHandler;
 use Drupal\medmus_share\Utility\MedmusShareRemoteEntityStatusAutomatedActions;
 use Drupal\medmus_share\Utility\MedmusShareRemoteEntityStatusFetcher;
