@@ -278,6 +278,14 @@ $button-sizes: (
         large: 1.25rem,
 );
 
+// Switch
+// ------------------
+$switch-background: transparent;
+$switch-radius: 5px;
+$switch-paddle-background: palette(oikoblue);
+$switch-background-active: transparent;
+$switch-margin: 0;
+
 // Tabs
 // ------------------
 $tab-item-font-size: rem-calc(20);

@@ -55,10 +55,16 @@
               Drupal.oiko.openSidebar(id);
             }
           });
+          $(context).find('.js-sidebar__expand').once('js-sidebar__expand').each(function () {
+            $(this).on('change', function() {
+              $content.toggleClass('sidebar--very-expanded', $('input[type="checkbox"]', this).is(':checked'));
+            });
+          });
         }
       });
     }
   };
+
 
   Drupal.oiko.openSidebar = function (id) {
     // Open the sidebar.

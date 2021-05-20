@@ -97,7 +97,7 @@
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 
-  padding: 20px;
+  padding: 30px 20px 20px;
 
   @media screen and (orientation: landscape) {
     .showing-map & {
@@ -115,18 +115,35 @@
     background: palette(oikocream);
   }
 
+  &.sidebar--very-expanded {
+    width: 100%;
+  }
+
   .sidebar-pane {
     display: none;
     position: relative;
     .close-button {
       right: -12px;
-      top: -20px;
+      top: -30px;
       @include to('s') {
         position: relative;
         right: 10px;
         top: 0;
         text-align: right;
       }
+    }
+
+    .sidebar__expand {
+      position: absolute;
+      right: 12px;
+      top: -22px;
+      z-index: 1;
+      //@include to('s') {
+      //  position: relative;
+      //  right: 10px;
+      //  top: 0;
+      //  text-align: right;
+      //}
     }
 
     @include to('s') {
@@ -174,4 +191,29 @@
       flex-basis: 1px;
     }
   }
+}
+
+.switch input:checked ~ .switch-paddle::after {
+  background: palette(oikotan);
+}
+.switch {
+  color: $body-font-color;
+  font-weight: normal;
+}
+
+.switch-paddle {
+  border: 1px $body-font-color solid;
+  &::after {
+    top: 0.2rem;
+    border-radius: 3px;
+  }
+}
+
+$switch-wide-extra-width: 5rem;
+.switch.tiny.switch--wide .switch-paddle {
+  width: $switch-wide-extra-width;
+}
+
+.switch.tiny.switch--wide input:checked ~ .switch-paddle::after {
+  left: ($switch-wide-extra-width - 3rem) + 1.65rem;
 }

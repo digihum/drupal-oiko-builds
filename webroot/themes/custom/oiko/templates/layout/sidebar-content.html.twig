@@ -9,6 +9,14 @@
     {{ page.sidebar_legend }}
   </div>
   <div class="sidebar-pane with-padding" data-pane-id="information">
+    <div class="sidebar__expand switch tiny switch--wide js-sidebar__expand">
+      <input class="switch-input" id="exampleSwitch" type="checkbox" name="exampleSwitch">
+      <label class="switch-paddle" for="exampleSwitch">
+        <span class="show-for-sr">Set sidebar width to: </span>
+        <span class="switch-active" aria-hidden="true">Collapse</span>
+        <span class="switch-inactive" aria-hidden="true">Expand</span>
+      </label>
+    </div>
     <div class="sidebar-close close-button"><span aria-hidden="true">&times;</span></div>
     <div class="sidebar-information-content-content"></div>
   </div>
