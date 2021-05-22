@@ -4,7 +4,12 @@ namespace Drupal\oiko_leaflet\Plugin\Block;
 
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\oiko_leaflet\ItemColorInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a 'MapLegendBlock' block.
@@ -14,8 +19,41 @@ use Drupal\Core\Form\FormStateInterface;
  *  admin_label = @Translation("Map legend block"),
  * )
  */
-class MapLegendBlock extends BlockBase {
+class MapLegendBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
+
+  /**
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
+  protected $eventTypeStorage;
+
+  /**
+   * @var \Drupal\oiko_leaflet\ItemColorInterface
+   */
+  protected $colorizer;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static($configuration, $plugin_id, $plugin_definition,
+      $container->get('renderer'),
+      $container->get('entity_type.manager'),
+      $container->get('oiko_leaflet.item_color')
+    );
+  }
+
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, RendererInterface $renderer, EntityTypeManagerInterface $entity_type_manager, ItemColorInterface $colorizer) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->renderer = $renderer;
+    $this->eventTypeStorage = $entity_type_manager->getStorage('taxonomy_term');
+    $this->colorizer = $colorizer;
+  }
 
   /**
    * {@inheritdoc}
@@ -105,47 +143,73 @@ class MapLegendBlock extends BlockBase {
 
     $list_items = [];
 
-    $renderer = \Drupal::service('renderer');
+    $renderer = $this->renderer;
 
-    $terms = \Drupal::entityManager()->getStorage('taxonomy_term')->loadByProperties(array('vid' => 'event_types'));
+    // @TODO: Decide if this should actually filter by Entity Class if colored by it.
+    $terms = $this->eventTypeStorage->loadByProperties(array('vid' => 'event_types'));
+    $show_icons = $this->colorizer->getColorSystem() == ItemColorInterface::COLOR_SYSTEM_PRIMARY_HISTORICAL_SIGNIFICANCE;
     if ($terms) {
       foreach ($terms as $term) {
-        if ($color = $term->field_icon_color->value) {
-          if (isset($icons[$color])) {
-            $image = [
-              '#theme' => 'image',
-              '#uri' => $icons[$color],
-              '#alt' => $this->t('A @type marker', ['@type' => $term->label()]),
-            ];
-            $renderer->addCacheableDependency($image, $term);
+        if ($show_icons) {
+          if ($color = $term->field_icon_color->value) {
+            if (isset($icons[$color])) {
+              $image = [
+                '#theme' => 'image',
+                '#uri' => $icons[$color],
+                '#alt' => $this->t('A @type marker', ['@type' => $term->label()]),
+              ];
+              $renderer->addCacheableDependency($image, $term);
 
-            $list_items[] = [
-              '#markup' => $this->t('@image&nbsp;&nbsp;@name', [
-                '@name' => $term->label(),
-                '@image' => $renderer->render($image),
-              ]),
-              '#wrapper_attributes' => [
-                'data-legend-category' => $term->id(),
-              ],
-            ];
+              $list_items[] = [
+                '#markup' => $this->t('@image&nbsp;&nbsp;@name', [
+                  '@name' => $term->label(),
+                  '@image' => $renderer->render($image),
+                ]),
+                '#wrapper_attributes' => [
+                  'data-legend-category' => $term->id(),
+                ],
+              ];
+            }
           }
+        }
+        else {
+          $list_items[] = [
+            '#markup' => $this->t('@name', [
+              '@name' => $term->label(),
+            ]),
+            '#wrapper_attributes' => [
+              'data-legend-category' => $term->id(),
+            ],
+          ];
         }
       }
     }
 
-    $image = [
-      '#theme' => 'image',
-      '#uri' => $icons['blue'],
-    ];
-    $list_items[] = [
-      '#markup' => $this->t('@image&nbsp;&nbsp;@name', [
-        '@name' => t('Other'),
-        '@image' => $renderer->render($image),
-      ]),
-      '#wrapper_attributes' => [
-        'data-legend-category' => 0,
-      ],
-    ];
+    if ($show_icons) {
+      $image = [
+        '#theme' => 'image',
+        '#uri' => $icons['blue'],
+      ];
+      $list_items[] = [
+        '#markup' => $this->t('@image&nbsp;&nbsp;@name', [
+          '@name' => t('Other'),
+          '@image' => $renderer->render($image),
+        ]),
+        '#wrapper_attributes' => [
+          'data-legend-category' => 0,
+        ],
+      ];
+    }
+    else {
+      $list_items[] = [
+        '#markup' => $this->t('@name', [
+          '@name' => t('Other'),
+        ]),
+        '#wrapper_attributes' => [
+          'data-legend-category' => 0,
+        ],
+      ];
+    }
 
     if (!empty($list_items)) {
       $build['map_legend_block'] = array(
@@ -163,6 +227,7 @@ class MapLegendBlock extends BlockBase {
           ],
         ],
       );
+      $renderer->addCacheableDependency($build['map_legend_block'], $this->colorizer);
     }
 
 

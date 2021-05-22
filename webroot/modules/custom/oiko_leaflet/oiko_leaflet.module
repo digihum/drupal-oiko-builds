@@ -188,32 +188,33 @@ function oiko_leaflet_cron() {
   $map_page_controller->computePagesOnCron();
 }
 
-//function oiko_leaflet_add_to_displays() {
-//  $entity_type = 'cidoc_entity';
-//  $bundles = entity_get_bundles($entity_type);
-//  foreach ($bundles as $bundle => $bundle_info) {
-//    $display = entity_get_display($entity_type, $bundle, 'popup');
-//    // We need to ensure there's a field group.
-//    $display->setThirdPartySetting('field_group', 'group_map', [
-//      'children' => ['map_link'],
-//      'parent_name' => '',
-//      'weight' => 20,
-//      'format_type' => 'html_element',
-//      'label' => '<span class="fa fa-map">&nbsp;&nbsp;</span>Map',
-//      'format_settings' => [
-//        'element' => 'div',
-//        'show_label' => true,
-//        'label_element' => 'h3',
-//        'attributes' => '',
-//        'effect' => 'none',
-//        'speed' => 'fast',
-//        'id' => '',
-//        'classes' => '',
-//      ],
-//    ]);
-//    $display->setComponent('map_link');
-//    $display->save();
-//  }
-//
-//
-//}
+/**
+ * Implements hook_form_cidoc_entity_bundle_edit_form_alter().
+ */
+function oiko_leaflet_form_cidoc_entity_bundle_edit_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $bundle = $form_state->getFormObject()->getEntity();
+
+  $form['oiko_leaflet_item_color'] = array(
+    '#type' => 'select',
+    '#title' => t('Marker color'),
+    '#default_value' => $bundle->getThirdPartySetting('oiko_leaflet', 'item_color', ''),
+    '#options' => \Drupal\oiko_leaflet\ItemColorInterface::ITEM_COLORS,
+    '#empty_option' => t('Default (blue)'),
+    '#access' => \Drupal::service('oiko_leaflet.item_color')->getColorSystem() == \Drupal\oiko_leaflet\ItemColorInterface::COLOR_SYSTEM_CIDOC_ENTITY_CLASS,
+    '#description' => t('Optionally specify the color markers and interface elements should be if they are of this entity type'),
+  );
+
+  $form['#entity_builders'][] = 'oiko_leaflet_cidoc_entity_bundle_edit_form_entity_builder';
+}
+
+/**
+ * Set our third party settings on the config entity.
+ */
+function oiko_leaflet_cidoc_entity_bundle_edit_form_entity_builder($entity_type, \Drupal\cidoc\Entity\CidocEntityBundle $type, &$form, FormStateInterface $form_state) {
+  if (!empty($form_state->getValue('oiko_leaflet_item_color'))) {
+    $type->setThirdPartySetting('oiko_leaflet', 'item_color', $form_state->getValue('oiko_leaflet_item_color'));
+  }
+  else {
+    $type->unsetThirdPartySetting('oiko_leaflet', 'item_color');
+  }
+}

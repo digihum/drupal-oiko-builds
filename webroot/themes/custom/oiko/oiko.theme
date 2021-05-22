@@ -97,11 +97,13 @@ function oiko_preprocess_taxonomy_term(&$variables) {
 
   if ($view_mode == 'primary_historical_significance_pill') {
     $variables['attributes']['class'][] = 'category-label';
-    if ($color = $term->field_icon_color->getValue()[0]['value']) {
-      $variables['attributes']['class'][] = 'category-label--' . $color;
-    }
-    else {
-      $variables['attributes']['class'][] = 'category-label--blue';
+    if (\Drupal::service('oiko_leaflet.item_color')->getColorSystem() == \Drupal\oiko_leaflet\ItemColorInterface::COLOR_SYSTEM_PRIMARY_HISTORICAL_SIGNIFICANCE) {
+      if ($color = $term->field_icon_color->getValue()[0]['value']) {
+        $variables['attributes']['class'][] = 'category-label--' . $color;
+      }
+      else {
+        $variables['attributes']['class'][] = 'category-label--blue';
+      }
     }
   }
 }

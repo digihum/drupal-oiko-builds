@@ -1,3 +1,6 @@
 services:
   oiko_leaflet.hook_implementations:
     class: Drupal\oiko_leaflet\OikoLeafletHookImplementations
+  oiko_leaflet.item_color:
+    class: Drupal\oiko_leaflet\ItemColor
+    arguments: ['@config.factory']

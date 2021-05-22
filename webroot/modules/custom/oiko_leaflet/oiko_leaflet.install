@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * Set a default color system.
+ */
+function oiko_leaflet_update_8100(&$sandbox) {
+  $config = \Drupal::configFactory()->getEditable('oiko_leaflet.settings');
+  $config->set('color_system', \Drupal\oiko_leaflet\ItemColorInterface::COLOR_SYSTEM_PRIMARY_HISTORICAL_SIGNIFICANCE);
+  $config->save();
+}

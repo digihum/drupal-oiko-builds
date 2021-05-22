@@ -4,3 +4,4 @@ services:
 
   oiko_timeline.helpers:
     class: Drupal\oiko_timeline\OikoTimelineHelpers
+    arguments: ['@oiko_leaflet.item_color']

@@ -2,7 +2,23 @@
 
 namespace Drupal\oiko_timeline;
 
+use Drupal\cidoc\Entity\CidocEntity;
+
 class OikoTimelineHelpers implements OikoTimelineHelpersInterface {
+
+  /**
+   * @var \Drupal\oiko_leaflet\ItemColorInterface
+   */
+  protected $colorizer;
+
+  /**
+   * OikoTimelineHelpers constructor.
+   *
+   * @param \Drupal\oiko_leaflet\ItemColorInterface $colorizer
+   */
+  public function __construct(\Drupal\oiko_leaflet\ItemColorInterface $colorizer) {
+    $this->colorizer = $colorizer;
+  }
 
   /**
    * @param $events
@@ -19,16 +35,9 @@ class OikoTimelineHelpers implements OikoTimelineHelpersInterface {
       if (isset($temporal['minmin']) || isset($temporal['maxmax'])) {
         if ($significance = $event->significance->entity) {
           $significance_id = $significance->id();
-          if ($color = $significance->field_icon_color->getValue()[0]['value']) {
-            $event_color = $color;
-          }
-          else {
-            $event_color = 'blue';
-          }
         }
         else {
           $significance_id = 0;
-          $event_color = 'blue';
         }
 
         $events_uri = $event->toUrl()->toString(TRUE);
@@ -42,7 +51,7 @@ class OikoTimelineHelpers implements OikoTimelineHelpersInterface {
           'date_title' => $temporal['human'],
           'minmin' => $temporal['minmin'],
           'maxmax' => $temporal['maxmax'],
-          'color' => $event_color,
+          'color' => $this->colorizer->getColorForCidocEvent($event),
           'significance' => $significance_id,
         ];
       }

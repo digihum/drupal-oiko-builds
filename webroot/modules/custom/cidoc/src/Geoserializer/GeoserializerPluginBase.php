@@ -3,11 +3,38 @@
 namespace Drupal\cidoc\Geoserializer;
 
 use Drupal\cidoc\CidocEntityInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
+use Drupal\oiko_leaflet\ItemColorInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class GeoserializerPluginBase extends PluginBase implements GeoserializerInterface {
 
-  // Here, provide default implementations for all methods of the interface (for which it makes sense).
+  /**
+   * @var \Drupal\oiko_leaflet\ItemColorInterface
+   */
+  protected $colorizer;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, \Drupal\oiko_leaflet\ItemColorInterface $colorizer) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->colorizer = $colorizer;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('oiko_leaflet.item_color')
+    );
+  }
 
   public function getPluginName() {
     return $this->pluginDefinition['name'];
@@ -16,19 +43,19 @@ abstract class GeoserializerPluginBase extends PluginBase implements Geoserializ
   protected function addCommonPointValues(array $point, CidocEntityInterface $entity) {
     $point['label'] = $entity->getName();
     $point['id'] = $entity->id();
+    $point['color'] = $this->colorizer->getColorForCidocEvent($entity);
 
     if ($significance = $entity->significance->entity) {
       $entity->addCacheableDependency($significance);
       $point['significance_id'] = $significance->id();
       $point['significance'] = $significance->label();
-      // Convert cultural significance to color.
-      if ($color = $significance->field_icon_color->getValue()[0]['value']) {
-        $point['color'] = $color;
+      if ($this->colorizer->getColorSystem($entity) == ItemColorInterface::COLOR_SYSTEM_PRIMARY_HISTORICAL_SIGNIFICANCE) {
+        $label = '<div class="category-label category-label--@color">@category</div> <em>@entity_type</em>: @label';
       }
       else {
-        $point['color'] = 'blue';
+        $label = '<em>@category</em> <div class="category-label category-label--@color">@entity_type</div>: @label';
       }
-      $point['popup'] = $this->t('<div class="category-label category-label--@color">@category</div> <em>@entity_type</em>: @label', array(
+      $point['popup'] = $this->t($label, array(
         '@category' => $point['significance'],
         '@entity_type' => $entity->getFriendlyLabel(),
         '@label' => $entity->getName(),
@@ -36,9 +63,10 @@ abstract class GeoserializerPluginBase extends PluginBase implements Geoserializ
       ));
     }
     else {
-      $point['popup'] = $this->t('<em>@entity_type</em>: @label', array(
+      $point['popup'] = $this->t('<div class="category-label category-label--@color">@entity_type</div>: @label', array(
         '@entity_type' => $entity->getFriendlyLabel(),
         '@label' => $entity->getName(),
+        '@color' => $point['color'],
       ));
     }
 

@@ -43,15 +43,4 @@ class Event extends GeoserializerPluginBase {
     return $this->addTemporalDataToPoints($points, $entity);
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition
-    );
-  }
-
 }

@@ -5,6 +5,7 @@ namespace Drupal\oiko_leaflet\Form;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\oiko_leaflet\ItemColorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -69,6 +70,18 @@ class LeafletSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Powered by <a href="http://leafletjs.com/">Leaflet</a> and <a href="https://www.mapbox.com/">Mapbox</a>. Map base by <a title="Ancient World Mapping Center (UNC-CH)" href="http://awmc.unc.edu">AWMC</a>, 2014 (cc-by-nc).'),
     );
 
+    $form['color_system'] = array(
+      '#title' => $this->t('Color system'),
+      '#type' => 'radios',
+      '#default_value' => $config->get('color_system'),
+      '#required' => TRUE,
+      '#options' => [
+        ItemColorInterface::COLOR_SYSTEM_PRIMARY_HISTORICAL_SIGNIFICANCE => $this->t('Primary Historical Significance'),
+        ItemColorInterface::COLOR_SYSTEM_CIDOC_ENTITY_CLASS => $this->t('CIDOC Entity Class'),
+      ],
+      '#description' => $this->t('Various interface elements are colored automatically by the system. You may select what property of the entity data they are coloured by.')
+    );
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -88,6 +101,7 @@ class LeafletSettingsForm extends ConfigFormBase {
     $this->config('oiko_leaflet.settings')
       ->set('url_template', $form_state->getValue('url_template'))
       ->set('attribution', $form_state->getValue('attribution'))
+      ->set('color_system', $form_state->getValue('color_system'))
       ->save();
   }
 

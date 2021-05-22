@@ -8,3 +8,14 @@ oiko_leaflet.settings:
     attribution:
       type: text
       label: 'Attribution'
+    color_system:
+      type: string
+      label: 'Color System'
+
+cidoc.cidoc_entity_bundle.*.third_party.oiko_leaflet:
+  type: mapping
+  label: 'Oiko leaflet settings'
+  mapping:
+    icon_color:
+      type: string
+      label: 'Icon color'
