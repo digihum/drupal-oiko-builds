@@ -90,7 +90,7 @@
       var icon = new L.Icon({
         iconUrl: drupalSettings.leaflet_icons[iconcolor],
         iconSize: [25, 40],
-        iconAnchor:   [13, 39],
+        iconAnchor: [13, 39],
         shadowUrl: drupalSettings.leaflet_icons['shadow'],
         shadowSize: [41, 41]
       });

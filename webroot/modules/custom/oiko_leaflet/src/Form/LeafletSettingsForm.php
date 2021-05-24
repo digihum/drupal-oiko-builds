@@ -2,6 +2,8 @@
 
 namespace Drupal\oiko_leaflet\Form;
 
+use Drupal\cidoc\Entity\CidocEntityBundle;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -15,18 +17,30 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class LeafletSettingsForm extends ConfigFormBase {
 
+  /**
+   * The cidoc entity type storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
+  protected $cidocEntityTypeStorage;
+
+  /**
+   * LeafletSettingsForm constructor.
+   */
   public function __construct(
-    ConfigFactoryInterface $config_factory
+    ConfigFactoryInterface $config_factory,
+    EntityStorageInterface $cidocEntityTypeStorage
     ) {
     parent::__construct($config_factory);
+    $this->cidocEntityTypeStorage = $cidocEntityTypeStorage;
   }
 
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('config.factory')
+      $container->get('config.factory'),
+      $container->get('entity_type.manager')->getStorage('cidoc_entity_bundle')
     );
   }
-
 
   /**
    * {@inheritdoc}
@@ -82,6 +96,33 @@ class LeafletSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Various interface elements are colored automatically by the system. You may select what property of the entity data they are coloured by.')
     );
 
+    // Allow specifying the colors of the CIDOC entites.
+    $form['cidoc_classes'] = array(
+      '#type' => 'fieldset',
+      '#title' => $this->t('CIDOC Entity class colors'),
+      '#tree' => TRUE,
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+      '#states' => [
+        'visible' => [
+          ':input[name="color_system"]' => ['value' => ItemColorInterface::COLOR_SYSTEM_CIDOC_ENTITY_CLASS],
+        ],
+      ],
+    );
+
+    $cidoc_classes = $this->cidocEntityTypeStorage->loadMultiple(NULL);
+    uasort($cidoc_classes, ['\Drupal\cidoc\Entity\CidocEntityBundle', 'sort']);
+    foreach ($cidoc_classes as $id => $cidoc_class) {
+      $form['cidoc_classes'][$id] = array(
+        '#type' => 'select',
+        '#title' => $cidoc_class->label(),
+        '#default_value' => $cidoc_class->getThirdPartySetting('oiko_leaflet', 'item_color', ''),
+        '#options' => \Drupal\oiko_leaflet\ItemColorInterface::ITEM_COLORS,
+        '#empty_option' => t('Default (blue)'),
+        '#description' => t('Optionally specify the color markers and interface elements should be if they are @type', ['@type' => $cidoc_class->label()]),
+      );
+    }
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -103,6 +144,20 @@ class LeafletSettingsForm extends ConfigFormBase {
       ->set('attribution', $form_state->getValue('attribution'))
       ->set('color_system', $form_state->getValue('color_system'))
       ->save();
+
+    // Now save all the colors.
+    $all_classes = $cidoc_classes = $this->cidocEntityTypeStorage->loadMultiple(NULL);
+    foreach ($form_state->getValue('cidoc_classes') as $class => $color) {
+      if (isset($all_classes[$class])) {
+        if (!empty($color)) {
+          $all_classes[$class]->setThirdPartySetting('oiko_leaflet', 'item_color', $color);
+        }
+        else {
+          $all_classes[$class]->unsetThirdPartySetting('oiko_leaflet', 'item_color');
+        }
+        $all_classes[$class]->save();
+      }
+    }
   }
 
 }
