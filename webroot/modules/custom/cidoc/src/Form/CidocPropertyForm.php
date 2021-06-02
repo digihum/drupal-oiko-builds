@@ -47,21 +47,10 @@ class CidocPropertyForm extends EntityForm {
 
     // See if data already exists for this property. If so, prevent changes to
     // the endpoint settings.
-    $has_data_range = [];
-    $has_data_domain = [];
-    foreach (\Drupal::service('entity_type.bundle.info')->getBundleInfo('cidoc_entity') as $bundle_id => $v) {
-      $has_data_range[$bundle_id] = (bool) \Drupal::entityQuery('cidoc_reference')
-        ->condition('property', $cidoc_property->id())
-        ->condition('range.entity:cidoc_entity.bundle', $bundle_id)
-        ->count()
-        ->execute();
-      $has_data_domain[$bundle_id] = (bool) \Drupal::entityQuery('cidoc_reference')
-        ->condition('property', $cidoc_property->id())
-        ->condition('domain.entity:cidoc_entity.bundle', $bundle_id)
-        ->count()
-        ->execute();
-    }
-    $has_data = !empty(array_keys(array_filter($has_data_domain))) || !empty(array_keys(array_filter($has_data_range)));
+    $has_data = (bool) \Drupal::entityQuery('cidoc_reference')
+      ->condition('property', $cidoc_property->id())
+      ->count()
+      ->execute();
 
     $form['bidirectional'] = array(
       '#title' => $this->t('Bi-directional'),
@@ -129,16 +118,13 @@ class CidocPropertyForm extends EntityForm {
       '#title' => $this->t('Domain classes'),
       '#options' => $options_bundles,
       '#default_value' => $domain_bundles,
+      '#disabled' => $has_data,
       '#attributes' => array(
         'class' => array('cidoc-property-form-composite-column'),
       ),
     );
-    foreach (array_keys(array_filter($has_data_domain)) as $bundle_id) {
-      $form['endpoints']['domain_bundles'][$bundle_id]['#disabled'] = TRUE;
-    }
-
     if ($has_data) {
-      $existing_data_warning = '<div class="messages messages--warning">' . $this->t('There is data for this property in the database. Some endpoint class restriction settings can no longer be changed.') . '</div>';
+      $existing_data_warning = '<div class="messages messages--warning">' . $this->t('There is data for this property in the database. The endpoint class restriction settings can no longer be changed.') . '</div>';
       if ($cidoc_property->bidirectional) {
         $form['bidirectional']['#prefix'] = $existing_data_warning;
       }
@@ -156,6 +142,7 @@ class CidocPropertyForm extends EntityForm {
       '#title' => $this->t('Range classes'),
       '#options' => $options_bundles,
       '#default_value' => $range_bundles,
+      '#disabled' => $has_data,
       '#attributes' => array(
         'class' => array('cidoc-property-form-composite-column'),
       ),
@@ -165,10 +152,6 @@ class CidocPropertyForm extends EntityForm {
         ),
       ),
     );
-
-    foreach (array_keys(array_filter($has_data_range)) as $bundle_id) {
-      $form['endpoints']['range_bundles'][$bundle_id]['#disabled'] = TRUE;
-    }
 
     $form['endpoints']['editability'] = array(
       '#type' => 'checkboxes',
