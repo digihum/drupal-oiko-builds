@@ -43,7 +43,13 @@ class CidocEntityViewBuilder extends EntityViewBuilder {
                  CidocProperty::RANGE_ENDPOINT => TRUE
                ) as $source_field => $reverse) {
         if ($grouped_references = $entity->getReferences(NULL, $reverse)) {
+          /* @var CidocProperty[] $property_definitions */
+          $property_definitions = CidocProperty::loadMultiple(array_keys($grouped_references));
           foreach ($grouped_references as $property => $references) {
+            // If this is a bidirectional property, no need to render the reverse.
+            if ($property_definitions[$property]->isBidirectional() && $reverse) {
+              continue;
+            }
             if ($displays[$entity->bundle()]->getComponent('cidoc_properties:' . $source_field . ':' . $property)) {
               $build[$id]['cidoc_properties:' . $source_field . ':' . $property] = $view_builder->viewMultiple($references, $source_field);
             }
@@ -58,7 +64,13 @@ class CidocEntityViewBuilder extends EntityViewBuilder {
                    CidocProperty::RANGE_ENDPOINT => TRUE
                  ) as $source_field => $reverse) {
           if ($grouped_references = $entity->getReferences(NULL, $reverse)) {
+            /* @var CidocProperty[] $property_definitions */
+            $property_definitions = CidocProperty::loadMultiple(array_keys($grouped_references));
             foreach ($grouped_references as $property => $references) {
+              // If this is a bidirectional property, no need to render the reverse.
+              if ($property_definitions[$property]->isBidirectional() && $reverse) {
+                continue;
+              }
               $build[$id]['cidoc_properties'][$source_field . ':' . $property] = $view_builder->viewMultiple($references, $source_field);
             }
           }
@@ -119,7 +131,7 @@ class CidocEntityViewBuilder extends EntityViewBuilder {
           ],
         ];
       }
-      
+
     }
   }
 
