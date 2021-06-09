@@ -476,14 +476,13 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
     $entities = [];
     if (!empty($references)) {
       foreach (\Drupal::entityTypeManager()->getStorage('cidoc_reference')->loadMultiple($references) as $reference) {
-        /** @var CidocReference $domain */
         $domain_entity_id = $reference->getDomain();
         if ($loaded) {
           $e = \Drupal::entityTypeManager()->getStorage('cidoc_entity')->load($domain_entity_id);
           $entities[$domain_entity_id] = $e;
         }
         else {
-          $entities[$domain_entity_id] = $domain;
+          $entities[$domain_entity_id] = $domain_entity_id;
         }
 
       }
@@ -513,14 +512,13 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
     $entities = [];
     if (!empty($references)) {
       foreach (\Drupal::entityTypeManager()->getStorage('cidoc_reference')->loadMultiple($references) as $reference) {
-        /** @var CidocReference $domain */
         $range_entity_id = $reference->getRange();
         if ($loaded) {
           $e = \Drupal::entityTypeManager()->getStorage('cidoc_entity')->load($range_entity_id);
           $entities[$range_entity_id] = $e;
         }
         else {
-          $entities[$range_entity_id] = $domain;
+          $entities[$range_entity_id] = $range_entity_id;
         }
 
       }

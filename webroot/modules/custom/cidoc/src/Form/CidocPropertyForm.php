@@ -134,7 +134,9 @@ class CidocPropertyForm extends EntityForm {
       ),
     );
     foreach (array_keys(array_filter($has_data_domain)) as $bundle_id) {
+      // Hide the actual checkbox, so that the value isn't lost on submission.
       $form['endpoints']['domain_bundles'][$bundle_id]['#disabled'] = TRUE;
+      $form['endpoints']['domain_bundles'][$bundle_id]['#default_value'] = $bundle_id;
     }
 
     if ($has_data) {
@@ -165,9 +167,9 @@ class CidocPropertyForm extends EntityForm {
         ),
       ),
     );
-
     foreach (array_keys(array_filter($has_data_range)) as $bundle_id) {
       $form['endpoints']['range_bundles'][$bundle_id]['#disabled'] = TRUE;
+      $form['endpoints']['range_bundles'][$bundle_id]['#default_value'] = $bundle_id;
     }
 
     $form['endpoints']['editability'] = array(

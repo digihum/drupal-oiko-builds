@@ -10,7 +10,7 @@
       $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
         var id;
         if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search) {
-          if (feature.hasOwnProperty('id') && feature.id) {
+          if (feature.hasOwnProperty('id') && feature.id && typeof feature.exclude_from_temporal_layer == 'undefined') {
             id = parseInt(feature.id, 10);
             if (feature.hasOwnProperty('lat') && feature.hasOwnProperty('lon')) {
               featureCache[feature.id] = {

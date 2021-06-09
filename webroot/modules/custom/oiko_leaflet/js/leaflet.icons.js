@@ -10,6 +10,10 @@
         var icon = this.create_icon_with_color(marker.color);
         lMarker = new L.Marker(latLng, {icon: icon});
       }
+      else if (marker.hasOwnProperty('markerClass') && marker.markerClass) {
+        var icon = this.create_div_icon(marker);
+        lMarker = new L.Marker(latLng, {icon: icon});
+      }
       else {
         lMarker = new L.Marker(latLng);
       }
@@ -32,6 +36,9 @@
 
         case 'yellow':
           return '#CCC344';
+
+        case 'deepblue':
+          return '#0067A3';
 
         case 'blue':
         default:
@@ -93,6 +100,18 @@
         iconAnchor: [13, 39],
         shadowUrl: drupalSettings.leaflet_icons['shadow'],
         shadowSize: [41, 41]
+      });
+
+      return icon;
+    };
+
+    drupalLeaflet.create_div_icon = function (marker) {
+
+      var icon = L.divIcon({
+        className: marker.markerClass,
+        html: '<i class=\'fa fa-music awesome\'>',
+        iconSize: [30, 30],
+        iconAnchor: [15, 15],
       });
 
       return icon;

@@ -189,6 +189,9 @@
       case 'geometrycollection':
         lFeature = this.create_collection(feature);
         break;
+      case 'circle':
+        lFeature = this.create_circle(feature);
+        break;
       default:
         return; // Crash and burn.
     }
@@ -323,6 +326,18 @@
       layers.addLayer(this.create_feature(collection.component[x]));
     }
     return layers;
+  };
+
+  Drupal.Leaflet.prototype.create_circle = function (marker) {
+    var latLng = new L.LatLng(marker.lat, marker.lon);
+    this.bounds.push(latLng);
+    var lMarker;
+
+    lMarker = new L.circle(latLng, {radius: marker.radius});
+    if (typeof marker.style != 'undefined') {
+      lMarker.setStyle(marker.style);
+    }
+    return lMarker;
   };
 
   Drupal.Leaflet.prototype.create_json = function (json) {

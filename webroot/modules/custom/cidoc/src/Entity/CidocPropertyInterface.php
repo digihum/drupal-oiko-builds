@@ -9,4 +9,12 @@ interface CidocPropertyInterface {
   const SubWidgetTypeTime = 'time';
 
   const SubWidgetTypeGeneric = 'generic';
+
+  /**
+   * Is this property bidirectional.
+   *
+   * @return bool
+   */
+  public function isBidirectional();
+
 }

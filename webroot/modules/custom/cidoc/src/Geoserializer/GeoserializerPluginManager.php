@@ -7,7 +7,7 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 
-class GeoserializerPluginManager extends DefaultPluginManager implements FallbackPluginManagerInterface {
+class GeoserializerPluginManager extends DefaultPluginManager implements GeoserializerPluginManagerInterface {
 
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
     parent::__construct('Plugin/cidoc/Geoserializer', $namespaces, $module_handler, 'Drupal\cidoc\Geoserializer\GeoserializerInterface', 'Drupal\cidoc\Annotation\CidocGeoserializer');

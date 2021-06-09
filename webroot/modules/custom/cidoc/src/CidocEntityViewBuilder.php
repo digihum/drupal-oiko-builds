@@ -8,8 +8,6 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityViewBuilder;
 use Drupal\Core\Url;
 use Drupal\oiko_app\Controller\AppPageController;
-use Drupal\oiko_timeline\Controller\ComparativeTimelineController;
-use Drupal\views\Views;
 
 /**
  * View builder handler for Cidoc entities.

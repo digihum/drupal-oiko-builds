@@ -99,7 +99,20 @@ interface CidocEntityInterface extends ContentEntityInterface, EntityChangedInte
    */
   public function getForwardReferences($properties = [], $loaded = TRUE);
 
+  /**
+   * @param array $properties
+   * @param bool $loaded
+   *
+   * @return \Drupal\cidoc\CidocEntityInterface[]|int[]
+   */
   public function getReverseReferencedEntities($properties = [], $loaded = TRUE);
+
+  /**
+   * @param array $properties
+   * @param bool $loaded
+   *
+   * @return \Drupal\cidoc\CidocEntityInterface[]|int[]
+   */
   public function getForwardReferencedEntities($properties = [], $loaded = TRUE);
 
 
