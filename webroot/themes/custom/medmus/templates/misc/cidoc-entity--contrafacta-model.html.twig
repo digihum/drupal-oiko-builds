@@ -1,0 +1,35 @@
+{#
+/**
+ * @file cidoc_entity.html.twig
+ * Default theme implementation to present CIDOC entity data.
+ *
+ * This template is used when viewing CIDOC entity pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_cidoc_entity()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('cidoc_entity') }}>
+    <header>
+      {% if content.contrafacta_details_carried_out_by %}
+      <h3>{{- content.contrafacta_details_carried_out_by -}}</h3>
+      {% endif %}
+      <h2>{{- content.name -}}{% if content['cidoc_properties:domain:pc7_has_music'] %} ♩{% endif %}</h2>
+    </header>
+    <div class="musical-details">
+      <div>
+        <strong>{{ content.internal_name }}</strong>
+        {{ content.contrafacta_details_took_place_at }}
+        {{ content.contrafacta_details_has_time_span }}
+      </div>
+      <div>
+        {{- content|without('name', 'contrafacta_details_carried_out_by', 'contrafacta_details_took_place_at', 'contrafacta_details_has_time_span', 'cidoc_properties:domain:pc7_has_music', 'internal_name') -}}
+      </div>
+    </div>
+</div>

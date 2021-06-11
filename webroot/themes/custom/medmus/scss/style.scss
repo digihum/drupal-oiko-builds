@@ -6,3 +6,53 @@
   text-transform: none;
   margin-bottom: 75px;
 }
+
+.contrafacta-wrapper {
+  margin-bottom: 2em;
+
+  .contrafacta-wrapper__model {
+    margin-left: -1rem;
+    padding-left: 1rem;
+    margin-right: -1rem;
+    padding-right: 1rem;
+    padding-bottom: 1em;
+    border-bottom: 1px solid rgba(48, 48, 47, 0.25);
+    margin-bottom: 1em;
+  }
+
+  .contrafacta-wrapper__detail {
+    margin-bottom: 1.5em;
+  }
+
+  // Make the music icons sit inline.
+  h2 > div {
+    display: inline-block;
+  }
+
+  .musical-details {
+    display: flex;
+    > * {
+      width: 50%;
+    }
+  }
+
+  &:not(.contrafacta-wrapper--details-hidden) {
+    .contrafacta-wrapper__toggler-show-when-hidden {
+      display: none;
+    }
+  }
+  &.contrafacta-wrapper--details-hidden {
+    .contrafacta-wrapper__toggler-show-when-shown,
+    .musical-details {
+      display: none;
+    }
+  }
+
+  .contrafacta-wrapper__toggler {
+    float: right;
+  }
+
+  .cidoc_entity {
+    margin-right: 2rem;
+  }
+}

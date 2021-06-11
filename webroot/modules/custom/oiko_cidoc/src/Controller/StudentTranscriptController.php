@@ -107,7 +107,6 @@ class StudentTranscriptController extends ControllerBase {
       ],
     ];
 
-
     // Timeline of entities.
     $storage = $this->entityTypeManager->getStorage('node');
     $query = $storage->getQuery();

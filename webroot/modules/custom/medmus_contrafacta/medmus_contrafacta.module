@@ -1,0 +1,87 @@
+<?php
+
+use Drupal\Component\Utility\Html;
+
+/**
+ * Prepares variables for views unformatted rows templates.
+ *
+ * Default template: views-view-unformatted.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - view: The view object.
+ *   - rows: An array of row items. Each row is an array of content.
+ */
+function medmus_contrafacta_preprocess_views_view_unformatted(&$variables) {
+  $view = $variables['view'];
+  $rows = $variables['rows'];
+
+  $storage = \Drupal::entityTypeManager()->getStorage('cidoc_entity');
+
+  if ($view->id() == 'contrafacta_page' && $view->current_display == 'expandy_page') {
+    // Loop over all the rows and get the unique values.
+    $model = NULL;
+    $contracfacta = [];
+    foreach ($rows as $row) {
+      if (!empty($row['content']['#row'])) {
+        $model_id = $row['content']['#row']->id;
+        $contracfacta[] = $row['content']['#row']->referenced_cidoc_entity_2_id;
+      }
+    }
+    $contracfacta = array_unique($contracfacta);
+    if (($model = $storage->load($model_id)) && $contracfacta) {
+      // We do not want to render the rows.
+      $variables['rows'] = [];
+      // Change the title.
+      $variables['title'] = [
+        '#theme' => 'medmus_contrafacta_listing',
+        '#model' => $model,
+        '#contrafacta' => $storage->loadMultiple($contracfacta),
+      ];
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function medmus_contrafacta_theme_suggestions_views_view_unformatted(array $variables) {
+  $view = $variables['view'];
+  $suggestions = [];
+  if ($view->id() == 'contrafacta_page' && $view->current_display == 'expandy_page') {
+    // We want a very specific views template for this display.
+    $suggestions[] = 'views_view_unformatted__contrafacta_page__expandy_page';
+  }
+  return $suggestions;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function medmus_contrafacta_theme($existing, $type, $theme, $path) {
+  $hooks = [];
+
+  $hooks['medmus_contrafacta_listing'] = [
+    'variables' => [
+      'model' => NULL,
+      'contrafacta' => NULL,
+    ],
+  ];
+
+  return $hooks;
+}
+
+
+/**
+ * Implements hook_preprocess_medmus_contrafacta_listing().
+ */
+function medmus_contrafacta_preprocess_medmus_contrafacta_listing(&$variables) {
+  $view_builder = \Drupal::entityTypeManager()->getViewBuilder('cidoc_entity');
+  $variables['model_view'] = $view_builder->view($variables['model'], 'contrafacta_model');
+  $variables['contrafacta_view'] = array_map(function ($e) use ($view_builder) {
+    return $view_builder->view($e, 'contrafacta_detail');
+  }, $variables['contrafacta']);
+
+  // Add a unique ID for the foundation toggler stuff.
+  $variables['unique_id'] =  Html::getUniqueId('contrafacta-wrapper-' . $variables['model']->id());
+}

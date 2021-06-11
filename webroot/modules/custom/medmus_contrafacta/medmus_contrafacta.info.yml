@@ -1,0 +1,9 @@
+name: 'Medmus - Contrafacta'
+description: 'Contrafacta query functionality.'
+type: module
+core: 8.x
+dependencies:
+  - cidoc
+  - views
+  - views_delimited_list
+package: Medmus

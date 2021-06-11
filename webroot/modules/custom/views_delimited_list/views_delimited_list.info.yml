@@ -1,0 +1,12 @@
+name: 'Views Delimited List'
+description: 'Displays the results of a view as a delimited text list.'
+dependencies:
+  - 'drupal:views'
+core: 8.x
+package: Views
+type: module
+
+# Information added by Drupal.org packaging script on 2021-05-11
+version: '2.0.0-alpha1'
+project: 'views_delimited_list'
+datestamp: 1620756884
