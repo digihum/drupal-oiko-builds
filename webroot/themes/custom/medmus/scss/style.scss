@@ -1,3 +1,36 @@
+@function luma($c) {
+  $-local-red: red(rgba($c, 1.0));
+  $-local-green: green(rgba($c, 1.0));
+  $-local-blue: blue(rgba($c, 1.0));
+
+  @return (0.2126 * $-local-red  +
+           0.7152 * $-local-green +
+           0.0722 * $-local-blue) / 255;
+}
+
+@function pick-visible-color($bg, $c1, $c2) {
+  $bg-luma: luma($bg);
+  $c1-luma: luma($c1);
+  $c2-luma: luma($c2);
+
+  $c1-diff: abs($bg-luma - $c1-luma);
+  $c2-diff: abs($bg-luma - $c2-luma);
+
+  @if $c1-diff > $c2-diff {
+    @return $c1;
+  } @else {
+    @return $c2;
+  }
+}
+
+@mixin pill($color) {
+  font-size: 85%;
+  background-color: $color;
+  color: pick-visible-color($color, #1b0906, #fefdfd);
+  margin: 0.5em 0.25em;
+  padding: 0.25em 0.5em;
+}
+
 .site-slogan {
   transform: rotate(90deg) translateX(-100%);
   transform-origin: bottom left;
@@ -54,5 +87,16 @@
 
   .cidoc_entity {
     margin-right: 2rem;
+  }
+
+  .contrafacta-wrapper__model-label,
+  .contrafacta-wrapper__contrafacta-label {
+    @include pill(#C0A68E);
+    margin-left: 0;
+    display: inline-block;
+    &[title] {
+      text-decoration: underline dotted;
+    }
+
   }
 }

@@ -84,4 +84,7 @@ function medmus_contrafacta_preprocess_medmus_contrafacta_listing(&$variables) {
 
   // Add a unique ID for the foundation toggler stuff.
   $variables['unique_id'] =  Html::getUniqueId('contrafacta-wrapper-' . $variables['model']->id());
+
+  // Add the correct label.
+  $variables['contrafacta_label'] = \Drupal::translation()->formatPlural(count($variables['contrafacta']), 'Contrafactum', 'Contrafacta');
 }
