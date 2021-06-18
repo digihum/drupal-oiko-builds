@@ -51,10 +51,16 @@
     padding-bottom: 1em;
     border-bottom: 1px solid rgba(48, 48, 47, 0.25);
     margin-bottom: 1em;
+    background-color: transparent !important;
   }
 
   .contrafacta-wrapper__detail {
     margin-bottom: 1.5em;
+    background-color: transparent !important;
+  }
+
+  .contextual-region {
+    background-color: transparent !important;
   }
 
   // Make the music icons sit inline.
@@ -86,16 +92,20 @@
   }
 
   .cidoc_entity {
-    margin-right: 2rem;
+    overflow: hidden;
   }
 
   .contrafacta-wrapper__model-label,
   .contrafacta-wrapper__contrafacta-label {
-    @include pill(#C0A68E);
-    margin-left: 0;
+    float: right;
+    border: 1px solid #1b0906;
+    font-size: 0.825rem;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 0 10px;
     display: inline-block;
     &[title] {
-      text-decoration: underline dotted;
+      text-decoration: underline dotted rgba(#1b0906, 0.5);
     }
 
   }
