@@ -13,6 +13,7 @@ use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityTypeManager;
@@ -238,13 +239,15 @@ class MapPageController extends ControllerBase {
       $storage = $this->entity_type_manager->getStorage('cidoc_entity');
       $query = $storage->getQuery()
         // Query for unpublished entities. Access checking takes care of limiting this to the correct entities.
+        ->accessCheck(TRUE)
         ->condition('status', 0)
         ->sort('id');
 
       \Drupal::moduleHandler()->invokeAll('oiko_app_own_entities_query_alter', [$query]);
 
+      $view_all = Settings::get('oiko_leaflet_map_entities_view_all_unpublished', TRUE);
       // User can view all entities.
-      if ($currentUser->hasPermission('view unpublished cidoc entities')) {
+      if ($view_all && $currentUser->hasPermission('view unpublished cidoc entities')) {
         $query->condition('status', 0);
       }
       else if ($currentUser->hasPermission('view own unpublished cidoc entities')) {
