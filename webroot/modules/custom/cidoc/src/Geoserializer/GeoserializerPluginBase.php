@@ -5,6 +5,7 @@ namespace Drupal\cidoc\Geoserializer;
 use Drupal\cidoc\CidocEntityInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
+use Drupal\Core\Site\Settings;
 use Drupal\oiko_leaflet\ItemColorInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -99,6 +100,21 @@ abstract class GeoserializerPluginBase extends PluginBase implements Geoserializ
       $points = $temporalPoints;
     }
 
+    return $points;
+  }
+
+  /**
+   * An easy way to apply sitewide filtering to data points before returning.
+   *
+   * @param array $points
+   *   The array of data points.
+   */
+  public function filterDataPointsToSiteSettings($points) {
+    if (!Settings::get('cidoc_show_entities_without_temporal_data_on_map', TRUE)) {
+      $points = array_filter($points, function ($point) {
+        return isset($point['temporal']);
+      });
+    }
     return $points;
   }
 

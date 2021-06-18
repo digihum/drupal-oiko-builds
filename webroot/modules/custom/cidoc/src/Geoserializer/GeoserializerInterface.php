@@ -11,4 +11,12 @@ interface GeoserializerInterface extends PluginInspectionInterface, DerivativeIn
 
   public function getGeospatialData(CidocEntityInterface $entity);
 
+  /**
+   * An easy way to apply sitewide filtering to data points before returning.
+   *
+   * @param array $points
+   *   The array of data points.
+   */
+  public function filterDataPointsToSiteSettings($points);
+
 }
