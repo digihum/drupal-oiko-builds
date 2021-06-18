@@ -15,6 +15,7 @@ use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
+use Drupal\user\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityTypeManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -236,32 +237,42 @@ class MapPageController extends ControllerBase {
     // Add some lovely locking.
     $lock_name = 'MapPageController::ownEntitiesForMap::' . $currentUser->id();
     if ($this->lock->acquire($lock_name, 180)) {
-      $storage = $this->entity_type_manager->getStorage('cidoc_entity');
-      $query = $storage->getQuery()
-        // Query for unpublished entities. Access checking takes care of limiting this to the correct entities.
-        ->accessCheck(TRUE)
-        ->condition('status', 0)
-        ->sort('id');
+      if ($currentUser->isAuthenticated()) {
+        $storage = $this->entity_type_manager->getStorage('cidoc_entity');
+        $query = $storage->getQuery()
+          // Query for unpublished entities. Access checking takes care of limiting this to the correct entities.
+          ->accessCheck(TRUE)
+          ->condition('status', 0)
+          ->sort('id');
 
-      \Drupal::moduleHandler()->invokeAll('oiko_app_own_entities_query_alter', [$query]);
+        \Drupal::moduleHandler()
+          ->invokeAll('oiko_app_own_entities_query_alter', [$query]);
+        $user_entity = User::load($currentUser->id());
 
-      $view_all = Settings::get('oiko_leaflet_map_entities_view_all_unpublished', TRUE);
-      // User can view all entities.
-      if ($view_all && $currentUser->hasPermission('view unpublished cidoc entities')) {
-        $query->condition('status', 0);
-      }
-      else if ($currentUser->hasPermission('view own unpublished cidoc entities')) {
-        $query->condition('status', 0);
-        $query->condition('user_id', $currentUser->id());
-      }
+        $view_all = $user_entity->field_show_all_unpublished_entit->value;
+        $view_mine = $user_entity->field_show_my_unpublished_entiti->value;
+        // User can view all entities.
+        if ($view_all && $currentUser->hasPermission('view unpublished cidoc entities')) {
+          $query->condition('status', 0);
+        }
+        elseif ($view_mine && ($currentUser->hasPermission('view own unpublished cidoc entities') || $currentUser->hasPermission('view unpublished cidoc entities'))) {
+          $query->condition('status', 0);
+          $query->condition('user_id', $currentUser->id());
+        }
+        else {
+          // Add a condition that will never be true, since we do not want to
+          // return any entities.
+          $query->condition('id', -1);
+        }
 
-      $results = $query->execute();
+        $results = $query->execute();
 
-      // Get the entities.
-      $entities = $storage->loadMultiple($results);
-      foreach ($entities as $entity) {
-        /** @var \Drupal\cidoc\Entity\CidocEntity $entity */
-        $data['features'] = array_merge($data['features'], $entity->getGeospatialData());
+        // Get the entities.
+        $entities = $storage->loadMultiple($results);
+        foreach ($entities as $entity) {
+          /** @var \Drupal\cidoc\Entity\CidocEntity $entity */
+          $data['features'] = array_merge($data['features'], $entity->getGeospatialData());
+        }
       }
 
       $response = new CacheableJsonResponse($data);
