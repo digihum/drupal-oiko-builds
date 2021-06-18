@@ -15,10 +15,13 @@
  * @ingroup themeable
  */
 #}
+{%- set carried_out_by_name -%}
+  {{ content.contrafacta_details_carried_out_by }}
+{% endset %}
 <div{{ attributes.addClass('cidoc_entity contrafacta-wrapper__detail') }}>
   <header>
-    {% if content.contrafacta_details_carried_out_by|trim %}
-    <h3>{{- content.contrafacta_details_carried_out_by -}}</h3>
+    {% if carried_out_by_name is not empty %}
+    <h3>{{- carried_out_by_name -}}</h3>
     {% endif %}
     <h2>{{- content.name -}}{% if content['cidoc_properties:domain:pc7_has_music'] %} ♩{% endif %}</h2>
   </header>
