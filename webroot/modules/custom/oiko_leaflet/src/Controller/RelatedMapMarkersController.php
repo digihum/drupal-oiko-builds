@@ -241,12 +241,12 @@ class RelatedMapMarkersController extends ControllerBase {
               'color' => 'deepblue',
               'points' => [
                 [
-                  'lat' => $leaflet_from_point['lat'],
-                  'lon' => $leaflet_from_point['lon'],
-                ],
-                [
                   'lat' => $leaflet_to_point['lat'],
                   'lon' => $leaflet_to_point['lon'],
+                ],
+                [
+                  'lat' => $leaflet_from_point['lat'],
+                  'lon' => $leaflet_from_point['lon'],
                 ],
               ],
             ];
