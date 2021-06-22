@@ -1,0 +1,7 @@
+non_geo_tray:
+  js:
+    js/leaflet.non_geo_tray.js: {}
+  version: VERSION
+  dependencies:
+    - leaflet/leaflet
+    - core/jquery

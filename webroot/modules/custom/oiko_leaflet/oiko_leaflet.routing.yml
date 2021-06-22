@@ -17,15 +17,6 @@ oiko_leaflet.popup_discussion_controller_view:
     cidoc_entity: '\d+'
     _entity_access: 'cidoc_entity.view'
 
-oiko_leaflet.related_markers:
-  path: '/cidoc-entity/{cidoc_entity}/related-markers.json'
-  defaults:
-    _controller: '\Drupal\oiko_leaflet\Controller\RelatedMapMarkersController::fetch'
-    _title: 'cidocRelatedMarkers'
-  requirements:
-    cidoc_entity: '\d+'
-    _entity_access: 'cidoc_entity.view'
-
 oiko_leaflet.map_page_controller_baseMap:
   path: '/oiko_leaflet/map'
   defaults:
@@ -48,7 +39,6 @@ oiko_leaflet.map_page_controller_unpublishedEntities:
     _controller: '\Drupal\oiko_leaflet\Controller\MapPageController::ownEntitiesForMap'
     _title: 'Fetch the entities for items on a map (unpublished)'
   requirements:
-     # @TODO: Sort the permissions here.
     _permission: 'view published cidoc entities'
 
 oiko_leaflet.leaflet_settings_form:

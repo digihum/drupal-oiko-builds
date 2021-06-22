@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Intergration with leaflet for the Oiko project.
+ */
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\oiko_leaflet\Controller\MapPageController;
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function medmus_leaflet_library_info_alter(array &$libraries, $module) {
+  if ($module === 'leaflet' && isset($libraries['leaflet'])) {
+    $libraries['leaflet-drupal']['dependencies'][] = 'medmus_leaflet/non_geo_tray';
+  }
+}
+
+/**
+ * Implements hook_oiko_app_main_map_alter().
+ */
+function medmus_leaflet_oiko_app_main_map_alter(array &$map) {
+  $map['non_geo_tray'] = TRUE;
+}

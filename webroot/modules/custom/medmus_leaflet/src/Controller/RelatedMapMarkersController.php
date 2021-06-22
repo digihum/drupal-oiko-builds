@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\oiko_leaflet\Controller;
+namespace Drupal\medmus_leaflet\Controller;
 
 use Consolidation\AnnotatedCommand\ParameterInjection;
 use Drupal\cidoc\CidocEntityInterface;
@@ -58,39 +58,6 @@ class RelatedMapMarkersController extends ControllerBase {
     );
   }
 
-  protected function generatePointsOnCircle($points, $circle) {
-    $number_of_points = count($points);
-
-    // Convert to radians.
-    $circle['lat'] = deg2rad($circle['lat']);
-    $circle['lon'] = deg2rad($circle['lon']);
-    $i = 0;
-    foreach ($points as $k => $fake_point) {
-      $point_on_circle = $fake_point;
-      $point_on_circle['type'] = 'point';
-      $point_angle = 2 * pi() * ($i + 1) / $number_of_points;
-      // https://gis.stackexchange.com/questions/134513/calculating-a-point-lat-lon-from-another-lat-lon-point-angle
-      // δ = distance r / Earth radius (both in the same units: meters).
-      $delta = $circle['radius'] / 6371009;
-      // lat_P2 = asin(sin lat_O ⋅ cos δ + cos lat_O ⋅ sin δ ⋅ cos θ ).
-      $point_on_circle['lat'] = asin(sin($circle['lat']) * cos($delta) + cos($circle['lat']) * sin($delta) * cos($point_angle));
-      // lon_P2 = lon_O + atan((sin θ ⋅ sin δ ⋅ cos lat_O) / (cos δ − sin lat_O ⋅ sin lat_P2)).
-      $point_on_circle['lon'] = $circle['lon'] + atan((sin($point_angle) * sin($delta) * cos($circle['lat'])) / (cos($delta) - sin($circle['lat'] * sin($circle['lat']))));
-      // Unused but helpful for humans.
-      $point_on_circle['was_fake'] = TRUE;
-
-      // Convert back to degrees.
-      $point_on_circle['lat'] = rad2deg($point_on_circle['lat']);
-      $point_on_circle['lon'] = rad2deg($point_on_circle['lon']);
-      unset($point_on_circle['color']);
-      $point_on_circle['markerClass'] = 'oiko-leaflet-marker-work';
-      $points[$k] = $point_on_circle;
-      $i++;
-    }
-
-    return $points;
-  }
-
   protected function generateFakePointForEntity(CidocEntityInterface $cidocEntity) {
     if ($fake_plugin = $this->geoserializerPluginManager->createInstance('oiko_leaflet_fake_data')) {
       foreach ($fake_plugin->getGeospatialData($cidocEntity) as $fake_point) {
@@ -111,7 +78,14 @@ class RelatedMapMarkersController extends ControllerBase {
     }
 
     $data = [];
-    $fake_cicle_radius_inner = 7500;
+
+    // Always add ourselves.
+
+    if ($geospatial_data = $cidoc_entity->getGeospatialData()) {
+      $data = array_merge($geospatial_data);
+    }
+
+    $fake_cicle_radius_inner = 3000;
     $creation_point = NULL;
 
     if ($cidoc_entity->bundle() == 'e65_creation') {
@@ -121,14 +95,7 @@ class RelatedMapMarkersController extends ControllerBase {
         foreach ($geo as $k => $v) {
           if ($v['type'] == 'point') {
             $creation_point = $v;
-            $v['type'] = 'circle';
-            $v['radius'] = $fake_cicle_radius_inner;
-            $v['style'] = [
-              'fillOpacity' => '0.1',
-              'weight' => '2',
-            ];
-            unset($v['popup']);
-            $fake_circle = $v;
+            $fake_circle = $this->generateCircleAtPoint($v, $fake_cicle_radius_inner, $fake_cicle_radius_inner * 3);
             break;
           }
         }
@@ -254,11 +221,37 @@ class RelatedMapMarkersController extends ControllerBase {
 
         }
 
+        // We want a sqaure that all our points will sit in, so increase the
+        // size of the fake circle by 50% and work out where that is.
+        $fake_circle_for_square = $fake_circle;
+        $fake_circle_for_square['radius'] = $fake_cicle_radius_inner * 1.5;
+        // Now generate 4 points on the circle, giving the extremes of lat/lng.
+        $extremes = $this->generatePointsOnCircle(array_fill(0, 4, []), $fake_circle_for_square);
+        $lat_min = min(array_column($extremes, 'lat'));
+        $lat_max = max(array_column($extremes, 'lat'));
+        $lon_min = min(array_column($extremes, 'lon'));
+        $lon_max = max(array_column($extremes, 'lon'));
+        // Form this into a valid 'Drupal leaflet' polygon.
+        $polygon = [
+          'type' => 'polygon',
+          'points' => [
+            ['lat' => $lat_min, 'lon' => $lon_min],
+            ['lat' => $lat_max, 'lon' => $lon_min],
+            ['lat' => $lat_max, 'lon' => $lon_max],
+            ['lat' => $lat_min, 'lon' => $lon_max],
+          ],
+          'color' => 'white',
+          'fillOpacity' => 0.975,
+        ];
 
         $data = array_merge(
+          [$polygon],
+          $leaflet_edges,
           $leaflet_outer_points,
-          $leaflet_edges
         );
+
+
+
 
       }
 
@@ -289,6 +282,80 @@ class RelatedMapMarkersController extends ControllerBase {
   public function fetch(CidocEntityInterface $cidoc_entity) {
     $response = new CacheableJsonResponse();
     return $response->setData($this->generateDataForEntity($cidoc_entity, $response));
+  }
+
+  /**
+   * @param $point
+   * @param int $fake_cicle_radius_inner
+   *
+   * @return mixed
+   */
+  protected function generateCircleAtPoint($point, int $fake_cicle_radius_inner, $offset_east = 0) {
+    $fake_circle = $point;
+    $fake_circle['type'] = 'circle';
+    $fake_circle['radius'] = $fake_cicle_radius_inner;
+    $fake_circle['style'] = [
+      'fillOpacity' => '0.1',
+      'weight' => '2',
+    ];
+    unset($fake_circle['popup']);
+
+    if (!empty($offset_east)) {
+      // Offset the point by this number of meters.
+      // Convert to radians.
+      $fake_circle['lat'] = deg2rad($fake_circle['lat']);
+      $fake_circle['lon'] = deg2rad($fake_circle['lon']);
+
+      $original_circle = $fake_circle;
+
+      $point_angle = 0.5 * pi();
+      // https://gis.stackexchange.com/questions/134513/calculating-a-point-lat-lon-from-another-lat-lon-point-angle
+      // δ = distance r / Earth radius (both in the same units: meters).
+      $delta = $offset_east / 6371009;
+      // lat_P2 = asin(sin lat_O ⋅ cos δ + cos lat_O ⋅ sin δ ⋅ cos θ ).
+      $fake_circle['lat'] = asin(sin($original_circle['lat']) * cos($delta) + cos($original_circle['lat']) * sin($delta) * cos($point_angle));
+      // lon_P2 = lon_O + atan((sin θ ⋅ sin δ ⋅ cos lat_O) / (cos δ − sin lat_O ⋅ sin lat_P2)).
+      $fake_circle['lon'] = $original_circle['lon'] + atan((sin($point_angle) * sin($delta) * cos($original_circle['lat'])) / (cos($delta) - sin($original_circle['lat'] * sin($original_circle['lat']))));
+
+      // Convert back to degrees.
+      $fake_circle['lat'] = rad2deg($fake_circle['lat']);
+      $fake_circle['lon'] = rad2deg($fake_circle['lon']);
+    }
+
+    return $fake_circle;
+  }
+
+  protected function generatePointsOnCircle($points, $circle) {
+    $number_of_points = count($points);
+
+    // Convert to radians.
+    $circle['lat'] = deg2rad($circle['lat']);
+    $circle['lon'] = deg2rad($circle['lon']);
+    $i = 0;
+    foreach ($points as $k => $fake_point) {
+      $point_on_circle = $fake_point;
+      $point_on_circle['type'] = 'point';
+      $point_angle = 2 * pi() * ($i + 1) / $number_of_points;
+      // https://gis.stackexchange.com/questions/134513/calculating-a-point-lat-lon-from-another-lat-lon-point-angle
+      // δ = distance r / Earth radius (both in the same units: meters).
+      $delta = $circle['radius'] / 6371009;
+      // lat_P2 = asin(sin lat_O ⋅ cos δ + cos lat_O ⋅ sin δ ⋅ cos θ ).
+      $point_on_circle['lat'] = asin(sin($circle['lat']) * cos($delta) + cos($circle['lat']) * sin($delta) * cos($point_angle));
+      // lon_P2 = lon_O + atan((sin θ ⋅ sin δ ⋅ cos lat_O) / (cos δ − sin lat_O ⋅ sin lat_P2)).
+      $point_on_circle['lon'] = $circle['lon'] + atan((sin($point_angle) * sin($delta) * cos($circle['lat'])) / (cos($delta) - sin($circle['lat'] * sin($circle['lat']))));
+      // Unused but helpful for humans.
+      $point_on_circle['was_fake'] = TRUE;
+
+      // Convert back to degrees.
+      $point_on_circle['lat'] = rad2deg($point_on_circle['lat']);
+      $point_on_circle['lon'] = rad2deg($point_on_circle['lon']);
+      unset($point_on_circle['color']);
+      $point_on_circle['markerClass'] = 'oiko-leaflet-marker-work';
+      $points[$k] = $point_on_circle;
+      $i++;
+    }
+
+    return $points;
   }
 
 }

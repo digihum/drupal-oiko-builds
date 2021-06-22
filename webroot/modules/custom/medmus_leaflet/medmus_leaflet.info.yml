@@ -1,0 +1,7 @@
+name: Medmus - Leaflet
+type: module
+description: Medmus leaflet customisations
+core: 8.x
+package: Medmus
+dependencies:
+  - oiko_leaflet

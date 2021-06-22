@@ -157,49 +157,6 @@
 
       }
 
-      // Set up our strange medmus stuff.
-      var previousSideBarRequest;
-      var leafletSidebarMapLayer = L.featureGroup();
-      leafletSidebarMapLayer.addTo(map);
-
-      $(window).bind('oikoSidebarOpening', function (e, id) {
-        // Additionally fire off a request to get a nice set of related markers.
-        if (previousSideBarRequest) {
-          previousSideBarRequest.abort();
-        }
-        // Remove all previous data.
-        leafletSidebarMapLayer.clearLayers();
-        var element_settings = {};
-        element_settings.progress = {type: 'none'};
-        // For anchor tags, these will go to the target of the anchor rather
-        // than the usual location.
-        element_settings.url = '/cidoc-entity/' + id + '/related-markers.json';
-        element_settings.dataType = 'json';
-        previousSideBarRequest = $.ajax(element_settings)
-          .done(function (data) {
-            previousSideBarRequest = null;
-            // Remove all previous data.
-            leafletSidebarMapLayer.clearLayers();
-            // We need to do display this data in the main window. Some of it is a bit...odd.
-
-            for (var i = 0; i < data.length; i++) {
-              var feature = data[i];
-              var lFeature;
-
-              lFeature = drupalLeaflet.create_feature(feature);
-              if (lFeature) {
-                leafletSidebarMapLayer.addLayer(lFeature);
-
-                if (feature.popup) {
-                  lFeature.bindPopup(feature.popup);
-                }
-                feature.exclude_from_temporal_layer = true;
-                // Allow others to do something with the feature that was just added to the map
-                $(document).trigger('leaflet.feature', [lFeature, feature, drupalLeaflet]);
-              }
-            }
-          });
-      });
     }
     else {
       Drupal.oiko.appModuleDoneLoading('temporal');

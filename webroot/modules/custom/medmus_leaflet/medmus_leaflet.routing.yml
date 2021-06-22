@@ -1,0 +1,8 @@
+medmus_leaflet.related_markers:
+  path: '/cidoc-entity/{cidoc_entity}/medmus-related-markers.json'
+  defaults:
+    _controller: '\Drupal\medmus_leaflet\Controller\RelatedMapMarkersController::fetch'
+    _title: 'cidocRelatedMarkers'
+  requirements:
+    cidoc_entity: '\d+'
+    _entity_access: 'cidoc_entity.view'

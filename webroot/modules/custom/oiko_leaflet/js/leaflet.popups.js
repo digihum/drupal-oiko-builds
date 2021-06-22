@@ -54,11 +54,19 @@
         if (L.Browser.mobile) {
           tooltipText = tooltipText + '<div class="leaflet-tooltip--cta">Tap for more information</div>';
         }
-        lFeature.bindTooltip(tooltipText, {direction: 'bottom', opacity: 1, sticky: sticky, permanent: false, interactive: true, _oiko: {popup: feature.popup, location: feature.location ? feature.location : false}});
+        lFeature.bindTooltip(tooltipText, {direction: feature.popup_direction ? feature.popup_direction : 'bottom', opacity: 1, sticky: sticky, permanent: false, interactive: true, _oiko: {popup: feature.popup, location: feature.location ? feature.location : false}});
         var tooltip = lFeature.getTooltip();
-        tooltip.on('click', function (e) {
-          Drupal.oiko.openSidebar(feature.id);
-        });
+        if (typeof feature.id != 'undefined') {
+          tooltip.on('click', function (e) {
+            Drupal.oiko.openSidebar(feature.id);
+          });
+        }
+        // This is an attempt to help when the tooltip appears on lines or
+        // polygons or other objects that are not quite as defined as a 'point'.
+        // We attempt to work out all the map layers that are 'near' the mouse
+        // pointer and show the popup for all of them.
+        // For lines we are really looking for lines that intersect for some
+        // non-trivial amount.
         if (feature.type !== 'point') {
           lFeature.on('tooltipopen mousemove', function (e) {
             if (e.type === 'tooltipopen') {
@@ -77,10 +85,25 @@
             }
             // Attempt to locate layers at this point.
             var intersectingLayers = [];
+            var ll = [latLng.lat, latLng.lng];
+            var container_ll = drupalLeaflet.lMap.latLngToContainerPoint(ll);
+            var latlngs;
             drupalLeaflet.lMap.eachLayer(function(layer) {
-              var ll = [latLng.lat, latLng.lng];
-              if (layer.getBounds && layer.getBounds().isValid() && (layer.getBounds().contains(ll))) {
-                intersectingLayers.push(layer);
+              // Handle lines between two points specially, so that we include
+              // lines 'near' the point that was clicked.
+              if ((layer instanceof L.Polyline) && (latlngs = layer.getLatLngs()) && (latlngs.length == 2)) {
+                var p1 = drupalLeaflet.lMap.latLngToContainerPoint(latlngs[0]);
+                var p2 = drupalLeaflet.lMap.latLngToContainerPoint(latlngs[1]);
+                if (L.LineUtil.pointToSegmentDistance(container_ll, p1, p2) < 5) {
+                  intersectingLayers.push(layer);
+                }
+              }
+              else {
+                // For everything else, if we can get the bounds of the shape,
+                // pull that into the tooltip if appropriate.
+                if (layer.getBounds && layer.getBounds().isValid() && (layer.getBounds().contains(ll))) {
+                  intersectingLayers.push(layer);
+                }
               }
             });
 

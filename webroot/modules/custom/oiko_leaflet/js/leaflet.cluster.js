@@ -7,9 +7,20 @@
       drupalLeaflet.clusterer = L.markerClusterGroup({
         // Make the radius of the clusters quite small.
         maxClusterRadius: 10,
-
       });
       map.addLayer(drupalLeaflet.clusterer);
+      if (L.Browser.touch) {
+        drupalLeaflet.clusterer.on('preclick', function (e) {
+          if (e.layer.isTooltipOpen()) {
+            drupalLeaflet.clusterer.unspiderfy();
+          }
+        });
+      }
+      else {
+        drupalLeaflet.clusterer.on('click', function (e) {
+          drupalLeaflet.clusterer.unspiderfy();
+        });
+      }
 
       // Set the clusterer be the main layer on the map for us.
       drupalLeaflet.mainLayer = drupalLeaflet.clusterer;

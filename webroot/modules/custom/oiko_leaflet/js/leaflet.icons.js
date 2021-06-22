@@ -40,6 +40,9 @@
         case 'deepblue':
           return '#0067A3';
 
+        case 'white':
+          return '#FFFFFF';
+
         case 'blue':
         default:
           return '#4798D0';
@@ -63,6 +66,9 @@
       }
       else {
         options.color = lookupColor('');
+      }
+      if (polygon.hasOwnProperty('fillOpacity')) {
+        options.fillOpacity = polygon.fillOpacity;
       }
       return new L.Polygon(latlngs, options);
     };
