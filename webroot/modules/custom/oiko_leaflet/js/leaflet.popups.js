@@ -3,6 +3,10 @@
 
   Drupal.oiko = Drupal.oiko || {};
 
+  // Number of pixels a feature has to be within a mouse pointer to be
+  // considered to be 'over' it.
+  var tooltipFeatureRadius = 5;
+
   var featureCache = {};
 
   $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
@@ -94,7 +98,12 @@
               if ((layer instanceof L.Polyline) && (latlngs = layer.getLatLngs()) && (latlngs.length == 2)) {
                 var p1 = drupalLeaflet.lMap.latLngToContainerPoint(latlngs[0]);
                 var p2 = drupalLeaflet.lMap.latLngToContainerPoint(latlngs[1]);
-                if (L.LineUtil.pointToSegmentDistance(container_ll, p1, p2) < 5) {
+                if (L.LineUtil.pointToSegmentDistance(container_ll, p1, p2) < tooltipFeatureRadius) {
+                  intersectingLayers.push(layer);
+                }
+              }
+              else if (typeof layer.pointToPolygonDistance !== 'undefined') {
+                if (layer.pointToPolygonDistance(container_ll) < tooltipFeatureRadius) {
                   intersectingLayers.push(layer);
                 }
               }
@@ -235,5 +244,91 @@
       }
     };
   }
+
+
+  var PointInPolygon = {
+    pointToPolygonDistance: function(point) {
+      // Handle each polygon in turn, this might actually be detecting holes, not sure.
+      var latlngs = this.getLatLngs();
+      if (latlngs[0][0] instanceof Array) {
+        // This is an array of polygons.
+        var mindist = Infinity;
+        for (var i = 0; i < latlngs.length; i++) {
+          var poly = latlngs[i];
+          var dist = this._pointToSinglePolygonDistance(point, poly);
+          if (dist <= mindist) {
+            mindist = dist;
+          }
+        }
+        return mindist;
+      }
+      else {
+        return this._pointToSinglePolygonDistance(point, latlngs);
+      }
+    },
+    _pointToSinglePolygonDistance: function(point, latlngs) {
+      // Determine if the point lines _inside_ the polygon.
+      var inside = this._pointInPolygon(point, latlngs[0]);
+      if (inside && (latlngs.length === 1)) {
+        return 0;
+      }
+      else if (inside && (latlngs.length > 1)) {
+        // Need to check that we are not in any 'holes'.
+        var inHole = false;
+        for (var i = 1; i < latlngs.length; i++) {
+          if (this._pointInPolygon(point, latlngs[i])) {
+            inHole = true;
+            break;
+          }
+        }
+        // We were in the outer polygon, not in any holes.
+        if (!inHole) {
+          return 0;
+        }
+      }
+      else {
+        var mindist = Infinity;
+        for (var i = 0; i < latlngs.length; i++) {
+          var poly = latlngs[i];
+          for (var j = 0; j < poly.length - 1; j++) {
+            var pointA = this._map.latLngToContainerPoint(poly[j]),
+              pointB = this._map.latLngToContainerPoint(poly[j + 1]);
+            var dist = L.LineUtil.pointToSegmentDistance(point, pointA, pointB);
+            if (dist <= mindist) {
+              mindist = dist;
+            }
+          }
+        }
+        return mindist;
+      }
+    },
+    _pointInPolygon: function(point, poly) {
+      var thisPoint, thatPoint, points = [];
+      thisPoint = [point.x, point.y];
+      for (var j = 0; j < poly.length - 1; j++) {
+        thatPoint = this._map.latLngToContainerPoint(poly[j]);
+        points[points.length] = [thatPoint.x, thatPoint.y];
+      }
+      return this._pointInPolygonNested(thisPoint, points);
+    },
+    // https://github.com/substack/point-in-polygon/blob/master/index.js
+    _pointInPolygonNested: function(point, vs, start, end) {
+      var x = point[0], y = point[1];
+      var inside = false;
+      if (start === undefined) start = 0;
+      if (end === undefined) end = vs.length;
+      var len = end - start;
+      for (var i = 0, j = len - 1; i < len; j = i++) {
+        var xi = vs[i+start][0], yi = vs[i+start][1];
+        var xj = vs[j+start][0], yj = vs[j+start][1];
+        var intersect = ((yi > y) !== (yj > y))
+          && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+      }
+      return inside;
+    }
+  }
+
+  L.Polygon.include(PointInPolygon);
 
 })(jQuery);
