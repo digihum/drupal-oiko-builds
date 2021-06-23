@@ -41,37 +41,55 @@ abstract class GeoserializerPluginBase extends PluginBase implements Geoserializ
     return $this->pluginDefinition['name'];
   }
 
-  protected function addCommonPointValues(array $point, CidocEntityInterface $entity) {
-    $point['label'] = $entity->getName();
-    $point['id'] = $entity->id();
-    $point['color'] = $this->colorizer->getColorForCidocEvent($entity);
+  /**
+   * {@inheritdoc}
+   */
+  public function getPointLabel(CidocEntityInterface $entity) {
+    return $entity->getName();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPointPopup(CidocEntityInterface $entity) {
+    $args = array(
+      '@entity_type' => $entity->getFriendlyLabel(),
+      '@label' => $entity->getName(),
+      '@color' => $this->colorizer->getColorForCidocEvent($entity),
+    );
 
     if ($significance = $entity->significance->entity) {
-      $entity->addCacheableDependency($significance);
-      $point['significance_id'] = $significance->id();
-      $point['significance'] = $significance->label();
+      $args['@category'] = $significance->label();
       if ($this->colorizer->getColorSystem($entity) == ItemColorInterface::COLOR_SYSTEM_PRIMARY_HISTORICAL_SIGNIFICANCE) {
         $label = '<div class="category-label category-label--@color">@category</div> <em>@entity_type</em>: @label';
       }
       else {
         $label = '<em>@category</em> <div class="category-label category-label--@color">@entity_type</div>: @label';
       }
-      $point['popup'] = $this->t($label, array(
-        '@category' => $point['significance'],
-        '@entity_type' => $entity->getFriendlyLabel(),
-        '@label' => $entity->getName(),
-        '@color' => $point['color'],
-      ));
     }
     else {
-      $point['popup'] = $this->t('<div class="category-label category-label--@color">@entity_type</div>: @label', array(
-        '@entity_type' => $entity->getFriendlyLabel(),
-        '@label' => $entity->getName(),
-        '@color' => $point['color'],
-      ));
+      if ($this->colorizer->getColorSystem($entity) == ItemColorInterface::COLOR_SYSTEM_PRIMARY_HISTORICAL_SIGNIFICANCE) {
+        $label = '<em>@entity_type</em>: @label';
+      }
+      else {
+        $label = '<div class="category-label category-label--@color">@entity_type</div>: @label';
+      }
     }
 
+    return $this->t($label, $args);
+  }
 
+  protected function addCommonPointValues(array $point, CidocEntityInterface $entity) {
+    $point['label'] = $this->getPointLabel($entity);
+    $point['id'] = $entity->id();
+    $point['color'] = $this->colorizer->getColorForCidocEvent($entity);
+    $point['popup'] = $this->getPointPopup($entity);
+
+    if ($significance = $entity->significance->entity) {
+      $entity->addCacheableDependency($significance);
+      $point['significance_id'] = $significance->id();
+      $point['significance'] = $significance->label();
+    }
 
     return $point;
   }

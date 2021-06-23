@@ -56,7 +56,7 @@
         }
         lFeature.bindTooltip(tooltipText, {direction: feature.popup_direction ? feature.popup_direction : 'bottom', opacity: 1, sticky: sticky, permanent: false, interactive: true, _oiko: {popup: feature.popup, location: feature.location ? feature.location : false}});
         var tooltip = lFeature.getTooltip();
-        if (typeof feature.id != 'undefined') {
+        if (typeof feature.id !== 'undefined') {
           tooltip.on('click', function (e) {
             Drupal.oiko.openSidebar(feature.id);
           });

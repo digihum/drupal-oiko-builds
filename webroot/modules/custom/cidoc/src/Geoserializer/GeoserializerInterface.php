@@ -9,6 +9,15 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 
 interface GeoserializerInterface extends PluginInspectionInterface, DerivativeInspectionInterface, ContainerFactoryPluginInterface {
 
+  /**
+   * Get the (leaflet) geospatial data for this entity.
+   *
+   * @param \Drupal\cidoc\CidocEntityInterface $entity
+   *   The entity.
+   *
+   * @return array
+   *   An array of leaflet geospatial data.
+   */
   public function getGeospatialData(CidocEntityInterface $entity);
 
   /**
@@ -18,5 +27,27 @@ interface GeoserializerInterface extends PluginInspectionInterface, DerivativeIn
    *   The array of data points.
    */
   public function filterDataPointsToSiteSettings($points);
+
+  /**
+   * Get the label for the given entity.
+   *
+   * @param \Drupal\cidoc\CidocEntityInterface $entity
+   *   The entity of get the label for.
+   *
+   * @return mixed
+   *   The label for the given point.
+   */
+  public function getPointLabel(CidocEntityInterface $entity);
+
+  /**
+   * Get the popup text for the given entity.
+   *
+   * @param \Drupal\cidoc\CidocEntityInterface $entity
+   *   The entity of get the popup text for.
+   *
+   * @return mixed
+   *   The popup text for the given point.
+   */
+  public function getPointPopup(CidocEntityInterface $entity);
 
 }

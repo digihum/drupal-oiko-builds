@@ -1,4 +1,8 @@
 // Styling of the different classifications of items.
+.category-label--none {
+  @include category-pill-transparent;
+}
+
 .category-label--blue {
   @include category-pill(palette(blue));
 }

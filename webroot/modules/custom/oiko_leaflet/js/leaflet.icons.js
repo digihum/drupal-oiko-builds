@@ -5,19 +5,21 @@
       var latLng = new L.LatLng(marker.lat, marker.lon);
       this.bounds.push(latLng);
       var lMarker;
+      var options = {};
 
       if (marker.hasOwnProperty('color') && marker.color) {
-        var icon = this.create_icon_with_color(marker.color);
-        lMarker = new L.Marker(latLng, {icon: icon});
+        options.icon = this.create_icon_with_color(marker.color);
       }
       else if (marker.hasOwnProperty('markerClass') && marker.markerClass) {
-        var icon = this.create_div_icon(marker);
-        lMarker = new L.Marker(latLng, {icon: icon});
+        options.icon = this.create_div_icon(marker);
       }
-      else {
-        lMarker = new L.Marker(latLng);
+      if (marker.hasOwnProperty('pane') && marker.pane) {
+        options.pane = marker.pane;
       }
-      return lMarker;
+      if (marker.hasOwnProperty('zIndexOffset') && marker.zIndexOffset) {
+        options.zIndexOffset = marker.zIndexOffset;
+      }
+      return new L.Marker(latLng, options);
     };
 
     var lookupColor = function(color) {
@@ -70,6 +72,12 @@
       if (polygon.hasOwnProperty('fillOpacity')) {
         options.fillOpacity = polygon.fillOpacity;
       }
+      if (polygon.hasOwnProperty('pane') && polygon.pane) {
+        options.pane = polygon.pane;
+      }
+      if (polygon.hasOwnProperty('zIndexOffset') && polygon.zIndexOffset) {
+        options.zIndexOffset = polygon.zIndexOffset;
+      }
       return new L.Polygon(latlngs, options);
     };
 
@@ -87,6 +95,12 @@
       }
       else {
         options.color = lookupColor('');
+      }
+      if (polyline.hasOwnProperty('pane') && polyline.pane) {
+        options.pane = polyline.pane;
+      }
+      if (polyline.hasOwnProperty('zIndexOffset') && polyline.zIndexOffset) {
+        options.zIndexOffset = polyline.zIndexOffset;
       }
       return new L.Polyline(latlngs, options);
     };

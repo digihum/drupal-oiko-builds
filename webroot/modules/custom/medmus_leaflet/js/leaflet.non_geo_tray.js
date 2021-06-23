@@ -4,10 +4,34 @@
 
     // If the map is using non_geo_tray add in the non_geo_tray.
     if (mapDefinition.hasOwnProperty('non_geo_tray') && mapDefinition.non_geo_tray) {
-      // Set up our strange medmus stuff.
       var previousSideBarRequest;
       var works = L.oikoMedmusWorksLayer(drupalLeaflet);
       works.addTo(map);
+      var oikoLoaded = false;
+
+      var previousLoad;
+      var loadData = function(data) {
+        if (previousLoad) {
+          clearTimeout(previousLoad);
+          previousLoad = null;
+        }
+        if (oikoLoaded) {
+          // Remove all previous data.
+          works.clearLayers();
+          works.setData(data);
+        }
+        else {
+          // Wait half a second before trying again.
+          previousLoad = setTimeout(function() {
+            loadData(data)
+          }, 500);
+        }
+      }
+
+      // Wait for the oiko app to have loaded.
+      $(window).bind('oiko.loaded', function () {
+        oikoLoaded = true;
+      });
 
       $(window).bind('oikoSidebarOpening', function (e, id) {
         // Additionally fire off a request to get a nice set of related markers.
@@ -25,146 +49,7 @@
         previousSideBarRequest = $.ajax(element_settings)
           .done(function (data) {
             previousSideBarRequest = null;
-            // Remove all previous data.
-            works.clearLayers();
-
-            works.setData({
-              sourcePoints: [
-                {
-                  "type": "point",
-                  "label": "Source point",
-                  "id": "15085",
-                  "significance_id": "3",
-                  "significance": "Cultural",
-                  "popup": "<em>Cultural</em> <div class=\"category-label category-label--blue\">Work</div>: Source point 1",
-                  "lat": 41.2698205224768,
-                  "lon": 5.499226927657332,
-                  "markerClass": "oiko-leaflet-marker-work"
-                }
-              ],
-              realTargetPoints: [
-                {
-                  "type": "point",
-                  "label": "Real target point 1",
-                  "id": "15085",
-                  "significance_id": "3",
-                  "significance": "Cultural",
-                  "popup": "<em>Cultural</em> <div class=\"category-label category-label--blue\">Work</div>: Real target point 1",
-                  "lat": 41.2698205224768,
-                  "lon": 9.499226927657332,
-                  "markerClass": "oiko-leaflet-marker-work"
-                },
-                {
-                  "type": "point",
-                  "label": "Real target point 2",
-                  "id": "15085",
-                  "significance_id": "3",
-                  "significance": "Cultural",
-                  "popup": "<em>Cultural</em> <div class=\"category-label category-label--blue\">Work</div>: Real target point 2",
-                  "lat": 42.2698205224768,
-                  "lon": 13.499226927657332,
-                  "markerClass": "oiko-leaflet-marker-work"
-                }
-              ],
-              realTargetLines: [
-                {
-                  popup: "Source 1 to Real 1",
-                  source: 0,
-                  target: 0,
-                  forward: true,
-                },
-                {
-                  popup: "Real 2 to Source 1",
-                  source: 0,
-                  target: 1,
-                  forward: false,
-                }
-              ],
-              fakeTargetPoints: [
-                {
-                  "type": "point",
-                  "label": "Fake target point 1",
-                  "id": "15085",
-                  "significance_id": "3",
-                  "significance": "Cultural",
-                  "popup": "<em>Cultural</em> <div class=\"category-label category-label--blue\">Work</div>: Fake target point 1",
-                  "markerClass": "oiko-leaflet-marker-work"
-                },
-                {
-                  "type": "point",
-                  "label": "Fake target point 2",
-                  "id": "15085",
-                  "significance_id": "3",
-                  "significance": "Cultural",
-                  "popup": "<em>Cultural</em> <div class=\"category-label category-label--blue\">Work</div>: Fake target point 2",
-                  "markerClass": "oiko-leaflet-marker-work"
-                },
-                {
-                  "type": "point",
-                  "label": "Fake target point 3",
-                  "id": "15085",
-                  "significance_id": "3",
-                  "significance": "Cultural",
-                  "popup": "<em>Cultural</em> <div class=\"category-label category-label--blue\">Work</div>: Fake target point 3",
-                  "markerClass": "oiko-leaflet-marker-work"
-                },
-                {
-                  "type": "point",
-                  "label": "Fake target point 4",
-                  "id": "15085",
-                  "significance_id": "3",
-                  "significance": "Cultural",
-                  "popup": "<em>Cultural</em> <div class=\"category-label category-label--blue\">Work</div>: Fake target point 4",
-                  "markerClass": "oiko-leaflet-marker-work"
-                },
-                {
-                  "type": "point",
-                  "label": "Fake target point 5",
-                  "id": "15085",
-                  "significance_id": "3",
-                  "significance": "Cultural",
-                  "popup": "<em>Cultural</em> <div class=\"category-label category-label--blue\">Work</div>: Fake target point 5",
-                  "markerClass": "oiko-leaflet-marker-work"
-                },
-                {
-                  "type": "point",
-                  "label": "Fake target point 6",
-                  "id": "15085",
-                  "significance_id": "3",
-                  "significance": "Cultural",
-                  "popup": "<em>Cultural</em> <div class=\"category-label category-label--blue\">Work</div>: Fake target point 6",
-                  "markerClass": "oiko-leaflet-marker-work"
-                }
-              ],
-              fakeTargetLines: [
-                {
-                  popup: "Source 1 to Fake 1",
-                  source: 0,
-                  target: 0,
-                  forward: true
-                },
-                {
-                  popup: "Fake 2 to Source 1",
-                  source: 0,
-                  target: 1,
-                  forward: false
-                },
-                {
-                  popup: "Fake 3 to Source 1",
-                  source: 0,
-                  target: 2,
-                  forward: false
-                },
-                {
-                  popup: "Source 1 to Fake 3",
-                  source: 0,
-                  target: 2,
-                  forward: true
-                }
-              ]
-            });
-
-            // We need to do display this data in the main window. Some of it is a bit...odd.
+            loadData(data);
           });
       });
     }
@@ -175,7 +60,7 @@
 var OikoMedmusWorksLayer = L.Class.extend({
   options: {
     startX: 35,
-    startY: 35,
+    startY: 85,
     spacingX: 35,
     spacingY: 35,
     maxInColumn: 10,
@@ -185,23 +70,28 @@ var OikoMedmusWorksLayer = L.Class.extend({
       weight: 2,
       color: '#000000',
       opacity: 0.2,
-    }
+    },
+    pane: 'nonGeoTray',
   },
   initialize: function(drupalLeaflet, opts) {
     this.drupalLeaflet = drupalLeaflet;
     this._map = null;
-    this._sourcePoints = L.featureGroup();
-    this._fakeTargetPoints = L.featureGroup();
-    this._realTargetPoints = L.featureGroup();
-    this._fakeLines = L.featureGroup();
-    this._realLines = L.featureGroup();
-    this._backgroundUI = L.featureGroup();
+    this._sourcePoints = L.layerGroup();
+    this._fakeTargetPoints = L.layerGroup();
+    this._realTargetPoints = L.layerGroup();
+    this._fakeLines = L.layerGroup();
+    this._realLines = L.layerGroup();
+    this._backgroundUI = L.layerGroup();
     this._fakeTargetPointsMapping = [];
     this._fakeLinesMapping = [];
   },
   addTo: function(map) {
     this._map = map;
     map.on('move viewreset', this.mapMoved, this);
+    if (!map.getPane(this.options.pane)) {
+      var pane = map.createPane(this.options.pane);
+      pane.style.zIndex = 649;
+    }
     this.proxyToAll('addTo', map);
   },
   remove: function() {
@@ -237,10 +127,12 @@ var OikoMedmusWorksLayer = L.Class.extend({
     this._fakeLinesMapping = [];
   },
   setData: function(data) {
+
     if (typeof data.sourcePoints != 'undefined') {
       // Set the source points.
       for (var i in data.sourcePoints) {
         var feature = data.sourcePoints[i];
+        feature.pane = this.options.pane;
         var lFeature = this.drupalLeaflet.create_feature(feature);
 
         if (lFeature) {
@@ -260,6 +152,7 @@ var OikoMedmusWorksLayer = L.Class.extend({
       // Set the target points.
       for (var i in data.realTargetPoints) {
         var feature = data.realTargetPoints[i];
+        feature.pane = this.options.pane;
         var lFeature = this.drupalLeaflet.create_feature(feature);
 
         if (lFeature) {
@@ -285,6 +178,8 @@ var OikoMedmusWorksLayer = L.Class.extend({
           color: "deepblue",
           popup: line.popup,
           points: [],
+          pane: this.options.pane,
+          zIndexOffset: 900,
         };
 
         if (typeof data.sourcePoints[line.source] != 'undefined') {
@@ -323,7 +218,7 @@ var OikoMedmusWorksLayer = L.Class.extend({
     }
 
     if (typeof data.fakeTargetPoints != 'undefined') {
-      var count = data.fakeTargetPoints.length;
+      var count = Object.keys(data.fakeTargetPoints).length;
       var j = 0;
       // Set the target points.
       for (var i in data.fakeTargetPoints) {
@@ -331,6 +226,8 @@ var OikoMedmusWorksLayer = L.Class.extend({
         // Make the feature valid.
         feature.type = 'point';
         feature.popup_direction = 'auto';
+        feature.pane = this.options.pane;
+        feature.zIndexOffset = 1000;
         var latlng = this.getFakePointLatLng(count, j);
         feature.lat = latlng.lat;
         feature.lon = latlng.lng;
@@ -368,6 +265,8 @@ var OikoMedmusWorksLayer = L.Class.extend({
           color: "deepblue",
           popup: line.popup,
           points: [],
+          zIndexOffset: 900,
+          pane: this.options.pane,
         };
 
         if (typeof data.sourcePoints[line.source] != 'undefined') {
@@ -459,7 +358,8 @@ var OikoMedmusWorksLayer = L.Class.extend({
         this.options.startX + Math.ceil(this._fakeTargetPointsMapping.length / this.options.maxInColumn) * this.options.spacingX - 10,
         this.options.startY + this.options.spacingY * Math.min(this.options.maxInColumn, this._fakeTargetPointsMapping.length) - 10
       ]);
-      if (this._backgroundUI.getLayers().length == 0) {
+      if (this._backgroundUI.getLayers().length === 0) {
+        this.options.backgroundUIRectangleStyle.pane = this.options.pane;
         var rect = L.rectangle([topLeft, bottomRight], this.options.backgroundUIRectangleStyle)
         this._backgroundUI.addLayer(rect);
         var tooltipText = 'Non-geographic events';

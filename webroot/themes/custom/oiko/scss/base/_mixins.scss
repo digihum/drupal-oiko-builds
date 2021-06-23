@@ -79,12 +79,16 @@
   }
 }
 
-@mixin pill($color) {
+@mixin basepill($background_color, $text_color) {
   font-size: $small-font-size;
-  background-color: $color;
-  color: pick-visible-color($color, $body-font-color, $white);
+  background-color: $background_color;
+  color: $text_color;
   margin: 0.5em 0.25em;
   padding: 0.25em 0.5em;
+}
+
+@mixin pill($color) {
+  @include basepill($color, pick-visible-color($color, $body-font-color, $white));
 }
 
 @mixin category-pill($color) {
@@ -93,3 +97,8 @@
   display: inline-block;
 }
 
+@mixin category-pill-transparent {
+  @include basepill(transparent, $body-font-color);
+  margin-left: 0;
+  display: inline-block;
+}

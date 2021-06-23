@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\oiko_leaflet\Plugin\cidoc\Geoserializer;
+namespace Drupal\medmus_leaflet\Plugin\cidoc\Geoserializer;
 
 use Drupal\cidoc\CidocEntityInterface;
 use Drupal\cidoc\Geoserializer\GeoserializerPluginBase;
@@ -9,12 +9,12 @@ use Drupal\cidoc\Geoserializer\GeoserializerPluginBase;
  * Null geospatial plugin to cover bundles that do not have specific handling.
  *
  * @CidocGeoserializer(
- *   id = "oiko_leaflet_fake_data",
- *   name = "Oiko Leaflet Fake Data",
+ *   id = "medmus_leaflet_fake_data",
+ *   name = "Medmus Leaflet Fake Data",
  *   hidden = TRUE,
  * )
  */
-class OikoLeafletFakeData extends GeoserializerPluginBase {
+class MedmusLeafletFakeData extends GeoserializerPluginBase {
   public function getGeospatialData(CidocEntityInterface $entity) {
 
     // Return some fake geospatial data.
