@@ -161,18 +161,18 @@ class RelatedMapMarkersResponse implements CacheableDependencyInterface {
 
   public function toJsonData() {
     return [
-      'sourcePoints' => $this->cleanPoints($this->realSourcePoints),
-      'realTargetPoints' => $this->cleanPoints($this->realTargetPoints),
+      'sourcePoints' => $this->cleanPoints($this->realSourcePoints, 'medmus-leaflet-marker-work-upside-down'),
+      'realTargetPoints' => $this->cleanPoints($this->realTargetPoints, 'medmus-leaflet-marker-work-upside-down'),
       'realTargetLines' => $this->realEdges,
       'fakeTargetPoints' => $this->cleanPoints($this->fakeTargetPoints),
       'fakeTargetLines' => $this->fakeEdges,
     ];
   }
 
-  protected function cleanPoints($points) {
-    return array_map(function ($item) {
+  protected function cleanPoints($points, $markerClass = 'medmus-leaflet-marker-work') {
+    return array_map(function ($item) use ($markerClass) {
       unset($item['temporal'], $item['significance_id'], $item['significance'], $item['color']);
-      $item['markerClass'] = 'oiko-leaflet-marker-work';
+      $item['markerClass'] = $markerClass;
       return $item;
     }, $points);
   }

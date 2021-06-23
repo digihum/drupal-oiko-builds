@@ -133,6 +133,7 @@ var OikoMedmusWorksLayer = L.Class.extend({
       for (var i in data.sourcePoints) {
         var feature = data.sourcePoints[i];
         feature.pane = this.options.pane;
+        feature.popup_direction = 'top';
         var lFeature = this.drupalLeaflet.create_feature(feature);
 
         if (lFeature) {
@@ -153,6 +154,7 @@ var OikoMedmusWorksLayer = L.Class.extend({
       for (var i in data.realTargetPoints) {
         var feature = data.realTargetPoints[i];
         feature.pane = this.options.pane;
+        feature.popup_direction = 'top';
         var lFeature = this.drupalLeaflet.create_feature(feature);
 
         if (lFeature) {
