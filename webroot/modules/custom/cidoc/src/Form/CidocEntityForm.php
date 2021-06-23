@@ -6,7 +6,6 @@ use Drupal\cidoc\Entity\CidocEntity;
 use Drupal\cidoc\Entity\CidocProperty;
 use Drupal\cidoc\Entity\CidocPropertyInterface;
 use Drupal\Component\Datetime\TimeInterface;
-use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Utility\Tags;
@@ -518,11 +517,11 @@ class CidocEntityForm extends ContentEntityForm {
                     ->load($matched);
                 }
                 $intermediate_entity_bundle = $this->entityManager->getStorage('cidoc_entity_bundle')->load($element['#genericsubwidget_intermediate_entity_type']);
-                $title = (string) (new FormattableMarkup($element['#genericsubwidget_title_template'], array(
+                $title = strtr($element['#genericsubwidget_title_template'], array(
                   '@source_name' => $matched_entity->getName(),
                   '@target_name' => $form_state->getValue('name')[0]['value'],
                   '@bundle_name' => $intermediate_entity_bundle->getFriendlyLabel(),
-                )));
+                ));
                 $new_entity = $handler->createNewEntity($element['#target_type'], $element['#genericsubwidget_intermediate_entity_type'], $title, $element['#autocreate']['uid']);
                 $property_bundle = $this->entityManager->getStorage('cidoc_property')->load($element['#genericsubwidget_property']);
                 $new_entity->addStubReference($property_bundle, $matched_entity, $element['#genericsubwidget_intermediate_reference_direction']);
@@ -540,7 +539,7 @@ class CidocEntityForm extends ContentEntityForm {
                     ->load($matched);
                 }
                 $intermediate_entity_bundle = $this->entityManager->getStorage('cidoc_entity_bundle')->load($autocreate_bundle);
-                $title = (string) format_string($element['#timesubwidget_title_template'], array(
+                $title = strtr($element['#timesubwidget_title_template'], array(
                   '@source_name' => $matched_entity->getName(),
                   '@target_name' => $form_state->getValue('name')[0]['value'],
                   '@bundle_name' => $intermediate_entity_bundle->getFriendlyLabel(),
@@ -575,11 +574,11 @@ class CidocEntityForm extends ContentEntityForm {
             if (!empty($element['#genericsubwidget'])) {
               $intermediate_entity_bundle = $this->entityManager->getStorage('cidoc_entity_bundle')->load($element['#genericsubwidget_intermediate_entity_type']);
               $matched_entity = CidocEntity::load($match);
-              $title = (string) (new FormattableMarkup($element['#genericsubwidget_title_template'], array(
+              $title = strtr($element['#genericsubwidget_title_template'], array(
                 '@source_name' => $matched_entity->getName(),
                 '@target_name' => $form_state->getValue('name')[0]['value'],
                 '@bundle_name' => $intermediate_entity_bundle->getFriendlyLabel(),
-              )));
+              ));
               $new_entity = $handler->createNewEntity($element['#target_type'], $element['#genericsubwidget_intermediate_entity_type'], $title, $element['#autocreate']['uid']);
               $property_bundle = $this->entityManager->getStorage('cidoc_property')->load($element['#genericsubwidget_property']);
               $new_entity->addStubReference($property_bundle, $matched_entity, $element['#genericsubwidget_intermediate_reference_direction']);
