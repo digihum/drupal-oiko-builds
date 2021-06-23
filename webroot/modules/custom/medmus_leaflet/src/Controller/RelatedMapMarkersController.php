@@ -88,7 +88,7 @@ class RelatedMapMarkersController extends ControllerBase {
               ->getPointLabel($createdWorkEntity);
             $geoDatum['popup'] = $this->getFakeGeoserializerPlugin()
               ->getPointPopup($createdWorkEntity);
-            $source_points[] = $responseData->addSourcePoint($geoDatum, $cidoc_entity);
+            $source_points[] = $responseData->addSourcePoint($geoDatum, $cidoc_entity, $createdWorkEntity);
           }
         }
 
@@ -112,7 +112,7 @@ class RelatedMapMarkersController extends ControllerBase {
                 foreach ($source_points as $source_point_id) {
                   $geoDatum['label'] = $this->getFakeGeoserializerPlugin()->getPointLabel($relatedWork);
                   $geoDatum['popup'] = $this->getFakeGeoserializerPlugin()->getPointPopup($relatedWork);
-                  $responseData->addRealTargetPoint($source_point_id, $geoDatum, FALSE, $lineLabel, $createdWorkEntity, $relatedWorkCreationEventEntity);
+                  $responseData->addRealTargetPoint($source_point_id, $geoDatum, FALSE, $lineLabel, $relatedWork, $relatedWorkCreationEventEntity);
                 }
               }
             }
@@ -125,7 +125,7 @@ class RelatedMapMarkersController extends ControllerBase {
                 "label" => $this->getFakeGeoserializerPlugin()->getPointLabel($relatedWork),
                 'popup' => $this->getFakeGeoserializerPlugin()->getPointPopup($relatedWork),
               ];
-              $responseData->addFakeTargetPoint($source_point_id, $fake_target, FALSE, $lineLabel, $createdWorkEntity);
+              $responseData->addFakeTargetPoint($source_point_id, $fake_target, FALSE, $lineLabel, $relatedWork);
             }
           }
         }
@@ -149,7 +149,7 @@ class RelatedMapMarkersController extends ControllerBase {
                 foreach ($source_points as $source_point_id) {
                   $geoDatum['label'] = $this->getFakeGeoserializerPlugin()->getPointLabel($relatedWork);
                   $geoDatum['popup'] = $this->getFakeGeoserializerPlugin()->getPointPopup($relatedWork);
-                  $responseData->addRealTargetPoint($source_point_id, $geoDatum, TRUE, $lineLabel, $createdWorkEntity, $relatedWorkCreationEventEntity);
+                  $responseData->addRealTargetPoint($source_point_id, $geoDatum, TRUE, $lineLabel, $relatedWork, $relatedWorkCreationEventEntity);
                 }
               }
             }
@@ -162,7 +162,7 @@ class RelatedMapMarkersController extends ControllerBase {
                 "label" => $this->getFakeGeoserializerPlugin()->getPointLabel($relatedWork),
                 'popup' => $this->getFakeGeoserializerPlugin()->getPointPopup($relatedWork),
               ];
-              $responseData->addFakeTargetPoint($source_point_id, $fake_target, TRUE, $lineLabel, $createdWorkEntity);
+              $responseData->addFakeTargetPoint($source_point_id, $fake_target, TRUE, $lineLabel, $relatedWork);
             }
           }
         }

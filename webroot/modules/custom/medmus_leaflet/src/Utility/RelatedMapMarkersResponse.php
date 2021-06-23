@@ -85,9 +85,10 @@ class RelatedMapMarkersResponse implements CacheableDependencyInterface {
     $this->addCacheableDependency($rootEntity);
   }
 
-  public function addSourcePoint($sourcePoint, CidocEntityInterface $cidocEntity) {
-    $this->addCacheableDependency($cidocEntity);
-    $sourcePoint['id'] = $cidocEntity->id();
+  public function addSourcePoint($sourcePoint, CidocEntityInterface $locationEntity, CidocEntityInterface $workEntity) {
+    $this->addCacheableDependency($locationEntity);
+    $this->addCacheableDependency($workEntity);
+    $sourcePoint['id'] = $workEntity->id();
     return $this->doAddSourcePoint($sourcePoint);
   }
 

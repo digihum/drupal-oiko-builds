@@ -161,20 +161,22 @@
         featureCache[feature.id] = leafletLatLngToBounds(center, 1000);
       }
 
-      // Add a click event that opens our marker in the sidebar.
-      if (L.Browser.touch) {
-        lFeature.on('preclick', function (e) {
-          // A second click should open the popup.
-          if (lFeature.isTooltipOpen()) {
-            Drupal.oiko.openSidebar(feature.id);
-          }
-        });
+      if (typeof feature.id !== 'undefined') {
+        // Add a click event that opens our marker in the sidebar.
+        if (L.Browser.touch) {
+          lFeature.on('preclick', function (e) {
+            // A second click should open the popup.
+            if (lFeature.isTooltipOpen()) {
+              Drupal.oiko.openSidebar(feature.id);
+            }
+          });
 
-      }
-      else {
-        lFeature.on('click', function (e) {
-          Drupal.oiko.openSidebar(feature.id);
-        });
+        }
+        else {
+          lFeature.on('click', function (e) {
+            Drupal.oiko.openSidebar(feature.id);
+          });
+        }
       }
     }
   });
