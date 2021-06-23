@@ -36,6 +36,7 @@ class ComposerStaticInite2cb2abed408c64b9f306078a7c9469a
         'cc8e14526dc240491e17a838cb78508c' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_server.legacy.php',
         '786bf90caabc9e09b6ad4cc5ca8f0e30' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_uploaded_files.legacy.php',
         '751a5a3f463e4be759be31748b61737c' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/parse_cookie_header.legacy.php',
+        'da25292559b495aacfa2ff5e4d3a3d64' => __DIR__ . '/..' . '/phpwatch/array_key_first_last-polyfill/src/array_key_first_last.php',
     );
 
     public static $prefixLengthsPsr4 = array (
