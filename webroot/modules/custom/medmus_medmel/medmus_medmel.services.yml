@@ -1,0 +1,4 @@
+services:
+  logger.channel.medmus_medmel:
+    parent: logger.channel_base
+    arguments: [ 'medmus_medmel' ]

@@ -1,0 +1,6 @@
+name: Medmus - Medmel
+type: module
+description: Medmus Medmel integration
+core: 8.x
+package: Medmus
+

@@ -1,0 +1,53 @@
+<?php
+
+use Drupal\Component\Utility\Html;
+use Drupal\medmus_medmel\Utility\MedmusMedmelIdFetcher;
+
+/**
+ * Implements hook_cron().
+ */
+function medmus_medmel_cron() {
+  /* @var MedmusMedmelIdFetcher $automated_actions */
+  $ids = \Drupal::classResolver(MedmusMedmelIdFetcher::class);
+  $ids->syncIds();
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function medmus_medmel_entity_extra_field_info() {
+  $extra = [];
+  $extra['cidoc_entity']['ec1_work']['display']['medmel_iframe'] = [
+    'label' => t('Medmel iframe'),
+    'weight' => 0,
+    'visible' => FALSE,
+  ];
+  return $extra;
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function medmus_medmel_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+  if ($display->getComponent('medmel_iframe')) {
+    // See if we can find a matching page.
+    $result = \Drupal::database()->select('medmus_medmel', 'a')
+      ->fields('a', ['unique_id'])
+      ->condition('a.work_id', $entity->getName())
+      ->execute()
+      ->fetchCol();
+
+    if (!empty($result)) {
+      $url = count($result) > 1 ? 'https://medmel.polisemie.it/embedAll.html?id=' : 'https://medmel.polisemie.it/embed.html?id=';
+      $build['medmel_iframe'] = [
+        '#type' => 'inline_template',
+        '#template' => '<iframe class="medmus-medmel-iframe-embed" width="100%" height="500" frameborder="0" src="{{ url }}"></iframe>',
+        '#context' => [
+          'url' => $url . Html::escape(reset($result)),
+        ],
+      ];
+    }
+
+  }
+
+}

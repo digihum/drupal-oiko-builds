@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function medmus_medmel_schema() {
+  $schema['medmus_medmel'] = [
+    'description' => 'Stores the remote IDs from Medmel.',
+    'fields' => [
+      'unique_id' => [
+        'description' => 'The unique MedMel ID.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'work_id' => [
+        'description' => 'The ID of the work.',
+        'type' => 'varchar_ascii',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'ms' => [
+        'description' => 'The ms.',
+        'type' => 'varchar_ascii',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+    ],
+    'primary key' => ['unique_id',],
+    'indexes' => [
+      'work_id' => ['work_id'],
+    ],
+  ];
+
+  return $schema;
+}
