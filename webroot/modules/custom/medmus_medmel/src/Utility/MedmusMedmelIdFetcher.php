@@ -54,7 +54,7 @@ class MedmusMedmelIdFetcher implements ContainerInjectionInterface {
 
   function syncIds() {
     // Fetch the IDs, and make our DB table look like the JSON.
-    $request = $this->httpClient->request('GET', 'http://medmel.polisemie.it/php/getStaffId.php');
+    $request = $this->httpClient->request('GET', 'https://medmel.polisemie.it/php/getStaffId.php');
 
     if ($request->getStatusCode() != 200) {
       $this->logger->error('Got error code: @code', [

@@ -179,16 +179,7 @@ function oiko_leaflet_entity_view_alter(array &$build, \Drupal\Core\Entity\Entit
   return \Drupal::service('oiko_leaflet.hook_implementations')->entity_view_alter($build, $entity, $display);
 }
 
-/**
- * Implements hook_cron().
- */
-function oiko_leaflet_cron() {
-  /* @var MapPageController $map_page_controller */
-  $map_page_controller = \Drupal::classResolver(MapPageController::class);
-  $map_page_controller->computePagesOnCron();
-}
-
-/**
+  /**
  * Implements hook_form_cidoc_entity_bundle_edit_form_alter().
  */
 function oiko_leaflet_form_cidoc_entity_bundle_edit_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
