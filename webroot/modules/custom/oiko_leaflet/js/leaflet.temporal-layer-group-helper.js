@@ -14,6 +14,8 @@ function extensions(parentClass) { return {
     this._staticLayers = [];
     this._temporalLayers = [];
     this._temporalTree = new IntervalTree();
+    this._holdfire = false;
+    this._lastShownTime = false;
   },
 
   addTo: function addTo(map) {
@@ -68,44 +70,83 @@ function extensions(parentClass) { return {
   },
 
   addLayer: function addLayer(layer) {
-    // This isn't a temporal layer, so just add it to our list of static layers.
-    if (!('temporal' in layer) || !('start' in layer.temporal) || !('end' in layer.temporal)) {
-      this._staticLayers.push(layer);
-      this._targetLayer.addLayer(layer);
-      return;
+    this.addLayers([layer]);
+  },
+
+  addLayers: function addLayers(layers) {
+    var i, layer, temporalRebase = false;
+    for (i = 0; i < layers.length; i++) {
+      layer = layers[i];
+      // This isn't a temporal layer, so just add it to our list of static layers.
+      if (!('temporal' in layer) || !('start' in layer.temporal) || !('end' in layer.temporal)) {
+        this._staticLayers.push(layer);
+        this._targetLayer.addLayer(layer);
+      }
+      else {
+        this._temporalLayers.push(layer);
+        this._temporalTree.insert(layer.temporal.start, layer.temporal.end, layer);
+        temporalRebase = true;
+      }
     }
 
-    this._temporalLayers.push(layer);
-    this._temporalTree.insert(layer.temporal.start, layer.temporal.end, layer);
-
-    this.map.fire('temporal.rebase');
+    if (!this._holdfire) {
+      this._updateDisplayedTemporalLayers();
+    }
+    if (temporalRebase) {
+      if (!this._holdfire) {
+        this.map.fire('temporal.rebase');
+      }
+    }
   },
 
   removeLayer: function removeLayer(layer) {
-    this._targetLayer.removeLayer(layer);
-    var i;
+    this.removeLayers([layer]);
+  },
 
-    i = this._visibleLayers.indexOf(layer);
-    if (i !== -1) {
-      this._visibleLayers.splice(i, 1);
+  removeLayers: function removeLayers(layers) {
+    var j, i, layer;
+    for (j = 0; j < layers.length; j++) {
+      layer = layers[j];
+
+      // Remove from the target layer first.
+      this._targetLayer.removeLayer(layer);
+      // Now remove the layer from our internal storage.
+      this._removeItemFromArray(this._visibleLayers, layer);
+      this._removeItemFromArray(this._staticLayers, layer);
+      this._removeItemFromArray(this._temporalLayers, layer);
     }
 
-    i = this._staticLayers.indexOf(layer);
-    if (i !== -1) {
-      this._staticLayers.splice(i, 1);
-    }
-
-    i = this._temporalLayers.indexOf(layer);
-    if (i !== -1) {
-      this._temporalLayers.splice(i, 1);
-    }
-
+    // Recreate a brand new temporal tree, as we have no way to remove things
+    // from it.
     this._temporalTree = new IntervalTree();
     for (i = 0; i < this._temporalLayers.length; i++) {
       this._temporalTree.insert(this._temporalLayers[i].temporal.start, this._temporalLayers[i].temporal.end, this._temporalLayers[i]);
     }
 
+    if (!this._holdfire) {
+      this.map.fire('temporal.rebase');
+    }
+  },
+
+  changeLayers: function changeLayers(layersToAdd, layersToRemove) {
+    this._holdfire = true;
+    this.addLayers(layersToAdd);
+    this.removeLayers(layersToRemove);
+    this._holdfire = false;
+    // Actually update the displayed layers if we have added, since they may
+    // need to be added to the target layer.
+    if (layersToAdd.length) {
+      this._updateDisplayedTemporalLayers();
+    }
+    // Inform linked controls that we have rebased.
     this.map.fire('temporal.rebase');
+  },
+
+  _removeItemFromArray: function(array, item) {
+    var i = array.indexOf(item);
+    if (i !== -1) {
+      array.splice(i, 1);
+    }
   },
 
   clearLayers: function () {
@@ -115,15 +156,25 @@ function extensions(parentClass) { return {
   },
 
   _onTemporalChange: function(e) {
+    this._lastShownTime = e.time;
+    this._updateDisplayedTemporalLayers();
+  },
+
+  _updateDisplayedTemporalLayers: function _updateDisplayedTemporalLayers() {
+
+    // Early exit if we do not know our set time.
+    if (this._lastShownTime === false) {
+      return;
+    }
 
     var features = [];
     if (this._temporalTree.size) {
       // Get the layers we should be showing.
       if (this.options.temporalRangeWindow === 0) {
-        features = this._temporalTree.lookup(Math.ceil(e.time));
+        features = this._temporalTree.lookup(Math.ceil(this._lastShownTime));
       }
       else {
-        features = this._temporalTree.overlap(Math.floor(e.time - this.options.temporalRangeWindow), Math.ceil(e.time + this.options.temporalRangeWindow));
+        features = this._temporalTree.overlap(Math.floor(this._lastShownTime - this.options.temporalRangeWindow), Math.ceil(this._lastShownTime + this.options.temporalRangeWindow));
       }
     }
 
@@ -149,6 +200,7 @@ function extensions(parentClass) { return {
       }
     }
 
+    // features now only contains features we do want, but are not visible yet.
     for (var k = 0; k < features.length; k++) {
       layer = features[k];
       this._visibleLayers.push(layer);

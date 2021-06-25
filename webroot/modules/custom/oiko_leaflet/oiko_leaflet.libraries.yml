@@ -103,6 +103,7 @@ temporal:
     - oiko_leaflet/moment.lang.oiko
     - oiko_sidebar/oikoApp
     - oiko_leaflet/leaflet.temporal-layer-group
+    - oiko_leaflet/leaflet.filterable-layer-group
     - oiko_app/app
 
 
@@ -114,6 +115,12 @@ leaflet.temporal-layer-group:
     - oiko_leaflet/intervalTree
     - leaflet/leaflet
 
+leaflet.filterable-layer-group:
+  js:
+    js/leaflet.filterable-layer-group-helper.js: {}
+  version: VERSION
+  dependencies:
+    - leaflet/leaflet
 
 moment.lang.oiko:
   js:

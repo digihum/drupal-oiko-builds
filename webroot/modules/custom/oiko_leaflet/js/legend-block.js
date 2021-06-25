@@ -48,6 +48,4 @@
     $(window).trigger('set.oiko.categories', [categories, true]);
   }
 
-
-
 })(jQuery);
