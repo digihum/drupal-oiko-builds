@@ -1,7 +1,7 @@
 import {
   setMapState, setTimeBrowserState, addAppModule, appModuleDoneLoading,
   setVisualisation, setComparativeTimelines, setTimelinesState,
-  setPHSCategories
+  setPHSCategories, setTags
 } from './actions';
 import { createOikoApp } from './store';
 import $ from './jquery';
@@ -75,7 +75,7 @@ if (['oiko', 'medmus'].indexOf(drupalSettings.ajaxPageState.theme) > -1) {
     $(window).trigger('resize.oiko.map_container');
   });
 
-// PHS category filter.
+  // PHS category filter.
   $(window).bind('set.oiko.categories', (e, categories, internal) => {
     if (internal) {
       store.dispatch(setPHSCategories(categories));
@@ -84,6 +84,17 @@ if (['oiko', 'medmus'].indexOf(drupalSettings.ajaxPageState.theme) > -1) {
   let PHSCategoryWatch = watch(store.getState, 'PHSCategories', isEqual);
   const PHSCategoryListener = (newVal) => {
     $(window).trigger('set.oiko.categories', [newVal]);
+  };
+
+  // Tags filter.
+  $(window).bind('set.oiko.tags', (e, categories, internal) => {
+    if (internal) {
+      store.dispatch(setTags(categories));
+    }
+  });
+  let TagsWatch = watch(store.getState, 'Tags', isEqual);
+  const TagsListener = (newVal) => {
+    $(window).trigger('set.oiko.tags', [newVal]);
   };
 
 
@@ -121,6 +132,11 @@ if (['oiko', 'medmus'].indexOf(drupalSettings.ajaxPageState.theme) > -1) {
     store.subscribe(PHSCategoryWatch(PHSCategoryListener));
     const {PHSCategories} = store.getState();
     PHSCategoryListener(PHSCategories, PHSCategories, 'PHSCategories');
+
+    // Bind the Tags listener.
+    store.subscribe(TagsWatch(TagsListener));
+    const {Tags} = store.getState();
+    TagsListener(Tags, Tags, 'Tags');
 
     $(window).on('oiko.timelines_updated', (e, timelines) => {
       if (typeof Drupal.oiko.timeline !== 'undefined') {

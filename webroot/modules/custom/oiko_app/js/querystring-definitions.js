@@ -89,3 +89,10 @@ export const QUERYSTRING_VARIABLE_TIMELINE_ENTITIES = 'lin';
  * @type {string}
  */
 export const QUERYSTRING_VARIABLE_PHS_CATEGORIES = 'cat';
+
+/**
+ * The tags being filtered.
+ *
+ * @type {string}
+ */
+export const QUERYSTRING_VARIABLE_TAGS = 'tag';

@@ -4,8 +4,15 @@
  * @file
  * Intergration with leaflet for the Oiko project.
  */
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\oiko_leaflet\Controller\MapPageController;
+
+use Drupal\cidoc\CidocEntityInterface;
+use Drupal\cidoc\Entity\CidocProperty;
+
+define('MEDMUS_LEAFLET_TAGS_ID_CREATIONS_OF_LITERARY_WORKS', 1);
+define('MEDMUS_LEAFLET_TAGS_ID_PRODUCTIONS_OF_MANUSCRIPT_SOURCES', 2);
+define('MEDMUS_LEAFLET_TAGS_ID_AUTHORS_ACTIVITIES', 3);
+define('MEDMUS_LEAFLET_TAGS_ID_OTHER_HISTORICAL_EVENTS', 4);
+define('MEDMUS_LEAFLET_TAGS_ID_ONLY_CREATIONS_OF_WORKS_WITH_MODEL_CONTRA', 5);
 
 /**
  * Implements hook_library_info_alter().
@@ -21,4 +28,45 @@ function medmus_leaflet_library_info_alter(array &$libraries, $module) {
  */
 function medmus_leaflet_oiko_app_main_map_alter(array &$map) {
   $map['non_geo_tray'] = TRUE;
+}
+
+/**
+ * Implements hook_cidoc_geoserializer_point_tags_alter().
+ */
+function medmus_leaflet_cidoc_geoserializer_point_tags_alter(&$tags, array $point, CidocEntityInterface $entity) {
+  // Add in our very custom categories!
+  // For now we're going to add 5 testing categories.
+  $tags_to_add = [];
+
+  if ($entity->bundle() == 'e65_creation') {
+    $tags_to_add[] = MEDMUS_LEAFLET_TAGS_ID_CREATIONS_OF_LITERARY_WORKS;
+    // Check to see if the created work actually references another work.
+    $created_works = array_filter($entity->getForwardReferencedEntities(['p94_has_created']), function ($cidocEntity) {
+      return $cidocEntity->bundle() == 'ec1_work';
+    });
+    /* @var CidocEntityInterface[] $createdWorks */
+    foreach ($created_works as $createdWorkEntity) {
+      // Now we work to get contrafactums of those works.
+      if (!empty($createdWorkEntity->getForwardReferencedEntities(['pc1_has_metrical_affinities_with', 'pc2_is_contrafactum_of'], FALSE)) || !empty($createdWorkEntity->getReverseReferencedEntities(['pc1_has_metrical_affinities_with', 'pc2_is_contrafactum_of'], FALSE))) {
+        $tags_to_add[] = MEDMUS_LEAFLET_TAGS_ID_ONLY_CREATIONS_OF_WORKS_WITH_MODEL_CONTRA;
+      }
+    }
+  }
+
+  if ($entity->bundle() == 'e12_production') {
+    $tags_to_add[] = MEDMUS_LEAFLET_TAGS_ID_PRODUCTIONS_OF_MANUSCRIPT_SOURCES;
+  }
+
+  if ($entity->bundle() == 'e7_activity' && stripos(trim($entity->label()), 'Activity of') !== FALSE) {
+    $tags_to_add[] = MEDMUS_LEAFLET_TAGS_ID_AUTHORS_ACTIVITIES;
+  }
+
+  // If there are no tags at this point, add a catch-all.
+  if (empty($tags_to_add)) {
+    $tags_to_add[] = MEDMUS_LEAFLET_TAGS_ID_OTHER_HISTORICAL_EVENTS;
+  }
+
+  foreach (array_unique($tags_to_add) as $tag) {
+    $tags[] = $tag;
+  }
 }

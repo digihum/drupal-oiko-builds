@@ -68,3 +68,8 @@ export const SET_PHS_CATEGORIES = 'oiko/SET_PHS_CATEGORIES';
 export function setPHSCategories(categories) {
   return { type: SET_PHS_CATEGORIES, categories }
 }
+
+export const SET_TAGS = 'oiko/SET_TAGS';
+export function setTags(categories) {
+  return { type: SET_TAGS, categories }
+}

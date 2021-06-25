@@ -3,6 +3,7 @@
 namespace Drupal\cidoc\Geoserializer;
 
 use Drupal\cidoc\CidocEntityInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
 use Drupal\Core\Site\Settings;
@@ -18,11 +19,17 @@ abstract class GeoserializerPluginBase extends PluginBase implements Geoserializ
   protected $colorizer;
 
   /**
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, \Drupal\oiko_leaflet\ItemColorInterface $colorizer) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, \Drupal\oiko_leaflet\ItemColorInterface $colorizer, ModuleHandlerInterface $moduleHandler) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->colorizer = $colorizer;
+    $this->moduleHandler = $moduleHandler;
   }
 
   /**
@@ -33,7 +40,8 @@ abstract class GeoserializerPluginBase extends PluginBase implements Geoserializ
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('oiko_leaflet.item_color')
+      $container->get('oiko_leaflet.item_color'),
+      $container->get('module_handler')
     );
   }
 
@@ -79,6 +87,16 @@ abstract class GeoserializerPluginBase extends PluginBase implements Geoserializ
     return $this->t($label, $args);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getPointTags(array $point, CidocEntityInterface $entity) {
+    return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   protected function addCommonPointValues(array $point, CidocEntityInterface $entity) {
     $point['label'] = $this->getPointLabel($entity);
     $point['id'] = $entity->id();
@@ -91,9 +109,16 @@ abstract class GeoserializerPluginBase extends PluginBase implements Geoserializ
       $point['significance'] = $significance->label();
     }
 
+    $point['tags'] = $this->getPointTags($point, $entity);
+    // Allow modules to alter the tags.
+    $this->moduleHandler->alter('cidoc_geoserializer_point_tags', $point['tags'], $point, $entity);
+
     return $point;
   }
 
+  /**
+   * Add the temporal data to points (where available).
+   */
   protected function addTemporalDataToPoints(array $points, CidocEntityInterface $entity) {
     // Try and fetch temporal data from the related time.
 

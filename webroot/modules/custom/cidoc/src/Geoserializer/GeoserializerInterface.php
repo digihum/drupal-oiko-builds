@@ -50,4 +50,14 @@ interface GeoserializerInterface extends PluginInspectionInterface, DerivativeIn
    */
   public function getPointPopup(CidocEntityInterface $entity);
 
+  /**
+   * Get any tags for the given point and entity.
+   *
+   * @param array $point
+   * @param \Drupal\cidoc\CidocEntityInterface $entity
+   *
+   * @return mixed
+   */
+  public function getPointTags(array $point, CidocEntityInterface $entity);
+
 }

@@ -5,3 +5,10 @@ non_geo_tray:
   dependencies:
     - leaflet/leaflet
     - core/jquery
+
+tagsBlock:
+  js:
+    js/tags-block.js: {}
+  version: VERSION
+  dependencies:
+    - oiko_leaflet/temporal
