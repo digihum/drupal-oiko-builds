@@ -164,12 +164,6 @@
           this.boundsAdjusted = true;
         }
 
-        // If we need to, move the current time marker.
-        if (!this.currentTimeAdjusted) {
-          // Set to 230AD as per #43708.
-          this.setTime(-54909100800);
-        }
-
         // Get the global count of events per biggest slice, this will be used to scale all events.
         this._maxOfCounts = 1;
 
@@ -209,6 +203,22 @@
               _count: count,
             };
             visSlices.push(visSlice);
+          }
+        }
+
+        // If the time is set, but outside our bounds, re-set it to be in a slice with the most events.
+        var currentTime = this.getTime();
+        if (!this.currentTimeAdjusted || (currentTime && (currentTime < bounds.min || currentTime > bounds.max))) {
+          if (visSlices.length) {
+            for (var i = 0; i < visSlices.length; i++) {
+              if (visSlices[i]._count === maxOfCounts) {
+                // Use this slice as the default value.
+                this.setTime((visSlices[i].start / 1000 + visSlices[i].end / 1000) / 2);
+              }
+            }
+          }
+          else {
+            this.setTime((bounds.max + bounds.min) / 2);
           }
         }
 

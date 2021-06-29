@@ -39,7 +39,10 @@
         $(document).trigger('leaflet.features', [initial || false, this])
 
         // Fit bounds after adding features.
-        this.fitbounds();
+        var that = this;
+        setTimeout(function() {
+        that.fitbounds();
+        }, 250);
       };
     }
   });

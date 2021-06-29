@@ -13,6 +13,7 @@ function extensions(parentClass) { return {
     this._filteringCallbacks = priorValue || [];
     this._additionQueue = [];
     this._addLayerTimer = null;
+    this._filterLayersTimer = null;
   },
 
   addLayer: function addLayer(layer, metadata) {
@@ -173,6 +174,18 @@ function extensions(parentClass) { return {
   },
 
   recomputeFilteredItems: function recomputeFilteredItems() {
+    // This gets called over and over and over by our mapping library, so
+    // we 'debounce' it.
+    if (this._filterLayersTimer) {
+      clearTimeout(this._filterLayersTimer);
+    }
+    var that = this;
+    this._filterLayersTimer = setTimeout(function () {
+      that.recomputeFilteredItemsImmediately();
+    }, 0);
+  },
+
+  recomputeFilteredItemsImmediately: function recomputeFilteredItemsImmediately() {
     // We need to work out which items we should show/hide etc.
     var i, features = [];
     var featuresToRemove = [];

@@ -14,15 +14,26 @@ const app = createOikoApp();
 
 const store = app.getStore();
 
+function debounce(func, timeout = 300){
+  let timers = {};
+  return (...args) => {
+    const ns = JSON.stringify(args);
+    clearTimeout(timers[ns]);
+    timers[ns] = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
+
 Drupal.oiko = Drupal.oiko || {};
 
 Drupal.oiko.addAppModule = (moduleName) => {
   return app.getStore().dispatch(addAppModule(moduleName));
 };
 
-Drupal.oiko.appModuleDoneLoading = (moduleName) => {
+function appModuleDoneLoadingInner(moduleName) {
   return app.getStore().dispatch(appModuleDoneLoading(moduleName));
-};
+}
+
+Drupal.oiko.appModuleDoneLoading = debounce((moduleName) => appModuleDoneLoadingInner(moduleName));
 
 Drupal.oiko.getAppState = () => {
   return app.getStore().getState();
