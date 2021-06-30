@@ -173,7 +173,9 @@ class RelatedMapMarkersResponse implements CacheableDependencyInterface {
   protected function cleanPoints($points, $markerClass = 'medmus-leaflet-marker-work') {
     return array_map(function ($item) use ($markerClass) {
       unset($item['temporal'], $item['significance_id'], $item['significance'], $item['color']);
-      $item['markerClass'] = $markerClass;
+      if (!isset($item['markerClass'])) {
+        $item['markerClass'] = $markerClass;
+      }
       return $item;
     }, $points);
   }

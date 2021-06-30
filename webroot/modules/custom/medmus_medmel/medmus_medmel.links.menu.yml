@@ -1,0 +1,6 @@
+medmus_medmel.medmus_medmel_settings_form:
+  title: 'Medmel settings'
+  route_name: medmus_medmel.settings
+  description: 'Settings for the Medmel embedded iframe'
+  parent: system.admin_config_ui
+  weight: 99

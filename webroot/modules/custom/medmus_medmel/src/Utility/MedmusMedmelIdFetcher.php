@@ -2,6 +2,7 @@
 
 namespace Drupal\medmus_medmel\Utility;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use GuzzleHttp\ClientInterface;
@@ -30,16 +31,23 @@ class MedmusMedmelIdFetcher implements ContainerInjectionInterface {
   protected $database;
 
   /**
+   * @var ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
    * Constructs a ContentEntityForm object.
    */
   public function __construct(
     ClientInterface $client,
     LoggerInterface $logger,
-    Connection $database
+    Connection $database,
+    ConfigFactoryInterface $configFactory
   ) {
     $this->httpClient = $client;
     $this->logger = $logger;
     $this->database = $database;
+    $this->configFactory = $configFactory;
   }
   /**
    * {@inheritdoc}
@@ -48,13 +56,16 @@ class MedmusMedmelIdFetcher implements ContainerInjectionInterface {
     return new static(
       $container->get('http_client'),
       $container->get('logger.channel.medmus_medmel'),
-      $container->get('database')
+      $container->get('database'),
+      $container->get('config.factory')
     );
   }
 
   function syncIds() {
+    $config = $this->configFactory->get('medmus_medmel.settings');
+
     // Fetch the IDs, and make our DB table look like the JSON.
-    $request = $this->httpClient->request('GET', 'https://medmel.polisemie.it/php/getStaffId.php');
+    $request = $this->httpClient->request('GET', $config->get('fetchUrl'));
 
     if ($request->getStatusCode() != 200) {
       $this->logger->error('Got error code: @code', [
@@ -79,6 +90,9 @@ class MedmusMedmelIdFetcher implements ContainerInjectionInterface {
         $insert->execute();
         // Commit our transaction.
         unset($transaction);
+
+        // Now we should try to find entities that match these items and invalidate their cache tags.
+
       }
     }
 

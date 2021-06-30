@@ -128,7 +128,7 @@
     drupalLeaflet.create_div_icon = function (marker) {
 
       switch (marker.markerClass) {
-        case 'medmus-leaflet-marker-work':
+        case 'medmus-leaflet-marker-music':
           var icon = L.divIcon({
             className: marker.markerClass,
             html: '<i class=\'fa fa-music awesome\'>',
@@ -138,10 +138,30 @@
 
           break;
 
-        case 'medmus-leaflet-marker-work-upside-down':
+        case 'medmus-leaflet-marker-music-upside-down':
           var icon = L.divIcon({
             className: marker.markerClass,
             html: '<i class=\'fa fa-music awesome\'>',
+            iconSize: [30, 30],
+            iconAnchor: [15, 0],
+          });
+
+          break;
+
+        case 'medmus-leaflet-marker-work':
+          var icon = L.divIcon({
+            className: marker.markerClass,
+            html: '<i class=\'fa fa-file-text-o awesome\'>',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+          });
+
+          break;
+
+        case 'medmus-leaflet-marker-work-upside-down':
+          var icon = L.divIcon({
+            className: marker.markerClass,
+            html: '<i class=\'fa fa-file-text-o awesome\'>',
             iconSize: [30, 30],
             iconAnchor: [15, 0],
           });

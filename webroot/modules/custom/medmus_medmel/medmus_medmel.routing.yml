@@ -1,0 +1,9 @@
+medmus_medmel.settings:
+  path: '/admin/config/medmus_medmel/settings'
+  defaults:
+    _form: '\Drupal\medmus_medmel\Form\settingsForm'
+    _title: 'Medmus Medmel settings'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE

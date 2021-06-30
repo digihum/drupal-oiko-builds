@@ -9,6 +9,7 @@ use Drupal\cidoc\Geoserializer\GeoserializerPluginManagerInterface;
 use Drupal\Core\Cache\CacheableJsonResponse;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\medmus_leaflet\Utility\RelatedMapMarkersResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -34,11 +35,19 @@ class RelatedMapMarkersController extends ControllerBase {
   protected $geoserializerPluginManager;
 
   /**
+   * The module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, GeoserializerPluginManagerInterface $geoserializerPluginManager) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, GeoserializerPluginManagerInterface $geoserializerPluginManager, ModuleHandlerInterface $moduleHandler) {
     $this->entity_type_manager = $entity_type_manager;
     $this->geoserializerPluginManager = $geoserializerPluginManager;
+    $this->moduleHandler = $moduleHandler;
   }
 
   /**
@@ -47,7 +56,8 @@ class RelatedMapMarkersController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity_type.manager'),
-      $container->get('plugin.manager.cidoc.geoserializer')
+      $container->get('plugin.manager.cidoc.geoserializer'),
+      $container->get('module_handler')
     );
   }
 
@@ -59,6 +69,11 @@ class RelatedMapMarkersController extends ControllerBase {
     if ($fake_plugin = $this->geoserializerPluginManager->createInstance('medmus_leaflet_fake_data')) {
       return $fake_plugin;
     }
+  }
+
+  protected function workHasMusic(CidocEntityInterface $work) {
+    $has_music_responses = array_filter($this->moduleHandler->invokeAll('medmus_leaflet_work_has_music', [$work]));
+    return !empty($has_music_responses);
   }
 
   /**
@@ -88,6 +103,9 @@ class RelatedMapMarkersController extends ControllerBase {
               ->getPointLabel($createdWorkEntity);
             $geoDatum['popup'] = $this->getFakeGeoserializerPlugin()
               ->getPointPopup($createdWorkEntity);
+            if ($this->workHasMusic($createdWorkEntity)) {
+              $geoDatum['markerClass'] = 'medmus-leaflet-marker-music-upside-down';
+            }
             $source_points[] = $responseData->addSourcePoint($geoDatum, $cidoc_entity, $createdWorkEntity);
           }
         }
@@ -112,6 +130,9 @@ class RelatedMapMarkersController extends ControllerBase {
                 foreach ($source_points as $source_point_id) {
                   $geoDatum['label'] = $this->getFakeGeoserializerPlugin()->getPointLabel($relatedWork);
                   $geoDatum['popup'] = $this->getFakeGeoserializerPlugin()->getPointPopup($relatedWork);
+                  if ($this->workHasMusic($relatedWork)) {
+                    $geoDatum['markerClass'] = 'medmus-leaflet-marker-music-upside-down';
+                  }
                   $responseData->addRealTargetPoint($source_point_id, $geoDatum, FALSE, $lineLabel, $relatedWork, $relatedWorkCreationEventEntity);
                 }
               }
@@ -125,6 +146,9 @@ class RelatedMapMarkersController extends ControllerBase {
                 "label" => $this->getFakeGeoserializerPlugin()->getPointLabel($relatedWork),
                 'popup' => $this->getFakeGeoserializerPlugin()->getPointPopup($relatedWork),
               ];
+              if ($this->workHasMusic($relatedWork)) {
+                $fake_target['markerClass'] = 'medmus-leaflet-marker-music';
+              }
               $responseData->addFakeTargetPoint($source_point_id, $fake_target, FALSE, $lineLabel, $relatedWork);
             }
           }
@@ -149,6 +173,9 @@ class RelatedMapMarkersController extends ControllerBase {
                 foreach ($source_points as $source_point_id) {
                   $geoDatum['label'] = $this->getFakeGeoserializerPlugin()->getPointLabel($relatedWork);
                   $geoDatum['popup'] = $this->getFakeGeoserializerPlugin()->getPointPopup($relatedWork);
+                  if ($this->workHasMusic($relatedWork)) {
+                    $geoDatum['markerClass'] = 'medmus-leaflet-marker-music-upside-down';
+                  }
                   $responseData->addRealTargetPoint($source_point_id, $geoDatum, TRUE, $lineLabel, $relatedWork, $relatedWorkCreationEventEntity);
                 }
               }
@@ -162,6 +189,9 @@ class RelatedMapMarkersController extends ControllerBase {
                 "label" => $this->getFakeGeoserializerPlugin()->getPointLabel($relatedWork),
                 'popup' => $this->getFakeGeoserializerPlugin()->getPointPopup($relatedWork),
               ];
+              if ($this->workHasMusic($relatedWork)) {
+                $fake_target['markerClass'] = 'medmus-leaflet-marker-music';
+              }
               $responseData->addFakeTargetPoint($source_point_id, $fake_target, TRUE, $lineLabel, $relatedWork);
             }
           }

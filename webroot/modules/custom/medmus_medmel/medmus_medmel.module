@@ -38,16 +38,34 @@ function medmus_medmel_entity_view(array &$build, \Drupal\Core\Entity\EntityInte
       ->fetchCol();
 
     if (!empty($result)) {
-      $url = count($result) > 1 ? 'https://medmel.polisemie.it/embedAll.html?id=' : 'https://medmel.polisemie.it/embed.html?id=';
+
+      $config = Drupal::config('medmus_medmel.settings');
+      $iframeHeight = $config->get('iframeHeight');
+
+      $url = count($result) > 1 ? $config->get('multipleEmbedUrl') : $config->get('embedUrl');
       $build['medmel_iframe'] = [
         '#type' => 'inline_template',
-        '#template' => '<iframe class="medmus-medmel-iframe-embed" width="100%" height="500" frameborder="0" src="{{ url }}"></iframe>',
+        '#template' => '<iframe class="medmus-medmel-iframe-embed" width="100%" height="{{ iframeHeight }}" frameborder="0" src="{{ url }}"></iframe>',
         '#context' => [
           'url' => $url . Html::escape(reset($result)),
+          'iframeHeight' => $iframeHeight,
         ],
       ];
+      $renderer = \Drupal::service('renderer');
+      $renderer->addCacheableDependency($build['medmel_iframe'], $config);
     }
-
   }
+}
 
+/**
+ * Implements hook_medmus_leaflet_work_has_music().
+ */
+function medmus_medmel_medmus_leaflet_work_has_music(\Drupal\cidoc\CidocEntityInterface $cidocEntity) {
+  $result = \Drupal::database()->select('medmus_medmel', 'a')
+    ->fields('a', ['unique_id'])
+    ->condition('a.work_id', $cidocEntity->getName())
+    ->execute()
+    ->fetchCol();
+
+  return !empty($result);
 }

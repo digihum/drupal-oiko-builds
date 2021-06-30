@@ -1,0 +1,4 @@
+fetchUrl: https://medmel.polisemie.it/php/getStaffId.php
+embedUrl: https://medmel.polisemie.it/embed.html?id=
+multipleEmbedUrl: https://medmel.polisemie.it/embedAll.html?id=
+iframeHeight: 700

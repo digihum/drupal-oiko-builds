@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\Core\Config\FileStorage;
+
 /**
  * Implements hook_schema().
  */
@@ -36,4 +38,15 @@ function medmus_medmel_schema() {
   ];
 
   return $schema;
+}
+
+/**
+ * Add some config.
+ */
+function medmus_medmel_update_8101(&$sandbox) {
+  $name = 'medmus_medmel.settings';
+  $source = new FileStorage(__DIR__ . '/config/install');
+  /** @var \Drupal\Core\Config\StorageInterface $active_storage */
+  $active_storage = \Drupal::service('config.storage');
+  $active_storage->write($name, $source->read($name));
 }

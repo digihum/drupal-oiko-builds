@@ -73,14 +73,15 @@
         // non-trivial amount.
         if (feature.type !== 'point') {
           lFeature.on('tooltipopen mousemove', function (e) {
+            var latLng, target, containerPoint, layerPoint, tooltip;
             if (e.type === 'tooltipopen') {
-              var target = e.target;
-              var tooltip = e.tooltip;
-              var latLng = tooltip.getLatLng();
+              target = e.target;
+              tooltip = e.tooltip;
+              latLng = tooltip.getLatLng();
             }
             else {
-              var target = e.target;
-              var latLng = e.latlng, containerPoint, layerPoint;
+              target = e.target;
+              latLng = e.latlng;
               if (e.originalEvent) {
                 containerPoint = drupalLeaflet.lMap.mouseEventToContainerPoint(e.originalEvent);
                 layerPoint = drupalLeaflet.lMap.containerPointToLayerPoint(containerPoint);
