@@ -21,17 +21,21 @@ class Event extends GeoserializerPluginBase {
 
     $place_entities = $entity->getForwardReferencedEntities(['p7_took_place_at']);
     foreach ($place_entities as $place_entity) {
-      $values = [];
       if ($place_entity->field_geodata->count()) {
         $entity->addCacheableDependency($place_entity);
         foreach ($place_entity->field_geodata->getValue() as $value) {
-          $values[] = $value['value'];
+          $new_points = leaflet_process_geofield($value['value']);
+          foreach ($new_points as $k => $v) {
+            $new_points[$k]['location'] = $place_entity->label();
+            if ($new_points[$k]['type'] !== 'point') {
+              $new_points[$k]['centroid'] = [
+                'lat' => $value['lat'],
+                'lon' => $value['lon'],
+              ];
+            }
+          }
+          $points = array_merge($points, $new_points);
         }
-        $new_points = leaflet_process_geofield($values);
-        foreach ($new_points as $k => $v) {
-          $new_points[$k]['location'] = $place_entity->label();
-        }
-        $points = array_merge($points, $new_points);
       }
     }
 

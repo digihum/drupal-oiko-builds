@@ -108,6 +108,22 @@ class RelatedMapMarkersController extends ControllerBase {
             }
             $source_points[] = $responseData->addSourcePoint($geoDatum, $cidoc_entity, $createdWorkEntity);
           }
+          elseif ($geoDatum['type'] == 'polygon' && !empty($geoDatum['centroid']['lat']) && !empty($geoDatum['centroid']['lon'])) {
+            // We got a polygon, convert it to a point.
+            $geoDatum['type'] = 'point';
+            $geoDatum['lat'] = $geoDatum['centroid']['lat'];
+            $geoDatum['lon'] = $geoDatum['centroid']['lon'];
+            unset($geoDatum['points'], $geoDatum['centroid']);
+            $geoDatum['label'] = $this->getFakeGeoserializerPlugin()
+              ->getPointLabel($createdWorkEntity);
+            $geoDatum['popup'] = $this->getFakeGeoserializerPlugin()
+              ->getPointPopup($createdWorkEntity);
+            if ($this->workHasMusic($createdWorkEntity)) {
+              $geoDatum['markerClass'] = 'medmus-leaflet-marker-music-upside-down';
+            }
+            $source_points[] = $responseData->addSourcePoint($geoDatum, $cidoc_entity, $createdWorkEntity);
+          }
+
         }
 
         // Now we work to get contrafactums of those works.
@@ -126,6 +142,22 @@ class RelatedMapMarkersController extends ControllerBase {
           foreach ($relatedWorkCreationEvents as $relatedWorkCreationEventEntity) {
             foreach ($relatedWorkCreationEventEntity->getGeospatialData() as $geoDatum) {
               if ($geoDatum['type'] == 'point') {
+                $relatedWorkAdded = TRUE;
+                foreach ($source_points as $source_point_id) {
+                  $geoDatum['label'] = $this->getFakeGeoserializerPlugin()->getPointLabel($relatedWork);
+                  $geoDatum['popup'] = $this->getFakeGeoserializerPlugin()->getPointPopup($relatedWork);
+                  if ($this->workHasMusic($relatedWork)) {
+                    $geoDatum['markerClass'] = 'medmus-leaflet-marker-music-upside-down';
+                  }
+                  $responseData->addRealTargetPoint($source_point_id, $geoDatum, FALSE, $lineLabel, $relatedWork, $relatedWorkCreationEventEntity);
+                }
+              }
+              elseif ($geoDatum['type'] == 'polygon' && !empty($geoDatum['centroid']['lat']) && !empty($geoDatum['centroid']['lon'])) {
+                // We got a polygon, convert it to a point.
+                $geoDatum['type'] = 'point';
+                $geoDatum['lat'] = $geoDatum['centroid']['lat'];
+                $geoDatum['lon'] = $geoDatum['centroid']['lon'];
+                unset($geoDatum['points'], $geoDatum['centroid']);
                 $relatedWorkAdded = TRUE;
                 foreach ($source_points as $source_point_id) {
                   $geoDatum['label'] = $this->getFakeGeoserializerPlugin()->getPointLabel($relatedWork);
@@ -168,7 +200,24 @@ class RelatedMapMarkersController extends ControllerBase {
           $relatedWorkAdded = FALSE;
           foreach ($relatedWorkCreationEvents as $relatedWorkCreationEventEntity) {
             foreach ($relatedWorkCreationEventEntity->getGeospatialData() as $geoDatum) {
+              // Process the data for real target points.
               if ($geoDatum['type'] == 'point') {
+                $relatedWorkAdded = TRUE;
+                foreach ($source_points as $source_point_id) {
+                  $geoDatum['label'] = $this->getFakeGeoserializerPlugin()->getPointLabel($relatedWork);
+                  $geoDatum['popup'] = $this->getFakeGeoserializerPlugin()->getPointPopup($relatedWork);
+                  if ($this->workHasMusic($relatedWork)) {
+                    $geoDatum['markerClass'] = 'medmus-leaflet-marker-music-upside-down';
+                  }
+                  $responseData->addRealTargetPoint($source_point_id, $geoDatum, TRUE, $lineLabel, $relatedWork, $relatedWorkCreationEventEntity);
+                }
+              }
+              elseif ($geoDatum['type'] == 'polygon' && !empty($geoDatum['centroid']['lat']) && !empty($geoDatum['centroid']['lon'])) {
+                // We got a polygon, convert it to a point.
+                $geoDatum['type'] = 'point';
+                $geoDatum['lat'] = $geoDatum['centroid']['lat'];
+                $geoDatum['lon'] = $geoDatum['centroid']['lon'];
+                unset($geoDatum['points'], $geoDatum['centroid']);
                 $relatedWorkAdded = TRUE;
                 foreach ($source_points as $source_point_id) {
                   $geoDatum['label'] = $this->getFakeGeoserializerPlugin()->getPointLabel($relatedWork);

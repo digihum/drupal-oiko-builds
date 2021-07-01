@@ -127,14 +127,16 @@ var OikoMedmusWorksLayer = L.Class.extend({
     this._fakeLinesMapping = [];
   },
   setData: function(data) {
+    var feature, lFeature, i;
 
     if (typeof data.sourcePoints != 'undefined') {
       // Set the source points.
-      for (var i in data.sourcePoints) {
-        var feature = data.sourcePoints[i];
+      for (i in data.sourcePoints) {
+        feature = data.sourcePoints[i];
         feature.pane = this.options.pane;
         feature.popup_direction = 'top';
-        var lFeature = this.drupalLeaflet.create_feature(feature);
+        feature.popupAggregated = true;
+        lFeature = this.drupalLeaflet.create_feature(feature);
 
         if (lFeature) {
           this._sourcePoints.addLayer(lFeature);
@@ -151,11 +153,12 @@ var OikoMedmusWorksLayer = L.Class.extend({
 
     if (typeof data.realTargetPoints != 'undefined') {
       // Set the target points.
-      for (var i in data.realTargetPoints) {
-        var feature = data.realTargetPoints[i];
+      for (i in data.realTargetPoints) {
+        feature = data.realTargetPoints[i];
         feature.pane = this.options.pane;
         feature.popup_direction = 'top';
-        var lFeature = this.drupalLeaflet.create_feature(feature);
+        feature.popupAggregated = true;
+        lFeature = this.drupalLeaflet.create_feature(feature);
 
         if (lFeature) {
           this._realTargetPoints.addLayer(lFeature);
@@ -365,7 +368,7 @@ var OikoMedmusWorksLayer = L.Class.extend({
         var rect = L.rectangle([topLeft, bottomRight], this.options.backgroundUIRectangleStyle)
         this._backgroundUI.addLayer(rect);
         var tooltipText = 'Non-geographic events';
-        rect.bindTooltip(tooltipText, {direction: 'auto', opacity: 1, sticky: true, permanent: false, interactive: true});
+        rect.bindMedmusTooltip(tooltipText, {direction: 'auto', opacity: 1, sticky: true, permanent: false, interactive: true});
       }
       else {
         var corners = [

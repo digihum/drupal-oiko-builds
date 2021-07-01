@@ -42,9 +42,9 @@
             marker.bindPopup(p);
           }
           // Copy over the tooltip.
-          var t = layer.getTooltip();
+          var t = layer.getMedmusTooltip();
           if (t) {
-            marker.bindTooltip(t);
+            marker.bindMedmusTooltip(t);
           }
           return marker;
         }
@@ -66,7 +66,7 @@
 
       if (L.Browser.touch) {
         drupalLeaflet.clusterer.on('preclick', function (e) {
-          if (e.layer.isTooltipOpen()) {
+          if (e.layer.isMedmusTooltipOpen()) {
             drupalLeaflet.clusterer.unspiderfy();
             moveLayerToFocusGroup(e.layer);
           }

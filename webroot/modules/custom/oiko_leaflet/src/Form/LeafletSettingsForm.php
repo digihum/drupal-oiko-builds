@@ -158,6 +158,8 @@ class LeafletSettingsForm extends ConfigFormBase {
         $all_classes[$class]->save();
       }
     }
+
+    \Drupal::cache()->invalidate('leaflet_map_info');
   }
 
 }
