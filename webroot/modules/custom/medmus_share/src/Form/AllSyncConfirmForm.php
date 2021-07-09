@@ -194,7 +194,7 @@ class AllSyncConfirmForm extends \Drupal\Core\Form\ConfirmFormBase {
     $selected_remote = $this->remoteWebsites[$form_state->getValue('remote')];
     $this->channelsInfos = $this->remoteManager->getChannelsInfos($selected_remote);
 
-    foreach ($this->getSelectOptions('channel') as $channel_id => $channel_label) {
+    foreach (array_intersect_key($this->getSelectOptions('channel'), array_filter($form_state->getValue('channel'))) as $channel_id => $channel_label) {
       $batch['operations'][] = array(
         'medmus_share_full_sync_callback',
         array(
@@ -226,7 +226,43 @@ class AllSyncConfirmForm extends \Drupal\Core\Form\ConfirmFormBase {
       $form['remote'] = $select_element;
     }
 
+    // Container for the AJAX.
+    $form['channel_wrapper'] = [
+      '#type' => 'container',
+      // Force an id because otherwise default id is changed when using AJAX.
+      '#attributes' => [
+        'id' => 'channel-wrapper',
+      ],
+    ];
+    $this->buildChannelSelect($form, $form_state);
+
+
     return $form;
+  }
+
+  /**
+   * Helper function to generate channel select.
+   *
+   * @param array $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state object.
+   */
+  protected function buildChannelSelect(array &$form, FormStateInterface $form_state) {
+    $selected_remote_id = $form_state->getValue('remote', $this->query->get('remote'));
+    // No remote selected.
+    if (empty($this->remoteWebsites[$selected_remote_id])) {
+      return;
+    }
+
+    $selected_remote = $this->remoteWebsites[$selected_remote_id];
+    $this->channelsInfos = $this->remoteManager->getChannelsInfos($selected_remote);
+
+    $select_element = $this->buildCheckboxesElement($form_state, 'channel');
+    if ($select_element) {
+      $select_element['#title'] = $this->t('Channel');
+      $form['channel_wrapper']['channel'] = $select_element;
+    }
   }
 
   /**
@@ -261,6 +297,45 @@ class AllSyncConfirmForm extends \Drupal\Core\Form\ConfirmFormBase {
       '#options' => $options,
       '#default_value' => $default_value,
       '#empty_value' => '',
+      '#required' => TRUE,
+      '#disabled' => $disabled,
+    ];
+  }
+
+  /**
+   * Builds a required select element, disabled if only one option exists.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state object.
+   * @param string $field
+   *   The form field key.
+   *
+   * @return array
+   *   The Drupal form element array, or an empty array if field is invalid.
+   */
+  protected function buildCheckboxesElement(FormStateInterface $form_state, string $field) {
+    // Get all available options for this field.
+    $options = $this->getSelectOptions($field);
+    // Sanity check for a valid $field parameter.
+    if (!$options) {
+      return [];
+    }
+    $disabled = FALSE;
+    $default_value = $this->query->get($field);
+    if (empty($default_value)) {
+      $default_value = array_keys($options);
+    }
+
+    // If only one option, pre-select it and disable the select.
+    if (count($options) == 1) {
+      $disabled = TRUE;
+      $default_value = key($options);
+      $form_state->setValue($field, $default_value);
+    }
+    return [
+      '#type' => 'checkboxes',
+      '#options' => $options,
+      '#default_value' => $default_value,
       '#required' => TRUE,
       '#disabled' => $disabled,
     ];
