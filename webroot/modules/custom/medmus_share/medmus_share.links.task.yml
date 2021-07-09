@@ -1,0 +1,4 @@
+medmus_share.admin_content_pull_all_form:
+  title: 'Enqueue full-sync'
+  route_name: medmus_share.admin_content_pull_all_form
+  parent_id: entity_share_client.admin_content_page

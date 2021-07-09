@@ -1,0 +1,9 @@
+medmus_share.admin_content_pull_all_form:
+  path: '/admin/content/entity_share/all-sync'
+  defaults:
+    _form: '\Drupal\medmus_share\Form\AllSyncConfirmForm'
+    _title: 'Enqueue full-sync'
+  requirements:
+    _permission: 'entity_share_client_pull_content'
+  options:
+    _admin_route: TRUE
