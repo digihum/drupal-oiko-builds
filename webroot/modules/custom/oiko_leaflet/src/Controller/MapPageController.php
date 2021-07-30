@@ -155,7 +155,15 @@ class MapPageController extends ControllerBase {
       return 'oiko_leaflet:MapPageController:allEntitiesForMap:' . $entities_per_page . ':' . $num;
     }, $pages), $pages);
     $uncached_cids = array_keys($cids);
-    $cached_pages = $this->cacheBin->getMultiple($uncached_cids);
+    // Sometimes we can run out of RAM getting things from cache!
+    // So chunk it down.
+    $cached_pages = [];
+    $remaining_pages = [];
+    foreach (array_chunk($uncached_cids, 10) as $chunk_to_fetch) {
+      $cached_pages += $this->cacheBin->getMultiple($chunk_to_fetch);
+      $remaining_pages = array_merge($remaining_pages, $chunk_to_fetch);
+    }
+
     $data = [
       'features' => [],
     ];
@@ -163,11 +171,11 @@ class MapPageController extends ControllerBase {
     Timer::start('entityPageGeneration');
 
     // If we have multiple threads regenerating these pages we don't mind them doing it in parallel, but we might as well get them to rebuild the pages in a random order so that hopefully they can complete some different pages each before redirecting and then spotting that the other thread has done some work too.
-    shuffle($uncached_cids);
+    shuffle($remaining_pages);
 
     // If there are uncached pages: compute those now.
-    while (!empty($uncached_cids)) {
-      $cid = array_shift($uncached_cids);
+    while (!empty($remaining_pages)) {
+      $cid = array_shift($remaining_pages);
       $page = $cids[$cid];
 
       $this_page = $this->getEntityDataForSinglePage($page, $entities_per_page);
@@ -179,7 +187,7 @@ class MapPageController extends ControllerBase {
 
       // If we have been executing for more than 10 seconds, redirect.
       if (Timer::read('entityPageGeneration') > 10000) {
-        return new RedirectResponse(Url::fromRoute('oiko_leaflet.map_page_controller_allEntities')->toString(), 307, ['X-Oiko-Cache-Pages-Left-To-Generate' => count($uncached_cids)]);
+        return new RedirectResponse(Url::fromRoute('oiko_leaflet.map_page_controller_allEntities')->toString(), 307, ['X-Oiko-Cache-Pages-Left-To-Generate' => count($remaining_pages)]);
       }
     }
 
