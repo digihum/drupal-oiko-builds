@@ -22,7 +22,10 @@ class SetImportPolicyToDefaultAction extends ViewsBulkOperationsActionBase {
    * {@inheritdoc}
    */
   public function execute($entity = NULL) {
-    $entity->setPolicy(EntityImportStatusInterface::IMPORT_POLICY_DEFAULT)->save();
+    $entity
+      ->setPolicy(EntityImportStatusInterface::IMPORT_POLICY_DEFAULT)
+      ->setLastImport(1)
+      ->save();
     // Enqueue a re-sync of this entity.
     $queue_helper = \Drupal::service('entity_share_async.queue_helper');
     $queue_helper->enqueue($entity->remote_website->value, $entity->channel_id->value, 'import', [$entity->entity_uuid->value]);

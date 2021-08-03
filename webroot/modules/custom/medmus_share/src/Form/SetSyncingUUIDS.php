@@ -64,18 +64,28 @@ class SetSyncingUUIDS extends \Drupal\Core\Form\FormBase {
 
 
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $count = 0;
     $uuids = array_filter(array_map('trim', explode("\n", trim($form_state->getValue('uuids')))));
 
     $state = \Drupal::service('entity_share_client.state_information');
     foreach ($uuids as $uuid) {
       if ($entity_state = $state->getImportStatusByParameters($uuid, $form_state->getValue('entity_type'))) {
         // Change the policy to syncing and enqueue a re-sync.
-        $entity_state->setPolicy(EntityImportStatusInterface::IMPORT_POLICY_DEFAULT)->save();
+        $entity_state
+          ->setPolicy(EntityImportStatusInterface::IMPORT_POLICY_DEFAULT)
+          ->setLastImport(1)
+          ->save();
         // Enqueue a re-sync of this entity.
         $queue_helper = \Drupal::service('entity_share_async.queue_helper');
         $queue_helper->enqueue($entity_state->remote_website->value, $entity_state->channel_id->value, 'import', [$entity_state->entity_uuid->value]);
+        $count++;
       }
     }
+
+    $messenger = \Drupal::messenger();
+    $messenger->addMessage($this->t('Set @count entities to re-sync.', [
+      '@count' => $count,
+    ]));
   }
 
 
