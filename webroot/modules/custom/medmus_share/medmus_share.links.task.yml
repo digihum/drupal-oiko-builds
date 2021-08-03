@@ -2,3 +2,13 @@ medmus_share.admin_content_pull_all_form:
   title: 'Enqueue full-sync'
   route_name: medmus_share.admin_content_pull_all_form
   parent_id: entity_share_client.admin_content_page
+
+medmus_share.views_deleted_synced_entities:
+  title: 'Deleted synced entities'
+  route_name: view.deleted_synced_entities.page_1
+  parent_id: entity_share_client.admin_content_page
+
+medmus_share.views_remote_deletion_queue:
+  title: 'Deleted remote entities'
+  route_name: view.remote_deletion_queue.page_1
+  parent_id: entity_share_client.admin_content_page
