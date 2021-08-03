@@ -3,6 +3,11 @@ medmus_share.admin_content_pull_all_form:
   route_name: medmus_share.admin_content_pull_all_form
   parent_id: entity_share_client.admin_content_page
 
+medmus_share.admin_content_set_syncing_uuids:
+  title: 'Set UUIDs to resync'
+  route_name: medmus_share.admin_content_set_syncing_uuids
+  parent_id: entity_share_client.admin_content_page
+
 medmus_share.views_deleted_synced_entities:
   title: 'Deleted synced entities'
   route_name: view.deleted_synced_entities.page_1

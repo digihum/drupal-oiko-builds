@@ -7,3 +7,14 @@ medmus_share.admin_content_pull_all_form:
     _permission: 'entity_share_client_pull_content'
   options:
     _admin_route: TRUE
+
+
+medmus_share.admin_content_set_syncing_uuids:
+  path: '/admin/content/entity_share/set_syncing_uuids'
+  defaults:
+    _form: '\Drupal\medmus_share\Form\SetSyncingUUIDS'
+    _title: 'Set UUIDs to resync'
+  requirements:
+    _permission: 'entity_share_client_pull_content'
+  options:
+    _admin_route: TRUE
