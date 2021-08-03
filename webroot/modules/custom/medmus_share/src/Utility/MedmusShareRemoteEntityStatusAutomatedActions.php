@@ -97,5 +97,35 @@ class MedmusShareRemoteEntityStatusAutomatedActions implements ContainerInjectio
         }
       }
     }
+
+    // We are also going to look for entities that were deleted on both sides,
+    // but we think the decision was undecided. In this case, we can simply mark
+    // it as deleted.
+    foreach (['cidoc_entity', 'cidoc_reference'] as $entity_type) {
+      $all_uuids = $this->connection->select($entity_type, 'e')
+        ->fields('e', array('uuid'));
+      $query = $this->connection->select('medmus_deleted_remote_entity', 'd')
+        ->fields('d', ['id'])
+        ->condition('d.decision', DeletedRemoteEntityInterface::DECISION_UNDECIDED)
+        ->range(0, 10);
+      $query->condition('d.entity_uuid', $all_uuids, 'NOT IN');
+      $query->condition('d.entity_type_id', $entity_type);
+
+      $results = $query->execute()->fetchCol();
+
+      if (!empty($results)) {
+        /* @var \Drupal\medmus_share\Entity\DeletedRemoteEntityInterface $entity */
+        foreach ($this->medmusDeletedRemoteEntityStorage->loadMultiple($results) as $entity) {
+          if ($local_entity = $entity->getLocalEntity()) {
+            // Really shouldn't get here.
+            // todo: throw an exception?
+            $this->logger->info('Found a local entity we thought had gone: %label', ['%label' => $local_entity->label()]);
+            continue;
+          }
+          $entity->setDecision(DeletedRemoteEntityInterface::DECISION_DELETE);
+          $entity->save();
+        }
+      }
+    }
   }
 }
