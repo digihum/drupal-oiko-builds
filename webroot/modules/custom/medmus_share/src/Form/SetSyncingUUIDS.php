@@ -75,9 +75,19 @@ class SetSyncingUUIDS extends \Drupal\Core\Form\FormBase {
           ->setPolicy(EntityImportStatusInterface::IMPORT_POLICY_DEFAULT)
           ->setLastImport(1)
           ->save();
+        // Work out the channel.
+        switch ($entity_state->entity_type_id->value) {
+          case 'cidoc_reference':
+          case 'cidoc_entity':
+            $channel = $entity_state->entity_type_id->value . '__' . $entity_state->entity_bundle->value;
+            break;
+
+          default:
+            $channel = $entity_state->channel_id->value;
+        }
         // Enqueue a re-sync of this entity.
         $queue_helper = \Drupal::service('entity_share_async.queue_helper');
-        $queue_helper->enqueue($entity_state->remote_website->value, $entity_state->channel_id->value, 'import', [$entity_state->entity_uuid->value]);
+        $queue_helper->enqueue($entity_state->remote_website->value, $channel, 'import', [$entity_state->entity_uuid->value]);
         $count++;
       }
     }
