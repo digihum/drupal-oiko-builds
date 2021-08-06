@@ -2,6 +2,8 @@
 
 namespace Drupal\cidoc\Entity;
 
+use Drupal\cidoc\Exception\CidocNoDomainException;
+use Drupal\cidoc\Exception\CidocNoRangeException;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EditorialContentEntityBase;
@@ -476,15 +478,22 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
     $entities = [];
     if (!empty($references)) {
       foreach (\Drupal::entityTypeManager()->getStorage('cidoc_reference')->loadMultiple($references) as $reference) {
-        $domain_entity_id = $reference->getDomain();
-        if ($loaded) {
-          $e = \Drupal::entityTypeManager()->getStorage('cidoc_entity')->load($domain_entity_id);
-          $entities[$domain_entity_id] = $e;
+        try {
+          $domain_entity_id = $reference->getDomain();
+          if ($loaded) {
+            $e = \Drupal::entityTypeManager()
+              ->getStorage('cidoc_entity')
+              ->load($domain_entity_id);
+            $entities[$domain_entity_id] = $e;
+          }
+          else {
+            $entities[$domain_entity_id] = $domain_entity_id;
+          }
         }
-        else {
-          $entities[$domain_entity_id] = $domain_entity_id;
+        catch (CidocNoDomainException $e) {
+          // todo: Log/delete the reference?
+          continue;
         }
-
       }
     }
     return array_filter($entities);
@@ -512,15 +521,22 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
     $entities = [];
     if (!empty($references)) {
       foreach (\Drupal::entityTypeManager()->getStorage('cidoc_reference')->loadMultiple($references) as $reference) {
-        $range_entity_id = $reference->getRange();
-        if ($loaded) {
-          $e = \Drupal::entityTypeManager()->getStorage('cidoc_entity')->load($range_entity_id);
-          $entities[$range_entity_id] = $e;
+        try {
+          $range_entity_id = $reference->getRange();
+          if ($loaded) {
+            $e = \Drupal::entityTypeManager()
+              ->getStorage('cidoc_entity')
+              ->load($range_entity_id);
+            $entities[$range_entity_id] = $e;
+          }
+          else {
+            $entities[$range_entity_id] = $range_entity_id;
+          }
         }
-        else {
-          $entities[$range_entity_id] = $range_entity_id;
+        catch (CidocNoRangeException $e) {
+          // todo: Log/delete the reference?
+          continue;
         }
-
       }
     }
     return array_filter($entities);

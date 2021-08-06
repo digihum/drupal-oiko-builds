@@ -2,6 +2,8 @@
 
 namespace Drupal\cidoc\Entity;
 
+use Drupal\cidoc\Exception\CidocNoDomainException;
+use Drupal\cidoc\Exception\CidocNoRangeException;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EditorialContentEntityBase;
@@ -357,6 +359,9 @@ class CidocReference extends EditorialContentEntityBase implements CidocReferenc
    * @return mixed
    */
   public function getDomain() {
+    if ($this->domain->isEmpty()) {
+      throw new CidocNoDomainException();
+    }
     // @TODO: fairly certain this is wrong/could be done better.
     return $this->get('domain')->getValue()[0]['target_id'];
   }
@@ -368,6 +373,9 @@ class CidocReference extends EditorialContentEntityBase implements CidocReferenc
    * @return mixed
    */
   public function getRange() {
+    if ($this->range->isEmpty()) {
+      throw new CidocNoRangeException();
+    }
     // @TODO: fairly certain this is wrong/could be done better.
     return $this->get('range')->getValue()[0]['target_id'];
   }
