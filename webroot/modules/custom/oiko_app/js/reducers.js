@@ -91,7 +91,7 @@ function timelinesState(state = {
   }
 }
 
-function PHSCategories(state = [], action) {
+function PHSCategories(state = [3], action) {
   switch (action.type) {
     case SET_PHS_CATEGORIES:
       return action.categories;
