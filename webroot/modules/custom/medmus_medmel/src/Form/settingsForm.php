@@ -67,13 +67,6 @@ class settingsForm extends \Drupal\Core\Form\ConfigFormBase {
       '#description' => $this->t('This will be used for the iframe embed URL when there are multiple related pieces of music.'),
     ];
 
-    $form['multipleEmbedUrl'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Multiple embed URL'),
-      '#default_value' => $config->get('multipleEmbedUrl'),
-      '#description' => $this->t('This will be used for the iframe embed URL when there are multiple related pieces of music.'),
-    ];
-
     $form['certName'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Certificate name'),
