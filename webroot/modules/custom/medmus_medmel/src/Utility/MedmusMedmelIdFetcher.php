@@ -66,8 +66,11 @@ class MedmusMedmelIdFetcher implements ContainerInjectionInterface {
     $config = $this->configFactory->get('medmus_medmel.settings');
 
     try {
+      $directory = \Drupal::service('file_system')->realpath("private://");
+      $certName = $config->get('certName');
+      $cert = $directory."/certificates/".$certName;
       // Fetch the IDs, and make our DB table look like the JSON.
-      $request = $this->httpClient->request('GET', $config->get('fetchUrl'), ['verify' => '/webroot/modules/custom/medmus_medmel/certificate/medmel-seai-uniroma1-it-chain.pem']);
+      $request = $this->httpClient->request('GET', $config->get('fetchUrl'), ["verify" => $cert]);
 
       if ($request->getStatusCode() != 200) {
         $this->logger->error('Got error code: @code', [

@@ -1,4 +1,5 @@
-fetchUrl: https://medmel.polisemie.it/php/getStaffId.php
-embedUrl: https://medmel.polisemie.it/embed.html?id=
-multipleEmbedUrl: https://medmel.polisemie.it/embedAll.html?id=
+fetchUrl: https://medmel.seai.uniroma1.it/php/getStaffId.php
+embedUrl: https://medmel.seai.uniroma1.it/embed.html?id=
+multipleEmbedUrl: https://medmel.seai.uniroma1.it/embedAll.html?id=
 iframeHeight: 700
+certName: medmel-seai-uniroma1-it-chain.pem
