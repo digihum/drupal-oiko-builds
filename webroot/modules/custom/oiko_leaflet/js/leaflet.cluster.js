@@ -50,6 +50,15 @@
         }
       }
 
+      // We have an additional layer for points that are 'in focus', i.e. have
+      // been clicked on.
+      // So when a marker in a spider gets clicked it will get cloned and placed
+      // into this layer.
+      // Further interaction with other spidered markers will clear this 'focus'
+      // layer.
+      // This is so that you can still 'interact' to some degree with the marker
+      // even though it is within the now closed spider.
+
       // Move the given layer to our focus layer group.
       var moveLayerToFocusGroup = function(layer) {
         // Remove the layer from the mainlayer and add.
@@ -67,15 +76,23 @@
       if (L.Browser.touch) {
         drupalLeaflet.clusterer.on('preclick', function (e) {
           if (e.layer.isMedmusTooltipOpen()) {
-            drupalLeaflet.clusterer.unspiderfy();
-            moveLayerToFocusGroup(e.layer);
+            // Only move the layer if the target is actually in a spidered
+            // collection.
+            if (e.target._spiderfied) {
+              drupalLeaflet.clusterer.unspiderfy();
+              moveLayerToFocusGroup(e.layer);
+            }
           }
         });
       }
       else {
         drupalLeaflet.clusterer.on('click', function (e) {
-          drupalLeaflet.clusterer.unspiderfy();
-          moveLayerToFocusGroup(e.layer);
+          // Only move the layer if the target is actually in a spidered
+          // collection.
+          if (e.target._spiderfied) {
+            drupalLeaflet.clusterer.unspiderfy();
+            moveLayerToFocusGroup(e.layer);
+          }
         });
       }
 
