@@ -1,8 +1,9 @@
-version: '2'
+version: '3'
 
 services:
   drupal_db:
     image: mysql:5.7
+    command: --max_allowed_packet=900M
     container_name: drupal_db
     volumes:
       - ./data:/var/lib/mysql
@@ -26,11 +27,18 @@ services:
     ports:
       - 8080:80
     volumes:
-      - ./web:/opt/drupal/web/
-      - ./modules:/opt/drupal/modules
-      - ./profiles:/opt/drupal/profiles
-      - ./themes:/opt/drupal/themes
-      - ./scripts:/opt/drupal/scripts
+      
+      - ./data:/var/lib/mysql
+      - ../webroot:/opt/drupal/web/
+      - ../modules:/opt/drupal/modules
+      - ../profiles:/opt/drupal/profiles
+      - ../themes:/opt/drupal/themes
+      - ../scripts:/opt/drupal/scripts
+      - ../vendor:/opt/drupal/vendor
+      - ../drush:/opt/drupal/drush
+      - ../config:/opt/drupal/config
+      - ./files:/opt/drupal/web/sites/default/files:rw
+      
       # this takes advantage of the feature in Docker that a new anonymous
       # volume (which is what we're creating here) will be initialized with the
       # existing content of the image at the same location
