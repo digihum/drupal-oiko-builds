@@ -42,17 +42,16 @@ class GeocoderController extends ControllerBase {
   /**
    * Callback Method for Route geocoder_autocomplete.autocomplete.
    *
-   * @param Request $request
+   * @param \Symfony\Component\HttpFoundation\Request $request
    *   The Request sent.
    *
-   * @return mixed|string
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   Json output of the found strings.
    */
   public function geocoderAutocomplete(Request $request) {
     $matches = $this->geocoderService->getAddress(
       $request->query->get('q')
     );
-
     return new JsonResponse($matches);
   }
 

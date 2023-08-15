@@ -3,7 +3,7 @@
  * Contains the definition of the behaviour entityShareClientFullPager.
  */
 
-(function ($, Drupal) {
+(function (Drupal, once) {
 
   'use strict';
 
@@ -17,14 +17,21 @@
    */
   Drupal.behaviors.entityShareClientFullPager = {
     attach: function (context, settings) {
-      $(context).find('.js-pager__items a').once('js--full-pager').each(function () {
-        var href = $(this).attr('href');
-        href = removeUrlParameter(href, 'ajax_form');
-        href = removeUrlParameter(href, '_wrapper_format');
-        $(this).attr('href', href);
-      });
+      var pagerLinks = once(
+        'js--full-pager',
+        '.js-pager__items a',
+        context
+      );
+      pagerLinks.forEach(prepareLink);
     }
   };
+
+  function prepareLink(element) {
+    var href = element.getAttribute('href');
+    href = removeUrlParameter(href, 'ajax_form');
+    href = removeUrlParameter(href, '_wrapper_format');
+    element.setAttribute('href', href);
+  }
 
   /**
    * Helper function to remove a query parameter from a string.
@@ -45,4 +52,4 @@
       .replace(/&$/, '');
   }
 
-})(jQuery, Drupal);
+})(Drupal, once);

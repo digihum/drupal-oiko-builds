@@ -6,6 +6,7 @@ namespace Drupal\Tests\entity_share_client\Functional;
 
 use Drupal\Core\Session\AccountInterface;
 use Drupal\entity_share_client\Entity\RemoteInterface;
+use Drupal\entity_share_server\Entity\ChannelInterface;
 use Drupal\node\NodeInterface;
 use Drupal\user\Entity\Role;
 use Drupal\user\UserInterface;
@@ -21,15 +22,15 @@ class AuthenticationAnonymousTest extends AuthenticationTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     Role::load(AccountInterface::ANONYMOUS_ROLE)
-      ->grantPermission('entity_share_server_access_channels')
+      ->grantPermission(ChannelInterface::CHANNELS_ACCESS_PERMISSION)
       ->save();
 
     foreach ($this->channels as $channel) {
-      $channel->set('authorized_users', ['anonymous']);
+      $channel->set('authorized_roles', ['anonymous']);
       $channel->save();
     }
 
@@ -103,15 +104,15 @@ class AuthenticationAnonymousTest extends AuthenticationTestBase {
     $entity_storage = $this->entityTypeManager->getStorage('node');
 
     $published = $entity_storage->loadByProperties(['uuid' => 'es_test_node_import_published']);
-    $this->assertEqual(count($published), 1, 'The published node was imported.');
+    $this->assertEquals(1, count($published), 'The published node was imported.');
 
     $not_published = $entity_storage->loadByProperties(['uuid' => 'es_test_node_import_not_published']);
-    $this->assertEqual(count($not_published), 0, 'The unpublished node was not imported.');
+    $this->assertEquals(0, count($not_published), 'The unpublished node was not imported.');
 
     foreach (static::$filesData as $file_data) {
       $this->assertTrue(file_exists($file_data['uri']), 'The private physical file ' . $file_data['filename'] . ' has been pulled and recreated.');
       $file_content = file_get_contents($file_data['uri']);
-      $this->assertEqual($file_content, $file_data['file_content'], 'Private physical file was downloaded with correct content.');
+      $this->assertEquals($file_data['file_content'], $file_content, 'Private physical file was downloaded with correct content.');
     }
   }
 

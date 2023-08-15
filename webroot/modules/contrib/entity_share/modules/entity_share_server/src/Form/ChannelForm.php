@@ -12,10 +12,11 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
+use Drupal\entity_share_server\Entity\ChannelInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class ChannelForm.
+ * Entity form for the channel entity.
  *
  * @package Drupal\entity_share_server\Form
  */
@@ -114,6 +115,16 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
 
     $this->buildLanguageSelect($form, $form_state);
 
+    $form['channel_maxsize'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Max size'),
+      '#description' => $this->t("The JSON:API's page limit option to limit the number of entities per page."),
+      '#default_value' => $channel->get('channel_maxsize'),
+      '#min' => 1,
+      '#max' => 50,
+      '#required' => TRUE,
+    ];
+
     $this->buildGroupsTable($form, $form_state);
 
     $this->buildFiltersTable($form, $form_state);
@@ -122,16 +133,7 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
 
     $this->buildSortsTable($form, $form_state);
 
-    $authorized_users = $channel->get('authorized_users');
-    $form['authorized_users'] = [
-      '#type' => 'checkboxes',
-      '#title' => $this->t('Authorized users'),
-      '#description' => $this->t('Only users with the %entity_share_server_access_channels permission are listed.', [
-        '%entity_share_server_access_channels' => $this->t('Access channels list'),
-      ]),
-      '#options' => $this->getAuthorizedUsersOptions(),
-      '#default_value' => !is_null($authorized_users) ? $authorized_users : [],
-    ];
+    $this->buildAccessSection($form, $form_state);
 
     return $form;
   }
@@ -143,6 +145,9 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
     /** @var \Drupal\entity_share_server\Entity\ChannelInterface $channel */
     $channel = $this->entity;
 
+    $channel->set('access_by_permission', $form_state->getValue('access_by_permission'));
+    $authorized_roles = array_filter($form_state->getValue('authorized_roles'));
+    $channel->set('authorized_roles', $authorized_roles);
     $authorized_users = array_filter($form_state->getValue('authorized_users'));
     $channel->set('authorized_users', $authorized_users);
 
@@ -209,7 +214,7 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
   }
 
   /**
-   * Helper function to generate bundle select.
+   * Generate bundle select.
    *
    * @param array $form
    *   The form array.
@@ -259,7 +264,7 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
   }
 
   /**
-   * Helper function to generate language select.
+   * Generate language select.
    *
    * @param array $form
    *   The form array.
@@ -306,7 +311,7 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
   }
 
   /**
-   * Helper function to generate group form elements.
+   * Generate group form elements.
    *
    * @param array $form
    *   The form array.
@@ -325,8 +330,9 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
     }
 
     $form['channel_groups'] = [
-      '#type' => 'fieldset',
+      '#type' => 'details',
       '#title' => $this->t('Groups'),
+      '#open' => TRUE,
     ];
 
     if ($channel->isNew()) {
@@ -402,7 +408,7 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
   }
 
   /**
-   * Helper function to generate filter form elements.
+   * Generate filter form elements.
    *
    * @param array $form
    *   The form array.
@@ -421,8 +427,9 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
     }
 
     $form['channel_filters'] = [
-      '#type' => 'fieldset',
+      '#type' => 'details',
       '#title' => $this->t('Filters'),
+      '#open' => TRUE,
     ];
 
     if ($channel->isNew()) {
@@ -510,7 +517,7 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
   }
 
   /**
-   * Helper function to generate search form elements.
+   * Generate search form elements.
    *
    * @param array $form
    *   The form array.
@@ -529,8 +536,9 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
     }
 
     $form['channel_searches'] = [
-      '#type' => 'fieldset',
+      '#type' => 'details',
       '#title' => $this->t('Searches'),
+      '#open' => TRUE,
     ];
 
     // Add a warning message.
@@ -624,7 +632,7 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
   }
 
   /**
-   * Helper function to generate sort form elements.
+   * Generate sort form elements.
    *
    * @param array $form
    *   The form array.
@@ -640,8 +648,9 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
     }
 
     $form['channel_sorts'] = [
-      '#type' => 'fieldset',
+      '#type' => 'details',
       '#title' => $this->t('sorts'),
+      '#open' => TRUE,
     ];
 
     if ($channel->isNew()) {
@@ -740,7 +749,56 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
   }
 
   /**
-   * Helper function to get the entity type options.
+   * Generate access section.
+   *
+   * @param array $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state object.
+   */
+  protected function buildAccessSection(array &$form, FormStateInterface $form_state) {
+    /** @var \Drupal\entity_share_server\Entity\ChannelInterface $channel */
+    $channel = $this->entity;
+
+    $form['access_section'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Access'),
+      '#open' => TRUE,
+    ];
+
+    $form['access_section']['access_by_permission'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('All users with the %entity_share_server_access_channels permission.', [
+        '%entity_share_server_access_channels' => $this->t('Access channels list'),
+      ]),
+      '#default_value' => $channel->get('access_by_permission'),
+    ];
+
+    $authorized_roles = $channel->get('authorized_roles');
+    $form['access_section']['authorized_roles'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Authorized roles'),
+      '#description' => $this->t('Only roles with the %entity_share_server_access_channels permission are listed.', [
+        '%entity_share_server_access_channels' => $this->t('Access channels list'),
+      ]),
+      '#options' => $this->getAuthorizedRolesOptions(),
+      '#default_value' => !is_null($authorized_roles) ? $authorized_roles : [],
+    ];
+
+    $authorized_users = $channel->get('authorized_users');
+    $form['access_section']['authorized_users'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Authorized users'),
+      '#description' => $this->t('Only users with the %entity_share_server_access_channels permission are listed.', [
+        '%entity_share_server_access_channels' => $this->t('Access channels list'),
+      ]),
+      '#options' => $this->getAuthorizedUsersOptions(),
+      '#default_value' => !is_null($authorized_users) ? $authorized_users : [],
+    ];
+  }
+
+  /**
+   * Get the entity type options.
    *
    * @return array
    *   An array of options.
@@ -761,12 +819,13 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
 
       $options[$entity_type_id] = $definition->getLabel();
     }
+    asort($options);
 
     return $options;
   }
 
   /**
-   * Helper function to get the bundle options.
+   * Get the bundle options.
    *
    * @param string $selected_entity_type
    *   The entity type.
@@ -783,9 +842,32 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
   }
 
   /**
-   * Helper function.
+   * Get roles with the permission entity_share_server_access_channels.
    *
-   * Get users with permission entity_share_server_access_channels.
+   * @return array
+   *   An array of options.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   */
+  protected function getAuthorizedRolesOptions() {
+    $authorized_roles = [];
+
+    // Filter on roles having access to the channel list.
+    /** @var \Drupal\user\RoleInterface[] $roles */
+    $roles = $this->entityTypeManager
+      ->getStorage('user_role')
+      ->loadMultiple();
+    foreach ($roles as $role) {
+      if ($role->hasPermission(ChannelInterface::CHANNELS_ACCESS_PERMISSION)) {
+        $authorized_roles[$role->id()] = $role->label();
+      }
+    }
+
+    return $authorized_roles;
+  }
+
+  /**
+   * Get users with the permission entity_share_server_access_channels.
    *
    * @return array
    *   An array of options.
@@ -794,25 +876,11 @@ class ChannelForm extends EntityForm implements ContainerInjectionInterface {
    */
   protected function getAuthorizedUsersOptions() {
     $authorized_users = [];
-    $authorized_roles = [];
+    $authorized_roles = $this->getAuthorizedRolesOptions();
     $users = [];
 
-    // Filter on roles having access to the channel list.
-    /** @var \Drupal\user\RoleInterface[] $roles */
-    $roles = $this->entityTypeManager
-      ->getStorage('user_role')
-      ->loadMultiple();
-    foreach ($roles as $role) {
-      if ($role->hasPermission('entity_share_server_access_channels')) {
-        $authorized_roles[] = $role->id();
-      }
-    }
-
     if (!empty($authorized_roles)) {
-      if (in_array('anonymous', $authorized_roles)) {
-        $authorized_users['anonymous'] = $this->t('Anonymous');
-      }
-
+      $authorized_roles = array_keys($authorized_roles);
       $users = $this->entityTypeManager
         ->getStorage('user')
         ->loadByProperties(['roles' => $authorized_roles]);

@@ -22,18 +22,16 @@ class TokenFieldUiTest extends TokenTestBase {
   protected $adminUser;
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
-  public static $modules = ['field_ui', 'node', 'image'];
+  protected static $modules = ['field_ui', 'node', 'image'];
 
   /**
    * {@inheritdoc}
    */
-  public function setUp($modules = []) {
+  public function setUp(): void {
     parent::setUp();
-    $this->adminUser = $this->drupalCreateUser(['administer content types', 'administer node fields']);
+    $this->adminUser = $this->drupalCreateUser(['bypass node access', 'administer content types', 'administer node fields']);
     $this->drupalLogin($this->adminUser);
 
     $node_type = NodeType::create([
@@ -104,22 +102,23 @@ class TokenFieldUiTest extends TokenTestBase {
     $this->drupalGet('admin/structure/types/manage/article/fields/node.article.field_image');
 
     // Ensure the 'Browse available tokens' link is present and correct.
-    $this->assertLink('Browse available tokens.');
-    $this->assertLinkByHref('token/tree');
+    $this->assertSession()->linkExists('Browse available tokens.');
+    $this->assertSession()->linkByHrefExists('token/tree');
 
     // Ensure that the default file directory value validates correctly.
-    $this->drupalPostForm(NULL, [], t('Save settings'));
-    $this->assertText(t('Saved Image configuration.'));
+    $this->submitForm([], 'Save settings');
+    $this->assertSession()->pageTextContains('Saved Image configuration.');
   }
 
   public function testFieldDescriptionTokens() {
     $edit = [
       'description' => 'The site is called [site:name].',
     ];
-    $this->drupalPostForm('admin/structure/types/manage/article/fields/node.article.field_body', $edit, 'Save settings');
+    $this->drupalGet('admin/structure/types/manage/article/fields/node.article.field_body');
+    $this->submitForm($edit, 'Save settings');
 
     $this->drupalGet('node/add/article');
-    $this->assertText('The site is called Drupal.');
+    $this->assertSession()->pageTextContains('The site is called Drupal.');
   }
 
   /**

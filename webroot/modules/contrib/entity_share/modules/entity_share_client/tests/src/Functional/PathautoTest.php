@@ -11,7 +11,7 @@ use Drupal\entity_share\EntityShareUtility;
 use Drupal\entity_share_client\ImportContext;
 
 /**
- * General functional test class for path field.
+ * General functional test class for path field with Pathauto.
  *
  * @group entity_share
  * @group entity_share_client
@@ -21,7 +21,7 @@ class PathautoTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'jsonapi_extras',
     'pathauto',
   ];
@@ -58,7 +58,7 @@ class PathautoTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->configFactory = $this->container->get('config.factory');

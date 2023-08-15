@@ -4,11 +4,11 @@ dependencies:
   config:
     - field.storage.media.field_es_test_document
     - media.type.es_test_document
+  module:
+    - file
   enforced:
     module:
       - media
-  module:
-    - file
 id: media.es_test_document.field_es_test_document
 field_name: field_es_test_document
 entity_type: media

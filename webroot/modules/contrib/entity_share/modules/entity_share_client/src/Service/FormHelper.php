@@ -17,10 +17,11 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\entity_share\EntityShareUtility;
 use Drupal\entity_share_client\Entity\RemoteInterface;
+use Drupal\entity_share_client\Exception\ResourceTypeNotFoundException;
 use Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface;
 
 /**
- * Class FormHelper.
+ * Service to extract code out of the PullForm.
  *
  * @package Drupal\entity_share_client\Service
  */
@@ -145,6 +146,7 @@ class FormHelper implements FormHelperInterface {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \InvalidArgumentException
+   * @throws \Drupal\entity_share_client\Exception\ResourceTypeNotFoundException
    */
   protected function addOptionFromJson(array &$options, array $data, RemoteInterface $remote, $channel_id, $level = 0) {
     $parsed_type = explode('--', $data['type']);
@@ -159,6 +161,10 @@ class FormHelper implements FormHelperInterface {
       $bundle_id
     );
 
+    if ($resource_type == NULL) {
+      throw new ResourceTypeNotFoundException("Trying to import an entity type '{$entity_type_id}' of bundle '{$bundle_id}' which does not exist on the website.");
+    }
+
     $status_info = $this->stateInformation->getStatusInfo($data);
 
     // Prepare remote changed info.
@@ -172,10 +178,13 @@ class FormHelper implements FormHelperInterface {
             'timezone' => date_default_timezone_get(),
           ]);
         }
-        elseif ($remote_changed_date = DrupalDateTime::createFromFormat(\DateTime::RFC3339, $data['attributes'][$changed_public_name])) {
-          $remote_changed_info = $remote_changed_date->format(self::CHANGED_FORMAT, [
-            'timezone' => date_default_timezone_get(),
-          ]);
+        else {
+          $remote_changed_date = DrupalDateTime::createFromFormat(\DateTime::RFC3339, $data['attributes'][$changed_public_name]);
+          if ($remote_changed_date) {
+            $remote_changed_info = $remote_changed_date->format(self::CHANGED_FORMAT, [
+              'timezone' => date_default_timezone_get(),
+            ]);
+          }
         }
       }
     }
@@ -190,34 +199,37 @@ class FormHelper implements FormHelperInterface {
         'data' => $status_info['label'],
         'class' => $status_info['class'],
       ],
+      'policy' => $status_info['policy'],
     ];
 
-    $id_public_name = $resource_type->getPublicName($entity_keys['id']);
-    if ($this->moduleHandler->moduleExists('diff') &&
-      in_array($status_info['info_id'], [
-        StateInformationInterface::INFO_ID_CHANGED,
-        StateInformationInterface::INFO_ID_NEW_TRANSLATION,
-      ]) &&
-      !is_null($status_info['local_revision_id']) &&
-      isset($data['attributes'][$id_public_name])
-    ) {
-      $options[$data['id']]['status']['data'] = new FormattableMarkup('@label: @diff_link', [
-        '@label' => $options[$data['id']]['status']['data'],
-        '@diff_link' => Link::createFromRoute($this->t('Diff'), 'entity_share_client.diff', [
-          'left_revision' => $status_info['local_revision_id'],
-          'remote' => $remote->id(),
-          'channel_id' => $channel_id,
-          'uuid' => $data['id'],
-        ], [
-          'attributes' => [
-            'class' => [
-              'use-ajax',
+    if ($this->moduleHandler->moduleExists('entity_share_diff')) {
+      $id_public_name = $resource_type->getPublicName($entity_keys['id']);
+      if (
+        in_array($status_info['info_id'], [
+          StateInformationInterface::INFO_ID_CHANGED,
+          StateInformationInterface::INFO_ID_NEW_TRANSLATION,
+        ]) &&
+        !is_null($status_info['local_revision_id']) &&
+        isset($data['attributes'][$id_public_name])
+      ) {
+        $options[$data['id']]['status']['data'] = new FormattableMarkup('@label: @diff_link', [
+          '@label' => $options[$data['id']]['status']['data'],
+          '@diff_link' => Link::createFromRoute($this->t('Diff'), 'entity_share_diff.comparison', [
+            'left_revision_id' => $status_info['local_revision_id'],
+            'remote' => $remote->id(),
+            'channel_id' => $channel_id,
+            'uuid' => $data['id'],
+          ], [
+            'attributes' => [
+              'class' => [
+                'use-ajax',
+              ],
+              'data-dialog-type' => 'modal',
+              'data-dialog-options' => Json::encode(['width' => '90%']),
             ],
-            'data-dialog-type' => 'modal',
-            'data-dialog-options' => Json::encode(['width' => '90%']),
-          ],
-        ])->toString(),
-      ]);
+          ])->toString(),
+        ]);
+      }
     }
   }
 
@@ -275,7 +287,7 @@ class FormHelper implements FormHelperInterface {
     // Get link to remote entity. Need to manually create the link to avoid
     // getting alias from local website.
     if (isset($entity_keys['id']) && $resource_type->hasField($entity_keys['id'])) {
-      $remote_entity_id = $data['attributes'][$resource_type->getPublicName($entity_keys['id'])];
+      $remote_entity_id = (string) $data['attributes'][$resource_type->getPublicName($entity_keys['id'])];
       $entity_definition = $this->entityDefinitions[$entity_type_id];
 
       if ($entity_definition->hasLinkTemplate('canonical')) {

@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\add_to_head\Controller\DefaultController.
- */
 
 namespace Drupal\add_to_head\Controller;
 
@@ -32,7 +28,7 @@ class AddToHeadController extends ControllerBase {
         $this->t('Scope'),
         $this->t('Operations'),
       ],
-      '#empty' => t('No profiles configured yet. @link.', array(
+      '#empty' => $this->t('No profiles configured yet. @link.', array(
         '@link' => \Drupal::service('renderer')->render($link),
       )),
     ];

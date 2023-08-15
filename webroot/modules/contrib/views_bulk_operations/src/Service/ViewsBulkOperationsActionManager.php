@@ -2,12 +2,13 @@
 
 namespace Drupal\views_bulk_operations\Service;
 
+use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Action\ActionManager;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\views_bulk_operations\ActionAlterDefinitionsEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\Event;
-use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 
 /**
  * Defines Views Bulk Operations action manager.
@@ -17,21 +18,24 @@ use Drupal\Component\Plugin\Exception\PluginNotFoundException;
  */
 class ViewsBulkOperationsActionManager extends ActionManager {
 
-  const ALTER_ACTIONS_EVENT = 'views_bulk_operations.action_definitions';
+  public const ALTER_ACTIONS_EVENT = 'views_bulk_operations.action_definitions';
 
   /**
    * Event dispatcher service.
-   *
-   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
    */
-  protected $eventDispatcher;
+  protected EventDispatcherInterface $eventDispatcher;
+
+  /**
+   * The entity type manager.
+   */
+  protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
    * Additional parameters passed to alter event.
    *
    * @var array
    */
-  protected $alterParameters;
+  protected array $alterParameters;
 
   /**
    * Service constructor.
@@ -45,15 +49,21 @@ class ViewsBulkOperationsActionManager extends ActionManager {
    *   The module handler to invoke the alter hook with.
    * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
    *   The event dispatcher service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   Entity type manager.
    */
   public function __construct(
     \Traversable $namespaces,
     CacheBackendInterface $cacheBackend,
     ModuleHandlerInterface $moduleHandler,
-    EventDispatcherInterface $eventDispatcher
+    EventDispatcherInterface $eventDispatcher,
+    EntityTypeManagerInterface $entityTypeManager
   ) {
     parent::__construct($namespaces, $cacheBackend, $moduleHandler);
+
     $this->eventDispatcher = $eventDispatcher;
+    $this->entityTypeManager = $entityTypeManager;
+
     $this->setCacheBackend($cacheBackend, 'views_bulk_operations_action_info');
   }
 
@@ -63,28 +73,53 @@ class ViewsBulkOperationsActionManager extends ActionManager {
   protected function findDefinitions() {
     $definitions = $this->getDiscovery()->getDefinitions();
 
-    // Incompatible actions.
-    $incompatible = [
-      'node_delete_action',
-      'user_cancel_user_action',
-    ];
-
+    $entity_type_definitions = $this->entityTypeManager->getDefinitions();
     foreach ($definitions as $plugin_id => &$definition) {
-      $this->processDefinition($definition, $plugin_id);
-      if (empty($definition) || in_array($definition['id'], $incompatible)) {
+      // We only allow actions of existing entity type and empty
+      // type meaning it's applicable to all entity types.
+      if (
+        empty($definition) ||
+        (
+          !empty($definition['type']) &&
+          !isset($entity_type_definitions[$definition['type']])
+        )
+      ) {
         unset($definitions[$plugin_id]);
       }
+
+      // Filter definitions that are incompatible due to applied core
+      // configuration form workaround (using confirm_form_route for config
+      // forms and using action execute() method for purposes other than
+      // actual action execution). Also filter out actions that don't implement
+      // ViewsBulkOperationsActionInterface and have empty type as this
+      // shouldn't be the case in core. Luckily, core also has useful actions
+      // without the workaround, like node_assign_owner_action or
+      // comment_unpublish_by_keyword_action.
+      if (!\in_array('Drupal\views_bulk_operations\Action\ViewsBulkOperationsActionInterface', \class_implements($definition['class']))) {
+        if (
+          !empty($definition['confirm_form_route_name']) ||
+          empty($definition['type'])
+        ) {
+          unset($definitions[$plugin_id]);
+        }
+      }
+
+      $this->processDefinition($definition, $plugin_id);
     }
     $this->alterDefinitions($definitions);
     foreach ($definitions as $plugin_id => $plugin_definition) {
       // If the plugin definition is an object, attempt to convert it to an
       // array, if that is not possible, skip further processing.
-      if (is_object($plugin_definition) && !($plugin_definition = (array) $plugin_definition)) {
+      if (\is_object($plugin_definition) && !($plugin_definition = (array) $plugin_definition)) {
         continue;
       }
       // If this plugin was provided by a module that does not exist, remove the
       // plugin definition.
-      if (isset($plugin_definition['provider']) && !in_array($plugin_definition['provider'], ['core', 'component']) && !$this->providerExists($plugin_definition['provider'])) {
+      if (
+        isset($plugin_definition['provider']) &&
+        !\in_array($plugin_definition['provider'], ['core', 'component']) &&
+        !$this->providerExists($plugin_definition['provider'])
+      ) {
         unset($definitions[$plugin_id]);
       }
     }
@@ -139,7 +174,7 @@ class ViewsBulkOperationsActionManager extends ActionManager {
       return NULL;
     }
 
-    throw new PluginNotFoundException($plugin_id, sprintf('The "%s" plugin does not exist.', $plugin_id));
+    throw new PluginNotFoundException($plugin_id, \sprintf('The "%s" plugin does not exist.', $plugin_id));
   }
 
   /**
@@ -147,11 +182,11 @@ class ViewsBulkOperationsActionManager extends ActionManager {
    */
   public function processDefinition(&$definition, $plugin_id) {
     // Only arrays can be operated on.
-    if (!is_array($definition)) {
+    if (!\is_array($definition)) {
       return;
     }
 
-    if (!empty($this->defaults) && is_array($this->defaults)) {
+    if (!empty($this->defaults) && \is_array($this->defaults)) {
       $definition = NestedArray::mergeDeep($this->defaults, $definition);
     }
 
@@ -174,10 +209,11 @@ class ViewsBulkOperationsActionManager extends ActionManager {
   protected function alterDefinitions(&$definitions) {
     // Let other modules change definitions.
     // Main purpose: Action permissions bridge.
-    $event = new Event();
+    $event = new ActionAlterDefinitionsEvent();
     $event->alterParameters = $this->alterParameters;
     $event->definitions = &$definitions;
-    $this->eventDispatcher->dispatch(static::ALTER_ACTIONS_EVENT, $event);
+
+    $this->eventDispatcher->dispatch($event, self::ALTER_ACTIONS_EVENT);
 
     // Include the expected behaviour (hook system) to avoid security issues.
     parent::alterDefinitions($definitions);

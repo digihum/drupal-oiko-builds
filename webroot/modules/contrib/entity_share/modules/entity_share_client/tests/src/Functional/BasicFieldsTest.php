@@ -6,6 +6,7 @@ namespace Drupal\Tests\entity_share_client\Functional;
 
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\entity_share_test\FakeDataGenerator;
 use Drupal\node\NodeInterface;
 use Drupal\user\UserInterface;
 
@@ -20,7 +21,7 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'entity_share_entity_test',
     'jsonapi_extras',
   ];
@@ -43,7 +44,7 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->entityTypeManager->getStorage('jsonapi_resource_config')->create([
@@ -116,14 +117,14 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
           // Date: date only.
           'es_test_date_only' => $this->getCompleteNodeInfos([
             'field_es_test_date_only' => [
-              'value' => $date_formatter->format($this->faker->dateTimeBetween()->getTimestamp(), 'custom', DateTimeItemInterface::DATE_STORAGE_FORMAT),
+              'value' => $date_formatter->format(FakeDataGenerator::dateTimeBetween()->getTimestamp(), 'custom', DateTimeItemInterface::DATE_STORAGE_FORMAT),
               'checker_callback' => 'getValue',
             ],
           ]),
           // Date: date and time.
           'es_test_date_and_time' => $this->getCompleteNodeInfos([
             'field_es_test_date' => [
-              'value' => $date_formatter->format($this->faker->dateTimeBetween()->getTimestamp(), 'custom', DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
+              'value' => $date_formatter->format(FakeDataGenerator::dateTimeBetween()->getTimestamp(), 'custom', DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
               'checker_callback' => 'getValue',
             ],
           ]),
@@ -132,8 +133,8 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
             'field_es_test_date_only_range' => [
               'value' => [
                 [
-                  'value' => $date_formatter->format($this->faker->dateTimeBetween()->getTimestamp(), 'custom', DateTimeItemInterface::DATE_STORAGE_FORMAT),
-                  'end_value' => $date_formatter->format($this->faker->dateTimeBetween('now', '+30 years')->getTimestamp(), 'custom', DateTimeItemInterface::DATE_STORAGE_FORMAT),
+                  'value' => $date_formatter->format(FakeDataGenerator::dateTimeBetween()->getTimestamp(), 'custom', DateTimeItemInterface::DATE_STORAGE_FORMAT),
+                  'end_value' => $date_formatter->format(FakeDataGenerator::dateTimeBetween('now', '+30 years')->getTimestamp(), 'custom', DateTimeItemInterface::DATE_STORAGE_FORMAT),
                 ],
               ],
               'checker_callback' => 'getValues',
@@ -144,8 +145,8 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
             'field_es_test_date_all_day_range' => [
               'value' => [
                 [
-                  'value' => $date_formatter->format($this->faker->dateTimeBetween()->getTimestamp(), 'custom', DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
-                  'end_value' => $date_formatter->format($this->faker->dateTimeBetween('now', '+30 years')->getTimestamp(), 'custom', DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
+                  'value' => $date_formatter->format(FakeDataGenerator::dateTimeBetween()->getTimestamp(), 'custom', DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
+                  'end_value' => $date_formatter->format(FakeDataGenerator::dateTimeBetween('now', '+30 years')->getTimestamp(), 'custom', DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
                 ],
               ],
               'checker_callback' => 'getValues',
@@ -156,8 +157,8 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
             'field_es_test_date_range' => [
               'value' => [
                 [
-                  'value' => $date_formatter->format($this->faker->dateTimeBetween()->getTimestamp(), 'custom', DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
-                  'end_value' => $date_formatter->format($this->faker->dateTimeBetween('now', '+30 years')->getTimestamp(), 'custom', DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
+                  'value' => $date_formatter->format(FakeDataGenerator::dateTimeBetween()->getTimestamp(), 'custom', DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
+                  'end_value' => $date_formatter->format(FakeDataGenerator::dateTimeBetween('now', '+30 years')->getTimestamp(), 'custom', DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
                 ],
               ],
               'checker_callback' => 'getValues',
@@ -166,14 +167,14 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
           // Email.
           'es_test_email' => $this->getCompleteNodeInfos([
             'field_es_test_email' => [
-              'value' => $this->faker->email,
+              'value' => $this->randomMachineName() . '@example.com',
               'checker_callback' => 'getValue',
             ],
           ]),
           // List: float.
           'es_test_list_float' => $this->getCompleteNodeInfos([
             'field_es_test_list_float' => [
-              'value' => $this->faker->randomElement([
+              'value' => FakeDataGenerator::randomElement([
                 1,
                 1.5,
                 2,
@@ -186,7 +187,7 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
           // List: integer.
           'es_test_list_integer' => $this->getCompleteNodeInfos([
             'field_es_test_list_integer' => [
-              'value' => $this->faker->randomElement([
+              'value' => FakeDataGenerator::randomElement([
                 1,
                 2,
                 3,
@@ -197,7 +198,7 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
           // List: text.
           'es_test_list_text' => $this->getCompleteNodeInfos([
             'field_es_test_list_text' => [
-              'value' => $this->faker->randomElement([
+              'value' => FakeDataGenerator::randomElement([
                 'choice_1',
                 'choice_2',
                 'choice_3',
@@ -208,7 +209,7 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
           // Number: decimal.
           'es_test_number_decimal' => $this->getCompleteNodeInfos([
             'field_es_test_number_decimal' => [
-              'value' => $this->faker->randomFloat(2, 0, 99999999),
+              'value' => FakeDataGenerator::randomFloat(2, 0, 99999999),
               'checker_callback' => 'getValue',
             ],
           ]),
@@ -217,47 +218,47 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
             'field_es_test_number_float' => [
               // Use integer value because of random failure on precision with
               // float.
-              'value' => $this->faker->randomNumber(5),
+              'value' => FakeDataGenerator::randomNumber(5),
               'checker_callback' => 'getValue',
             ],
           ]),
           // Number: integer.
           'es_test_number_integer' => $this->getCompleteNodeInfos([
             'field_es_test_number_integer' => [
-              'value' => $this->faker->randomNumber(),
+              'value' => FakeDataGenerator::randomNumber(),
               'checker_callback' => 'getValue',
             ],
           ]),
           // Telephone.
           'es_test_telephone_phone_number' => $this->getCompleteNodeInfos([
             'field_es_test_telephone' => [
-              'value' => $this->faker->phoneNumber,
+              'value' => '+33 1 23 45 67 89',
               'checker_callback' => 'getValue',
             ],
           ]),
           'es_test_telephone_mobile_number' => $this->getCompleteNodeInfos([
             'field_es_test_telephone' => [
-              'value' => $this->faker->mobileNumber,
+              'value' => '+33 (0)6 12 34 56 78',
               'checker_callback' => 'getValue',
             ],
           ]),
           'es_test_telephone_service_number' => $this->getCompleteNodeInfos([
             'field_es_test_telephone' => [
-              'value' => $this->faker->serviceNumber,
+              'value' => '0812345678',
               'checker_callback' => 'getValue',
             ],
           ]),
           // Text: plain.
           'es_test_text_plain' => $this->getCompleteNodeInfos([
             'field_es_test_text_plain' => [
-              'value' => $this->faker->text(255),
+              'value' => FakeDataGenerator::text(255),
               'checker_callback' => 'getValue',
             ],
           ]),
           // Text: plain, long.
           'es_test_text_plain_long' => $this->getCompleteNodeInfos([
             'field_es_test_text_plain_long' => [
-              'value' => $this->faker->text(1000),
+              'value' => FakeDataGenerator::text(1000),
               'checker_callback' => 'getValue',
             ],
           ]),
@@ -266,7 +267,7 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
             'field_es_test_text_formatted' => [
               'value' => [
                 [
-                  'value' => $this->faker->text(255),
+                  'value' => FakeDataGenerator::text(255),
                   'format' => 'restricted_html',
                 ],
               ],
@@ -278,7 +279,7 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
             'field_es_test_text_formatted_lon' => [
               'value' => [
                 [
-                  'value' => $this->faker->text(1000),
+                  'value' => FakeDataGenerator::text(1000),
                   'format' => 'basic_html',
                 ],
               ],
@@ -290,8 +291,8 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
             'field_es_test_body' => [
               'value' => [
                 [
-                  'value' => $this->faker->text(1000),
-                  'summary' => $this->faker->text(1000),
+                  'value' => FakeDataGenerator::text(1000),
+                  'summary' => FakeDataGenerator::text(1000),
                   'format' => 'full_html',
                 ],
               ],
@@ -301,7 +302,7 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
           // Timestamp.
           'es_test_timestamp' => $this->getCompleteNodeInfos([
             'field_es_test_timestamp' => [
-              'value' => $this->faker->unixTime(),
+              'value' => FakeDataGenerator::unixTime(),
               'checker_callback' => 'getValue',
             ],
           ]),
@@ -344,9 +345,12 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
     $channel = $channel_storage->create([
       'id' => 'entity_test_not_translatable_entity_test_not_translatable_' . LanguageInterface::LANGCODE_NOT_SPECIFIED,
       'label' => $this->randomString(),
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'entity_test_not_translatable',
       'channel_bundle' => 'entity_test_not_translatable',
       'channel_langcode' => LanguageInterface::LANGCODE_NOT_SPECIFIED,
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $user->uuid(),
       ],
@@ -358,9 +362,12 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
     $channel = $channel_storage->create([
       'id' => 'entity_test_not_translatable_el_entity_test_not_translatable_el_' . LanguageInterface::LANGCODE_NOT_SPECIFIED,
       'label' => $this->randomString(),
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'entity_test_not_translatable_el',
       'channel_bundle' => 'entity_test_not_translatable_el',
       'channel_langcode' => LanguageInterface::LANGCODE_NOT_SPECIFIED,
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $user->uuid(),
       ],

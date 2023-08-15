@@ -1,12 +1,10 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\migrate_example\Plugin\migrate\source\BeerNode.
- */
+declare(strict_types = 1);
 
 namespace Drupal\migrate_example\Plugin\migrate\source;
 
+use Drupal\Core\Database\Query\SelectInterface;
 use Drupal\migrate\Plugin\migrate\source\SqlBase;
 use Drupal\migrate\Row;
 
@@ -17,35 +15,42 @@ use Drupal\migrate\Row;
  *   id = "beer_node"
  * )
  */
-class BeerNode extends SqlBase {
+final class BeerNode extends SqlBase {
 
   /**
    * {@inheritdoc}
    */
-  public function query() {
-    /**
-     * An important point to note is that your query *must* return a single row
-     * for each item to be imported. Here we might be tempted to add a join to
-     * migrate_example_beer_topic_node in our query, to pull in the
-     * relationships to our categories. Doing this would cause the query to
-     * return multiple rows for a given node, once per related value, thus
-     * processing the same node multiple times, each time with only one of the
-     * multiple values that should be imported. To avoid that, we simply query
-     * the base node data here, and pull in the relationships in prepareRow()
-     * below.
-     */
-    $query = $this->select('migrate_example_beer_node', 'b')
-                 ->fields('b', ['bid', 'name', 'body', 'excerpt', 'aid',
-                   'countries', 'image', 'image_alt', 'image_title',
-                   'image_description']);
-    return $query;
+  public function query(): SelectInterface {
+    // An important point to note is that your query *must* return a single row
+    // for each item to be imported. Here we might be tempted to add a join to
+    // migrate_example_beer_topic_node in our query, to pull in the
+    // relationships to our categories. Doing this would cause the query to
+    // return multiple rows for a given node, once per related value, thus
+    // processing the same node multiple times, each time with only one of the
+    // multiple values that should be imported. To avoid that, we simply query
+    // the base node data here, and pull in the relationships in prepareRow()
+    // below.
+    $fields = [
+      'bid',
+      'name',
+      'body',
+      'excerpt',
+      'aid',
+      'countries',
+      'image',
+      'image_alt',
+      'image_title',
+      'image_description',
+    ];
+    return $this->select('migrate_example_beer_node', 'b')
+      ->fields('b', $fields);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function fields() {
-    $fields = [
+  public function fields(): array {
+    return [
       'bid' => $this->t('Beer ID'),
       'name' => $this->t('Name of beer'),
       'body' => $this->t('Full description of the beer'),
@@ -61,14 +66,12 @@ class BeerNode extends SqlBase {
       // are available for mapping after prepareRow() is called.
       'terms' => $this->t('Applicable styles'),
     ];
-
-    return $fields;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getIds() {
+  public function getIds(): array {
     return [
       'bid' => [
         'type' => 'integer',
@@ -80,14 +83,12 @@ class BeerNode extends SqlBase {
   /**
    * {@inheritdoc}
    */
-  public function prepareRow(Row $row) {
-    /**
-     * As explained above, we need to pull the style relationships into our
-     * source row here, as an array of 'style' values (the unique ID for
-     * the beer_term migration).
-     */
+  public function prepareRow(Row $row): bool {
+    // As explained above, we need to pull the style relationships into our
+    // source row here, as an array of 'style' values (the unique ID for
+    // the beer_term migration).
     $terms = $this->select('migrate_example_beer_topic_node', 'bt')
-                 ->fields('bt', ['style'])
+      ->fields('bt', ['style'])
       ->condition('bid', $row->getSourceProperty('bid'))
       ->execute()
       ->fetchCol();

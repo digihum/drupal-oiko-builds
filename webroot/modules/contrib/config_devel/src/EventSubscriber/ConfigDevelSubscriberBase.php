@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\config_devel\EventSubscriber\ConfigDevelSubscriberBase.
- */
-
 namespace Drupal\config_devel\EventSubscriber;
 
 
@@ -47,7 +42,7 @@ class ConfigDevelSubscriberBase {
    * @return \Drupal\Core\Config\Entity\ConfigEntityStorageInterface
    */
   protected function getStorage($entity_type_id) {
-    return $this->configManager->getEntityManager()->getStorage($entity_type_id);
+    return $this->configManager->getEntityTypeManager()->getStorage($entity_type_id);
   }
 
   /**
@@ -65,7 +60,7 @@ class ConfigDevelSubscriberBase {
    * @return \Drupal\Core\Config\Config
    */
   protected function getSettings() {
-    return $this->configFactory->getEditable('config_devel.settings');
+    return $this->configFactory->get('config_devel.settings');
   }
 
 }

@@ -4,6 +4,7 @@ namespace Drupal\devel;
 
 use Drupal\Core\Plugin\PluginBase;
 use Drupal\devel\Render\FilteredMarkup;
+use Drupal\devel\Twig\Extension\Debug;
 
 /**
  * Defines a base devel dumper implementation.
@@ -40,6 +41,48 @@ abstract class DevelDumperBase extends PluginBase implements DevelDumperInterfac
    */
   protected function setSafeMarkup($input) {
     return FilteredMarkup::create($input);
+  }
+
+  /**
+   * Returns a list of internal functions.
+   *
+   * The list returned from this method can be used to exclude internal
+   * functions from the backtrace output.
+   *
+   * @return array
+   *   An array of internal functions.
+   */
+  protected function getInternalFunctions() {
+    $class_name = get_class($this);
+    $manager_class_name = DevelDumperManager::class;
+
+    $aliases = [
+      [$class_name, 'dump'],
+      [$class_name, 'export'],
+      [$manager_class_name, 'dump'],
+      [$manager_class_name, 'export'],
+      [$manager_class_name, 'exportAsRenderable'],
+      [$manager_class_name, 'message'],
+      [Debug::class, 'dump'],
+      'dpm',
+      'dvm',
+      'dsm',
+      'dpr',
+      'dvr',
+      'kpr',
+      'dargs',
+      'dcp',
+      'dfb',
+      'dfbt',
+      'dpq',
+      'kint',
+      'ksm',
+      'ddebug_backtrace',
+      'kdevel_print_object',
+      'backtrace_error_handler',
+    ];
+
+    return $aliases;
   }
 
 }

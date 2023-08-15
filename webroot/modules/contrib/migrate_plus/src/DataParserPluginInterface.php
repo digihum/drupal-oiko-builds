@@ -1,9 +1,6 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\migrate_plus\DataParserPluginInterface.
- */
+declare(strict_types = 1);
 
 namespace Drupal\migrate_plus;
 
@@ -16,5 +13,13 @@ namespace Drupal\migrate_plus;
  * @see plugin_api
  */
 interface DataParserPluginInterface extends \Iterator, \Countable {
+
+  /**
+   * Returns current source URL.
+   *
+   * @return string|null
+   *   The URL currently parsed on success, otherwise NULL.
+   */
+  public function currentUrl(): ?string;
 
 }

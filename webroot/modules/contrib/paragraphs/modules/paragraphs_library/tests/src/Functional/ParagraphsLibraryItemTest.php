@@ -8,6 +8,7 @@ use Drupal\paragraphs\Entity\ParagraphsType;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\field_ui\Traits\FieldUiTestTrait;
 use Drupal\Tests\paragraphs\FunctionalJavascript\ParagraphsTestBaseTrait;
+use Drupal\Tests\paragraphs\Traits\ParagraphsCoreVersionUiTestTrait;
 
 /**
  * Tests the functionality of the Paragraphs Library.
@@ -16,14 +17,14 @@ use Drupal\Tests\paragraphs\FunctionalJavascript\ParagraphsTestBaseTrait;
  */
 class ParagraphsLibraryItemTest extends BrowserTestBase {
 
-  use ParagraphsTestBaseTrait, FieldUiTestTrait;
+  use ParagraphsTestBaseTrait, FieldUiTestTrait, ParagraphsCoreVersionUiTestTrait;
 
   /**
    * Modules to be enabled.
    *
    * @var string[]
    */
-  public static $modules = [
+  protected static $modules = [
     'node',
     'paragraphs_library',
     'block',
@@ -33,7 +34,12 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected $defaultTheme = 'classy';
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp(): void {
     parent::setUp();
     $this->addParagraphedContentType('paragraphed_test', 'field_paragraphs');
 
@@ -51,10 +57,7 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
     ]);
     $this->drupalLogin($admin);
 
-    $this->drupalPlaceBlock('system_breadcrumb_block');
-    $this->drupalPlaceBlock('local_tasks_block');
-    $this->drupalPlaceBlock('local_actions_block');
-    $this->drupalPlaceBlock('page_title_block');
+    $this->placeDefaultBlocks();
   }
 
   /**
@@ -75,7 +78,7 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
       'label[0][value]' => 'Library item',
       'paragraphs[0][subform][field_text][0][value]' => 'Item content',
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $this->assertSession()->pageTextContains('Paragraph Library item has been created');
     // Assert a user has no access to the global library overview page.
     $this->assertSession()->statusCodeEquals(403);
@@ -160,8 +163,8 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
 
     // Convert the container to a library item.
     $this->drupalGet('/node/' . $node->id() . '/edit');
-    $this->drupalPostForm(NULL, [], 'Promote to library');
-    $this->drupalPostForm(NULL, [], 'Save');
+    $this->submitForm([], 'Promote to library');
+    $this->submitForm([], 'Save');
 
     // Check that the child text paragraph is present in the node.
     $this->assertSession()->pageTextContains('Test text 1');
@@ -176,7 +179,7 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
     $this->getSession()->getPage()
       ->findButton('paragraphs_0_subform_paragraphs_container_paragraphs_0_remove')
       ->press();
-    $this->drupalPostForm(NULL, [], 'Save');
+    $this->submitForm([], 'Save');
 
     // Check that the child text paragraph is no longer present in the
     // library item or the node.
@@ -192,17 +195,17 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
       ->find('xpath', '(//tbody//tr)[2]//a')
       ->click();
     $revision_url = $this->getSession()->getCurrentUrl();
-    $this->assertContains('/node/' . $node->id() . '/revisions/', $revision_url);
-    $this->assertContains('view', $revision_url);
+    $this->assertStringContainsString('/node/' . $node->id() . '/revisions/', $revision_url);
+    $this->assertStringContainsString('view', $revision_url);
 
     // Check that the child text paragraph is still present in this revision.
     $this->assertSession()->pageTextContains('Test text 1');
 
     // Add a new text paragraph to the library item.
     $this->drupalGet('/admin/content/paragraphs/' . $library_item->id() . '/edit');
-    $this->drupalPostForm(NULL, [], 'Add text');
+    $this->submitForm([], 'Add text');
     $this->getSession()->getPage()->fillField('field_text', 'Test text 2');
-    $this->drupalPostForm(NULL, [], 'Save');
+    $this->submitForm([], 'Save');
 
     // Check that the child text paragraph is present in the library item and
     // the node.
@@ -214,11 +217,11 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
     // Convert the library item in the node back to a container paragraph and
     // delete it.
     $this->drupalGet('/node/' . $node->id() . '/edit');
-    $this->drupalPostForm(NULL, [], 'Unlink from library');
+    $this->submitForm([], 'Unlink from library');
     $this->getSession()->getPage()
       ->findButton('field_paragraphs_0_subform_paragraphs_container_paragraphs_0_remove')
       ->press();
-    $this->drupalPostForm(NULL, [], 'Save');
+    $this->submitForm([], 'Save');
 
     // Check that the child text paragraph is no longer present in the node but
     // still present in the library item.
@@ -270,7 +273,7 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
       'label[0][value]' => 'Test usage nested paragraph',
       'paragraphs[0][subform][field_err_field][0][subform][field_paragraphs_text][0][value]' => 'Example text for revision in nested paragraph.',
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $assert_session->pageTextContains('Paragraph Test usage nested paragraph has been created.');
 
     // Create content with referenced paragraph.
@@ -280,7 +283,7 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
       'title[0][value]' => 'Test content',
       'field_paragraphs[0][subform][field_reusable_paragraph][0][target_id]' => 'Test usage nested paragraph',
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $node = $this->drupalGetNodeByTitle('Test content');
 
     // Check Usage tab.
@@ -293,6 +296,7 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
     $assert_session->elementContains('css', 'table tbody tr td:nth-child(2)', 'Paragraph');
     $assert_session->elementContains('css', 'table tbody tr td:nth-child(3)', 'English');
     $assert_session->elementContains('css', 'table tbody tr td:nth-child(4)', 'Reusable paragraph');
+    $assert_session->elementContains('css', 'table tbody tr td:nth-child(5)', 'Published');
 
     // Assert breadcrumb.
     $assert_session->elementContains('css', '.breadcrumb ol li:nth-child(1)', 'Home');
@@ -302,8 +306,8 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
     // Unlink library item and check usage tab.
     $node = $this->drupalGetNodeByTitle('Test content');
     $this->drupalGet($node->toUrl('edit-form'));
-    $this->drupalPostForm(NULL, [], 'Unlink from library');
-    $this->drupalPostForm(NULL, ['revision' => TRUE], 'Save');
+    $this->submitForm([], 'Unlink from library');
+    $this->submitForm(['revision' => TRUE], 'Save');
 
     // Check Usage tab.
     $this->drupalGet('admin/content/paragraphs');
@@ -311,13 +315,13 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
     $this->clickLink('Usage');
     $assert_session->pageTextContains('Entity usage information for Test usage nested paragraph');
 
-    // No usage shows up on this page.
-    // @todo once 2954039 lands, we expect to have a row here indicating that
-    // the host node references the paragraph in a non-default revision.
-    // Alternatively, if 2971131 lands first, we would have here an extra row
-    // with possibly a generic label (just with the entity ID or similar). In
-    // both cases this test will need to be updated.
-    $assert_session->elementNotExists('css', 'table tbody tr');
+    // Assert there is a row here indicating that the host node references the
+    // paragraph in a non-default revision.
+    $assert_session->elementContains('css', 'table tbody tr td:nth-child(1)', 'Test content &gt; field_paragraphs (previous revision)');
+    $assert_session->elementContains('css', 'table tbody tr td:nth-child(2)', 'Paragraph');
+    $assert_session->elementContains('css', 'table tbody tr td:nth-child(3)', 'English');
+    $assert_session->elementContains('css', 'table tbody tr td:nth-child(4)', 'Reusable paragraph');
+    $assert_session->elementContains('css', 'table tbody tr td:nth-child(5)', 'Published');
   }
 
   /**
@@ -335,7 +339,7 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
       'label[0][value]' => 'Test usage warning message',
       'paragraphs[0][subform][field_text][0][value]' => 'Example text.',
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $assert_session->pageTextContains('Paragraph Test usage warning message has been created.');
 
     // Create content with referenced paragraph.
@@ -345,7 +349,7 @@ class ParagraphsLibraryItemTest extends BrowserTestBase {
       'title[0][value]' => 'Test content',
       'field_paragraphs[0][subform][field_reusable_paragraph][0][target_id]' => 'Test usage warning message',
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
 
     $node = $this->drupalGetNodeByTitle('Test content');
     $library_item = $node->get('field_paragraphs')->entity->get('field_reusable_paragraph')->entity;

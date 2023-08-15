@@ -454,10 +454,10 @@ class ShareMessageForm extends EntityForm {
     $status = $sharemessage->save();
 
     if ($status == SAVED_UPDATED) {
-      drupal_set_message(t('Share Message %label has been updated.', ['%label' => $sharemessage->label()]));
+      $this->messenger()->addMessage(t('Share Message %label has been updated.', ['%label' => $sharemessage->label()]));
     }
     else {
-      drupal_set_message(t('Share Message %label has been added.', ['%label' => $sharemessage->label()]));
+      $this->messenger()->addMessage(t('Share Message %label has been added.', ['%label' => $sharemessage->label()]));
     }
     // Share Message settings might have changed, but it is not immediately
     // updated for the view display. Thus clear the entity extra field caches.

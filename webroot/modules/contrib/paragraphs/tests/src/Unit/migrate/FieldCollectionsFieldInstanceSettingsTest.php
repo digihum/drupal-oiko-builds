@@ -16,7 +16,7 @@ class FieldCollectionsFieldInstanceSettingsTest extends ProcessTestCase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->plugin = new FieldCollectionFieldInstanceSettings([], 'field_collection_field_instance_settings', [], $this->entityTypeBundleInfo);
@@ -43,7 +43,7 @@ class FieldCollectionsFieldInstanceSettingsTest extends ProcessTestCase {
       ]);
     $value = $this->plugin->transform($source, $this->migrateExecutable, $this->row, 'settings');
 
-    $this->assertArrayEquals($expected, $value);
+    $this->assertEquals($expected, $value);
   }
 
   /**
@@ -56,7 +56,8 @@ class FieldCollectionsFieldInstanceSettingsTest extends ProcessTestCase {
         ['type', 'field_collection'],
         ['bundle', 'non_existent_bundle'],
       ]);
-    $this->setExpectedException(MigrateSkipRowException::class, 'No target paragraph bundle found for field_collection');
+    $this->expectException(MigrateSkipRowException::class);
+    $this->expectExceptionMessage("No target paragraph bundle found for field_collection");
     $this->plugin->transform([], $this->migrateExecutable, $this->row, 'settings');
   }
 

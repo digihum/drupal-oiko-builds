@@ -9,10 +9,10 @@ declare(strict_types = 1);
 
 use Drupal\Core\Config\Entity\ConfigEntityType;
 use Drupal\Core\Entity\ContentEntityType;
-use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\entity_share_client\ClientAuthorization\ClientAuthorizationInterface;
 use Drupal\entity_share_client\Entity\Remote;
+use Drupal\Core\Utility\UpdateException;
 
 /**
  * Implements hook_uninstall().
@@ -56,7 +56,7 @@ function entity_share_client_update_8302() {
 /**
  * Move any basic auth credentials stored in configuration into the new plugin.
  */
-function entity_share_client_update_8201() {
+function entity_share_client_update_8303() {
   /** @var \Drupal\entity_share_client\ClientAuthorization\ClientAuthorizationPluginManager $manager */
   $manager = \Drupal::service('plugin.manager.entity_share_client_authorization');
   $state = \Drupal::state();
@@ -64,6 +64,12 @@ function entity_share_client_update_8201() {
   /** @var \Drupal\entity_share_client\Entity\RemoteInterface[] $remotes */
   $remotes = Remote::loadMultiple();
   foreach ($remotes as $remote) {
+    // Check that the remote config had not already been converted into the new
+    // plugin system due to hook_update renaming.
+    if (!is_null($remote->get('auth'))) {
+      continue;
+    }
+
     if (!empty($remote->get('basic_auth_username'))
       && !empty($remote->get('basic_auth_password'))
     ) {
@@ -100,14 +106,33 @@ function entity_share_client_update_8201() {
 }
 
 /**
- * Add a 'changed' field to entity_import_status entities.
+ * Adding the default 'rename' value to the physical file import config.
  */
-function entity_share_client_update_8303() {
-  $field_storage_definition = BaseFieldDefinition::create('changed')
-    ->setLabel(t('Changed'))
-    ->setDescription(t('The time that the import status was last edited.'));
-
-  \Drupal::entityDefinitionUpdateManager()
-    ->installFieldStorageDefinition('changed', 'entity_import_status', 'entity_share_client', $field_storage_definition);
+function entity_share_client_update_8304() {
+  try {
+    /** @var \Drupal\entity_share_client\Entity\ImportConfig[] $import_config_items */
+    $import_config_items = \Drupal::entityTypeManager()->getStorage('import_config')
+      ->loadMultiple();
+    foreach ($import_config_items as $item) {
+      $settings = $item->get('import_processor_settings');
+      if (isset($settings['physical_file']) && !isset($settings['physical_file']['rename'])) {
+        $settings['physical_file']['rename'] = FALSE;
+        $item->set('import_processor_settings', $settings)->save();
+      }
+    }
+  }
+  catch (Exception $exception) {
+    throw new UpdateException($exception->getMessage());
+  }
 }
 
+/**
+ * Install module Entity Share Diff.
+ *
+ * Its functionality was previously a part of Entity Share Client.
+ */
+function entity_share_client_update_8305() {
+  if (\Drupal::moduleHandler()->moduleExists('diff')) {
+    \Drupal::service('module_installer')->install(['entity_share_diff']);
+  }
+}

@@ -34,7 +34,7 @@ class TaxonomyEntityReferenceTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->postSetupFixture();
   }
@@ -131,9 +131,12 @@ class TaxonomyEntityReferenceTest extends EntityShareClientFunctionalTestBase {
     $channel = $channel_storage->create([
       'id' => 'node_es_test_en',
       'label' => $this->randomString(),
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => static::$entityLangcode,
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $user->uuid(),
       ],

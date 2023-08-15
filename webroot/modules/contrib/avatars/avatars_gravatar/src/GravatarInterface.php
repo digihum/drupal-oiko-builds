@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars_gravatar\GravatarInterface.
- */
-
 namespace Drupal\avatars_gravatar;
 
 /**
@@ -46,7 +41,7 @@ interface GravatarInterface {
    * @return array
    *   An array of GET values keyed by type.
    */
-  static public function getTypesMap();
+  public static function getTypesMap();
 
   /**
    * Valid fallback types for when 'gravatar' is the primary type.
@@ -54,12 +49,12 @@ interface GravatarInterface {
    * @return string[]
    *   An array of fallback avatar types.
    */
-  static public function getFallbackTypes();
+  public static function getFallbackTypes();
 
   /**
    * Get the fallback avatar type.
    *
-   * @return string|NULL
+   * @return string|null
    *   The fallback avatar type, or NULL to use default.
    */
   public function getFallbackType();
@@ -69,7 +64,7 @@ interface GravatarInterface {
    *
    * Such as when there is no Gravatar for the hash.
    *
-   * @param string|NULL $type
+   * @param string|null $type
    *   An avatar type.
    *
    * @throws \Drupal\avatars\Exception\AvatarException
@@ -99,12 +94,12 @@ interface GravatarInterface {
    * @return array
    *   An array of rating labels keyed by rating.
    */
-  static public function getRatings();
+  public static function getRatings();
 
   /**
    * Get the rating.
    *
-   * @return string|NULL
+   * @return string|null
    *   The set rating, or NULL if no rating.
    */
   public function getRating();
@@ -112,7 +107,7 @@ interface GravatarInterface {
   /**
    * Sets the maximum gravatar rating.
    *
-   * @param string|NULL $rating
+   * @param string|null $rating
    *   The rating to set, or NULL if no rating.
    *
    * @throws \Drupal\avatars\Exception\AvatarException

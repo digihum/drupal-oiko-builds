@@ -2,16 +2,17 @@
 
 namespace Drupal\views_bulk_operations\Controller;
 
+use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Drupal\views_bulk_operations\Form\ViewsBulkOperationsFormTrait;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Drupal\views_bulk_operations\Service\ViewsBulkOperationsActionProcessorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Drupal\Core\Ajax\AjaxResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Defines VBO controller class.
@@ -21,18 +22,19 @@ class ViewsBulkOperationsController extends ControllerBase implements ContainerI
   use ViewsBulkOperationsFormTrait;
 
   /**
-   * User private temporary storage factory.
-   *
-   * @var \Drupal\user\PrivateTempStoreFactory
+   * The tempstore service.
    */
-  protected $tempStoreFactory;
+  protected PrivateTempStoreFactory $tempStoreFactory;
 
   /**
    * Views Bulk Operations action processor.
-   *
-   * @var \Drupal\views_bulk_operations\Service\ViewsBulkOperationsActionProcessorInterface
    */
-  protected $actionProcessor;
+  protected ViewsBulkOperationsActionProcessorInterface $actionProcessor;
+
+  /**
+   * The Renderer service object.
+   */
+  protected RendererInterface $renderer;
 
   /**
    * Constructs a new controller object.
@@ -41,13 +43,17 @@ class ViewsBulkOperationsController extends ControllerBase implements ContainerI
    *   Private temporary storage factory.
    * @param \Drupal\views_bulk_operations\Service\ViewsBulkOperationsActionProcessorInterface $actionProcessor
    *   Views Bulk Operations action processor.
+   * @param \Drupal\Core\Render\RendererInterface $renderer
+   *   The Renderer service object.
    */
   public function __construct(
     PrivateTempStoreFactory $tempStoreFactory,
-    ViewsBulkOperationsActionProcessorInterface $actionProcessor
+    ViewsBulkOperationsActionProcessorInterface $actionProcessor,
+    RendererInterface $renderer
   ) {
     $this->tempStoreFactory = $tempStoreFactory;
     $this->actionProcessor = $actionProcessor;
+    $this->renderer = $renderer;
   }
 
   /**
@@ -56,7 +62,8 @@ class ViewsBulkOperationsController extends ControllerBase implements ContainerI
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('tempstore.private'),
-      $container->get('views_bulk_operations.processor')
+      $container->get('views_bulk_operations.processor'),
+      $container->get('renderer')
     );
   }
 
@@ -68,20 +75,14 @@ class ViewsBulkOperationsController extends ControllerBase implements ContainerI
    * @param string $display_id
    *   The display ID of the current view.
    */
-  public function execute($view_id, $display_id) {
+  public function execute($view_id, $display_id): RedirectResponse {
     $view_data = $this->getTempstoreData($view_id, $display_id);
     if (empty($view_data)) {
       throw new NotFoundHttpException();
     }
     $this->deleteTempstoreData();
 
-    $this->actionProcessor->executeProcessing($view_data);
-    if ($view_data['batch']) {
-      return batch_process($view_data['redirect_url']);
-    }
-    else {
-      return new RedirectResponse($view_data['redirect_url']->setAbsolute()->toString());
-    }
+    return $this->actionProcessor->executeProcessing($view_data);
   }
 
   /**
@@ -94,37 +95,53 @@ class ViewsBulkOperationsController extends ControllerBase implements ContainerI
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request object.
    */
-  public function updateSelection($view_id, $display_id, Request $request) {
-    $view_data = $this->getTempstoreData($view_id, $display_id);
-    if (empty($view_data)) {
+  public function updateSelection($view_id, $display_id, Request $request): AjaxResponse {
+    $response = [];
+    $tempstore_data = $this->getTempstoreData($view_id, $display_id);
+    if (empty($tempstore_data)) {
       throw new NotFoundHttpException();
     }
 
-    $list = $request->request->get('list');
+    $parameters = $request->request->all();
 
-    $op = $request->request->get('op', 'add');
-    $change = 0;
-
-    if ($op === 'add') {
-      foreach ($list as $bulkFormKey => $label) {
-        if (!isset($view_data['list'][$bulkFormKey])) {
-          $view_data['list'][$bulkFormKey] = $this->getListItem($bulkFormKey, $label);
-          $change++;
+    if ($parameters['op'] === 'method_include') {
+      unset($tempstore_data['exclude_mode']);
+      $tempstore_data['list'] = [];
+    }
+    elseif ($parameters['op'] === 'method_exclude') {
+      $tempstore_data['exclude_mode'] = TRUE;
+      $tempstore_data['list'] = [];
+    }
+    elseif ($parameters['op'] === 'update') {
+      $exclude_mode = \array_key_exists('exclude_mode', $tempstore_data) && $tempstore_data['exclude_mode'] === TRUE;
+      foreach ($parameters['list'] as $bulkFormKey => $state) {
+        if ($exclude_mode) {
+          $state = $state === 'true' ? 'false' : 'true';
+        }
+        if ($state === 'true') {
+          $list_item = $this->getListItem($bulkFormKey);
+          if ($list_item !== NULL) {
+            $tempstore_data['list'][$bulkFormKey] = $list_item;
+          }
+        }
+        else {
+          unset($tempstore_data['list'][$bulkFormKey]);
         }
       }
     }
-    elseif ($op === 'remove') {
-      foreach ($list as $bulkFormKey => $label) {
-        if (isset($view_data['list'][$bulkFormKey])) {
-          unset($view_data['list'][$bulkFormKey]);
-          $change--;
-        }
-      }
-    }
-    $this->setTempstoreData($view_data);
+
+    $this->setTempstoreData($tempstore_data);
+
+    $count = empty($tempstore_data['exclude_mode']) ? \count($tempstore_data['list']) : $tempstore_data['total_results'] - \count($tempstore_data['list']);
+
+    $selection_info_renderable = $this->getMultipageList($tempstore_data);
+    $response_data = [
+      'count' => $count,
+      'selection_info' => $this->renderer->renderRoot($selection_info_renderable),
+    ];
 
     $response = new AjaxResponse();
-    $response->setData(['change' => $change]);
+    $response->setData($response_data);
     return $response;
   }
 

@@ -1,5 +1,4 @@
 field_ui:
-  version: VERSION
   js:
     js/field_group.field_ui.js: {}
   css:
@@ -7,51 +6,56 @@ field_ui:
       css/field_group.field_ui.css: {}
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/drupal
     - core/drupalSettings
 
 core:
-  version: VERSION
   js:
     js/field_group.js: {}
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/drupal
     - core/drupalSettings
 
 formatter.accordion:
-  version: VERSION
   js:
     formatters/accordion/accordion.js: {}
   dependencies:
-    - core/jquery.ui.accordion
+    - core/jquery
+    - core/once
+    - jquery_ui_accordion/accordion
 
 formatter.html_element:
-  version: VERSION
   js:
     formatters/html_element/html-element.js: {}
+  dependencies:
+    - core/jquery
+    - core/once
 
 formatter.fieldset:
-  version: VERSION
   js:
     formatters/fieldset/fieldset.js: {}
+  dependencies:
+    - core/jquery
+    - core/once
 
 formatter.details:
-  version: VERSION
   js:
     formatters/details/details.js: {}
+  dependencies:
+    - core/jquery
 
 formatter.tabs:
-  version: VERSION
   js:
     formatters/tabs/tabs.js: {}
   dependencies:
+    - core/jquery
+    - core/once
     - core/modernizr
 
 element.horizontal_tabs:
-  version: VERSION
   js:
     # Load before field_group/core.
     formatters/tabs/horizontal-tabs.js: {weight: -1}
@@ -59,5 +63,7 @@ element.horizontal_tabs:
     component:
       formatters/tabs/horizontal-tabs.css: {}
   dependencies:
+    - core/jquery
+    - core/once
     - core/drupal.collapse
     - core/modernizr

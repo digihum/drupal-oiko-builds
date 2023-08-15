@@ -1,6 +1,6 @@
 Provides a selection of generated avatars for users.
 
-Copyright (C) 2015 Daniel Phin (@dpi)
+Copyright (C) 2020 Daniel Phin (@dpi)
 
 [![Build Status](https://travis-ci.org/dpi/avatars.svg?branch=master)](https://travis-ci.org/dpi/avatars)
 

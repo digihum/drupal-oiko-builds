@@ -105,11 +105,15 @@ class Revision extends ImportProcessorPluginBase implements PluginFormInterface 
 
       try {
         $revision_metadata_keys = $processed_entity->getEntityType()->getRevisionMetadataKeys();
-        $processed_entity->{$revision_metadata_keys['revision_created']}->value = $this->time->getRequestTime();
-        $processed_entity->{$revision_metadata_keys['revision_log_message']}->value = $this->t('Auto created revision during Entity Share synchronization.');
+        if (isset($revision_metadata_keys['revision_created'])) {
+          $processed_entity->{$revision_metadata_keys['revision_created']}->value = $this->time->getRequestTime();
+        }
+        if (isset($revision_metadata_keys['revision_log_message'])) {
+          $processed_entity->{$revision_metadata_keys['revision_log_message']}->value = $this->t('Auto created revision during Entity Share synchronization.');
+        }
       }
       catch (\Exception $e) {
-        $this->messenger->addError($this->t('There was a problem: @message', ['@message' => $e->getMessage()]));
+        $this->messenger()->addError($this->t('There was a problem: @message', ['@message' => $e->getMessage()]));
       }
     }
   }

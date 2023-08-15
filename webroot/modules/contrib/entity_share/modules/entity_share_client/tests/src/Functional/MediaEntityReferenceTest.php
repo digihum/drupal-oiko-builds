@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\Tests\entity_share_client\Functional;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\StreamWrapper\PublicStream;
 use Drupal\node\NodeInterface;
 use Drupal\Tests\TestFileCreationTrait;
 
@@ -73,8 +72,11 @@ class MediaEntityReferenceTest extends EntityShareClientFunctionalTestBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @SuppressWarnings(PHPMD.UndefinedVariable)
+   * Bug in PHPMD, @see https://github.com/phpmd/phpmd/issues/714
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->getTestFiles('image');
     // Special case for the image created using native helper method.
@@ -88,9 +90,25 @@ class MediaEntityReferenceTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
+  protected function postSetupFixture() {
+    $this->prepareContent();
+    $this->populateRequestService();
+
+    // Delete the physical file after populating the request service.
+    foreach (static::$filesData as $file_data) {
+      $this->fileSystem->delete($file_data['uri']);
+    }
+
+    $this->deleteContent();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   protected function getImportConfigProcessorSettings() {
     $processors = parent::getImportConfigProcessorSettings();
     $processors['physical_file'] = [
+      'rename' => FALSE,
       'weights' => [
         'process_entity' => 0,
       ],
@@ -262,22 +280,6 @@ class MediaEntityReferenceTest extends EntityShareClientFunctionalTestBase {
         'target_id' => $this->getEntityId('media', 'es_test_video'),
       ],
     ];
-  }
-
-  /**
-   * Helper function.
-   *
-   * @param string $file_uuid
-   *   The file UUID.
-   * @param array $file_data
-   *   The file data as in static::filesData.
-   */
-  protected function getMediaEntityReferenceTestFiles($file_uuid, array $file_data) {
-    /** @var \Drupal\Core\File\FileSystemInterface $file_system */
-    $file_system = \Drupal::service('file_system');
-    $filepath = drupal_get_path('module', 'entity_share') . '/tests/fixtures/files/' . $file_data['filename'];
-    $file_system->copy($filepath, PublicStream::basePath());
-    $this->filesSize[$file_uuid] = filesize($filepath);
   }
 
 }

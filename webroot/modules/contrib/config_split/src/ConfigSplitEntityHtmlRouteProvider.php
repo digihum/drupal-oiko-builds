@@ -7,7 +7,7 @@ use Drupal\Core\Entity\Routing\AdminHtmlRouteProvider;
 use Symfony\Component\Routing\Route;
 
 /**
- * Provides routes for Configuration Split Setting entities.
+ * Provides routes for Configuration Split setting entities.
  *
  * @see \Drupal\Core\Entity\Routing\AdminHtmlRouteProvider
  * @see \Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider
@@ -54,6 +54,8 @@ class ConfigSplitEntityHtmlRouteProvider extends AdminHtmlRouteProvider {
 
       return $route;
     }
+
+    return NULL;
   }
 
 }

@@ -17,9 +17,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
 
   /**
-   * The entity manager.
+   * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityManager;
 
@@ -87,18 +87,27 @@ class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
    * {@inheritdoc}
    */
   public function import($type, $name) {
-    // Read the config from the file.
+    // Read the config from the file. Note: Do not call getFromExtension() here
+    // because we need $full_name below.
     $full_name = $this->getFullName($type, $name);
-    $value = $this->extensionConfigStorage->read($full_name);
-    if (!$value) {
-      $value = $this->extensionOptionalConfigStorage->read($full_name);
+    $value = FALSE;
+    if ($full_name) {
+      $value = $this->extensionConfigStorage->read($full_name);
+      if (!$value) {
+        $value = $this->extensionOptionalConfigStorage->read($full_name);
+      }
     }
     if (!$value) {
       return FALSE;
     }
 
+    // Trigger an event to modify the configuration value.
+    $event = new ConfigPreRevertEvent($type, $name, $value, NULL);
+    $this->dispatcher->dispatch($event, ConfigRevertInterface::PRE_IMPORT);
+    $value = $event->getValue();
+
     // Save it as a new config entity or simple config.
-    if ($type == 'system.simple') {
+    if ($type === 'system.simple') {
       $this->configFactory->getEditable($full_name)->setData($value)->save();
     }
     else {
@@ -109,7 +118,7 @@ class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
 
     // Trigger an event notifying of this change.
     $event = new ConfigRevertEvent($type, $name);
-    $this->dispatcher->dispatch(ConfigRevertInterface::IMPORT, $event);
+    $this->dispatcher->dispatch($event, ConfigRevertInterface::IMPORT);
 
     return TRUE;
   }
@@ -118,38 +127,56 @@ class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
    * {@inheritdoc}
    */
   public function revert($type, $name) {
-    // Read the config from the file.
+    // Read the config from the file. Note: Do not call getFromExtension() here
+    // because we need $full_name below.
+    $value = FALSE;
     $full_name = $this->getFullName($type, $name);
-    $value = $this->extensionConfigStorage->read($full_name);
-    if (!$value) {
-      $value = $this->extensionOptionalConfigStorage->read($full_name);
+    if ($full_name) {
+      $value = $this->extensionConfigStorage->read($full_name);
+      if (!$value) {
+        $value = $this->extensionOptionalConfigStorage->read($full_name);
+      }
     }
     if (!$value) {
       return FALSE;
     }
 
-    if ($type == 'system.simple') {
-      // Load the current config and replace the value.
-      $this->configFactory->getEditable($full_name)->setData($value)->save();
+    // Make sure the configuration exists currently in active storage.
+    $active_value = $this->activeConfigStorage->read($full_name);
+    if (!$active_value) {
+      return FALSE;
+    }
+
+    // Trigger an event to modify the active configuration value.
+    $event = new ConfigPreRevertEvent($type, $name, $value, $active_value);
+    $this->dispatcher->dispatch($event, ConfigRevertInterface::PRE_REVERT);
+    $value = $event->getValue();
+
+    // Load the current config and replace the value, retaining the config
+    // hash (which is part of the _core config key's value).
+    if ($type === 'system.simple') {
+      $config = $this->configFactory->getEditable($full_name);
+      $core = $config->get('_core');
+      $config
+        ->setData($value)
+        ->set('_core', $core)
+        ->save();
     }
     else {
-      // Load the current config entity and replace the value, with the
-      // old UUID.
       $definition = $this->entityManager->getDefinition($type);
       $id_key = $definition->getKey('id');
-
       $id = $value[$id_key];
       $entity_storage = $this->entityManager->getStorage($type);
       $entity = $entity_storage->load($id);
-      $uuid = $entity->get('uuid');
+      $core = $entity->get('_core');
       $entity = $entity_storage->updateFromStorageRecord($entity, $value);
-      $entity->set('uuid', $uuid);
+      $entity->set('_core', $core);
       $entity->save();
     }
 
     // Trigger an event notifying of this change.
     $event = new ConfigRevertEvent($type, $name);
-    $this->dispatcher->dispatch(ConfigRevertInterface::REVERT, $event);
+    $this->dispatcher->dispatch($event, ConfigRevertInterface::REVERT);
 
     return TRUE;
   }
@@ -158,19 +185,41 @@ class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
    * {@inheritdoc}
    */
   public function delete($type, $name) {
+    $config = FALSE;
     $full_name = $this->getFullName($type, $name);
-    if (!$full_name) {
-      return FALSE;
+    if ($full_name) {
+      // Make sure the configuration exists currently in active storage.
+      if (!$this->activeConfigStorage->read($full_name)) {
+        return FALSE;
+      }
+      $config = $this->configFactory->getEditable($full_name);
     }
-    $config = $this->configFactory->getEditable($full_name);
     if (!$config) {
       return FALSE;
     }
-    $config->delete();
 
     // Trigger an event notifying of this change.
     $event = new ConfigRevertEvent($type, $name);
-    $this->dispatcher->dispatch(ConfigDeleteInterface::DELETE, $event);
+    $this->dispatcher->dispatch($event, ConfigDeleteInterface::PRE_DELETE);
+
+    if ($type === 'system.simple') {
+      $config->delete();
+    }
+    else {
+      // Delete a config entity instance, updating all its dependants.
+      $definition = $this->entityManager->getDefinition($type);
+      $id = $config->get($definition->getKey('id'));
+      $entity_storage = $this->entityManager->getStorage($type);
+      $entity = $entity_storage->load($id);
+      if (!$entity) {
+        return FALSE;
+      }
+      $entity->delete();
+    }
+
+    // Trigger an event notifying of this change.
+    $event = new ConfigRevertEvent($type, $name);
+    $this->dispatcher->dispatch($event, ConfigDeleteInterface::DELETE);
     return TRUE;
   }
 
@@ -179,17 +228,23 @@ class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
    */
   public function getFromActive($type, $name) {
     $full_name = $this->getFullName($type, $name);
-    return $this->activeConfigStorage->read($full_name);
+    if ($full_name) {
+      return $this->activeConfigStorage->read($full_name);
+    }
+    return FALSE;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getFromExtension($type, $name) {
+    $value = FALSE;
     $full_name = $this->getFullName($type, $name);
-    $value = $this->extensionConfigStorage->read($full_name);
-    if (!$value) {
-      $value = $this->extensionOptionalConfigStorage->read($full_name);
+    if ($full_name) {
+      $value = $this->extensionConfigStorage->read($full_name);
+      if (!$value) {
+        $value = $this->extensionOptionalConfigStorage->read($full_name);
+      }
     }
     return $value;
   }
@@ -203,16 +258,21 @@ class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
    *   The config name, without prefix.
    *
    * @return string
-   *   The config item's full name.
+   *   The config item's full name, or FALSE if there is an error.
    */
   protected function getFullName($type, $name) {
-    if ($type == 'system.simple' || !$type) {
+    if ($type === 'system.simple' || !$type) {
       return $name;
     }
 
     $definition = $this->entityManager->getDefinition($type);
-    $prefix = $definition->getConfigPrefix() . '.';
-    return $prefix . $name;
+    if ($definition) {
+      $prefix = $definition->getConfigPrefix() . '.';
+      return $prefix . $name;
+    }
+    else {
+      return FALSE;
+    }
   }
 
 }

@@ -5,6 +5,8 @@ declare(strict_types = 1);
 namespace Drupal\Tests\entity_share_client\Functional;
 
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Url;
+use Drupal\entity_share_test\FakeDataGenerator;
 use Drupal\node\NodeInterface;
 
 /**
@@ -20,7 +22,7 @@ class LinkFieldTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'jsonapi_extras',
   ];
 
@@ -42,7 +44,7 @@ class LinkFieldTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->entityTypeManager->getStorage('jsonapi_resource_config')->create([
@@ -55,7 +57,7 @@ class LinkFieldTest extends EntityShareClientFunctionalTestBase {
           'fieldName' => 'field_es_test_link',
           'publicName' => 'field_es_test_link',
           'enhancer' => [
-            'id' => 'uuid_link',
+            'id' => 'entity_share_uuid_link',
           ],
           'disabled' => FALSE,
         ],
@@ -84,8 +86,8 @@ class LinkFieldTest extends EntityShareClientFunctionalTestBase {
             'field_es_test_link' => [
               'value' => [
                 [
-                  'uri' => $this->faker->url,
-                  'title' => $this->faker->text(255),
+                  'uri' => 'http://www.example.com/strings_(string_within_parenthesis)',
+                  'title' => FakeDataGenerator::text(255),
                 ],
               ],
               'checker_callback' => 'getFilteredStructureValues',
@@ -96,7 +98,7 @@ class LinkFieldTest extends EntityShareClientFunctionalTestBase {
             'field_es_test_link' => [
               'value' => [
                 [
-                  'uri' => $this->faker->url,
+                  'uri' => 'http://www.example.com/numbers_(9999)',
                 ],
               ],
               'checker_callback' => 'getFilteredStructureValues',
@@ -107,14 +109,14 @@ class LinkFieldTest extends EntityShareClientFunctionalTestBase {
             'field_es_test_link' => [
               'value' => [
                 [
-                  'uri' => $this->faker->url,
-                  'title' => $this->faker->text(255),
+                  'uri' => 'http://www.example.com/',
+                  'title' => FakeDataGenerator::text(255),
                   'options' => [
                     'attributes' => [
                       'class' => [
-                        $this->faker->text(20),
-                        $this->faker->text(20),
-                        $this->faker->text(20),
+                        FakeDataGenerator::text(20),
+                        FakeDataGenerator::text(20),
+                        FakeDataGenerator::text(20),
                       ],
                     ],
                   ],
@@ -147,6 +149,69 @@ class LinkFieldTest extends EntityShareClientFunctionalTestBase {
   public function testBasicPull() {
     $this->pullEveryChannels();
     $this->checkCreatedEntities();
+
+    // Test link_internal_content_importer plugin.
+    // Need to remove all imported content prior to that.
+    $this->resetImportedContent();
+    // Import only one content.
+    $selected_entities = [
+      'es_test_link_internal',
+    ];
+    $this->importSelectedEntities($selected_entities);
+
+    // Check that only the imported content had been pulled.
+    $linking_entity = $this->loadEntity('node', 'es_test_link_internal');
+    $this->assertNotNull($linking_entity, 'The linking node has been created.');
+    $linked_entity = $this->loadEntity('node', 'es_test');
+    $this->assertNull($linked_entity, 'The linked node has not been created.');
+
+    // Enable the plugin.
+    $this->mergePluginsToImportConfig([
+      'link_internal_content_importer' => [
+        'max_recursion_depth' => -1,
+        'weights' => [
+          'prepare_importable_entity_data' => 20,
+        ],
+      ],
+    ]);
+
+    $this->resetImportedContent();
+
+    // Import only one content.
+    $selected_entities = [
+      'es_test_link_internal',
+    ];
+    $this->importSelectedEntities($selected_entities);
+
+    // Check that both contents had been imported.
+    $linking_entity = $this->loadEntity('node', 'es_test_link_internal');
+    $this->assertNotNull($linking_entity, 'The linking node has been created.');
+    $linked_entity = $this->loadEntity('node', 'es_test');
+    $this->assertNotNull($linked_entity, 'The linked node has been created.');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function populateRequestService() {
+    parent::populateRequestService();
+
+    // Needs to make the requests when only the linking content will be
+    // required.
+    $selected_entities = [
+      'es_test_link_internal',
+    ];
+    $prepared_url = $this->prepareUrlFilteredOnUuids($selected_entities, 'node_es_test_en');
+    $this->discoverJsonApiEndpoints($prepared_url);
+
+    // Prepare the request on the linked content.
+    $route_name = sprintf('jsonapi.%s--%s.individual', 'node', 'es_test');
+    $linked_content_url = Url::fromRoute($route_name, [
+      'entity' => 'es_test',
+    ])
+      ->setOption('language', $this->container->get('language_manager')->getLanguage('en'))
+      ->setOption('absolute', TRUE);
+    $this->discoverJsonApiEndpoints($linked_content_url->toString());
   }
 
   /**

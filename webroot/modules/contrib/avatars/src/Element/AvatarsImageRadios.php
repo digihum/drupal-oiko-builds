@@ -1,12 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\Element\AvatarsImageRadios.
- */
-
 namespace Drupal\avatars\Element;
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Element\Radios;
 
@@ -25,12 +21,12 @@ use Drupal\Core\Render\Element\Radios;
  *   'label' => t('My Generator'),
  *   'uri' => 'public://path/to.image',
  * ];
- * $form['avatar_generators'] = array(
+ * $form['avatar_generators'] = [
  *   '#type' => 'avatars_image_radios',
  *   '#thumbs' => $thumbs,
  *   '#style_name' => $this->getSetting('preview_image_style'),
  *   '#default_value' => $default_value,
- * );
+ * ];
  * @endcode
  *
  * @FormElement("avatars_image_radios")
@@ -60,7 +56,7 @@ class AvatarsImageRadios extends Radios {
   /**
    * {@inheritdoc}
    */
-  public static function processRadios(&$element, \Drupal\Core\Form\FormStateInterface $form_state, &$complete_form) {
+  public static function processRadios(&$element, FormStateInterface $form_state, &$complete_form) {
     static::setAttributes($element, ['avatar_preview_radios']);
 
     $parent = $element;

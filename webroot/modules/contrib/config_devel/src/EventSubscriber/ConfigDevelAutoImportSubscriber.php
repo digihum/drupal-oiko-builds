@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\config_devel\EventSubscriber\ConfigDevelAutoImportSubscriber.
- */
-
 namespace Drupal\config_devel\EventSubscriber;
 
 use Drupal\Component\Utility\Crypt;
@@ -48,6 +43,7 @@ class ConfigDevelAutoImportSubscriber extends ConfigDevelSubscriberBase implemen
    * @return bool
    */
   public function importOne($filename, $original_hash = '', $contents = '') {
+    // TODO: use the config_devel.importer_exporter service.
     $hash = '';
     if (!$contents && (!$contents = @file_get_contents($filename))) {
       return $hash;
@@ -70,7 +66,7 @@ class ConfigDevelAutoImportSubscriber extends ConfigDevelSubscriberBase implemen
         $id_key = $entity_type->getKey('id');
         $data[$id_key] = $entity_id;
         /** @var \Drupal\Core\Config\Entity\ConfigEntityInterface $entity */
-        $entity = $entity_storage->create($data);
+        $entity = $entity_storage->createFromStorageRecord($data);
         if ($existing_entity = $entity_storage->load($entity_id)) {
           $entity
             ->set('uuid', $existing_entity->uuid())

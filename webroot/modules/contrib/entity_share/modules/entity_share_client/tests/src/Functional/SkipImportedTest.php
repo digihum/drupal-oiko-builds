@@ -32,7 +32,7 @@ class SkipImportedTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->entityTypeManager->getStorage('jsonapi_resource_config')->create([
@@ -108,14 +108,14 @@ class SkipImportedTest extends EntityShareClientFunctionalTestBase {
     $imported_entities = $this->importService->getRuntimeImportContext()->getImportedEntities();
     $imported_entities_en = $imported_entities['en'] ?? [];
     $this->importService->getRuntimeImportContext()->clearImportedEntities();
-    $this->assertEqual(count($imported_entities_en), 1);
+    $this->assertEquals(1, count($imported_entities_en));
 
     // The repeated pull (without any modifications on remote) should
     // import no entities.
     $this->pullChannel('node_es_test_en');
     $imported_entities = $this->importService->getRuntimeImportContext()->getImportedEntities();
     $imported_entities_en = $imported_entities['en'] ?? [];
-    $this->assertEqual(count($imported_entities_en), 0);
+    $this->assertEquals(0, count($imported_entities_en));
 
     // Clean up imported content.
     $this->importService->getRuntimeImportContext()->clearImportedEntities();
@@ -130,14 +130,14 @@ class SkipImportedTest extends EntityShareClientFunctionalTestBase {
     $imported_entities = $this->importService->getRuntimeImportContext()->getImportedEntities();
     $imported_entities_en = $imported_entities['en'] ?? [];
     $this->importService->getRuntimeImportContext()->clearImportedEntities();
-    $this->assertEqual(count($imported_entities_en), 1);
+    $this->assertEquals(1, count($imported_entities_en));
 
     // The repeated pull should import all entities (ie. one entity) as the
     // skip imported plugin is disabled.
     $this->pullChannel('node_es_test_en');
     $imported_entities = $this->importService->getRuntimeImportContext()->getImportedEntities();
     $imported_entities_en = $imported_entities['en'] ?? [];
-    $this->assertEqual(count($imported_entities_en), 1);
+    $this->assertEquals(1, count($imported_entities_en));
   }
 
 }

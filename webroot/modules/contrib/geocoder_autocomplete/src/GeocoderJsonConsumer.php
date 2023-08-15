@@ -53,29 +53,35 @@ class GeocoderJsonConsumer {
   public function getAddress($text) {
     $language_interface = $this->languageManager->getCurrentLanguage();
     $language = isset($language_interface) ? $language_interface->getId() : 'en';
+    $config = \Drupal::config('geocoder_autocomplete.settings');
 
     $query = [
       'address' => $text,
       'language' => $language,
       'sensor' => 'false',
+      'region' => $config->get('region_code_bias'),
+      'key' => $config->get('api_key'),
     ];
-    $uri = 'http://maps.googleapis.com/maps/api/geocode/json';
+    $uri = 'https://maps.googleapis.com/maps/api/geocode/json';
 
     $response = $this->httpClient->request('GET', $uri, [
       'query' => $query,
     ]);
 
-    $matches = array();
+    $matches = [];
     if (empty($response->error)) {
       $data = json_decode($response->getBody());
       if ($data->status == 'OK') {
         foreach ($data->results as $result) {
           if (!empty($result->formatted_address)) {
             $formatted_address = $result->formatted_address;
-            $matches[] = array(
+            $matches[] = [
               'value' => Html::escape($formatted_address),
               'label' => Html::escape($formatted_address),
-            );
+              'lat' => $result->geometry->location->lat,
+              'lng' => $result->geometry->location->lng,
+              'place_id' => $result->place_id,
+            ];
           }
         }
 

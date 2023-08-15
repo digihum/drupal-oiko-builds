@@ -1,10 +1,10 @@
 /*
  * Pull form page.
  */
-td.entity-share-new {
+.entity-share-new {
   background-color: greenyellow;
 }
-td.entity-share-changed {
+.entity-share-changed {
   background-color: lightpink;
 }
 

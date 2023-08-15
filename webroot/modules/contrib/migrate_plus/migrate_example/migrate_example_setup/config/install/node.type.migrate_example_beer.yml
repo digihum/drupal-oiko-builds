@@ -1,13 +1,9 @@
 langcode: en
 status: true
 dependencies:
-  module:
-    - menu_ui
-third_party_settings:
-  menu_ui:
-    available_menus:
-      - main
-    parent: 'main:'
+  enforced:
+    module:
+      - migrate_example_setup
 name: Beer
 type: migrate_example_beer
 description: 'Beer is what we drink.'

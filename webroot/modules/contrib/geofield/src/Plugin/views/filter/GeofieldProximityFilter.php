@@ -55,6 +55,34 @@ class GeofieldProximityFilter extends NumericFilter {
   protected $request;
 
   /**
+   * The Value Label.
+   *
+   * @var string
+   */
+  protected $valueLabel;
+
+  /**
+   * The Min Label.
+   *
+   * @var string
+   */
+  protected $minLabel;
+
+  /**
+   * The Max Label.
+   *
+   * @var string
+   */
+  protected $maxLabel;
+
+  /**
+   * The Origin Label.
+   *
+   * @var string
+   */
+  protected $originLabel;
+
+  /**
    * {@inheritdoc}
    */
   protected function defineOptions() {
@@ -62,15 +90,12 @@ class GeofieldProximityFilter extends NumericFilter {
 
     // Override some default settings from the NumericFilter.
     $options['operator'] = ['default' => '<='];
-    $options['value'] = [
-      'contains' => [
-        'min' => ['default' => ''],
-        'max' => ['default' => ''],
-        'value' => ['default' => ''],
-      ],
-    ];
 
     $options['units'] = ['default' => 'GEOFIELD_KILOMETERS'];
+
+    $options['exposed_units'] = [
+      'default' => FALSE
+    ];
 
     // Default Data sources Info.
     $options['source'] = ['default' => 'geofield_manual_origin'];
@@ -112,13 +137,17 @@ class GeofieldProximityFilter extends NumericFilter {
     $this->proximitySourceManager = $proximity_source_manager;
     $this->geofieldRadiusOptions = geofield_radius_options();
     $this->request = $request_stack;
+    $this->valueLabel = $this->t('Distance');
+    $this->minLabel = $this->t('Min');
+    $this->maxLabel = $this->t('Max');
+    $this->originLabel = $this->t('Origin');
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static (
+    return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
@@ -134,51 +163,51 @@ class GeofieldProximityFilter extends NumericFilter {
   public function operators() {
     $operators = [
       '<' => [
-        'title' => t('Is less than'),
+        'title' => $this->t('Is less than'),
         'method' => 'opSimple',
-        'short' => t('<'),
+        'short' => $this->t('<'),
         'values' => 1,
       ],
       '<=' => [
-        'title' => t('Is less than or equal to'),
+        'title' => $this->t('Is less than or equal to'),
         'method' => 'opSimple',
-        'short' => t('<='),
+        'short' => $this->t('<='),
         'values' => 1,
       ],
       '=' => [
-        'title' => t('Is equal to'),
+        'title' => $this->t('Is equal to'),
         'method' => 'opSimple',
-        'short' => t('='),
+        'short' => $this->t('='),
         'values' => 1,
       ],
       '!=' => [
-        'title' => t('Is not equal to'),
+        'title' => $this->t('Is not equal to'),
         'method' => 'opSimple',
-        'short' => t('!='),
+        'short' => $this->t('!='),
         'values' => 1,
       ],
       '>=' => [
-        'title' => t('Is greater than or equal to'),
+        'title' => $this->t('Is greater than or equal to'),
         'method' => 'opSimple',
-        'short' => t('>='),
+        'short' => $this->t('>='),
         'values' => 1,
       ],
       '>' => [
-        'title' => t('Is greater than'),
+        'title' => $this->t('Is greater than'),
         'method' => 'opSimple',
-        'short' => t('>'),
+        'short' => $this->t('>'),
         'values' => 1,
       ],
       'between' => [
-        'title' => t('Is between'),
+        'title' => $this->t('Is between'),
         'method' => 'opBetween',
-        'short' => t('between'),
+        'short' => $this->t('between'),
         'values' => 2,
       ],
       'not between' => [
-        'title' => t('Is not between'),
+        'title' => $this->t('Is not between'),
         'method' => 'opBetween',
-        'short' => t('not between'),
+        'short' => $this->t('not between'),
         'values' => 2,
       ],
     ];
@@ -193,12 +222,6 @@ class GeofieldProximityFilter extends NumericFilter {
     $this->ensureMyTable();
     $lat_alias = $this->realField . '_lat';
     $lon_alias = $this->realField . '_lon';
-
-    /** @var \Drupal\views\Plugin\views\query\Sql $query */
-    $query = $this->query;
-    /** @var \Symfony\Component\HttpFoundation\Request $request */
-    $request = $this->request->getCurrentRequest();
-    $proximity_filter_get = $request->get($this->options['expose']['identifier']);
 
     try {
       /** @var \Drupal\geofield\Plugin\GeofieldProximitySourceInterface $source_plugin */
@@ -215,13 +238,12 @@ class GeofieldProximityFilter extends NumericFilter {
 
         // Ensure that destination is valid.
         $condition = (new Condition('AND'))->isNotNull($haversine_options['destination_latitude'])->isNotNull($haversine_options['destination_longitude']);
-        $query->addWhere($this->options['group'], $condition);
+        $this->query->addWhere(0, $condition);
       }
-      // Otherwise output empty result in case of unexposed priximity filter or
-      // submitted/applied one.
-      elseif (!$this->isExposed() || isset($proximity_filter_get)) {
+      // Otherwise output empty result in case of unexposed proximity filter.
+      elseif (!$this->isExposed()) {
         // Origin is not valid so return no results (if not exposed filter).
-        $query->addWhereExpression($this->options['group'], '1=0');
+        $this->query->addWhereExpression($this->options['group'], '1=0');
       }
     }
     catch (\Exception $e) {
@@ -233,12 +255,13 @@ class GeofieldProximityFilter extends NumericFilter {
    * {@inheritdoc}
    */
   protected function opBetween($options) {
-
     if (!empty($this->value['min']) && is_numeric($this->value['min']) &&
       !empty($this->value['max']) && is_numeric($this->value['max'])) {
-      /** @var \Drupal\views\Plugin\views\query\Sql $query */
-      $query = $this->query;
-      $query->addWhereExpression($this->options['group'], geofield_haversine($options) . ' ' . strtoupper($this->operator) . ' ' . $this->value['min'] . ' AND ' . $this->value['max']);
+      // Be sure to convert $options into array,
+      // as this method PhpDoc might expects $options to be an object.
+      $options = (array) $options;
+      /* @var array $options */
+      $this->query->addWhereExpression($this->options['group'], geofield_haversine($options) . ' ' . strtoupper($this->operator) . ' ' . $this->value['min'] . ' AND ' . $this->value['max']);
     }
   }
 
@@ -246,12 +269,11 @@ class GeofieldProximityFilter extends NumericFilter {
    * {@inheritdoc}
    */
   protected function opSimple($options) {
-
     if (!empty($this->value['value']) && is_numeric($this->value['value'])) {
-      /** @var \Drupal\views\Plugin\views\query\Sql $query */
-      $query = $this->query;
-      $query->addWhereExpression($this->options['group'], geofield_haversine($options) . ' ' . $this->operator . ' ' . $this->value['value']);
-      $this->value['value'];
+      // Be sure to convert $options into array,
+      // as this method PhpDoc might expects $options to be an object.
+      $options = (array) $options;
+      $this->query->addWhereExpression($this->options['group'], geofield_haversine($options) . ' ' . $this->operator . ' ' . $this->value['value']);
     }
   }
 
@@ -259,6 +281,7 @@ class GeofieldProximityFilter extends NumericFilter {
    * {@inheritdoc}
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
+    parent::buildOptionsForm($form, $form_state);
 
     $context = $this->pluginDefinition['plugin_type'];
 
@@ -266,14 +289,14 @@ class GeofieldProximityFilter extends NumericFilter {
     $source_plugin_id = isset($user_input['options']['source']) ? $user_input['options']['source'] : $this->options['source'];
     $source_plugin_configuration = isset($user_input['options']['source_configuration']) ? $user_input['options']['source_configuration'] : $this->options['source_configuration'];
 
-    $this->proximitySourceManager->buildCommonFormElements($form, $form_state, $context, $this->options['exposed']);
+    $this->proximitySourceManager->buildCommonFormElements($form, $form_state, $this->options, $context);
 
     $form['units']['#default_value'] = isset($user_input['options']['units']) ? $user_input['options']['units'] : $this->options['units'];
     $form['source']['#default_value'] = $source_plugin_id;
 
     $form['source_configuration']['exposed_summary'] = [
       '#type' => 'checkbox',
-      '#title' => t('Expose Summary Description for the specific Proximity Filter Source'),
+      '#title' => $this->t('Expose Summary Description for the specific Proximity Filter Source'),
       '#default_value' => isset($user_input['options']['source_configuration']['exposed_summary']) ? $user_input['options']['source_configuration']['exposed_summary'] : $this->options['source_configuration']['exposed_summary'],
       '#states' => [
         'visible' => [
@@ -294,8 +317,6 @@ class GeofieldProximityFilter extends NumericFilter {
     catch (\Exception $e) {
       watchdog_exception('geofield', $e);
     }
-
-    parent::buildOptionsForm($form, $form_state);
   }
 
   /**
@@ -308,7 +329,7 @@ class GeofieldProximityFilter extends NumericFilter {
     }
     catch (\Exception $e) {
       watchdog_exception('geofield', $e);
-      $form_state->setErrorByName($form['source'], t("The Proximity Source couldn't be set due to: @error", [
+      $form_state->setErrorByName($form['source'], $this->t("The Proximity Source couldn't be set due to: @error", [
         '@error' => $e,
       ]));
     }
@@ -321,33 +342,83 @@ class GeofieldProximityFilter extends NumericFilter {
     parent::validateExposed($form, $form_state);
     $form_values = $form_state->getValues();
     $identifier = $this->options['expose']['identifier'];
+    $identifier_operator = $form_values[$identifier . '_op'] ?? NULL;
+    $which = isset($identifier_operator) && in_array($identifier_operator, $this->operatorValues(2)) ? 'minmax' : 'value';
 
-    // Validate the Distance field.
-    if (isset($form_values[$identifier]['value']) && (!empty($form_values[$identifier]['value']) && !is_numeric($form_values[$identifier]['value']))) {
-      $form_state->setError($form[$identifier]['value'], t('The Distance value is not valid.'));
+    // Set/alter the Unit value, if present in the form option.
+    if (isset($form_values["field_geofield_proximity"]["unit"]) ) {
+      $this->options["units"] = $form_values["field_geofield_proximity"]["unit"];
     }
 
-    // Validate the Min and Max values.
-    if (isset($form_values[$identifier]['min']) && isset($form_values[$identifier]['max'])
+    // Validate the Distance field.
+    if ($which !== 'minmax' && isset($form_values[$identifier]['value']) && (!empty($form_values[$identifier]['value']) && !is_numeric($form_values[$identifier]['value']))) {
+      $form_state->setError($form[$identifier . '_wrapper'][$identifier]['value'], $this->t('The @value_label value is not valid.', [
+        '@value_label' => $this->valueLabel,
+      ]));
+    }
+
+    // Validate the Distance field as positive value.
+    if ($which !== 'minmax' && !empty($form_values[$identifier]['value']) && $form_values[$identifier]['value'] < 0) {
+      $form_state->setError($form[$identifier . '_wrapper'][$identifier]['value'], $this->t('The @value_label value should be positive.', [
+        '@value_label' => $this->valueLabel,
+      ]));
+    }
+
+    // Validate the Min value.
+    if ($which !== 'value' && !empty($form_values[$identifier]['min']) && !is_numeric($form_values[$identifier]['min'])) {
+      $form_state->setError($form[$identifier . '_wrapper'][$identifier]['min'], $this->t('The @min_label value is not valid.', [
+        '@min_label' => $this->minLabel,
+      ]));
+    }
+
+    // Validate the Max value.
+    if ($which !== 'value' && !empty($form_values[$identifier]['max']) && !is_numeric($form_values[$identifier]['max'])) {
+      $form_state->setError($form[$identifier . '_wrapper'][$identifier]['max'], $this->t('The @max_label value is not valid.', [
+        '@max_label' => $this->maxLabel,
+      ]));
+    }
+
+    // Validate the Min value as positive value.
+    if ($which !== 'value' && !empty($form_values[$identifier]['min']) && $form_values[$identifier]['min'] < 0) {
+      $form_state->setError($form[$identifier . '_wrapper'][$identifier]['min'], $this->t('The @min_label value should be positive.', [
+        '@min_label' => $this->minLabel,
+      ]));
+    }
+
+    // Validate the Max value as positive value.
+    if ($which !== 'value' && !empty($form_values[$identifier]['max']) && $form_values[$identifier]['max'] < 0) {
+      $form_state->setError($form[$identifier . '_wrapper'][$identifier]['max'], $this->t('The @max_label value should be positive.', [
+        '@max_label' => $this->maxLabel,
+      ]));
+    }
+
+    // Validate the Min and Max values relationship.
+    if ($which !== 'value' && !empty($form_values[$identifier]['min']) && isset($form_values[$identifier]['max'])
       && ($form_values[$identifier]['min'] > $form_values[$identifier]['max'])) {
-      $form_state->setError($form[$identifier]['min'], t('The Min value should be smaller than the Max value.'));
+      $form_state->setError($form[$identifier . '_wrapper'][$identifier]['min'], $this->t('The @min_label value should be smaller than the @max_label value.', [
+        '@min_label' => $this->minLabel,
+        '@max_label' => $this->maxLabel,
+      ]));
     }
 
     // Validate the Origin (not null) value, when the filter is required.
     if ($this->options['expose']['required'] == TRUE) {
-      if (isset($form_values[$identifier]['source_configuration']['origin'])) {
-        $input_origin = $form_values[$identifier]['source_configuration']['origin'];
-        if ($this->sourcePlugin->isEmptyLocation($input_origin['lat'], $input_origin['lon'])) {
-          $form_state->setError($form[$identifier]['source_configuration']['origin'], t('The Origin (Lat/Lon) is required'));
-        }
-      }
-      elseif (isset($form_values[$identifier]['source_configuration']['origin_address'])) {
+      if (isset($form_values[$identifier]['source_configuration']['origin_address'])) {
         $input_address = $form_values[$identifier]['source_configuration']['origin_address'];
         if (empty($input_address)) {
-          $form_state->setError($form[$identifier]['source_configuration']['origin_address'], t('The Origin Address is required'));
+          $form_state->setError($form[$identifier . '_wrapper'][$identifier]['source_configuration']['origin_address'], $this->t('The @origin_label Address is required', [
+            '@origin_label' => $this->originLabel,
+          ]));
         }
       }
-
+      elseif (isset($form_values[$identifier]['source_configuration']['origin'])) {
+        $input_origin = $form_values[$identifier]['source_configuration']['origin'];
+        if ($this->sourcePlugin->isEmptyLocation($input_origin['lat'], $input_origin['lon'])) {
+          $form_state->setError($form[$identifier . '_wrapper'][$identifier]['source_configuration']['origin'], $this->t('The @origin_label (Lat/Lon) is required', [
+            '@origin_label' => $this->originLabel,
+          ]));
+        }
+      }
     }
   }
 
@@ -358,7 +429,6 @@ class GeofieldProximityFilter extends NumericFilter {
     parent::valueForm($form, $form_state);
 
     $form['value'] = [
-      '#type' => 'container',
       '#tree' => TRUE,
     ];
 
@@ -378,9 +448,12 @@ class GeofieldProximityFilter extends NumericFilter {
       if (!isset($user_input[$identifier]) || !is_array($user_input[$identifier])) {
         $user_input[$identifier] = [];
       }
-      $units_description = t('Units: @units', [
-        '@units' => isset($user_input['options']['units']) ? $this->geofieldRadiusOptions[$user_input['options']['units']] : $this->geofieldRadiusOptions[$this->options['units']],
-      ]);
+
+      if (isset($this->options["exposed_units"]) && !$this->options["exposed_units"]) {
+        $units_description = $this->t('Units: @units', [
+          '@units' => isset($user_input['options']['units']) ? $this->geofieldRadiusOptions[$user_input['options']['units']] : $this->geofieldRadiusOptions[$this->options['units']],
+        ]);
+      }
 
       if (empty($this->options['expose']['use_operator']) || empty($this->options['expose']['operator_id'])) {
         // Exposed and locked.
@@ -393,10 +466,8 @@ class GeofieldProximityFilter extends NumericFilter {
 
     if ($which == 'all' || $which == 'value') {
       $form['value']['value'] = [
-        '#type' => 'number',
-        '#min' => 0,
-        '#step' => 0.1,
-        '#title' => $exposed && !isset($form['field_geofield_proximity_op']) ? $this->t('Distance') . ' ' . $this->operator : $this->t('Distance'),
+        '#type' => 'textfield',
+        '#title' => $exposed && empty($source) ? $this->valueLabel . ' ' . $this->operator : (!$exposed ? $this->valueLabel : ''),
         '#size' => 30,
         '#default_value' => $this->value['value'],
         '#description' => $exposed && isset($units_description) ? $units_description : '',
@@ -422,10 +493,8 @@ class GeofieldProximityFilter extends NumericFilter {
 
     if ($which == 'all' || $which == 'minmax') {
       $form['value']['min'] = [
-        '#type' => 'number',
-        '#min' => 0,
-        '#step' => 0.1,
-        '#title' => !$exposed ? $this->t('Min') : $this->t('From'),
+        '#type' => 'textfield',
+        '#title' => $exposed && empty($source) ? $this->valueLabel . ' ' . $this->operator . ' ' . $this->minLabel : (!$exposed ? $this->minLabel : $this->minLabel),
         '#size' => 30,
         '#default_value' => $this->value['min'],
         '#description' => $exposed ? $units_description : '',
@@ -435,10 +504,8 @@ class GeofieldProximityFilter extends NumericFilter {
         $form['value']['min']['#attributes']['placeholder'] = $this->options['expose']['min_placeholder'];
       }
       $form['value']['max'] = [
-        '#type' => 'number',
-        '#min' => 0,
-        '#step' => 0.1,
-        '#title' => !$exposed ? $this->t('And max') : $this->t('And'),
+        '#type' => 'textfield',
+        '#title' => $this->maxLabel,
         '#size' => 30,
         '#default_value' => $this->value['max'],
         '#description' => $exposed ? $units_description : '',
@@ -457,11 +524,16 @@ class GeofieldProximityFilter extends NumericFilter {
         $form['value']['min'] += $states;
         $form['value']['max'] += $states;
       }
-      if ($exposed && isset($identifier) && isset($identifier) && !isset($user_input[$identifier]['min'])) {
+      if ($exposed && isset($identifier) && !isset($user_input[$identifier]['min'])) {
         $user_input[$identifier]['min'] = $this->value['min'];
       }
       if ($exposed && isset($identifier) && !isset($user_input[$identifier]['max'])) {
         $user_input[$identifier]['max'] = $this->value['max'];
+      }
+
+      if (isset($identifier) && isset($form[$identifier . '_wrapper'])) {
+        unset($form[$identifier . '_wrapper'][$identifier . '_op']['#title_display']);
+        $form[$identifier . '_wrapper'][$identifier . '_op']['#title'] = $this->valueLabel;
       }
 
       if (!isset($form['value'])) {
@@ -475,7 +547,16 @@ class GeofieldProximityFilter extends NumericFilter {
 
     // Build the specific Geofield Proximity Form Elements.
     if ($exposed && isset($identifier)) {
-      $form['value']['#type'] = 'fieldset';
+
+      // Expose the Units selector, if required.
+      if (isset($this->options["exposed_units"]) && $this->options["exposed_units"]) {
+        $form['value']['unit'] = [
+          '#type' => 'select',
+          '#options' => geofield_radius_options(),
+          '#default_value' => isset($user_input['options']['units']) ? $user_input['options']['units'] : $this->options['units'],
+        ];
+      }
+
       $form['value']['source_configuration'] = [
         '#type' => 'container',
       ];
@@ -505,7 +586,7 @@ class GeofieldProximityFilter extends NumericFilter {
       }
       catch (\Exception $e) {
         watchdog_exception('geofield', $e);
-        $form_state->setErrorByName($form['value']['source_configuration'], t("The Proximity Source couldn't be set due to: @error", [
+        $form_state->setErrorByName($form['value']['source_configuration'], $this->t("The Proximity Source couldn't be set due to: @error", [
           '@error' => $e,
         ]));
       }
@@ -552,7 +633,6 @@ class GeofieldProximityFilter extends NumericFilter {
         '#type' => 'html_tag',
         '#tag' => 'div',
         "#value" => $this->sourcePlugin->getPluginDefinition()['description'],
-        '#weight' => -100,
         "#attributes" => [
           'class' => ['proximity-filter-summary'],
         ],

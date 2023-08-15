@@ -5,9 +5,11 @@ namespace Drupal\editor_file\Form;
 use Drupal\Component\Utility\Bytes;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Form\BaseFormIdInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\filter\Entity\FilterFormat;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
@@ -36,16 +38,36 @@ class EditorFileDialog extends FormBase implements BaseFormIdInterface {
   protected $entityRepository;
 
   /**
+   * The renderer service.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
+   * The file URL generator service.
+   *
+   * @var \Drupal\Core\File\FileUrlGeneratorInterface
+   */
+  protected $fileUrlGenerator;
+
+  /**
    * Constructs a form object for image dialog.
    *
    * @param \Drupal\Core\Entity\EntityStorageInterface $file_storage
    *   The file storage service.
    * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   The entity repository service.
+   * @param \Drupal\Core\Render\RendererInterface $renderer
+   *   The renderer service.
+   * @param \Drupal\Core\File\FileUrlGeneratorInterface $file_url_generator
+   *   The file URL generator service.
    */
-  public function __construct(EntityStorageInterface $file_storage, EntityRepositoryInterface $entity_repository) {
+  public function __construct(EntityStorageInterface $file_storage, EntityRepositoryInterface $entity_repository, RendererInterface $renderer, FileUrlGeneratorInterface $file_url_generator) {
     $this->fileStorage = $file_storage;
     $this->entityRepository = $entity_repository;
+    $this->renderer = $renderer;
+    $this->fileUrlGenerator = $file_url_generator;
   }
 
   /**
@@ -54,7 +76,9 @@ class EditorFileDialog extends FormBase implements BaseFormIdInterface {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity_type.manager')->getStorage('file'),
-      $container->get('entity.repository')
+      $container->get('entity.repository'),
+      $container->get('renderer'),
+      $container->get('file_url_generator')
     );
   }
 
@@ -113,7 +137,7 @@ class EditorFileDialog extends FormBase implements BaseFormIdInterface {
     // Load dialog settings.
     $editor = editor_load($filter_format->id());
     $file_upload = $editor->getThirdPartySettings('editor_file');
-    $max_filesize = isset($file_upload['max_size']) ? min(Bytes::toInt($file_upload['max_size']), Environment::getUploadMaxSize()) : Environment::getUploadMaxSize();
+    $max_filesize = !empty($file_upload['max_size']) ? min(Bytes::toNumber($file_upload['max_size']), Environment::getUploadMaxSize()) : Environment::getUploadMaxSize();
 
     $existing_file = isset($file_element['data-entity-uuid']) ? $this->entityRepository->loadEntityByUuid('file', $file_element['data-entity-uuid']) : NULL;
     $fid = $existing_file ? $existing_file->id() : NULL;
@@ -130,10 +154,18 @@ class EditorFileDialog extends FormBase implements BaseFormIdInterface {
       '#required' => TRUE,
     ];
 
+    $file_upload_help = [
+      '#theme' => 'file_upload_help',
+      '#description' => '',
+      '#upload_validators' => $form['fid']['#upload_validators'],
+      '#cardinality' => 1,
+    ];
+    $form['fid']['#description'] = $this->renderer->renderPlain($file_upload_help);
+
     $form['attributes']['href'] = [
       '#title' => $this->t('URL'),
       '#type' => 'textfield',
-      '#default_value' => isset($file_element['href']) ? $file_element['href'] : '',
+      '#default_value' => $file_element['href'] ?: '',
       '#maxlength' => 2048,
       '#required' => TRUE,
     ];
@@ -175,11 +207,12 @@ class EditorFileDialog extends FormBase implements BaseFormIdInterface {
     $fid = $form_state->getValue(['fid', 0]);
     if (!empty($fid)) {
       $file = $this->fileStorage->load($fid);
-      $file_url = file_create_url($file->getFileUri());
+      $file_url = $this->fileUrlGenerator->generateAbsoluteString($file->getFileUri());
       // Transform absolute file URLs to relative file URLs: prevent problems
       // on multisite set-ups and prevent mixed content errors.
-      $file_url = file_url_transform_relative($file_url);
+      $file_url = $this->fileUrlGenerator->transformRelative($file_url);
       $form_state->setValue(['attributes', 'href'], $file_url);
+      $form_state->setValue(['attributes', 'filename'], urldecode(basename($file_url)));
       $form_state->setValue(['attributes', 'data-entity-uuid'], $file->uuid());
       $form_state->setValue(['attributes', 'data-entity-type'], 'file');
 

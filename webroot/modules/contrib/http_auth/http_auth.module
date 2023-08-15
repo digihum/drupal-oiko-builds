@@ -10,7 +10,7 @@
  */
 function http_auth_page_top(array &$page_top) {
   $user_roles = \Drupal::currentUser()->getRoles();
-  if (is_array($user_roles) && in_array("administrator", $user_roles)) {
+  if (is_array($user_roles) && in_array('administrator', $user_roles)) {
     return;
   }
 
@@ -32,8 +32,9 @@ function http_auth_page_top(array &$page_top) {
       header('WWW-Authenticate: Basic realm="' . $realm . '"');
       header('HTTP/1.0 401 Unauthorized');
       if (empty($message)) {
-        $message = "This page is Restricted. Please contact the administrator for access.";
+        $message = 'This page is Restricted. Please contact the administrator for access.';
       }
+
       die(http_auth_cancel_page($message));
     }
   }
@@ -44,16 +45,16 @@ function http_auth_page_top(array &$page_top) {
  */
 function http_auth_cancel_page($message = '') {
   $sitename = \Drupal::config('system.site')->get('name');
-  if ($sitename == '') {
-    $sitename = "Locked";
+  if ($sitename === '') {
+    $sitename = 'Locked';
   }
   return '<html>
-            <head>
-              <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-              <title>' . $sitename . ' | Restricted Site</title>
-            </head>
-            <body class="http-restricted">
-              <p>' . $message . '</p>
-            </body>
-          </html>';
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <title>' . $sitename . ' | Restricted Site</title>
+    </head>
+    <body class="http-restricted">
+      <p>' . $message . '</p>
+    </body>
+  </html>';
 }

@@ -33,12 +33,12 @@ class GeofieldFormatterTest extends EntityKernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['geofield'];
+  protected static $modules = ['geofield'];
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     FieldStorageConfig::create([
@@ -215,6 +215,11 @@ class GeofieldFormatterTest extends EntityKernelTestBase {
         'POINT (-2.1021 42.2257)',
         'decimal',
         '<span class="latlon latlon-lat">42.2257</span>, <span class="latlon latlon-lon">-2.1021</span>',
+      ],
+      'Polygon' => [
+        'POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))',
+        'wkt',
+        'POINT (25.454545454545 26.969696969697)',
       ],
     ];
   }

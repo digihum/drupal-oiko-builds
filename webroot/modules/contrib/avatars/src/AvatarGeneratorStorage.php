@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\AvatarGeneratorStorage.
- */
-
 namespace Drupal\avatars;
 
 use Drupal\Core\Config\Entity\ConfigEntityStorage;
@@ -19,6 +14,7 @@ class AvatarGeneratorStorage extends ConfigEntityStorage implements AvatarGenera
    */
   public function getEnabledAvatarGenerators() {
     $result = $this->getQuery()
+      ->accessCheck(FALSE)
       ->condition('status', TRUE)
       ->execute();
     return $this->loadMultiple($result);

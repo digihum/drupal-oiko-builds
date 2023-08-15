@@ -5,8 +5,9 @@ declare(strict_types = 1);
 namespace Drupal\Tests\entity_share_client\Functional;
 
 use Drupal\consumers\Entity\Consumer;
-use Drupal\Core\Site\Settings;
+use Drupal\Core\Url;
 use Drupal\entity_share_client\Entity\RemoteInterface;
+use Drupal\entity_share_server\Entity\ChannelInterface;
 use Drupal\Tests\simple_oauth\Functional\SimpleOauthTestTrait;
 use Drupal\user\Entity\Role;
 use Drupal\user\RoleInterface;
@@ -17,8 +18,7 @@ use League\OAuth2\Client\Token\AccessTokenInterface;
 /**
  * Functional test class for import with "OAuth" authorization.
  *
- * @group entity_share
- * @group entity_share_client
+ * @group no_drupalci
  */
 class AuthenticationOAuthTest extends AuthenticationTestBase {
 
@@ -27,7 +27,7 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'serialization',
     'simple_oauth',
   ];
@@ -38,6 +38,13 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
    * @var \Drupal\entity_share_client\Service\KeyProvider
    */
   protected $keyService;
+
+  /**
+   * The Drupal config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
 
   /**
    * The client secret.
@@ -68,9 +75,19 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
   protected $clientRolePlain;
 
   /**
+   * Store if some initial setup had been done.
+   *
+   * This is for setup that should be done once but can't be placed in the
+   * setup method because of some parent class calls.
+   *
+   * @var bool
+   */
+  protected $initialSetupDone = FALSE;
+
+  /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->keyService = $this->container->get('entity_share_client.key_provider');
@@ -87,6 +104,12 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
     $this->createKey($this->adminUser);
     $this->createKey($this->channelUser);
 
+    $this->configFactory = $this->container->get('config.factory');
+    $simple_oauth_settings = $this->configFactory->getEditable('simple_oauth.settings');
+    $simple_oauth_settings->set('access_token_expiration', 10);
+    $simple_oauth_settings->set('refresh_token_expiration', 30);
+    $simple_oauth_settings->save();
+
     // Change the initial remote configuration: it will use the admin user
     // to authenticate. We first test as administrative user because they have
     // access to all nodes, so we can in the beginning of the test pull the
@@ -102,8 +125,15 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
    * {@inheritdoc}
    */
   protected function createAuthenticationPlugin(UserInterface $user, RemoteInterface $remote) {
-    // Create all needed OAuth-related entities on the "server" side.
-    $this->serverOauthSetup();
+    if (!$this->initialSetupDone) {
+      // This is placed here because by inheritance this method is triggered by
+      // parent::setup(), so not possible to place it in this class setup().
+      $this->settingsSetup();
+
+      // Create all needed OAuth-related entities on the "server" side.
+      $this->serverOauthSetup();
+      $this->initialSetupDone = TRUE;
+    }
 
     $plugin = $this->authPluginManager->createInstance('oauth');
     $configuration = $plugin->getConfiguration();
@@ -113,25 +143,11 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
       $this->keyValueStore->delete($configuration['uuid'] . '-' . $plugin->getPluginId());
     }
 
-    // Override Guzzle HTTP client options.
-    // This is mandatory because otherwise in testing environment there would
-    // be a redirection from POST /oauth/token to GET /oauth/token.
-    // @see GuzzleHttp\RedirectMiddleware::modifyRequest().
-    $request_options = [
-      RequestOptions::HTTP_ERRORS => FALSE,
-      RequestOptions::ALLOW_REDIRECTS => [
-        'strict' => TRUE,
-      ],
-    ];
-    $site_settings = Settings::getAll();
-    $site_settings['http_client_config'] = $request_options;
-    new Settings($site_settings);
-
     // Obtain the access token from server.
     $credentials = [
       'username' => $user->getAccountName(),
       'password' => $user->passRaw,
-      'client_id' => $this->clients[$user->id()]->uuid(),
+      'client_id' => $this->clients[$user->id()]->getClientId(),
       'client_secret' => $this->clientSecret,
       'authorization_path' => '/oauth/authorize',
       'token_path' => '/oauth/token',
@@ -139,14 +155,11 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
 
     $access_token = '';
     try {
-      $access_token = $plugin->initalizeToken($remote, $credentials);
+      $access_token = $plugin->initializeToken($remote, $credentials);
     }
     catch (\Exception $e) {
-      // Do nothing.
+      $this->fail('The access token had not been generated.');
     }
-    // Since this is an important part of OAuth functionality,
-    // assert that it is successful.
-    $this->assertNotEmpty($access_token, 'The access token is not empty.');
 
     // Remove the username and password.
     unset($credentials['username']);
@@ -185,7 +198,7 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
     // Some stronger assertions for the uploaded private file.
     foreach (static::$filesData as $file_definition) {
       $this->assertTrue(file_exists($file_definition['uri']), 'The physical file ' . $file_definition['filename'] . ' has been pulled and recreated.');
-      $this->assertEqual(file_get_contents($file_definition['uri']), $file_definition['file_content'], 'The content of physical file ' . $file_definition['filename'] . ' is correct.');
+      $this->assertEquals($file_definition['file_content'], file_get_contents($file_definition['uri']), 'The content of physical file ' . $file_definition['filename'] . ' is correct.');
     }
 
     // 2. Test as a non-administrative user who can't access unpublished nodes.
@@ -221,10 +234,10 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
     $entity_storage = $this->entityTypeManager->getStorage('node');
 
     $published = $entity_storage->loadByProperties(['uuid' => 'es_test_node_import_published']);
-    $this->assertEqual(count($published), 1, 'The published node was imported.');
+    $this->assertEquals(1, count($published), 'The published node was imported.');
 
     $not_published = $entity_storage->loadByProperties(['uuid' => 'es_test_node_import_not_published']);
-    $this->assertEqual(count($not_published), 0, 'The unpublished node was not imported.');
+    $this->assertEquals(0, count($not_published), 'The unpublished node was not imported.');
 
     // 3. Test as non-administrative user, but with credentials stored using
     // Key module.
@@ -240,10 +253,46 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
     $entity_storage = $this->entityTypeManager->getStorage('node');
 
     $published = $entity_storage->loadByProperties(['uuid' => 'es_test_node_import_published']);
-    $this->assertEqual(count($published), 1, 'The published node was imported.');
+    $this->assertEquals(1, count($published), 'The published node was imported.');
 
     $not_published = $entity_storage->loadByProperties(['uuid' => 'es_test_node_import_not_published']);
-    $this->assertEqual(count($not_published), 0, 'The unpublished node was not imported.');
+    $this->assertEquals(0, count($not_published), 'The unpublished node was not imported.');
+  }
+
+  /**
+   * Test behavior when access and refresh tokens are revoked.
+   */
+  public function testTokenExpiration() {
+    // 1. Access token is valid.
+    $entity_share_entrypoint_url = Url::fromRoute('entity_share_server.resource_list');
+    $response = $this->remoteManager->jsonApiRequest($this->remote, 'GET', $entity_share_entrypoint_url->setAbsolute()->toString());
+    $this->assertNotNull($response, 'No exception caught during request');
+    $this->assertEquals(200, $response->getStatusCode());
+
+    // Ensure access token has expired.
+    $plugin = $this->remote->getAuthPlugin();
+    $configuration = $plugin->getConfiguration();
+    /** @var \League\OAuth2\Client\Token\AccessTokenInterface $access_token */
+    $access_token = $this->keyValueStore->get($configuration['uuid'] . '-' . $plugin->getPluginId());
+    $this->assertFalse($access_token->hasExpired(), 'The access token has not expired yet.');
+    sleep(30);
+    $this->assertTrue($access_token->hasExpired(), 'The access token has expired.');
+
+    // 2. Access token has expired but refresh token is still valid.
+    $this->resetRemoteCaches();
+    $response = $this->remoteManager->jsonApiRequest($this->remote, 'GET', $entity_share_entrypoint_url->setAbsolute()->toString());
+    $this->assertNotNull($response, 'No exception caught during request');
+    $this->assertEquals(200, $response->getStatusCode());
+
+    // Ensure refresh token has expired.
+    sleep(120);
+
+    // 3. Both access and refresh tokens have expired, so use
+    // client_credentials as a last resort.
+    $this->resetRemoteCaches();
+    $response = $this->remoteManager->jsonApiRequest($this->remote, 'GET', $entity_share_entrypoint_url->setAbsolute()->toString());
+    $this->assertNotNull($response, 'No exception caught during request');
+    $this->assertEquals(200, $response->getStatusCode());
   }
 
   /**
@@ -266,22 +315,13 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
     $credentials = $this->keyService->getCredentials($plugin);
     $credentials['username'] = $account->getAccountName();
     $credentials['password'] = $account->passRaw;
-    $request_options = [
-      RequestOptions::HTTP_ERRORS => FALSE,
-      RequestOptions::ALLOW_REDIRECTS => [
-        'strict' => TRUE,
-      ],
-    ];
     $access_token = '';
     try {
-      $access_token = $plugin->initalizeToken($this->remote, $credentials, $request_options);
+      $access_token = $plugin->initializeToken($this->remote, $credentials);
     }
     catch (\Exception $e) {
-      // Do nothing.
+      $this->fail('The access token had not been generated.');
     }
-    // Since this is an important part of OAuth functionality,
-    // assert that it is successful.
-    $this->assertNotEmpty($access_token, 'The new access token is not empty.');
     // Save the obtained key.
     $this->keyValueStore->set($configuration['uuid'] . '-' . $plugin->getPluginId(), $access_token);
 
@@ -298,6 +338,32 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
   }
 
   /**
+   * Helper function: set settings PHP overrides.
+   */
+  private function settingsSetup() {
+    // Override Guzzle HTTP client options.
+    // This is mandatory because otherwise in testing environment there would
+    // be a redirection from POST /oauth/token to GET /oauth/token.
+    // @see GuzzleHttp\RedirectMiddleware::modifyRequest().
+    $settings = [];
+    $settings['settings']['http_client_config'][RequestOptions::HTTP_ERRORS] = (object) [
+      'value' => FALSE,
+      'required' => TRUE,
+    ];
+    $settings['settings']['http_client_config'][RequestOptions::ALLOW_REDIRECTS] = (object) [
+      'value' => [
+        'strict' => TRUE,
+      ],
+      'required' => TRUE,
+    ];
+    $settings['settings']['http_client_config'][RequestOptions::VERIFY] = (object) [
+      'value' => FALSE,
+      'required' => TRUE,
+    ];
+    $this->writeSettings($settings);
+  }
+
+  /**
    * Helper function: creates needed server-side entities needed for OAuth.
    */
   private function serverOauthSetup() {
@@ -308,7 +374,7 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
       'is_admin' => FALSE,
     ]);
     $this->clientRole->grantPermission('grant simple_oauth codes');
-    $this->clientRole->grantPermission('entity_share_server_access_channels');
+    $this->clientRole->grantPermission(ChannelInterface::CHANNELS_ACCESS_PERMISSION);
     $this->clientRole->grantPermission('bypass node access');
     $this->clientRole->save();
     $this->adminUser->addRole($this->clientRole->id());
@@ -319,7 +385,7 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
       'is_admin' => FALSE,
     ]);
     $this->clientRolePlain->grantPermission('grant simple_oauth codes');
-    $this->clientRolePlain->grantPermission('entity_share_server_access_channels');
+    $this->clientRolePlain->grantPermission(ChannelInterface::CHANNELS_ACCESS_PERMISSION);
     $this->clientRolePlain->save();
     $this->channelUser->addRole($this->clientRolePlain->id());
 
@@ -349,6 +415,7 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
       'owner_id' => '',
       'user_id' => $account->id(),
       'label' => $this->getRandomGenerator()->name(),
+      'client_id' => 'entity_share_' . $account->id(),
       'secret' => $this->clientSecret,
       'confidential' => FALSE,
       'third_party' => TRUE,
@@ -369,7 +436,7 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
   protected function createKey(UserInterface $account) {
     $this->createTestKey('key_oauth_' . $account->id(), 'entity_share_oauth', 'config');
     $credentials = [
-      'client_id' => $this->clients[$account->id()]->uuid(),
+      'client_id' => $this->clients[$account->id()]->getClientId(),
       'client_secret' => $this->clientSecret,
       'authorization_path' => '/oauth/authorize',
       'token_path' => '/oauth/token',

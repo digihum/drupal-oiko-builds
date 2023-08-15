@@ -16,6 +16,12 @@ eu_cookie_compliance.settings:
     popup_scrolling_confirmation:
       type: boolean
       label: 'Consent by scrolling'
+    eu_countries:
+      type: sequence
+      label: 'Array of EU countries'
+      sequence:
+        type: text
+        label: 'Country name.'
     eu_only:
       type: boolean
       label: 'Only display banner in EU countries.'
@@ -29,32 +35,18 @@ eu_cookie_compliance.settings:
       type: boolean
       label: "If the banner is at the top, don't scroll the banner with the page."
     popup_info:
-      type: mapping
+      type: text_format
       label: 'Cookie information banner message'
-      mapping:
-        value:
-          type: text
-          label: 'Cookie information banner message - Value'
-        format:
-          type: string
-          label: 'Cookie information banner message - Format'
     mobile_popup_info:
-      type: mapping
+      type: text_format
       label: 'Cookie information banner message - mobile'
-      mapping:
-        value:
-          type: text
-          label: 'Cookie information banner message - mobile - Value'
-        format:
-          type: string
-          label: 'Cookie information banner message - mobile - Format'
     popup_info_template:
       type: string
       label: 'Template to use for "consent by default" method'
     popup_agree_button_message:
       type: label
       label: 'Agree button message'
-    popup_disagree_button_message:
+    popup_more_info_button_message:
       type: label
       label: 'Cookie Policy button message'
     mobile_breakpoint:
@@ -70,15 +62,8 @@ eu_cookie_compliance.settings:
       type: label
       label: 'Disagree button label'
     popup_agreed:
-      type: mapping
+      type: text_format
       label: 'Thank you banner message'
-      mapping:
-        value:
-          type: text
-          label: 'Thank you banner message - Value'
-        format:
-          type: string
-          label: 'Thank you banner message - Format'
     popup_find_more_button_message:
       type: label
       label: 'More info button label'
@@ -100,7 +85,7 @@ eu_cookie_compliance.settings:
     popup_delay:
       type: integer
       label: 'Banner sliding animation time in milliseconds'
-    show_disagree_button:
+    show_more_info:
       type: boolean
       label: 'Show "Cookie Policy" and "More info" buttons'
     popup_bg_hex:
@@ -127,6 +112,9 @@ eu_cookie_compliance.settings:
     cookie_session:
       type: integer
       label: 'Cookie session'
+    set_cookie_session_zero_on_disagree:
+      type: integer
+      label: 'Disagree set cookie session'
     cookie_lifetime:
       type: integer
       label: 'Cookie lifetime'
@@ -136,12 +124,21 @@ eu_cookie_compliance.settings:
     use_bare_css:
       type: boolean
       label: 'Include minimal CSS, I want to style the overlay in the theme CSS'
+    use_olivero_css:
+      type: boolean
+      label: 'Include styles to support Drupal Olivero theme default CSS.'
     disagree_do_not_show_popup:
       type: boolean
       label: 'Do not show cookie policy when the user clicks the "Cookie Policy" button.'
     reload_page:
       type: boolean
       label: 'Reload page after user clicks the "Agree" button.'
+    reload_options:
+      type: integer
+      label: 'Include/exclude specified routes for reloading'
+    reload_routes_list:
+      type: string
+      label: 'Routes list'
     cookie_name:
       type: string
       label: 'Cookie name'
@@ -157,22 +154,18 @@ eu_cookie_compliance.settings:
     disabled_javascripts:
       type: string
       label: 'Disable JavaScripts'
-    whitelisted_cookies:
+    automatic_cookies_removal:
+      type: boolean
+      label: 'Enable cookie(s) automatic-removal when consent is not explicitly given'
+    allowed_cookies:
       type: string
-      label: 'Whitelisted cookies'
+      label: 'Allowed cookies'
     consent_storage_method:
       type: string
       label: 'Consent storage method'
     withdraw_message:
-      type: mapping
+      type: text_format
       label: 'Withdraw consent banner message'
-      mapping:
-        value:
-          type: text
-          label: 'Withdraw consent banner message - Value'
-        format:
-          type: string
-          label: 'Withdraw consent banner message - Format'
     withdraw_tab_button_label:
       type: label
       label: 'Privacy settings tab label'
@@ -185,9 +178,6 @@ eu_cookie_compliance.settings:
     withdraw_button_on_info_popup:
       type: boolean
       label: 'Put the withdraw consent action button on the cookie information banner'
-    cookie_categories:
-      type: text
-      label: 'List of cookie categories with separate consent'
     save_preferences_button_label:
       type: label
       label: 'Save preferences action button label'
@@ -197,12 +187,57 @@ eu_cookie_compliance.settings:
     enable_save_preferences_button:
       type: boolean
       label: 'Replace the Agree button by a Save preferences and an Accept all categories button'
-    select_all_categories_by_default:
-      type: boolean
-      label: 'Check all checkboxes by default'
-    fix_first_cookie_category:
-      type: boolean
-      label: 'Check the first checkbox and mark it read only'
     domain_all_sites:
       type: boolean
       label: 'Allow the cookie to be set for all sites on the same domain'
+    settings_tab_enabled:
+      type: boolean
+      label: 'Enable floating privacy settings permanently'
+    containing_element:
+      type: string
+      label: 'Containing element'
+    cookie_policy_version:
+      type: string
+      label: 'Cookie Policy Version'
+    cookie_value_disagreed:
+      type: string
+      label: 'Cookie value (disagreed)'
+    cookie_value_agreed_show_thank_you:
+      type: string
+      label: 'Cookie value (agreed, show thank you banner)'
+    cookie_value_agreed:
+      type: string
+      label: 'Cookie value (agreed)'
+    show_disagree_button:
+      type: boolean
+      label: 'Show disagree button (DEPRECATED)'
+    popup_disagree_button_message:
+      type: label
+      label: 'Disagree button message (DEPRECATED)'
+    whitelisted_cookies:
+      type: string
+      label: 'Whitelisted cookies (DEPRECATED)'
+    cookie_categories:
+      type: string
+      label: 'Cookie categories (DEPRECATED)'
+    fix_first_cookie_category:
+      type: boolean
+      label: 'Boolean value to indicate that the first consent category cannot be unchecked (DEPRECATED)'
+    select_all_categories_by_default:
+      type: boolean
+      label: 'Select all categories by default (DEPRECATED)'
+    accessibility_focus:
+      type: boolean
+      label: 'Buttons have red focus outline (for accessibility)'
+    close_button_action:
+      type: string
+      label: 'Close button action'
+    reject_button_label:
+      type: label
+      label: 'Reject button label'
+    reject_button_enabled:
+      type: boolean
+      label: 'Enable "Reject/deny all" button'
+    close_button_enabled:
+      type: boolean
+      label: 'Close button/box enabled'

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars_robohash\RobohashInterface.
- */
-
 namespace Drupal\avatars_robohash;
 
 /**
@@ -66,7 +61,7 @@ interface RobohashInterface {
   /**
    * Gets the background.
    *
-   * @return string|NULL
+   * @return string|null
    *   The background, or NULL for default.
    */
   public function getBackground();
@@ -74,7 +69,7 @@ interface RobohashInterface {
   /**
    * Set the background.
    *
-   * @param string|NULL $background
+   * @param string|null $background
    *   The background to use, or NULL to use default.
    *
    * @return \Drupal\avatars_robohash\RobohashInterface
@@ -88,7 +83,7 @@ interface RobohashInterface {
    * @return array
    *   An array of GET values keyed by type.
    */
-  static public function getTypesMap();
+  public static function getTypesMap();
 
   /**
    * Sets type to random.

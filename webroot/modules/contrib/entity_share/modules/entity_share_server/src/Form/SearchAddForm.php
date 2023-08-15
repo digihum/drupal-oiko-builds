@@ -7,7 +7,7 @@ namespace Drupal\entity_share_server\Form;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class SearchAddForm.
+ * Form to add a search on a channel.
  *
  * @package Drupal\entity_share_server\Form
  */
@@ -22,7 +22,7 @@ class SearchAddForm extends SearchBaseForm {
     $form['path'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Path'),
-      '#description' => $this->t('Enter the machine name of the field / property you want to filter on. You can reference field / property of a referenced entity. Example: uid.name for the name of the author.'),
+      '#description' => $this->t('Enter the machine name of the field / property you want to be able to search in, on the client website. You can reference field / property of a referenced entity. Example: uid.name for the name of the author.'),
       '#required' => TRUE,
     ];
 

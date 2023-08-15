@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\Entity\AvatarGenerator.
- */
-
 namespace Drupal\avatars\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
@@ -38,6 +33,14 @@ use Drupal\avatars\AvatarGeneratorPluginCollection;
  *     "edit-form" = "/admin/config/people/avatars/generators/{avatar_generator}",
  *     "delete-form" = "/admin/config/people/avatars/generators/{avatar_generator}/delete",
  *   },
+ *   config_export = {
+ *     "id",
+ *     "label",
+ *     "weight",
+ *     "plugin",
+ *     "provider",
+ *     "settings",
+ *   }
  * )
  */
 class AvatarGenerator extends ConfigEntityBase implements AvatarGeneratorInterface, EntityWithPluginCollectionInterface {

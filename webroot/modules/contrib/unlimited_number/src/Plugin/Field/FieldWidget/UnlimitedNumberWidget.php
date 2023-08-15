@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\unlimited_number\Plugin\Field\FieldWidget;
 
-use Drupal\Core\Field\Plugin\Field\FieldWidget\NumberWidget;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\Plugin\Field\FieldWidget\NumberWidget;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\unlimited_number\Element\UnlimitedNumber;
 
@@ -11,7 +13,7 @@ use Drupal\unlimited_number\Element\UnlimitedNumber;
  * Plugin implementation of the 'unlimited_number' widget.
  *
  * @FieldWidget(
- *   id = "unlimited_number",
+ *   id = \Drupal\unlimited_number\Plugin\Field\FieldWidget\UnlimitedNumberWidget::PLUGIN_ID,
  *   label = @Translation("Unlimited or Number"),
  *   field_types = {
  *     "integer",
@@ -20,10 +22,12 @@ use Drupal\unlimited_number\Element\UnlimitedNumber;
  */
 class UnlimitedNumberWidget extends NumberWidget {
 
+  public const PLUGIN_ID = 'unlimited_number';
+
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
+  public static function defaultSettings(): array {
     return [
       'value_unlimited' => 0,
       'label_unlimited' => t('Unlimited'),
@@ -34,7 +38,7 @@ class UnlimitedNumberWidget extends NumberWidget {
   /**
    * {@inheritdoc}
    */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
+  public function settingsForm(array $form, FormStateInterface $form_state): array {
     $element = parent::settingsForm($form, $form_state);
 
     $element['value_unlimited'] = [
@@ -64,12 +68,12 @@ class UnlimitedNumberWidget extends NumberWidget {
   /**
    * {@inheritdoc}
    */
-  public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
+  public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
     $field_settings = $this->getFieldSettings();
     $value_unlimited = $this->getUnlimitedValue();
 
-    $value = isset($items[$delta]->value) ? $items[$delta]->value : NULL;
-    if (isset($value)) {
+    $value = $items[$delta]->value ?? NULL;
+    if ($value !== NULL) {
       $default_value = $value == $value_unlimited ? UnlimitedNumber::UNLIMITED : $value;
     }
     else {
@@ -94,7 +98,7 @@ class UnlimitedNumberWidget extends NumberWidget {
   /**
    * {@inheritdoc}
    */
-  public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
+  public function massageFormValues(array $values, array $form, FormStateInterface $form_state): array {
     $new_values = [];
     foreach ($values as $value) {
       $number = $value['unlimited_number'];
@@ -109,11 +113,12 @@ class UnlimitedNumberWidget extends NumberWidget {
   /**
    * Get unlimited value from settings.
    *
-   * @return integer
+   * @return int
+   *   The unlimited value.
    */
-  public function getUnlimitedValue() {
+  public function getUnlimitedValue(): int {
     $value_unlimited_raw = $this->getSetting('value_unlimited');
-    return empty($value_unlimited_raw) ? 0 : $value_unlimited_raw;
+    return empty($value_unlimited_raw) ? 0 : (int) $value_unlimited_raw;
   }
 
 }

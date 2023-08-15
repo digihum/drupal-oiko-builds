@@ -20,7 +20,7 @@ class ChangedRemovedTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'jsonapi_extras',
   ];
 
@@ -42,7 +42,7 @@ class ChangedRemovedTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->entityTypeManager->getStorage('jsonapi_resource_config')->create([
@@ -107,14 +107,17 @@ class ChangedRemovedTest extends EntityShareClientFunctionalTestBase {
   protected function createChannel(UserInterface $user) {
     parent::createChannel($user);
 
-    // Add a channel for the node in french.
+    // Add a channel for the node in French.
     $channel_storage = $this->entityTypeManager->getStorage('channel');
     $channel = $channel_storage->create([
       'id' => 'node_es_test_fr',
       'label' => $this->randomString(),
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'fr',
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $user->uuid(),
       ],

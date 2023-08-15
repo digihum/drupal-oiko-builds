@@ -11,12 +11,12 @@ use Drupal\Tests\UnitTestCase;
 abstract class ConfigDevelTestBase extends UnitTestCase {
 
   /**
-   * @var \Drupal\Core\Config\ConfigFactoryInterface|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Core\Config\ConfigFactoryInterface|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $configFactory;
 
   /**
-   * @var \Drupal\Core\Config\ConfigManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Core\Config\ConfigManagerInterface|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $configManager;
 
@@ -28,13 +28,13 @@ abstract class ConfigDevelTestBase extends UnitTestCase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
-    $this->configFactory = $this->getMock('Drupal\Core\Config\ConfigFactoryInterface');
+    $this->configFactory = $this->createMock('Drupal\Core\Config\ConfigFactoryInterface');
 
-    $this->eventDispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+    $this->eventDispatcher = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
-    $this->configManager = $this->getMock('Drupal\Core\Config\ConfigManagerInterface');
+    $this->configManager = $this->createMock('Drupal\Core\Config\ConfigManagerInterface');
     $this->configManager->expects($this->any())
       ->method('getEntityTypeIdByName')
       ->will($this->returnArgument(0));

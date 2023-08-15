@@ -2,10 +2,11 @@
 
 namespace Drupal\paragraphs;
 
+use Drupal\Component\Plugin\ConfigurableInterface;
+use Drupal\Component\Plugin\DependentPluginInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\PluginFormInterface;
-use Drupal\Component\Plugin\ConfigurablePluginInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\Entity\ParagraphsType;
 
@@ -16,7 +17,7 @@ use Drupal\paragraphs\Entity\ParagraphsType;
  * adding properties and attributes, it can also add extra classes to the render
  * elements so extra styling can be applied.
  */
-interface ParagraphsBehaviorInterface extends PluginFormInterface, ConfigurablePluginInterface {
+interface ParagraphsBehaviorInterface extends PluginFormInterface, ConfigurableInterface, DependentPluginInterface {
 
   /**
    * Builds a behavior perspective for each paragraph based on its type.
@@ -94,9 +95,6 @@ interface ParagraphsBehaviorInterface extends PluginFormInterface, ConfigurableP
    *   entity components.
    * @param string $view_mode
    *   The view mode the entity is rendered in.
-   *
-   * @return array
-   *   A render array provided by the plugin.
    */
   public function view(array &$build, Paragraph $paragraph, EntityViewDisplayInterface $display, $view_mode);
 

@@ -1,9 +1,6 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\migrate_plus\Annotation\DataFetcher.
- */
+declare(strict_types = 1);
 
 namespace Drupal\migrate_plus\Annotation;
 
@@ -12,7 +9,7 @@ use Drupal\Component\Annotation\Plugin;
 /**
  * Defines a data fetcher annotation object.
  *
- * Plugin Namespace: Plugin\migrate_plus\data_fetcher
+ * Plugin namespace: Plugin\migrate_plus\data_fetcher.
  *
  * @see \Drupal\migrate_plus\DataFetcherPluginBase
  * @see \Drupal\migrate_plus\DataFetcherPluginInterface
@@ -25,18 +22,12 @@ class DataFetcher extends Plugin {
 
   /**
    * The plugin ID.
-   *
-   * @var string
    */
-  public $id;
+  public string $id;
 
   /**
    * The title of the plugin.
-   *
-   * @var \Drupal\Core\Annotation\Translation
-   *
-   * @ingroup plugin_translatable
    */
-  public $title;
+  public string $title;
 
 }

@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace Drupal\entity_share_server\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * Class ChannelListEvent.
+ * Allows to alter the list of channels provided by the website.
  *
  * @package Drupal\entity_share_server\Event
  */

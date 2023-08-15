@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\entity_share_client\Entity;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityChangedInterface;
 
 /**
  * Provides an interface for defining Entity import status entities.
@@ -15,12 +14,7 @@ interface EntityImportStatusInterface extends ContentEntityInterface {
   /**
    * Denotes the default entity import policy.
    */
-  const IMPORT_POLICY_DEFAULT = 0;
-
-  /**
-   * Denotes the skip entity import policy.
-   */
-  const IMPORT_POLICY_SKIP = 1;
+  const IMPORT_POLICY_DEFAULT = 'default';
 
   /**
    * Returns the last import time.
@@ -42,27 +36,9 @@ interface EntityImportStatusInterface extends ContentEntityInterface {
   public function setLastImport($timestamp);
 
   /**
-   * Gets the timestamp of the last entity change.
-   *
-   * @return int
-   *   The timestamp of the last entity save operation.
-   */
-  public function getChangedTime();
-
-  /**
-   * Sets the timestamp of the last entity change.
-   *
-   * @param int $timestamp
-   *   The timestamp of the last entity save operation.
-   *
-   * @return $this
-   */
-  public function setChangedTime($timestamp);
-
-  /**
    * Returns the import policy of entity.
    *
-   * @return int
+   * @return string
    *   The import policy.
    */
   public function getPolicy();
@@ -70,20 +46,12 @@ interface EntityImportStatusInterface extends ContentEntityInterface {
   /**
    * Sets the import policy of entity.
    *
-   * @param int $policy
+   * @param string $policy
    *   The import policy.
    *
    * @return $this
    *   The class instance that this method is called on.
    */
   public function setPolicy($policy);
-
-  /**
-   * Gets all implemented import policies.
-   *
-   * @return array
-   *   Keys are raw policy values, values are human-readable labels.
-   */
-  public static function getAvailablePolicies();
 
 }

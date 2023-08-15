@@ -62,61 +62,53 @@ class EntryPoint extends ControllerBase {
       'channels' => [],
       'field_mappings' => $this->getFieldMappings(),
     ];
-
-    $uuid = 'anonymous';
-    if ($this->currentUser()->isAuthenticated()) {
-      // Load the user to ensure with have a user entity.
-      /** @var \Drupal\user\UserInterface $account */
-      $account = $this->entityTypeManager()->getStorage('user')->load($this->currentUser()->id());
-      if (!is_null($account)) {
-        $uuid = $account->uuid();
-      }
-    }
+    $languages = $this->languageManager()->getLanguages(LanguageInterface::STATE_ALL);
 
     /** @var \Drupal\entity_share_server\Entity\ChannelInterface[] $channels */
     $channels = $this->entityTypeManager()
       ->getStorage('channel')
       ->loadMultiple();
 
-    $languages = $this->languageManager()->getLanguages(LanguageInterface::STATE_ALL);
     foreach ($channels as $channel) {
-      // Check access for this user.
-      if (in_array($uuid, $channel->get('authorized_users'))) {
-        $channel_entity_type = $channel->get('channel_entity_type');
-        $channel_bundle = $channel->get('channel_bundle');
-        $channel_langcode = $channel->get('channel_langcode');
-        $route_name = sprintf('jsonapi.%s--%s.collection', $channel_entity_type, $channel_bundle);
-        $url = Url::fromRoute($route_name)
-          ->setOption('language', $languages[$channel_langcode])
-          ->setOption('absolute', TRUE)
-          ->setOption('query', $this->channelManipulator->getQuery($channel));
-
-        // Prepare an URL to get only the UUIDs.
-        $url_uuid = clone($url);
-        $query = $url_uuid->getOption('query');
-        $query = (!is_null($query)) ? $query : [];
-        $url_uuid->setOption('query',
-          $query + [
-            'fields' => [
-              $channel_entity_type . '--' . $channel_bundle => 'changed',
-            ],
-          ]
-        );
-
-        $data['channels'][$channel->id()] = [
-          'label' => $channel->label(),
-          'url' => $url->toString(),
-          'url_uuid' => $url_uuid->toString(),
-          'channel_entity_type' => $channel_entity_type,
-          'channel_bundle' => $channel_bundle,
-          'search_configuration' => $this->channelManipulator->getSearchConfiguration($channel),
-        ];
+      if (!$this->channelManipulator->userAccessChannel($channel, $this->currentUser())) {
+        continue;
       }
+
+      $channel_entity_type = $channel->get('channel_entity_type');
+      $channel_bundle = $channel->get('channel_bundle');
+      $channel_langcode = $channel->get('channel_langcode');
+      $route_name = sprintf('jsonapi.%s--%s.collection', $channel_entity_type, $channel_bundle);
+      $url = Url::fromRoute($route_name)
+        ->setOption('language', $languages[$channel_langcode])
+        ->setOption('absolute', TRUE)
+        ->setOption('query', $this->channelManipulator->getQuery($channel));
+
+      // Prepare an URL to get only the UUIDs.
+      $url_uuid = clone($url);
+      $query = $url_uuid->getOption('query');
+      $query = (!is_null($query)) ? $query : [];
+      $url_uuid->setOption('query',
+        $query + [
+          'fields' => [
+            $channel_entity_type . '--' . $channel_bundle => 'changed',
+          ],
+        ]
+      );
+
+      $data['channels'][$channel->id()] = [
+        'label' => $channel->label(),
+        'url' => $url->toString(),
+        'url_uuid' => $url_uuid->toString(),
+        'channel_entity_type' => $channel_entity_type,
+        'channel_bundle' => $channel_bundle,
+        'search_configuration' => $this->channelManipulator->getSearchConfiguration($channel),
+        'channel_maxsize' => $channel->get('channel_maxsize'),
+      ];
     }
 
     // Collect other channel definitions.
     $event = new ChannelListEvent($data);
-    $this->eventDispatcher->dispatch(ChannelListEvent::EVENT_NAME, $event);
+    $this->eventDispatcher->dispatch($event, ChannelListEvent::EVENT_NAME);
 
     return new JsonResponse([
       'data' => $event->getChannelList(),

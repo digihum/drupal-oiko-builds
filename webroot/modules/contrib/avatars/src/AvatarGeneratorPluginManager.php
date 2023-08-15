@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\AvatarGeneratorPluginManager.
- */
-
 namespace Drupal\avatars;
 
 use Drupal\Component\Plugin\FallbackPluginManagerInterface;

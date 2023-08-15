@@ -2,9 +2,10 @@
 
 namespace Drupal\views_bulk_operations\Action;
 
+use Drupal\Component\Plugin\ConfigurableInterface;
 use Drupal\Core\Action\ActionBase;
-use Drupal\Component\Plugin\ConfigurablePluginInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\views\ViewExecutable;
 
 /**
@@ -13,34 +14,34 @@ use Drupal\views\ViewExecutable;
  * Provides a base implementation for a configurable
  * and preconfigurable VBO Action plugin.
  */
-abstract class ViewsBulkOperationsActionBase extends ActionBase implements ViewsBulkOperationsActionInterface, ConfigurablePluginInterface {
+abstract class ViewsBulkOperationsActionBase extends ActionBase implements ViewsBulkOperationsActionInterface, ConfigurableInterface {
+
+  use ViewsBulkOperationsActionCompletedTrait;
 
   /**
    * Action context.
    *
-   * @var array
-   *   Contains view data and optionally batch operation context.
+   * Contains view data and optionally batch operation context.
    */
-  protected $context;
+  protected array $context;
 
   /**
    * The processed view.
-   *
-   * @var \Drupal\views\ViewExecutable
    */
-  protected $view;
+  protected ViewExecutable $view;
 
   /**
    * Configuration array.
    *
    * @var array
+   *   NOTE: Don't add a type hint due to parent declaration unless changed.
    */
   protected $configuration;
 
   /**
    * {@inheritdoc}
    */
-  public function setContext(array &$context) {
+  public function setContext(array &$context): void {
     $this->context['sandbox'] = &$context['sandbox'];
     foreach ($context as $key => $item) {
       if ($key === 'sandbox') {
@@ -53,7 +54,7 @@ abstract class ViewsBulkOperationsActionBase extends ActionBase implements Views
   /**
    * {@inheritdoc}
    */
-  public function setView(ViewExecutable $view) {
+  public function setView(ViewExecutable $view): void {
     $this->view = $view;
   }
 
@@ -124,10 +125,18 @@ abstract class ViewsBulkOperationsActionBase extends ActionBase implements Views
   }
 
   /**
-   * {@inheritdoc}
+   * Default custom access callback.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   The user the access check needs to be preformed against.
+   * @param \Drupal\views\ViewExecutable $view
+   *   The View Bulk Operations view data.
+   *
+   * @return bool
+   *   Has access.
    */
-  public function calculateDependencies() {
-    return [];
+  public static function customAccess(AccountInterface $account, ViewExecutable $view): bool {
+    return TRUE;
   }
 
 }

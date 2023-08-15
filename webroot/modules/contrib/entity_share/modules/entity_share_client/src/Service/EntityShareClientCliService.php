@@ -9,7 +9,7 @@ use Drupal\Component\Utility\Timer;
 use Drupal\entity_share_client\ImportContext;
 
 /**
- * Class EntityShareClientCliService.
+ * Service to ease the usage of CLI tools.
  *
  * @package Drupal\entity_share_client
  *
@@ -69,7 +69,9 @@ class EntityShareClientCliService {
     if ($batch) {
       drush_backend_batch_process();
       Timer::stop('io-pull');
-      $input_output->success($translate('Channel successfully pulled. Execution time @time ms.', ['@time' => Timer::read('io-pull')]));
+      $input_output->success($translate('Channel successfully pulled. Execution time @time ms.', [
+        '@time' => Timer::read('io-pull'),
+      ]));
     }
   }
 

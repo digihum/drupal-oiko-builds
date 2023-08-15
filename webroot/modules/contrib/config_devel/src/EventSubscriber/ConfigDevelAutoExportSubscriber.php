@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\config_devel\EventSubscriber\ConfigDevelAutoExportSubscriber.
- */
-
 namespace Drupal\config_devel\EventSubscriber;
 
 use Drupal\config_devel\Event\ConfigDevelEvents;
@@ -14,7 +9,6 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ConfigManagerInterface;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Config\InstallStorage;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Yaml\Exception\DumpException;
@@ -86,7 +80,7 @@ class ConfigDevelAutoExportSubscriber extends ConfigDevelSubscriberBase implemen
    */
   protected function autoExportConfig(Config $config) {
     $config_name = $config->getName();
-    $file_names = array_filter($this->getSettings()->get('auto_export'), function ($file_name) use ($config_name) {
+    $file_names = array_filter($this->getSettings()->get('auto_export') ?: [], function ($file_name) use ($config_name) {
       return basename($file_name, '.' . FileStorage::getFileExtension()) == $config_name;
     });
     $this->writeBackConfig($config, $file_names);
@@ -101,6 +95,7 @@ class ConfigDevelAutoExportSubscriber extends ConfigDevelSubscriberBase implemen
    *   The file names to which the configuration should be written.
    */
   public function writeBackConfig(Config $config, array $file_names) {
+    // TODO: use the config_devel.importer_exporter service.
     if ($file_names) {
       $data = $config->get();
       $config_name = $config->getName();
@@ -111,7 +106,7 @@ class ConfigDevelAutoExportSubscriber extends ConfigDevelSubscriberBase implemen
 
       // Let everyone else have a change to update the exported data.
       $event = new ConfigDevelSaveEvent($file_names, $data);
-      $this->eventDispatcher->dispatch(ConfigDevelEvents::SAVE, $event);
+      $this->eventDispatcher->dispatch($event, ConfigDevelEvents::SAVE);
       $data = $event->getData();
       $file_names = $event->getFileNames();
 

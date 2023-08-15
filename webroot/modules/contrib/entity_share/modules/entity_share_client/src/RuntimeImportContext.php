@@ -87,11 +87,39 @@ class RuntimeImportContext {
   protected $importService;
 
   /**
+   * The import max size.
+   *
+   * @var int
+   */
+  protected $importMaxSize;
+
+  /**
    * The list of the currently imported entities.
    *
    * @var array
    */
   protected $importedEntities = [];
+
+  /**
+   * The list of the entities mark for import.
+   *
+   * This is a different list than the $importedEntities because of some
+   * processors which have to import entities before it is normally marked as
+   * imported in the import service.
+   *
+   * So to avoid infinite loop, a second list of entities being imported is
+   * created.
+   *
+   * @var array
+   */
+  protected $entitiesMarkedForImport = [];
+
+  /**
+   * The list of books that got processed.
+   *
+   * @var array
+   */
+  protected $books = [];
 
   /**
    * Getter.
@@ -296,6 +324,26 @@ class RuntimeImportContext {
   /**
    * Getter.
    *
+   * @return int
+   *   The import max size.
+   */
+  public function getImportMaxSize(): int {
+    return $this->importMaxSize;
+  }
+
+  /**
+   * Setter.
+   *
+   * @param int $importMaxSize
+   *   The import max size.
+   */
+  public function setImportMaxSize(int $importMaxSize): void {
+    $this->importMaxSize = $importMaxSize;
+  }
+
+  /**
+   * Getter.
+   *
    * @return array
    *   The imported entities.
    */
@@ -360,6 +408,67 @@ class RuntimeImportContext {
     else {
       return FALSE;
     }
+  }
+
+  /**
+   * Getter.
+   *
+   * @return array
+   *   The entities marked for import.
+   */
+  public function getEntitiesMarkedForImport(): array {
+    return $this->entitiesMarkedForImport;
+  }
+
+  /**
+   * Register that an entity has been marked for import.
+   *
+   * @param string $entity_uuid
+   *   The entity UUID.
+   */
+  public function addEntityMarkedForImport($entity_uuid): void {
+    $this->entitiesMarkedForImport[$entity_uuid] = $entity_uuid;
+  }
+
+  /**
+   * Check if an entity has been marked for import in any language.
+   *
+   * @param string $entity_uuid
+   *   The entity UUID.
+   *
+   * @return bool
+   *   TRUE if the entity had been marked for import. FALSE otherwise.
+   */
+  public function isEntityMarkedForImport(string $entity_uuid): bool {
+    if (isset($this->entitiesMarkedForImport[$entity_uuid])) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Getter.
+   *
+   * @param string $uuid
+   *   The UUID of the imported book content.
+   *
+   * @return array
+   *   The book structure if existing.
+   */
+  public function getBook(string $uuid): array {
+    return $this->books[$uuid] ?? [];
+  }
+
+  /**
+   * Setter.
+   *
+   * @param string $uuid
+   *   The UUID of the imported book content.
+   * @param array $book
+   *   The book structure as provided by JSON:API Book module.
+   */
+  public function setBook(string $uuid, array $book): void {
+    $this->books[$uuid] = $book;
   }
 
 }

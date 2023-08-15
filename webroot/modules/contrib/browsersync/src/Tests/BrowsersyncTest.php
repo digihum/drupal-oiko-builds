@@ -1,20 +1,15 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\browsersync\Tests\BrowsersyncTest.
- */
-
 namespace Drupal\browsersync\Tests;
 
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Tests Browsersync functionality.
  *
  * @group browsersync
  */
-class BrowsersyncTest extends WebTestBase {
+class BrowsersyncTest extends BrowserTestBase {
 
   /**
    * Modules to install.

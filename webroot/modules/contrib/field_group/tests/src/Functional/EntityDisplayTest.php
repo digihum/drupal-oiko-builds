@@ -18,7 +18,7 @@ class EntityDisplayTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'node',
     'field_test',
     'field_ui',
@@ -43,12 +43,12 @@ class EntityDisplayTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'starterkit_theme';
 
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
 
     // Create test user.
@@ -64,7 +64,10 @@ class EntityDisplayTest extends BrowserTestBase {
 
     // Create content type, with underscores.
     $type_name = strtolower($this->randomMachineName(8)) . '_test';
-    $type = $this->drupalCreateContentType(['name' => $type_name, 'type' => $type_name]);
+    $type = $this->drupalCreateContentType([
+      'name' => $type_name,
+      'type' => $type_name,
+    ]);
     $this->type = $type->id();
     /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display */
     $display = \Drupal::entityTypeManager()
@@ -153,12 +156,13 @@ class EntityDisplayTest extends BrowserTestBase {
     ];
     $group = $this->createGroup('node', $this->type, 'view', 'default', $data);
 
-    // $groups = field_group_info_groups('node', 'article', 'view', 'default', TRUE);.
+    // $groups =
+    // field_group_info_groups('node', 'article', 'view', 'default', TRUE);.
     $this->drupalGet('node/' . $this->node->id());
 
     // Test group ids and classes.
-    $this->assertTrue($this->xpath("//div[contains(@id, 'wrapper-id')]"), 'Wrapper id set on wrapper div');
-    $this->assertTrue($this->xpath("//div[contains(@class, 'test-class')]"), 'Test class set on wrapper div, class="' . $group->group_name . ' test-class');
+    $this->assertCount(1, $this->xpath("//div[contains(@id, 'wrapper-id')]"), 'Wrapper id set on wrapper div');
+    $this->assertCount(1, $this->xpath("//div[contains(@class, 'test-class')]"), 'Test class set on wrapper div, class="' . $group->group_name . ' test-class');
 
     // Test group label.
     $this->assertSession()->responseNotContains('<h3><span>' . $data['label'] . '</span></h3>');
@@ -178,8 +182,66 @@ class EntityDisplayTest extends BrowserTestBase {
     field_group_group_save($group);
 
     $this->drupalGet('node/' . $this->node->id());
-    $this->assertTrue($this->xpath("//div[contains(@class, 'speed-fast')]"), 'Speed class is set');
-    $this->assertTrue($this->xpath("//div[contains(@class, 'effect-blink')]"), 'Effect class is set');
+    $this->assertCount(1, $this->xpath("//div[contains(@class, 'speed-fast')]"), 'Speed class is set');
+    $this->assertCount(1, $this->xpath("//div[contains(@class, 'effect-blink')]"), 'Effect class is set');
+  }
+
+  /**
+   * Test the html element formatter with label_as_html=TRUE.
+   */
+  public function testHtmlElementLabelHtml() {
+    $session = $this->assertSession();
+    $data = [
+      'weight' => '1',
+      'children' => [
+        0 => 'field_test',
+        1 => 'body',
+      ],
+      'label' => '<strong>Test HTML</strong>',
+      'format_type' => 'html_element',
+      'format_settings' => [
+        'label' => 'Link',
+        'element' => 'div',
+        'id' => 'wrapper-id',
+        'classes' => 'test-class',
+        'label_as_html' => TRUE,
+        'show_label' => TRUE,
+      ],
+    ];
+    $this->createGroup('node', $this->type, 'view', 'default', $data);
+    $this->drupalGet('node/' . $this->node->id());
+    // See if the field group supports HTML elements in the label:
+    // We expect the HTML to be not escaped:
+    $session->elementContains('css', '#wrapper-id.test-class > h3', '<strong>Test HTML</strong>');
+  }
+
+  /**
+   * Test the html element formatter with label_as_html=FALSE.
+   */
+  public function testHtmlElementLabelNoHtml() {
+    $session = $this->assertSession();
+    $data = [
+      'weight' => '1',
+      'children' => [
+        0 => 'field_test',
+        1 => 'body',
+      ],
+      'label' => '<strong>Test HTML</strong>',
+      'format_type' => 'html_element',
+      'format_settings' => [
+        'label' => 'Link',
+        'element' => 'div',
+        'id' => 'wrapper-id',
+        'classes' => 'test-class',
+        'label_as_html' => FALSE,
+        'show_label' => TRUE,
+      ],
+    ];
+    $this->createGroup('node', $this->type, 'view', 'default', $data);
+    $this->drupalGet('node/' . $this->node->id());
+    // See if the field group supports HTML elements in the label:
+    // We expect the HTML to be not escaped:
+    $session->elementContains('css', '#wrapper-id.test-class > h3', '&lt;strong&gt;Test HTML&lt;/strong&gt;');
   }
 
   /**
@@ -201,18 +263,72 @@ class EntityDisplayTest extends BrowserTestBase {
       ],
     ];
     $this->createGroup('node', $this->type, 'view', 'default', $data);
-
     $this->drupalGet('node/' . $this->node->id());
 
     // Test group ids and classes.
-    $this->assertTrue($this->xpath("//fieldset[contains(@id, 'fieldset-id')]"), 'Correct id set on the fieldset');
-    $this->assertTrue($this->xpath("//fieldset[contains(@class, 'test-class')]"), 'Test class set on the fieldset');
+    $this->assertCount(1, $this->xpath("//fieldset[contains(@id, 'fieldset-id')]"), 'Correct id set on the fieldset');
+    $this->assertCount(1, $this->xpath("//fieldset[contains(@class, 'test-class')]"), 'Test class set on the fieldset');
+  }
+
+  /**
+   * Test the fieldset formatter with label_as_html=TRUE.
+   */
+  public function testFieldsetLabelHtml() {
+    $session = $this->assertSession();
+    $data = [
+      'weight' => '1',
+      'children' => [
+        0 => 'field_test',
+        1 => 'body',
+      ],
+      'label' => '<strong>Test Fieldset</strong>',
+      'format_type' => 'fieldset',
+      'format_settings' => [
+        'id' => 'fieldset-id',
+        'classes' => 'test-class',
+        'description' => 'test description',
+        'label_as_html' => TRUE,
+      ],
+    ];
+    $this->createGroup('node', $this->type, 'view', 'default', $data);
+    $this->drupalGet('node/' . $this->node->id());
+    // See if the field group supports HTML elements in the label:
+    // We expect the HTML to be not escaped:
+    $session->elementContains('css', '#fieldset-id.test-class > legend > span', '<strong>Test Fieldset</strong>');
+  }
+
+  /**
+   * Test the fieldset formatter with label_as_html=FALSE.
+   */
+  public function testFieldsetLabelNoHtml() {
+    $session = $this->assertSession();
+    $data = [
+      'weight' => '1',
+      'children' => [
+        0 => 'field_test',
+        1 => 'body',
+      ],
+      'label' => '<strong>Test Fieldset</strong>',
+      'format_type' => 'fieldset',
+      'format_settings' => [
+        'id' => 'fieldset-id',
+        'classes' => 'test-class',
+        'description' => 'test description',
+        'label_as_html' => FALSE,
+      ],
+    ];
+    $this->createGroup('node', $this->type, 'view', 'default', $data);
+
+    $this->drupalGet('node/' . $this->node->id());
+    // See if the field group supports HTML elements in the label:
+    // We expect the HTML to be escaped (plain):
+    $session->elementContains('css', '#fieldset-id.test-class > legend > span', '&lt;strong&gt;Test Fieldset&lt;/strong&gt;');
   }
 
   /**
    * Test the tabs formatter.
    */
-  public function testTabs() {
+  public function testVerticalTabs() {
     $data = [
       'label' => 'Tab 1',
       'weight' => '1',
@@ -264,16 +380,16 @@ class EntityDisplayTest extends BrowserTestBase {
     $this->drupalGet('node/' . $this->node->id());
 
     // Test properties.
-    $this->assertTrue($this->xpath("//div[contains(@class, 'test-class-wrapper')]"), 'Test class set on tabs wrapper');
-    $this->assertTrue($this->xpath("//details[contains(@class, 'test-class-2')]"), 'Test class set on second tab');
+    $this->assertCount(1, $this->xpath("//div[contains(@class, 'test-class-wrapper')]"), 'Test class set on tabs wrapper');
+    $this->assertCount(1, $this->xpath("//details[contains(@class, 'test-class-2')]"), 'Test class set on second tab');
     $this->assertSession()->responseContains('<div class="details-description">description of second tab</div>');
 
     // Test if correctly nested.
-    $this->assertTrue($this->xpath("//div[contains(@class, 'test-class-wrapper')]//details[contains(@class, 'test-class')]"), 'First tab is displayed as child of the wrapper.');
-    $this->assertTrue($this->xpath("//div[contains(@class, 'test-class-wrapper')]//details[contains(@class, 'test-class-2')]"), 'Second tab is displayed as child of the wrapper.');
+    $this->assertCount(2, $this->xpath("//div[contains(@class, 'test-class-wrapper')]//details[contains(@class, 'test-class')]"), 'First tab is displayed as child of the wrapper.');
+    $this->assertCount(1, $this->xpath("//div[contains(@class, 'test-class-wrapper')]//details[contains(@class, 'test-class-2')]"), 'Second tab is displayed as child of the wrapper.');
 
     // Test if it's a vertical tab.
-    $this->assertTrue($this->xpath('//div[@data-vertical-tabs-panes=""]'), 'Tabs are shown vertical.');
+    $this->assertCount(1, $this->xpath('//div[@data-vertical-tabs-panes=""]'), 'Tabs are shown vertical.');
 
     // Switch to horizontal.
     $tabs_group->format_settings['direction'] = 'horizontal';
@@ -282,7 +398,135 @@ class EntityDisplayTest extends BrowserTestBase {
     $this->drupalGet('node/' . $this->node->id());
 
     // Test if it's a horizontal tab.
-    $this->assertTrue($this->xpath('//div[@data-horizontal-tabs-panes=""]'), 'Tabs are shown horizontal.');
+    $this->assertCount(1, $this->xpath('//div[@data-horizontal-tabs-panes=""]'), 'Tabs are shown horizontal.');
+  }
+
+  /**
+   * Test the vertical tab formatter inside tabs with label_as_html=TRUE.
+   *
+   * @todo The "label_as_html" is currently not working for vertical tabs,
+   * as the HTML is escaped in the core definition of the vertical tab. For more
+   * information see: https://www.drupal.org/project/field_group/issues/3363890.
+   */
+  public function todotestVerticalTabsLabelHtml() {
+    $session = $this->assertSession();
+    $data = [
+      'label' => '<em>Tab 1</em>',
+      'weight' => '1',
+      'children' => [
+        0 => 'field_test',
+      ],
+      'format_type' => 'tab',
+      'format_settings' => [
+        'label' => '<em>Tab 1</em>',
+        'classes' => 'test-class',
+        'description' => '',
+        'formatter' => 'open',
+        'label_as_html' => TRUE,
+      ],
+    ];
+    $first_tab = $this->createGroup('node', $this->type, 'view', 'default', $data);
+
+    $data = [
+      'label' => '<em>Tab 2</em>',
+      'weight' => '1',
+      'children' => [
+        0 => 'field_test_2',
+      ],
+      'format_type' => 'tab',
+      'format_settings' => [
+        'label' => '<em>Tab 2</em>',
+        'classes' => 'test-class-2',
+        'description' => 'description of second tab',
+        'formatter' => 'closed',
+        'label_as_html' => TRUE,
+      ],
+    ];
+    $second_tab = $this->createGroup('node', $this->type, 'view', 'default', $data);
+
+    $data = [
+      'label' => 'Tabs',
+      'weight' => '1',
+      'children' => [
+        0 => $first_tab->group_name,
+        1 => $second_tab->group_name,
+      ],
+      'format_type' => 'tabs',
+      'format_settings' => [
+        'direction' => 'vertical',
+        'label' => 'Tab 1',
+        'classes' => 'test-class-wrapper',
+      ],
+    ];
+    $this->createGroup('node', $this->type, 'view', 'default', $data);
+
+    $this->drupalGet('node/' . $this->node->id());
+    $session->elementContains('css', 'div.test-class-wrapper li.vertical-tabs__menu-item.first > a > strong', '<em>Tab 1</em>');
+    $session->elementContains('css', 'div.test-class-wrapper li.vertical-tabs__menu-item.last > a > strong', '<em>Tab 2</em>');
+  }
+
+  /**
+   * Test the vertical tab formatter inside tabs with label_as_html=FALSE.
+   *
+   * @todo The "label_as_html" is currently not working for vertical tabs,
+   * as the HTML is escaped in the core definition of the vertical tab. For more
+   * information see: https://www.drupal.org/project/field_group/issues/3363890.
+   */
+  public function todotestVerticalTabsLabelNoHtml() {
+    $session = $this->assertSession();
+    $data = [
+      'label' => '<em>Tab 1</em>',
+      'weight' => '1',
+      'children' => [
+        0 => 'field_test',
+      ],
+      'format_type' => 'tab',
+      'format_settings' => [
+        'label' => '<em>Tab 1</em>',
+        'classes' => 'test-class',
+        'description' => '',
+        'formatter' => 'open',
+        'label_as_html' => FALSE,
+      ],
+    ];
+    $first_tab = $this->createGroup('node', $this->type, 'view', 'default', $data);
+
+    $data = [
+      'label' => '<em>Tab 2</em>',
+      'weight' => '1',
+      'children' => [
+        0 => 'field_test_2',
+      ],
+      'format_type' => 'tab',
+      'format_settings' => [
+        'label' => '<em>Tab 2</em>',
+        'classes' => 'test-class-2',
+        'description' => 'description of second tab',
+        'formatter' => 'closed',
+        'label_as_html' => FALSE,
+      ],
+    ];
+    $second_tab = $this->createGroup('node', $this->type, 'view', 'default', $data);
+
+    $data = [
+      'label' => 'Tabs',
+      'weight' => '1',
+      'children' => [
+        0 => $first_tab->group_name,
+        1 => $second_tab->group_name,
+      ],
+      'format_type' => 'tabs',
+      'format_settings' => [
+        'direction' => 'vertical',
+        'label' => 'Tab 1',
+        'classes' => 'test-class-wrapper',
+      ],
+    ];
+    $this->createGroup('node', $this->type, 'view', 'default', $data);
+
+    $this->drupalGet('node/' . $this->node->id());
+    $session->elementContains('css', 'div.test-class-wrapper li.vertical-tabs__menu-item.first > a > strong', '&lt;em&gt;Tab 1&lt;/em&gt');
+    $session->elementContains('css', 'div.test-class-wrapper li.vertical-tabs__menu-item.last > a > strong', '&lt;em&gt;Tab 2&lt;/em&gt');
   }
 
   /**
@@ -338,15 +582,15 @@ class EntityDisplayTest extends BrowserTestBase {
     $this->drupalGet('node/' . $this->node->id());
 
     // Test properties.
-    $this->assertTrue($this->xpath("//div[contains(@class, 'test-class-wrapper')]"), 'Test class set on tabs wrapper');
-    $this->assertTrue($this->xpath("//div[contains(@class, 'effect-bounceslide')]"), 'Correct effect is set on the accordion');
-    $this->assertTrue($this->xpath("//div[contains(@class, 'test-class')]"), 'Accordion item with test-class is shown');
-    $this->assertTrue($this->xpath("//div[contains(@class, 'test-class-2')]"), 'Accordion item with test-class-2 is shown');
-    $this->assertTrue($this->xpath("//h3[contains(@class, 'field-group-accordion-active')]"), 'Accordion item 2 was set active');
+    $this->assertCount(1, $this->xpath("//div[contains(@class, 'test-class-wrapper')]"), 'Test class set on tabs wrapper');
+    $this->assertCount(1, $this->xpath("//div[contains(@class, 'effect-bounceslide')]"), 'Correct effect is set on the accordion');
+    $this->assertCount(3, $this->xpath("//div[contains(@class, 'test-class')]"), 'Accordion item with test-class is shown');
+    $this->assertCount(1, $this->xpath("//div[contains(@class, 'test-class-2')]"), 'Accordion item with test-class-2 is shown');
+    $this->assertCount(1, $this->xpath("//h3[contains(@class, 'field-group-accordion-active')]"), 'Accordion item 2 was set active');
 
     // Test if correctly nested.
-    $this->assertTrue($this->xpath("//div[contains(@class, 'test-class-wrapper')]//div[contains(@class, 'test-class')]"), 'First item is displayed as child of the wrapper.');
-    $this->assertTrue($this->xpath("//div[contains(@class, 'test-class-wrapper')]//div[contains(@class, 'test-class-2')]"), 'Second item is displayed as child of the wrapper.');
+    $this->assertCount(2, $this->xpath("//div[contains(@class, 'test-class-wrapper')]//div[contains(@class, 'test-class')]"), 'First item is displayed as child of the wrapper.');
+    $this->assertCount(1, $this->xpath("//div[contains(@class, 'test-class-wrapper')]//div[contains(@class, 'test-class-2')]"), 'Second item is displayed as child of the wrapper.');
   }
 
 }

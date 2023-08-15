@@ -34,6 +34,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   config_export = {
  *     "id",
  *     "label",
+ *     "import_maxsize",
  *     "import_processor_settings",
  *   },
  *   links = {
@@ -44,6 +45,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "collection" = "/admin/config/services/entity_share/import_config"
  *   }
  * )
+ *
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class ImportConfig extends ConfigEntityBase implements ImportConfigInterface {
 
@@ -60,6 +63,13 @@ class ImportConfig extends ConfigEntityBase implements ImportConfigInterface {
    * @var string
    */
   protected $label;
+
+  /**
+   * The Import config max size.
+   *
+   * @var int
+   */
+  protected $import_maxsize = 50;
 
   /**
    * The array of import processor settings.

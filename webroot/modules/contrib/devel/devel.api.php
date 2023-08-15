@@ -13,10 +13,10 @@
 /**
  * Alter devel dumper information declared by other modules.
  *
- * @param $info
+ * @param array $info
  *   Devel dumper information to alter.
  */
-function hook_devel_dumper_info_alter(&$info) {
+function hook_devel_dumper_info_alter(array &$info) {
   $info['default']['label'] = 'Altered label';
 }
 

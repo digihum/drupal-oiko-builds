@@ -5,27 +5,36 @@ declare(strict_types = 1);
 namespace Drupal\Tests\entity_share_client\Functional;
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Entity\RevisionableInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StreamWrapper\PublicStream;
 use Drupal\Core\Url;
 use Drupal\entity_share\EntityShareUtility;
 use Drupal\entity_share_client\ClientAuthorization\ClientAuthorizationInterface;
+use Drupal\entity_share_client\Entity\EntityImportStatusInterface;
 use Drupal\entity_share_client\Entity\RemoteInterface;
 use Drupal\entity_share_client\ImportContext;
+use Drupal\entity_share_server\Entity\ChannelInterface;
 use Drupal\entity_share_test\EntityFieldHelperTrait;
+use Drupal\file\FileInterface;
 use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\entity_share_server\Functional\EntityShareServerRequestTestTrait;
 use Drupal\Tests\RandomGeneratorTrait;
 use Drupal\user\UserInterface;
-use Faker\Factory;
-use Faker\Provider\fr_FR\PhoneNumber;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\RequestOptions;
 
 /**
  * Base class for Entity Share Client functional tests.
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassLength)
+ * @SuppressWarnings(PHPMD.NumberOfChildren)
+ * @SuppressWarnings(PHPMD.TooManyFields)
  */
 abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
 
@@ -41,7 +50,7 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'basic_auth',
     'entity_share_client',
     'entity_share_client_remote_manager_test',
@@ -53,7 +62,7 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stark';
 
   /**
    * The tested entity type.
@@ -98,6 +107,20 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
   protected $entityTypeManager;
 
   /**
+   * The file system service.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
+
+  /**
+   * The stream wrapper manager.
+   *
+   * @var \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface
+   */
+  protected $streamWrapperManager;
+
+  /**
    * The import service.
    *
    * @var \Drupal\entity_share_client\Service\ImportServiceInterface
@@ -110,13 +133,6 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
    * @var \Drupal\entity_share_client\Service\RemoteManagerInterface
    */
   protected $remoteManager;
-
-  /**
-   * Faker generator.
-   *
-   * @var \Faker\Generator
-   */
-  protected $faker;
 
   /**
    * The visited URLs during setup.
@@ -191,9 +207,23 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
   protected $keyValueStore;
 
   /**
+   * The module extension list service.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected ModuleExtensionList $moduleExtensionList;
+
+  /**
+   * The file URL generator service.
+   *
+   * @var \Drupal\Core\File\FileUrlGeneratorInterface
+   */
+  protected FileUrlGeneratorInterface $fileUrlGenerator;
+
+  /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Prepare users.
@@ -207,15 +237,16 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
     $config->save(TRUE);
 
     // Retrieve required services.
+    $this->fileSystem = $this->container->get('file_system');
+    $this->streamWrapperManager = $this->container->get('stream_wrapper_manager');
     $this->entityTypeManager = $this->container->get('entity_type.manager');
     $this->entityDefinitions = $this->entityTypeManager->getDefinitions();
     $this->importService = $this->container->get('entity_share_client.import_service');
     $this->remoteManager = $this->container->get('entity_share_client.remote_manager');
     $this->authPluginManager = $this->container->get('plugin.manager.entity_share_client_authorization');
     $this->keyValueStore = $this->container->get('keyvalue')->get(ClientAuthorizationInterface::LOCAL_STORAGE_KEY_VALUE_COLLECTION);
-    $this->faker = Factory::create();
-    // Add French phone number.
-    $this->faker->addProvider(new PhoneNumber($this->faker));
+    $this->moduleExtensionList = $this->container->get('extension.list.module');
+    $this->fileUrlGenerator = $this->container->get('file_url_generator');
 
     $this->createRemote($this->channelUser);
     $this->createChannel($this->channelUser);
@@ -256,7 +287,7 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
    */
   protected function getChannelUserPermissions() {
     return [
-      'entity_share_server_access_channels',
+      ChannelInterface::CHANNELS_ACCESS_PERMISSION,
     ];
   }
 
@@ -340,9 +371,12 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
     $channel = $channel_storage->create([
       'id' => static::$entityTypeId . '_' . static::$entityBundleId . '_' . static::$entityLangcode,
       'label' => $this->randomString(),
+      'channel_maxsize' => 50,
       'channel_entity_type' => static::$entityTypeId,
       'channel_bundle' => static::$entityBundleId,
       'channel_langcode' => static::$entityLangcode,
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $user->uuid(),
       ],
@@ -359,6 +393,7 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
     $import_config = $import_config_storage->create([
       'id' => $this::IMPORT_CONFIG_ID,
       'label' => $this->randomString(),
+      'import_maxsize' => 50,
       'import_processor_settings' => $this->getImportConfigProcessorSettings(),
     ]);
     $import_config->save();
@@ -375,7 +410,10 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
   protected function mergePluginsToImportConfig(array $plugins) {
     $processor_settings = $this->importConfig->get('import_processor_settings');
     // Add new plugins or override existing plugin configurations.
-    $processor_settings = array_merge($processor_settings, $plugins);
+    $processor_settings = NestedArray::mergeDeepArray([
+      $processor_settings,
+      $plugins,
+    ]);
     $this->importConfig->set('import_processor_settings', $processor_settings);
     $this->importConfig->save();
   }
@@ -405,6 +443,8 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
     // Only locked import processors are enabled by default.
     return [
       'default_data_processor' => [
+        'policy' => EntityImportStatusInterface::IMPORT_POLICY_DEFAULT,
+        'update_policy' => FALSE,
         'weights' => [
           'is_entity_importable' => -10,
           'post_entity_save' => 0,
@@ -535,7 +575,7 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
    * Helper function to populate the request service with responses.
    *
    * @param string $url
-   *   THe url to request.
+   *   The url to request.
    */
   protected function discoverJsonApiEndpoints($url) {
     // Prevents infinite loop.
@@ -720,13 +760,13 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
    * @param string $channel_id
    *   Identifier of the import channel.
    */
-  protected function importSelectedEntities(array $selected_entities, string $channel_id = NULL) {
+  protected function importSelectedEntities(array $selected_entities, string $channel_id = '') {
     // Generate the remote URL.
     // Unless overridden by parameter, pull from the default channel.
-    $channel_id = $channel_id ?: static::$entityTypeId . '_' . static::$entityBundleId . '_' . static::$entityLangcode;
+    $channel_id = !empty($channel_id) ? $channel_id : static::$entityTypeId . '_' . static::$entityBundleId . '_' . static::$entityLangcode;
     $prepared_url = $this->prepareUrlFilteredOnUuids($selected_entities, $channel_id);
     // Prepare import context.
-    $import_context = new ImportContext($this->remote->id(), 'node_es_test_en', $this::IMPORT_CONFIG_ID);
+    $import_context = new ImportContext($this->remote->id(), $channel_id, $this::IMPORT_CONFIG_ID);
     $this->importService->prepareImport($import_context);
     // Imports data from the remote URL.
     $this->importService->importFromUrl($prepared_url);
@@ -923,14 +963,41 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
    * @param string $entity_type_id
    *   The entity type id.
    * @param string $entity_uuid
-   *   Then entity UUID.
+   *   The entity UUID.
    *
    * @return \Drupal\Core\Entity\EntityInterface|null
    *   Return the entity if it exists. NULL otherwise.
    */
   protected function loadEntity($entity_type_id, $entity_uuid) {
     $existing_entity = NULL;
-    $existing_entities = $this->entityTypeManager->getStorage($entity_type_id)->loadByProperties(['uuid' => $entity_uuid]);
+    $existing_entities = $this->entityTypeManager->getStorage($entity_type_id)->loadByProperties([
+      'uuid' => $entity_uuid,
+    ]);
+
+    if (!empty($existing_entities)) {
+      $existing_entity = array_shift($existing_entities);
+    }
+
+    return $existing_entity;
+  }
+
+  /**
+   * Helper function.
+   *
+   * @param string $entity_uuid
+   *   The entity UUID.
+   * @param string $remote_entity_langcode
+   *   The entity langcode.
+   *
+   * @return \Drupal\entity_share_client\Entity\EntityImportStatusInterface|null
+   *   Return the entity if it exists. NULL otherwise.
+   */
+  protected function loadImportStatusEntity($entity_uuid, $remote_entity_langcode) {
+    $existing_entity = NULL;
+    $existing_entities = $this->entityTypeManager->getStorage('entity_import_status')->loadByProperties([
+      'entity_uuid' => $entity_uuid,
+      'langcode' => $remote_entity_langcode,
+    ]);
 
     if (!empty($existing_entities)) {
       $existing_entity = array_shift($existing_entities);
@@ -963,16 +1030,11 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
    *   An array of data.
    */
   protected function preparePhysicalFilesAndFileEntitiesData() {
-    /** @var \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface $stream_wrapper_manager */
-    $stream_wrapper_manager = \Drupal::service('stream_wrapper_manager');
-    /** @var \Drupal\Core\File\FileSystemInterface $file_system */
-    $file_system = \Drupal::service('file_system');
-
     $files_entities_data = [];
     foreach (static::$filesData as $file_uuid => $file_data) {
-      $stream_wrapper = $stream_wrapper_manager->getViaUri($file_data['uri']);
+      $stream_wrapper = $this->streamWrapperManager->getViaUri($file_data['uri']);
       $directory_uri = $stream_wrapper->dirname($file_data['uri']);
-      $file_system->prepareDirectory($directory_uri, FileSystemInterface::CREATE_DIRECTORY);
+      $this->fileSystem->prepareDirectory($directory_uri, FileSystemInterface::CREATE_DIRECTORY);
       if (isset($file_data['file_content'])) {
         file_put_contents($file_data['uri'], $file_data['file_content']);
         $this->filesSize[$file_uuid] = filesize($file_data['uri']);
@@ -995,7 +1057,7 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
           'checker_callback' => 'getValue',
         ],
         'status' => [
-          'value' => FILE_STATUS_PERMANENT,
+          'value' => FileInterface::STATUS_PERMANENT,
           'checker_callback' => 'getValue',
         ],
       ];
@@ -1027,6 +1089,35 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
         $this->assertEquals($this->filesSize[$file_uuid], filesize($file_data['uri']), 'The recreated physical file ' . $file_data['filename'] . ' has the same size as the original.');
       }
     }
+  }
+
+  /**
+   * Helper function.
+   *
+   * @param string $file_uuid
+   *   The file UUID.
+   * @param array $file_data
+   *   The file data as in static::filesData.
+   */
+  protected function getMediaEntityReferenceTestFiles($file_uuid, array $file_data) {
+    $filepath = $this->moduleExtensionList->getPath('entity_share') . '/tests/fixtures/files/' . $file_data['filename'];
+    $this->fileSystem->copy($filepath, PublicStream::basePath());
+    $this->filesSize[$file_uuid] = filesize($filepath);
+  }
+
+  /**
+   * Helper function: unsets remote manager's cached data.
+   *
+   * This is needed because our remote ID is not changing, and remote manager
+   * caches certain values based on the remote ID.
+   * Another solution would be to reinitialize $this->remoteManager and create
+   * new remote.
+   */
+  protected function resetRemoteCaches() {
+    $this->remoteManager->resetRemoteInfos();
+    $this->remoteManager->resetHttpClientsCache('json_api');
+    // Reset "remote" response mapping (ie. cached JSON:API responses).
+    $this->remoteManager->resetResponseMapping();
   }
 
 }

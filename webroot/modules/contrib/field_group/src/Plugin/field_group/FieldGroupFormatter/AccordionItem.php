@@ -37,7 +37,10 @@ class AccordionItem extends FieldGroupFormatterBase {
     $element += [
       '#type' => 'field_group_accordion_item',
       '#effect' => $this->getSetting('effect'),
-      '#title' => $this->getSetting('fieldset_label_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel())),
+      '#title' => $this->getSetting('label_as_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel())),
+      // Prevent \Drupal\content_translation\ContentTranslationHandler::addTranslatabilityClue()
+      // from adding an incorrect suffix to the field group title.
+      '#multilingual' => TRUE,
     ];
 
     if ($this->getSetting('id')) {
@@ -54,7 +57,7 @@ class AccordionItem extends FieldGroupFormatterBase {
     }
 
     if ($this->getSetting('formatter') == 'open') {
-        $element['#open'] = TRUE;
+      $element['#open'] = TRUE;
     }
 
     foreach ($element as $key => $value) {
