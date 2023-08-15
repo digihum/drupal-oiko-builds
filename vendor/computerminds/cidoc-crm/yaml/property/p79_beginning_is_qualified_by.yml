@@ -1,6 +1,0 @@
----
-label: P79 beginning is qualified by
-domain: e52_time_span
-range: e62_string
-superproperties:
-  - p3_has_note

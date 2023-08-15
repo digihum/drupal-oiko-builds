@@ -1,5 +1,0 @@
----
-label: P51 has former or current owner
-domain: e18_physical_thing
-range: e39_actor
-reverse label: P51 is former or current owner of

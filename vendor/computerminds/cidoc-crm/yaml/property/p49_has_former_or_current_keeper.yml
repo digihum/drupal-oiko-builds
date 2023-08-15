@@ -1,5 +1,0 @@
----
-label: P49 has former or current keeper
-domain: e18_physical_thing
-range: e39_actor
-reverse label: P49 is former or current keeper of

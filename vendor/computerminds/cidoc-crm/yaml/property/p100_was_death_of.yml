@@ -1,8 +1,0 @@
----
-label: P100 was death of
-domain: e69_death
-range: e21_person
-superproperties:
-  - p11_had_participant
-  - p93_took_out_of_existence
-reverse label: P100 died in
