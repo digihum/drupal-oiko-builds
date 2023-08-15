@@ -22,14 +22,13 @@ services:
   drupal:
     depends_on:
       - drupal_db
-    image: drupal:8-apache
+    image: drupal:9.5-php8.0-apache
     container_name: drupal
     ports:
       - 8080:80
     volumes:
-      
       - ./data:/var/lib/mysql
-      - ../webroot:/opt/drupal/web/
+      - ../webroot:/opt/drupal/webroot/
       - ../modules:/opt/drupal/modules
       - ../profiles:/opt/drupal/profiles
       - ../themes:/opt/drupal/themes
@@ -37,18 +36,22 @@ services:
       - ../vendor:/opt/drupal/vendor
       - ../drush:/opt/drupal/drush
       - ../config:/opt/drupal/config
-      - ./files:/opt/drupal/web/sites/default/files:rw
+      - ./files:/opt/drupal/webroot/sites/default/files:rw
       
       # this takes advantage of the feature in Docker that a new anonymous
       # volume (which is what we're creating here) will be initialized with the
       # existing content of the image at the same location
       - type: bind
         source: seed/settings.php
-        target: /opt/drupal/web/sites/default/settings.php
+        target: /opt/drupal/webroot/sites/default/settings.php
         read_only: false
       - type: bind
         source: seed/settings.local.php
-        target: /opt/drupal/web/sites/default/settings.local.php
+        target: /opt/drupal/webroot/sites/default/settings.local.php
+        read_only: false
+      - type: bind
+        source: seed/services.yml
+        target: /opt/drupal/webroot/sites/default/services.yml
         read_only: false
       - type: bind
         source: ../composer.json
@@ -58,7 +61,9 @@ services:
         source: ../composer.lock
         target: /opt/drupal/composer.lock
         read_only: false
+    #entrypoint: /opt/drupal/scripts/shell/on-build.sh
     restart: always
+
 #    command: bash -c "php -r 'readfile(\'http://files.drush.org/drush.phar\');' > drush && chmod +x drush && mv drush /usr/bin/"
   # missing unzip and git
 
@@ -78,8 +83,3 @@ services:
 
 #    command: bash -c "curl -sS https://getcomposer.org/installer | php -- \ --install-dir=/usr/bin --filename=composer"
       
-
-# Volumes
-volumes:
-  youthmatters-data:
-    driver: local
