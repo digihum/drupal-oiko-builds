@@ -5,3 +5,6 @@ webroot/sites/sites.php
 webroot/sites/clone.test/
 .idea
 node_modules/
+docker/data/*
+docker/seed/*
+docker/files/*
