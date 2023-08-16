@@ -143,6 +143,7 @@
         "drupal/shib_auth": "1.x-dev",
         "drupal/squid_autocomplete": "1.0-alpha5",
         "drupal/stage_file_proxy": "*",
+
         "drupal/views_bulk_operations": "^2.6.0",
         "drupal/views_fields_on_off": "^1.0@alpha",
         "drupal/webform": "^5.11",
@@ -154,6 +155,8 @@
         "wikimedia/composer-merge-plugin": "^1.3"
     },
     "require-dev": {
+        "palantirnet/drupal-rector": "^0.15.1",
+        "drupal/upgrade_status": "^3.19"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -228,7 +231,11 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "7.2"
+            "php": "7.4"
+        },
+        "allow-plugins": {
+            "composer/installers": true,
+            "oomphinc/composer-installers-extender": true
         }
     }
 }
