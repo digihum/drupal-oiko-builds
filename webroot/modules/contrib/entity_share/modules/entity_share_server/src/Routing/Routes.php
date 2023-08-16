@@ -6,7 +6,8 @@ namespace Drupal\entity_share_server\Routing;
 
 use Drupal\Core\Authentication\AuthenticationCollectorInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Symfony\Cmf\Component\Routing\RouteObjectInterface;
+use Drupal\entity_share_server\Entity\ChannelInterface;
+use Drupal\Core\Routing\RouteObjectInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
@@ -46,7 +47,7 @@ class Routes implements ContainerInjectionInterface {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    /* @var \Drupal\Core\Authentication\AuthenticationCollectorInterface $auth_collector */
+    /** @var \Drupal\Core\Authentication\AuthenticationCollectorInterface $auth_collector */
     $auth_collector = $container->get('authentication_collector');
 
     return new static($auth_collector);
@@ -61,7 +62,7 @@ class Routes implements ContainerInjectionInterface {
     $route_collection = (new Route('/entity_share', [
       RouteObjectInterface::CONTROLLER_NAME => '\Drupal\entity_share_server\Controller\EntryPoint::index',
     ]))
-      ->setRequirement('_permission', 'entity_share_server_access_channels')
+      ->setRequirement('_permission', ChannelInterface::CHANNELS_ACCESS_PERMISSION)
       ->setMethods(['GET']);
     $route_collection->addOptions([
       '_auth' => $this->authProviderList(),

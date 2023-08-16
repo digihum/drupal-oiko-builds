@@ -36,7 +36,7 @@ class Tab extends FieldGroupFormatterBase {
 
     $add = [
       '#type' => 'details',
-      '#title' => $this->getSetting('fieldset_label_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel())),
+      '#title' => $this->getSetting('label_as_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel())),
       '#description' => $this->getSetting('description'),
       '#group' => $this->group->parent_name,
     ];
@@ -117,6 +117,7 @@ class Tab extends FieldGroupFormatterBase {
     $defaults = [
       'formatter' => 'closed',
       'description' => '',
+      'show_empty_fields' => FALSE,
     ] + parent::defaultSettings($context);
 
     if ($context == 'form') {

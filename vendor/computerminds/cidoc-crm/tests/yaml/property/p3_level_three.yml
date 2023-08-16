@@ -1,6 +1,0 @@
----
-label: P3 Level three
-domain: e1_top_level
-range: e4_subclass
-superproperties:
-  - p2_level_two

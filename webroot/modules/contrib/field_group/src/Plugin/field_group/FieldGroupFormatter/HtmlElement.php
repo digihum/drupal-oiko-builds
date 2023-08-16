@@ -59,7 +59,8 @@ class HtmlElement extends FieldGroupFormatterBase {
       if (!isset($element_attributes['class'])) {
         $element_attributes['class'] = [];
       }
-      // If user also entered class in the attributes textfield, force it to an array.
+      // If user also entered class in the attributes textfield, force it to an
+      // array.
       else {
         $element_attributes['class'] = [$element_attributes['class']];
       }
@@ -73,7 +74,10 @@ class HtmlElement extends FieldGroupFormatterBase {
     $element['#attributes'] = $element_attributes;
     if ($this->getSetting('show_label')) {
       $element['#title_element'] = $this->getSetting('label_element');
-      $element['#title'] = $this->getSetting('fieldset_label_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel()));
+      $element['#title'] = $this->getSetting('label_as_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel()));
+      // Prevent \Drupal\content_translation\ContentTranslationHandler::addTranslatabilityClue()
+      // from adding an incorrect suffix to the field group title.
+      $element['#multilingual'] = TRUE;
       $element['#title_attributes'] = new Attribute();
 
       if (!empty($this->getSetting('label_element_classes'))) {
@@ -246,6 +250,7 @@ class HtmlElement extends FieldGroupFormatterBase {
       'effect' => 'none',
       'speed' => 'fast',
       'attributes' => '',
+      'show_empty_fields' => FALSE,
     ] + parent::defaultSettings($context);
 
     if ($context == 'form') {

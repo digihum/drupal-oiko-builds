@@ -12,6 +12,10 @@ label: Migrate style categories from the source database to taxonomy terms
 # configuration to be merged with our own configuration here).
 migration_group: beer
 
+# The category or tag for the migration.
+migration_tags:
+  - example
+
 # Every migration must have a source plugin, which controls the delivery of our
 # source data. In this case, our source plugin has the name "beer_term", which
 # Drupal resolves to the PHP class defined in
@@ -60,7 +64,7 @@ process:
   # IDs in map tables, and the migration plugin is the means of performing a
   # lookup in those map tables during processing.
   parent:
-    plugin: migration
+    plugin: migration_lookup
     # Here we reference the migration whose map table we're performing a lookup
     # against. You'll note that in this case we're actually referencing this
     # migration itself, since category parents are imported by the same
@@ -76,3 +80,12 @@ process:
 
 # We'll learn more about dependencies in beer_node - here, we leave them empty.
 migration_dependencies: {}
+
+# By default, configuration entities (like this migration) are not automatically
+# removed when the migration which installed them is uninstalled. To have your
+# migrations uninstalled with your migration module, add an enforced dependency
+# on your module.
+dependencies:
+  enforced:
+    module:
+      - migrate_example

@@ -13,7 +13,7 @@ use Drupal\entity_share_client\RuntimeImportContext;
  * @ImportProcessor(
  *   id = "block_field_block_content_importer",
  *   label = @Translation("Block field block content"),
- *   description = @Translation("Import block contents from block fields."),
+ *   description = @Translation("Import block contents from block fields. Require the 'Block field (Block field only) (Entity Share)' field enhancer enabled on both client and server websites."),
  *   stages = {
  *     "prepare_importable_entity_data" = 20,
  *   },
@@ -34,13 +34,13 @@ class BlockFieldBlockContentImporter extends EntityReference {
           if (EntityShareUtility::isNumericArray($field_data)) {
             foreach ($field_data as $delta => $value) {
               if (isset($value['block_content_href'])) {
-                $this->importUrl($runtime_import_context, $value['block_content_href']);
+                $this->processBlockContent($runtime_import_context, $value['block_content_href']);
                 unset($entity_json_data['attributes'][$field_name][$delta]['block_content_href']);
               }
             }
           }
           elseif (isset($field_data['block_content_href'])) {
-            $this->importUrl($runtime_import_context, $field_data['block_content_href']);
+            $this->processBlockContent($runtime_import_context, $field_data['block_content_href']);
             unset($entity_json_data['attributes'][$field_name]['block_content_href']);
           }
         }
@@ -49,16 +49,28 @@ class BlockFieldBlockContentImporter extends EntityReference {
   }
 
   /**
-   * {@inheritdoc}
+   * Attempts to import a block content.
+   *
+   * @param \Drupal\entity_share_client\RuntimeImportContext $runtime_import_context
+   *   The import context.
+   * @param string $import_url
+   *   The import URL prepared by the entity_share_block_field enhancer plugin.
    */
-  protected function importUrl(RuntimeImportContext $runtime_import_context, $url) {
-    // In the case of block field, if the block content entity is already
-    // present on the website, there is nothing to do.
-    if ($this->currentRecursionDepth == $this->configuration['max_recursion_depth']) {
-      return [];
-    }
+  protected function processBlockContent(RuntimeImportContext $runtime_import_context, string $import_url) {
+    $parsed_url = explode('/', $import_url);
+    if (!empty($parsed_url)) {
+      $entity_uuid = array_pop($parsed_url);
 
-    return parent::importUrl($runtime_import_context, $url);
+      // In the case of block content entities, if the block content entity is
+      // already present on the website, there is nothing to do.
+      if (
+        $this->currentRecursionDepth != $this->configuration['max_recursion_depth'] &&
+        !$runtime_import_context->isEntityMarkedForImport($entity_uuid)
+      ) {
+        $runtime_import_context->addEntityMarkedForImport($entity_uuid);
+        $this->importUrl($runtime_import_context, $import_url);
+      }
+    }
   }
 
 }

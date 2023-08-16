@@ -6,7 +6,6 @@ namespace Drupal\entity_share_notifier\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\entity_share_client\ClientAuthorization\ClientAuthorizationInterface;
 
 /**
  * Defines the Entity share subscriber entity.
@@ -37,7 +36,8 @@ use Drupal\entity_share_client\ClientAuthorization\ClientAuthorizationInterface;
  *     "id",
  *     "label",
  *     "subscriber_url",
- *     "auth",
+ *     "basic_auth_username",
+ *     "basic_auth_password",
  *     "remote_id",
  *     "remote_config_id",
  *     "channel_ids",
@@ -75,11 +75,18 @@ class EntityShareSubscriber extends ConfigEntityBase implements EntityShareSubsc
   protected $subscriber_url;
 
   /**
-   * An associative array of the authorization plugin data.
+   * The subscriber basic auth username.
    *
-   * @var array
+   * @var string
    */
-  protected $auth;
+  protected $basic_auth_username;
+
+  /**
+   * The subscriber basic auth password.
+   *
+   * @var string
+   */
+  protected $basic_auth_password;
 
   /**
    * The remote ID used on the subscriber website to pull this server.
@@ -113,43 +120,6 @@ class EntityShareSubscriber extends ConfigEntityBase implements EntityShareSubsc
     if (!empty($subscriber_url) && preg_match('/(.*)\/$/', $subscriber_url, $matches)) {
       $this->set('subscriber_url', $matches[1]);
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getAuthPlugin() {
-    $pluginData = $this->auth;
-    if (!empty($pluginData['pid'])) {
-      // DI not available in entities:
-      // https://www.drupal.org/project/drupal/issues/2142515.
-      /** @var \Drupal\entity_share_client\ClientAuthorization\ClientAuthorizationPluginManager $manager */
-      $manager = \Drupal::service('plugin.manager.entity_share_client_authorization');
-      $pluginId = $pluginData['pid'];
-      unset($pluginData['pid']);
-      return $manager->createInstance($pluginId, $pluginData);
-    }
-    return NULL;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function mergePluginConfig(ClientAuthorizationInterface $plugin) {
-    $auth = ['pid' => $plugin->getPluginId()] +
-      $plugin->getConfiguration();
-    $this->auth = $auth;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getHttpClient(bool $json) {
-    $plugin = $this->getAuthPlugin();
-    if ($json) {
-      return $plugin->getJsonApiClient($this->subscriber_url);
-    }
-    return $plugin->getClient($this->subscriber_url);
   }
 
 }

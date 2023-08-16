@@ -22,7 +22,7 @@ class EntityReferenceRevisionsAutocompleteTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = array(
+  protected static $modules = array(
     'block_content',
     'node',
     'field',
@@ -33,7 +33,12 @@ class EntityReferenceRevisionsAutocompleteTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp(): void {
     parent::setUp();
     // Create article content type.
     $this->drupalCreateContentType(array('type' => 'article', 'name' => 'Article'));
@@ -81,7 +86,8 @@ class EntityReferenceRevisionsAutocompleteTest extends BrowserTestBase {
       'info[0][value]' => $block_label,
       'body[0][value]' => $block_content,
     );
-    $this->drupalPostForm('block/add', $edit, t('Save'));
+    $this->drupalGet('block/add');
+    $this->submitForm($edit, 'Save');
     $block = $this->drupalGetBlockByInfo($block_label);
 
     // Create an article.
@@ -91,9 +97,10 @@ class EntityReferenceRevisionsAutocompleteTest extends BrowserTestBase {
       'body[0][value]' => 'Revision 1',
       'field_entity_reference_revisions[0][target_id]' => $block_label . ' (' . $block->id() . ')',
     );
-    $this->drupalPostForm('node/add/article', $edit, t('Save'));
-    $this->assertText($title);
-    $this->assertText(Html::escape($block_content));
+    $this->drupalGet('node/add/article');
+    $this->submitForm($edit, 'Save');
+    $this->assertSession()->pageTextContains($title);
+    $this->assertSession()->responseContains(Html::escape($block_content));
 
     // Check if the block content is not deleted since there is no composite
     // relationship.
@@ -139,8 +146,9 @@ class EntityReferenceRevisionsAutocompleteTest extends BrowserTestBase {
       'id' => $machine_name,
       'revision' => TRUE,
     );
-    $this->drupalPostForm('admin/structure/block/block-content/types/add', $edit, t('Save'));
-    $this->assertText($label);
+    $this->drupalGet('admin/structure/block/block-content/types/add');
+    $this->submitForm($edit, 'Save');
+    $this->assertSession()->pageTextContains($label);
   }
 
 }

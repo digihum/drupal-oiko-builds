@@ -29,6 +29,8 @@ class ColorFieldWidgetSpectrum extends ColorFieldWidgetBase {
       'palette' => '',
       'show_palette_only' => FALSE,
       'show_buttons' => FALSE,
+      'cancel_text' => 'Cancel',
+      'choose_text' => 'Choose',
       'allow_empty' => FALSE,
     ] + parent::defaultSettings();
   }
@@ -55,7 +57,7 @@ class ColorFieldWidgetSpectrum extends ColorFieldWidgetBase {
       '#type' => 'textarea',
       '#title' => $this->t('Color Palette'),
       '#default_value' => $this->getSetting('palette'),
-      '#description' => $this->t('Selectable color palette to accompany the Spectrum Widget. Separate values with a comma, and group them with square brackets. Ex: <br> ["#fff","#aaa","#f00","#00f"],<br>["#414141","#242424","#0a8db9"]'),
+      '#description' => $this->t('Selectable color palette to accompany the Spectrum Widget. Most possible color values will work - including rgba, rgb, hex, web color names, hsl, hsv. Separate values with a comma, and group them with square brackets - ensure one group per line. Ex: <br> ["#fff","#aaa","#f00","#00f"],<br>["#414141","#242424","#0a8db9"]'),
       '#states' => [
         'visible' => [
           ':input[name="fields[' . $this->fieldDefinition->getName() . '][settings_edit_form][settings][show_palette]"]' => ['checked' => TRUE],
@@ -78,6 +80,28 @@ class ColorFieldWidgetSpectrum extends ColorFieldWidgetBase {
       '#title' => $this->t('Show Buttons'),
       '#default_value' => $this->getSetting('show_buttons'),
       '#description' => $this->t('Add Cancel/Confirm Button.'),
+    ];
+    $element['cancel_text'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Cancel button text'),
+      '#description' => $this->t('Leave empty to stay default.'),
+      '#default_value' => $this->getSetting('cancel_text'),
+      '#states' => [
+        'visible' => [
+          ':input[name="fields[' . $this->fieldDefinition->getName() . '][settings_edit_form][settings][show_buttons]"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    $element['choose_text'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Choose button text'),
+      '#description' => $this->t('Leave empty to stay default.'),
+      '#default_value' => $this->getSetting('choose_text'),
+      '#states' => [
+        'visible' => [
+          ':input[name="fields[' . $this->fieldDefinition->getName() . '][settings_edit_form][settings][show_buttons]"]' => ['checked' => TRUE],
+        ],
+      ],
     ];
     $element['allow_empty'] = [
       '#type' => 'checkbox',
@@ -117,17 +141,25 @@ class ColorFieldWidgetSpectrum extends ColorFieldWidgetBase {
 
     // Parsing Palette data so that it works with spectrum color picker.
     // This will create a multidimensional array of hex values.
+    // Do some cleanup to reduce risk of malformed data.
     if (!empty($settings['palette'])) {
       // Remove any whitespace.
-      $settings['palette'] = str_replace(' ', '', $settings['palette']);
+      $settings['palette'] = str_replace(
+        [' ', "\n", '"', "'"],
+        '',
+        $settings['palette']
+      );
 
       // Parse each row first and reset the palette.
-      $rows = explode("\n", $settings['palette']);
+      $rows = explode("\r", $settings['palette']);
       $settings['palette'] = [];
 
+      // Support all kinds of color modes.
+      $re = '/(rgba|hsva|hsla)[\(\s][0-9]*[%\,\s]+[0-9]*[%\,\s]+[0-9]*[%\,\s]+[0-9\.]+[\)\s]*|(rgb|hsv|hsl)[\(\s][0-9]+[%\,\s]+[0-9]+[%\,\s]+[0-9]+[\)\s]*|[\#]?[0-9a-f]+|[a-z]+/mi';
       foreach ($rows as $row) {
         // Next explode each row into an array of values.
-        $settings['palette'][] = $columns = explode(',', $row);
+        preg_match_all($re, $row, $matches);
+        $settings['palette'][] = $matches[0];
       }
     }
 

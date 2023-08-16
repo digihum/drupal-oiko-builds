@@ -22,9 +22,15 @@ interface DelegatorFactoryInterface
     /**
      * A factory that creates delegates of a given service
      *
+<<<<<<< HEAD
      * @param  string             $name
      * @psalm-param callable():mixed $callback
      * @param  null|array         $options
+=======
+     * @param  string                $name
+     * @psalm-param callable():mixed $callback
+     * @param  null|array<mixed>     $options
+>>>>>>> feature/medmus-d9
      * @return object
      * @throws ServiceNotFoundException If unable to resolve the service.
      * @throws ServiceNotCreatedException If an exception is raised when creating a service.

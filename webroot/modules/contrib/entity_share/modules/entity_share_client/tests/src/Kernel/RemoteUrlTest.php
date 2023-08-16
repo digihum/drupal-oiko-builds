@@ -32,7 +32,7 @@ class RemoteUrlTest extends EntityKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'serialization',
     'jsonapi',
     'entity_share_client',
@@ -41,7 +41,7 @@ class RemoteUrlTest extends EntityKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->authPluginManager = $this->container->get('plugin.manager.entity_share_client_authorization');
     $this->keyValueStore = $this->container->get('keyvalue')->get(ClientAuthorizationInterface::LOCAL_STORAGE_KEY_VALUE_COLLECTION);
@@ -73,19 +73,19 @@ class RemoteUrlTest extends EntityKernelTestBase {
     $remote->mergePluginConfig($plugin);
     $remote->save();
 
-    $this->assertEqual($remote->get('url'), 'http://example.com');
+    $this->assertEquals('http://example.com', $remote->get('url'));
 
     $remote->set('url', 'http://example.com/');
     $remote->save();
-    $this->assertEqual($remote->get('url'), 'http://example.com');
+    $this->assertEquals('http://example.com', $remote->get('url'));
 
     $remote->set('url', 'http://example.com/subdirectory');
     $remote->save();
-    $this->assertEqual($remote->get('url'), 'http://example.com/subdirectory');
+    $this->assertEquals('http://example.com/subdirectory', $remote->get('url'));
 
     $remote->set('url', 'http://example.com/subdirectory/');
     $remote->save();
-    $this->assertEqual($remote->get('url'), 'http://example.com/subdirectory');
+    $this->assertEquals('http://example.com/subdirectory', $remote->get('url'));
   }
 
 }

@@ -118,6 +118,8 @@ class ImportService implements ImportServiceInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
    */
   public function importEntities(ImportContext $context, array $uuids, bool $is_batched = TRUE) {
     if (!$this->prepareImport($context)) {
@@ -163,9 +165,16 @@ class ImportService implements ImportServiceInterface {
     $channel_count = $context->getRemoteChannelCount();
     // Check how much content is in the channel if the count has not been
     // provided before.
-    if (empty($channel_count)) {
+    if ($channel_count == NULL) {
       $url_uuid = $this->runtimeImportContext->getChannelUrlUuid();
-      $response = $this->remoteManager->jsonApiRequest($this->runtimeImportContext->getRemote(), 'GET', $url_uuid);
+      $response = $this->jsonApiRequest('GET', $url_uuid);
+
+      if (is_null($response)) {
+        $this->logger->error('An error occurred while requesting the UUID URL for the remote website @remote_id and channel @channel_id', $log_variables);
+        $this->messenger->addError($this->t('An error occurred while requesting the UUID URL for the remote website @remote_id and channel @channel_id', $log_variables));
+        return;
+      }
+
       $json = Json::decode((string) $response->getBody());
 
       if (isset($json['errors'])) {
@@ -179,7 +188,7 @@ class ImportService implements ImportServiceInterface {
         return;
       }
 
-      $channel_count = $json['meta']['count'];
+      $channel_count = (int) $json['meta']['count'];
     }
 
     if ($channel_count == 0) {
@@ -190,7 +199,7 @@ class ImportService implements ImportServiceInterface {
 
     // Using the number of entities on the channel, we can generate all the
     // urls of the channel's pages, and so prepare all the operations.
-    $step = 50;
+    $step = $this->runtimeImportContext->getImportMaxSize();
     $url = $this->runtimeImportContext->getChannelUrl();
     $parsed_url = UrlHelper::parse($url);
     $parsed_url['query']['page']['limit'] = $step;
@@ -234,6 +243,9 @@ class ImportService implements ImportServiceInterface {
    */
   public function importFromUrl(string $url) {
     $response = $this->jsonApiRequest('GET', $url);
+    if (is_null($response)) {
+      return [];
+    }
     $json = Json::decode((string) $response->getBody());
     if (!isset($json['data'])) {
       return [];
@@ -309,6 +321,11 @@ class ImportService implements ImportServiceInterface {
     $log_variables['@import_config_id'] = $import_config_id;
 
     // Prepare import processors.
+    if (is_null($import_config_id)) {
+      $this->logger->error('No import config ID provided.');
+      $this->messenger->addError($this->t('No import config ID provided.'));
+      return FALSE;
+    }
     try {
       /** @var \Drupal\entity_share_client\Entity\ImportConfigInterface $import_config */
       $import_config = $this->entityTypeManager->getStorage('import_config')
@@ -319,6 +336,8 @@ class ImportService implements ImportServiceInterface {
       $this->messenger->addError($this->t('Impossible to load the import config with the ID: @import_config_id', $log_variables));
     }
     if (is_null($import_config)) {
+      $this->logger->error('Impossible to load the import config with the ID: @import_config_id', $log_variables);
+      $this->messenger->addError($this->t('Impossible to load the import config with the ID: @import_config_id', $log_variables));
       return FALSE;
     }
     $this->importProcessors = $this->importConfigManipulator->getImportProcessorsByStages($import_config);
@@ -354,6 +373,7 @@ class ImportService implements ImportServiceInterface {
     $this->runtimeImportContext->setChannelEntityType($channels_info[$channel_id]['channel_entity_type']);
     $this->runtimeImportContext->setChannelBundle($channels_info[$channel_id]['channel_bundle']);
     $this->runtimeImportContext->setChannelSearchConfiguration($channels_info[$channel_id]['search_configuration']);
+    $this->runtimeImportContext->setImportMaxSize(EntityShareUtility::getMaxSize($import_config, $channel_id, $channels_info));
 
     // Get field mappings.
     $this->runtimeImportContext->setFieldMappings($this->remoteManager->getfieldMappings($remote));
@@ -396,7 +416,7 @@ class ImportService implements ImportServiceInterface {
    *   The entity to be processed.
    */
   protected function getProcessedEntity(array $entity_data) {
-    // TODO: Avoid duplicated code (and duplicate execution?) with
+    // @todo Avoid duplicated code (and duplicate execution?) with
     // DefaultDataProcessor.
     $field_mappings = $this->runtimeImportContext->getFieldMappings();
     $parsed_type = explode('--', $entity_data['type']);
@@ -445,6 +465,13 @@ class ImportService implements ImportServiceInterface {
     else {
       /** @var \Drupal\Core\Entity\ContentEntityInterface $existing_entity */
       $existing_entity = array_shift($existing_entities);
+
+      if ($existing_entity->language()->isLocked()) {
+        // The existing entity was in an untranslatable language like "und",
+        // so we convert it to the new language.
+        $existing_entity->set('langcode', $data_langcode);
+      }
+
       $has_translation = $existing_entity->hasTranslation($data_langcode);
       // Update the existing translation.
       if ($has_translation) {
@@ -455,11 +482,14 @@ class ImportService implements ImportServiceInterface {
         // For example, JSON:API extras field enhancers plugins.
         foreach (array_keys($entity_data['attributes']) as $field_public_name) {
           $field_internal_name = array_search($field_public_name, $field_mappings[$entity_type_id][$entity_bundle]);
-          if ($field_internal_name) {
+          if ($field_internal_name && $existing_translation->hasField($field_internal_name)) {
             $existing_translation->set(
               $field_internal_name,
               $remote_entity->get($field_internal_name)->getValue()
             );
+          }
+          else {
+            $this->logger->notice('Error during import. The field @field does not exist.', ['@field' => $field_internal_name]);
           }
         }
         $processed_entity = $existing_translation;

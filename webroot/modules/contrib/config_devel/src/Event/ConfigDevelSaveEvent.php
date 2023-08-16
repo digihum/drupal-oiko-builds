@@ -1,13 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\config_devel\Event\ConfigDevelSaveEvent
- */
-
 namespace Drupal\config_devel\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * The ConfigDevelSaveEvent class.

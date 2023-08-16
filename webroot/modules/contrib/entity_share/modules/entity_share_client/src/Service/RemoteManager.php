@@ -13,7 +13,7 @@ use GuzzleHttp\Exception\ServerException;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class RemoteManager.
+ * Service to wrap requests logic.
  *
  * @package Drupal\entity_share_client\Service
  */
@@ -76,26 +76,26 @@ class RemoteManager implements RemoteManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function request(RemoteInterface $remote, $method, $url) {
+  public function request(RemoteInterface $remote, $method, $url, array $options = []) {
     $client = $this->getHttpClient($remote);
-    return $this->doRequest($client, $method, $url);
+    return $this->doRequest($client, $method, $url, $options);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function jsonApiRequest(RemoteInterface $remote, $method, $url) {
+  public function jsonApiRequest(RemoteInterface $remote, $method, $url, array $options = []) {
     $client = $this->getJsonApiHttpClient($remote);
-    return $this->doRequest($client, $method, $url);
+    return $this->doRequest($client, $method, $url, $options);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getChannelsInfos(RemoteInterface $remote) {
+  public function getChannelsInfos(RemoteInterface $remote, array $options = []) {
     $remote_id = $remote->id();
     if (!isset($this->remoteInfos[$remote_id])) {
-      $response = $this->jsonApiRequest($remote, 'GET', 'entity_share');
+      $response = $this->jsonApiRequest($remote, 'GET', 'entity_share', $options);
       $json = [
         'data' => [
           'channels' => [],
@@ -170,13 +170,15 @@ class RemoteManager implements RemoteManagerInterface {
    *   HTTP method.
    * @param string $url
    *   URL to request.
+   * @param array $options
+   *   Some options to alter the behavior.
    *
-   * @return \Psr\Http\Message\ResponseInterface||null
-   *   The response or NULL if a problem occured.
+   * @return \Psr\Http\Message\ResponseInterface|null
+   *   The response or NULL if a problem occurred.
    *
    * @see \GuzzleHttp\ClientInterface::request()
    */
-  protected function doRequest(ClientInterface $client, $method, $url) {
+  protected function doRequest(ClientInterface $client, $method, $url, array $options = []) {
     $log_variables = [
       '@url' => $url,
       '@method' => $method,
@@ -200,6 +202,10 @@ class RemoteManager implements RemoteManagerInterface {
     catch (\Exception $exception) {
       $log_variables['@exception_message'] = $exception->getMessage();
       $this->logger->error('Error when requesting the URL: @url with method @method: @exception_message', $log_variables);
+    }
+
+    if (isset($options['rethrow']) && $options['rethrow'] && isset($exception)) {
+      throw $exception;
     }
 
     return NULL;

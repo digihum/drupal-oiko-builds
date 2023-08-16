@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\Permissions.
- */
-
 namespace Drupal\avatars;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;

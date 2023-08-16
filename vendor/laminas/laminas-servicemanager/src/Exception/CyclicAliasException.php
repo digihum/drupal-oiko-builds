@@ -43,7 +43,11 @@ class CyclicAliasException extends InvalidArgumentException
     public static function fromAliasesMap(array $aliases)
     {
         $detectedCycles = array_filter(array_map(
+<<<<<<< HEAD
             static fn($alias) => self::getCycleFor($aliases, $alias),
+=======
+            static fn($alias): ?array => self::getCycleFor($aliases, $alias),
+>>>>>>> feature/medmus-d9
             array_keys($aliases)
         ));
 

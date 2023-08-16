@@ -1,0 +1,31 @@
+{
+  "name": "drupal/http_auth",
+  "description": "Allows you to set up HTTP authentication on your site without server site configurations.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "keywords": [
+    "Drupal",
+    "http-auth"
+  ],
+  "homepage": "https://www.drupal.org/project/http_auth",
+  "authors": [
+    {
+      "name": "See contributors",
+      "homepage": "https://www.drupal.org/node/2833082/committers",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "sami.siddiqui@yasglobal.com",
+    "issues": "https://www.drupal.org/project/issues/http_auth",
+    "source": "https://git.drupalcode.org/project/http_auth"
+  },
+  "require": {
+    "php": "^7.4 || ^8.0",
+    "drupal/core": "^8 || ^9"
+  },
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+    "drupal/coder": "^8.3"
+  }
+}

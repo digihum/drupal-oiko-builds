@@ -22,7 +22,7 @@ services:
   drupal:
     depends_on:
       - drupal_db
-    image: drupal:8.9-php7.4-apache
+    image: drupal:9.5-php8.0-apache
     container_name: drupal
     ports:
       - 8080:80

@@ -8,6 +8,7 @@ use Drupal\Core\Url;
 use Drupal\config_update\ConfigListInterface;
 use Drupal\config_update\ConfigRevertInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Defines a confirmation form for deleting configuration.
@@ -81,7 +82,18 @@ class ConfigDeleteConfirmForm extends ConfirmFormBase {
     }
     else {
       $definition = $this->configList->getType($this->type);
+      if (!$definition) {
+        // Make a 404 error if the type doesn't exist.
+        throw new NotFoundHttpException();
+      }
       $type_label = $definition->get('label');
+    }
+
+    // To delete, the configuration item must exist in active storage. Check
+    // that and make a 404 error if not.
+    $active = $this->configRevert->getFromActive($this->type, $this->name);
+    if (!$active) {
+      throw new NotFoundHttpException();
     }
 
     return $this->t('Are you sure you want to delete the %type config %item?', ['%type' => $type_label, '%item' => $this->name]);
@@ -122,21 +134,10 @@ class ConfigDeleteConfirmForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    $value = $this->configRevert->getFromActive($this->type, $this->name);
-    if (!$value) {
-      $form_state->setErrorByName('', $this->t('There is no configuration @type named @name to delete', ['@type' => $this->type, '@name' => $this->name]));
-      return;
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->configRevert->delete($this->type, $this->name);
 
-    drupal_set_message($this->t('The configuration was deleted.'));
+    $this->messenger()->addMessage($this->t('The configuration %item has been deleted.', ['%item' => $this->name]));
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

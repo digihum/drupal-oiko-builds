@@ -1,5 +1,0 @@
----
-label: P2 has type
-domain: e1_crm_entity
-range: e55_type
-reverse label: P2 is type of

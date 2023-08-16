@@ -1,22 +1,18 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\Plugin\AvatarGenerator\AvatarGeneratorPluginInterface.
- */
-
 namespace Drupal\avatars\Plugin\AvatarGenerator;
 
+use Drupal\Component\Plugin\ConfigurableInterface;
+use Drupal\Component\Plugin\DependentPluginInterface;
 use Drupal\Core\Plugin\PluginFormInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Component\Plugin\PluginInspectionInterface;
 use Drupal\Component\Plugin\DerivativeInspectionInterface;
-use Drupal\Component\Plugin\ConfigurablePluginInterface;
 
 /**
  * Interface for AvatarGenerator plugins.
  */
-interface AvatarGeneratorPluginInterface extends PluginInspectionInterface, DerivativeInspectionInterface, PluginFormInterface, ConfigurablePluginInterface {
+interface AvatarGeneratorPluginInterface extends PluginInspectionInterface, DerivativeInspectionInterface, PluginFormInterface, ConfigurableInterface, DependentPluginInterface {
 
   /**
    * Generate a summary about the current configuration of the widget.
@@ -29,7 +25,7 @@ interface AvatarGeneratorPluginInterface extends PluginInspectionInterface, Deri
   /**
    * Gets File object for an avatar.
    *
-   * @param AccountInterface $account
+   * @param \Drupal\Core\Session\AccountInterface $account
    *   A user account.
    *
    * @return \Drupal\file\FileInterface
@@ -40,7 +36,7 @@ interface AvatarGeneratorPluginInterface extends PluginInspectionInterface, Deri
   /**
    * Creates a URI to an avatar.
    *
-   * @param AccountInterface $account
+   * @param \Drupal\Core\Session\AccountInterface $account
    *   A user account.
    *
    * @return string

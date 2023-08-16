@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\Form\AvatarGeneratorForm.
- */
-
 namespace Drupal\avatars\Form;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -163,7 +158,7 @@ class AvatarGeneratorForm extends EntityForm {
 
     $t_args['%label'] = $avatar_generator->label();
     $message = ($saved == SAVED_NEW) ? t('Created avatar generator %label', $t_args) : t('Updated avatar generator %label', $t_args);
-    drupal_set_message($message);
+    $this->messenger()->addStatus($message);
 
     if ($saved == SAVED_NEW) {
       // Redirect to edit form.

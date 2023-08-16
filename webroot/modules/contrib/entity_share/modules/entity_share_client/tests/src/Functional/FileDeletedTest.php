@@ -33,10 +33,8 @@ class FileDeletedTest extends FileTest {
     $this->prepareContent();
 
     // Delete the physical file before populating the request service.
-    /** @var \Drupal\Core\File\FileSystemInterface $file_system */
-    $file_system = \Drupal::service('file_system');
     foreach (static::$filesData as $file_data) {
-      $file_system->delete($file_data['uri']);
+      $this->fileSystem->delete($file_data['uri']);
     }
 
     $this->populateRequestService();

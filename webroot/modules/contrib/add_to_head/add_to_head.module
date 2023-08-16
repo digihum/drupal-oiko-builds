@@ -6,6 +6,7 @@
  * based on path selection.
  */
 
+use Drupal\Core\Render\Markup;
 
 /**
  * Helper to get the settings.
@@ -75,6 +76,32 @@ function add_to_head_page_attachments_alter(array &$attachments) {
   }
 }
 
+/**
+ * Implements hook_page_bottom().
+ */
+function add_to_head_page_bottom(array &$page_bottom) {
+  // Inject code into the 'scripts' scope.
+  $settings = add_to_head_get_settings('scripts');
+
+  // If applicable, append each profile's code to the output.
+  foreach ($settings as $profile) {
+    if (_add_to_head_profile_visible($profile)) {
+      // Add to output
+      $page_bottom['add_to_head'][] = [
+        [
+          '#type' => 'markup',
+          '#markup' => Markup::create($profile['code']),
+          '#suffix' => "\n",
+          '#cache' => [
+            'keys' => ['add_to_head'],
+            'contexts' => ['user.permissions'],
+          ],
+        ],
+        'add-to-head--' . $profile['name'],
+      ];
+    }
+  }
+}
 
 /**
  * Implements hook_css_alter().
@@ -120,6 +147,11 @@ function add_to_head_match_page(array $profile, $path = NULL) {
   $page_match =  \Drupal::service('path.matcher')->matchPath($path, $paths);
   if (!empty($_GET['q']) && $path != $_GET['q']) {
     $page_match =  $page_match || \Drupal::service('path.matcher')->matchPath($_GET['q'], $paths);
+  }
+  // Check alias
+  if (!$page_match) {
+    $alias = \Drupal::service('path_alias.manager')->getAliasByPath($path);
+    $page_match = \Drupal::service('path.matcher')->matchPath($alias, $paths);
   }
 
   $visibility = ($visibility == 'exclude') ? 0 : 1;

@@ -6,6 +6,7 @@ use Drupal\Core\DependencyInjection\ClassResolverInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\ctools\Event\WizardEvent;
 use Drupal\Core\TempStore\SharedTempStoreFactory;
@@ -42,25 +43,29 @@ abstract class EntityFormWizardBase extends FormWizardBase implements EntityForm
    * @param null $step
    *   The current active step of the wizard.
    */
-  public function __construct(SharedTempStoreFactory $tempstore, FormBuilderInterface $builder, ClassResolverInterface $class_resolver, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, RouteMatchInterface $route_match, $tempstore_id, $machine_name = NULL, $step = NULL) {
+  public function __construct(SharedTempStoreFactory $tempstore, FormBuilderInterface $builder, ClassResolverInterface $class_resolver, EventDispatcherInterface $event_dispatcher, RouteMatchInterface $route_match, RendererInterface $renderer, $tempstore_id, EntityTypeManagerInterface $entity_type_manager, $machine_name = NULL, $step = NULL) {
+    parent::__construct($tempstore, $builder, $class_resolver, $event_dispatcher, $route_match, $renderer, $tempstore_id, $machine_name, $step);
     $this->entityTypeManager = $entity_type_manager;
-    parent::__construct($tempstore, $builder, $class_resolver, $event_dispatcher, $route_match, $tempstore_id, $machine_name, $step);
   }
 
   /**
    * {@inheritdoc}
    */
   public static function getParameters() {
-    return [
+    $parameters = [
       'tempstore' => \Drupal::service('tempstore.shared'),
       'builder' => \Drupal::service('form_builder'),
       'class_resolver' => \Drupal::service('class_resolver'),
       'event_dispatcher' => \Drupal::service('event_dispatcher'),
-      // Keep the deprecated entity manager service as a parameter as well for
-      // BC, so that subclasses still work.
-      'entity_manager' => \Drupal::service('entity.manager'),
       'entity_type_manager' => \Drupal::service('entity_type.manager'),
+      'renderer' => \Drupal::service('renderer'),
     ];
+    // Keep the deprecated entity manager service as a parameter as well for
+    // BC, so that subclasses still work.
+    if (\Drupal::hasService('entity.manager')) {
+      $parameters['entity_manager'] = \Drupal::service('entity.manager');
+    }
+    return $parameters;
   }
 
   /**
@@ -82,7 +87,7 @@ abstract class EntityFormWizardBase extends FormWizardBase implements EntityForm
       $values[$this->getEntityType()] = $entity;
     }
     $event = new WizardEvent($this, $values);
-    $this->dispatcher->dispatch(FormWizardInterface::LOAD_VALUES, $event);
+    $this->dispatcher->dispatch($event, FormWizardInterface::LOAD_VALUES);
     return $event->getValues();
   }
 
@@ -98,7 +103,7 @@ abstract class EntityFormWizardBase extends FormWizardBase implements EntityForm
     $status = $entity->save();
 
     $arguments = [
-      '@entity-type' => $entity->getEntityType()->getLowercaseLabel(),
+      '@entity-type' => $entity->getEntityType()->getSingularLabel(),
       '%label' => $entity->label(),
     ];
     if ($status === SAVED_UPDATED) {
@@ -150,12 +155,12 @@ abstract class EntityFormWizardBase extends FormWizardBase implements EntityForm
       // Get the plugin definition of this entity.
       $definition = $this->entityTypeManager->getDefinition($this->getEntityType());
       // Create id and label form elements.
-      $form['name'] = array(
+      $form['name'] = [
         '#type' => 'fieldset',
-        '#attributes' => array('class' => array('fieldset-no-legend')),
+        '#attributes' => ['class' => ['fieldset-no-legend']],
         '#title' => $this->getWizardLabel(),
-      );
-      $form['name']['label'] = array(
+      ];
+      $form['name']['label'] = [
         '#type' => 'textfield',
         '#title' => $this->getMachineLabel(),
         '#required' => TRUE,
@@ -163,18 +168,18 @@ abstract class EntityFormWizardBase extends FormWizardBase implements EntityForm
         '#default_value' => !empty($cached_values['label']) ? $cached_values['label'] : '',
         '#maxlength' => 255,
         '#disabled' => !empty($cached_values['label']),
-      );
-      $form['name']['id'] = array(
+      ];
+      $form['name']['id'] = [
         '#type' => 'machine_name',
         '#maxlength' => 128,
-        '#machine_name' => array(
-          'source' => array('name', 'label'),
+        '#machine_name' => [
+          'source' => ['name', 'label'],
           'exists' => $this->exists(),
-        ),
+        ],
         '#description' => $this->t('A unique machine-readable name for this @entity_type. It must only contain lowercase letters, numbers, and underscores.', ['@entity_type' => $definition->getLabel()]),
         '#default_value' => !empty($cached_values['id']) ? $cached_values['id'] : '',
         '#disabled' => !empty($cached_values['id']),
-      );
+      ];
     }
 
     return $form;

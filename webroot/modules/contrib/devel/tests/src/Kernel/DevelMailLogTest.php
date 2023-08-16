@@ -33,7 +33,6 @@ class DevelMailLogTest extends KernelTestBase {
   protected function setUp() {
     parent::setUp();
 
-    $this->installSchema('system', 'mail');
     $this->installConfig(['system', 'devel']);
 
     // Configure system.site mail settings.
@@ -187,7 +186,7 @@ EOF;
    * Configure devel_mail_log as default mail backend.
    */
   private function setDevelMailLogAsDefaultBackend() {
-    // TODO can this be avoided?
+    // @todo can this be avoided?
     // KernelTestBase enforce the usage of 'test_mail_collector' plugin for
     // collect the mails. Since we need to test devel mail plugin we manually
     // configure the mail implementation to use 'devel_mail_log'.

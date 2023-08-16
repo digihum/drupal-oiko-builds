@@ -3,12 +3,12 @@ description: This module allows you to set up HTTP authentication on your site. 
 package: HTTP Auth
 
 type: module
-# core: 8.x
+core: 8.x
+core_version_requirement: ^8 || ^9
 
 configure: http_auth.admin_settings
 
-# Information added by Drupal.org packaging script on 2017-09-18
-version: '8.x-1.0'
-core: '8.x'
+# Information added by Drupal.org packaging script on 2023-02-13
+version: '2.0.0'
 project: 'http_auth'
-datestamp: 1505734320
+datestamp: 1676280478

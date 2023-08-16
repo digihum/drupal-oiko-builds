@@ -82,12 +82,14 @@ class ConfigLister implements ConfigListInterface {
    * Sets up and returns the entity definitions list.
    */
   public function listTypes() {
+    // Return list if it has already been calculated.
     if (count($this->definitions)) {
       return $this->definitions;
     }
 
+    // Calculate and return the list.
     foreach ($this->entityManager->getDefinitions() as $entity_type => $definition) {
-      if ($definition->isSubclassOf('Drupal\Core\Config\Entity\ConfigEntityInterface')) {
+      if ($definition->entityClassImplements('Drupal\Core\Config\Entity\ConfigEntityInterface')) {
         $this->definitions[$entity_type] = $definition;
         $prefix = $definition->getConfigPrefix();
         $this->typesByPrefix[$prefix] = $entity_type;
@@ -121,7 +123,7 @@ class ConfigLister implements ConfigListInterface {
   public function getTypeNameByConfigName($name) {
     $definitions = $this->listTypes();
     foreach ($this->typesByPrefix as $prefix => $entity_type) {
-      if (strpos($name, $prefix) === 0) {
+      if (strpos($name, $prefix . '.') === 0) {
         return $entity_type;
       }
     }
@@ -162,7 +164,7 @@ class ConfigLister implements ConfigListInterface {
         break;
 
       case 'profile':
-        $name = Settings::get('install_profile');
+        $name = $this->getProfileName();
         // Intentional fall-through here to the 'module' or 'theme' case.
       case 'module':
       case 'theme':
@@ -170,6 +172,12 @@ class ConfigLister implements ConfigListInterface {
         $install_list = $this->listProvidedItems($list_type, $name);
         $optional_list = $this->listProvidedItems($list_type, $name, TRUE);
         break;
+    }
+
+    // This only seems to be a problem in unit tests, where a mock object
+    // is returning NULL instead of an empy array for some reason.
+    if (!is_array($optional_list)) {
+      $optional_list = [];
     }
 
     return [$active_list, $install_list, $optional_list];
@@ -190,7 +198,8 @@ class ConfigLister implements ConfigListInterface {
    *   List of config items provided by this extension.
    */
   protected function listProvidedItems($type, $name, $do_optional = FALSE) {
-    $pathname = drupal_get_filename($type, $name);
+    // @todo Inject this dependency in the constructor.
+    $pathname = \Drupal::service("extension.list.$type")->getPathname($name);
     $component = new Extension(\Drupal::root(), $type, $pathname);
     if ($do_optional) {
       $names = $this->extensionOptionalConfigStorage->getComponentNames([$component]);
@@ -209,13 +218,35 @@ class ConfigLister implements ConfigListInterface {
     $list = array_combine($list, $list);
     foreach ($list as $name) {
       foreach ($prefixes as $prefix) {
-        if (strpos($name, $prefix) === 0) {
+        if (strpos($name, $prefix . '.') === 0) {
           unset($list[$name]);
         }
       }
     }
 
     return array_values($list);
+  }
+
+  /**
+   * Returns the name of the install profile.
+   *
+   * For backwards compatibility with pre/post 8.3.x, tries to get it from
+   * either configuration or settings.
+   *
+   * @return string
+   *   The name of the install profile.
+   */
+  protected function getProfileName() {
+    // Code adapted from DrupalKernel::getInstalProfile() in Core.
+    // In Core 8.3.x or later, read from config.
+    $config = $this->activeConfigStorage->read('core.extension');
+    if (!empty($config['profile'])) {
+      return $config['profile'];
+    }
+    else {
+      // If system_update_8300() has not yet run, use settings.
+      return Settings::get('install_profile');
+    }
   }
 
 }

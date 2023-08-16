@@ -8,6 +8,7 @@
 declare(strict_types = 1);
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\entity_share_server\HookHandler\EntityDeleteHookHandler;
 
 /**
  * Implements hook_entity_delete().
@@ -15,19 +16,15 @@ use Drupal\Core\Entity\EntityInterface;
  * Remove user from channels if needed.
  */
 function entity_share_server_entity_delete(EntityInterface $entity) {
-  if ($entity->getEntityTypeId() == 'user') {
-    /** @var \Drupal\user\UserInterface $user */
-    $user = $entity;
-    /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager */
-    $entity_type_manager = \Drupal::service('entity_type.manager');
-    /** @var \Drupal\entity_share_server\Entity\ChannelInterface[] $channels */
-    $channels = $entity_type_manager
-      ->getStorage('channel')
-      ->loadMultiple();
-    foreach ($channels as $channel) {
-      if ($channel->removeAuthorizedUser($user->uuid())) {
-        $channel->save();
-      }
-    }
+  $entity_type_id = $entity->getEntityTypeId();
+  if ($entity_type_id == 'user') {
+    \Drupal::service('class_resolver')
+      ->getInstanceFromDefinition(EntityDeleteHookHandler::class)
+      ->userDelete($entity);
+  }
+  elseif ($entity_type_id == 'user_role') {
+    \Drupal::service('class_resolver')
+      ->getInstanceFromDefinition(EntityDeleteHookHandler::class)
+      ->roleDelete($entity);
   }
 }

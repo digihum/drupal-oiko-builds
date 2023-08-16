@@ -57,6 +57,7 @@ interface StateInformationInterface {
    *     - info_id: an identifier of the status info.
    *     - local_entity_link: the link of the local entity if it exists.
    *     - local_revision_id: the revision ID of the local entity if it exists.
+   *     - policy: the policy label or ID if the policy can not be found.
    */
   public function getStatusInfo(array $data);
 

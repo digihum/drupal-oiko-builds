@@ -1,9 +1,6 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\migrate_plus\DataFetcherPluginBase.
- */
+declare(strict_types = 1);
 
 namespace Drupal\migrate_plus;
 
@@ -23,14 +20,7 @@ abstract class DataFetcherPluginBase extends PluginBase implements DataFetcherPl
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
     return new static($configuration, $plugin_id, $plugin_definition);
   }
 

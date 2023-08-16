@@ -131,9 +131,13 @@ class ReflectionBasedAbstractFactory implements AbstractFactoryInterface
         return new $requestedName(...$parameters);
     }
 
+<<<<<<< HEAD
     /**
      * {@inheritDoc}
      */
+=======
+    /** {@inheritDoc} */
+>>>>>>> feature/medmus-d9
     public function canCreate(ContainerInterface $container, $requestedName)
     {
         return class_exists($requestedName) && $this->canCallConstructor($requestedName);

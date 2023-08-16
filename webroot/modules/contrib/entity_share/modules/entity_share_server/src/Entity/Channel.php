@@ -52,6 +52,9 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "channel_groups",
  *     "channel_sorts",
  *     "channel_searches",
+ *     "channel_maxsize",
+ *     "access_by_permission",
+ *     "authorized_roles",
  *     "authorized_users",
  *   },
  *   links = {
@@ -74,6 +77,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "group-delete" = "/admin/config/services/entity_share/channel/{channel}/groups/{group}/delete",
  *   }
  * )
+ *
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Channel extends ConfigEntityBase implements ChannelInterface {
 
@@ -141,11 +146,47 @@ class Channel extends ConfigEntityBase implements ChannelInterface {
   protected $channel_searches;
 
   /**
+   * The channel max size.
+   *
+   * @var int
+   */
+  protected $channel_maxsize = 50;
+
+  /**
+   * Authorized all the users with the permission 'Access channels list'.
+   *
+   * @var bool
+   */
+  protected $access_by_permission;
+
+  /**
+   * The user roles authorized to see this channel.
+   *
+   * @var string[]
+   */
+  protected $authorized_roles;
+
+  /**
    * The UUIDs of the users authorized to see this channel.
    *
    * @var string[]
    */
   protected $authorized_users;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function removeAuthorizedRole($role) {
+    $authorized_roles = $this->authorized_roles;
+    $key = array_search($role, $authorized_roles);
+    if ($key !== FALSE) {
+      unset($authorized_roles[$key]);
+      $this->set('authorized_roles', $authorized_roles);
+      return TRUE;
+    }
+
+    return FALSE;
+  }
 
   /**
    * {@inheritdoc}

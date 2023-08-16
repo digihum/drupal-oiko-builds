@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\Tests\entity_share_client\Functional;
 
 use Drupal\Core\Session\AccountInterface;
+use Drupal\entity_share_server\Entity\ChannelInterface;
 use Drupal\user\Entity\Role;
 
 /**
@@ -25,11 +26,11 @@ class AuthenticationBasicAuthTest extends AuthenticationTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     Role::load(AccountInterface::AUTHENTICATED_ROLE)
-      ->grantPermission('entity_share_server_access_channels')
+      ->grantPermission(ChannelInterface::CHANNELS_ACCESS_PERMISSION)
       ->save();
 
     // Change the initial remote configuration: it will use the admin user
@@ -57,11 +58,11 @@ class AuthenticationBasicAuthTest extends AuthenticationTestBase {
    * {@inheritdoc}
    */
   protected function getAdministratorPermissions() {
-    return [
+    return \array_merge([
       // Administrative user will be actually pulling the content, so we need
       // them to allow to pull unpublished nodes, unlike the channel user.
       'bypass node access',
-    ] + parent::getAdministratorPermissions();
+    ], parent::getAdministratorPermissions());
   }
 
   /**
@@ -83,7 +84,7 @@ class AuthenticationBasicAuthTest extends AuthenticationTestBase {
     // Some stronger assertions for the uploaded private file.
     foreach (static::$filesData as $file_definition) {
       $this->assertTrue(file_exists($file_definition['uri']), 'The physical file ' . $file_definition['filename'] . ' has been pulled and recreated.');
-      $this->assertEqual(file_get_contents($file_definition['uri']), $file_definition['file_content'], 'The content of physical file ' . $file_definition['filename'] . ' is correct.');
+      $this->assertEquals($file_definition['file_content'], file_get_contents($file_definition['uri']), 'The content of physical file ' . $file_definition['filename'] . ' is correct.');
     }
 
     // Delete all "client" entities created after the first import.
@@ -120,10 +121,10 @@ class AuthenticationBasicAuthTest extends AuthenticationTestBase {
     $entity_storage = $this->entityTypeManager->getStorage('node');
 
     $published = $entity_storage->loadByProperties(['uuid' => 'es_test_node_import_published']);
-    $this->assertEqual(count($published), 1, 'The published node was imported.');
+    $this->assertEquals(1, count($published), 'The published node was imported.');
 
     $not_published = $entity_storage->loadByProperties(['uuid' => 'es_test_node_import_not_published']);
-    $this->assertEqual(count($not_published), 0, 'The unpublished node was not imported.');
+    $this->assertEquals(0, count($not_published), 'The unpublished node was not imported.');
 
     // 3. Test as non-administrative user, but with credentials stored using
     // Key module.
@@ -148,10 +149,10 @@ class AuthenticationBasicAuthTest extends AuthenticationTestBase {
     $entity_storage = $this->entityTypeManager->getStorage('node');
 
     $published = $entity_storage->loadByProperties(['uuid' => 'es_test_node_import_published']);
-    $this->assertEqual(count($published), 1, 'The published node was imported.');
+    $this->assertEquals(1, count($published), 'The published node was imported.');
 
     $not_published = $entity_storage->loadByProperties(['uuid' => 'es_test_node_import_not_published']);
-    $this->assertEqual(count($not_published), 0, 'The unpublished node was not imported.');
+    $this->assertEquals(0, count($not_published), 'The unpublished node was not imported.');
   }
 
   /**

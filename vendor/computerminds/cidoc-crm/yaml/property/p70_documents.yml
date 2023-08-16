@@ -1,7 +1,0 @@
----
-label: P70 documents
-domain: e31_document
-range: e1_crm_entity
-superproperties:
-  - p67_refers_to
-reverse label: P70 is documented in

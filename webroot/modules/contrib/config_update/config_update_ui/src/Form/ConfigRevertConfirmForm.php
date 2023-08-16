@@ -8,6 +8,7 @@ use Drupal\Core\Url;
 use Drupal\config_update\ConfigListInterface;
 use Drupal\config_update\ConfigRevertInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Defines a confirmation form for reverting configuration.
@@ -81,7 +82,20 @@ class ConfigRevertConfirmForm extends ConfirmFormBase {
     }
     else {
       $definition = $this->configList->getType($this->type);
+      if (!$definition) {
+        // Make a 404 error if the type doesn't exist.
+        throw new NotFoundHttpException();
+      }
       $type_label = $definition->get('label');
+    }
+
+    // To revert (as opposed to import), the configuration item must exist in
+    // both active storage and extension storage, so check that and make a 404
+    // error if not.
+    $extension = $this->configRevert->getFromExtension($this->type, $this->name);
+    $active = $this->configRevert->getFromActive($this->type, $this->name);
+    if (!$extension || !$active) {
+      throw new NotFoundHttpException();
     }
 
     return $this->t('Are you sure you want to revert the %type config %item to its source configuration?', ['%type' => $type_label, '%item' => $this->name]);
@@ -122,21 +136,10 @@ class ConfigRevertConfirmForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    $value = $this->configRevert->getFromExtension($this->type, $this->name);
-    if (!$value) {
-      $form_state->setErrorByName('', $this->t('There is no configuration @type named @name to import', ['@type' => $this->type, '@name' => $this->name]));
-      return;
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->configRevert->revert($this->type, $this->name);
 
-    drupal_set_message($this->t('The configuration was reverted to its source.'));
+    $this->messenger()->addMessage($this->t('The configuration %item has been reverted to its source.', ['%item' => $this->name]));
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

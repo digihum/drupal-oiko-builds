@@ -7,6 +7,15 @@ migrate_plus.migration.*:
     id:
       type: string
       label: 'ID'
+    class:
+      type: string
+      label: 'Class'
+    field_plugin_method:
+      type: string
+      label: 'Field Plugin Method'
+    cck_plugin_method:
+      type: string
+      label: 'BC layer for Field Plugin Method'
     migration_tags:
       type: sequence
       label: 'Migration Tags'
@@ -20,13 +29,13 @@ migrate_plus.migration.*:
       type: label
       label: 'Label'
     source:
-      type: migrate_plus.source.[plugin]
+      type: ignore
       label: 'Source'
     process:
       type: ignore
       label: 'Process'
     destination:
-      type: migrate_plus.destination.[plugin]
+      type: ignore
       label: 'Destination'
     migration_dependencies:
       type: mapping

@@ -19,9 +19,13 @@ use Psr\Container\ContainerInterface;
  */
 final class InvokableFactory implements FactoryInterface
 {
+<<<<<<< HEAD
     /**
      * {@inheritDoc}
      */
+=======
+    /** {@inheritDoc} */
+>>>>>>> feature/medmus-d9
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         return null === $options ? new $requestedName() : new $requestedName($options);

@@ -23,7 +23,7 @@ abstract class AuthenticationTestBase extends EntityShareClientFunctionalTestBas
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'key',
   ];
 
@@ -43,13 +43,6 @@ abstract class AuthenticationTestBase extends EntityShareClientFunctionalTestBas
   protected static $entityLangcode = 'en';
 
   /**
-   * Drupal's file system service.
-   *
-   * @var \Drupal\Core\File\FileSystemInterface
-   */
-  protected $fileSystem;
-
-  /**
    * An array of data to generate physical files.
    *
    * @var array
@@ -66,18 +59,10 @@ abstract class AuthenticationTestBase extends EntityShareClientFunctionalTestBas
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
-    parent::setUp();
-
-    $this->fileSystem = $this->container->get('file_system');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   protected function getImportConfigProcessorSettings() {
     $processors = parent::getImportConfigProcessorSettings();
     $processors['physical_file'] = [
+      'rename' => FALSE,
       'weights' => [
         'process_entity' => 0,
       ],
@@ -138,21 +123,6 @@ abstract class AuthenticationTestBase extends EntityShareClientFunctionalTestBas
   }
 
   /**
-   * Helper function: unsets remote manager's cached data.
-   *
-   * This is needed because our remote ID is not changing, and remote manager
-   * caches certain values based on the remote ID.
-   * Another solution would be to reinitialize $this->remoteManager and create
-   * new remote.
-   */
-  protected function resetRemoteCaches() {
-    $this->remoteManager->resetRemoteInfos();
-    $this->remoteManager->resetHttpClientsCache('json_api');
-    // Reset "remote" response mapping (ie. cached JSON:API responses).
-    $this->remoteManager->resetResponseMapping();
-  }
-
-  /**
    * Helper function: re-imports content from JSON:API.
    *
    * @param array $channel_infos
@@ -173,7 +143,7 @@ abstract class AuthenticationTestBase extends EntityShareClientFunctionalTestBas
     $this->deleteContent();
     $this->entities = [];
     // Launch the import.
-    $import_context = new ImportContext($this->remote->id(), 'node_es_test_en', $this::IMPORT_CONFIG_ID);
+    $import_context = new ImportContext($this->remote->id(), $channel_id, $this::IMPORT_CONFIG_ID);
     $this->importService->prepareImport($import_context);
     $this->importService->importEntityListData(EntityShareUtility::prepareData($json['data']));
   }

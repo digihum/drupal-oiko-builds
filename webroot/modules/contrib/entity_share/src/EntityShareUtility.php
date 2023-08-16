@@ -52,13 +52,13 @@ class EntityShareUtility {
    *
    * Needed mostly for converting times coming from Remotes.
    *
-   * @param string $changed_time
+   * @param string|int $changed_time
    *   The timestamp or formatted date of "changed" date.
    *
    * @return int
    *   The timestamp of "changed" date.
    */
-  public static function convertChangedTime(string $changed_time) {
+  public static function convertChangedTime($changed_time) {
     $entity_changed_time = 0;
     // If the website is using backward compatible timestamps output.
     // @see https://www.drupal.org/node/2859657.
@@ -67,8 +67,11 @@ class EntityShareUtility {
     if (is_numeric($changed_time)) {
       $entity_changed_time = (int) $changed_time;
     }
-    elseif ($changed_datetime = \DateTime::createFromFormat(\DateTime::RFC3339, $changed_time)) {
-      $entity_changed_time = $changed_datetime->getTimestamp();
+    else {
+      $changed_datetime = \DateTime::createFromFormat(\DateTime::RFC3339, $changed_time);
+      if ($changed_datetime) {
+        $entity_changed_time = $changed_datetime->getTimestamp();
+      }
     }
     return $entity_changed_time;
   }
@@ -96,6 +99,36 @@ class EntityShareUtility {
     ];
     $query = UrlHelper::buildQuery($query);
     return $parsed_url['path'] . '?' . $query;
+  }
+
+  /**
+   * Compute the max size.
+   *
+   * It will be the minimum between import config and channel config.
+   *
+   * @param \Drupal\entity_share_client\Entity\ImportConfigInterface|null $import_config
+   *   The selected import config.
+   * @param string $channel_id
+   *   The selected channel ID.
+   * @param array $channel_infos
+   *   The channels infos.
+   *
+   * @return int
+   *   The max size.
+   */
+  public static function getMaxSize($import_config, string $channel_id, array $channel_infos) : int {
+    $import_maxsize = 50;
+    $channel_maxsize = 50;
+
+    if (!is_null($import_config)) {
+      $import_maxsize = $import_config->get('import_maxsize');
+    }
+
+    if (isset($channel_infos[$channel_id]['channel_maxsize'])) {
+      $channel_maxsize = $channel_infos[$channel_id]['channel_maxsize'];
+    }
+
+    return (int) min($import_maxsize, $channel_maxsize);
   }
 
 }

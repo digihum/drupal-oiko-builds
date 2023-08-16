@@ -22,13 +22,15 @@ interface RemoteManagerInterface {
    *   HTTP method.
    * @param string $url
    *   URL to request.
+   * @param array $options
+   *   Some options to alter the behavior.
    *
    * @return \Psr\Http\Message\ResponseInterface
    *   The response.
    *
    * @see \GuzzleHttp\ClientInterface::request()
    */
-  public function request(RemoteInterface $remote, $method, $url);
+  public function request(RemoteInterface $remote, $method, $url, array $options = []);
 
   /**
    * Performs a HTTP request on a JSON:API endpoint. Wraps the HTTP client.
@@ -41,24 +43,28 @@ interface RemoteManagerInterface {
    *   HTTP method.
    * @param string $url
    *   URL to request.
+   * @param array $options
+   *   Some options to alter the behavior.
    *
    * @return \Psr\Http\Message\ResponseInterface
    *   The response.
    *
    * @see \GuzzleHttp\ClientInterface::request()
    */
-  public function jsonApiRequest(RemoteInterface $remote, $method, $url);
+  public function jsonApiRequest(RemoteInterface $remote, $method, $url, array $options = []);
 
   /**
    * Get the channels infos of a remote website.
    *
    * @param \Drupal\entity_share_client\Entity\RemoteInterface $remote
    *   The remote website on which to get the channels infos.
+   * @param array $options
+   *   Some options to alter the behavior.
    *
    * @return array
    *   Channel infos as returned by entity_share_server entry point.
    */
-  public function getChannelsInfos(RemoteInterface $remote);
+  public function getChannelsInfos(RemoteInterface $remote, array $options = []);
 
   /**
    * Get the field mappings of a remote website.

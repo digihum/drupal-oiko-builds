@@ -420,7 +420,7 @@ class ShareMessage extends ConfigEntityBase implements ShareMessageInterface {
       '#type' => 'html_tag',
       '#tag' => 'meta',
       '#attributes' => [
-        'property' => 'twitter:card',
+        'name' => 'twitter:card',
         'content' => 'summary_large_image',
       ],
     ];
@@ -430,7 +430,7 @@ class ShareMessage extends ConfigEntityBase implements ShareMessageInterface {
       '#type' => 'html_tag',
       '#tag' => 'meta',
       '#attributes' => [
-        'property' => 'twitter:site',
+        'name' => 'twitter:site',
         'content' => \Drupal::config('sharemessage.settings')->get('twitter_user'),
       ],
     ];
@@ -440,7 +440,7 @@ class ShareMessage extends ConfigEntityBase implements ShareMessageInterface {
       '#type' => 'html_tag',
       '#tag' => 'meta',
       '#attributes' => [
-        'property' => 'twitter:description',
+        'name' => 'twitter:description',
         'content' => $this->getTokenizedField($this->message_long, $context),
       ],
     ];
@@ -451,7 +451,7 @@ class ShareMessage extends ConfigEntityBase implements ShareMessageInterface {
         '#type' => 'html_tag',
         '#tag' => 'meta',
         '#attributes' => [
-          'property' => 'twitter:image',
+          'name' => 'twitter:image',
           'content' => $image_url,
         ],
       ];

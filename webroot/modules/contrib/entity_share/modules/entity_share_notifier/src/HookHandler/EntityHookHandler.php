@@ -12,7 +12,6 @@ use Drupal\Core\Http\ClientFactory;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\entity_share_server\Service\ChannelManipulatorInterface;
-use Drupal\user\Entity\User;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Psr\Log\LoggerInterface;
@@ -120,18 +119,6 @@ class EntityHookHandler implements ContainerInjectionInterface {
    *   The entity.
    */
   public function process(EntityInterface $entity) {
-    // Hack in a big killswitch, do not process entities if we are the anon user.
-    if (\Drupal::currentUser()->isAnonymous()) {
-      return;
-    }
-
-    // Hack in a big killswitch, do not process entities if we are the replicator user.
-    if ($user = User::load(\Drupal::currentUser()->id())) {
-      if ($user->uuid() == MEDMUS_CIDOC_REPLICATOR_USER_UUID) {
-        return;
-      }
-    }
-
     $channels_to_notify = [];
     /** @var \Drupal\entity_share_server\Entity\ChannelInterface[] $channels */
     $channels = $this->entityTypeManager
@@ -203,8 +190,16 @@ class EntityHookHandler implements ContainerInjectionInterface {
 
       $remote_id = $subscriber->get('remote_id');
       $remote_config_id = $subscriber->get('remote_config_id');
-
-      $http_client = $subscriber->getHttpClient(TRUE);
+      $http_client = $this->clientFactory->fromOptions([
+        'base_uri' => $subscriber->get('subscriber_url') . '/',
+        'auth' => [
+          $subscriber->get('basic_auth_username'),
+          $subscriber->get('basic_auth_password'),
+        ],
+        'headers' => [
+          'Content-type' => 'application/json',
+        ],
+      ]);
 
       foreach ($channels_to_notify_for_subscriber as $channel_id) {
         try {

@@ -1,9 +1,6 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\migrate_example_advanced_setup\Plugin\rest\resource\VarietyList.
- */
+declare(strict_types = 1);
 
 namespace Drupal\migrate_example_advanced_setup\Plugin\rest\resource;
 
@@ -21,19 +18,26 @@ use Drupal\rest\ResourceResponse;
  *   }
  * )
  */
-class VarietyList extends ResourceBase {
+final class VarietyList extends ResourceBase {
 
   /**
    * Responds to GET requests.
    *
-   * @return \Drupal\rest\ResourceResponse
    *   The response containing the requested variety data.
    */
-  public function get() {
+  public function get(): ResourceResponse {
+    $data = [];
     $data['items'] = ['retsina', 'trebbiano', 'valpolicella', 'bardolino'];
 
-    $response = new ResourceResponse($data, 200);
-    return $response;
+    return new ResourceResponse($data, 200);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function permissions(): array {
+    // Remove permissions so the resource is available to all.
+    return [];
   }
 
 }

@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\entity_share_client\Event;
 
+use Symfony\Contracts\EventDispatcher\Event;
 use Drupal\Core\Field\FieldItemListInterface;
-use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Defines a RelationshipFieldValueEvent event.

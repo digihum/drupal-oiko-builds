@@ -33,7 +33,7 @@ class ContentEntityReferenceTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->postSetupFixture();
   }
@@ -121,9 +121,6 @@ class ContentEntityReferenceTest extends EntityShareClientFunctionalTestBase {
     $new_plugin_configurations = [
       'entity_reference' => [
         'max_recursion_depth' => 2,
-        'weights' => [
-          'process_entity' => 10,
-        ],
       ],
     ];
     $this->mergePluginsToImportConfig($new_plugin_configurations);
@@ -147,9 +144,6 @@ class ContentEntityReferenceTest extends EntityShareClientFunctionalTestBase {
     $new_plugin_configurations = [
       'entity_reference' => [
         'max_recursion_depth' => 1,
-        'weights' => [
-          'process_entity' => 10,
-        ],
       ],
     ];
     $this->mergePluginsToImportConfig($new_plugin_configurations);
@@ -173,9 +167,6 @@ class ContentEntityReferenceTest extends EntityShareClientFunctionalTestBase {
     $new_plugin_configurations = [
       'entity_reference' => [
         'max_recursion_depth' => 0,
-        'weights' => [
-          'process_entity' => 10,
-        ],
       ],
     ];
     $this->mergePluginsToImportConfig($new_plugin_configurations);
@@ -205,9 +196,6 @@ class ContentEntityReferenceTest extends EntityShareClientFunctionalTestBase {
       // Let's test with default recursion level (ie. unlimited).
       'entity_reference' => [
         'max_recursion_depth' => 2,
-        'weights' => [
-          'process_entity' => 10,
-        ],
       ],
     ];
     $this->mergePluginsToImportConfig($new_plugin_configurations);
@@ -239,7 +227,7 @@ class ContentEntityReferenceTest extends EntityShareClientFunctionalTestBase {
     // Test if the relation between the entities is maintained.
     $expected_value = $target_entity->id();
     $actual_value = $referencing_entity->field_es_test_content_reference->target_id;
-    $this->assertEqual($actual_value, $expected_value, 'The referencing node references the target node after second import.');
+    $this->assertEquals($expected_value, $actual_value, 'The referencing node references the target node after second import.');
 
     // Delete created entities before the second turn.
     $this->resetImportedContent();
@@ -269,7 +257,7 @@ class ContentEntityReferenceTest extends EntityShareClientFunctionalTestBase {
     // Test if the relation between the entities is maintained.
     $expected_value = $target_entity->id();
     $actual_value = $referencing_entity->field_es_test_content_reference->target_id;
-    $this->assertEqual($actual_value, $expected_value, 'The referencing node references the target node after second import.');
+    $this->assertEquals($expected_value, $actual_value, 'The referencing node references the target node after second import.');
   }
 
   /**

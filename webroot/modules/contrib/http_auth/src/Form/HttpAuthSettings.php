@@ -113,7 +113,7 @@ class HttpAuthSettings extends ConfigFormBase {
       ->set('activate', $values['activate'])
       ->save();
 
-    drupal_set_message($this->t('Your Settings have been saved.'), 'status');
+    $this->messenger()->addStatus($this->t('Your Settings have been saved.'));
   }
 
 }

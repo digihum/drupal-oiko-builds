@@ -1,236 +1,274 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\leaflet\Plugin\Field\FieldFormatter\LeafletDefaultFormatter.
- */
-
 namespace Drupal\leaflet\Plugin\Field\FieldFormatter;
 
-use Drupal\Component\Utility\UrlHelper;
-use Drupal\Core\Field\Annotation\FieldFormatter;
-use Drupal\Core\Annotation\Translation;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\Render\RenderContext;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Leaflet\LeafletService;
+use Drupal\leaflet\LeafletSettingsElementsTrait;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Utility\Token;
+use Drupal\core\Render\Renderer;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Utility\LinkGeneratorInterface;
 
 /**
  * Plugin implementation of the 'leaflet_default' formatter.
  *
  * @FieldFormatter(
  *   id = "leaflet_formatter_default",
- *   label = @Translation("Leaflet map"),
+ *   label = @Translation("Leaflet Map"),
  *   field_types = {
  *     "geofield"
  *   }
  * )
  */
-class LeafletDefaultFormatter extends FormatterBase {
+class LeafletDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
+
+  use LeafletSettingsElementsTrait;
+
+  /**
+   * The Default Settings.
+   *
+   * @var array
+   */
+  protected $defaultSettings;
+
+  /**
+   * Leaflet service.
+   *
+   * @var \Drupal\Leaflet\LeafletService
+   */
+  protected $leafletService;
+
+  /**
+   * The EntityField Manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
+   */
+  protected $entityFieldManager;
+
+  /**
+   * The token service.
+   *
+   * @var \Drupal\core\Utility\Token
+   */
+  protected $token;
+
+  /**
+   * The renderer service.
+   *
+   * @var \Drupal\core\Render\Renderer
+   */
+  protected $renderer;
+
+  /**
+   * The module handler to invoke the alter hook.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
+   * The Link generator Service.
+   *
+   * @var \Drupal\Core\Utility\LinkGeneratorInterface
+   */
+  protected $link;
+
+  /**
+   * LeafletDefaultFormatter constructor.
+   *
+   * @param string $plugin_id
+   *   The plugin_id for the formatter.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The definition of the field to which the formatter is associated.
+   * @param array $settings
+   *   The formatter settings.
+   * @param string $label
+   *   The formatter label display setting.
+   * @param string $view_mode
+   *   The view mode.
+   * @param array $third_party_settings
+   *   Any third party settings settings.
+   * @param \Drupal\Leaflet\LeafletService $leaflet_service
+   *   The Leaflet service.
+   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
+   *   The Entity Field Manager.
+   * @param \Drupal\core\Utility\Token $token
+   *   The token service.
+   * @param \Drupal\core\Render\Renderer $renderer
+   *   The renderer service.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler.
+   * @param \Drupal\Core\Utility\LinkGeneratorInterface $link_generator
+   *   The Link Generator service.
+   */
+  public function __construct(
+    $plugin_id,
+    $plugin_definition,
+    FieldDefinitionInterface $field_definition,
+    array $settings,
+    $label,
+    $view_mode,
+    array $third_party_settings,
+    LeafletService $leaflet_service,
+    EntityFieldManagerInterface $entity_field_manager,
+    Token $token,
+    Renderer $renderer,
+    ModuleHandlerInterface $module_handler,
+    LinkGeneratorInterface $link_generator
+  ) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+    $this->defaultSettings = self::getDefaultSettings();
+    $this->leafletService = $leaflet_service;
+    $this->entityFieldManager = $entity_field_manager;
+    $this->token = $token;
+    $this->renderer = $renderer;
+    $this->moduleHandler = $module_handler;
+    $this->link = $link_generator;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $plugin_id,
+      $plugin_definition,
+      $configuration['field_definition'],
+      $configuration['settings'],
+      $configuration['label'],
+      $configuration['view_mode'],
+      $configuration['third_party_settings'],
+      $container->get('leaflet.service'),
+      $container->get('entity_field.manager'),
+      $container->get('token'),
+      $container->get('renderer'),
+      $container->get('module_handler'),
+      $container->get('link_generator')
+    );
+  }
 
   /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return array(
-      'leaflet_map' => 'OSM Mapnik',
-      'height' => 400,
-      'zoom' => 10,
-      'minPossibleZoom' => 0,
-      'maxPossibleZoom' => 18,
-      'minZoom' => 0,
-      'maxZoom' => 18,
-      'popup' => False,
-      'icon' => array(
-        'icon_url' => '',
-        'shadow_url' => '',
-        'icon_size' => array('x' => 0, 'y' => 0),
-        'icon_anchor' => array('x' => 0, 'y' => 0),
-        'shadow_anchor' => array('x' => 0, 'y' => 0),
-        'popup_anchor' => array('x' => 0, 'y' => 0),
-      ),
-    ) + parent::defaultSettings();
+    return self::getDefaultSettings() + parent::defaultSettings();
   }
 
   /**
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    $elements = parent::settingsForm($form, $form_state);
+    $settings = $this->getSettings();
 
-    foreach (leaflet_map_get_info() as $key => $map) {
-      $options[$key] = $this->t($map['label']);
+    $form = parent::settingsForm($form, $form_state);
+    $form['#tree'] = TRUE;
+
+    // Get the Cardinality set for the Formatter Field.
+    $field_cardinality = $this->fieldDefinition->getFieldStorageDefinition()
+      ->getCardinality();
+
+    // Set Replacement Patterns Element.
+    $this->setReplacementPatternsElement($form);
+
+    if ($field_cardinality !== 1) {
+      $form['multiple_map'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Multiple Maps'),
+        '#description' => $this->t('Check this option if you want to render a single Map for every single Geo Point.'),
+        '#default_value' => $settings['multiple_map'],
+        '#return_value' => 1,
+      ];
     }
-    $elements['leaflet_map'] = array(
-      '#title' => $this->t('Leaflet Map'),
-      '#type' => 'select',
-      '#options' => $options,
-      '#default_value' => $this->getSetting('leaflet_map'),
-      '#required' => TRUE,
-    );
-    $options=null;
-    for ($i = $this->getSetting('minPossibleZoom'); $i <= $this->getSetting('maxPossibleZoom'); $i++) {
-      $options[$i] = $i;
+    else {
+      $form['multiple_map'] = [
+        '#type' => 'hidden',
+        '#value' => 0,
+      ];
     }
-    $elements['zoom'] = array(
-      '#title' => $this->t('Zoom'),
-      '#type' => 'select',
-      '#options' => $options,
-      '#default_value' => $this->getSetting('zoom'),
-      '#required' => TRUE,
-    );
-    $elements['minZoom'] = array(
-      '#title' => $this->t('Min. Zoom'),
-      '#type' => 'select',
-      '#options' => $options,
-      '#default_value' => $this->getSetting('minZoom'),
-      '#required' => TRUE,
-    );
-    $elements['maxZoom'] = array(
-      '#title' => $this->t('Max. Zoom'),
-      '#type' => 'select',
-      '#options' => $options,
-      '#default_value' => $this->getSetting('maxZoom'),
-      '#required' => TRUE,
-    );
-    $elements['height'] = array(
-      '#title' => $this->t('Map Height'),
-      '#type' => 'textfield',
-      '#default_value' => $this->getSetting('height'),
-      '#field_suffix' => $this->t('px'),
-      '#element_validate' => array('form_validate_number'),
-    );
-    $elements['popup'] = array(
-      '#title' => $this->t('Popup'),
-      '#description' => $this->t('Show a popup for single location fields.'),
-      '#type' => 'checkbox',
-      '#default_value' => $this->getSetting('popup'),
-    );
-    $icon = $this->getSetting('icon');
-    $elements['icon'] = array(
-      '#title' => $this->t('Map Icon'),
-      '#description' => $this->t('These settings will overwrite the icon settings defined in the map definition.'),
-      '#type' => 'fieldset',
-      '#collapsible' => TRUE,
-      '#collapsed' => empty($icon),
-    );
-    $elements['icon']['icon_url'] = array(
-      '#title' => $this->t('Icon URL'),
-      '#description' => $this->t('Can be an absolute or relative URL.'),
-      '#type' => 'textfield',
-      '#maxlength' => 999,
-      '#default_value' => $icon['icon_url'],
-      '#element_validate' => array(array($this, 'validateUrl')),
-    );
-    $elements['icon']['shadow_url'] = array(
-      '#title' => $this->t('Icon Shadow URL'),
-      '#type' => 'textfield',
-      '#maxlength' => 999,
-      '#default_value' => $icon['shadow_url'],
-      '#element_validate' => array(array($this, 'validateUrl')),
-    );
 
-    $elements['icon']['icon_size'] = array(
-      '#title' => $this->t('Icon Size'),
-      '#type' => 'fieldset',
-      '#collapsible' => FALSE,
-      '#description' => $this->t('Size of the icon image in pixels.')
-    );
-    $elements['icon']['icon_size']['x'] = array(
-      '#title' => $this->t('Width'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => $icon['icon_size']['x'],
-      '#element_validate' => array('form_validate_number'),
-    );
-    $elements['icon']['icon_size']['y'] = array(
-      '#title' => $this->t('Height'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => $icon['icon_size']['y'],
-      '#element_validate' => array('form_validate_number'),
-    );
-    $elements['icon']['icon_anchor'] = array(
-      '#title' => $this->t('Icon Anchor'),
-      '#type' => 'fieldset',
-      '#collapsible' => FALSE,
-      '#description' => $this->t('The coordinates of the "tip" of the icon (relative to
-        its top left corner). The icon will be aligned so that this point is at the marker\'s geographical location.')
-    );
-    $elements['icon']['icon_anchor']['x'] = array(
-      '#title' => $this->t('X'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => $icon['icon_anchor']['x'],
-      '#element_validate' => array('form_validate_number'),
-    );
-    $elements['icon']['icon_anchor']['y'] = array(
-      '#title' => $this->t('Y'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => $icon['icon_anchor']['y'],
-      '#element_validate' => array('form_validate_number'),
-    );
-    $elements['icon']['shadow_anchor'] = array(
-      '#title' => $this->t('Shadow Anchor'),
-      '#type' => 'fieldset',
-      '#collapsible' => FALSE,
-      '#description' => $this->t('The point from which the shadow is shown.')
-    );
-    $elements['icon']['shadow_anchor']['x'] = array(
-      '#title' => $this->t('X'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => $icon['shadow_anchor']['x'],
-      '#element_validate' => array('form_validate_number'),
-    );
-    $elements['icon']['shadow_anchor']['y'] = array(
-      '#title' => $this->t('Y'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => $icon['shadow_anchor']['y'],
-      '#element_validate' => array('form_validate_number'),
-    );
-    $elements['icon']['popup_anchor'] = array(
-      '#title' => $this->t('Popup Anchor'),
-      '#type' => 'fieldset',
-      '#collapsible' => FALSE,
-      '#description' => $this->t('The point from which the marker popup opens, relative
-        to the anchor point.')
-    );
-    $elements['icon']['popup_anchor']['x'] = array(
-      '#title' => $this->t('X'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => $icon['popup_anchor']['x'],
-      '#element_validate' => array('form_validate_number'),
-    );
-    $elements['icon']['popup_anchor']['y'] = array(
-      '#title' => $this->t('Y'),
-      '#type' => 'textfield',
-      '#maxlength' => 3,
-      '#size' => 3,
-      '#default_value' => $icon['popup_anchor']['y'],
-      '#element_validate' => array('form_validate_number'),
-    );
+    // Insert the Tooltip Element.
+    $this->setTooltipElement($form, $settings);
 
-    return $elements;
+    // Insert the Popup Element.
+    $this->setPopupElement($form, $settings);
+
+    // Generate the Leaflet Map General Settings.
+    $this->generateMapGeneralSettings($form, $settings);
+
+    // Generate the Leaflet Map Reset Control.
+    $this->setResetMapViewControl($form, $settings);
+
+    // Generate the Leaflet Map Scale Control.
+    $this->setMapScaleControl($form, $settings);
+
+    // Generate the Leaflet Map Position Form Element.
+    $map_position_options = $settings['map_position'];
+    $form['map_position'] = $this->generateMapPositionElement($map_position_options);
+
+    // Generate Icon form element.
+    $icon_options = $settings['icon'];
+    $form['icon'] = $this->generateIconFormElement($icon_options);
+
+    // Set Map Marker Cluster Element.
+    $this->setMapMarkerclusterElement($form, $settings);
+
+    // Set Fullscreen Element.
+    $this->setFullscreenElement($form, $settings);
+
+    // Set Map Geometries Options Element.
+    $this->setMapPathOptionsElement($form, $settings);
+
+    // Set the Feature Additional Properties Element.
+    $this->setFeatureAdditionalPropertiesElement($form, $settings);
+
+    // Set Locate User Position Control Element.
+    $this->setLocateControl($form, $settings);
+
+    // Set Map Geocoder Control Element, if the Geocoder Module exists,
+    // otherwise output a tip on Geocoder Module Integration.
+    $this->setGeocoderMapControl($form, $settings);
+
+    // Set Map Lazy Load Element.
+    $this->setMapLazyLoad($form, $settings);
+
+    return $form;
   }
 
   /**
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $summary = array();
-    $summary[] = $this->t('Leaflet map: @map', array('@map' => $this->getSetting('leaflet_map')));
-    $summary[] = $this->t('Map height: @height px', array('@height' => $this->getSetting('height')));
+    $settings = $this->getSettings();
+
+    // Define the Popup Control and Popup Content with backward
+    // compatibility with Leaflet release < 2.x.
+    $popup_control = !empty($settings['popup']) ? $settings['popup'] : ($settings['leaflet_popup']['control'] ?? NULL);
+    $popup_content = !empty($settings['popup_content']) ? $settings['popup_content'] : ($settings['leaflet_popup']['content'] ?? NULL);
+
+    $summary = [];
+    $summary[] = $this->t('Leaflet Map: @map', ['@map' => $settings['leaflet_map']]);
+    $summary[] = $this->t('Map height: @height @height_unit', [
+      '@height' => $settings['height'],
+      '@height_unit' => $settings['height_unit'],
+    ],
+    );
+    $summary[] = $this->t('Popup Infowindow: @popup', ['@popup' => $popup_control ? $this->t('Yes') : $this->t('No')]);
+    if ($popup_control && $popup_content) {
+      $summary[] = $this->t('Popup content: @popup_content', ['@popup_content' => $popup_content]);
+    }
     return $summary;
   }
 
@@ -240,37 +278,246 @@ class LeafletDefaultFormatter extends FormatterBase {
    * This function is called from parent::view().
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
+
+    /** @var \Drupal\Core\Entity\EntityInterface $entity */
+    $entity = $items->getEntity();
+    // Take the entity translation, if existing.
+    /** @var \Drupal\Core\TypedData\TranslatableInterface $entity */
+    if ($entity->hasTranslation($langcode)) {
+      $entity = $entity->getTranslation($langcode);
+    }
+
+    $entity_type = $entity->getEntityTypeId();
+    $bundle = $entity->bundle();
+    $entity_id = $entity->id();
+    /** @var \Drupal\Core\Field\FieldDefinitionInterface $field */
+    $field = $items->getFieldDefinition();
+
+    // Sets/consider possibly existing previous Zoom settings.
+    $this->setExistingZoomSettings();
+
+    // Determine the formatter default and input settings.
+    $default_settings = self::defaultSettings();
     $settings = $this->getSettings();
-    $icon_url = $settings['icon']['icon_url'];
 
-    $map = leaflet_map_get_info($settings['leaflet_map']);
-    $map['settings']['zoom'] = isset($settings['zoom']) ? $settings['zoom'] : null;
-    $map['settings']['minZoom'] = isset($settings['minZoom']) ? $settings['minZoom'] : null;
-    $map['settings']['maxZoom'] = isset($settings['zoom']) ? $settings['maxZoom'] : null;
+    // Get the base Map info.
+    $map = leaflet_map_get_info($settings['leaflet_map']) ?? $default_settings['leaflet_map'];
 
-    $elements = array();
-    foreach ($items as $delta => $item) {
+    // Add a specific map id.
+    $map['id'] = Html::getUniqueId("leaflet_map_{$entity_type}_{$bundle}_{$entity_id}_{$field->getName()}");
 
-      $features = leaflet_process_geofield($item->value);
+    // Get and set the Geofield cardinality.
+    $map['geofield_cardinality'] = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
 
-      // If only a single feature, set the popup content to the entity title.
-      if ($settings['popup'] && count($items) == 1) {
-        $features[0]['popup'] = $items->getEntity()->label();
+    // Set Map additional map Settings.
+    $this->setAdditionalMapOptions($map, $settings);
+
+    // Get token context.
+    $tokens = [
+      'field' => $items,
+      $this->fieldDefinition->getTargetEntityTypeId() => $items->getEntity(),
+    ];
+
+    $results = [];
+    $features = [];
+    foreach ($items as $item) {
+
+      $points = $this->leafletService->leafletProcessGeofield($item->value);
+      $feature = $points[0];
+      $feature['entity_id'] = $entity_id;
+
+      // Attach tooltip data (value & options).
+      if (isset($settings['leaflet_tooltip']) && !empty($settings['leaflet_tooltip']['value'])) {
+        $feature['tooltip'] = $settings['leaflet_tooltip'];
+        // Decode any entities because JS will encode them again,
+        // and we don't want double encoding.
+        $feature['tooltip']['value'] = $this->tokenResolvedContent($entity, $settings['leaflet_tooltip']['value'], $tokens, $results);
       }
-      if (!empty($icon_url)) {
-        foreach ($features as $key => $feature) {
-          $features[$key]['icon'] = $settings['icon'];
+
+      // Define the Popup Control and Popup Content with backward
+      // compatibility with Leaflet release < 2.x.
+      $popup_control = !empty($settings['popup']) ? $settings['popup'] : ($settings['leaflet_popup']['control'] ?? NULL);
+      $popup_content = !empty($settings['popup_content']) ? $settings['popup_content'] : ($settings['leaflet_popup']['content'] ?? NULL);
+
+      // Eventually set the popup content.
+      if ($popup_control) {
+        $feature['popup'] = $settings['leaflet_popup'];
+        // Generate the Popup Content render array transforming the
+        // 'popup_content' text area through replacements tokens.
+        $feature['popup']['value'] = $this->tokenResolvedContent($entity, $popup_content, $tokens, $results);
+      }
+
+      // Add/merge eventual map icon definition from hook_leaflet_map_info.
+      if (!empty($map['icon'])) {
+        $settings['icon'] = $settings['icon'] ?: [];
+        // Remove empty icon options so thxat they might be replaced by the
+        // ones set by the hook_leaflet_map_info.
+        foreach ($settings['icon'] as $k => $icon_option) {
+          if (empty($icon_option) || (is_array($icon_option) && $this->leafletService->multipleEmpty($icon_option))) {
+            unset($settings['icon'][$k]);
+          }
+        }
+        $settings['icon'] = array_replace($map['icon'], $settings['icon']);
+      }
+
+      $icon_type = $settings['icon']['iconType'] ?? 'marker';
+
+      // Eventually set the custom Marker icon (DivIcon, Icon Url or
+      // Circle Marker).
+      if ($feature['type'] === 'point' && isset($settings['icon'])) {
+
+        // Set Feature Icon properties.
+        $feature['icon'] = $settings['icon'];
+
+        // Transforms Icon Options that support Replacement Patterns/Tokens.
+        if (!empty($settings["icon"]["iconSize"]["x"])) {
+          $feature['icon']["iconSize"]["x"] = $this->token->replace($settings["icon"]["iconSize"]["x"], $tokens);
+        }
+        if (!empty($settings["icon"]["iconSize"]["y"])) {
+          $feature['icon']["iconSize"]["y"] = $this->token->replace($settings["icon"]["iconSize"]["y"], $tokens);
+        }
+        if (!empty($settings["icon"]["shadowSize"]["x"])) {
+          $feature['icon']["shadowSize"]["x"] = $this->token->replace($settings["icon"]["shadowSize"]["x"], $tokens);
+        }
+        if (!empty($settings["icon"]["shadowSize"]["y"])) {
+          $feature['icon']["shadowSize"]["y"] = $this->token->replace($settings["icon"]["shadowSize"]["y"], $tokens);
+        }
+
+        switch ($icon_type) {
+          case 'html':
+            $feature['icon']['html'] = $this->token->replace($settings['icon']['html'], $tokens);
+            $feature['icon']['html_class'] = $settings['icon']['html_class'] ?? '';
+            break;
+
+          case 'circle_marker':
+            $feature['icon']['options'] = $this->token->replace($settings['icon']['circle_marker_options'], $tokens);
+            break;
+
+          default:
+            // Apply Token Replacements to iconUrl & shadowUrl.
+            if (!empty($settings['icon']['iconUrl'])) {
+              $feature['icon']['iconUrl'] = str_replace(["\n", "\r"], "", $this->token->replace($settings['icon']['iconUrl'], $tokens));
+              // Generate correct Absolute iconUrl & shadowUrl,
+              // if not external.
+              if (!empty($feature['icon']['iconUrl'])) {
+                $feature['icon']['iconUrl'] = $this->leafletService->generateAbsoluteString($feature['icon']['iconUrl']);
+              }
+            }
+            if (!empty($settings['icon']['shadowUrl'])) {
+              $feature['icon']['shadowUrl'] = str_replace(["\n", "\r"], "", $this->token->replace($settings['icon']['shadowUrl'], $tokens));
+              if (!empty($feature['icon']['shadowUrl'])) {
+                $feature['icon']['shadowUrl'] = $this->leafletService->generateAbsoluteString($feature['icon']['shadowUrl']);
+              }
+            }
+
+            // Set the Feature IconSize and ShadowSize to the IconUrl or
+            // ShadowUrl Image sizes (if empty or invalid).
+            $this->leafletService->setFeatureIconSizesIfEmptyOrInvalid($feature);
+            break;
         }
       }
-      $elements[$delta] = leaflet_render_map($map, $features, $settings['height'] . 'px');
+
+      // Associate dynamic path properties (token based) to the feature,
+      // in case of not point.
+      if ($feature['type'] !== 'point') {
+        $feature['path'] = str_replace(["\n", "\r"], "", $this->token->replace($settings['path'], $tokens));
+      }
+
+      // Associate dynamic className property (token based) to icon.
+      $feature['className'] = !empty($settings['className']) ?
+        str_replace(["\n", "\r"], "", $this->token->replace($settings['className'], $tokens)) : '';
+
+      // Add Feature additional Properties (if present).
+      if (!empty($settings['feature_properties']['values'])) {
+        $feature['properties'] = str_replace([
+          "\n",
+          "\r",
+        ], "", $this->token->replace($settings['feature_properties']['values'], $tokens));
+      }
+
+      // Allow modules to adjust the marker.
+      $this->moduleHandler->alter('leaflet_formatter_feature', $feature, $item, $entity);
+      $features[] = $feature;
     }
-    return $elements;
+
+    $js_settings = [
+      'map' => $map,
+      'features' => $features,
+    ];
+
+    // Allow other modules to add/alter the map js settings.
+    $this->moduleHandler->alter('leaflet_default_map_formatter', $js_settings, $items);
+
+    $map_height = !empty($settings['height']) ? $settings['height'] . $settings['height_unit'] : '';
+
+    if (!empty($settings['multiple_map'])) {
+      foreach ($js_settings['features'] as $k => $feature) {
+        $map = $js_settings['map'];
+        $map['id'] = $map['id'] . "-{$k}";
+        $results[] = $this->leafletService->leafletRenderMap($map, [$feature], $map_height);
+      }
+    }
+    // Render the map, if we do have data or the hide option is unchecked.
+    elseif (!empty($js_settings['features']) || empty($settings['hide_empty_map'])) {
+      $results[] = $this->leafletService->leafletRenderMap($js_settings['map'], $js_settings['features'], $map_height);
+    }
+
+    return $results;
   }
 
-  public function validateUrl($element, FormStateInterface $form_state) {
-    if (!empty($element['#value']) && !UrlHelper::isValid($element['#value'])) {
-      $form_state->setError($element, $this->t("Icon Url is not valid."));
+  /**
+   * Sets possibly existing previous settings for the Zoom Form Element.
+   */
+  private function setExistingZoomSettings() {
+    $settings = $this->getSettings();
+    if (isset($settings['zoom'])) {
+      $settings['map_position']['zoom'] = (int) $settings['zoom'];
+      $settings['map_position']['minZoom'] = (int) $settings['minZoom'];
+      $settings['map_position']['maxZoom'] = (int) $settings['maxZoom'];
+      $this->setSettings($settings);
     }
+  }
+
+  /**
+   * Returns a Token Resolved Content.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The Entity.
+   * @param string $element_content
+   *   The Element Content.
+   * @param array $tokens
+   *   The Tokens list array.
+   * @param array $results
+   *   The results array.
+   *
+   * @return array
+   *   The result render array.
+   */
+  private function tokenResolvedContent(EntityInterface $entity, string $element_content, array $tokens, array $results) {
+    // Construct the renderable array for popup title / text. As we later
+    // convert that to plain text, losing attachments and cacheability, save
+    // them to $results.
+    $build = [];
+    if (!empty($element_content)) {
+      $bubbleable_metadata = new BubbleableMetadata();
+      $content = $this->token->replace($element_content, $tokens, ['clear' => TRUE], $bubbleable_metadata);
+      $build[] = [
+        '#markup' => $content,
+      ];
+      $bubbleable_metadata->applyTo($results);
+    }
+
+    // We need a string for using it inside the popup. Save attachments and
+    // cache-ability to $results.
+    $render_context = new RenderContext();
+    $rendered = $this->renderer->executeInRenderContext($render_context, function () use (&$build) {
+      return $this->renderer->render($build, TRUE);
+    });
+    $result = !empty($rendered) ? $rendered : $entity->label();
+    if (!$render_context->isEmpty()) {
+      $render_context->update($results);
+    }
+    return $result;
   }
 
 }

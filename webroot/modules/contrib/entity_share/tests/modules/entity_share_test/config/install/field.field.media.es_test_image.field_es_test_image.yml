@@ -4,12 +4,12 @@ dependencies:
   config:
     - field.storage.media.field_es_test_image
     - media.type.es_test_image
-  enforced:
-    module:
-      - media
   module:
     - content_translation
     - image
+  enforced:
+    module:
+      - media
 third_party_settings:
   content_translation:
     translation_sync:

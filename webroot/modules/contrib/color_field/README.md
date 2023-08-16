@@ -4,8 +4,14 @@
 
 ### Formatters
 
-  Plain text HEX code (#FFFFFF)
-  Css Declaration (color/background-color)
+- *Plain text*: Renders a simple HEX Code (#fffff) or an RGB decimal - with
+or without opacity.
+- *CSS Declaration*: Provides simple options to automatically build a CSS
+declaration affecting color or background-color. New in 2.4, also "advanced
+mode" which lets you build your own css declaration - for example to target
+multiple aspects (such as border color and background color) of elements or
+multiple elements.
+- *Swatches*: Provides simple swatch of color in various shapes.
 
 ### Widgets
 
@@ -13,7 +19,8 @@
 list of colors. If enabled, opacity is a number field.
 - *Color Default*: Textbox to put in a hex value. If enabled, opacity is a
 number field.
-- *Color Grid*: Uses [jQuery Simple Color](https://github.com/recurser/jquery-simple-color)
+- *Color Grid*: Uses
+[jQuery Simple Color](https://github.com/recurser/jquery-simple-color)
 to provide a pop up grid of color options. If enabled, opacity is a number
 field.
 - *Color HTML5*: Uses the color HTML5 input type to render in a browser/system
@@ -32,7 +39,7 @@ integrated slider for opacity (if opacity is enabled).
 ## INSTALLATION
 
 Install as you would normally install a contributed Drupal module. See also
-[Core Documentation](https://www.drupal.org/docs/8/extending-drupal-8/installing-modules)
+[Core Docs](https://www.drupal.org/docs/8/extending-drupal-8/installing-modules)
 
 ### DEPENDENCIES
 There are JavaScript libraries required for a couple of the field widgets. If
@@ -102,6 +109,12 @@ Field
 1. Add the field to an node/entity
 2. Select the 'Color Field' field type
 3. Select the 'Color' widget you want
+
+## DEVELOPMENT
+
+To ease matching Drupal code standards, development dependencies are configured
+to use a pre-commit hook. Install composer dev dependencies and PHPCS will be
+automatically run if php is in your path.
 
 ## CREDIT
 

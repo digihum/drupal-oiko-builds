@@ -41,11 +41,18 @@ class ColorFieldWidgetJavascriptTests extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
+  protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp() {
     parent::setUp();
 
     $this->drupalCreateContentType(['type' => 'article']);
-    $user = $this->drupalCreateUser(['create article content', 'edit own article content']);
+    $user = $this->drupalCreateUser([
+      'create article content', 'edit own article content',
+    ]);
     $this->drupalLogin($user);
     $entityTypeManager = $this->container->get('entity_type.manager');
     FieldStorageConfig::create([
@@ -94,13 +101,13 @@ class ColorFieldWidgetJavascriptTests extends WebDriverTestBase {
       ->setComponent('field_color_repeat', [
         'type' => 'color_field_widget_box',
         'settings' => [
-          'default_colors' => '#FF0000,#FFFFFF',
+          'default_colors' => '#ff0000,#FFFFFF',
         ],
       ])
       ->setComponent('field_color', [
         'type' => 'color_field_widget_box',
         'settings' => [
-          'default_colors' => '#007749,#000000,#FFFFFF,#FFB81C,#E03C31,#001489',
+          'default_colors' => '#007749,#000000,#FFFFFF,#FFB81C,#E03C31,#001489,#ffafc8,#74d7ee',
         ],
       ])
       ->save();
@@ -112,7 +119,7 @@ class ColorFieldWidgetJavascriptTests extends WebDriverTestBase {
     $page = $session->getPage();
 
     // Wait for elements to be generated.
-    $web_assert->waitForElementVisible('css', '#color-field-field-color_repeat button');
+    $web_assert->waitForElementVisible('css', '#color-field-field-color-repeat button');
 
     $boxes = $page->findAll('css', '#color-field-field-color-repeat button');
     $this->assertEquals(3, count($boxes));
@@ -123,7 +130,7 @@ class ColorFieldWidgetJavascriptTests extends WebDriverTestBase {
 
     // Confirm that two fields aren't sharing settings.
     $boxes = $page->findAll('css', '#color-field-field-color button');
-    $this->assertEquals(6, count($boxes));
+    $this->assertEquals(8, count($boxes));
 
     /** @var \Behat\Mink\Element\NodeElement $box */
     $box = $boxes[0];
@@ -140,6 +147,34 @@ class ColorFieldWidgetJavascriptTests extends WebDriverTestBase {
     $box->click();
     $field = $page->findField('field_color[0][color]');
     $this->assertEquals('#007749', $field->getValue());
+
+    // Test that the edit of a saved color field also show the selected color.
+    // This one tests for the default in uppercase.
+    $node1 = $this->drupalCreateNode([
+      'type' => 'article',
+      'field_color_repeat' => [
+        ['color' => 'ffffff'],
+      ],
+    ]);
+    $this->drupalGet('/node/' . $node1->id() . '/edit');
+    // Wait for elements to be generated.
+    $web_assert->waitForElementVisible('css', '#color-field-field-color-repeat button');
+    $active = $page->findAll('css', '#color-field-field-color-repeat button.color_field_widget_box__square.active');
+    $this->assertEquals(1, count($active));
+
+    // Test that the edit of a saved color field also show the selected color.
+    // This one tests for the default in lowercase.
+    $node2 = $this->drupalCreateNode([
+      'type' => 'article',
+      'field_color_repeat' => [
+        ['color' => 'ff0000'],
+      ],
+    ]);
+    $this->drupalGet('/node/' . $node2->id() . '/edit');
+    // Wait for elements to be generated.
+    $web_assert->waitForElementVisible('css', '#color-field-field-color-repeat button');
+    $active = $page->findAll('css', '#color-field-field-color-repeat button.color_field_widget_box__square.active');
+    $this->assertEquals(1, count($active));
   }
 
   /**
@@ -149,6 +184,9 @@ class ColorFieldWidgetJavascriptTests extends WebDriverTestBase {
    * buttons, we can't use full interaction of clicks with elements. So instead
    * we just confirm that the right html has been generated and assume that the
    * library tests itself.
+   *
+   * Ensure that our handling of the palette is correctly handling different
+   * types of color values. Like don't break if using commas in rgba values.
    */
   public function testColorFieldSpectrum() {
     $this->form
@@ -162,7 +200,7 @@ class ColorFieldWidgetJavascriptTests extends WebDriverTestBase {
       ->setComponent('field_color', [
         'type' => 'color_field_widget_spectrum',
         'settings' => [
-          'palette' => '["#005493","#F5AA1C","#C63527","002754"]',
+          'palette' => '["#005493","#F5AA1C","#C63527","002754", hsv 0 100 100, "rgba(0,255,255,0.5)", green,hsl(0 100 50)]',
           'show_palette' => TRUE,
         ],
       ])
@@ -191,7 +229,7 @@ class ColorFieldWidgetJavascriptTests extends WebDriverTestBase {
     // one field's palette isn't shown. 4 for the one palette plus one each for
     // the widget and the current color value.
     $boxes = $page->findAll('css', '.sp-thumb-el');
-    $this->assertEquals(6, count($boxes));
+    $this->assertEquals(13, count($boxes));
 
     // Confirm that alpha slider is hidden if the field doesn't support opacity.
     $alpha = $page->findAll('css', '.sp-alpha-enabled');

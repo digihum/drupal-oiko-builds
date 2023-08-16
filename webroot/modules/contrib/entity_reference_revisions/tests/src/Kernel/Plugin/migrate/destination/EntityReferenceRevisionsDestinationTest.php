@@ -28,7 +28,7 @@ class EntityReferenceRevisionsDestinationTest extends KernelTestBase implements 
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'migrate',
     'entity_reference_revisions',
     'entity_composite_relationship_test',
@@ -40,11 +40,11 @@ class EntityReferenceRevisionsDestinationTest extends KernelTestBase implements 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('entity_test_composite');
     $this->installSchema('system', ['sequences']);
-    $this->installConfig($this->modules);
+    $this->installConfig(static::$modules);
 
     $this->migrationPluginManager = \Drupal::service('plugin.manager.migration');
   }
@@ -63,8 +63,12 @@ class EntityReferenceRevisionsDestinationTest extends KernelTestBase implements 
     $destination = $migration->getDestinationPlugin();
 
     /** @var \Drupal\Core\Entity\EntityStorageBase $storage */
-    $storage = $this->readAttribute($destination, 'storage');
-    $actual = $this->readAttribute($storage, 'entityTypeId');
+    $reflected_storage = new \ReflectionProperty($destination, 'storage');
+    $reflected_storage->setAccessible(TRUE);
+    $storage = $reflected_storage->getValue($destination);
+    $reflected_entity_type_id = new \ReflectionProperty($storage, 'entityTypeId');
+    $reflected_entity_type_id->setAccessible(TRUE);
+    $actual = $reflected_entity_type_id->getValue($storage);
 
     $this->assertEquals($expected, $actual);
   }
@@ -96,7 +100,9 @@ class EntityReferenceRevisionsDestinationTest extends KernelTestBase implements 
     $migration = $this->migrationPluginManager->createStubMigration($definition);
     $migrationExecutable = (new MigrateExecutable($migration, $this));
     /** @var \Drupal\Core\Entity\EntityStorageBase $storage */
-    $storage = $this->readAttribute($migration->getDestinationPlugin(), 'storage');
+    $reflected_storage = new \ReflectionProperty($migration->getDestinationPlugin(), 'storage');
+    $reflected_storage->setAccessible(TRUE);
+    $storage = $reflected_storage->getValue($migration->getDestinationPlugin());
     // Test inserting and updating by looping twice.
     for ($i = 0; $i < 2; $i++) {
       $migrationExecutable->import();
@@ -237,6 +243,118 @@ class EntityReferenceRevisionsDestinationTest extends KernelTestBase implements 
   }
 
   /**
+   * Tests get entity.
+   *
+   * @dataProvider getEntityDataProviderForceRevision
+   *
+   * @covers ::getEntity
+   * @covers ::rollback
+   * @covers ::rollbackNonTranslation
+   */
+  public function testGetEntityForceRevision(array $definition, array $expected) {
+    /** @var \Drupal\migrate\Plugin\Migration $migration */
+    $migration = $this->migrationPluginManager->createStubMigration($definition);
+    $migrationExecutable = (new MigrateExecutable($migration, $this));
+    /** @var \Drupal\Core\Entity\EntityStorageBase $storage */
+    $reflected_storage = new \ReflectionProperty($migration->getDestinationPlugin(), 'storage');
+    $reflected_storage->setAccessible(TRUE);
+    $storage = $reflected_storage->getValue($migration->getDestinationPlugin());
+    // Test inserting and updating by looping twice.
+    for ($i = 0; $i < 2; $i++) {
+      $migrationExecutable->import();
+      $migration->getIdMap()->prepareUpdate();
+      foreach ($expected[$i] as $data) {
+        $entity = $storage->loadRevision($data['revision_id']);
+        $this->assertEquals($data['label'], $entity->label());
+        $this->assertEquals($data['id'], $entity->id());
+      }
+    }
+    $migrationExecutable->rollback();
+    for ($i = 0; $i < 2; $i++) {
+      foreach ($expected[$i] as $data) {
+        $entity = $storage->loadRevision($data['id']);
+        $this->assertEmpty($entity);
+      }
+    }
+  }
+
+  /**
+   * Provides multiple migration definitions for "getEntity" test.
+   */
+  public function getEntityDataProviderForceRevision() {
+    return [
+      'with ids, new revisions and no force revision' => [
+        'definition' => [
+          'source' => [
+            'plugin' => 'embedded_data',
+            'data_rows' => [
+              ['id' => 1, 'name' => 'content item 1a'],
+              ['id' => 2, 'name' => 'content item 2'],
+            ],
+            'ids' => [
+              'id' => ['type' => 'integer'],
+              'name' => ['type' => 'text'],
+            ],
+          ],
+          'process' => [
+            'name' => 'name',
+            'id' => 'id',
+          ],
+          'destination' => [
+            'plugin' => 'entity_reference_revisions:entity_test_composite',
+            'new_revisions' => TRUE,
+            'force_revision' => FALSE,
+          ],
+        ],
+        'expected' => [
+          [
+            ['id' => 1, 'revision_id' => 1, 'label' => 'content item 1a'],
+            ['id' => 2, 'revision_id' => 2, 'label' => 'content item 2'],
+          ],
+          [
+            ['id' => 1, 'revision_id' => 1, 'label' => 'content item 1a'],
+            ['id' => 2, 'revision_id' => 2, 'label' => 'content item 2'],
+          ]
+        ],
+      ],
+      'with ids, new revisions and force revision' => [
+        'definition' => [
+          'source' => [
+            'plugin' => 'embedded_data',
+            'data_rows' => [
+              ['id' => 1, 'name' => 'content item 1a'],
+              ['id' => 2, 'name' => 'content item 2'],
+            ],
+            'ids' => [
+              'id' => ['type' => 'integer'],
+              'name' => ['type' => 'text'],
+            ],
+          ],
+          'process' => [
+            'name' => 'name',
+            'id' => 'id',
+          ],
+          'destination' => [
+            'plugin' => 'entity_reference_revisions:entity_test_composite',
+            'new_revisions' => TRUE,
+            'force_revision' => TRUE,
+          ],
+        ],
+        'expected' => [
+          [
+            ['id' => 1, 'revision_id' => 1, 'label' => 'content item 1a'],
+            ['id' => 2, 'revision_id' => 2, 'label' => 'content item 2'],
+          ],
+          [
+            ['id' => 1, 'revision_id' => 3, 'label' => 'content item 1a'],
+            ['id' => 2, 'revision_id' => 4, 'label' => 'content item 2'],
+          ]
+        ],
+      ],
+    ];
+  }
+
+  /**
    * Tests multi-value and single-value destination field linkage.
    *
    * @dataProvider destinationFieldMappingDataProvider
@@ -305,7 +423,9 @@ class EntityReferenceRevisionsDestinationTest extends KernelTestBase implements 
       $migration = $this->migrationPluginManager->createInstance($datum['definition']['id']);
       $migrationExecutable = (new MigrateExecutable($migration, $this));
       /** @var \Drupal\Core\Entity\EntityStorageBase $storage */
-      $storage = $this->readAttribute($migration->getDestinationPlugin(), 'storage');
+      $reflected_storage = new \ReflectionProperty($migration->getDestinationPlugin(), 'storage');
+      $reflected_storage->setAccessible(TRUE);
+      $storage = $reflected_storage->getValue($migration->getDestinationPlugin());
       $migrationExecutable->import();
       foreach ($datum['expected'] as $expected) {
         $entity = $storage->loadRevision($expected['id']);
@@ -461,7 +581,7 @@ class EntityReferenceRevisionsDestinationTest extends KernelTestBase implements 
                 ],
                 'field_err_single/target_id' => [
                   [
-                    'plugin' => 'migration',
+                    'plugin' => 'migration_lookup',
                     'migration' => ['single_err'],
                     'no_stub' => TRUE,
                     'source' => 'id',
@@ -475,7 +595,7 @@ class EntityReferenceRevisionsDestinationTest extends KernelTestBase implements 
                 ],
                 'field_err_single/target_revision_id' => [
                   [
-                    'plugin' => 'migration',
+                    'plugin' => 'migration_lookup',
                     'migration' => ['single_err'],
                     'no_stub' => TRUE,
                     'source' => 'id',
@@ -489,7 +609,7 @@ class EntityReferenceRevisionsDestinationTest extends KernelTestBase implements 
                 ],
                 'field_err_multiple' => [
                   [
-                    'plugin' => 'migration',
+                    'plugin' => 'migration_lookup',
                     'migration' => [
                       'multiple_err_author1',
                       'multiple_err_author2',

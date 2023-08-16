@@ -21,11 +21,11 @@ class GeocoderAutocomplete extends StringTextfieldWidget {
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return array(
+    return [
       'size' => '60',
       'autocomplete_route_name' => 'geocoder_autocomplete.autocomplete',
       'placeholder' => t('Digit a place'),
-    ) + parent::defaultSettings();
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -36,14 +36,18 @@ class GeocoderAutocomplete extends StringTextfieldWidget {
     $element['value'] = $main_widget['value'];
 
     if (\Drupal::currentUser()->hasPermission('access geocoder autocomplete')) {
-      $element['value'] = $element['value'] + array(
+      $element['value'] = $element['value'] + [
         '#size' => $this->getSetting('size'),
         '#autocomplete_route_name' => $this->getSetting('autocomplete_route_name'),
-        '#autocomplete_route_parameters' => array(),
+        '#autocomplete_route_parameters' => [],
         '#placeholder' => $this->getSetting('placeholder'),
         '#maxlength' => 255,
-        '#element_validate' => array(array(get_class($this), 'validateFormElement')),
-      );
+        '#element_validate' => [
+          [
+            get_class($this), 'validateFormElement',
+          ],
+        ],
+      ];
     }
 
     return $element;
@@ -57,7 +61,7 @@ class GeocoderAutocomplete extends StringTextfieldWidget {
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The form state.
    */
-  public static function validateFormElement($element, FormStateInterface $form_state) {
+  public static function validateFormElement(array $element, FormStateInterface $form_state) {
     if ($geocoded_address = $element['#value']) {
       $geocoded_address_cleaned = trim($geocoded_address, '"');
       $form_state->setValueForElement($element, $geocoded_address_cleaned);

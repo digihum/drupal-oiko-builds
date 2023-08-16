@@ -12,18 +12,16 @@ use Drupal\Core\Url;
 class TokenCurrentPageTest extends TokenTestBase {
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
-  public static $modules = ['node'];
+  protected static $modules = ['node'];
 
   function testCurrentPageTokens() {
     // Cache clear is necessary because the frontpage was already cached by an
     // initial request.
     $this->rebuildAll();
     $tokens = [
-      '[current-page:title]' => t('Log in'),
+      '[current-page:title]' => 'Log in',
       '[current-page:url]' => Url::fromRoute('user.login', [], ['absolute' => TRUE])->toString(),
       '[current-page:url:absolute]' => Url::fromRoute('user.login', [], ['absolute' => TRUE])->toString(),
       '[current-page:url:relative]' => Url::fromRoute('user.login')->toString(),

@@ -11,10 +11,11 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Exception\UndefinedLinkTemplateException;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\entity_share\EntityShareUtility;
+use Drupal\entity_share_client\ImportPolicy\ImportPolicyPluginManager;
 use Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface;
 
 /**
- * Class StateInformation.
+ * Service to handle presentation of import state.
  *
  * @package Drupal\entity_share_client\Service
  */
@@ -43,6 +44,20 @@ class StateInformation implements StateInformationInterface {
   protected $time;
 
   /**
+   * The import policies manager.
+   *
+   * @var \Drupal\entity_share_client\ImportPolicy\ImportPolicyPluginManager
+   */
+  protected $policiesManager;
+
+  /**
+   * The entity import status. NULL if not found.
+   *
+   * @var \Drupal\entity_share_client\Entity\EntityImportStatusInterface|null
+   */
+  protected $entityImportStatus;
+
+  /**
    * StateInformation constructor.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -51,21 +66,27 @@ class StateInformation implements StateInformationInterface {
    *   The resource type repository.
    * @param \Drupal\Component\Datetime\TimeInterface $time
    *   The Drupal time service.
+   * @param \Drupal\entity_share_client\ImportPolicy\ImportPolicyPluginManager $policies_manager
+   *   The import policies manager.
    */
   public function __construct(
     EntityTypeManagerInterface $entity_type_manager,
     ResourceTypeRepositoryInterface $resource_type_repository,
-    TimeInterface $time
+    TimeInterface $time,
+    ImportPolicyPluginManager $policies_manager
   ) {
     $this->entityTypeManager = $entity_type_manager;
     $this->resourceTypeRepository = $resource_type_repository;
     $this->time = $time;
+    $this->policiesManager = $policies_manager;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getStatusInfo(array $data) {
+    // Reset the entity import status.
+    $this->entityImportStatus = NULL;
     $status_info = $this->statusInfoArray(StateInformationInterface::INFO_ID_UNDEFINED);
 
     // Get the entity type and entity storage.
@@ -118,10 +139,10 @@ class StateInformation implements StateInformationInterface {
 
             // Existing entity.
             if ($this->entityHasChanged($existing_translation, $entity_changed_time)) {
-              $status_info = $this->statusInfoArray(StateInformationInterface::INFO_ID_CHANGED, $existing_entity);
+              $status_info = $this->statusInfoArray(StateInformationInterface::INFO_ID_CHANGED, $existing_translation);
             }
             else {
-              $status_info = $this->statusInfoArray(StateInformationInterface::INFO_ID_SYNCHRONIZED, $existing_entity);
+              $status_info = $this->statusInfoArray(StateInformationInterface::INFO_ID_SYNCHRONIZED, $existing_translation);
             }
           }
           else {
@@ -196,7 +217,17 @@ class StateInformation implements StateInformationInterface {
       'info_id' => $status_info_id,
       'local_entity_link' => NULL,
       'local_revision_id' => NULL,
+      'policy' => '',
     ];
+
+    if ($this->entityImportStatus) {
+      $policy = $this->entityImportStatus->getPolicy();
+      $policy_plugin = $this->policiesManager->getDefinition($policy, FALSE);
+      $status_info['policy'] = !is_null($policy_plugin) ? $policy_plugin['label'] : $this->t('Unknown policy: @policy', [
+        '@policy' => $policy,
+      ]);
+    }
+
     if ($entity instanceof ContentEntityInterface) {
       try {
         $status_info['local_entity_link'] = $entity->toUrl();
@@ -225,8 +256,10 @@ class StateInformation implements StateInformationInterface {
     // We are determining if the entity has changed by comparing the dates.
     // The last import date must be after the remote changed date, otherwise
     // the entity has changed.
-    if ($import_status_entity = $this->getImportStatusOfEntity($entity)) {
-      return $import_status_entity->getLastImport() < $remote_changed_time;
+    $this->entityImportStatus = $this->getImportStatusOfEntity($entity);
+
+    if ($this->entityImportStatus) {
+      return $this->entityImportStatus->getLastImport() < $remote_changed_time;
     }
     // If for some reason the "Entity import status" entity doesn't exist,
     // simply compare by modification dates on remote and local.

@@ -23,11 +23,11 @@ build:
       # deprecated code.
       run_tests.kernel:
         types: 'PHPUnit-Kernel'
-        testgroups: '--all'
+        testgroups: 'entity_share'
         suppress-deprecations: true
         halt-on-fail: false
       run_tests.functional:
         types: 'PHPUnit-Functional'
-        testgroups: '--all'
+        testgroups: 'entity_share'
         suppress-deprecations: true
         halt-on-fail: false

@@ -33,16 +33,16 @@ class AddToHeadProfileForm extends FormBase {
 
     $form['name'] = array(
       '#type' => 'textfield',
-      '#title' => t('Name'),
-      '#description' => t('This is the unique name for this profile'),
+      '#title' => $this->t('Name'),
+      '#description' => $this->t('This is the unique name for this profile'),
       '#required' => TRUE,
       '#default_value' => $profile['name'],
     );
 
     $form['code'] = array(
       '#type' => 'textarea',
-      '#title' => t('Code'),
-      '#description' => t('Enter the code you would like to insert into the head of the page'),
+      '#title' => $this->t('Code'),
+      '#description' => $this->t('Enter the code you would like to insert into the head of the page'),
       '#required' => TRUE,
       '#default_value' => $profile['code'],
       '#wysiwyg' => FALSE,
@@ -50,24 +50,24 @@ class AddToHeadProfileForm extends FormBase {
 
     $form['paths'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Paths'),
+      '#title' => $this->t('Paths'),
       '#tree' => TRUE,
     );
 
     $form['paths']['visibility'] = array(
       '#type' => 'radios',
-      '#title' => t('Embed code on specific pages'),
+      '#title' => $this->t('Embed code on specific pages'),
       '#options' => array(
-        'exclude' => t('Show on every page except the listed pages.'),
-        'include' => t('Show on only the listed pages.'),
+        'exclude' => $this->t('Show on every page except the listed pages.'),
+        'include' => $this->t('Show on only the listed pages.'),
       ),
       '#default_value' => $profile['paths']['visibility'],
     );
 
     $form['paths']['paths'] = array(
       '#type' => 'textarea',
-      '#title' => t('Paths'),
-      '#description' => t("Enter one page per line as Drupal paths. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>')),
+      '#title' => $this->t('Paths'),
+      '#description' => $this->t("Enter one page per line as Drupal paths. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>')),
       '#default_value' => $profile['paths']['paths'],
       '#wysiwyg' => FALSE,
     );
@@ -75,23 +75,23 @@ class AddToHeadProfileForm extends FormBase {
     // Render the Roles overview.
     $form['roles'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Roles'),
+      '#title' => $this->t('Roles'),
       '#tree' => TRUE,
     );
 
     $form['roles']['visibility'] = array(
       '#type' => 'radios',
-      '#title' => t('Embed code for specific roles'),
+      '#title' => $this->t('Embed code for specific roles'),
       '#options' => array(
-        'include' => t('Add for the selected roles only'),
-        'exclude' => t('Add for every role except the selected ones'),
+        'include' => $this->t('Add for the selected roles only'),
+        'exclude' => $this->t('Add for every role except the selected ones'),
       ),
       '#default_value' => $profile['roles']['visibility'],
     );
 
     $form['roles']['list'] = array(
       '#type' => 'checkboxes',
-      '#title' => t('Selected roles'),
+      '#title' => $this->t('Selected roles'),
       '#default_value' => $profile['roles']['list'],
       '#options' => user_role_names(),
       '#description' => $this->t('If none of the roles are selected, all roles will have the code displayed. If a user has any of the roles checked, that user will be have the code displayed (or not, depending on the setting above).'),
@@ -99,12 +99,12 @@ class AddToHeadProfileForm extends FormBase {
 
     $form['scope'] = array(
       '#type' => 'radios',
-      '#title' => t('Scope of addition'),
-      '#description' => t('Which section of the head would you like this snippet appended to?'),
+      '#title' => $this->t('Scope of addition'),
+      '#description' => $this->t('Which section of the head would you like this snippet appended to?'),
       '#options' => array(
-        'head' => t('Head - This appears early on in the head (before any CSS and JS are included)'),
-        'styles' => t('Styles - It will be appended to the CSS files section. This is usually before any other JS is included.'),
-        'scripts' => t('Scripts - It will be appended to the Javascripts section. This can, sometimes, be in the footer of the document depending on the theme.'),
+        'head' => $this->t('Head - This appears early on in the head (before any CSS and JS are included)'),
+        'styles' => $this->t('Styles - It will be appended to the CSS files section. This is usually before any other JS is included.'),
+        'scripts' => $this->t('Scripts - It will be appended to the Javascripts section. This can, sometimes, be in the footer of the document depending on the theme.'),
       ),
       '#default_value' => $profile['scope'],
     );
@@ -112,7 +112,7 @@ class AddToHeadProfileForm extends FormBase {
 
     $form['submit'] = array(
       '#type' => 'submit',
-      '#value' => t('Save'),
+      '#value' => $this->t('Save'),
     );
 
     return $form;
@@ -121,13 +121,15 @@ class AddToHeadProfileForm extends FormBase {
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
     $name = $form_state->getValue('name');
+    $settings = \Drupal::config('add_to_head.settings')->get('add_to_head_profiles');
+
     if (preg_match('/[^a-z0-9\-]/', $name)) {
-      $form_state->setErrorByName('name', t('The name should only contain lower case letters, numbers and hyphens.'));
+      $form_state->setErrorByName('name', $this->t('The name should only contain lower case letters, numbers and hyphens.'));
       return;
     }
 
-    if ( ($name != $form_state->getValue('orig_name')) && isset($settings[$name]) ) {
-      $form_state->setErrorByName('name', t('This name has already been used. Please try another.'));
+    if ( ($name != $form_state->getValue('name_orig')) && isset($settings[$name]) ) {
+      $form_state->setErrorByName('name', $this->t('This name has already been used. Please try another.'));
     }
   }
 

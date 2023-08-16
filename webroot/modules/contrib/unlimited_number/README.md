@@ -1,6 +1,6 @@
 Provides a widget for number fields for unlimited or limited values.
 
-Copyright (C) 2015 Daniel Phin (@dpi)
+Copyright (C) 2022 Daniel Phin (@dpi)
 
 # License
 

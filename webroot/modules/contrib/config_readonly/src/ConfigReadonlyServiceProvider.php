@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\config_readonly\ConfigReadonlyServiceProvider.
- */
-
 namespace Drupal\config_readonly;
 
 use Symfony\Component\DependencyInjection\Reference;
@@ -30,8 +25,16 @@ class ConfigReadonlyServiceProvider implements ServiceProviderInterface, Service
     if ($container->getParameter('kernel.environment') !== 'install') {
       $definition = $container->getDefinition('config.storage');
       $definition->setClass('Drupal\config_readonly\Config\ConfigReadonlyStorage');
-      $definition->setArguments([new Reference('config.storage.active'), new Reference('cache.config'), new Reference('lock'), new Reference('request_stack')]);
+      $definition->setArguments(
+        [
+          new Reference('config.storage.active'),
+          new Reference('cache.config'),
+          new Reference('lock'),
+          new Reference('request_stack'),
+          new Reference('module_handler'),
+        ]
+      );
     }
   }
-}
 
+}

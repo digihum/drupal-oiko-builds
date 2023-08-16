@@ -8,6 +8,10 @@ use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
 use ReflectionClass;
+<<<<<<< HEAD
+=======
+use ReflectionNamedType;
+>>>>>>> feature/medmus-d9
 use ReflectionParameter;
 
 use function array_filter;
@@ -99,13 +103,21 @@ class FactoryCreator
 
         $constructorParameters = array_filter(
             $constructorParameters,
+<<<<<<< HEAD
             function (ReflectionParameter $argument): bool {
+=======
+            static function (ReflectionParameter $argument): bool {
+>>>>>>> feature/medmus-d9
                 if ($argument->isOptional()) {
                     return false;
                 }
 
                 $type  = $argument->getType();
+<<<<<<< HEAD
                 $class = null !== $type && ! $type->isBuiltin() ? $type->getName() : null;
+=======
+                $class = $type instanceof ReflectionNamedType && ! $type->isBuiltin() ? $type->getName() : null;
+>>>>>>> feature/medmus-d9
 
                 if (null === $class) {
                     throw new InvalidArgumentException(sprintf(
@@ -123,9 +135,15 @@ class FactoryCreator
             return [];
         }
 
+<<<<<<< HEAD
         return array_map(function (ReflectionParameter $parameter): ?string {
             $type = $parameter->getType();
             return null !== $type && ! $type->isBuiltin() ? $type->getName() : null;
+=======
+        return array_map(static function (ReflectionParameter $parameter): ?string {
+            $type = $parameter->getType();
+            return $type instanceof ReflectionNamedType && ! $type->isBuiltin() ? $type->getName() : null;
+>>>>>>> feature/medmus-d9
         }, $constructorParameters);
     }
 
@@ -135,7 +153,11 @@ class FactoryCreator
      */
     private function createArgumentString($className)
     {
+<<<<<<< HEAD
         $arguments = array_map(fn(string $dependency): string
+=======
+        $arguments = array_map(static fn(string $dependency): string
+>>>>>>> feature/medmus-d9
             => sprintf('$container->get(\\%s::class)', $dependency), $this->getConstructorParameters($className));
 
         switch (count($arguments)) {

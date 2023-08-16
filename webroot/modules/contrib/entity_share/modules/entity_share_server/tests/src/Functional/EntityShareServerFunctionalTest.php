@@ -40,9 +40,12 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $es_test_en_channel = $channel_storage->create([
       'id' => 'es_test_en',
       'label' => 'Entity share test en',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -52,9 +55,12 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $es_test_fr_channel = $channel_storage->create([
       'id' => 'es_test_fr',
       'label' => 'Entity share test fr',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'fr',
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -76,31 +82,31 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
 
     // Test the english channel info.
     $this->assertTrue(isset($entity_share_endpoint_response['data']['channels']['es_test_en']), 'The english channel has been found');
-    $this->assertEquals($entity_share_endpoint_response['data']['channels']['es_test_en']['label'], $es_test_en_channel->label(), 'The expected channel label has been found.');
-    $this->assertEquals($entity_share_endpoint_response['data']['channels']['es_test_en']['channel_entity_type'], $es_test_en_channel->get('channel_entity_type'), 'The expected channel entity type has been found.');
-    $this->assertEquals($entity_share_endpoint_response['data']['channels']['es_test_en']['search_configuration'], $expected_search_configuration, 'The expected search configuration had been found.');
+    $this->assertEquals($es_test_en_channel->label(), $entity_share_endpoint_response['data']['channels']['es_test_en']['label'], 'The expected channel label has been found.');
+    $this->assertEquals($es_test_en_channel->get('channel_entity_type'), $entity_share_endpoint_response['data']['channels']['es_test_en']['channel_entity_type'], 'The expected channel entity type has been found.');
+    $this->assertEquals($expected_search_configuration, $entity_share_endpoint_response['data']['channels']['es_test_en']['search_configuration'], 'The expected search configuration had been found.');
 
     // Test that the node can be found on the channel URL.
     $response = $this->request('GET', Url::fromUri($entity_share_endpoint_response['data']['channels']['es_test_en']['url']), $this->getAuthenticationRequestOptions($this->channelUser));
     $es_test_en_channel_url_response = Json::decode((string) $response->getBody());
-    $this->assertEquals($es_test_en_channel_url_response['data'][0]['attributes']['title'], $node->label(), 'The channel url is correct. The created node has been found.');
+    $this->assertEquals($node->label(), $es_test_en_channel_url_response['data'][0]['attributes']['title'], 'The channel url is correct. The created node has been found.');
 
     // Test that the channel URL uuid contains only changed timestamp.
     $response = $this->request('GET', Url::fromUri($entity_share_endpoint_response['data']['channels']['es_test_en']['url_uuid']), $this->getAuthenticationRequestOptions($this->channelUser));
     $es_test_en_channel_url_uuid_response = Json::decode((string) $response->getBody());
-    $this->assertEquals(count($es_test_en_channel_url_uuid_response['data'][0]['attributes']), 1, 'There is only one attribute.');
+    $this->assertEquals(1, count($es_test_en_channel_url_uuid_response['data'][0]['attributes']), 'There is only one attribute.');
     $this->assertTrue(isset($es_test_en_channel_url_uuid_response['data'][0]['attributes']['changed']), 'The only attribute is changed.');
 
-    // Test the french channel info.
-    $this->assertTrue(isset($entity_share_endpoint_response['data']['channels']['es_test_fr']), 'The french channel has been found');
-    $this->assertEquals($entity_share_endpoint_response['data']['channels']['es_test_fr']['label'], $es_test_fr_channel->label(), 'The expected channel label has been found.');
-    $this->assertEquals($entity_share_endpoint_response['data']['channels']['es_test_fr']['channel_entity_type'], $es_test_fr_channel->get('channel_entity_type'), 'The expected channel entity type has been found.');
-    $this->assertEquals($entity_share_endpoint_response['data']['channels']['es_test_fr']['search_configuration'], $expected_search_configuration, 'The expected search configuration had been found.');
+    // Test the French channel info.
+    $this->assertTrue(isset($entity_share_endpoint_response['data']['channels']['es_test_fr']), 'The French channel has been found');
+    $this->assertEquals($es_test_fr_channel->label(), $entity_share_endpoint_response['data']['channels']['es_test_fr']['label'], 'The expected channel label has been found.');
+    $this->assertEquals($es_test_fr_channel->get('channel_entity_type'), $entity_share_endpoint_response['data']['channels']['es_test_fr']['channel_entity_type'], 'The expected channel entity type has been found.');
+    $this->assertEquals($expected_search_configuration, $entity_share_endpoint_response['data']['channels']['es_test_fr']['search_configuration'], 'The expected search configuration had been found.');
 
     // Test that the node translation can be found on the channel URL.
     $response = $this->request('GET', Url::fromUri($entity_share_endpoint_response['data']['channels']['es_test_fr']['url']), $this->getAuthenticationRequestOptions($this->channelUser));
     $es_test_fr_channel_url_response = Json::decode((string) $response->getBody());
-    $this->assertEquals($es_test_fr_channel_url_response['data'][0]['attributes']['title'], $node->getTranslation('fr')->label(), 'The channel url is correct. The created node has been found.');
+    $this->assertEquals($node->getTranslation('fr')->label(), $es_test_fr_channel_url_response['data'][0]['attributes']['title'], 'The channel url is correct. The created node has been found.');
   }
 
   /**
@@ -194,6 +200,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_1 = $channel_storage->create([
       'id' => 'channel_1',
       'label' => 'Channel 1',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -206,6 +213,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -221,6 +230,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_2 = $channel_storage->create([
       'id' => 'channel_2',
       'label' => 'Channel 2',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -233,6 +243,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -248,6 +260,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_3 = $channel_storage->create([
       'id' => 'channel_3',
       'label' => 'Channel 3',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -260,6 +273,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -276,6 +291,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_4 = $channel_storage->create([
       'id' => 'channel_4',
       'label' => 'Channel 4',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -288,6 +304,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -303,6 +321,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_5 = $channel_storage->create([
       'id' => 'channel_5',
       'label' => 'Channel 5',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -315,6 +334,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -330,6 +351,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_6 = $channel_storage->create([
       'id' => 'channel_6',
       'label' => 'Channel 6',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -342,6 +364,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -357,6 +381,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_7 = $channel_storage->create([
       'id' => 'channel_7',
       'label' => 'Channel 7',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -369,6 +394,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -385,6 +412,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_8 = $channel_storage->create([
       'id' => 'channel_8',
       'label' => 'Channel 8',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -397,6 +425,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -412,6 +442,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_9 = $channel_storage->create([
       'id' => 'channel_9',
       'label' => 'Channel 9',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -424,6 +455,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -439,6 +472,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_10 = $channel_storage->create([
       'id' => 'channel_10',
       'label' => 'Channel 10',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -451,6 +485,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -466,6 +502,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_11 = $channel_storage->create([
       'id' => 'channel_11',
       'label' => 'Channel 11',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -479,6 +516,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -494,6 +533,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_12 = $channel_storage->create([
       'id' => 'channel_12',
       'label' => 'Channel 12',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -507,6 +547,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -522,6 +564,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_13 = $channel_storage->create([
       'id' => 'channel_13',
       'label' => 'Channel 13',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -535,6 +578,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -550,6 +595,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_14 = $channel_storage->create([
       'id' => 'channel_14',
       'label' => 'Channel 14',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -563,6 +609,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           ],
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -578,6 +626,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_15 = $channel_storage->create([
       'id' => 'channel_15',
       'label' => 'Channel 15',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -587,6 +636,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           'operator' => 'IS NULL',
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -602,6 +653,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_16 = $channel_storage->create([
       'id' => 'channel_16',
       'label' => 'Channel 16',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -611,6 +663,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           'operator' => 'IS NOT NULL',
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -626,6 +680,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_17 = $channel_storage->create([
       'id' => 'channel_17',
       'label' => 'Channel 17',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -661,6 +716,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           'memberof' => 'and_group',
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -676,6 +733,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $channel_18 = $channel_storage->create([
       'id' => 'channel_18',
       'label' => 'Channel 18',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -691,6 +749,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           'weight' => -9,
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -712,6 +772,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
     $es_test_en_channel = $channel_storage->create([
       'id' => 'es_test_en',
       'label' => 'Entity share test en',
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'en',
@@ -721,6 +782,8 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
           'label' => 'Tag name',
         ],
       ],
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $this->channelUser->uuid(),
       ],
@@ -741,7 +804,66 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
       ],
     ];
 
-    $this->assertEquals($entity_share_endpoint_response['data']['channels']['es_test_en']['search_configuration'], $expected_search_configuration, 'The expected search configuration had been found.');
+    $this->assertEquals($expected_search_configuration, $entity_share_endpoint_response['data']['channels']['es_test_en']['search_configuration'], 'The expected search configuration had been found.');
+  }
+
+  /**
+   * Test limiting number of entities displayed on channel.
+   */
+  public function testChannelMaxSize() {
+    for ($i = 1; $i <= 60; $i++) {
+      $this->createNode([
+        'type' => 'es_test',
+        'title' => "Entity share test $i en",
+        'status' => NodeInterface::PUBLISHED,
+      ]);
+    }
+
+    $this->checkChannelNumberOfResults(50);
+    $this->checkChannelNumberOfResults(30);
+  }
+
+  /**
+   * Helper function to check the number of entities on a specific channel.
+   *
+   * @param int $maxSize
+   *   The channel max size to set and so to expect.
+   */
+  protected function checkChannelNumberOfResults($maxSize) {
+    $channel_storage = $this->entityTypeManager->getStorage('channel');
+
+    $es_test_en_channel = $channel_storage->load('es_test_en');
+    if (is_null($es_test_en_channel)) {
+      $es_test_en_channel = $channel_storage->create([
+        'id' => 'es_test_en',
+        'label' => 'Entity share test en',
+        'channel_maxsize' => $maxSize,
+        'channel_entity_type' => 'node',
+        'channel_bundle' => 'es_test',
+        'channel_langcode' => 'en',
+        'channel_searches' => [],
+        'access_by_permission' => FALSE,
+        'authorized_roles' => [],
+        'authorized_users' => [
+          $this->channelUser->uuid(),
+        ],
+      ]);
+    }
+    else {
+      $es_test_en_channel->set('channel_maxsize', 30);
+    }
+    $es_test_en_channel->save();
+
+    $entity_share_entrypoint_url = Url::fromRoute('entity_share_server.resource_list');
+    $response = $this->request('GET', $entity_share_entrypoint_url, $this->getAuthenticationRequestOptions($this->channelUser));
+    $entity_share_endpoint_response = Json::decode((string) $response->getBody());
+
+    // Test the number of results on the channel URL.
+    $response = $this->request('GET', Url::fromUri($entity_share_endpoint_response['data']['channels']['es_test_en']['url']), $this->getAuthenticationRequestOptions($this->channelUser));
+    $channel_url_response = Json::decode((string) $response->getBody());
+    $channel_url_data = EntityShareUtility::prepareData($channel_url_response['data']);
+
+    $this->assertEquals($maxSize, count($channel_url_data));
   }
 
   /**
@@ -771,7 +893,7 @@ class EntityShareServerFunctionalTest extends EntityShareServerFunctionalTestBas
         }
       }
 
-      $this->assertEqual($found, $expected, 'Expected state for entity with UUID: ' . $entity_uuid);
+      $this->assertEquals($expected, $found, 'Expected state for entity with UUID: ' . $entity_uuid);
     }
   }
 

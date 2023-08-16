@@ -31,6 +31,7 @@
   padding: 0 1em;
   border: 0;
   background-color: unset;
+  box-shadow: unset;
 }
 
 .horizontal-tabs-pane > summary {
@@ -38,7 +39,7 @@
 }
 
 /* Layout of each tab */
-.horizontal-tabs  .horizontal-tab-button {
+.horizontal-tabs .horizontal-tab-button {
   background: #eee;
   border-right: 1px solid #ccc; /* LTR */
   padding-top: 0;
@@ -106,9 +107,6 @@
 
 .horizontal-tab-button .summary {
   display: block;
-}
-
-.horizontal-tab-button .summary {
   line-height: normal;
   margin-bottom: 0;
 }
@@ -120,4 +118,3 @@ div.field-group-htabs-wrapper .field-group-format-wrapper {
   clear: both;
   padding: 0 0 0.6em;
 }
-

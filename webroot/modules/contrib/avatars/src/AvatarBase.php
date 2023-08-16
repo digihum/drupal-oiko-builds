@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\AvatarBase.
- */
-
 namespace Drupal\avatars;
 
 use Drupal\avatars\Exception\AvatarException;
@@ -14,42 +9,84 @@ use Drupal\avatars\Exception\AvatarException;
  */
 abstract class AvatarBase implements AvatarBaseInterface {
 
+  /**
+   * Host name.
+   *
+   * @var string
+   */
   protected $hostname;
+
+  /**
+   * Type.
+   *
+   * @var string
+   */
   protected $type;
+
+  /**
+   * Identifier.
+   *
+   * @var string
+   */
   protected $identifier;
+
+  /**
+   * Is Secure.
+   *
+   * @var bool
+   */
   protected $secure;
+
+  /**
+   * Prehashed.
+   *
+   * @var bool|null
+   */
   protected $prehashed;
+
+  /**
+   * Width.
+   *
+   * @var int
+   */
   protected $width;
+
+  /**
+   * Height.
+   *
+   * @var int
+   */
   protected $height;
 
-  /*
+  // @codingStandardsIgnoreStart
+  /**
    * Maximum width of the avatar.
    *
    * @var int
    */
   protected $dimension_width_maximum;
 
-  /*
+  /**
    * Minimum width of the avatar.
    *
    * @var int
    */
   protected $dimension_width_minimum;
 
-  /*
+  /**
    * Maximum height of the avatar.
    *
    * @var int
    */
   protected $dimension_height_maximum;
 
-  /*
+  /**
    * Minimum height of the avatar.
    *
    * @var int
    */
   protected $dimension_height_minimum;
-
+  // @codingStandardsIgnoreEnd
 
   /**
    * {@inheritdoc}

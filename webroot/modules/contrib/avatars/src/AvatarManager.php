@@ -1,12 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\AvatarManager.
- */
-
 namespace Drupal\avatars;
 
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\avatars\Entity\AvatarPreview;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -57,7 +53,7 @@ class AvatarManager implements AvatarManagerInterface {
   protected $loggerFactory;
 
   /**
-   * The file usage service
+   * The file usage service.
    *
    * @var \Drupal\file\FileUsage\FileUsageInterface
    */
@@ -95,7 +91,7 @@ class AvatarManager implements AvatarManagerInterface {
    * @param \Drupal\avatars\AvatarGeneratorPluginManagerInterface $avatar_generator
    *   The avatar generator plugin manager.
    */
-  function __construct(ConfigFactoryInterface $config_factory, ClientInterface $http_client, CacheTagsInvalidatorInterface $cache_tag_invalidator, LoggerChannelFactoryInterface $logger_factory, EntityTypeManagerInterface $entity_type_manager, FileUsageInterface $file_usage, AvatarGeneratorPluginManagerInterface $avatar_generator) {
+  public function __construct(ConfigFactoryInterface $config_factory, ClientInterface $http_client, CacheTagsInvalidatorInterface $cache_tag_invalidator, LoggerChannelFactoryInterface $logger_factory, EntityTypeManagerInterface $entity_type_manager, FileUsageInterface $file_usage, AvatarGeneratorPluginManagerInterface $avatar_generator) {
     $this->configFactory = $config_factory;
     $this->httpClient = $http_client;
     $this->cacheTagInvalidator = $cache_tag_invalidator;
@@ -129,7 +125,7 @@ class AvatarManager implements AvatarManagerInterface {
   /**
    * {@inheritdoc}
    */
-  function findValidAvatar(UserInterface $user) {
+  public function findValidAvatar(UserInterface $user) {
     foreach ($this->getPreferences($user) as $avatar_generator => $scope) {
       $avatar_generator = $this->avatarGeneratorStorage->load($avatar_generator);
       if ($avatar_generator instanceof AvatarGeneratorInterface) {
@@ -176,7 +172,7 @@ class AvatarManager implements AvatarManagerInterface {
   /**
    * {@inheritdoc}
    */
-  function refreshAllAvatars(UserInterface $user) {
+  public function refreshAllAvatars(UserInterface $user) {
     $previews = [];
     foreach ($this->getAvatarGeneratorsForUser($user) as $avatar_generator) {
       $avatar_preview = $this->refreshAvatarGenerator($user, $avatar_generator, AvatarPreviewInterface::SCOPE_TEMPORARY);
@@ -190,7 +186,7 @@ class AvatarManager implements AvatarManagerInterface {
   /**
    * {@inheritdoc}
    */
-  function getAvatarFile(AvatarGeneratorInterface $avatar_generator, UserInterface $user) {
+  public function getAvatarFile(AvatarGeneratorInterface $avatar_generator, UserInterface $user) {
     $plugin = $avatar_generator->getPlugin();
 
     // Get avatar if it is already local.
@@ -199,11 +195,13 @@ class AvatarManager implements AvatarManagerInterface {
     // Otherwise get the URL of the avatar, download it, and store it as a file.
     if (!$file && $url = $plugin->generateUri($user)) {
       $directory = 'public://avatar_kit/' . $avatar_generator->id();
-      if (file_prepare_directory($directory, FILE_CREATE_DIRECTORY)) {
+      /** @var \Drupal\Core\File\FileSystemInterface $fileSystem */
+      $fileSystem = \Drupal::service('file_system');
+      if ($fileSystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY)) {
         try {
           if (($result = $this->httpClient->get($url)) && ($result->getStatusCode() == 200)) {
             $file_path = $directory . '/' . $user->id() . '.jpg';
-            $file = file_save_data($result->getBody(), $file_path, FILE_EXISTS_REPLACE);
+            $file = \Drupal::service('file.repository')->writeData($result->getBody(), $file_path, FileSystemInterface::EXISTS_REPLACE);
           }
         }
         catch (ClientException $e) {
@@ -256,7 +254,7 @@ class AvatarManager implements AvatarManagerInterface {
   /**
    * {@inheritdoc}
    */
-  function invalidateUserAvatar(UserInterface $user) {
+  public function invalidateUserAvatar(UserInterface $user) {
     if (isset($user->{AK_FIELD_PICTURE_ACTIVE}->entity)) {
       $this->cacheTagInvalidator->invalidateTags(
         $user->{AK_FIELD_PICTURE_ACTIVE}->entity->getCacheTags()
@@ -267,7 +265,7 @@ class AvatarManager implements AvatarManagerInterface {
   /**
    * {@inheritdoc}
    */
-  function notifyDynamicChange(AvatarGeneratorInterface $avatar_generator, UserInterface $user) {
+  public function notifyDynamicChange(AvatarGeneratorInterface $avatar_generator, UserInterface $user) {
     if ($avatar_preview = AvatarPreview::getAvatarPreview($avatar_generator, $user)) {
       $avatar_preview->delete();
     }
@@ -276,7 +274,7 @@ class AvatarManager implements AvatarManagerInterface {
   /**
    * {@inheritdoc}
    */
-  function getAvatarGeneratorsForUser(UserInterface $user, $exclude_user_preference = TRUE) {
+  public function getAvatarGeneratorsForUser(UserInterface $user, $exclude_user_preference = TRUE) {
     $avatar_generators = [];
     foreach ($this->avatarGeneratorStorage->getEnabledAvatarGenerators() as $avatar_generator) {
       if ($avatar_generator->getPlugin()->getPluginId() == 'user_preference') {
@@ -284,7 +282,7 @@ class AvatarManager implements AvatarManagerInterface {
           continue;
         }
       }
-      else if (!$user->hasPermission("avatars avatar_generator user " . $avatar_generator->id())) {
+      elseif (!$user->hasPermission("avatars avatar_generator user " . $avatar_generator->id())) {
         continue;
       }
       $avatar_generators[] = $avatar_generator;
@@ -295,7 +293,7 @@ class AvatarManager implements AvatarManagerInterface {
   /**
    * {@inheritdoc}
    */
-  function getAvatarPreviewByFile(FileInterface $file) {
+  public function getAvatarPreviewByFile(FileInterface $file) {
     $usages = $this->fileUsage->listUsage($file);
 
     if (isset($usages['avatars']['avatars_preview'])) {

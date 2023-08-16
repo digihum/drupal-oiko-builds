@@ -1,7 +1,0 @@
----
-label: P14 carried out by
-domain: e7_activity
-range: e39_actor
-superproperties:
-  - p11_had_participant
-reverse label: P14 performed

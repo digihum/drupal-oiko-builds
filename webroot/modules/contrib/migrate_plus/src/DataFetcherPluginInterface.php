@@ -1,11 +1,10 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\migrate_plus\DataFetcherPluginInterface.
- */
+declare(strict_types = 1);
 
 namespace Drupal\migrate_plus;
+
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Defines an interface for data fetchers.
@@ -20,35 +19,36 @@ interface DataFetcherPluginInterface {
   /**
    * Set the client headers.
    *
-   * @param $headers
+   * @param array $headers
    *   An array of the headers to set on the HTTP request.
    */
-  public function setRequestHeaders(array $headers);
+  public function setRequestHeaders(array $headers): void;
 
   /**
    * Get the currently set request headers.
    */
-  public function getRequestHeaders();
+  public function getRequestHeaders(): array;
 
   /**
    * Return content.
    *
-   * @param $url
+   * @param string $url
    *   URL to retrieve from.
    *
    * @return string
    *   Content at the given url.
    */
-  public function getResponseContent($url);
+  public function getResponseContent(string $url): string;
 
   /**
    * Return Http Response object for a given url.
    *
-   * @param $url
+   * @param string $url
    *   URL to retrieve from.
    *
    * @return \Psr\Http\Message\ResponseInterface
+   *   The HTTP response message.
    */
-  public function getResponse($url);
+  public function getResponse(string $url): ResponseInterface;
 
 }

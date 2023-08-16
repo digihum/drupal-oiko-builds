@@ -1,5 +1,0 @@
----
-label: P30 transferred custody of
-domain: e10_transfer_of_custody
-range: e18_physical_thing
-reverse label: P30 custody transferred through

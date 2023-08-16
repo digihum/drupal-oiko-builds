@@ -3,8 +3,8 @@
 namespace Drupal\Tests\avatars\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\simpletest\UserCreationTrait;
 use Drupal\avatars\Entity\AvatarGenerator;
+use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
 use Drupal\user\RoleInterface;
@@ -15,14 +15,21 @@ use Drupal\user\RoleInterface;
  * @group avatars
  * @coversDefaultClass \Drupal\avatars\AvatarManager
  */
-class AvatarKitManagerTest extends KernelTestBase {
+final class AvatarKitManagerTest extends KernelTestBase {
 
   use UserCreationTrait;
 
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['avatars', 'user', 'avatars_test', 'system', 'field', 'file'];
+  protected static $modules = [
+    'avatars',
+    'user',
+    'avatars_test',
+    'system',
+    'field',
+    'file',
+  ];
 
   /**
    * The avatar manager.
@@ -34,7 +41,7 @@ class AvatarKitManagerTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('user');
     $this->installSchema('system', 'sequences');
@@ -52,7 +59,7 @@ class AvatarKitManagerTest extends KernelTestBase {
    *
    * @covers ::getAvatarGeneratorsForUser
    */
-  public function testGetAvatarGeneratorsForUser() {
+  public function testGetAvatarGeneratorsForUser(): void {
     $generator_1 = AvatarGenerator::create([
       'label' => $this->randomMachineName(),
       'id' => $this->randomMachineName(),
@@ -84,7 +91,7 @@ class AvatarKitManagerTest extends KernelTestBase {
    *
    * @covers ::getAvatarGeneratorsForUser
    */
-  public function testGetAvatarGeneratorsForUserWithPermissions() {
+  public function testGetAvatarGeneratorsForUserWithPermissions(): void {
     $generator_1 = AvatarGenerator::create([
       'label' => $this->randomMachineName(),
       'id' => $this->randomMachineName(),
@@ -116,7 +123,7 @@ class AvatarKitManagerTest extends KernelTestBase {
    *
    * @covers ::getAvatarGeneratorsForUser
    */
-  public function testGetAvatarGeneratorsForUserWithoutPermissions() {
+  public function testGetAvatarGeneratorsForUserWithoutPermissions(): void {
     $generator_1 = AvatarGenerator::create([
       'label' => $this->randomMachineName(),
       'id' => $this->randomMachineName(),
@@ -137,7 +144,7 @@ class AvatarKitManagerTest extends KernelTestBase {
    *
    * @covers ::getAvatarGeneratorsForUser
    */
-  public function testGetAvatarGeneratorsDisabledGenerators() {
+  public function testGetAvatarGeneratorsDisabledGenerators(): void {
     $generator_1 = AvatarGenerator::create([
       'label' => $this->randomMachineName(),
       'id' => $this->randomMachineName(),
@@ -158,7 +165,7 @@ class AvatarKitManagerTest extends KernelTestBase {
   /**
    * Test unsaved user (such as user registration form)
    */
-  public function testUnsavedUser() {
+  public function testUnsavedUser(): void {
     $generator_1 = AvatarGenerator::create([
       'label' => $this->randomMachineName(),
       'id' => $this->randomMachineName(),

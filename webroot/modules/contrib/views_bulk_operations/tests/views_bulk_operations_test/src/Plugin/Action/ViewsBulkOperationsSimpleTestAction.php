@@ -2,8 +2,9 @@
 
 namespace Drupal\views_bulk_operations_test\Plugin\Action;
 
-use Drupal\views_bulk_operations\Action\ViewsBulkOperationsActionBase;
+use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\views_bulk_operations\Action\ViewsBulkOperationsActionBase;
 
 /**
  * Action for test purposes only.
@@ -15,22 +16,22 @@ use Drupal\Core\Session\AccountInterface;
  * )
  */
 class ViewsBulkOperationsSimpleTestAction extends ViewsBulkOperationsActionBase {
+  use MessengerTrait;
 
   /**
    * {@inheritdoc}
    */
   public function execute($entity = NULL) {
-    drupal_set_message(sprintf('Test action (preconfig: %s, label: %s)',
-      $this->configuration['preconfig'],
+    $this->messenger()->addMessage(\sprintf('Test action (label: %s)',
       $entity->label()
     ));
-    return 'Test';
+    return $this->t('Test');
   }
 
   /**
    * {@inheritdoc}
    */
-  public function access($object, AccountInterface $account = NULL, $return_as_object = FALSE) {
+  public function access($object, ?AccountInterface $account = NULL, $return_as_object = FALSE) {
     return $object->access('update', $account, $return_as_object);
   }
 

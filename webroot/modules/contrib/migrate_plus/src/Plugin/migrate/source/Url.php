@@ -1,14 +1,11 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\migrate_plus\Plugin\migrate\source\Url.
- */
+declare(strict_types = 1);
 
 namespace Drupal\migrate_plus\Plugin\migrate\source;
 
-use Drupal\migrate\Entity\MigrationInterface;
 use Drupal\migrate_plus\DataParserPluginInterface;
+use Drupal\migrate\Plugin\MigrationInterface;
 
 /**
  * Source plugin for retrieving data via URLs.
@@ -24,14 +21,14 @@ class Url extends SourcePluginExtension {
    *
    * @var array
    */
-  protected $sourceUrls = [];
+  protected array $sourceUrls = [];
 
   /**
    * The data parser plugin.
    *
    * @var \Drupal\migrate_plus\DataParserPluginInterface
    */
-  protected $dataParserPlugin;
+  protected DataParserPluginInterface $dataParserPlugin;
 
   /**
    * {@inheritdoc}
@@ -43,15 +40,6 @@ class Url extends SourcePluginExtension {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $migration);
 
     $this->sourceUrls = $configuration['urls'];
-
-    // Set a default Accept header.
-/*    $this->headers = array_merge(['Accept' => 'application/json'],
-      $configuration['headers'] ?: []);*/
-
-    // See if this is a paged response with next links. If so, add to the source_urls array.
-/*    foreach ( (array) $configuration['urls'] as $url) {
-      $this->sourceUrls += $this->getNextLinks($url);
-    }*/
   }
 
   /**
@@ -60,7 +48,7 @@ class Url extends SourcePluginExtension {
    * @return string
    *   Comma-separated list of URLs being imported.
    */
-  public function __toString() {
+  public function __toString(): string {
     // This could cause a problem when using a lot of urls, may need to hash.
     $urls = implode(', ', $this->sourceUrls);
     return $urls;
@@ -69,10 +57,9 @@ class Url extends SourcePluginExtension {
   /**
    * Returns the initialized data parser plugin.
    *
-   * @return \Drupal\migrate_plus\DataParserPluginInterface
    *   The data parser plugin.
    */
-  public function getDataParserPlugin() {
+  public function getDataParserPlugin(): DataParserPluginInterface {
     if (!isset($this->dataParserPlugin)) {
       $this->dataParserPlugin = \Drupal::service('plugin.manager.migrate_plus.data_parser')->createInstance($this->configuration['data_parser_plugin'], $this->configuration);
     }
@@ -82,63 +69,11 @@ class Url extends SourcePluginExtension {
   /**
    * Creates and returns a filtered Iterator over the documents.
    *
-   * @return \Iterator
    *   An iterator over the documents providing source rows that match the
    *   configured item_selector.
    */
-  protected function initializeIterator() {
+  protected function initializeIterator(): DataParserPluginInterface {
     return $this->getDataParserPlugin();
   }
 
-  /**
-   * Collect an array of next links from a paged response.
-   */
-/*  protected function getNextLinks($url) {
-    $urls = array();
-    $more = TRUE;
-    while ($more == TRUE) {
-      $response = $this->dataParserPlugin->getDataFetcher()->getResponse($url);
-      if ($url = $this->getNextFromHeaders($response)) {
-        $urls[] = $url;
-      }
-      elseif ($url = $this->getNextFromLinks($response)) {
-        $urls[] = $url;
-      }
-      else {
-        $more = FALSE;
-      }
-    }
-    return $urls;
-  }
-*/
-  /**
-   * See if the next link is in a 'links' group in the response.
-   *
-   * @param \Psr\Http\Message\ResponseInterface $response
-   */
-/*  protected function getNextFromLinks(ResponseInterface $response) {
-    $body = json_decode($response->getBody(), TRUE);
-    if (!empty($body['links']) && array_key_exists('next', $body['links'])) {
-      return $body['links']['next'];
-    }
-    return FALSE;
-  }
-*/
-  /**
-   * See if the next link is in the header.
-   *
-   * @param \Psr\Http\Message\ResponseInterface $response
-   */
-/*  protected function getNextFromHeaders(ResponseInterface $response) {
-    $headers = $response->getHeader('Link');
-    foreach ($headers as $header) {
-      $matches = array();
-      preg_match('/^<(.*)>; rel="next"$/', $header, $matches);
-      if (!empty($matches) && !empty($matches[1])) {
-        return $matches[1];
-      }
-    }
-    return FALSE;
-  }
-*/
 }

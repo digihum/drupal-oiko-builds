@@ -15,7 +15,7 @@ use Drupal\entity_share_client\Service\ImportConfigManipulatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class ImportConfigForm.
+ * Entity form of the import config entity.
  */
 class ImportConfigForm extends EntityForm {
 
@@ -83,6 +83,16 @@ class ImportConfigForm extends EntityForm {
         'exists' => '\Drupal\entity_share_client\Entity\ImportConfig::load',
       ],
       '#disabled' => !$import_config->isNew(),
+    ];
+
+    $form['import_maxsize'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Max size'),
+      '#description' => $this->t("The JSON:API's page limit option to limit the number of entities per page."),
+      '#default_value' => $import_config->get('import_maxsize'),
+      '#min' => 1,
+      '#max' => 50,
+      '#required' => TRUE,
     ];
 
     // Retrieve lists of all processors, and the stages and weights they have.

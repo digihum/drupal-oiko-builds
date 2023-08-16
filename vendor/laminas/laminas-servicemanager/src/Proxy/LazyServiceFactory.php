@@ -21,19 +21,27 @@ use function sprintf;
  */
 final class LazyServiceFactory implements DelegatorFactoryInterface
 {
+<<<<<<< HEAD
     private LazyLoadingValueHolderFactory $proxyFactory;
 
     /** @var array<string, class-string> map of service names to class names */
     private array $servicesMap;
 
+=======
+>>>>>>> feature/medmus-d9
     /**
      * @param array<string, class-string> $servicesMap A map of service names to
      *     class names of their respective classes
      */
+<<<<<<< HEAD
     public function __construct(LazyLoadingValueHolderFactory $proxyFactory, array $servicesMap)
     {
         $this->proxyFactory = $proxyFactory;
         $this->servicesMap  = $servicesMap;
+=======
+    public function __construct(private LazyLoadingValueHolderFactory $proxyFactory, private array $servicesMap)
+    {
+>>>>>>> feature/medmus-d9
     }
 
     /**
@@ -45,7 +53,11 @@ final class LazyServiceFactory implements DelegatorFactoryInterface
     public function __invoke(ContainerInterface $container, $name, callable $callback, ?array $options = null)
     {
         if (isset($this->servicesMap[$name])) {
+<<<<<<< HEAD
             $initializer = function (&$wrappedInstance, LazyLoadingInterface $proxy) use ($callback) {
+=======
+            $initializer = static function (&$wrappedInstance, LazyLoadingInterface $proxy) use ($callback): bool {
+>>>>>>> feature/medmus-d9
                 $proxy->setProxyInitializer(null);
                 $wrappedInstance = $callback();
 

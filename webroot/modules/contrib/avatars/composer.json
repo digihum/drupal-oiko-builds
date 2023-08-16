@@ -11,6 +11,11 @@
       "role": "Maintainer"
     }
   ],
-  "license": "GPL-2.0+",
-  "minimum-stability": "dev"
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "require": {
+      "php": ">=7.4",
+      "drupal/core": ">=9.5",
+      "drupal/unlimited_number": "*"
+  }
 }

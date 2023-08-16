@@ -4,6 +4,7 @@ namespace Drupal\stage_file_proxy\EventSubscriber;
 
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\StreamWrapper\StreamWrapperManager;
 use Drupal\Core\Url;
 use Drupal\stage_file_proxy\EventDispatcher\AlterExcludedPathsEvent;
 use Drupal\stage_file_proxy\FetchManagerInterface;
@@ -11,11 +12,16 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Stage file proxy subscriber for controller requests.
+ *
+ * @deprecated in stage_file_proxy:2.1.0 and is removed from stage_file_proxy:3.0.0.
+ *   Use StageFileProxySubscriber instead.
+ *
+ * @see https://www.drupal.org/project/stage_file_proxy/issues/3282542
  */
 class ProxySubscriber implements EventSubscriberInterface {
 
@@ -77,12 +83,12 @@ class ProxySubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Fetch the file according the its origin.
+   * Fetch the file from it's origin.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-   *   The Event to process.
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
+   *   The event to process.
    */
-  public function checkFileOrigin(GetResponseEvent $event) {
+  public function checkFileOrigin(RequestEvent $event) {
     $config = $this->configFactory->get('stage_file_proxy.settings');
 
     // Get the origin server.
@@ -112,8 +118,24 @@ class ProxySubscriber implements EventSubscriberInterface {
       return;
     }
 
+    // Moving to parent directory is insane here, so prevent that.
+    if (in_array('..', explode('/', $request_path))) {
+      return;
+    }
+
+    // Quit if the extension is in the list of excluded extensions.
+    $excluded_extensions = $config->get('excluded_extensions') ?
+      array_map('trim', explode(',', $config->get('excluded_extensions'))) : [];
+
+    $path_info = pathinfo($request_path);
+    $ext = $path_info['extension'];
+
+    if (in_array($ext, $excluded_extensions)) {
+      return;
+    }
+
     $alter_excluded_paths_event = new AlterExcludedPathsEvent([]);
-    $this->eventDispatcher->dispatch('stage_file_proxy.alter_excluded_paths', $alter_excluded_paths_event);
+    $this->eventDispatcher->dispatch($alter_excluded_paths_event, 'stage_file_proxy.alter_excluded_paths');
     $excluded_paths = $alter_excluded_paths_event->getExcludedPaths();
     foreach ($excluded_paths as $excluded_path) {
       if (strpos($request_path, $excluded_path) !== FALSE) {
@@ -124,61 +146,69 @@ class ProxySubscriber implements EventSubscriberInterface {
     // Note if the origin server files location is different. This
     // must be the exact path for the remote site's public file
     // system path, and defaults to the local public file system path.
-    $remote_file_dir = trim($config->get('origin_dir'));
-    if (!$remote_file_dir) {
+    $origin_dir = $config->get('origin_dir') ?? '';
+    $remote_file_dir = trim($origin_dir);
+    if (!empty($remote_file_dir)) {
       $remote_file_dir = $file_dir;
     }
 
     $request_path = rawurldecode($request_path);
     // Path relative to file directory. Used for hotlinking.
-    $relative_path = mb_substr($request_path, mb_strlen($file_dir) + 1);
+    $relative_path = mb_substr($request_path, mb_strlen($file_dir));
     // If file is fetched and use_imagecache_root is set, original is used.
-    $fetch_path = $relative_path;
+    $paths = [$relative_path];
 
-    // Is this imagecache? Request the root file and let imagecache resize.
-    // We check this first so locally added files have precedence.
-    $original_path = $this->manager->styleOriginalPath($relative_path, TRUE);
-    if ($original_path) {
-      if (file_exists($original_path)) {
-        // Imagecache can generate it without our help.
-        return;
+    // Webp support.
+    if (str_ends_with($relative_path, '.webp')) {
+      $paths[] = str_replace('.webp', '', $relative_path);
+      $paths = array_reverse($paths);
+    }
+
+    foreach ($paths as $relative_path) {
+      $fetch_path = $relative_path;
+
+      // Is this imagecache? Request the root file and let imagecache resize.
+      // We check this first so locally added files have precedence.
+      $original_path = $this->manager->styleOriginalPath($relative_path, TRUE);
+      if ($original_path) {
+        if (file_exists($original_path)) {
+          // Imagecache can generate it without our help.
+          return;
+        }
+        if ($config->get('use_imagecache_root')) {
+          // Config says: Fetch the original.
+          $fetch_path = StreamWrapperManager::getTarget($original_path);
+        }
       }
-      if ($config->get('use_imagecache_root')) {
-        // Config says: Fetch the original.
-        $fetch_path = file_uri_target($original_path);
+
+      $query = $this->requestStack->getCurrentRequest()->query->all();
+      $query_parameters = UrlHelper::filterQueryParameters($query);
+      $options = [
+        'verify' => $config->get('verify'),
+      ];
+
+      if ($config->get('hotlink')) {
+
+        $location = Url::fromUri("$server/$remote_file_dir/$relative_path", [
+          'query' => $query_parameters,
+          'absolute' => TRUE,
+        ])->toString();
+
       }
-    }
+      elseif ($this->manager->fetch($server, $remote_file_dir, $fetch_path, $options)) {
+        // Refresh this request & let the web server work out mime type, etc.
+        $location = Url::fromUri('base://' . $request_path, [
+          'query' => $query_parameters,
+          'absolute' => TRUE,
+        ])->toString();
+        // Avoid redirection caching in upstream proxies.
+        header("Cache-Control: must-revalidate, no-cache, post-check=0, pre-check=0, private");
+      }
 
-    $query = $this->requestStack->getCurrentRequest()->query->all();
-    $query_parameters = UrlHelper::filterQueryParameters($query);
-    $options = [
-      'verify' => $config->get('verify'),
-    ];
-
-    if ($config->get('hotlink')) {
-
-      $location = Url::fromUri("$server/$remote_file_dir/$relative_path", [
-        'query' => $query_parameters,
-        'absolute' => TRUE,
-      ])->toString();
-
-    }
-    elseif ($this->manager->fetch($server, $remote_file_dir, $fetch_path, $options)) {
-      // Refresh this request & let the web server work out mime type, etc.
-      $location = Url::fromUri('base://' . $request_path, [
-        'query' => $query_parameters,
-        'absolute' => TRUE,
-      ])->toString();
-      // Avoid redirection caching in upstream proxies.
-      header("Cache-Control: must-revalidate, no-cache, post-check=0, pre-check=0, private");
-    }
-    else {
-      $this->logger->error('Stage File Proxy encountered an unknown error by retrieving file @file', ['@file' => $server . '/' . UrlHelper::encodePath($remote_file_dir . '/' . $relative_path)]);
-    }
-
-    if (isset($location)) {
-      header("Location: $location");
-      exit;
+      if (isset($location)) {
+        header("Location: $location");
+        exit;
+      }
     }
   }
 

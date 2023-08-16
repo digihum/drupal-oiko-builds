@@ -5,6 +5,7 @@
  * Post update functions for Paragraphs.
  */
 
+use Drupal\Core\Database\Database;
 use Drupal\Core\Database\Query\Condition;
 use Drupal\Core\Entity\Sql\SqlEntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
@@ -21,7 +22,7 @@ function paragraphs_post_update_set_paragraphs_parent_fields(&$sandbox) {
   // Don't execute the function if paragraphs_update_8003() was already executed
   // which used to do the same.
 
-  $module_schema = drupal_get_installed_schema_version('paragraphs');
+  $module_schema = \Drupal::service('update.update_hook_registry')->getInstalledVersion('paragraphs');
 
   // The state entry 'paragraphs_update_8003_placeholder' is used in order to
   // indicate that the placeholder paragraphs_update_8003() function has been
@@ -202,7 +203,7 @@ function paragraphs_post_update_rebuild_parent_fields(array &$sandbox) {
   }
 
   $current_field = $sandbox['paragraph_field_ids'][$sandbox['current_index']];
-  $revision_column = $current_field['revision_column'];
+  $revision_column = !empty($current_field['revision_column']) ? ($current_field['revision_column']) : $current_field['field_name'] . '_target_revision_id';
   $entity_id_column = $current_field['entity_id_column'];
   $entity_type_id = $current_field['entity_type_id'];
   $field_name = $current_field['field_name'];
@@ -216,7 +217,13 @@ function paragraphs_post_update_rebuild_parent_fields(array &$sandbox) {
 
   // Select paragraphs with at least one wrong parent field.
   $or_group = new Condition('OR');
-  $or_group->where("p.parent_id <> f.$entity_id_column");
+  // Only use CAST if the db driver is Postgres.
+  if (Database::getConnection()->databaseType() == 'pgsql') {
+    $or_group->where("CAST(p.parent_id as TEXT) <> CAST(f.$entity_id_column as TEXT)");
+  }
+  else {
+    $or_group->where("p.parent_id <> f.$entity_id_column");
+  }
   $or_group->condition('p.parent_type', $entity_type_id, '<>');
   $or_group->condition('p.parent_field_name', $field_name, '<>');
   $query->condition($or_group);

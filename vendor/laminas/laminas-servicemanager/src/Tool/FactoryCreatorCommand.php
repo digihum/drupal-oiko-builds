@@ -45,6 +45,7 @@ EOH;
 
     private ConsoleHelper $helper;
 
+<<<<<<< HEAD
     private string $scriptName;
 
     /**
@@ -54,6 +55,14 @@ EOH;
     {
         $this->scriptName = $scriptName;
         $this->helper     = $helper ?: new ConsoleHelper();
+=======
+    /**
+     * @param string $scriptName
+     */
+    public function __construct(private $scriptName = self::DEFAULT_SCRIPT_NAME, ?ConsoleHelper $helper = null)
+    {
+        $this->helper = $helper ?: new ConsoleHelper();
+>>>>>>> feature/medmus-d9
     }
 
     /**
@@ -98,7 +107,10 @@ EOH;
     }
 
     /**
+<<<<<<< HEAD
      * @param array $args
+=======
+>>>>>>> feature/medmus-d9
      * @return ArgumentObject
      */
     private function parseArgs(array $args)
