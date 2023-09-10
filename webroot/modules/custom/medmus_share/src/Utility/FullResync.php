@@ -263,7 +263,7 @@ class FullResync implements ContainerInjectionInterface  {
           'path' => 'changed',
           'operator' => '>',
           // Limit to the last 90 days.
-          'value' => REQUEST_TIME - 86400 * 90,
+          'value' => Drupal::time()->getRequestTime() - 86400 * 90,
         ],
       ];
       $parsed_url['query']['filter'] = isset($parsed_url['query']['filter']) ? array_merge_recursive($parsed_url['query']['filter'], $search_filter_and_group) : $search_filter_and_group;

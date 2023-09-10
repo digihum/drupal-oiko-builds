@@ -7,13 +7,14 @@ use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Element\FormElement;
 use Drupal\Core\Render\Markup;
 use Drupal\webform\Element\WebformCompositeFormElementTrait;
 use Drupal\webform\Utility\WebformArrayHelper;
 use Drupal\webform\Utility\WebformElementHelper;
+use Drupal\webform\Utility\WebformFormHelper;
 use Drupal\webform\Utility\WebformOptionsHelper;
-use Symfony\Component\CssSelector\CssSelectorConverter;
 use Drupal\webform_options_custom\Entity\WebformOptionsCustom as WebformOptionsCustomEntity;
 
 /**
@@ -43,7 +44,7 @@ class WebformOptionsCustom extends FormElement implements WebformOptionsCustomIn
     // NOTE:
     // Choices is not supported by custom options because of <option> being
     // removed inside the <select>.
-    // @see https://github.com/jshjohnson/Choices/issues/601
+    // @see https://github.com/Choices-js/Choices/issues/601
     '#placeholder',
     '#help_display',
     '#size',
@@ -111,8 +112,8 @@ class WebformOptionsCustom extends FormElement implements WebformOptionsCustomIn
     // @see webform_options_custom.element.js#initializeTemplateTooltip
     $descriptions = [];
     foreach ($element['#options'] as $option_value => $option_text) {
-      if (strpos($option_text, WebformOptionsHelper::DESCRIPTION_DELIMITER) !== FALSE) {
-        list($option_text, $option_description) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $option_text);
+      if (WebformOptionsHelper::hasOptionDescription($option_text)) {
+        [$option_text, $option_description] = WebformOptionsHelper::splitOption($option_text);
         $element['#options'][$option_value] = $option_text;
         $descriptions[$option_value] = Xss::filterAdmin($option_description);
       }
@@ -154,7 +155,7 @@ class WebformOptionsCustom extends FormElement implements WebformOptionsCustomIn
         '#template' => $element['#template'],
         '#context' => $template_context,
         '#prefix' => '<div class="webform-options-custom-template">',
-        '#suffic' => '</div>',
+        '#suffix' => '</div>',
       ];
     }
     else {
@@ -162,7 +163,7 @@ class WebformOptionsCustom extends FormElement implements WebformOptionsCustomIn
       $element['template'] = [
         '#markup' => Markup::create($element['#template']),
         '#prefix' => '<div class="webform-options-custom-template">',
-        '#suffic' => '</div>',
+        '#suffix' => '</div>',
       ];
     }
 
@@ -212,7 +213,7 @@ class WebformOptionsCustom extends FormElement implements WebformOptionsCustomIn
     }
 
     // Process states.
-    webform_process_states($element, '#wrapper_attributes');
+    WebformFormHelper::processStates($element, '#wrapper_attributes');
 
     return $element;
   }
@@ -222,9 +223,6 @@ class WebformOptionsCustom extends FormElement implements WebformOptionsCustomIn
    */
   public static function validateWebformOptionsCustom(&$element, FormStateInterface $form_state, &$complete_form) {
     $value = NestedArray::getValue($form_state->getValues(), $element['select']['#parents']);
-
-    // Determine if the element is visible. (#access !== FALSE)
-    $has_access = (!isset($element['#access']) || $element['#access'] === TRUE);
 
     // Determine if the element has multiple values.
     $is_multiple = (empty($element['#multiple'])) ? FALSE : TRUE;
@@ -238,7 +236,7 @@ class WebformOptionsCustom extends FormElement implements WebformOptionsCustomIn
     }
 
     // Validate on elements with #access.
-    if ($has_access && !empty($element['#required']) && $is_empty) {
+    if (Element::isVisibleElement($element) && !empty($element['#required']) && $is_empty) {
       WebformElementHelper::setRequiredError($element, $form_state);
     }
 
@@ -247,9 +245,9 @@ class WebformOptionsCustom extends FormElement implements WebformOptionsCustomIn
     $form_state->setValueForElement($element, $value);
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Helper methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Set a custom options element #options property.
@@ -294,14 +292,14 @@ class WebformOptionsCustom extends FormElement implements WebformOptionsCustomIn
     ];
 
     // Get options.
-    $options =& $element['#options'];
+    $options = &$element['#options'];
 
     // Build options by text look up.
     $options_by_text = [];
     foreach ($options as $option_value => $option_text) {
       $option_description = '';
-      if (strpos($option_text, WebformOptionsHelper::DESCRIPTION_DELIMITER) !== FALSE) {
-        list($option_text, $option_description) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $option_text);
+      if (WebformOptionsHelper::hasOptionDescription($option_text)) {
+        [$option_text, $option_description] = WebformOptionsHelper::splitOption($option_text);
       }
       $options_by_text[$option_text] = ['value' => $option_value, 'text' => $option_text, 'description' => $option_description];
     }
@@ -343,12 +341,11 @@ class WebformOptionsCustom extends FormElement implements WebformOptionsCustomIn
     // DOM element which contain any of the attributes.
     $css_attributes = array_map(
       function ($value) {
-        return '[' . $value . ']';
+        return 'descendant-or-self::*[@' . $value . ']';
       },
       $custom_attributes
     );
-    $css_selector_converter = new CssSelectorConverter();
-    $xpath_expression = $css_selector_converter->toXPath(implode(',', $css_attributes));
+    $xpath_expression = implode(' | ', $css_attributes);
 
     // Remove XML tag from SVG file.
     $xml_tag = NULL;

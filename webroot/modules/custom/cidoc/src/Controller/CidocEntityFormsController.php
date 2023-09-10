@@ -2,6 +2,7 @@
 
 namespace Drupal\cidoc\Controller;
 
+use Drupal\Core\Link;
 use Drupal\cidoc\CidocEntityInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityInterface;
@@ -88,8 +89,10 @@ class CidocEntityFormsController extends ControllerBase {
       return $this->addForm($bundle, $request);
     }
     if (count($bundles) === 0) {
+      // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
+      // Please manually remove the `use LinkGeneratorTrait;` statement from this class.
       $t_params = [
-        '@link' => $this->l($this->t('Go to the class creation page'), Url::fromRoute('entity.cidoc_entity_bundle.add_form')),
+        '@link' => Link::fromTextAndUrl($this->t('Go to the class creation page'), Url::fromRoute('entity.cidoc_entity_bundle.add_form')),
       ];
       return array(
         '#markup' => $this->t('You have not created any CIDOC entity classes yet. @link to add a new one.', $t_params),

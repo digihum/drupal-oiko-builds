@@ -35,7 +35,7 @@ class WebformTime extends WebformElementBase {
       + $this->defineDefaultMultipleProperties();
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -64,8 +64,8 @@ class WebformTime extends WebformElementBase {
     }
 
     $format = $this->getItemFormat($element);
-    if ($format == 'value') {
-      $time_format = (isset($element['#time_format'])) ? $element['#time_format'] : 'H:i';
+    if ($format === 'value') {
+      $time_format = $element['#time_format'] ?? 'H:i';
       return static::formatTime($time_format, strtotime($value));
     }
 
@@ -156,7 +156,7 @@ class WebformTime extends WebformElementBase {
   protected static function formatTime($custom_format, $timestamp = NULL) {
     /** @var \Drupal\Core\Datetime\DateFormatterInterface $date_formatter */
     $date_formatter = \Drupal::service('date.formatter');
-    return $date_formatter->format($timestamp ?: time(), 'custom', $custom_format);
+    return $date_formatter->format($timestamp ?: \Drupal::time()->getRequestTime(), 'custom', $custom_format);
   }
 
 }

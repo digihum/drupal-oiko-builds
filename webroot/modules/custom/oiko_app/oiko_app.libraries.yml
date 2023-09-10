@@ -4,7 +4,6 @@ app:
     dist/oiko.app.js: { }
   version: '1.0.0'
   dependencies:
-    - core/domready
     - core/drupalSettings
 
 mainsearch:

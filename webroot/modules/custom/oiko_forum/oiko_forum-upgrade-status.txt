@@ -1,0 +1,37 @@
+CUSTOM PROJECTS
+--------------------------------------------------------------------------------
+Oiko - Forum
+Scanned on Wed, 08/16/2023 - 12:19.
+
+3 warnings found.
+
+modules/custom/oiko_forum/src/Plugin/Block/UserLoggedIn.php:
+┌──────────┬──────┬──────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                            │
+├──────────┼──────┼──────────────────────────────────────────────────────────────┤
+│ Check    │ 121  │ #lazy_builder callback class                                 │
+│ manually │      │ 'static(Drupal\oiko_forum\Plugin\Block\UserLoggedIn)' at key │
+│          │      │ '0' does not implement                                       │
+│          │      │ Drupal\Core\Security\TrustedCallbackInterface.               │
+│          │      │                                                              │
+└──────────┴──────┴──────────────────────────────────────────────────────────────┘
+
+modules/custom/oiko_forum/src/Plugin/Block/UserLoggedOut.php:
+┌──────────┬──────┬───────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                          MESSAGE                          │
+├──────────┼──────┼───────────────────────────────────────────────────────────┤
+│ Check    │ 85   │ #lazy_builder callback class                              │
+│ manually │      │ 'static(Drupal\oiko_forum\Plugin\Block\UserLoggedOut)' at │
+│          │      │ key '0' does not implement                                │
+│          │      │ Drupal\Core\Security\TrustedCallbackInterface.            │
+│          │      │                                                           │
+│ Check    │ 103  │ #lazy_builder callback class                              │
+│ manually │      │ 'static(Drupal\oiko_forum\Plugin\Block\UserLoggedOut)' at │
+│          │      │ key '0' does not implement                                │
+│          │      │ Drupal\Core\Security\TrustedCallbackInterface.            │
+│          │      │                                                           │
+└──────────┴──────┴───────────────────────────────────────────────────────────┘
+
+
+
+

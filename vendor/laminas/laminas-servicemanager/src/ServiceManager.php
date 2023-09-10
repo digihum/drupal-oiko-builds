@@ -24,10 +24,6 @@ use function array_intersect;
 use function array_key_exists;
 use function array_keys;
 use function class_exists;
-<<<<<<< HEAD
-use function get_class;
-=======
->>>>>>> feature/medmus-d9
 use function gettype;
 use function in_array;
 use function is_callable;
@@ -63,9 +59,6 @@ use const E_USER_DEPRECATED;
  * @psalm-import-type FactoriesConfigurationType from ConfigInterface
  * @psalm-import-type InitializersConfigurationType from ConfigInterface
  * @psalm-import-type LazyServicesConfigurationType from ConfigInterface
-<<<<<<< HEAD
- * @psalm-type ServiceManagerConfiguration = array{shared_by_default?:bool}&ServiceManagerConfigurationType
-=======
  * @psalm-type ServiceManagerConfiguration = array{
  *     abstract_factories?: AbstractFactoriesConfigurationType,
  *     aliases?: array<string,string>,
@@ -79,7 +72,6 @@ use const E_USER_DEPRECATED;
  *     shared_by_default?:bool,
  *     ...
  * }
->>>>>>> feature/medmus-d9
  */
 class ServiceManager implements ServiceLocatorInterface
 {
@@ -177,10 +169,6 @@ class ServiceManager implements ServiceLocatorInterface
      * See {@see \Laminas\ServiceManager\ServiceManager::configure()} for details
      * on what $config accepts.
      *
-<<<<<<< HEAD
-     * @param array $config
-=======
->>>>>>> feature/medmus-d9
      * @psalm-param ServiceManagerConfiguration $config
      */
     public function __construct(array $config = [])
@@ -208,13 +196,7 @@ class ServiceManager implements ServiceLocatorInterface
         return $this->creationContext;
     }
 
-<<<<<<< HEAD
-    /**
-     * {@inheritDoc}
-     */
-=======
     /** {@inheritDoc} */
->>>>>>> feature/medmus-d9
     public function get($name)
     {
         // We start by checking if we have cached the requested service;
@@ -273,13 +255,7 @@ class ServiceManager implements ServiceLocatorInterface
         return $object;
     }
 
-<<<<<<< HEAD
-    /**
-     * {@inheritDoc}
-     */
-=======
     /** {@inheritDoc} */
->>>>>>> feature/medmus-d9
     public function build($name, ?array $options = null)
     {
         // We never cache when using "build".
@@ -320,10 +296,6 @@ class ServiceManager implements ServiceLocatorInterface
     }
 
     /**
-<<<<<<< HEAD
-     * @param  array $config
-=======
->>>>>>> feature/medmus-d9
      * @psalm-param ServiceManagerConfiguration $config
      * @return self
      * @throws ContainerModificationsNotAllowedException If the allow
@@ -1009,11 +981,7 @@ class ServiceManager implements ServiceLocatorInterface
         }
         throw new ServiceNotCreatedException(sprintf(
             'A non-callable delegator, "%s", was provided; expected a callable or instance of "%s"',
-<<<<<<< HEAD
-            is_object($delegatorFactory) ? get_class($delegatorFactory) : gettype($delegatorFactory),
-=======
             is_object($delegatorFactory) ? $delegatorFactory::class : gettype($delegatorFactory),
->>>>>>> feature/medmus-d9
             DelegatorFactoryInterface::class
         ));
     }

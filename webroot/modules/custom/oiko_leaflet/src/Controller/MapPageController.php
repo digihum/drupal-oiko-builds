@@ -9,6 +9,7 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Lock\LockBackendInterface;
@@ -93,6 +94,7 @@ class MapPageController extends ControllerBase {
       $storage = $this->entity_type_manager->getStorage('cidoc_entity');
       $query = $storage->getQuery()
         ->condition('status', 1)
+        ->accessCheck(FALSE)
         ->count();
       $this->moduleHandler->invokeAll('oiko_app_all_entities_query_alter', [$query]);
       $count = $query->execute();

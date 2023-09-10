@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\Core\Entity\EntityInterface;
 /**
  * @file
  * Describes API functions for tour module.
@@ -18,7 +19,7 @@
  * @param \Drupal\Core\Entity\EntityInterface $entity
  *   The tour which contains the $tour_tips.
  */
-function hook_tour_tips_alter(array &$tour_tips, Drupal\Core\Entity\EntityInterface $entity) {
+function hook_tour_tips_alter(array &$tour_tips, EntityInterface $entity) {
   foreach ($tour_tips as $tour_tip) {
     if ($tour_tip->get('id') == 'tour-code-test-1') {
       $tour_tip->set('body', 'Altered by hook_tour_tips_alter');

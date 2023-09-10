@@ -8,6 +8,7 @@ use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactory;
@@ -145,6 +146,7 @@ class MedmusShareRemoteEntityStatusFetcher implements ContainerInjectionInterfac
       ->getQuery()
       ->condition('remote_website', $remote_id)
       ->condition('entity_uuid', $entity_uuid)
+      ->accessCheck(FALSE)
       ->execute();
     if (empty($existing_entities)) {
       $deleted_entity = DeletedRemoteEntity::create([

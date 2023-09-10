@@ -4,11 +4,12 @@
  * @file
  * Contains CIDOC module.
  */
-
+use Drupal\Core\Database\Query\AlterableInterface;
 use Drupal\cidoc\Entity\CidocEntityBundle;
 use Drupal\cidoc\Entity\CidocProperty;
 use Drupal\Core\Render\Element;
 use Drupal\field\Entity\FieldConfig;
+use Drupal\Core\Database\Query\Condition;
 
 /**
  * Implements hook_entity_extra_field_info().
@@ -40,7 +41,7 @@ function cidoc_cidoc_entity_storage_load($entities) {
  * to do is change the second field to be the property column. Also sort by
  * property name.
  */
-function cidoc_query_cidoc_entity_get_properties_alter(\Drupal\Core\Database\Query\AlterableInterface $query) {
+function cidoc_query_cidoc_entity_get_properties_alter(AlterableInterface $query) {
   /** @var \Drupal\Core\Database\Query\Select $query */
   $fields = &$query->getFields();
   $existing_fields = array_keys($fields);
@@ -61,7 +62,7 @@ function cidoc_query_cidoc_entity_get_properties_alter(\Drupal\Core\Database\Que
  * fields with two expressions that are concatenations of the needed fields.
  * Also add a sort for more predicatable behaviour.
  */
-function cidoc_query_cidoc_get_properties_for_population_alter(\Drupal\Core\Database\Query\AlterableInterface $query) {
+function cidoc_query_cidoc_get_properties_for_population_alter(AlterableInterface $query) {
   /** @var \Drupal\Core\Database\Query\Select $query */
   $fields = &$query->getFields();
   $id_field = reset($fields);
@@ -91,7 +92,7 @@ function cidoc_query_cidoc_get_properties_for_population_alter(\Drupal\Core\Data
 /**
  * Implements hook_query_TAG_alter().
  */
-function cidoc_query_cidoc_entity_access_alter(Drupal\Core\Database\Query\AlterableInterface $query) {
+function cidoc_query_cidoc_entity_access_alter(AlterableInterface $query) {
   // Read meta-data from query, if provided.
   if (!$account = $query->getMetaData('account')) {
     $account = \Drupal::currentUser();
@@ -144,9 +145,10 @@ function cidoc_query_cidoc_entity_access_alter(Drupal\Core\Database\Query\Altera
       if (!($table instanceof SelectInterface) && $table == $base_table) {
 
         if ($account->hasPermission('view own unpublished cidoc entities')) {
-          $condition = db_or();
+          $condition = new Condition('OR');
           $condition->condition($table . '.status', 1);
-          $own_condition = db_and()
+          $own_condition = new Condition('AND');
+          $own_condition
             ->condition($table . '.status', 0)
             ->condition($table . '.user_id', $account->id());
           $condition->condition($own_condition);

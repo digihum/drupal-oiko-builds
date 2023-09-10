@@ -26,7 +26,7 @@ abstract class GeoserializerPluginBase extends PluginBase implements Geoserializ
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, \Drupal\oiko_leaflet\ItemColorInterface $colorizer, ModuleHandlerInterface $moduleHandler) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ItemColorInterface $colorizer, ModuleHandlerInterface $moduleHandler) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->colorizer = $colorizer;
     $this->moduleHandler = $moduleHandler;

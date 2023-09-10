@@ -4,26 +4,6 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "content-hash": "902fdfea30c4b5c805adcfe02f526547",
-    "packages": [
-        {
-            "name": "laminas/laminas-stdlib",
-            "version": "3.13.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-stdlib.git",
-                "reference": "66a6d03c381f6c9f1dd988bf8244f9afb9380d76"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/66a6d03c381f6c9f1dd988bf8244f9afb9380d76",
-                "reference": "66a6d03c381f6c9f1dd988bf8244f9afb9380d76",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.4 || ~8.0.0 || ~8.1.0"
-=======
     "content-hash": "42755a420dd48f27f0839d1c3dc4f748",
     "packages": [
         {
@@ -42,26 +22,16 @@
             },
             "require": {
                 "php": "~8.0.0 || ~8.1.0 || ~8.2.0"
->>>>>>> feature/medmus-d9
             },
             "conflict": {
                 "zendframework/zend-stdlib": "*"
             },
             "require-dev": {
-<<<<<<< HEAD
-                "laminas/laminas-coding-standard": "~2.3.0",
-                "phpbench/phpbench": "^1.2.6",
-                "phpstan/phpdoc-parser": "^0.5.4",
-                "phpunit/phpunit": "^9.5.23",
-                "psalm/plugin-phpunit": "^0.17.0",
-                "vimeo/psalm": "^4.26"
-=======
                 "laminas/laminas-coding-standard": "^2.4.0",
                 "phpbench/phpbench": "^1.2.6",
                 "phpunit/phpunit": "^9.5.25",
                 "psalm/plugin-phpunit": "^0.17.0",
                 "vimeo/psalm": "^4.28"
->>>>>>> feature/medmus-d9
             },
             "type": "library",
             "autoload": {
@@ -93,11 +63,7 @@
                     "type": "community_bridge"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-08-24T13:56:50+00:00"
-=======
             "time": "2022-10-10T19:10:24+00:00"
->>>>>>> feature/medmus-d9
         },
         {
             "name": "psr/container",
@@ -390,18 +356,6 @@
         },
         {
             "name": "composer/pcre",
-<<<<<<< HEAD
-            "version": "3.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/composer/pcre.git",
-                "reference": "e300eb6c535192decd27a85bc72a9290f0d6b3bd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/composer/pcre/zipball/e300eb6c535192decd27a85bc72a9290f0d6b3bd",
-                "reference": "e300eb6c535192decd27a85bc72a9290f0d6b3bd",
-=======
             "version": "3.1.0",
             "source": {
                 "type": "git",
@@ -412,7 +366,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/composer/pcre/zipball/4bff79ddd77851fe3cdd11616ed3f92841ba5bd2",
                 "reference": "4bff79ddd77851fe3cdd11616ed3f92841ba5bd2",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
@@ -454,11 +407,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/pcre/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/composer/pcre/tree/3.0.0"
-=======
                 "source": "https://github.com/composer/pcre/tree/3.1.0"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -474,11 +423,7 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-02-25T20:21:48+00:00"
-=======
             "time": "2022-11-17T09:50:14+00:00"
->>>>>>> feature/medmus-d9
         },
         {
             "name": "composer/semver",
@@ -1061,18 +1006,6 @@
         },
         {
             "name": "laminas/laminas-code",
-<<<<<<< HEAD
-            "version": "4.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-code.git",
-                "reference": "0337d9265bc2e6376babad8c511500821620cb30"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/0337d9265bc2e6376babad8c511500821620cb30",
-                "reference": "0337d9265bc2e6376babad8c511500821620cb30",
-=======
             "version": "4.7.1",
             "source": {
                 "type": "git",
@@ -1083,7 +1016,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laminas/laminas-code/zipball/91aabc066d5620428120800c0eafc0411e441a62",
                 "reference": "91aabc066d5620428120800c0eafc0411e441a62",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
@@ -1136,11 +1068,7 @@
                     "type": "community_bridge"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-09-13T10:33:30+00:00"
-=======
             "time": "2022-11-21T01:32:31+00:00"
->>>>>>> feature/medmus-d9
         },
         {
             "name": "laminas/laminas-coding-standard",
@@ -1200,22 +1128,6 @@
         },
         {
             "name": "laminas/laminas-container-config-test",
-<<<<<<< HEAD
-            "version": "0.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-container-config-test.git",
-                "reference": "799bbd667c25bf5b88ff879be2ac0e33a5a15185"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-container-config-test/zipball/799bbd667c25bf5b88ff879be2ac0e33a5a15185",
-                "reference": "799bbd667c25bf5b88ff879be2ac0e33a5a15185",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.4 || ~8.0.0 || ~8.1.0",
-=======
             "version": "0.8.0",
             "source": {
                 "type": "git",
@@ -1230,7 +1142,6 @@
             },
             "require": {
                 "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
->>>>>>> feature/medmus-d9
                 "psr/container": "^1.0 || ^2.0"
             },
             "conflict": {
@@ -1238,15 +1149,9 @@
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "^2.3",
-<<<<<<< HEAD
-                "phpunit/phpunit": "^9.5.21",
-                "psalm/plugin-phpunit": "^0.17.0",
-                "vimeo/psalm": "^4.24.0"
-=======
                 "phpunit/phpunit": "^9.5.26",
                 "psalm/plugin-phpunit": "^0.18.0",
                 "vimeo/psalm": "^4.29.0"
->>>>>>> feature/medmus-d9
             },
             "type": "library",
             "autoload": {
@@ -1286,11 +1191,7 @@
                     "type": "community_bridge"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-07-24T20:30:12+00:00"
-=======
             "time": "2022-11-16T00:42:21+00:00"
->>>>>>> feature/medmus-d9
         },
         {
             "name": "laminas/laminas-dependency-plugin",
@@ -1508,18 +1409,6 @@
         },
         {
             "name": "nikic/php-parser",
-<<<<<<< HEAD
-            "version": "v4.15.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "0ef6c55a3f47f89d7a374e6f835197a0b5fcf900"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/0ef6c55a3f47f89d7a374e6f835197a0b5fcf900",
-                "reference": "0ef6c55a3f47f89d7a374e6f835197a0b5fcf900",
-=======
             "version": "v4.15.2",
             "source": {
                 "type": "git",
@@ -1530,7 +1419,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/f59bbe44bf7d96f24f3e2b4ddc21cd52c1d2adbc",
                 "reference": "f59bbe44bf7d96f24f3e2b4ddc21cd52c1d2adbc",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
@@ -1571,24 +1459,6 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.15.1"
-            },
-            "time": "2022-09-04T07:30:47+00:00"
-        },
-        {
-            "name": "ocramius/proxy-manager",
-            "version": "2.13.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Ocramius/ProxyManager.git",
-                "reference": "e32bc1986fb6fa318ce35e573c654e3ddfb4848d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/ProxyManager/zipball/e32bc1986fb6fa318ce35e573c654e3ddfb4848d",
-                "reference": "e32bc1986fb6fa318ce35e573c654e3ddfb4848d",
-=======
                 "source": "https://github.com/nikic/PHP-Parser/tree/v4.15.2"
             },
             "time": "2022-11-12T15:38:23+00:00"
@@ -1605,34 +1475,10 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/Ocramius/ProxyManager/zipball/3990d60ef79001badbab4927a6a811682274a0d1",
                 "reference": "3990d60ef79001badbab4927a6a811682274a0d1",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2.1.0",
-<<<<<<< HEAD
-                "laminas/laminas-code": "^4.3.0",
-                "php": "~7.4.1 || ~8.0.0",
-                "webimpress/safe-writer": "^2.2.0"
-            },
-            "conflict": {
-                "doctrine/annotations": "<1.6.1",
-                "laminas/laminas-stdlib": "<3.2.1",
-                "thecodingmachine/safe": "<1.3.3",
-                "zendframework/zend-stdlib": "<3.2.1"
-            },
-            "require-dev": {
-                "codelicia/xulieta": "^0.1.6",
-                "doctrine/coding-standard": "^8.2.1",
-                "ext-phar": "*",
-                "infection/infection": "^0.21.5",
-                "nikic/php-parser": "^4.10.5",
-                "phpbench/phpbench": "^0.17.1 || 1.0.0-alpha2",
-                "phpunit/phpunit": "^9.5.4",
-                "slevomat/coding-standard": "^6.3.10",
-                "squizlabs/php_codesniffer": "^3.6.0",
-                "vimeo/psalm": "^4.4.1"
-=======
                 "laminas/laminas-code": "^4.4.2",
                 "php": "~8.0.0",
                 "webimpress/safe-writer": "^2.2.0"
@@ -1649,7 +1495,6 @@
                 "roave/infection-static-analysis-plugin": "^1.8",
                 "squizlabs/php_codesniffer": "^3.6.0",
                 "vimeo/psalm": "^4.8.1"
->>>>>>> feature/medmus-d9
             },
             "suggest": {
                 "laminas/laminas-json": "To have the JsonRpc adapter (Remote Object feature)",
@@ -1658,14 +1503,6 @@
                 "ocramius/generated-hydrator": "To have very fast object to array to object conversion for ghost objects"
             },
             "type": "library",
-<<<<<<< HEAD
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0.x-dev"
-                }
-            },
-=======
->>>>>>> feature/medmus-d9
             "autoload": {
                 "psr-4": {
                     "ProxyManager\\": "src/ProxyManager"
@@ -1679,11 +1516,7 @@
                 {
                     "name": "Marco Pivetta",
                     "email": "ocramius@gmail.com",
-<<<<<<< HEAD
-                    "homepage": "http://ocramius.github.io/"
-=======
                     "homepage": "https://ocramius.github.io/"
->>>>>>> feature/medmus-d9
                 }
             ],
             "description": "A library providing utilities to generate, instantiate and generally operate with Object Proxies",
@@ -1697,11 +1530,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Ocramius/ProxyManager/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/Ocramius/ProxyManager/tree/2.13.1"
-=======
                 "source": "https://github.com/Ocramius/ProxyManager/tree/2.14.1"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -1713,11 +1542,7 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-03-05T18:42:03+00:00"
-=======
             "time": "2022-03-05T18:43:14+00:00"
->>>>>>> feature/medmus-d9
         },
         {
             "name": "openlss/lib-array2xml",
@@ -1987,18 +1812,6 @@
         },
         {
             "name": "phpbench/phpbench",
-<<<<<<< HEAD
-            "version": "1.2.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "c30fac992e72b505a1f131790583647f4d3255c3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/c30fac992e72b505a1f131790583647f4d3255c3",
-                "reference": "c30fac992e72b505a1f131790583647f4d3255c3",
-=======
             "version": "1.2.7",
             "source": {
                 "type": "git",
@@ -2009,7 +1822,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpbench/phpbench/zipball/dce145304abbb16c8d9af69c19d96f47e9d0e670",
                 "reference": "dce145304abbb16c8d9af69c19d96f47e9d0e670",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
@@ -2030,26 +1842,16 @@
                 "symfony/finder": "^4.2 || ^5.0 || ^6.0",
                 "symfony/options-resolver": "^4.2 || ^5.0 || ^6.0",
                 "symfony/process": "^4.2 || ^5.0 || ^6.0",
-<<<<<<< HEAD
-                "webmozart/path-util": "^2.3"
-=======
                 "webmozart/glob": "^4.6"
->>>>>>> feature/medmus-d9
             },
             "require-dev": {
                 "dantleech/invoke": "^2.0",
                 "friendsofphp/php-cs-fixer": "^3.0",
-<<<<<<< HEAD
-                "jangregor/phpstan-prophecy": "^0.8.1",
-                "phpspec/prophecy": "^1.12",
-                "phpstan/phpstan": "^0.12.7",
-=======
                 "jangregor/phpstan-prophecy": "^1.0",
                 "phpspec/prophecy": "^1.12",
                 "phpstan/extension-installer": "^1.1",
                 "phpstan/phpstan": "^1.0",
                 "phpstan/phpstan-phpunit": "^1.0",
->>>>>>> feature/medmus-d9
                 "phpunit/phpunit": "^8.5.8 || ^9.0",
                 "symfony/error-handler": "^5.2 || ^6.0",
                 "symfony/var-dumper": "^4.0 || ^5.0 || ^6.0"
@@ -2088,11 +1890,7 @@
             "description": "PHP Benchmarking Framework",
             "support": {
                 "issues": "https://github.com/phpbench/phpbench/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/phpbench/phpbench/tree/1.2.6"
-=======
                 "source": "https://github.com/phpbench/phpbench/tree/1.2.7"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -2100,11 +1898,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-07-19T19:52:39+00:00"
-=======
             "time": "2022-10-15T09:57:51+00:00"
->>>>>>> feature/medmus-d9
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -2218,22 +2012,6 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-<<<<<<< HEAD
-            "version": "1.6.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "77a32518733312af16a44300404e945338981de3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/77a32518733312af16a44300404e945338981de3",
-                "reference": "77a32518733312af16a44300404e945338981de3",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2 || ^8.0",
-=======
             "version": "1.6.2",
             "source": {
                 "type": "git",
@@ -2248,21 +2026,16 @@
             },
             "require": {
                 "php": "^7.4 || ^8.0",
->>>>>>> feature/medmus-d9
                 "phpdocumentor/reflection-common": "^2.0"
             },
             "require-dev": {
                 "ext-tokenizer": "*",
-<<<<<<< HEAD
-                "psalm/phar": "^4.8"
-=======
                 "phpstan/extension-installer": "^1.1",
                 "phpstan/phpstan": "^1.8",
                 "phpstan/phpstan-phpunit": "^1.1",
                 "phpunit/phpunit": "^9.5",
                 "rector/rector": "^0.13.9",
                 "vimeo/psalm": "^4.25"
->>>>>>> feature/medmus-d9
             },
             "type": "library",
             "extra": {
@@ -2288,134 +2061,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.6.1"
-            },
-            "time": "2022-03-15T21:29:03+00:00"
-        },
-        {
-            "name": "phpspec/prophecy",
-            "version": "v1.15.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "bbcd7380b0ebf3961ee21409db7b38bc31d69a13"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/bbcd7380b0ebf3961ee21409db7b38bc31d69a13",
-                "reference": "bbcd7380b0ebf3961ee21409db7b38bc31d69a13",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/instantiator": "^1.2",
-                "php": "^7.2 || ~8.0, <8.2",
-                "phpdocumentor/reflection-docblock": "^5.2",
-                "sebastian/comparator": "^3.0 || ^4.0",
-                "sebastian/recursion-context": "^3.0 || ^4.0"
-            },
-            "require-dev": {
-                "phpspec/phpspec": "^6.0 || ^7.0",
-                "phpunit/phpunit": "^8.0 || ^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Prophecy\\": "src/Prophecy"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Konstantin Kudryashov",
-                    "email": "ever.zet@gmail.com",
-                    "homepage": "http://everzet.com"
-                },
-                {
-                    "name": "Marcello Duarte",
-                    "email": "marcello.duarte@gmail.com"
-                }
-            ],
-            "description": "Highly opinionated mocking framework for PHP 5.3+",
-            "homepage": "https://github.com/phpspec/prophecy",
-            "keywords": [
-                "Double",
-                "Dummy",
-                "fake",
-                "mock",
-                "spy",
-                "stub"
-            ],
-            "support": {
-                "issues": "https://github.com/phpspec/prophecy/issues",
-                "source": "https://github.com/phpspec/prophecy/tree/v1.15.0"
-            },
-            "time": "2021-12-08T12:19:24+00:00"
-        },
-        {
-            "name": "phpspec/prophecy-phpunit",
-            "version": "v2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpspec/prophecy-phpunit.git",
-                "reference": "2d7a9df55f257d2cba9b1d0c0963a54960657177"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy-phpunit/zipball/2d7a9df55f257d2cba9b1d0c0963a54960657177",
-                "reference": "2d7a9df55f257d2cba9b1d0c0963a54960657177",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.3 || ^8",
-                "phpspec/prophecy": "^1.3",
-                "phpunit/phpunit": "^9.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Prophecy\\PhpUnit\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christophe Coevoet",
-                    "email": "stof@notk.org"
-                }
-            ],
-            "description": "Integrating the Prophecy mocking library in PHPUnit test cases",
-            "homepage": "http://phpspec.net",
-            "keywords": [
-                "phpunit",
-                "prophecy"
-            ],
-            "support": {
-                "issues": "https://github.com/phpspec/prophecy-phpunit/issues",
-                "source": "https://github.com/phpspec/prophecy-phpunit/tree/v2.0.1"
-            },
-            "time": "2020-07-09T08:33:42+00:00"
-=======
                 "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.6.2"
             },
             "time": "2022-10-14T12:47:21+00:00"
->>>>>>> feature/medmus-d9
         },
         {
             "name": "phpstan/phpdoc-parser",
@@ -2463,18 +2111,6 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-<<<<<<< HEAD
-            "version": "9.2.17",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "aa94dc41e8661fe90c7316849907cba3007b10d8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/aa94dc41e8661fe90c7316849907cba3007b10d8",
-                "reference": "aa94dc41e8661fe90c7316849907cba3007b10d8",
-=======
             "version": "9.2.19",
             "source": {
                 "type": "git",
@@ -2485,7 +2121,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c77b56b63e3d2031bd8997fcec43c1925ae46559",
                 "reference": "c77b56b63e3d2031bd8997fcec43c1925ae46559",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
@@ -2541,11 +2176,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.17"
-=======
                 "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.19"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -2553,11 +2184,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-08-30T12:24:04+00:00"
-=======
             "time": "2022-11-18T07:47:47+00:00"
->>>>>>> feature/medmus-d9
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2802,18 +2429,6 @@
         },
         {
             "name": "phpunit/phpunit",
-<<<<<<< HEAD
-            "version": "9.5.24",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "d0aa6097bef9fd42458a9b3c49da32c6ce6129c5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d0aa6097bef9fd42458a9b3c49da32c6ce6129c5",
-                "reference": "d0aa6097bef9fd42458a9b3c49da32c6ce6129c5",
-=======
             "version": "9.5.26",
             "source": {
                 "type": "git",
@@ -2824,7 +2439,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/851867efcbb6a1b992ec515c71cdcf20d895e9d2",
                 "reference": "851867efcbb6a1b992ec515c71cdcf20d895e9d2",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
@@ -2846,16 +2460,6 @@
                 "phpunit/php-timer": "^5.0.2",
                 "sebastian/cli-parser": "^1.0.1",
                 "sebastian/code-unit": "^1.0.6",
-<<<<<<< HEAD
-                "sebastian/comparator": "^4.0.5",
-                "sebastian/diff": "^4.0.3",
-                "sebastian/environment": "^5.1.3",
-                "sebastian/exporter": "^4.0.3",
-                "sebastian/global-state": "^5.0.1",
-                "sebastian/object-enumerator": "^4.0.3",
-                "sebastian/resource-operations": "^3.0.3",
-                "sebastian/type": "^3.1",
-=======
                 "sebastian/comparator": "^4.0.8",
                 "sebastian/diff": "^4.0.3",
                 "sebastian/environment": "^5.1.3",
@@ -2864,7 +2468,6 @@
                 "sebastian/object-enumerator": "^4.0.3",
                 "sebastian/resource-operations": "^3.0.3",
                 "sebastian/type": "^3.2",
->>>>>>> feature/medmus-d9
                 "sebastian/version": "^3.0.2"
             },
             "suggest": {
@@ -2908,11 +2511,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.24"
-=======
                 "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.26"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -2922,24 +2521,6 @@
                 {
                     "url": "https://github.com/sebastianbergmann",
                     "type": "github"
-<<<<<<< HEAD
-                }
-            ],
-            "time": "2022-08-30T07:42:16+00:00"
-        },
-        {
-            "name": "psalm/plugin-phpunit",
-            "version": "0.17.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/psalm/psalm-plugin-phpunit.git",
-                "reference": "45951541beef07e93e3ad197daf01da88e85c31d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/45951541beef07e93e3ad197daf01da88e85c31d",
-                "reference": "45951541beef07e93e3ad197daf01da88e85c31d",
-=======
                 },
                 {
                     "url": "https://tidelift.com/funding/github/packagist/phpunit/phpunit",
@@ -2960,7 +2541,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/057c1cdf7546c1e427f6fd83b635d0cc18c252bf",
                 "reference": "057c1cdf7546c1e427f6fd83b635d0cc18c252bf",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
@@ -2968,11 +2548,7 @@
                 "composer/semver": "^1.4 || ^2.0 || ^3.0",
                 "ext-simplexml": "*",
                 "php": "^7.1 || ^8.0",
-<<<<<<< HEAD
-                "vimeo/psalm": "dev-master || dev-4.x || ^4.5"
-=======
                 "vimeo/psalm": "dev-master || dev-4.x || ^4.5 || ^5@beta"
->>>>>>> feature/medmus-d9
             },
             "conflict": {
                 "phpunit/phpunit": "<7.5"
@@ -3009,28 +2585,6 @@
             "description": "Psalm plugin for PHPUnit",
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-phpunit/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/0.17.0"
-            },
-            "time": "2022-06-14T17:05:57+00:00"
-        },
-        {
-            "name": "psr/cache",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/cache.git",
-                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/cache/zipball/d11b50ad223250cf17b86e38383413f5a6764bf8",
-                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-=======
                 "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/0.18.3"
             },
             "time": "2022-11-03T18:17:28+00:00"
@@ -3051,7 +2605,6 @@
             },
             "require": {
                 "php": ">=8.0.0"
->>>>>>> feature/medmus-d9
             },
             "type": "library",
             "extra": {
@@ -3071,11 +2624,7 @@
             "authors": [
                 {
                     "name": "PHP-FIG",
-<<<<<<< HEAD
-                    "homepage": "http://www.php-fig.org/"
-=======
                     "homepage": "https://www.php-fig.org/"
->>>>>>> feature/medmus-d9
                 }
             ],
             "description": "Common interface for caching libraries",
@@ -3085,28 +2634,6 @@
                 "psr-6"
             ],
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/php-fig/cache/tree/master"
-            },
-            "time": "2016-08-06T20:24:11+00:00"
-        },
-        {
-            "name": "psr/log",
-            "version": "1.1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/log.git",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/d49695b909c3b7628b6289db5479a1c204601f11",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-=======
                 "source": "https://github.com/php-fig/cache/tree/3.0.0"
             },
             "time": "2021-02-03T23:26:27+00:00"
@@ -3127,25 +2654,16 @@
             },
             "require": {
                 "php": ">=8.0.0"
->>>>>>> feature/medmus-d9
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "1.1.x-dev"
-=======
                     "dev-master": "3.x-dev"
->>>>>>> feature/medmus-d9
                 }
             },
             "autoload": {
                 "psr-4": {
-<<<<<<< HEAD
-                    "Psr\\Log\\": "Psr/Log/"
-=======
                     "Psr\\Log\\": "src"
->>>>>>> feature/medmus-d9
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3166,15 +2684,9 @@
                 "psr-3"
             ],
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/php-fig/log/tree/1.1.4"
-            },
-            "time": "2021-05-03T11:20:27+00:00"
-=======
                 "source": "https://github.com/php-fig/log/tree/3.0.0"
             },
             "time": "2021-07-14T16:46:02+00:00"
->>>>>>> feature/medmus-d9
         },
         {
             "name": "sebastian/cli-parser",
@@ -4323,48 +3835,6 @@
         },
         {
             "name": "symfony/console",
-<<<<<<< HEAD
-            "version": "v5.4.12",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/console.git",
-                "reference": "c072aa8f724c3af64e2c7a96b796a4863d24dba1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/c072aa8f724c3af64e2c7a96b796a4863d24dba1",
-                "reference": "c072aa8f724c3af64e2c7a96b796a4863d24dba1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1|^3",
-                "symfony/polyfill-mbstring": "~1.0",
-                "symfony/polyfill-php73": "^1.9",
-                "symfony/polyfill-php80": "^1.16",
-                "symfony/service-contracts": "^1.1|^2|^3",
-                "symfony/string": "^5.1|^6.0"
-            },
-            "conflict": {
-                "psr/log": ">=3",
-                "symfony/dependency-injection": "<4.4",
-                "symfony/dotenv": "<5.1",
-                "symfony/event-dispatcher": "<4.4",
-                "symfony/lock": "<4.4",
-                "symfony/process": "<4.4"
-            },
-            "provide": {
-                "psr/log-implementation": "1.0|2.0"
-            },
-            "require-dev": {
-                "psr/log": "^1|^2",
-                "symfony/config": "^4.4|^5.0|^6.0",
-                "symfony/dependency-injection": "^4.4|^5.0|^6.0",
-                "symfony/event-dispatcher": "^4.4|^5.0|^6.0",
-                "symfony/lock": "^4.4|^5.0|^6.0",
-                "symfony/process": "^4.4|^5.0|^6.0",
-                "symfony/var-dumper": "^4.4|^5.0|^6.0"
-=======
             "version": "v6.0.16",
             "source": {
                 "type": "git",
@@ -4401,7 +3871,6 @@
                 "symfony/lock": "^5.4|^6.0",
                 "symfony/process": "^5.4|^6.0",
                 "symfony/var-dumper": "^5.4|^6.0"
->>>>>>> feature/medmus-d9
             },
             "suggest": {
                 "psr/log": "For using the console logger",
@@ -4441,11 +3910,7 @@
                 "terminal"
             ],
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/symfony/console/tree/v5.4.12"
-=======
                 "source": "https://github.com/symfony/console/tree/v6.0.16"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -4461,26 +3926,6 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-08-17T13:18:05+00:00"
-        },
-        {
-            "name": "symfony/deprecation-contracts",
-            "version": "v2.5.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "e8b495ea28c1d97b5e0c121748d6f9b53d075c66"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/e8b495ea28c1d97b5e0c121748d6f9b53d075c66",
-                "reference": "e8b495ea28c1d97b5e0c121748d6f9b53d075c66",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1"
-=======
             "time": "2022-11-25T18:58:46+00:00"
         },
         {
@@ -4499,16 +3944,11 @@
             },
             "require": {
                 "php": ">=8.0.2"
->>>>>>> feature/medmus-d9
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-main": "2.5-dev"
-=======
                     "dev-main": "3.0-dev"
->>>>>>> feature/medmus-d9
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -4537,11 +3977,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v2.5.2"
-=======
                 "source": "https://github.com/symfony/deprecation-contracts/tree/v3.0.2"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -4557,29 +3993,6 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-01-02T09:53:40+00:00"
-        },
-        {
-            "name": "symfony/filesystem",
-            "version": "v5.4.12",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/filesystem.git",
-                "reference": "2d67c1f9a1937406a9be3171b4b22250c0a11447"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/2d67c1f9a1937406a9be3171b4b22250c0a11447",
-                "reference": "2d67c1f9a1937406a9be3171b4b22250c0a11447",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/polyfill-ctype": "~1.8",
-                "symfony/polyfill-mbstring": "~1.8",
-                "symfony/polyfill-php80": "^1.16"
-=======
             "time": "2022-01-02T09:55:41+00:00"
         },
         {
@@ -4600,7 +4013,6 @@
                 "php": ">=8.0.2",
                 "symfony/polyfill-ctype": "~1.8",
                 "symfony/polyfill-mbstring": "~1.8"
->>>>>>> feature/medmus-d9
             },
             "type": "library",
             "autoload": {
@@ -4628,11 +4040,7 @@
             "description": "Provides basic utilities for the filesystem",
             "homepage": "https://symfony.com",
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/symfony/filesystem/tree/v5.4.12"
-=======
                 "source": "https://github.com/symfony/filesystem/tree/v6.0.13"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -4648,28 +4056,6 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-08-02T13:48:16+00:00"
-        },
-        {
-            "name": "symfony/finder",
-            "version": "v5.4.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/finder.git",
-                "reference": "7872a66f57caffa2916a584db1aa7f12adc76f8c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/7872a66f57caffa2916a584db1aa7f12adc76f8c",
-                "reference": "7872a66f57caffa2916a584db1aa7f12adc76f8c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1|^3",
-                "symfony/polyfill-php80": "^1.16"
-=======
             "time": "2022-09-21T20:25:27+00:00"
         },
         {
@@ -4688,7 +4074,6 @@
             },
             "require": {
                 "php": ">=8.0.2"
->>>>>>> feature/medmus-d9
             },
             "type": "library",
             "autoload": {
@@ -4716,11 +4101,7 @@
             "description": "Finds files and directories via an intuitive fluent interface",
             "homepage": "https://symfony.com",
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/symfony/finder/tree/v5.4.11"
-=======
                 "source": "https://github.com/symfony/finder/tree/v6.0.11"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -4736,29 +4117,6 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-07-29T07:37:50+00:00"
-        },
-        {
-            "name": "symfony/options-resolver",
-            "version": "v5.4.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "54f14e36aa73cb8f7261d7686691fd4d75ea2690"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/54f14e36aa73cb8f7261d7686691fd4d75ea2690",
-                "reference": "54f14e36aa73cb8f7261d7686691fd4d75ea2690",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1|^3",
-                "symfony/polyfill-php73": "~1.0",
-                "symfony/polyfill-php80": "^1.16"
-=======
             "time": "2022-07-29T07:39:48+00:00"
         },
         {
@@ -4778,7 +4136,6 @@
             "require": {
                 "php": ">=8.0.2",
                 "symfony/deprecation-contracts": "^2.1|^3"
->>>>>>> feature/medmus-d9
             },
             "type": "library",
             "autoload": {
@@ -4811,11 +4168,7 @@
                 "options"
             ],
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/symfony/options-resolver/tree/v5.4.11"
-=======
                 "source": "https://github.com/symfony/options-resolver/tree/v6.0.3"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -4831,22 +4184,6 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-07-20T13:00:38+00:00"
-        },
-        {
-            "name": "symfony/polyfill-ctype",
-            "version": "v1.26.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "6fd1b9a79f6e3cf65f9e679b23af304cd9e010d4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/6fd1b9a79f6e3cf65f9e679b23af304cd9e010d4",
-                "reference": "6fd1b9a79f6e3cf65f9e679b23af304cd9e010d4",
-=======
             "time": "2022-01-02T09:55:41+00:00"
         },
         {
@@ -4861,7 +4198,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/5bbc823adecdae860bb64756d639ecfec17b050a",
                 "reference": "5bbc823adecdae860bb64756d639ecfec17b050a",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
@@ -4876,11 +4212,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-main": "1.26-dev"
-=======
                     "dev-main": "1.27-dev"
->>>>>>> feature/medmus-d9
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -4918,11 +4250,7 @@
                 "portable"
             ],
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.26.0"
-=======
                 "source": "https://github.com/symfony/polyfill-ctype/tree/v1.27.0"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -4938,22 +4266,6 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-05-24T11:49:31+00:00"
-        },
-        {
-            "name": "symfony/polyfill-intl-grapheme",
-            "version": "v1.26.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-intl-grapheme.git",
-                "reference": "433d05519ce6990bf3530fba6957499d327395c2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/433d05519ce6990bf3530fba6957499d327395c2",
-                "reference": "433d05519ce6990bf3530fba6957499d327395c2",
-=======
             "time": "2022-11-03T14:55:06+00:00"
         },
         {
@@ -4968,7 +4280,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/511a08c03c1960e08a883f4cffcacd219b758354",
                 "reference": "511a08c03c1960e08a883f4cffcacd219b758354",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
@@ -4980,11 +4291,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-main": "1.26-dev"
-=======
                     "dev-main": "1.27-dev"
->>>>>>> feature/medmus-d9
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -5024,11 +4331,7 @@
                 "shim"
             ],
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.26.0"
-=======
                 "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.27.0"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -5044,22 +4347,6 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-05-24T11:49:31+00:00"
-        },
-        {
-            "name": "symfony/polyfill-intl-normalizer",
-            "version": "v1.26.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
-                "reference": "219aa369ceff116e673852dce47c3a41794c14bd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/219aa369ceff116e673852dce47c3a41794c14bd",
-                "reference": "219aa369ceff116e673852dce47c3a41794c14bd",
-=======
             "time": "2022-11-03T14:55:06+00:00"
         },
         {
@@ -5074,7 +4361,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/19bd1e4fcd5b91116f14d8533c57831ed00571b6",
                 "reference": "19bd1e4fcd5b91116f14d8533c57831ed00571b6",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
@@ -5086,11 +4372,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-main": "1.26-dev"
-=======
                     "dev-main": "1.27-dev"
->>>>>>> feature/medmus-d9
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -5133,11 +4415,7 @@
                 "shim"
             ],
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.26.0"
-=======
                 "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.27.0"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -5153,22 +4431,6 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-05-24T11:49:31+00:00"
-        },
-        {
-            "name": "symfony/polyfill-mbstring",
-            "version": "v1.26.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "9344f9cb97f3b19424af1a21a3b0e75b0a7d8d7e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/9344f9cb97f3b19424af1a21a3b0e75b0a7d8d7e",
-                "reference": "9344f9cb97f3b19424af1a21a3b0e75b0a7d8d7e",
-=======
             "time": "2022-11-03T14:55:06+00:00"
         },
         {
@@ -5183,7 +4445,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/8ad114f6b39e2c98a8b0e3bd907732c207c2b534",
                 "reference": "8ad114f6b39e2c98a8b0e3bd907732c207c2b534",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
@@ -5198,11 +4459,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-main": "1.26-dev"
-=======
                     "dev-main": "1.27-dev"
->>>>>>> feature/medmus-d9
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -5241,11 +4498,7 @@
                 "shim"
             ],
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.26.0"
-=======
                 "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.27.0"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -5261,101 +4514,6 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-05-24T11:49:31+00:00"
-        },
-        {
-            "name": "symfony/polyfill-php73",
-            "version": "v1.26.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php73.git",
-                "reference": "e440d35fa0286f77fb45b79a03fedbeda9307e85"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/e440d35fa0286f77fb45b79a03fedbeda9307e85",
-                "reference": "e440d35fa0286f77fb45b79a03fedbeda9307e85",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "1.26-dev"
-                },
-                "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php73\\": ""
-                },
-                "classmap": [
-                    "Resources/stubs"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-php73/tree/v1.26.0"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-05-24T11:49:31+00:00"
-        },
-        {
-            "name": "symfony/polyfill-php80",
-            "version": "v1.26.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "cfa0ae98841b9e461207c13ab093d76b0fa7bace"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/cfa0ae98841b9e461207c13ab093d76b0fa7bace",
-                "reference": "cfa0ae98841b9e461207c13ab093d76b0fa7bace",
-=======
             "time": "2022-11-03T14:55:06+00:00"
         },
         {
@@ -5370,7 +4528,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/7a6ff3f1959bb01aefccb463a0f2cd3d3d2fd936",
                 "reference": "7a6ff3f1959bb01aefccb463a0f2cd3d3d2fd936",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
@@ -5379,11 +4536,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-main": "1.26-dev"
-=======
                     "dev-main": "1.27-dev"
->>>>>>> feature/medmus-d9
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -5428,11 +4581,7 @@
                 "shim"
             ],
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.26.0"
-=======
                 "source": "https://github.com/symfony/polyfill-php80/tree/v1.27.0"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -5448,27 +4597,6 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-05-10T07:21:04+00:00"
-        },
-        {
-            "name": "symfony/process",
-            "version": "v5.4.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/process.git",
-                "reference": "6e75fe6874cbc7e4773d049616ab450eff537bf1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/6e75fe6874cbc7e4773d049616ab450eff537bf1",
-                "reference": "6e75fe6874cbc7e4773d049616ab450eff537bf1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/polyfill-php80": "^1.16"
-=======
             "time": "2022-11-03T14:55:06+00:00"
         },
         {
@@ -5487,7 +4615,6 @@
             },
             "require": {
                 "php": ">=8.0.2"
->>>>>>> feature/medmus-d9
             },
             "type": "library",
             "autoload": {
@@ -5515,11 +4642,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/symfony/process/tree/v5.4.11"
-=======
                 "source": "https://github.com/symfony/process/tree/v6.0.11"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -5535,11 +4658,7 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-06-27T16:58:25+00:00"
-=======
             "time": "2022-06-27T17:10:44+00:00"
->>>>>>> feature/medmus-d9
         },
         {
             "name": "symfony/service-contracts",
@@ -5626,36 +4745,6 @@
         },
         {
             "name": "symfony/string",
-<<<<<<< HEAD
-            "version": "v5.4.12",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/string.git",
-                "reference": "2fc515e512d721bf31ea76bd02fe23ada4640058"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/2fc515e512d721bf31ea76bd02fe23ada4640058",
-                "reference": "2fc515e512d721bf31ea76bd02fe23ada4640058",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/polyfill-ctype": "~1.8",
-                "symfony/polyfill-intl-grapheme": "~1.0",
-                "symfony/polyfill-intl-normalizer": "~1.0",
-                "symfony/polyfill-mbstring": "~1.0",
-                "symfony/polyfill-php80": "~1.15"
-            },
-            "conflict": {
-                "symfony/translation-contracts": ">=3.0"
-            },
-            "require-dev": {
-                "symfony/error-handler": "^4.4|^5.0|^6.0",
-                "symfony/http-client": "^4.4|^5.0|^6.0",
-                "symfony/translation-contracts": "^1.1|^2",
-                "symfony/var-exporter": "^4.4|^5.0|^6.0"
-=======
             "version": "v6.0.15",
             "source": {
                 "type": "git",
@@ -5683,7 +4772,6 @@
                 "symfony/http-client": "^5.4|^6.0",
                 "symfony/translation-contracts": "^2.0|^3.0",
                 "symfony/var-exporter": "^5.4|^6.0"
->>>>>>> feature/medmus-d9
             },
             "type": "library",
             "autoload": {
@@ -5722,11 +4810,7 @@
                 "utf8"
             ],
             "support": {
-<<<<<<< HEAD
-                "source": "https://github.com/symfony/string/tree/v5.4.12"
-=======
                 "source": "https://github.com/symfony/string/tree/v6.0.15"
->>>>>>> feature/medmus-d9
             },
             "funding": [
                 {
@@ -5742,11 +4826,7 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2022-08-12T17:03:11+00:00"
-=======
             "time": "2022-10-10T09:34:08+00:00"
->>>>>>> feature/medmus-d9
         },
         {
             "name": "theseer/tokenizer",
@@ -5800,18 +4880,6 @@
         },
         {
             "name": "vimeo/psalm",
-<<<<<<< HEAD
-            "version": "4.27.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vimeo/psalm.git",
-                "reference": "faf106e717c37b8c81721845dba9de3d8deed8ff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/faf106e717c37b8c81721845dba9de3d8deed8ff",
-                "reference": "faf106e717c37b8c81721845dba9de3d8deed8ff",
-=======
             "version": "5.0.0",
             "source": {
                 "type": "git",
@@ -5822,21 +4890,14 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/vimeo/psalm/zipball/4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8",
                 "reference": "4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8",
->>>>>>> feature/medmus-d9
                 "shasum": ""
             },
             "require": {
                 "amphp/amp": "^2.4.2",
                 "amphp/byte-stream": "^1.5",
-<<<<<<< HEAD
-                "composer/package-versions-deprecated": "^1.8.0",
-                "composer/semver": "^1.4 || ^2.0 || ^3.0",
-                "composer/xdebug-handler": "^1.1 || ^2.0 || ^3.0",
-=======
                 "composer/package-versions-deprecated": "^1.10.0",
                 "composer/semver": "^1.4 || ^2.0 || ^3.0",
                 "composer/xdebug-handler": "^2.0 || ^3.0",
->>>>>>> feature/medmus-d9
                 "dnoegel/php-xdg-base-dir": "^0.1.1",
                 "ext-ctype": "*",
                 "ext-dom": "*",
@@ -5845,18 +4906,6 @@
                 "ext-mbstring": "*",
                 "ext-simplexml": "*",
                 "ext-tokenizer": "*",
-<<<<<<< HEAD
-                "felixfbecker/advanced-json-rpc": "^3.0.3",
-                "felixfbecker/language-server-protocol": "^1.5",
-                "netresearch/jsonmapper": "^1.0 || ^2.0 || ^3.0 || ^4.0",
-                "nikic/php-parser": "^4.13",
-                "openlss/lib-array2xml": "^1.0",
-                "php": "^7.1|^8",
-                "sebastian/diff": "^3.0 || ^4.0",
-                "symfony/console": "^3.4.17 || ^4.1.6 || ^5.0 || ^6.0",
-                "symfony/polyfill-php80": "^1.25",
-                "webmozart/path-util": "^2.3"
-=======
                 "felixfbecker/advanced-json-rpc": "^3.1",
                 "felixfbecker/language-server-protocol": "^1.5.2",
                 "netresearch/jsonmapper": "^1.0 || ^2.0 || ^3.0 || ^4.0",
@@ -5867,27 +4916,11 @@
                 "symfony/console": "^4.1.6 || ^5.0 || ^6.0",
                 "symfony/filesystem": "^5.4 || ^6.0",
                 "symfony/polyfill-php80": "^1.25"
->>>>>>> feature/medmus-d9
             },
             "provide": {
                 "psalm/psalm": "self.version"
             },
             "require-dev": {
-<<<<<<< HEAD
-                "bamarni/composer-bin-plugin": "^1.2",
-                "brianium/paratest": "^4.0||^6.0",
-                "ext-curl": "*",
-                "php-parallel-lint/php-parallel-lint": "^1.2",
-                "phpdocumentor/reflection-docblock": "^5",
-                "phpmyadmin/sql-parser": "5.1.0||dev-master",
-                "phpspec/prophecy": ">=1.9.0",
-                "phpunit/phpunit": "^9.0",
-                "psalm/plugin-phpunit": "^0.16",
-                "slevomat/coding-standard": "^7.0",
-                "squizlabs/php_codesniffer": "^3.5",
-                "symfony/process": "^4.3 || ^5.0 || ^6.0",
-                "weirdan/prophecy-shim": "^1.0 || ^2.0"
-=======
                 "bamarni/composer-bin-plugin": "^1.4",
                 "brianium/paratest": "^6.0",
                 "ext-curl": "*",
@@ -5901,7 +4934,6 @@
                 "slevomat/coding-standard": "^8.4",
                 "squizlabs/php_codesniffer": "^3.6",
                 "symfony/process": "^4.4 || ^5.0 || ^6.0"
->>>>>>> feature/medmus-d9
             },
             "suggest": {
                 "ext-curl": "In order to send data to shepherd",
@@ -5917,25 +4949,14 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "4.x-dev",
-=======
                     "dev-master": "5.x-dev",
                     "dev-4.x": "4.x-dev",
->>>>>>> feature/medmus-d9
                     "dev-3.x": "3.x-dev",
                     "dev-2.x": "2.x-dev",
                     "dev-1.x": "1.x-dev"
                 }
             },
             "autoload": {
-<<<<<<< HEAD
-                "files": [
-                    "src/functions.php",
-                    "src/spl_object_id.php"
-                ],
-=======
->>>>>>> feature/medmus-d9
                 "psr-4": {
                     "Psalm\\": "src/Psalm/"
                 }
@@ -5957,15 +4978,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vimeo/psalm/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/vimeo/psalm/tree/4.27.0"
-            },
-            "time": "2022-08-31T13:47:09+00:00"
-=======
                 "source": "https://github.com/vimeo/psalm/tree/5.0.0"
             },
             "time": "2022-11-30T06:06:01+00:00"
->>>>>>> feature/medmus-d9
         },
         {
             "name": "webimpress/coding-standard",
@@ -6140,28 +5155,6 @@
             "time": "2022-06-03T18:03:27+00:00"
         },
         {
-<<<<<<< HEAD
-            "name": "webmozart/path-util",
-            "version": "2.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webmozart/path-util.git",
-                "reference": "d939f7edc24c9a1bb9c0dee5cb05d8e859490725"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/path-util/zipball/d939f7edc24c9a1bb9c0dee5cb05d8e859490725",
-                "reference": "d939f7edc24c9a1bb9c0dee5cb05d8e859490725",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "webmozart/assert": "~1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.6",
-                "sebastian/version": "^1.0.1"
-=======
             "name": "webmozart/glob",
             "version": "4.6.0",
             "source": {
@@ -6181,25 +5174,16 @@
             "require-dev": {
                 "phpunit/phpunit": "^9.5",
                 "symfony/filesystem": "^5.3"
->>>>>>> feature/medmus-d9
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "2.3-dev"
-=======
                     "dev-master": "4.1-dev"
->>>>>>> feature/medmus-d9
                 }
             },
             "autoload": {
                 "psr-4": {
-<<<<<<< HEAD
-                    "Webmozart\\PathUtil\\": "src/"
-=======
                     "Webmozart\\Glob\\": "src/"
->>>>>>> feature/medmus-d9
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -6212,22 +5196,12 @@
                     "email": "bschussek@gmail.com"
                 }
             ],
-<<<<<<< HEAD
-            "description": "A robust cross-platform utility for normalizing, comparing and modifying file paths.",
-            "support": {
-                "issues": "https://github.com/webmozart/path-util/issues",
-                "source": "https://github.com/webmozart/path-util/tree/2.3.0"
-            },
-            "abandoned": "symfony/filesystem",
-            "time": "2015-12-17T08:42:14+00:00"
-=======
             "description": "A PHP implementation of Ant's glob.",
             "support": {
                 "issues": "https://github.com/webmozarts/glob/issues",
                 "source": "https://github.com/webmozarts/glob/tree/4.6.0"
             },
             "time": "2022-05-24T19:45:58+00:00"
->>>>>>> feature/medmus-d9
         }
     ],
     "aliases": [],
@@ -6238,19 +5212,11 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-<<<<<<< HEAD
-        "php": "~7.4.0 || ~8.0.0 || ~8.1.0"
-    },
-    "platform-dev": [],
-    "platform-overrides": {
-        "php": "7.4.99"
-=======
         "php": "~8.0.0 || ~8.1.0 || ~8.2.0"
     },
     "platform-dev": [],
     "platform-overrides": {
         "php": "8.0.99"
->>>>>>> feature/medmus-d9
     },
     "plugin-api-version": "2.3.0"
 }

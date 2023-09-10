@@ -57,10 +57,10 @@ services:
         source: ../composer.json
         target: /opt/drupal/composer.json
         read_only: false
-      - type: bind
-        source: ../composer.lock
-        target: /opt/drupal/composer.lock
-        read_only: false
+     # - type: bind
+     #   source: ../composer.lock
+     #   target: /opt/drupal/composer.lock
+     #   read_only: false
     #entrypoint: /opt/drupal/scripts/shell/on-build.sh
     restart: always
 

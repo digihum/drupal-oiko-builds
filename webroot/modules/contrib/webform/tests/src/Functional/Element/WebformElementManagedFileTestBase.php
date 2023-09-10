@@ -20,7 +20,7 @@ abstract class WebformElementManagedFileTestBase extends WebformElementBrowserTe
   public static $modules = ['file', 'webform'];
 
   /**
-   * File usage manager.
+   * The file usage service.
    *
    * @var \Drupal\file\FileUsage\FileUsageInterface
    */
@@ -36,7 +36,7 @@ abstract class WebformElementManagedFileTestBase extends WebformElementBrowserTe
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     $this->fileUsage = $this->container->get('file.usage');

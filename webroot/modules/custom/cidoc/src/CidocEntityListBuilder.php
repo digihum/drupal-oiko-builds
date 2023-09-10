@@ -2,6 +2,7 @@
 
 namespace Drupal\cidoc;
 
+use Drupal\Core\Link;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
 use Drupal\Core\Routing\LinkGeneratorTrait;
@@ -13,7 +14,6 @@ use Drupal\Core\Url;
  * @ingroup cidoc
  */
 class CidocEntityListBuilder extends EntityListBuilder {
-  use LinkGeneratorTrait;
 
   /**
    * {@inheritdoc}
@@ -36,14 +36,13 @@ class CidocEntityListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\cidoc\Entity\CidocEntity */
-    $row['name'] = $this->l(
-      $entity->label(),
-      new Url(
-        'entity.cidoc_entity.canonical', array(
-          'cidoc_entity' => $entity->id(),
-        )
+    // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
+    // Please manually remove the `use LinkGeneratorTrait;` statement from this class.
+    $row['name'] = Link::fromTextAndUrl($entity->label(), new Url(
+      'entity.cidoc_entity.canonical', array(
+        'cidoc_entity' => $entity->id(),
       )
-    );
+    ));
     $row['internal_name'] = $entity->getName(FALSE);
     $row['bundle'] = $entity->bundleLabel();
     return $row + parent::buildRow($entity);

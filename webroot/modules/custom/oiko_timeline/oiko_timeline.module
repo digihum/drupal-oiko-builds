@@ -28,8 +28,7 @@ function oiko_timeline_preprocess_comparative_timeline(&$variables, $hook) {
 
   // Build a list of links for the timline if it's interactive.
   if (!empty($variables['interactive'])) {
-    $cidoc_entity_query = \Drupal::service('entity.query')
-      ->get('cidoc_entity')
+    $cidoc_entity_query = \Drupal::entityQuery('cidoc_entity')
       ->condition('timeline_preselect_option', TRUE)
       ->condition('status', TRUE)
       ->sort('name');

@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Render\Element;
@@ -101,6 +102,6 @@ function template_preprocess_oiko_citation_field_multiple_value_form(&$variables
 /**
  * Implements hook_entity_base_field_info().
  */
-function oiko_citation_entity_base_field_info(\Drupal\Core\Entity\EntityTypeInterface $entity_type) {
+function oiko_citation_entity_base_field_info(EntityTypeInterface $entity_type) {
   return \Drupal::service('oiko_citation.hook_implementations')->entity_base_field_info($entity_type);
 }

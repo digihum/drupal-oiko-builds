@@ -46,7 +46,7 @@ class WebformMessageManagerTest extends UnitTestCase {
     $url->method('toString')
       ->willReturn('http://example.com/');
 
-    /**************************************************************************/
+    /* ********************************************************************** */
 
     // Mock current user.
     $current_user = $this->getMockBuilder(AccountInterface::class)
@@ -105,7 +105,7 @@ class WebformMessageManagerTest extends UnitTestCase {
     $token_manager->method('replace')
       ->will($this->returnCallback(function ($text) {
         return $text;
-    }));
+      }));
 
     // Mock Drupal's container.
     $container = new ContainerBuilder();
@@ -127,7 +127,7 @@ class WebformMessageManagerTest extends UnitTestCase {
     // Set message manager mock webform.
     $message_manager->setWebform($webform);
 
-    /**************************************************************************/
+    /* ********************************************************************** */
 
     // Check custom single message.
     $expected = [
@@ -138,7 +138,7 @@ class WebformMessageManagerTest extends UnitTestCase {
     $result = $message_manager->get(WebformMessageManagerInterface::DRAFT_PENDING_SINGLE);
     $this->assertEquals($expected, $result);
 
-    // Check [none] for multiple message returns an empty string..
+    // Check [none] for multiple message returns an empty string.
     $result = $message_manager->get(WebformMessageManagerInterface::DRAFT_PENDING_MULTIPLE);
     $this->assertFalse($result);
   }

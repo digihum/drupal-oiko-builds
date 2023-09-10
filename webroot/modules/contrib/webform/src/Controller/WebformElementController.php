@@ -56,7 +56,7 @@ class WebformElementController extends ControllerBase {
   public function autocomplete(Request $request, WebformInterface $webform, $key) {
     // Get autocomplete query.
     $q = $request->query->get('q') ?: '';
-    if ($q == '') {
+    if ($q === '') {
       return new JsonResponse([]);
     }
 
@@ -97,7 +97,7 @@ class WebformElementController extends ControllerBase {
     // Sort matches by label and enforce the limit.
     if ($matches) {
       uasort($matches, function (array $a, array $b) {
-        return $a['label'] > $b['label'];
+        return $a['label'] <=> $b['label'];
       });
       $matches = array_values($matches);
       $matches = array_slice($matches, 0, $element['#autocomplete_limit']);
@@ -129,7 +129,7 @@ class WebformElementController extends ControllerBase {
       ->fields('webform_submission_data', ['value'])
       ->condition('webform_id', $webform_id)
       ->condition('name', $key)
-      ->condition('value', ($operator == 'START_WITH') ? "$q%" : "%$q%", 'LIKE')
+      ->condition('value', ($operator === 'START_WITH') ? "$q%" : "%$q%", 'LIKE')
       ->orderBy('value');
     if ($limit) {
       $query->range(0, $limit);
@@ -203,7 +203,7 @@ class WebformElementController extends ControllerBase {
       // Cast TranslatableMarkup to string.
       $label = (string) $label;
 
-      if ($operator == 'STARTS_WITH' && stripos($label, $q) === 0) {
+      if ($operator === 'STARTS_WITH' && stripos($label, $q) === 0) {
         $matches[$label] = [
           'value' => $label,
           'label' => $label,

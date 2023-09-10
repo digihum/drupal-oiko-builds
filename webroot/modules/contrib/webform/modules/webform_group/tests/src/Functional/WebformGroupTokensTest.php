@@ -25,8 +25,6 @@ class WebformGroupTokensTest extends WebformGroupBrowserTestBase {
     $group->addContent($node, 'group_node:webform');
 
     // Users.
-    $outsider_user = $this->createUser([], 'outsider', FALSE, ['mail' => 'outsider@example.com']);
-
     $member_user = $this->createUser([], 'member', FALSE, ['mail' => 'member@example.com']);
     $group->addMember($member_user);
 
@@ -51,9 +49,9 @@ class WebformGroupTokensTest extends WebformGroupBrowserTestBase {
     $token_manager = \Drupal::service('webform.token_manager');
     $token_data['webform_group'] = $webform_submission;
 
-    /**************************************************************************/
+    /* ********************************************************************** */
     // [webform_group:role:GROUP_ROLE] tokens.
-    /**************************************************************************/
+    /* ********************************************************************** */
 
     // Enable group roles and owner.
     \Drupal::configFactory()->getEditable('webform_group.settings')
@@ -64,7 +62,7 @@ class WebformGroupTokensTest extends WebformGroupBrowserTestBase {
 
     // Check [webform_group:role:member] token.
     $result = $token_manager->replace('[webform_group:role:member]', $webform_submission, $token_data);
-    $this->assertEqual(implode(',', [
+    $this->assertEquals(implode(',', [
       $owner_user->getEmail(),
       $member_user->getEmail(),
       $custom_user->getEmail(),
@@ -72,17 +70,17 @@ class WebformGroupTokensTest extends WebformGroupBrowserTestBase {
 
     // Check [webform_group:role:custom] token.
     $result = $token_manager->replace('[webform_group:role:custom]', $webform_submission, $token_data);
-    $this->assertEqual(implode(',', [
+    $this->assertEquals(implode(',', [
       $custom_user->getEmail(),
     ]), $result);
 
     // Check [webform_group:role:outsider] token returns nothing.
     $result = $token_manager->replace('[webform_group:role:outsider]', $webform_submission, $token_data);
-    $this->assertEqual('', $result);
+    $this->assertEquals('', $result);
 
     // Check [webform_group:owner:mail] token returns the group's owner email.
     $result = $token_manager->replace('[webform_group:owner:mail]', $webform_submission, $token_data);
-    $this->assertEqual($owner_user->getEmail(), $result);
+    $this->assertEquals($owner_user->getEmail(), $result);
 
   }
 

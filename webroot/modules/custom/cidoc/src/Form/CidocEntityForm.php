@@ -12,7 +12,7 @@ use Drupal\Component\Utility\Tags;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
-use Drupal\Core\Entity\EntityManagerInterface;
+use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityReferenceSelection\SelectionInterface;
 use Drupal\Core\Entity\EntityReferenceSelection\SelectionWithAutocreateInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
@@ -40,7 +40,7 @@ class CidocEntityForm extends ContentEntityForm {
   /**
    * Constructs a CidocEntityForm object.
    *
-   * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
+   * @param \Drupal\Core\Entity\EntityRepositoryInterface xz
    *   The entity manager.
    * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
    *   The entity type bundle service.
@@ -49,8 +49,8 @@ class CidocEntityForm extends ContentEntityForm {
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user.
    */
-  public function __construct(EntityManagerInterface $entity_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL, AccountInterface $current_user) {
-    parent::__construct($entity_manager, $entity_type_bundle_info, $time);
+  public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL, AccountInterface $current_user) {
+    parent::__construct($entity_repository, $entity_type_bundle_info, $time);
     $this->currentUser = $current_user;
   }
 
@@ -207,11 +207,11 @@ class CidocEntityForm extends ContentEntityForm {
               $reference = $references[$property_name][$reference_id];
             }
             else {
-              $entity_manager = \Drupal::entityTypeManager();
+              $entity_repository = \Drupal::entityTypeManager();
               $target_type = 'cidoc_reference';
-              $entity_type = $entity_manager->getDefinition($target_type);
+              $entity_type = $entity_repository->getDefinition($target_type);
               $bundle_key = $entity_type->getKey('bundle');
-              $reference = $entity_manager->getStorage($target_type)->create(array(
+              $reference = $entity_repository->getStorage($target_type)->create(array( // I'm not sure this works.. create may not be something on this...
                 $bundle_key => $property_name,
                 $source_field => array(
                   'target_id' => $cidoc_entity->id(),
@@ -881,7 +881,7 @@ class CidocEntityForm extends ContentEntityForm {
     $element = $form_state->getTriggeringElement();
     if (empty($element['#ramble_on'])) {
       $form_state->setRedirect('entity.cidoc_entity.edit_preview', ['cidoc_entity' => $cidoc_entity->id()]);
-      drupal_set_message($this->t('Saved CIDOC entity %label.', ['%label' => $cidoc_entity->label()]));
+      $this->messenger()->addStatus($this->t('Saved CIDOC entity %label.', ['%label' => $cidoc_entity->label()]));
     }
     else {
       $to_populate = \Drupal::request()->query->get('cidoc_population', array());
@@ -898,7 +898,7 @@ class CidocEntityForm extends ContentEntityForm {
         $form_state->setRedirect('entity.cidoc_entity.edit_form', ['cidoc_entity' => $redirect_id], ['query' => ['cidoc_population' => array_unique($to_populate)]]);
 
         $redirect_entity = CidocEntity::load($redirect_id);
-        drupal_set_message($this->t('Saved CIDOC entity %label. Please now populate the entities associated with %label, starting with %populate_entity.', ['%label' => $cidoc_entity->label(), '%populate_entity' => $redirect_entity->label()]));
+        $this->messenger()->addStatus($this->t('Saved CIDOC entity %label. Please now populate the entities associated with %label, starting with %populate_entity.', ['%label' => $cidoc_entity->label(), '%populate_entity' => $redirect_entity->label()]));
       }
       elseif (!empty($to_populate)) {
         $redirect_entity = FALSE;
@@ -920,7 +920,7 @@ class CidocEntityForm extends ContentEntityForm {
             $form_state->setRedirect('entity.cidoc_entity.edit_form', ['cidoc_entity' => $redirect_id], ['query' => ['cidoc_population' => array_unique($to_populate)]]);
 
             $redirect_entity = CidocEntity::load($redirect_id);
-            drupal_set_message($this->t('Saved CIDOC entity %label. Please continue to populate the entities associated with %root_label, from %populate_label.', ['%label' => $cidoc_entity->label(), '%populate_label' => $redirect_entity->label(), '%root_label' => $populate_entity->label()]));
+            $this->messenger()->addStatus($this->t('Saved CIDOC entity %label. Please continue to populate the entities associated with %root_label, from %populate_label.', ['%label' => $cidoc_entity->label(), '%populate_label' => $redirect_entity->label(), '%root_label' => $populate_entity->label()]));
             break;
           }
           else {
@@ -931,12 +931,12 @@ class CidocEntityForm extends ContentEntityForm {
         if (!$redirect_entity) {
           $form_state->setRedirect('entity.cidoc_entity.edit_preview', ['cidoc_entity' => $cidoc_entity->id()]);
           $populate_entity = CidocEntity::load($populate_id);
-          drupal_set_message($this->t('Saved CIDOC entity %label. All entities associated with %root_label have now been populated.', ['%label' => $cidoc_entity->label(), '%root_label' => $populate_entity->label()]));
+          $this->messenger()->addStatus($this->t('Saved CIDOC entity %label. All entities associated with %root_label have now been populated.', ['%label' => $cidoc_entity->label(), '%root_label' => $populate_entity->label()]));
         }
       }
       else {
         $form_state->setRedirect('entity.cidoc_entity.edit_preview', ['cidoc_entity' => $cidoc_entity->id()]);
-        drupal_set_message($this->t('Saved CIDOC entity %label. All entities associated with %label have already been populated.', ['%label' => $cidoc_entity->label()]));
+        $this->messenger()->addStatus($this->t('Saved CIDOC entity %label. All entities associated with %label have already been populated.', ['%label' => $cidoc_entity->label()]));
       }
     }
   }

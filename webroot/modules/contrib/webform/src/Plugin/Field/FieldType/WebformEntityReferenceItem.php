@@ -112,14 +112,22 @@ class WebformEntityReferenceItem extends EntityReferenceItem {
    * {@inheritdoc}
    */
   public function getSettableOptions(AccountInterface $account = NULL) {
-    $options = parent::getSettableOptions($account);
+    // Get webform options grouped by category.
+    /** @var \Drupal\webform\WebformEntityStorageInterface $webform_storage */
+    $webform_storage = \Drupal::service('entity_type.manager')->getStorage('webform');
+    $options = $webform_storage->getOptions(FALSE);
 
-    // Remove all templates.
-    if ($options && \Drupal::moduleHandler()->moduleExists('webform_templates')) {
-      /** @var \Drupal\webform\WebformEntityStorageInterface $webform_storage */
-      $webform_storage = \Drupal::service('entity_type.manager')->getStorage('webform');
-      $webform_templates = $webform_storage->loadByProperties(['template' => TRUE]);
-      $options = array_diff_key($options, $webform_templates);
+    // Make sure the options are included in the settable options.
+    $settable_options = parent::getSettableOptions($account);
+    foreach ($options as $value => $text) {
+      // If optgroup, make sure all options are included settable options.
+      if (is_array($text)) {
+        $options[$value] = array_intersect_key($text, $settable_options);
+      }
+      // Unset the option value, if it is not a settable options.
+      elseif (!isset($settable_options[$value])) {
+        unset($options[$value]);
+      }
     }
 
     return $options;

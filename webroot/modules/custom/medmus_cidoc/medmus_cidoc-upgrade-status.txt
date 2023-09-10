@@ -1,0 +1,40 @@
+CUSTOM PROJECTS
+--------------------------------------------------------------------------------
+Medmus - CIDOC
+Scanned on Wed, 08/16/2023 - 11:25.
+
+2 errors found. 1 warning found.
+
+modules/custom/medmus_cidoc/medmus_cidoc.module:
+┌──────────┬──────┬──────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                            │
+├──────────┼──────┼──────────────────────────────────────────────────────────────┤
+│ Check    │ 81   │ Relying on entity queries to check access by default is      │
+│ manually │      │ deprecated in drupal:9.2.0 and an error will be thrown from  │
+│          │      │ drupal:10.0.0. Call                                          │
+│          │      │ \Drupal\Core\Entity\Query\QueryInterface::accessCheck() with │
+│          │      │ TRUE or FALSE to specify whether access should be checked.   │
+│          │      │                                                              │
+└──────────┴──────┴──────────────────────────────────────────────────────────────┘
+
+modules/custom/medmus_cidoc/medmus_cidoc.post_update.php:
+┌─────────┬──────┬─────────────────────────────────────────────────────────────┐
+│ STATUS  │ LINE │                           MESSAGE                           │
+├─────────┼──────┼─────────────────────────────────────────────────────────────┤
+│ Fix now │ 40   │ Call to deprecated function db_update(). Deprecated in      │
+│         │      │ drupal:8.0.0 and is removed from drupal:9.0.0. Instead, get │
+│         │      │ a database connection injected into your service from the   │
+│         │      │ container and call update() on it. For example,             │
+│         │      │ $injected_database->update($table, $options);               │
+│         │      │                                                             │
+│ Fix now │ 71   │ Call to deprecated function db_update(). Deprecated in      │
+│         │      │ drupal:8.0.0 and is removed from drupal:9.0.0. Instead, get │
+│         │      │ a database connection injected into your service from the   │
+│         │      │ container and call update() on it. For example,             │
+│         │      │ $injected_database->update($table, $options);               │
+│         │      │                                                             │
+└─────────┴──────┴─────────────────────────────────────────────────────────────┘
+
+
+
+

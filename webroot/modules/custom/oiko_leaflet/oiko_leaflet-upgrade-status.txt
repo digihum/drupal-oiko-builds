@@ -1,0 +1,40 @@
+CUSTOM PROJECTS
+--------------------------------------------------------------------------------
+Oiko - Leaflet
+Scanned on Wed, 08/16/2023 - 12:19.
+
+3 warnings found.
+
+modules/custom/oiko_leaflet/src/Controller/MapPageController.php:
+┌──────────┬──────┬──────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                            │
+├──────────┼──────┼──────────────────────────────────────────────────────────────┤
+│ Check    │ 98   │ Relying on entity queries to check access by default is      │
+│ manually │      │ deprecated in drupal:9.2.0 and an error will be thrown from  │
+│          │      │ drupal:10.0.0. Call                                          │
+│          │      │ \Drupal\Core\Entity\Query\QueryInterface::accessCheck() with │
+│          │      │ TRUE or FALSE to specify whether access should be checked.   │
+│          │      │                                                              │
+└──────────┴──────┴──────────────────────────────────────────────────────────────┘
+
+modules/custom/oiko_leaflet/src/Controller/PopupContentController.php:
+┌──────────┬──────┬────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                          MESSAGE                           │
+├──────────┼──────┼────────────────────────────────────────────────────────────┤
+│ Check    │ 40   │ The "entity.manager" service is deprecated. You should use │
+│ manually │      │ the 'entity_type.manager' service instead.                 │
+│          │      │                                                            │
+└──────────┴──────┴────────────────────────────────────────────────────────────┘
+
+modules/custom/oiko_leaflet/src/Controller/PopupDiscussionController.php:
+┌──────────┬──────┬────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                          MESSAGE                           │
+├──────────┼──────┼────────────────────────────────────────────────────────────┤
+│ Check    │ 39   │ The "entity.manager" service is deprecated. You should use │
+│ manually │      │ the 'entity_type.manager' service instead.                 │
+│          │      │                                                            │
+└──────────┴──────┴────────────────────────────────────────────────────────────┘
+
+
+
+

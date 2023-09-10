@@ -5,7 +5,7 @@ namespace Drupal\tour_ui;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Config\Entity\ConfigEntityStorageInterface;
 use Drupal\Core\Entity\EntityListBuilder;
-use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Component\Utility\Html;
 
@@ -32,7 +32,7 @@ class TourListBuilder extends EntityListBuilder {
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
     return new static(
       $entity_type,
-      $container->get('entity.manager')->getStorage($entity_type->id())
+      $container->get('entity_type.manager')->getStorage($entity_type->id())
     );
   }
 
@@ -51,7 +51,7 @@ class TourListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function buildRow(EntityInterface $entity) {
+  public function buildRow(EntityTypeManagerInterface $entity) {
     $row['title'] = [
       'data' => $entity->label(),
       'class' => ['menu-label'],
@@ -91,7 +91,7 @@ class TourListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function getOperations(EntityInterface $entity) {
+  public function getOperations(EntityTypeManagerInterface $entity) {
     $operations = parent::getOperations($entity);
 
     $operations['edit'] = [

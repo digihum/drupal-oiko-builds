@@ -8,7 +8,7 @@ use Drupal\webform\Entity\Webform;
 /**
  * Tests for webform UI element properties.
  *
- * @group WebformUi
+ * @group webform_ui
  */
 class WebformUiElementPropertiesTest extends WebformBrowserTestBase {
 
@@ -37,7 +37,7 @@ class WebformUiElementPropertiesTest extends WebformBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     // Create filters.
@@ -59,17 +59,13 @@ class WebformUiElementPropertiesTest extends WebformBrowserTestBase {
       $webform_elements = Webform::load($webform_id);
       $original_elements = $webform_elements->getElementsDecodedAndFlattened();
       foreach ($original_elements as $key => $original_element) {
-        $this->drupalPostForm('/admin/structure/webform/manage/' . $webform_elements->id() . '/element/' . $key . '/edit', [], t('Save'));
+        // Update the element via element edit form.
+        $this->drupalGet('/admin/structure/webform/manage/' . $webform_elements->id() . '/element/' . $key . '/edit');
+        $this->submitForm([], 'Save');
 
-        // Must reset the webform entity cache so that the update elements can
-        // be loaded.
-        \Drupal::entityTypeManager()->getStorage('webform_submission')->resetCache();
-
-        /** @var \Drupal\webform\WebformInterface $webform_elements */
-        $webform_elements = Webform::load($webform_id);
-        $updated_element = $webform_elements->getElementsDecodedAndFlattened()[$key];
-
-        $this->assertEqual($original_element, $updated_element, "'$key'' properties is equal.");
+        // Check that the original and updated element are equal.
+        $updated_element = $this->reloadWebform($webform_id)->getElementDecoded($key);
+        $this->assertEquals($original_element, $updated_element, "'$key'' properties is equal.");
       }
     }
   }

@@ -105,17 +105,17 @@ class CidocEntityBundleForm extends EntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label CIDOC entity class.', [
+        $this->messenger()->addStatus($this->t('Created the %label CIDOC entity class.', [
           '%label' => $cidoc_entity_bundle->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label CIDOC entity class.', [
+        $this->messenger()->addStatus($this->t('Saved the %label CIDOC entity class.', [
           '%label' => $cidoc_entity_bundle->label(),
         ]));
     }
-    $form_state->setRedirectUrl($cidoc_entity_bundle->urlInfo('collection'));
+    $form_state->setRedirectUrl($cidoc_entity_bundle->toUrl('collection'));
   }
 
 }

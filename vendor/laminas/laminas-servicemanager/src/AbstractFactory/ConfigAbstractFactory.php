@@ -36,13 +36,7 @@ final class ConfigAbstractFactory implements AbstractFactoryInterface
         return is_array($dependencies) && array_key_exists($requestedName, $dependencies);
     }
 
-<<<<<<< HEAD
-    /**
-     * {@inheritDoc}
-     */
-=======
     /** {@inheritDoc} */
->>>>>>> feature/medmus-d9
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         if (! $container->has('config')) {

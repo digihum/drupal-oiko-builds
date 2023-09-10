@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\Component\Render\FormattableMarkup;
+
 /**
  * Implements hook_install_tasks().
  */
@@ -43,14 +45,14 @@ function oiko_profile_create_default_content() {
   foreach (range(1, 400) as $year) {
     $year_entity = $date_storage->create(array(
       'bundle' => 'e52_time_span',
-      'name' => format_string('@year CE', array('@year' => $year)),
-      'status' => NODE_PUBLISHED,
+      'name' => new FormattableMarkup('@year CE', array('@year' => $year)),
+      'status' => Drupal\node\NodeInterface::PUBLISHED,
       'populated' => 1,
     ));
     $date_value = array(
       array(
         'value' => sprintf('%04d', $year),
-        'human_value' => format_string('@year CE', array('@year' => $year)),
+        'human_value' => new FormattableMarkup('@year CE', array('@year' => $year)),
       ),
     );
     $year_entity->field_date->setValue($date_value);

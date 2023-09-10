@@ -178,6 +178,17 @@ duplicate:
         ],
       ],
 
+      // Check validate pages.
+      [
+        'getElementsRaw' => "page:
+  '#type': webform_wizard_page
+card:
+  '#type': webform_card",
+        'messages' => [
+          'Pages and cards cannot be used in the same webform. Please remove or convert the pages/cards to the same element type.',
+        ],
+      ],
+// phpcs:disable
 /*
       // Check validate rendering.
       [
@@ -196,6 +207,7 @@ duplicate:
         ],
       ],
 */
+// phpcs:enable
     ];
 
     // Check invalid YAML.

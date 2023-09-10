@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: closed
 dependencies:
@@ -26,10 +27,10 @@ elements: |
       '#title': 'Last Name'
       '#type': textfield
       '#required': true
-    gender:
+    sex:
       '#type': webform_radios_other
-      '#title': Gender
-      '#options': gender
+      '#title': Sex
+      '#options': sex
       '#required': true
   contact_information:
     '#title': 'Contact Information'
@@ -45,12 +46,15 @@ elements: |
     '#type': webform_section
     resume_method:
       '#type': radios
+      '#title': 'Resume method'
+      '#title_display': invisible
       '#options':
         attach: 'Attach resume file'
         paste: 'Paste your resume'
-      '#prefix': '<div class="container-inline">'
-      '#suffix': '</div>'
       '#default_value': attach
+      '#wrapper_attributes':
+        class:
+          - container-inline
     resume_file:
       '#type': managed_file
       '#title': Resume
@@ -83,7 +87,7 @@ elements: |
     '#type': webform_actions
     '#title': 'Submit button(s)'
     '#submit__label': Apply
-  
+
 css: ''
 javascript: ''
 settings:
@@ -95,7 +99,7 @@ settings:
   page: true
   page_submit_path: ''
   page_confirm_path: ''
-  page_admin_theme: false
+  page_theme_name: ''
   form_title: source_entity_webform
   form_submit_once: false
   form_exception_message: ''
@@ -104,7 +108,7 @@ settings:
   form_previous_submissions: true
   form_confidential: false
   form_confidential_message: ''
-  form_remote_addr: true
+  form_disable_remote_addr: false
   form_convert_anonymous: false
   form_prepopulate: false
   form_prepopulate_source_entity: false
@@ -125,6 +129,14 @@ settings:
   form_access_denied_message: ''
   form_access_denied_attributes: {  }
   form_file_limit: ''
+  form_method: ''
+  form_action: ''
+  form_attributes: {  }
+  share: false
+  share_node: false
+  share_theme_name: ''
+  share_title: true
+  share_page_body_attributes: {  }
   submission_label: ''
   submission_log: false
   submission_views: {  }
@@ -150,11 +162,19 @@ settings:
   wizard_progress_percentage: false
   wizard_progress_link: false
   wizard_progress_states: false
+  wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
   wizard_confirmation_label: ''
   wizard_track: ''
+  wizard_prev_button_label: ''
+  wizard_next_button_label: ''
+  wizard_toggle: false
+  wizard_toggle_show_label: ''
+  wizard_toggle_hide_label: ''
   preview: 0
   preview_label: ''
   preview_title: ''
@@ -200,6 +220,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -251,6 +273,7 @@ handlers:
   email_notification:
     id: email
     label: 'Email Notification'
+    notes: ''
     handler_id: email_notification
     status: true
     conditions: {  }

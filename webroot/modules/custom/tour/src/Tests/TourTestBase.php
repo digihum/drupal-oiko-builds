@@ -2,12 +2,13 @@
 
 namespace Drupal\tour\Tests;
 
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
+use Drupal\Component\Render\FormattableMarkup;
 
 /**
  * Base class for testing Tour functionality.
  */
-abstract class TourTestBase extends WebTestBase {
+abstract class TourTestBase extends BrowserTestBase {
 
   /**
    * Assert function to determine if tips rendered to the page
@@ -50,12 +51,12 @@ abstract class TourTestBase extends WebTestBase {
       $modals = 0;
       foreach ($tips as $tip) {
         if (!empty($tip['data-id'])) {
-          $elements = \PHPUnit_Util_XML::cssSelect('#' . $tip['data-id'], TRUE, $this->content, TRUE);
-          $this->assertTrue(!empty($elements) && count($elements) === 1, format_string('Found corresponding page element for tour tip with id #%data-id', array('%data-id' => $tip['data-id'])));
+          $elements = \PHPUnit\Util\XML::cssSelect('#' . $tip['data-id'], TRUE, $this->content, TRUE);
+          $this->assertTrue(!empty($elements) && count($elements) === 1, new FormattableMarkup('Found corresponding page element for tour tip with id #%data-id', array('%data-id' => $tip['data-id'])));
         }
         elseif (!empty($tip['data-class'])) {
-          $elements = \PHPUnit_Util_XML::cssSelect('.' . $tip['data-class'], TRUE, $this->content, TRUE);
-          $this->assertFalse(empty($elements), format_string('Found corresponding page element for tour tip with class .%data-class', array('%data-class' => $tip['data-class'])));
+          $elements = \PHPUnit\Util\XML::cssSelect('.' . $tip['data-class'], TRUE, $this->content, TRUE);
+          $this->assertFalse(empty($elements), new FormattableMarkup('Found corresponding page element for tour tip with class .%data-class', array('%data-class' => $tip['data-class'])));
         }
         else {
           // It's a modal.
@@ -63,7 +64,7 @@ abstract class TourTestBase extends WebTestBase {
         }
         $total++;
       }
-      $this->pass(format_string('Total %total Tips tested of which %modals modal(s).', array('%total' => $total, '%modals' => $modals)));
+      $this->pass(new FormattableMarkup('Total %total Tips tested of which %modals modal(s).', array('%total' => $total, '%modals' => $modals)));
     }
   }
 

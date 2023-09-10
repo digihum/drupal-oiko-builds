@@ -1,7 +1,7 @@
 name: 'Oiko - Forum'
 type: module
 description: Integration and customisation of the forum
-core: 8.x
+core_version_requirement: ^8 || ^9
 package: Oiko
 dependencies:
   - tracker

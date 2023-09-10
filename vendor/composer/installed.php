@@ -91,15 +91,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'computerminds/php-edtf' => array(
-            'pretty_version' => '0.2.2',
-            'version' => '0.2.2.0',
-            'reference' => '855b689f7fc1183b0cd668b191aa46209a35d2c6',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../computerminds/php-edtf',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'consolidation/annotated-command' => array(
             'pretty_version' => '4.9.1',
             'version' => '4.9.1.0',
@@ -752,12 +743,14 @@
             'dev_requirement' => false,
         ),
         'drupal/leaflet' => array(
-            'pretty_version' => '10.0.19',
-            'version' => '10.0.19.0',
-            'reference' => '10.0.19',
+            'pretty_version' => 'dev-1.x',
+            'version' => 'dev-1.x',
+            'reference' => 'a3274e4',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../webroot/modules/contrib/leaflet',
-            'aliases' => array(),
+            'aliases' => array(
+                0 => '1.x-dev',
+            ),
             'dev_requirement' => false,
         ),
         'drupal/leaflet_widget' => array(
@@ -877,6 +870,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/upgrade_status' => array(
+            'pretty_version' => '3.19.0',
+            'version' => '3.19.0.0',
+            'reference' => '8.x-3.19',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../webroot/modules/contrib/upgrade_status',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
         'drupal/views_bulk_operations' => array(
             'pretty_version' => '4.2.5',
             'version' => '4.2.5.0',
@@ -896,13 +898,19 @@
             'dev_requirement' => false,
         ),
         'drupal/webform' => array(
-            'pretty_version' => '5.13.0',
-            'version' => '5.13.0.0',
-            'reference' => '8.x-5.13',
+            'pretty_version' => '6.1.5',
+            'version' => '6.1.5.0',
+            'reference' => '6.1.5',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../webroot/modules/contrib/webform',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'drupal8-rector/drupal8-rector' => array(
+            'dev_requirement' => true,
+            'replaced' => array(
+                0 => '*',
+            ),
         ),
         'drush/drush' => array(
             'pretty_version' => '11.6.0',
@@ -1027,6 +1035,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'laminas/laminas-text' => array(
+            'pretty_version' => '2.10.0',
+            'version' => '2.10.0.0',
+            'reference' => '40f7acdb284d41553d32db811e704d6e15e415b4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laminas/laminas-text',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
         'leaflet/leaflet' => array(
             'pretty_version' => '1.0.3',
             'version' => '1.0.3.0',
@@ -1090,6 +1107,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'mathieuviossat/arraytotexttable' => array(
+            'pretty_version' => 'v1.0.9',
+            'version' => '1.0.9.0',
+            'reference' => '518ec338fe62e92c064a9d3d3bc8c64fb6e77d1c',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../mathieuviossat/arraytotexttable',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
         'mglaman/drupal-check' => array(
             'pretty_version' => '1.4.0',
             'version' => '1.4.0.0',
@@ -1107,15 +1133,6 @@
             'install_path' => __DIR__ . '/../mglaman/phpstan-drupal',
             'aliases' => array(),
             'dev_requirement' => true,
-        ),
-        'michelf/php-markdown' => array(
-            'pretty_version' => '1.9.1',
-            'version' => '1.9.1.0',
-            'reference' => '5024d623c1a057dcd2d076d25b7d270a1d0d55f3',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../michelf/php-markdown',
-            'aliases' => array(),
-            'dev_requirement' => false,
         ),
         'nette/neon' => array(
             'pretty_version' => 'v3.4.0',
@@ -1148,6 +1165,21 @@
             'dev_requirement' => false,
             'replaced' => array(
                 0 => '~2.0',
+            ),
+        ),
+        'palantirnet/drupal-rector' => array(
+            'pretty_version' => '0.15.1',
+            'version' => '0.15.1.0',
+            'reference' => '85382a67a07b928f5a963d94fbca11d7be33d6ca',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../palantirnet/drupal-rector',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
+        'palantirnet/drupal8-rector' => array(
+            'dev_requirement' => true,
+            'replaced' => array(
+                0 => '*',
             ),
         ),
         'paragonie/random_compat' => array(
@@ -1384,6 +1416,15 @@
             'install_path' => __DIR__ . '/../ralouphie/getallheaders',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'rector/rector' => array(
+            'pretty_version' => '0.15.25',
+            'version' => '0.15.25.0',
+            'reference' => '015935c7ed9e48a4f5895ba974f337e20a263841',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../rector/rector',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'rsky/pear-core-min' => array(
             'dev_requirement' => false,

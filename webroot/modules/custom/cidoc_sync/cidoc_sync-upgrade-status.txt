@@ -1,0 +1,73 @@
+CUSTOM PROJECTS
+--------------------------------------------------------------------------------
+CIDOC Sync
+Scanned on Tue, 08/15/2023 - 18:27.
+
+8 errors found. 1 warning found. Avoid some manual work by using drupal-rector
+for fixing issues automatically or Upgrade Rector to generate patches.
+
+modules/custom/cidoc_sync/cidoc_sync.batch_functions.inc:
+┌──────────┬──────┬──────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                            │
+├──────────┼──────┼──────────────────────────────────────────────────────────────┤
+│ Fix with │ 23   │ Call to deprecated function drupal_set_message(). Deprecated │
+│ rector   │      │ in drupal:8.5.0 and is removed from drupal:9.0.0. Use        │
+│          │      │ Drupal\Core\Messenger\MessengerInterface::addMessage()       │
+│          │      │ instead.                                                     │
+│          │      │                                                              │
+│ Fix with │ 40   │ Call to deprecated function drupal_set_message(). Deprecated │
+│ rector   │      │ in drupal:8.5.0 and is removed from drupal:9.0.0. Use        │
+│          │      │ Drupal\Core\Messenger\MessengerInterface::addMessage()       │
+│          │      │ instead.                                                     │
+│          │      │                                                              │
+│ Fix with │ 74   │ Call to deprecated function drupal_set_message(). Deprecated │
+│ rector   │      │ in drupal:8.5.0 and is removed from drupal:9.0.0. Use        │
+│          │      │ Drupal\Core\Messenger\MessengerInterface::addMessage()       │
+│          │      │ instead.                                                     │
+│          │      │                                                              │
+│ Fix with │ 102  │ Call to deprecated function drupal_set_message(). Deprecated │
+│ rector   │      │ in drupal:8.5.0 and is removed from drupal:9.0.0. Use        │
+│          │      │ Drupal\Core\Messenger\MessengerInterface::addMessage()       │
+│          │      │ instead.                                                     │
+│          │      │                                                              │
+│ Fix with │ 152  │ Call to deprecated function drupal_set_message(). Deprecated │
+│ rector   │      │ in drupal:8.5.0 and is removed from drupal:9.0.0. Use        │
+│          │      │ Drupal\Core\Messenger\MessengerInterface::addMessage()       │
+│          │      │ instead.                                                     │
+│          │      │                                                              │
+│ Fix with │ 155  │ Call to deprecated function drupal_set_message(). Deprecated │
+│ rector   │      │ in drupal:8.5.0 and is removed from drupal:9.0.0. Use        │
+│          │      │ Drupal\Core\Messenger\MessengerInterface::addMessage()       │
+│          │      │ instead.                                                     │
+│          │      │                                                              │
+│ Fix with │ 166  │ Call to deprecated function drupal_set_message(). Deprecated │
+│ rector   │      │ in drupal:8.5.0 and is removed from drupal:9.0.0. Use        │
+│          │      │ Drupal\Core\Messenger\MessengerInterface::addMessage()       │
+│          │      │ instead.                                                     │
+│          │      │                                                              │
+└──────────┴──────┴──────────────────────────────────────────────────────────────┘
+
+modules/custom/cidoc_sync/src/Form/CidocSyncForm.php:
+┌──────────┬──────┬──────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                            │
+├──────────┼──────┼──────────────────────────────────────────────────────────────┤
+│ Fix with │ 163  │ Call to deprecated function drupal_set_message(). Deprecated │
+│ rector   │      │ in drupal:8.5.0 and is removed from drupal:9.0.0. Use        │
+│          │      │ Drupal\Core\Messenger\MessengerInterface::addMessage()       │
+│          │      │ instead.                                                     │
+│          │      │                                                              │
+└──────────┴──────┴──────────────────────────────────────────────────────────────┘
+
+modules/custom/cidoc_sync/cidoc_sync.info.yml:
+┌──────────┬──────┬──────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                            │
+├──────────┼──────┼──────────────────────────────────────────────────────────────┤
+│ Check    │ 0    │ Add core_version_requirement: ^8 || ^9 to designate that the │
+│ manually │      │ extension is compatible with Drupal 9. See                   │
+│          │      │ https://drupal.org/node/3070687.                             │
+│          │      │                                                              │
+└──────────┴──────┴──────────────────────────────────────────────────────────────┘
+
+
+
+

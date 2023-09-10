@@ -2,6 +2,7 @@
 
 namespace Drupal\cidoc\Controller;
 
+use Drupal\Core\Link;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -66,8 +67,10 @@ class CidocReferenceAddController extends ControllerBase {
         return $this->addForm($property, $request);
       }
       if (count($properties) === 0) {
+        // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
+        // Please manually remove the `use LinkGeneratorTrait;` statement from this class.
         $t_params = [
-          '@link' => $this->l($this->t('Go to the property creation page'), Url::fromRoute('entity.cidoc_property.add_form')),
+          '@link' => Link::fromTextAndUrl($this->t('Go to the property creation page'), Url::fromRoute('entity.cidoc_property.add_form')),
         ];
         return array(
           '#markup' => $this->t('You have not created any CIDOC properties yet. @link to add a new one.', $t_params),

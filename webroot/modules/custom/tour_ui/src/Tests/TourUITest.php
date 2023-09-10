@@ -2,19 +2,19 @@
 
 namespace Drupal\tour_ui\Tests;
 
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Tests the Tour UI.
  */
-class TourUITest extends WebTestBase {
+class TourUITest extends BrowserTestBase {
 
   /**
    * Modules to enable.
    *
    * @var array
    */
-  public static $modules = array('tour_ui', 'tour_test');
+  protected static $modules = array('tour_ui', 'tour_test');
 
   /**
    *

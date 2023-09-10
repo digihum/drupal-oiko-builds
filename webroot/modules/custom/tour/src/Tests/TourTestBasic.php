@@ -2,6 +2,8 @@
 
 namespace Drupal\tour\Tests;
 
+use Drupal\Core\Extension\ThemeInstaller;
+
 /**
  * Simple tour tips test base.
  */
@@ -39,12 +41,14 @@ abstract class TourTestBasic extends TourTestBase {
    */
   protected $permissions = array('access tour');
 
+  protected static $modules = array('tour', 'tour_test');
+
   protected function setUp() {
     parent::setUp();
 
     // Make sure we are using distinct default and administrative themes for
     // the duration of these tests.
-    $this->container->get('theme_handler')->install(array('bartik', 'seven'));
+    $this->container->get('theme_handler')->theme_install(array('bartik', 'seven'));
     $this->config('system.theme')
       ->set('default', 'bartik')
       ->set('admin', 'seven')

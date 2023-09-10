@@ -3,7 +3,6 @@
 namespace Drupal\webform\EntitySettings;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\webform\WebformAccessRulesManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -12,29 +11,19 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class WebformEntitySettingsAccessForm extends WebformEntitySettingsBaseForm {
 
   /**
-   * Webform access rules manager.
+   * The webform access rules manager.
    *
    * @var \Drupal\webform\WebformAccessRulesManagerInterface
    */
   protected $accessRulesManager;
 
   /**
-   * WebformEntitySettingsAccessForm constructor.
-   *
-   * @param \Drupal\webform\WebformAccessRulesManagerInterface $access_rules_manager
-   *   Webform access rules manager.
-   */
-  public function __construct(WebformAccessRulesManagerInterface $access_rules_manager) {
-    $this->accessRulesManager = $access_rules_manager;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('webform.access_rules_manager')
-    );
+    $instance = parent::create($container);
+    $instance->accessRulesManager = $container->get('webform.access_rules_manager');
+    return $instance;
   }
 
   /**

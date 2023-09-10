@@ -3,7 +3,7 @@
 namespace Drupal\tour\Tests;
 
 use Drupal\Core\Url;
-use Drupal\system\Tests\Cache\PageCacheTagsTestBase;
+use Drupal\Tests\system\Functional\Cache\PageCacheTagsTestBase;
 use Drupal\tour\Entity\Tour;
 use Drupal\user\Entity\Role;
 use Drupal\user\RoleInterface;
@@ -18,7 +18,7 @@ class TourCacheTagsTest extends PageCacheTagsTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = array('tour', 'tour_test');
+  protected static $modules = array('tour', 'tour_test');
 
   /**
    * {@inheritdoc}

@@ -35,7 +35,7 @@
       $element[showEffect]();
       // If not initializing, then focus the other element.
       if (effect !== false) {
-        $input.focus();
+        $input.trigger('focus');
       }
       // Require the input.
       $input.prop('required', true).attr('aria-required', 'true');
@@ -59,7 +59,9 @@
       // Hide the element.
       $element[hideEffect]();
       // Save the input's value.
-      $input.data('webform-value', $input.val());
+      if ($input.val() !== '') {
+        $input.data('webform-value', $input.val());
+      }
       // Empty and un-required the input.
       $input.val('').prop('required', false).removeAttr('aria-required');
     }
@@ -151,7 +153,7 @@
         var $container = $(this).find('.js-webform-webform-buttons');
 
         // Create set onchange handler.
-        $container.change(function () {
+        $container.on('change', function () {
           toggleOther(($(this).find(':radio:checked').val() === '_other_'), $input);
         });
 

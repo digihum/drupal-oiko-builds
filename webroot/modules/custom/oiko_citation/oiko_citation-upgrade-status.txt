@@ -1,0 +1,73 @@
+CUSTOM PROJECTS
+--------------------------------------------------------------------------------
+Oiko - Citation
+Scanned on Tue, 08/15/2023 - 18:28.
+
+6 errors found. 1 warning found. Avoid some manual work by using drupal-rector
+for fixing issues automatically or Upgrade Rector to generate patches.
+
+modules/custom/oiko_citation/src/Plugin/Field/FieldWidget/InlineCitationsWidget.
+php:
+┌──────────┬──────┬──────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                            │
+├──────────┼──────┼──────────────────────────────────────────────────────────────┤
+│ Fix with │ 113  │ Call to deprecated method entityManager() of class Drupal.   │
+│ rector   │      │ Deprecated in drupal:8.0.0 and is removed from drupal:9.0.0. │
+│          │      │ Use Drupal::entityTypeManager() instead in most cases. If    │
+│          │      │ the needed method is not on                                  │
+│          │      │ \Drupal\Core\Entity\EntityTypeManagerInterface, see the      │
+│          │      │ deprecated \Drupal\Core\Entity\EntityManager to find the     │
+│          │      │ correct interface or service.                                │
+│          │      │                                                              │
+│ Fix with │ 177  │ Call to deprecated method entityManager() of class Drupal.   │
+│ rector   │      │ Deprecated in drupal:8.0.0 and is removed from drupal:9.0.0. │
+│          │      │ Use Drupal::entityTypeManager() instead in most cases. If    │
+│          │      │ the needed method is not on                                  │
+│          │      │ \Drupal\Core\Entity\EntityTypeManagerInterface, see the      │
+│          │      │ deprecated \Drupal\Core\Entity\EntityManager to find the     │
+│          │      │ correct interface or service.                                │
+│          │      │                                                              │
+│ Fix with │ 557  │ Call to deprecated function entity_view(). Deprecated in     │
+│ rector   │      │ drupal:8.0.0 and is removed from drupal:9.0.0. Use the       │
+│          │      │ entity view builder's view() method for creating a render    │
+│          │      │ array:                                                       │
+│          │      │                                                              │
+│ Fix with │ 593  │ Call to deprecated method entityManager() of class Drupal.   │
+│ rector   │      │ Deprecated in drupal:8.0.0 and is removed from drupal:9.0.0. │
+│          │      │ Use Drupal::entityTypeManager() instead in most cases. If    │
+│          │      │ the needed method is not on                                  │
+│          │      │ \Drupal\Core\Entity\EntityTypeManagerInterface, see the      │
+│          │      │ deprecated \Drupal\Core\Entity\EntityManager to find the     │
+│          │      │ correct interface or service.                                │
+│          │      │                                                              │
+│ Fix with │ 712  │ Call to deprecated method entityManager() of class Drupal.   │
+│ rector   │      │ Deprecated in drupal:8.0.0 and is removed from drupal:9.0.0. │
+│          │      │ Use Drupal::entityTypeManager() instead in most cases. If    │
+│          │      │ the needed method is not on                                  │
+│          │      │ \Drupal\Core\Entity\EntityTypeManagerInterface, see the      │
+│          │      │ deprecated \Drupal\Core\Entity\EntityManager to find the     │
+│          │      │ correct interface or service.                                │
+│          │      │                                                              │
+│ Fix with │ 1068 │ Call to deprecated method entityManager() of class Drupal.   │
+│ rector   │      │ Deprecated in drupal:8.0.0 and is removed from drupal:9.0.0. │
+│          │      │ Use Drupal::entityTypeManager() instead in most cases. If    │
+│          │      │ the needed method is not on                                  │
+│          │      │ \Drupal\Core\Entity\EntityTypeManagerInterface, see the      │
+│          │      │ deprecated \Drupal\Core\Entity\EntityManager to find the     │
+│          │      │ correct interface or service.                                │
+│          │      │                                                              │
+└──────────┴──────┴──────────────────────────────────────────────────────────────┘
+
+modules/custom/oiko_citation/oiko_citation.info.yml:
+┌──────────┬──────┬──────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                            │
+├──────────┼──────┼──────────────────────────────────────────────────────────────┤
+│ Check    │ 0    │ Add core_version_requirement: ^8 || ^9 to designate that the │
+│ manually │      │ extension is compatible with Drupal 9. See                   │
+│          │      │ https://drupal.org/node/3070687.                             │
+│          │      │                                                              │
+└──────────┴──────┴──────────────────────────────────────────────────────────────┘
+
+
+
+

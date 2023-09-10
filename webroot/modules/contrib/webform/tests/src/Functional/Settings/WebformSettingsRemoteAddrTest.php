@@ -10,7 +10,7 @@ use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 /**
  * Tests for disable tracking of remote IP address.
  *
- * @group Webform
+ * @group webform
  */
 class WebformSettingsRemoteAddrTest extends WebformBrowserTestBase {
 
@@ -39,24 +39,24 @@ class WebformSettingsRemoteAddrTest extends WebformBrowserTestBase {
     $webform = Webform::load('test_form_remote_addr');
     $sid = $this->postSubmission($webform, ['name' => 'John']);
     $webform_submission = WebformSubmission::load($sid);
-    $this->assertEqual($webform_submission->getRemoteAddr(), t('(unknown)'));
-    $this->assertEqual($webform_submission->getOwnerId(), 1);
+    $this->assertEquals($webform_submission->getRemoteAddr(), '(unknown)');
+    $this->assertEquals($webform_submission->getOwnerId(), 1);
 
     $webform_submission = WebformSubmissionForm::submitFormValues($values);
-    $this->assertEqual($webform_submission->getRemoteAddr(), t('(unknown)'));
-    $this->assertEqual($webform_submission->getOwnerId(), 1);
+    $this->assertEquals($webform_submission->getRemoteAddr(), '(unknown)');
+    $this->assertEquals($webform_submission->getOwnerId(), 1);
 
     // Enable the setting and make sure the IP is stored.
-    $webform->setSetting('form_remote_addr', TRUE);
+    $webform->setSetting('form_disable_remote_addr', FALSE);
     $webform->save();
     $sid = $this->postSubmission($webform, ['name' => 'John']);
     $webform_submission = WebformSubmission::load($sid);
-    $this->assertNotEqual($webform_submission->getRemoteAddr(), t('(unknown)'));
-    $this->assertEqual($webform_submission->getOwnerId(), 1);
+    $this->assertNotEquals($webform_submission->getRemoteAddr(), '(unknown)');
+    $this->assertEquals($webform_submission->getOwnerId(), 1);
 
     $webform_submission = WebformSubmissionForm::submitFormValues($values);
-    $this->assertNotEqual($webform_submission->getRemoteAddr(), t('(unknown)'));
-    $this->assertEqual($webform_submission->getOwnerId(), 1);
+    $this->assertNotEquals($webform_submission->getRemoteAddr(), '(unknown)');
+    $this->assertEquals($webform_submission->getOwnerId(), 1);
   }
 
 }

@@ -27,10 +27,7 @@ class TourTest extends UnitTestCase {
    * @dataProvider routeProvider
    */
   public function testHasMatchingRoute($routes, $route_name, $route_params, $result) {
-    $tour = $this->getMockBuilder('\Drupal\tour\Entity\Tour')
-      ->disableOriginalConstructor()
-      ->setMethods(array('getRoutes'))
-      ->getMock();
+    $tour = $this->createMock('\Drupal\tour\Entity\Tour');
 
     $tour->expects($this->any())
       ->method('getRoutes')

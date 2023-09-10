@@ -21,14 +21,14 @@ class WebformTestHandlerRemotePostClient extends Client {
       return parent::request($method, $uri, $options);
     }
 
-    if ($method == 'get') {
+    if ($method === 'get') {
       parse_str(parse_url($uri, PHP_URL_QUERY), $params);
     }
     else {
-      $params = (isset($options['json'])) ? $options['json'] : $options['form_params'];
+      $params = $options['json'] ?? $options['form_params'];
     }
 
-    $response_type = (isset($params['response_type'])) ? $params['response_type'] : 200;
+    $response_type = $params['response_type'] ?? 200;
     $operation = ltrim(parse_url($uri, PHP_URL_PATH), '/');
     $random = new Random();
     // Handle 404 errors.

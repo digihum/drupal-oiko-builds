@@ -19,8 +19,9 @@ function webform_shortcuts_webform_libraries_info() {
     'description' => t('jQuery Hotkeys is a plug-in that lets you easily add and remove handlers for keyboard events anywhere in your code supporting almost any key combination.'),
     'notes' => t('jQuery Hotkeys is used by the form builder to quickly add and save elements.'),
     'homepage_url' => Url::fromUri('https://github.com/jeresig/jquery.hotkeys'),
-    'download_url' => Url::fromUri('https://github.com/jeresig/jquery.hotkeys/archive/0.2.0.zip'),
+    'download_url' => Url::fromUri('https://github.com/jeresig/jquery.hotkeys/archive/refs/tags/0.2.0.zip'),
     'version' => '0.2.0',
+    'license' => 'MIT',
     'optional' => FALSE,
   ];
   return $libraries;
@@ -30,7 +31,7 @@ function webform_shortcuts_webform_libraries_info() {
  * Implements hook_preprocess_block().
  */
 function webform_shortcuts_preprocess_block(&$variables) {
-  if ($variables['plugin_id'] != 'local_actions_block') {
+  if ($variables['plugin_id'] !== 'local_actions_block') {
     return;
   }
 
@@ -42,6 +43,7 @@ function webform_shortcuts_preprocess_block(&$variables) {
   $config = \Drupal::config('webform_shortcuts.settings');
 
   // Shortcuts.
+  // phpcs:disable Squiz.Arrays.ArrayDeclaration.KeySpecified
   $shortcuts = [
     '--',
     'add_element' => t('Add element'),
@@ -54,6 +56,7 @@ function webform_shortcuts_preprocess_block(&$variables) {
     'toggle_weights' => t('Show/hide row weights'),
     '--',
   ];
+  // phpcs:enable Squiz.Arrays.ArrayDeclaration.KeySpecified
 
   $items = [];
   $last_shortcut = '';
@@ -84,6 +87,7 @@ function webform_shortcuts_preprocess_block(&$variables) {
     '#type' => 'webform_help',
     '#help_title' => t('Keyboard shortcuts'),
     '#help' => $items,
+    '#weight' => 100,
   ];
 
   $variables['content']['help']['#attached']['library'][] = 'webform_shortcuts/webform_shortcuts';
@@ -103,7 +107,7 @@ function webform_shortcuts_preprocess_block(&$variables) {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Implements hook_form_FORM_ID_alter() for admin config advanced form.
  */
 function webform_shortcuts_form_webform_admin_config_advanced_form_alter(&$form, FormStateInterface $form_state) {
   $config = \Drupal::config('webform_shortcuts.settings');

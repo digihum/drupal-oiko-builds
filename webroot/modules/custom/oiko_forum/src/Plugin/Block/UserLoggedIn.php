@@ -8,6 +8,7 @@ use Drupal\Core\EventSubscriber\MainContentViewSubscriber;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Url;
 use Drupal\views\Views;
+use Drupal\Core\Security\TrustedCallbackInterface;
 
 /**
  * Provides the discussion notifications block.
@@ -17,7 +18,16 @@ use Drupal\views\Views;
  *   admin_label = @Translation("User logged in header block"),
  * )
  */
-class UserLoggedIn extends BlockBase {
+class UserLoggedIn extends BlockBase implements TrustedCallbackInterface {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function trustedCallbacks() {
+    return [
+      'renderPlaceholderFormAction'
+    ];
+  }
 
 
   /**
@@ -69,7 +79,7 @@ class UserLoggedIn extends BlockBase {
 
     if (\Drupal::currentUser()->isAuthenticated()) {
 
-      $profile_form = \Drupal::entityManager()->getFormObject('user', 'default');
+      $profile_form = \Drupal::service('entity_type.manager')->getFormObject('user', 'default');
       $account = \Drupal::entityTypeManager()->getStorage('user')->load(\Drupal::currentUser()->id());
       $profile_form->setEntity($account);
 
