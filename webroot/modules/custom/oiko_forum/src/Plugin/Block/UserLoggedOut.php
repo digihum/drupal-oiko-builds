@@ -8,6 +8,7 @@ use Drupal\Core\EventSubscriber\MainContentViewSubscriber;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Url;
 use Drupal\views\Views;
+use Drupal\Core\Security\TrustedCallbackInterface;
 
 /**
  * Provides the discussion notifications block.
@@ -17,8 +18,16 @@ use Drupal\views\Views;
  *   admin_label = @Translation("User logged out header block"),
  * )
  */
-class UserLoggedOut extends BlockBase {
+class UserLoggedOut extends BlockBase implements TrustedCallbackInterface {
 
+    /**
+   * {@inheritdoc}
+   */
+  public static function trustedCallbacks() {
+    return [
+      'renderPlaceholderFormAction'
+    ];
+  }
 
   /**
    * #lazy_builder callback; renders a form action URL.
@@ -87,7 +96,7 @@ class UserLoggedOut extends BlockBase {
       $block['login_form']['#action'] = $placeholder;
 
 
-      $register_form = \Drupal::entityManager()->getFormObject('user', 'register');
+      $register_form = \Drupal::service('entity_type.manager')->getFormObject('user', 'register');
       $entity = \Drupal::entityTypeManager()->getStorage('user')->create([]);
       $register_form->setEntity($entity);
 

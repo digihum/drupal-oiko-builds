@@ -1,11 +1,12 @@
 <?php
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Access\AccessResultForbidden;
 
 /**
  * Implements hook_form_alter().
  */
-function oiko_forum_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function oiko_forum_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   if ($form_id == 'user_form') {
     $account = $form_state->getFormObject()->getEntity();
