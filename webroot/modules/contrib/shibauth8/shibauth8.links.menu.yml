@@ -1,5 +1,0 @@
-shibauth8.shibboleth_settings:
-  title: 'Shibboleth settings'
-  route_name: shibauth8.shibboleth_settings
-  description: 'Shibboleth configuration form'
-  parent: user.admin_index
