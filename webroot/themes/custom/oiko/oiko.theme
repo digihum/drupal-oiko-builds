@@ -1,11 +1,13 @@
 <?php
 
+use Drupal\oiko\OikoPreRender;
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Block\MainContentBlockPluginInterface;
 use Drupal\Core\Block\MessagesBlockPluginInterface;
 use Drupal\Core\Block\TitleBlockPluginInterface;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\block\Entity\Block;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Url;
@@ -123,14 +125,13 @@ function oiko_preprocess_page(&$variables) {
     $variables['page']['highlighted']['#attributes']['class'][] = 'js-no-process';
   }
   $match = \Drupal::routeMatch();
-  if ($match->getRouteName() != 'entity.cidoc_entity.canonical' && !\Drupal::service('path.matcher')->isFrontPage()) {
+  if ($match->getRouteName() != 'entity_type.cidoc_entity.canonical' && !\Drupal::service('path.matcher')->isFrontPage()) {
     // This isn't our app page, so add a library to help to get back to there!
     $variables['page']['content']['#attached']['library'][] = 'oiko/oiko-redirector';
   }
   else {
     // Get a nice entity to use as a demo.
-    $cidoc_entity_query = \Drupal::service('entity.query')
-      ->get('cidoc_entity')
+    $cidoc_entity_query =  \Drupal::entityQuery('cidoc_entity')
       ->condition('timeline_preselect_option', TRUE)
       ->condition('status', TRUE)
       ->sort('name');
@@ -326,12 +327,12 @@ function oiko_preprocess_cidoc_entity(array &$variables) {
     // Add the sidebar share region to the popup.
     $build = [
       '#cache' => [
-        'tags' => \Drupal::service('entity.manager')
+        'tags' => \Drupal::service('entity_type.manager')
           ->getDefinition('block')
           ->getListCacheTags(),
       ],
     ];
-    $blockViewBuilder = \Drupal::service('entity.manager')
+    $blockViewBuilder = \Drupal::service('entity_type.manager')
       ->getViewBuilder('block');
     // Load all region content assigned via blocks.
     $cacheable_metadata_list = [];
@@ -400,24 +401,20 @@ function oiko_theme_suggestions_region_alter(array &$suggestions, array $variabl
   }
 }
 
-
 /**
  * Implements hook_element_info_alter().
  */
-function oiko_element_info_alter(&$elements) {
-  if (isset($elements['view']['#pre_render'])) {
-    $elements['view']['#pre_render'][] = 'oiko_remove_theme_wrappers';
+
+  # @TODO for D10: https://www.drupal.org/node/3349470
+  # @TODO test this!
+
+  function oiko_element_info_alter(&$build) {
+    if (isset($elements['view']['#pre_render'])) {
+      $elements['view']['#pre_render'][] = [
+        OikoElementController::class, 
+        'oiko_remove_theme_wrappers'];
+    }
   }
-}
-
-
-/**
- * pre_render callback that removes #theme_wrappers
- */
-function oiko_remove_theme_wrappers($element) {
-  $element['#theme_wrappers'] = array();
-  return $element;
-}
 
 
 /**
