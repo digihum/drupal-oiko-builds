@@ -1,0 +1,51 @@
+CUSTOM PROJECTS
+--------------------------------------------------------------------------------
+Oiko
+Scanned on Wed, 08/16/2023 - 12:19.
+
+2 errors found. 4 warnings found.
+
+themes/custom/oiko/oiko.theme:
+┌──────────┬──────┬──────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                            │
+├──────────┼──────┼──────────────────────────────────────────────────────────────┤
+│ Check    │ 132  │ The "entity.query" service is deprecated. Use the            │
+│ manually │      │ 'entity_type.manager' service to get an entity type's        │
+│          │      │ storage object and then call                                 │
+│          │      │ \Drupal\Core\Entity\EntityStorageInterface::getQuery() or    │
+│          │      │ \Drupal\Core\Entity\EntityStorageInterface::getAggregateQuer │
+│          │      │ y() instead. See https://www.drupal.org/node/2849874         │
+│          │      │                                                              │
+│ Fix now  │ 329  │ Call to deprecated method getDefinition() of class           │
+│          │      │ Drupal\Core\Entity\EntityManager. Deprecated in drupal:8.0.0 │
+│          │      │ and is removed from drupal:9.0.0. Use                        │
+│          │      │ Drupal\Core\Entity\EntityTypeManagerInterface::getDefinition │
+│          │      │ () instead.                                                  │
+│          │      │                                                              │
+│ Check    │ 329  │ The "entity.manager" service is deprecated. You should use   │
+│ manually │      │ the 'entity_type.manager' service instead.                   │
+│          │      │                                                              │
+│ Fix now  │ 334  │ Call to deprecated method getViewBuilder() of class          │
+│          │      │ Drupal\Core\Entity\EntityManager. Deprecated in drupal:8.0.0 │
+│          │      │ and is removed from drupal:9.0.0. Use                        │
+│          │      │ Drupal\Core\Entity\EntityTypeManagerInterface::getViewBuilde │
+│          │      │ r() instead.                                                 │
+│          │      │                                                              │
+│ Check    │ 334  │ The "entity.manager" service is deprecated. You should use   │
+│ manually │      │ the 'entity_type.manager' service instead.                   │
+│          │      │                                                              │
+└──────────┴──────┴──────────────────────────────────────────────────────────────┘
+
+themes/custom/oiko/oiko.info.yml:
+┌──────────┬──────┬──────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                            │
+├──────────┼──────┼──────────────────────────────────────────────────────────────┤
+│ Check    │ 0    │ Add core_version_requirement: ^8 || ^9 to designate that the │
+│ manually │      │ extension is compatible with Drupal 9. See                   │
+│          │      │ https://drupal.org/node/3070687.                             │
+│          │      │                                                              │
+└──────────┴──────┴──────────────────────────────────────────────────────────────┘
+
+
+
+
