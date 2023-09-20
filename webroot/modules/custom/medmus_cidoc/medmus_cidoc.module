@@ -5,6 +5,7 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Symfony\Component\Yaml\Yaml;
+use Drupal\Core\Entity\Query\QueryInterface;
 
 /**
  * We create a specific user with a specific UUID.
@@ -82,6 +83,7 @@ function medmus_cidoc_entity_share_sync_channels($bundle_entity_type_id, $sync_e
       ->getStorage('channel')
       ->getQuery()
       ->condition('channel_entity_type', $sync_entity_type_id)
+      ->accessCheck(FALSE)
       ->execute();
     $channels = $entity_type_manager
       ->getStorage('channel')

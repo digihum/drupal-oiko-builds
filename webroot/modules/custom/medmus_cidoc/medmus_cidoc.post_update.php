@@ -1,5 +1,9 @@
 <?php
 
+use Drupal\Core\Database;
+
+
+
 /**
  * Converts p72_has_language to pa19_has_language.
  */
@@ -18,6 +22,9 @@ function medmus_cidoc_post_update_pa19_convert(&$sandbox) {
  * Converts p72_has_language to pa19_has_language.
  */
 function medmus_cidoc_post_update_pa19_convert_redux(&$sandbox) {
+
+  $connection = Database::getConnection();
+
   $tables = [
     'cidoc_reference__citation' => 'bundle',
     'cidoc_reference__domain' => 'bundle',
@@ -37,7 +44,7 @@ function medmus_cidoc_post_update_pa19_convert_redux(&$sandbox) {
     'cidoc_reference_revision__range' => 'bundle',
   ];
   foreach (array_filter($tables, 'db_table_exists', ARRAY_FILTER_USE_KEY) as $table => $column) {
-    db_update($table)
+    $connection->update($table)
       ->fields(array(
         $column => 'pa19_has_language',
       ))
@@ -50,6 +57,9 @@ function medmus_cidoc_post_update_pa19_convert_redux(&$sandbox) {
  * Converts p72_has_language to pa19_has_language.
  */
 function medmus_cidoc_post_update_pa19_convert_redux2(&$sandbox) {
+
+  $connection = Database::getConnection();
+
   $tables = [
     'cidoc_reference__citation' => 'bundle',
     'cidoc_reference__domain' => 'bundle',
@@ -68,7 +78,7 @@ function medmus_cidoc_post_update_pa19_convert_redux2(&$sandbox) {
     'cidoc_reference_revision__range' => 'bundle',
   ];
   foreach (array_filter($tables, 'db_table_exists', ARRAY_FILTER_USE_KEY) as $table => $column) {
-    db_update($table)
+    $connection->update($table)
       ->fields(array(
         'deleted' => 0,
       ))
