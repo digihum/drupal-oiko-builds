@@ -10,7 +10,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\oiko_leaflet\Ajax\EventHistoryAddCommand;
 use Drupal\oiko_leaflet\Ajax\GAEventCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Entity\EntityManager;
+use Drupal\Core\Entity\EntityTypeManager;
 
 /**
  * Class PopupContentController.
@@ -20,15 +20,15 @@ use Drupal\Core\Entity\EntityManager;
 class PopupContentController extends ControllerBase {
 
   /**
-   * Drupal\Core\Entity\EntityManager definition.
+   * Drupal\Core\Entity\EntityTypeManager definition.
    *
-   * @var Drupal\Core\Entity\EntityManager
+   * @var Drupal\Core\Entity\EntityTypeManager
    */
   protected $entity_manager;
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityManager $entity_manager) {
+  public function __construct(EntityTypeManager $entity_manager) {
     $this->entity_manager = $entity_manager;
   }
 
@@ -37,7 +37,7 @@ class PopupContentController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity.manager')
+      $container->get('entity_type.manager') // might need to adjust this...
     );
   }
 

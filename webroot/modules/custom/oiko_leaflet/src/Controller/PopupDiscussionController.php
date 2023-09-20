@@ -9,7 +9,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\oiko_leaflet\Ajax\HistoryPushCommand;
 use Drupal\views\Views;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Entity\EntityManager;
+use Drupal\Core\Entity\EntityTypeManager;
 
 /**
  * Class PopupDiscussionController.
@@ -19,15 +19,15 @@ use Drupal\Core\Entity\EntityManager;
 class PopupDiscussionController extends ControllerBase {
 
   /**
-   * Drupal\Core\Entity\EntityManager definition.
+   * Drupal\Core\Entity\EntityTypeManager definition.
    *
-   * @var Drupal\Core\Entity\EntityManager
+   * @var Drupal\Core\Entity\EntityTypeManager
    */
   protected $entity_manager;
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityManager $entity_manager) {
+  public function __construct(EntityTypeManager $entity_manager) {
     $this->entity_manager = $entity_manager;
   }
 
@@ -36,7 +36,7 @@ class PopupDiscussionController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity.manager')
+      $container->get('entity_type.manager')
     );
   }
 

@@ -49,7 +49,7 @@ class OikoLeafletMap extends StylePluginBase {
     // For later use, set entity info related to the View's base table.
     $base_tables = array_keys($view->getBaseTables());
     $base_table = reset($base_tables);
-    foreach (\Drupal::entityManager()->getDefinitions() as $key => $info) {
+    foreach (\Drupal::entityTypeManager()->getDefinitions() as $key => $info) {
       if ($info->getDataTable() == $base_table) {
         $this->entity_type = $key;
         $this->entity_info = $info;
@@ -76,7 +76,7 @@ class OikoLeafletMap extends StylePluginBase {
 
       // Get the human readable labels for the entity view modes.
       $view_mode_options = array();
-      foreach (\Drupal::entityManager()
+      foreach (\Drupal::entityTypeManager()
                  ->getViewModes($this->entity_type) as $key => $view_mode) {
         $view_mode_options[$key] = $view_mode['label'];
       }
