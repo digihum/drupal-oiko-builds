@@ -1,0 +1,32 @@
+CUSTOM PROJECTS
+--------------------------------------------------------------------------------
+Medmus - Entity Share
+Scanned on Wed, 08/16/2023 - 11:25.
+
+1 warning found.
+
+modules/custom/medmus_share/src/Utility/FullResync.php:
+┌────────┬──────┬─────────────────────────────────────────────────────────┐
+│ STATUS │ LINE │                         MESSAGE                         │
+├────────┼──────┼─────────────────────────────────────────────────────────┤
+│ Ignore │ 266  │ Call to deprecated constant REQUEST_TIME: Deprecated in │
+│        │      │ drupal:8.3.0 and is removed from drupal:11.0.0. Use     │
+│        │      │ Drupal::time()->getRequestTime();                       │
+│        │      │                                                         │
+└────────┴──────┴─────────────────────────────────────────────────────────┘
+
+modules/custom/medmus_share/src/Utility/MedmusShareRemoteEntityStatusFetcher.php:
+┌──────────┬──────┬──────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                            │
+├──────────┼──────┼──────────────────────────────────────────────────────────────┤
+│ Check    │ 144  │ Relying on entity queries to check access by default is      │
+│ manually │      │ deprecated in drupal:9.2.0 and an error will be thrown from  │
+│          │      │ drupal:10.0.0. Call                                          │
+│          │      │ \Drupal\Core\Entity\Query\QueryInterface::accessCheck() with │
+│          │      │ TRUE or FALSE to specify whether access should be checked.   │
+│          │      │                                                              │
+└──────────┴──────┴──────────────────────────────────────────────────────────────┘
+
+
+
+
