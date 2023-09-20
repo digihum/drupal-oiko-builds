@@ -110,7 +110,7 @@ class InlineCitationsWidget extends WidgetBase {
 
     $elements['form_display_mode'] = array(
       '#type' => 'select',
-      '#options' => \Drupal::entityManager()->getFormModeOptions($this->getFieldSetting('target_type')),
+      '#options' => \Drupal::service('entity_display.repository')->getFormModeOptions($this->getFieldSetting('target_type')),
       '#description' => t('The form display mode to use when rendering the paragraph form.'),
       '#title' => t('Form display mode'),
       '#default_value' => $this->getSetting('form_display_mode'),
@@ -174,7 +174,9 @@ class InlineCitationsWidget extends WidgetBase {
     $host = $items->getEntity();
     $widget_state = static::getWidgetState($parents, $field_name, $form_state);
 
-    $entity_manager = \Drupal::entityManager();
+    // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
+    // We are assuming that we want to use the `entity_type.manager` service since no method was called here directly. Please confirm this is the case. See https://www.drupal.org/node/2549139 for more information.
+    $entity_manager = \Drupal::service('entity_type.manager');
     $target_type = $this->getFieldSetting('target_type');
 
     $item_mode = isset($widget_state['paragraphs'][$delta]['mode']) ? $widget_state['paragraphs'][$delta]['mode'] : 'edit';
@@ -554,7 +556,7 @@ class InlineCitationsWidget extends WidgetBase {
       }
       elseif ($item_mode == 'preview') {
         $element['subform'] = array();
-        $element['preview'] = entity_view($paragraphs_entity, 'preview', $paragraphs_entity->language()->getId());
+        $element['preview'] = \Drupal::entityTypeManager()->getViewBuilder($paragraphs_entity->getEntityTypeId())->view($paragraphs_entity, 'preview', $paragraphs_entity->language()->getId());
         $element['preview']['#access'] = $paragraphs_entity->access('view');
       }
       elseif ($item_mode == 'closed') {
@@ -590,9 +592,11 @@ class InlineCitationsWidget extends WidgetBase {
 
     $return_bundles = array();
 
-    $entity_manager = \Drupal::entityManager();
+    // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
+    // We are assuming that we want to use the `entity_type.manager` service since no method was called here directly. Please confirm this is the case. See https://www.drupal.org/node/2549139 for more information.
+    $entity_type_manager = \Drupal::entityTypeManager();
     $target_type = $this->getFieldSetting('target_type');
-    $bundles = $entity_manager->getBundleInfo($target_type);
+    $bundles = $entity_type_manager->getBundleInfo($target_type);
 
     if ($this->getSelectionHandlerSetting('target_bundles') !== NULL) {
       $bundles = array_intersect_key($bundles, $this->getSelectionHandlerSetting('target_bundles'));
@@ -709,7 +713,9 @@ class InlineCitationsWidget extends WidgetBase {
     $field_state['real_item_count'] = $real_item_count;
     static::setWidgetState($parents, $field_name, $form_state, $field_state);
 
-    $entity_manager = \Drupal::entityManager();
+    // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
+    // We are assuming that we want to use the `entity_type.manager` service since no method was called here directly. Please confirm this is the case. See https://www.drupal.org/node/2549139 for more information.
+    $entity_manager = \Drupal::service('entity_type.manager');
     $target_type = $this->getFieldSetting('target_type');
     $bundles = $this->getAllowedTypes();
     $access_control_handler = $entity_manager->getAccessControlHandler($target_type);
@@ -1065,7 +1071,7 @@ class InlineCitationsWidget extends WidgetBase {
    */
   protected function isContentReferenced() {
     $target_type = $this->getFieldSetting('target_type');
-    $target_type_info = \Drupal::entityManager()->getDefinition($target_type);
+    $target_type_info = \Drupal::service('entity_type.manager')->getDefinition($target_type);
     return $target_type_info->isSubclassOf('\Drupal\Core\Entity\ContentEntityInterface');
   }
 
