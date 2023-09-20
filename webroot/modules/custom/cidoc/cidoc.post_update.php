@@ -1,6 +1,8 @@
 <?php
 
-use \Drupal\Core\Entity\Sql\SqlContentEntityStorageSchemaConverter;
+use Drupal\cidoc\Entity\CidocProperty;
+use Drupal\cidoc\Entity\CidocReference;
+use Drupal\Core\Entity\EntityDefinitionUpdateManagerInterface;
 
 /**
  * Update cidoc_entity to be revisionable.
@@ -18,7 +20,7 @@ function cidoc_post_update_make_cidoc_entity_revisionable(&$sandbox) {
     \Drupal::state()->set('cidoc.populate_temporal_date_for_cache', 0);
   }
 
-  $schema_converter = new SqlContentEntityStorageSchemaConverter(
+  $schema_converter = new updateFieldableEntityType(
     'cidoc_entity',
     \Drupal::entityTypeManager(),
     \Drupal::entityDefinitionUpdateManager(),
@@ -62,7 +64,7 @@ function cidoc_post_update_make_cidoc_reference_revisionable(&$sandbox) {
     \Drupal::state()->set('cidoc.populate_temporal_date_for_cache', 0);
   }
 
-  $schema_converter = new SqlContentEntityStorageSchemaConverter(
+  $schema_converter = new updateFieldableEntityType(
     'cidoc_reference',
     \Drupal::entityTypeManager(),
     \Drupal::entityDefinitionUpdateManager(),
@@ -95,7 +97,7 @@ function cidoc_post_update_bidirectional_properties2(&$sandbox) {
   \Drupal::state()->set('cidoc.maintain_reverse_relationships', 1);
 
   // Get a list of bidirectional properties.
-  $properties = array_filter(\Drupal\cidoc\Entity\CidocProperty::loadMultiple(NULL), function ($property) {
+  $properties = array_filter(CidocProperty::loadMultiple(NULL), function ($property) {
     return $property->isBidirectional();
   });
 
@@ -105,7 +107,7 @@ function cidoc_post_update_bidirectional_properties2(&$sandbox) {
       ->condition('property', array_keys($properties), 'IN')
       ->execute();
     if (!empty($result)) {
-      foreach (\Drupal\cidoc\Entity\CidocReference::loadMultiple($result) as $reference) {
+      foreach (CidocReference::loadMultiple($result) as $reference) {
         // Re-save the property to generate a bidirection partner.
         $reference->save();
       }

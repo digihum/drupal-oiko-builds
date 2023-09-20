@@ -37,7 +37,7 @@ class CidocEntityBundleDeleteForm extends EntityConfirmFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->entity->delete();
 
-    drupal_set_message($this->t('Deleted the %label CIDOC entity class.', ['%label' => $this->entity->label()]));
+    $this->messenger()->addStatus($this->t('Deleted the %label CIDOC entity class.', ['%label' => $this->entity->label()]));
 
     $form_state->setRedirectUrl($this->getCancelUrl());
   }

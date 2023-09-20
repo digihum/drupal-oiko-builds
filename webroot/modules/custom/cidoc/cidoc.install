@@ -4,7 +4,9 @@
  * @file
  * Install, update and uninstall functions for the CIDOC module.
  */
-
+use Drupal\user\Entity\Role;
+use Drupal\views\Views;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\cidoc\Entity\CidocEntityBundle;
 use Drupal\cidoc\Entity\CidocProperty;
 use Drupal\cidoc\Entity\CidocPropertyInterface;
@@ -157,11 +159,11 @@ function cidoc_update_8102() {
  * Give content editors permission to view the cidoc entity overview page.
  */
 function cidoc_update_8103() {
-  $role = \Drupal\user\Entity\Role::load('content_editor');
+  $role = Role::load('content_editor');
   $role->grantPermission('access cidoc entity overview');
   $role->save();
 
-  $view = \Drupal\views\Views::getView('cidoc_entities');
+  $view = Views::getView('cidoc_entities');
   $view->setDisplay('default');
   $view->display_handler->setOption('access', array(
     'type' => 'perm',
@@ -310,7 +312,7 @@ function cidoc_update_8402() {
 
   // Add the status field.
   $status = BaseFieldDefinition::create('boolean')
-    ->setLabel(new \Drupal\Core\StringTranslation\TranslatableMarkup('Published'))
+    ->setLabel(new TranslatableMarkup('Published'))
     ->setRevisionable(TRUE)
     ->setTranslatable(TRUE)
     ->setDefaultValue(TRUE);
@@ -379,7 +381,9 @@ function cidoc_update_8402() {
  */
 function cidoc_update_8403() {
   // Ideally we'd do better at updating the value of existing entities, but this will do.
-  db_update('cidoc_reference')
+  // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
+  // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
+  \Drupal::database()->update('cidoc_reference')
     ->fields(array('status' => TRUE))
     ->execute();
 }

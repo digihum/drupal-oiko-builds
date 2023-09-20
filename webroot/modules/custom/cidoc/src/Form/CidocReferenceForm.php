@@ -18,7 +18,7 @@ class CidocReferenceForm extends ContentEntityForm {
     $entity = $this->entity;
     parent::save($form, $form_state);
 
-    drupal_set_message($this->t('Saved the %label CIDOC entity property reference.', ['%label' => $entity->label()]));
+    $this->messenger()->addStatus($this->t('Saved the %label CIDOC entity property reference.', ['%label' => $entity->label()]));
     $form_state->setRedirect('entity.cidoc_reference.canonical', ['cidoc_reference' => $entity->id()]);
   }
 
