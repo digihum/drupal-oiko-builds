@@ -20,7 +20,7 @@ function cidoc_sync_create_entity_bundle_callback($dry_run, $destructive, $crm_e
   if (!$dry_run) {
     $new_bundle->save();
   }
-  drupal_set_message(t('Added Drupal representation for @crm_entity_label', array('@crm_entity_label' => $crm_entity_factory->getEntity($crm_entity_name)->getLabel())));
+  \Drupal::messenger()->addStatus(t('Added Drupal representation for @crm_entity_label', array('@crm_entity_label' => $crm_entity_factory->getEntity($crm_entity_name)->getLabel())));
 }
 
 /**
@@ -37,7 +37,7 @@ function cidoc_sync_delete_entity_bundle_callback($dry_run, $destructive, $drupa
     if (!$dry_run) {
       $new_bundle->delete();
     }
-    drupal_set_message(t('Removed Drupal representation for @label', array('@label' => $drupal_bundle_name)));
+    \Drupal::messenger()->addStatus(t('Removed Drupal representation for @label', array('@label' => $drupal_bundle_name)));
   }
 }
 
@@ -71,7 +71,7 @@ function cidoc_sync_sync_entity_bundle_callback($dry_run, $destructive, $crm_ent
   $bundle->set('description', MarkdownExtra::defaultTransform($crm_entity->getDescription()));
   $bundle->set('examples', MarkdownExtra::defaultTransform($crm_entity->getExamples()));
   if ($bundle->toArray() != $cidoc_entity_storage->loadUnchanged($bundle->getOriginalId())->toArray()) {
-    drupal_set_message(t('Updated label/description for @crm_entity_label.', array('@crm_entity_label' => $crm_entity_factory->getEntity($crm_entity_name)->getLabel())));
+    \Drupal::messenger()->addStatus(t('Updated label/description for @crm_entity_label.', array('@crm_entity_label' => $crm_entity_factory->getEntity($crm_entity_name)->getLabel())));
   }
   if (!$dry_run) {
     $bundle->save();
@@ -99,7 +99,7 @@ function cidoc_sync_sync_entity_bundle_callback($dry_run, $destructive, $crm_ent
           if (!$dry_run) {
             $drupal_property->delete();
           }
-          drupal_set_message(t('Removed CRM property: @crm_property_label.', [
+          \Drupal::messenger()->addStatus(t('Removed CRM property: @crm_property_label.', [
             '@crm_property_label' => $crm_property_factory->getProperty($crm_property_name)
               ->getLabel(),
           ]));
@@ -149,10 +149,10 @@ function cidoc_sync_sync_entity_bundle_callback($dry_run, $destructive, $crm_ent
         $drupal_property->save();
       }
       if ($drupal_property->isNew()) {
-        drupal_set_message(t('Added Property: @crm_property_label.', array('@crm_property_label' => $drupal_property->label())));
+        \Drupal::messenger()->addStatus(t('Added Property: @crm_property_label.', array('@crm_property_label' => $drupal_property->label())));
       }
       elseif ($drupal_property->toArray() != $cidoc_property_storage->loadUnchanged($drupal_property->getOriginalId())->toArray()) {
-        drupal_set_message(t('Updated Property: @crm_property_label.', array('@crm_property_label' => $drupal_property->label())));
+        \Drupal::messenger()->addStatus(t('Updated Property: @crm_property_label.', array('@crm_property_label' => $drupal_property->label())));
       }
     }
     else {
@@ -163,7 +163,7 @@ function cidoc_sync_sync_entity_bundle_callback($dry_run, $destructive, $crm_ent
           if (!$dry_run) {
             $drupal_property->delete();
           }
-          drupal_set_message(t('Removed CRM property: @crm_property_label.', [
+          \Drupal::messenger()->addStatus(t('Removed CRM property: @crm_property_label.', [
             '@crm_property_label' => $drupal_property->label(),
           ]));
         }
