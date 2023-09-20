@@ -13,20 +13,24 @@ class CidocSpecServiceProvider extends ServiceProviderBase {
    * {@inheritdoc}
    */
   public function alter(ContainerBuilder $container) {
-    $definition = $container->getDefinition('cidoc_spec.entity_factory');
-    $arguments = $definition->getArguments();
-    $arguments[0] = isset($arguments[0]) ? $arguments[0] : array();
-    // Add the original directory of entities.
-    $arguments[0][] = realpath(DRUPAL_ROOT . '/../vendor/computerminds/cidoc-crm/yaml');
+    if ($container->hasDefinition('cidoc_spec.entity_factory')) {
+      $definition = $container->getDefinition('cidoc_spec.entity_factory');
+      $arguments = $definition->getArguments();
+      $arguments[0] = isset($arguments[0]) ? $arguments[0] : array();
+      // Add the original directory of entities.
+      $arguments[0][] = realpath(DRUPAL_ROOT . '/../vendor/digihum/cidoc-crm/yaml');
 
-    $definition->setArguments($arguments);
+      $definition->setArguments($arguments);
+    }
 
-    $definition = $container->getDefinition('cidoc_spec.property_factory');
-    $arguments = $definition->getArguments();
-    $arguments[0] = isset($arguments[0]) ? $arguments[0] : array();
-    // Add the original directory of entities.
-    $arguments[0][] = realpath(DRUPAL_ROOT . '/../vendor/computerminds/cidoc-crm/yaml');
+    if ($container->hasDefinition('cidoc_spec.property_factory')) {
+      $definition = $container->getDefinition('cidoc_spec.property_factory');
+      $arguments = $definition->getArguments();
+      $arguments[0] = isset($arguments[0]) ? $arguments[0] : array();
+      // Add the original directory of entities.
+      $arguments[0][] = realpath(DRUPAL_ROOT . '/../vendor/digihum/cidoc-crm/yaml');
 
-    $definition->setArguments($arguments);
+      $definition->setArguments($arguments);
+    }
   }
 }

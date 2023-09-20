@@ -7,6 +7,6 @@
   "homepage": "https://www.drupal.org/project/cidoc_spec",
   "minimum-stability": "dev",
   "require": {
-    "computerminds/cidoc-crm": "^1.0.0"
+    "digihum/cidoc-crm": "1.1.0"
   }
 }
