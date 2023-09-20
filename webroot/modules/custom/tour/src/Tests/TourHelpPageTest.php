@@ -2,21 +2,21 @@
 
 namespace Drupal\tour\Tests;
 
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Verifies help page display of tours.
  *
  * @group help
  */
-class TourHelpPageTest extends WebTestBase {
+class TourHelpPageTest extends BrowserTestBase {
 
   /**
    * Modules to enable, including some providing tours.
    *
    * @var array
    */
-  public static $modules = ['help', 'tour', 'locale', 'language'];
+  protected static $modules = ['help', 'tour', 'locale', 'language'];
 
   /**
    * User that can access tours and help.
@@ -45,6 +45,8 @@ class TourHelpPageTest extends WebTestBase {
     $this->noTourUser = $this->drupalCreateUser(['access administration pages']);
   }
 
+
+  
   /**
    * Logs in users, tests help pages.
    */

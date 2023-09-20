@@ -16,7 +16,7 @@ class TourPluginTest extends KernelTestBase {
    *
    * @var array
    */
-  public static $modules = array('tour');
+  protected static $modules = array('tour');
 
   /**
    * Stores the tour plugin manager.
@@ -25,7 +25,7 @@ class TourPluginTest extends KernelTestBase {
    */
   protected $pluginManager;
 
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->installConfig(array('tour'));
@@ -36,7 +36,7 @@ class TourPluginTest extends KernelTestBase {
    * Test tour plugins.
    */
   public function testTourPlugins() {
-    $this->assertIdentical(count($this->pluginManager->getDefinitions()), 1, 'Only tour plugins for the enabled modules were returned.');
+    $this->assertSame(count($this->pluginManager->getDefinitions()), 1, 'Only tour plugins for the enabled modules were returned.');
   }
 
 }
