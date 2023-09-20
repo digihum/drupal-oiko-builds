@@ -1,5 +1,5 @@
 name: Oiko - Pleiades
 type: module
 description: Oiko integration with Pleiades.
-core: 8.x
+core_version_requirement: ^8 || ^9
 package: Oiko
