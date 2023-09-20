@@ -1,0 +1,47 @@
+CUSTOM PROJECTS
+--------------------------------------------------------------------------------
+Tour UI
+Scanned on Wed, 08/16/2023 - 12:19.
+
+2 errors found. 2 warnings found.
+
+modules/custom/tour_ui/src/Form/TourDeleteForm.php:
+┌──────────┬──────┬────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                          MESSAGE                           │
+├──────────┼──────┼────────────────────────────────────────────────────────────┤
+│ Check    │ 11   │ Class Drupal\tour_ui\Form\TourDeleteForm extends @internal │
+│ manually │      │ class Drupal\Core\Entity\EntityDeleteForm.                 │
+│          │      │                                                            │
+└──────────┴──────┴────────────────────────────────────────────────────────────┘
+
+modules/custom/tour_ui/src/Tests/TourUITest.php:
+┌─────────┬──────┬─────────────────────────────────────────────────────────────┐
+│ STATUS  │ LINE │                           MESSAGE                           │
+├─────────┼──────┼─────────────────────────────────────────────────────────────┤
+│ Fix now │ 10   │ Class Drupal\tour_ui\Tests\TourUITest extends deprecated    │
+│         │      │ class Drupal\simpletest\WebTestBase. Deprecated in          │
+│         │      │ drupal:8.8.0 and is removed from drupal:9.0.0. Instead, use │
+│         │      │ Drupal\Tests\BrowserTestBase. See                           │
+│         │      │ https://www.drupal.org/node/3030340. Replacement available  │
+│         │      │ from drupal:8.6.0.                                          │
+│         │      │                                                             │
+└─────────┴──────┴─────────────────────────────────────────────────────────────┘
+
+modules/custom/tour_ui/src/TourListBuilder.php:
+┌──────────┬──────┬──────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                            │
+├──────────┼──────┼──────────────────────────────────────────────────────────────┤
+│ Fix now  │ 35   │ Call to deprecated method getStorage() of class              │
+│          │      │ Drupal\Core\Entity\Entity*Manager. Deprecated in drupal:8.0.0 │
+│          │      │ and is removed from drupal:9.0.0. Use                        │
+│          │      │ Drupal\Core\Entity\EntityTypeManagerInterface::getStorage()  │
+│          │      │ instead.                                                     │
+│          │      │                                                              │
+│ Check    │ 35   │ The "entity.manager" service is deprecated. You should use   │
+│ manually │      │ the 'entity_type.manager' service instead.                   │
+│          │      │                                                              │
+└──────────┴──────┴──────────────────────────────────────────────────────────────┘
+
+
+
+
