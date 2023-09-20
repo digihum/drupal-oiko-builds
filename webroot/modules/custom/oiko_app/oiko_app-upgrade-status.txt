@@ -1,0 +1,55 @@
+CUSTOM PROJECTS
+--------------------------------------------------------------------------------
+Oiko App
+Scanned on Wed, 08/16/2023 - 11:25.
+
+5 warnings found.
+
+modules/custom/oiko_app/src/Plugin/Block/MainSearchBlock.php:
+┌──────────┬──────┬─────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                           │
+├──────────┼──────┼─────────────────────────────────────────────────────────────┤
+│ Check    │ 108  │ Call to deprecated method checkPlain() of class             │
+│ manually │      │ Drupal\Component\Utility\SafeMarkup: Will be removed before │
+│          │      │ Drupal 9.0.0. Rely on Twig's auto-escaping feature, or use  │
+│          │      │ the @link theme_render #plain_text @endlink key when        │
+│          │      │ constructing a render array that contains plain text in     │
+│          │      │ order to use the renderer's auto-escaping feature. If       │
+│          │      │ neither of these are possible,                              │
+│          │      │ \Drupal\Component\Utility\Html::escape() can be used in     │
+│          │      │ places where explicit escaping is needed.                   │
+│          │      │                                                             │
+│ Check    │ 108  │ Call to method checkPlain() of deprecated class             │
+│ manually │      │ Drupal\Component\Utility\SafeMarkup: Will be removed before │
+│          │      │ Drupal 9.0.0. Use the appropriate                           │
+│          │      │                                                             │
+│ Check    │ 110  │ Call to deprecated method checkPlain() of class             │
+│ manually │      │ Drupal\Component\Utility\SafeMarkup: Will be removed before │
+│          │      │ Drupal 9.0.0. Rely on Twig's auto-escaping feature, or use  │
+│          │      │ the @link theme_render #plain_text @endlink key when        │
+│          │      │ constructing a render array that contains plain text in     │
+│          │      │ order to use the renderer's auto-escaping feature. If       │
+│          │      │ neither of these are possible,                              │
+│          │      │ \Drupal\Component\Utility\Html::escape() can be used in     │
+│          │      │ places where explicit escaping is needed.                   │
+│          │      │                                                             │
+│ Check    │ 110  │ Call to method checkPlain() of deprecated class             │
+│ manually │      │ Drupal\Component\Utility\SafeMarkup: Will be removed before │
+│          │      │ Drupal 9.0.0. Use the appropriate                           │
+│          │      │                                                             │
+└──────────┴──────┴─────────────────────────────────────────────────────────────┘
+
+modules/custom/oiko_app/oiko_app.libraries.yml:
+┌──────────┬──────┬─────────────────────────────────────────────────────────────┐
+│  STATUS  │ LINE │                           MESSAGE                           │
+├──────────┼──────┼─────────────────────────────────────────────────────────────┤
+│ Check    │ 0    │ The 'app' library is depending on a deprecated library. The │
+│ manually │      │ "core/domready" asset library is deprecated in drupal:8.8.0 │
+│          │      │ and is removed from drupal:9.0.0. See                       │
+│          │      │ https://www.drupal.org/node/3086669                         │
+│          │      │                                                             │
+└──────────┴──────┴─────────────────────────────────────────────────────────────┘
+
+
+
+

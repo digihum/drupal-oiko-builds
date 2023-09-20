@@ -4,6 +4,7 @@ namespace Drupal\oiko_app\Plugin\Block;
 
 use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Component\Utility\Xss;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -105,9 +106,9 @@ class MainSearchBlock extends BlockBase {
   public function build() {
     return array(
       '#theme' => 'main_cidoc_search',
-      '#placeholder_map' => SafeMarkup::checkPlain($this->configuration['placeholder_map']),
+      '#placeholder_map' => Html::escape($this->configuration['placeholder_map']),
       '#no_search_map' => Xss::filterAdmin($this->configuration['no_search_map']),
-      '#placeholder_timeline' => SafeMarkup::checkPlain($this->configuration['placeholder_timeline']),
+      '#placeholder_timeline' => Html::escape($this->configuration['placeholder_timeline']),
       '#no_search_timeline' => Xss::filterAdmin($this->configuration['no_search_timeline']),
       '#no_results_text' => Xss::filterAdmin($this->configuration['no_results_text']),
       '#searching_text' => Xss::filterAdmin($this->configuration['searching_text']),
