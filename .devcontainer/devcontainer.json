@@ -4,7 +4,8 @@
     "service": "drupal",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	"features": {
-		"ghcr.io/devcontainers/features/github-cli:1": {}
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
 	},	
 	"forwardPorts": [
 		8080
@@ -24,6 +25,11 @@
 			"/drupal/seeds/settings.local.php",
 			"/drupal/docker-compose.yml"
 		]
+		},
+		"vscode": {
+			"extensions": [
+				"ms-azuretools.vscode-docker"
+			]
 		}
 	}
 }
