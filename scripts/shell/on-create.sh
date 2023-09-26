@@ -12,4 +12,4 @@ rm -f "$APACHE_DIR"
 rm -rf "$DEFAULT_DIR"
 
 # new synbolic link
-ln -s "$LIVE_DIR/" "html"
+ln -s "$LIVE_DIR/" "$APACHE_DIR"
