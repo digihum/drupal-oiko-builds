@@ -1,7 +1,7 @@
 .drush-cache-rebuild
 webroot/sites/*/files/
 webroot/sites/*/settings.local.php
-webroot/sites/sites.php
-webroot/sites/clone.test/
-.idea
+webroot/sites/*/settings.php
+webroot/sites/*/services.yml
 node_modules/
+docker/data/*
