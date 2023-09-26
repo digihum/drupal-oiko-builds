@@ -106,6 +106,7 @@
         "drupal/admin_toolbar": "^2.0",
         "drupal/avatars": "^1.0@beta",
         "drupal/browsersync": "1.0-beta1",
+        "drupal/checklistapi": "^2.0",
         "drupal/color_field": "^2.0",
         "drupal/config_devel": "1.x-dev#92f735cae8e9fb328edca285340a5bfbf72028cc",
         "drupal/config_readonly": "1.0-beta2",
@@ -123,6 +124,7 @@
         "drupal/eu_cookie_compliance": "^1.0",
         "drupal/eva": "^2.0",
         "drupal/field_group": "^3.0.0",
+        "drupal/gdpr": "^1.0",
         "drupal/geocoder": "^2.0",
         "drupal/geocoder_autocomplete": "^1.0",
         "drupal/geofield": "^1.6",
@@ -143,6 +145,7 @@
         "drupal/shib_auth": "1.x-dev",
         "drupal/squid_autocomplete": "1.0-alpha5",
         "drupal/stage_file_proxy": "*",
+        "drupal/upgrade_status": "^4.0",
         "drupal/views_bulk_operations": "^2.6.0",
         "drupal/views_fields_on_off": "^1.0@alpha",
         "drupal/webform": "^5.11",
@@ -229,6 +232,10 @@
         "sort-packages": true,
         "platform": {
             "php": "7.2"
+        },
+        "allow-plugins": {
+            "composer/installers": true,
+            "oomphinc/composer-installers-extender": true
         }
     }
 }

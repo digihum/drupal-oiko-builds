@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "be129ea87c9c47c2c5b4c7b6fcf3f09e",
+    "content-hash": "5f694797e3a4b831fa1fd35b3d2487a8",
     "packages": [
         {
             "name": "Leaflet/Leaflet",
@@ -1182,8 +1182,7 @@
             "homepage": "https://www.drupal.org/project/add_to_head",
             "support": {
                 "source": "https://git.drupalcode.org/project/add_to_head"
-            },
-            "time": "2016-12-30T18:11:10+00:00"
+            }
         },
         {
             "name": "drupal/admin_toolbar",
@@ -1359,6 +1358,73 @@
             }
         },
         {
+            "name": "drupal/checklistapi",
+            "version": "1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/checklistapi.git",
+                "reference": "8.x-1.11"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/checklistapi-8.x-1.11.zip",
+                "reference": "8.x-1.11",
+                "shasum": "78fcf8ff6edd02f2cdfc907981db119dfca795c2"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9",
+                "php": ">=5.6.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.11",
+                    "datestamp": "1586540246",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                },
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                },
+                "drush": {
+                    "services": {
+                        "drush.services.yml": "^10"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Travis Carden",
+                    "homepage": "https://www.drupal.org/user/3550392",
+                    "email": "travis.carden@gmail.com"
+                },
+                {
+                    "name": "Rajeshreeputra",
+                    "homepage": "https://www.drupal.org/user/3418561"
+                },
+                {
+                    "name": "TravisCarden",
+                    "homepage": "https://www.drupal.org/user/236758"
+                },
+                {
+                    "name": "VladimirAus",
+                    "homepage": "https://www.drupal.org/user/673120"
+                }
+            ],
+            "description": "Provides an API for creating fillable, persistent checklists.",
+            "homepage": "http://drupal.org/project/checklistapi",
+            "support": {
+                "source": "https://git.drupalcode.org/project/checklistapi",
+                "issues": "https://www.drupal.org/project/issues/checklistapi"
+            }
+        },
+        {
             "name": "drupal/color_field",
             "version": "2.0.0",
             "source": {
@@ -1484,8 +1550,7 @@
             "homepage": "https://www.drupal.org/project/config_devel",
             "support": {
                 "source": "https://git.drupalcode.org/project/config_devel"
-            },
-            "time": "2016-06-21T08:20:33+00:00"
+            }
         },
         {
             "name": "drupal/config_filter",
@@ -1729,8 +1794,7 @@
             "homepage": "https://www.drupal.org/project/config_update",
             "support": {
                 "source": "https://git.drupalcode.org/project/config_update"
-            },
-            "time": "2016-08-31T19:41:53+00:00"
+            }
         },
         {
             "name": "drupal/core",
@@ -2351,8 +2415,7 @@
                 "source": "http://cgit.drupalcode.org/devel",
                 "issues": "http://drupal.org/project/devel",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
-            },
-            "time": "2019-01-29T21:22:48+00:00"
+            }
         },
         {
             "name": "drupal/devel_entity_updates",
@@ -2460,6 +2523,75 @@
             "homepage": "https://www.drupal.org/project/editor_file",
             "support": {
                 "source": "https://git.drupalcode.org/project/editor_file"
+            }
+        },
+        {
+            "name": "drupal/entity",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/entity.git",
+                "reference": "8.x-1.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/entity-8.x-1.3.zip",
+                "reference": "8.x-1.3",
+                "shasum": "9515e28a70448d369adf4199d08a01a5ab75792d"
+            },
+            "require": {
+                "drupal/core": "^8.8.2 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.3",
+                    "datestamp": "1646324539",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Berdir",
+                    "homepage": "https://www.drupal.org/user/214652"
+                },
+                {
+                    "name": "bojanz",
+                    "homepage": "https://www.drupal.org/user/86106"
+                },
+                {
+                    "name": "dawehner",
+                    "homepage": "https://www.drupal.org/user/99340"
+                },
+                {
+                    "name": "dixon_",
+                    "homepage": "https://www.drupal.org/user/239911"
+                },
+                {
+                    "name": "fago",
+                    "homepage": "https://www.drupal.org/user/16747"
+                },
+                {
+                    "name": "mglaman",
+                    "homepage": "https://www.drupal.org/user/2416470"
+                },
+                {
+                    "name": "TR",
+                    "homepage": "https://www.drupal.org/user/202830"
+                }
+            ],
+            "description": "Provides expanded entity APIs, which will be moved to Drupal core one day.",
+            "homepage": "https://www.drupal.org/project/entity",
+            "support": {
+                "source": "https://git.drupalcode.org/project/entity",
+                "issues": "https://www.drupal.org/project/issues/entity"
             }
         },
         {
@@ -2793,6 +2925,124 @@
             "homepage": "https://www.drupal.org/project/field_group",
             "support": {
                 "source": "https://git.drupalcode.org/project/field_group"
+            }
+        },
+        {
+            "name": "drupal/gdpr",
+            "version": "1.0.0-alpha19",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/gdpr.git",
+                "reference": "8.x-1.0-alpha19"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/gdpr-8.x-1.0-alpha19.zip",
+                "reference": "8.x-1.0-alpha19",
+                "shasum": "89fec87935dfb569b7cf4463e08c562705a5278b"
+            },
+            "require": {
+                "cweagans/composer-patches": "~1.0",
+                "drupal/checklistapi": "^1.0",
+                "drupal/core": "~8.0",
+                "drupal/entity": "^1.0",
+                "drupal/entity_reference_revisions": "^1.4",
+                "drupal/message": "^1.0",
+                "drupal/token": "^1.1",
+                "ext-zip": "*",
+                "fzaninotto/faker": "^1.7",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "drupal/anonymizer": "*",
+                "drupal/entity": "*",
+                "drupal/entity_reference_revisions": "*",
+                "drupal/gdpr_fields": "*",
+                "drupal/message": "*",
+                "drupal/token": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.0-alpha19",
+                    "datestamp": "1552919885",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "mhavelant",
+                    "homepage": "https://www.drupal.org/user/1358588",
+                    "email": "mhavelant@brainsum.com"
+                },
+                {
+                    "name": "andrewbelcher",
+                    "homepage": "https://www.drupal.org/user/655282"
+                },
+                {
+                    "name": "back-2-95",
+                    "homepage": "https://www.drupal.org/user/327328"
+                },
+                {
+                    "name": "Balu Ertl",
+                    "homepage": "https://www.drupal.org/user/1086292"
+                },
+                {
+                    "name": "bfr",
+                    "homepage": "https://www.drupal.org/user/369262"
+                },
+                {
+                    "name": "dj1999",
+                    "homepage": "https://www.drupal.org/user/387119"
+                },
+                {
+                    "name": "golddragon007",
+                    "homepage": "https://www.drupal.org/user/2723471"
+                },
+                {
+                    "name": "Kosa Ilma",
+                    "homepage": "https://www.drupal.org/user/3435475"
+                },
+                {
+                    "name": "lbesenyei",
+                    "homepage": "https://www.drupal.org/user/2626013"
+                },
+                {
+                    "name": "leymannx",
+                    "homepage": "https://www.drupal.org/user/2482808"
+                },
+                {
+                    "name": "mhavelant",
+                    "homepage": "https://www.drupal.org/user/3331139"
+                },
+                {
+                    "name": "pedrop",
+                    "homepage": "https://www.drupal.org/user/1043368"
+                },
+                {
+                    "name": "Rajeshreeputra",
+                    "homepage": "https://www.drupal.org/user/3418561"
+                },
+                {
+                    "name": "szato",
+                    "homepage": "https://www.drupal.org/user/389677"
+                },
+                {
+                    "name": "yanniboi",
+                    "homepage": "https://www.drupal.org/user/1837556"
+                }
+            ],
+            "description": "Helps with making a site GDPR-compliant.",
+            "homepage": "https://www.drupal.org/project/gdpr",
+            "support": {
+                "source": "https://git.drupalcode.org/project/gdpr"
             }
         },
         {
@@ -3329,8 +3579,7 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/leaflet",
                 "issues": "https://www.drupal.org/project/issues/leaflet"
-            },
-            "time": "2016-04-04T21:22:53+00:00"
+            }
         },
         {
             "name": "drupal/leaflet_widget",
@@ -3343,8 +3592,70 @@
             "require": {
                 "composer/installers": "^1.0.21"
             },
+            "type": "drupal-module"
+        },
+        {
+            "name": "drupal/message",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/message.git",
+                "reference": "8.x-1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/message-8.x-1.2.zip",
+                "reference": "8.x-1.2",
+                "shasum": "f1494d8c482840b01f8d1dcc4ed572d5844a3873"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "require-dev": {
+                "drupal/token": "*"
+            },
             "type": "drupal-module",
-            "time": "2016-09-20T10:25:00+00:00"
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.2",
+                    "datestamp": "1607017386",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "amitaibu",
+                    "homepage": "https://www.drupal.org/user/57511"
+                },
+                {
+                    "name": "Grayside",
+                    "homepage": "https://www.drupal.org/user/346868"
+                },
+                {
+                    "name": "itamar",
+                    "homepage": "https://www.drupal.org/user/1757910"
+                },
+                {
+                    "name": "jhedstrom",
+                    "homepage": "https://www.drupal.org/user/208732"
+                },
+                {
+                    "name": "RoySegall",
+                    "homepage": "https://www.drupal.org/user/1812910"
+                }
+            ],
+            "description": "Message",
+            "homepage": "https://www.drupal.org/project/message",
+            "support": {
+                "source": "https://git.drupalcode.org/project/message"
+            }
         },
         {
             "name": "drupal/metatag",
@@ -3741,8 +4052,7 @@
             "homepage": "https://www.drupal.org/project/r4032login",
             "support": {
                 "source": "https://git.drupalcode.org/project/r4032login"
-            },
-            "time": "2020-01-10T16:52:01+00:00"
+            }
         },
         {
             "name": "drupal/search_api",
@@ -3929,8 +4239,7 @@
             "homepage": "https://www.drupal.org/project/shib_auth",
             "support": {
                 "source": "https://git.drupalcode.org/project/shib_auth"
-            },
-            "time": "2019-09-21T23:41:49+00:00"
+            }
         },
         {
             "name": "drupal/squid_autocomplete",
@@ -4712,6 +5021,57 @@
                 "validator"
             ],
             "time": "2019-08-13T17:33:27+00:00"
+        },
+        {
+            "name": "fzaninotto/faker",
+            "version": "v1.9.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzaninotto/Faker.git",
+                "reference": "848d8125239d7dbf8ab25cb7f054f1a630e68c2e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/848d8125239d7dbf8ab25cb7f054f1a630e68c2e",
+                "reference": "848d8125239d7dbf8ab25cb7f054f1a630e68c2e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.3 || ^7.0"
+            },
+            "require-dev": {
+                "ext-intl": "*",
+                "phpunit/phpunit": "^4.8.35 || ^5.7",
+                "squizlabs/php_codesniffer": "^2.9.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Faker\\": "src/Faker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "François Zaninotto"
+                }
+            ],
+            "description": "Faker is a PHP library that generates fake data for you.",
+            "keywords": [
+                "data",
+                "faker",
+                "fixtures"
+            ],
+            "abandoned": true,
+            "time": "2020-12-11T09:56:16+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -5537,7 +5897,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:oomphinc/composer-installers-extender.git",
+                "url": "https://github.com/oomphinc/composer-installers-extender.git",
                 "reference": "8d3fe38a1723e0e91076920c8bb946b1696e28ca"
             },
             "dist": {
@@ -6386,6 +6746,7 @@
             ],
             "description": "Symfony ClassLoader Component",
             "homepage": "https://symfony.com",
+            "abandoned": true,
             "time": "2019-08-20T13:31:17+00:00"
         },
         {
@@ -6514,6 +6875,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
+            "abandoned": "symfony/error-handler",
             "time": "2019-10-24T15:33:53+00:00"
         },
         {
@@ -8018,6 +8380,7 @@
                 }
             ],
             "description": "A robust cross-platform utility for normalizing, comparing and modifying file paths.",
+            "abandoned": "symfony/filesystem",
             "time": "2015-12-17T08:42:14+00:00"
         },
         {
