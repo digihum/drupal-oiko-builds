@@ -28,25 +28,16 @@ services:
       - 8080:80
     volumes:
       - ./data:/var/lib/mysql
-      - ../webroot:/opt/drupal/webroot/
+      - ../webroot:/opt/drupal/webroot
       - ../profiles:/opt/drupal/profiles
       - ../scripts:/opt/drupal/scripts
       - ../vendor:/opt/drupal/vendor
       - ../drush:/opt/drupal/drush
       - ../config:/opt/drupal/config
-      - ./files:/opt/drupal/webroot/sites/default/files:rw
       
       # this takes advantage of the feature in Docker that a new anonymous
       # volume (which is what we're creating here) will be initialized with the
       # existing content of the image at the same location
-      - type: bind
-        source: ./seed/settings.local.php
-        target: /opt/drupal/webroot/sites/default/settings.local.php
-        read_only: false
-      - type: bind
-        source: ./seed/services.yml
-        target: /opt/drupal/webroot/sites/default/services.yml
-        read_only: false
       - type: bind
         source: ../composer.json
         target: /opt/drupal/composer.json
