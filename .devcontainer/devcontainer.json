@@ -1,0 +1,29 @@
+{
+    "name":"MedMus D8",
+    "dockerComposeFile": "../docker/docker-compose.yml",
+    "service": "drupal",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"features": {
+		"ghcr.io/devcontainers/features/github-cli:1": {}
+	},	
+	"forwardPorts": [
+		8080
+	],
+	"portsAttributes": {
+		"8080": {
+			"label": "web"
+		},
+		"16635": {
+			"label": "codespaces"
+		}
+	},
+	"postCreateCommand": "/opt/drupal/scripts/shell/on-create.sh",
+	"customizations": {
+		"codespaces": {
+		"openFiles": [
+			"/drupal/seeds/settings.local.php",
+			"/drupal/docker-compose.yml"
+		]
+		}
+	}
+}

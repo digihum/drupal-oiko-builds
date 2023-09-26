@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  drupal_db:
+    image: mysql:5.7
+    command: --max_allowed_packet=900M
+    container_name: drupal_db
+    volumes:
+      - ./data:/var/lib/mysql
+      - type: bind
+        source: ./seed/medmus.prod.20230921.sql
+        target: /docker-entrypoint-initdb.d/medmus.prod.20230921.sql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: drupal
+      MYSQL_DATABASE: db_prod_2
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+#    command:
+#      - sh -c 'exec mysql -uroot -p drupal' < /production_no_users.sql
+
+  drupal:
+    depends_on:
+      - drupal_db
+    image: drupal:8.8.10-apache
+    container_name: drupal
+    ports:
+      - 8080:80
+    volumes:
+      - ./data:/var/lib/mysql
+      - ../webroot:/opt/drupal/webroot/
+      - ../profiles:/opt/drupal/profiles
+      - ../scripts:/opt/drupal/scripts
+      - ../vendor:/opt/drupal/vendor
+      - ../drush:/opt/drupal/drush
+      - ../config:/opt/drupal/config
+      - ./files:/opt/drupal/webroot/sites/default/files:rw
+      
+      # this takes advantage of the feature in Docker that a new anonymous
+      # volume (which is what we're creating here) will be initialized with the
+      # existing content of the image at the same location
+      - type: bind
+        source: ./seed/settings.local.php
+        target: /opt/drupal/webroot/sites/default/settings.local.php
+        read_only: false
+      - type: bind
+        source: ./seed/services.yml
+        target: /opt/drupal/webroot/sites/default/services.yml
+        read_only: false
+      - type: bind
+        source: ../composer.json
+        target: /opt/drupal/composer.json
+        read_only: false
+      - type: bind
+        source: ../composer.lock
+        target: /opt/drupal/composer.lock
+        read_only: false
+
+    restart: always
