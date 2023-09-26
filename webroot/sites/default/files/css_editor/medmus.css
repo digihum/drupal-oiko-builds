@@ -1,0 +1,691 @@
+/* Color variables*/
+:root {
+  --dark: #bc412b;
+  --less-dark: #bdd8bd; /* #B8D5B8;  mint */
+  --more-dark: #fefdfd;
+  --light: #fefdfd;
+  --less-light: #e6f0e6;
+  --disabled: #d0d0d0;
+  --main-font: Optima !important;
+  --link-color: #bc412b;
+  --font-color: #1b0906;
+}
+
+/* expanded sidebar */
+.expandedSidebar {
+  width: 100%;
+}
+
+/*
+h1 {font-size:35px;}
+h2 {font-size:30px;}
+h3 {font-size:28px;}
+li, p, a, .field__label {font-size: 19px;}
+.leaflet-control-attribution a {font-size: 11px;}*/
+header.navigation-bar a {
+  font-size: 28px;
+}
+header.navigation-bar a:hover {
+  color: var(--less-dark);
+}
+
+/* TABLES */
+th,
+tr:nth-child(even) {
+  background-color: var(--less-light) !important;
+}
+tr:nth-child(odd) {
+  background: var(--light);
+}
+thead,
+tbody {
+  border-color: #fff !important;
+}
+
+#main-search-dropdown--2  {
+  margin-left: 20px;
+}
+
+#main-search-dropdown--2 {
+  margin-left: 20px;
+}
+
+/* Button*/
+.form-submit:hover,
+a.button:hover {
+  background-color: var(--less-light);
+  border: 2px solid var(--font-color);
+}
+.form-submit:focus {
+  outline: none;
+  border: 2px solid var(--dark) !important;
+}
+
+/* SIDEBAR */
+.oiko-sidebar,
+.navigation-bar,
+.main-search-wrapper,
+.main-search-box,
+.main-search__dropdown,
+.dropdown-pane {
+  background-color: var(--dark) !important;
+  color: #000;
+}
+.sidebar-close {
+  z-index: 1;
+  margin-top: 0px !important;
+}
+
+.tabs-panel {
+  background-color: var(--light);
+}
+
+.fancy-titles h3,
+.cidoc_entity div {
+  color: var(--font-color) !important;
+}
+
+.main-search__dropdown,
+.dropdown-pane {
+  border: 1px solid var(--dark);
+  border-top: 5px solid var(--dark);
+  border-left: 2px solid var(--dark) !important;
+}
+
+/* CONTENT COLORS*/
+.l-content-header-search,
+.icon-links__item,
+.l-content-header,
+.page-scroll-container,
+.form-text,
+.form-select,
+.l-sidebar-content,
+.contextual-region,
+.is-active a,
+.main-search-wrapper,
+.main-search-box,
+.main-search__dropdown,
+.dropdown-pane {
+  background-color: var(--light) !important;
+  color: #000;
+  font-family: var(--main-font);
+}
+
+/* Menu top */
+.icon-links__item:hover a.icon-links__link {
+  background-color: var(--dark);
+}
+
+.icon-links__item:hover a.icon-links__link i {
+  color: var(--light);
+}
+
+.icon-links__item a:focus i {
+  color: var(--dark);
+}
+.icon-links__item:hover a:focus {
+  background-color: var(--light);
+}
+
+/*Sidebar menu*/
+.sidebar-tabs {
+  color: var(--light);
+}
+
+.footer--lower {
+  background-color: var(--dark);
+}
+
+.footer {
+  border-top-color: var(--more-dark);
+}
+
+.tabs.vertical .tabs-title {
+  border-bottom: 0px solid var(--more-dark);
+  padding-left: 0.0rem;
+}
+
+.tabs-title:hover a {
+  background-color: var(--less-dark) !important;
+}
+
+.tabs-title:hover a i {
+  color: var(--light) !important;
+}
+
+.tabs-title.is-active:hover a {
+  background-color: var(--light) !important;
+}
+
+.tabs-title.is-active:hover a i {
+  color: var(--font-color) !important;
+}
+
+.tabs-title a.disabled i,
+.tabs-title.disabled:hover a i {
+  color: var(--disabled) !important;
+}
+
+/* Header */
+h1,
+h2,
+h3 {
+  font-family: var(--main-font);
+  color: var(--font-color) !important;
+}
+
+header {
+  font-family: var(--main-font);
+  /*color: var(--light);*/
+}
+/* I don't know why header color is light; I'm just going to override it in the header created in the view, hard coding the class "font-color" in the span */
+header.font-color {
+  color: var(--font-color) !important;
+}
+
+/* Links in content*/
+.l-full a,
+.cidoc_entity a {
+  text-decoration-line: none;
+  color: var(--link-color);
+}
+
+.leaflet-control-attribution a {
+  background-color: transparent !important;
+  color: #1884af;
+}
+
+.cidoc_entity a.button {
+  color: var(--font-color);
+}
+
+/* Timeline */
+.leaflet-control-layers,
+.leaflet-control-layers-expanded,
+.leaflet-timeline-control,
+.vis-timeline,
+.vis-bottom {
+  background: var(--light) !important;
+  /*    padding: ?;*/
+}
+
+/* TOOLTIPS */
+.quote-tooltip {
+  position: relative;
+  display: inline-block;
+  color: #303030;
+}
+
+.quote-tooltip .quote-tooltiptext {
+  visibility: hidden;
+  background-color: #303030;
+  color: #fff !important;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 5px;
+  top: 20px;
+  left: -50px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 9999999999999 !important;
+}
+
+.quote-tooltip:hover .quote-tooltiptext {
+  visibility: visible;
+}
+/* Hide comparative timeline */
+.js-oiko-app--toggle {
+  display: none;
+}
+/* Hide share and add to comparative timeline buttons*/
+a#info-label,
+a#discuss-label,
+a#share-label {
+  display: none;
+}
+.add-event-basket-link {
+  display: none;
+}
+
+/* Pager */
+.pager__item.is-active.current {
+  background-color: var(--less-dark);
+}
+
+.oiko-sidebar {
+  width: 70px;
+}
+
+.oiko-sidebar .tabs-title a {
+  padding-left: 1.25rem !important;
+  padding-top: 1.395rem !important;
+}
+
+.oiko-sidebar .tabs-title i {
+  font-size: 20px;
+}
+
+.l-sidebar-content,
+.sidebar-content {
+  float: right !important;
+}
+
+/* Adjust search field inside sidebar*/
+.main-search-wrapper {
+  margin: 0px;
+  margin-bottom: 10px;
+}
+
+/* Hide "Searching in space and time for your information..." */
+.js-loading-results-text {
+  display: none !important;
+}
+
+/* Hide "Firing up the history engine..." */
+.oiko-app--loader::after {
+  display: none;
+}
+
+/* Hide top bar and keep user icons floating */
+.icon-links__item div img {
+  top: 20px;
+  right: 20px;
+}
+
+#block-network,
+#block-people-page,
+#block-places-list,
+#block-sources,
+#block-works-list {
+  display: none;
+}
+
+/* .l-content-header {height:0px;} */
+
+.icon-links__item .icon-links__link {
+  z-index: 1000;
+  top: 0px;
+  right: 0% !important;
+}
+
+.main-search-box {
+  margin-left: 20px;
+}
+/* Login */
+.shibboleth-login a {
+  font-family: Helvetica;
+  background-color: #5b3069 !important;
+  padding: 0.46875rem 0.9375rem;
+  color: white;
+  display: inline-block;
+  border-radius: 6px;
+  border: 1px solid #4c2858;
+  border-top-color: rgb(76, 40, 88);
+  border-right-color: rgb(76, 40, 88);
+  border-bottom-color: rgb(76, 40, 88);
+  border-left-color: rgb(76, 40, 88);
+  text-decoration: none;
+  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+}
+
+.shibboleth-login a:hover {
+  border-color: #27152e;
+  background-color: #3d2046;
+}
+
+/* Separator line in Main menu*/
+a[href="/bibliography"],
+a[href="/"],
+a[href="/accessibility"],
+a[href="/contrafacta"] {
+  border-top: 1px solid var(--less-dark);
+}
+
+/* HIDE MAP LEGEND */
+.map-legend-features li {
+  display: none;
+}
+
+/*CHANGE ICONS IN SIDEBAR*/
+.sidebar-tabs .tabs-title a i.fa-bars::before {
+  /*content: "\f002" ;
+  font-family: "FontAwesome";*/
+}
+/*.sidebar-tabs .tabs-title a i.fa-filter::before {
+  content: "\f00c" ;
+  font-family: "FontAwesome";
+}*/
+
+/* SMOOTH INPUT AND SELECT EDGES*/
+input,
+select {
+  border-radius: 5px !important;
+}
+#main-search-dropdown--3 {
+  border-radius: 5px !important;
+}
+
+header.navigation-bar {
+  display: none;
+}
+
+/* loading map text */
+.oiko-app--loader::before {
+  content: "Explore the cultural network of troubadours, trouvères, trobadores, and Minnesänger across space and time" !important;
+  top: 50% !important;
+  left: 10%;
+  position: absolute !important;
+  font-size: 40px;
+}
+
+/*TIMELINE*/
+.vis-custom-time div {
+  background-color: rgba(111, 163, 219, 0.25) !important;
+}
+.timeline-browser-item-count--1 {
+  background-color: rgba(111, 163, 219, 0.1) !important;
+  height: 3px !important;
+}
+.timeline-browser-item-count--2 {
+  background-color: rgba(111, 163, 219, 0.15) !important;
+  height: 3.5px !important;
+}
+.timeline-browser-item-count--3 {
+  background-color: rgba(111, 163, 219, 0.2) !important;
+  height: 4px !important;
+}
+.timeline-browser-item-count--4 {
+  background-color: rgba(111, 163, 219, 0.25) !important;
+  height: 4.5px !important;
+}
+.timeline-browser-item-count--5 {
+  background-color: rgba(111, 163, 219, 0.3) !important;
+  height: 5px !important;
+}
+.timeline-browser-item-count--6 {
+  background-color: rgba(111, 163, 219, 0.35) !important;
+  height: 5.5px !important;
+}
+.timeline-browser-item-count--7 {
+  background-color: rgba(111, 163, 219, 0.4) !important;
+  height: 6px !important;
+}
+.timeline-browser-item-count--8 {
+  background-color: rgba(111, 163, 219, 0.45) !important;
+  height: 6.5px !important;
+}
+.timeline-browser-item-count--9 {
+  background-color: rgba(111, 163, 219, 0.5) !important;
+  height: 7px !important;
+}
+.timeline-browser-item-count--10 {
+  background-color: rgba(111, 163, 219, 0.55) !important;
+  height: 7.5px !important;
+}
+.timeline-browser-item-count--11 {
+  background-color: rgba(111, 163, 219, 0.6) !important;
+  height: 8px !important;
+}
+.timeline-browser-item-count--12 {
+  background-color: rgba(111, 163, 219, 0.65) !important;
+  height: 8.5px !important;
+}
+.timeline-browser-item-count--13 {
+  background-color: rgba(111, 163, 219, 0.7) !important;
+  height: 9px !important;
+}
+.timeline-browser-item-count--14 {
+  background-color: rgba(111, 163, 219, 0.75) !important;
+  height: 9.5px !important;
+}
+.timeline-browser-item-count--15 {
+  background-color: rgba(111, 163, 219, 0.8) !important;
+  height: 10px !important;
+}
+.timeline-browser-item-count--16 {
+  background-color: rgba(111, 163, 219, 0.85) !important;
+  height: 10.5px !important;
+}
+.timeline-browser-item-count--17 {
+  background-color: rgba(111, 163, 219, 0.9) !important;
+  height: 11px !important;
+}
+.timeline-browser-item-count--18 {
+  background-color: rgba(111, 163, 219, 0.95) !important;
+  height: 11.5px !important;
+}
+.timeline-browser-item-count--19 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 12px !important;
+}
+.timeline-browser-item-count--20 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 12.5px !important;
+}
+.timeline-browser-item-count--21 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 13px !important;
+}
+.timeline-browser-item-count--22 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 13.5px !important;
+}
+.timeline-browser-item-count--23 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 14px !important;
+}
+.timeline-browser-item-count--24 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 14.5px !important;
+}
+.timeline-browser-item-count--25 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 15px !important;
+}
+.timeline-browser-item-count--26 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 15.5px !important;
+}
+.timeline-browser-item-count--27 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 16px !important;
+}
+.timeline-browser-item-count--28 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 16.5px !important;
+}
+.timeline-browser-item-count--29 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 17px !important;
+}
+.timeline-browser-item-count--30 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 17.5px !important;
+}
+.timeline-browser-item-count--31 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 18px !important;
+}
+.timeline-browser-item-count--32 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 18.5px !important;
+}
+.timeline-browser-item-count--33 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 19px !important;
+}
+.timeline-browser-item-count--34 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 19.5px !important;
+}
+.timeline-browser-item-count--35 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 20px !important;
+}
+.timeline-browser-item-count--36 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 20.5px !important;
+}
+.timeline-browser-item-count--37 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 21px !important;
+}
+.timeline-browser-item-count--38 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 21.5px !important;
+}
+.timeline-browser-item-count--39 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 22px !important;
+}
+.timeline-browser-item-count--40 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 22.5px !important;
+}
+.timeline-browser-item-count--41 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 23px !important;
+}
+.timeline-browser-item-count--42 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 23.5px !important;
+}
+.timeline-browser-item-count--43 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 24px !important;
+}
+.timeline-browser-item-count--44 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 24.5px !important;
+}
+.timeline-browser-item-count--45 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 25px !important;
+}
+.timeline-browser-item-count--46 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 25.5px !important;
+}
+.timeline-browser-item-count--47 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 26.5px !important;
+}
+.timeline-browser-item-count--48 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 27px !important;
+}
+.timeline-browser-item-count--49 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 27.5px !important;
+}
+.timeline-browser-item-count--51 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 28px !important;
+}
+.timeline-browser-item-count--52 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 28.5px !important;
+}
+.timeline-browser-item-count--53 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 29px !important;
+}
+.timeline-browser-item-count--54 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 29.5px !important;
+}
+.timeline-browser-item-count--55 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 30px !important;
+}
+.timeline-browser-item-count--56 {
+  background-color: rgba(111, 163, 219, 1) !important;
+  height: 30px !important;
+}
+
+/* You need this to make taxonomy term text visible for non authenticated users */
+div {
+  color: var(--font-color);
+}
+
+.main-search-wrapper,
+.l-sidebar-content a[href="/content/about-project"],
+.l-sidebar-content a[href="/contrafacta"],
+.l-sidebar-content a[href="/people"],
+.l-sidebar-content a[href="/"],
+.l-sidebar-content a[href="/places"],
+.l-sidebar-content a[href="/about-project"],
+.l-sidebar-content a[href="/works"],
+.l-sidebar-content a[href="/sources"],
+.l-sidebar-content a[href="/search-by-metrical-structure"],
+.l-sidebar-content a[href="/accessibility"],
+.l-sidebar-content a[href="/networks"],
+.l-sidebar-content a[href="/content/data-license-and-entry-protocols"],
+.l-sidebar-content a[href="/bibliography"] {/content/data-license-and-entry-protocols
+  width: 95% !important;
+}
+
+h3 li {
+  font-size: 16px;
+}
+.language-source-label {
+  font-size: 22px !important;
+  font-weight: bold;
+}
+
+header strong {
+  color: var(--font-color) !important;
+}
+
+/*Contrafacta table*/
+.contrafacta_table tr td {
+  width: 50%;
+}
+
+/* Site logo */
+#block-medmus-branding img {
+  max-height: 60px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+}
+
+/*Hides status messages*/
+/*.reveal-overlay {display:none !important;}*/
+
+/* Contrafacta page*/
+.contrafacta-wrapper__model h2,
+.contrafacta-wrapper__model h3,
+.contrafacta-wrapper__detail h3,
+.contrafacta-wrapper__detail h2 {
+  font-size: 12pt;
+}
+#views-exposed-form-contrafacta-page-expandy-page div.js-form-item.form-item {
+  width: 33%;
+  display: inline-block;
+}
+#views-exposed-form-contrafacta-page-expandy-page input[type="submit"] {
+  display: block;
+}
+
+/* distance between boxes */
+.contrafacta-wrapper {
+  margin-bottom: 1.5 rem;
+}
+
+/* box padding */
+.callout {
+  padding-bottom: 0;
+}
+
+/* Site logo */
+li#block-medmus-branding img {
+  max-height: 60px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+}
+
+.groupingTag {
+  font-size: 0.8em;
+}
