@@ -4,7 +4,7 @@ MedMus
 Codespaces
 ----------
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/digihum/drupal-oiko-builds/tree/drupal-medmus-d8
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/digihum/drupal-oiko-builds/tree/drupal-medmus-d8)
 
 To use in Codespaces: 
 
