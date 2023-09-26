@@ -8,9 +8,7 @@ Codespaces
 
 To use in Codespaces: 
 
-1. Add a database sql to the `/docker/seed/` folder and add this to the `docker/docker-compose.yml`
-2. Check the configuration in `/docker/seed/`
-3. Add site specific files to the `/docker/files` folder
+1. Add your database sql to the `/docker/seed/` folder and change the filename in the `docker/docker-compose.yml`
 
 Getting started for developers
 ------------------------------
