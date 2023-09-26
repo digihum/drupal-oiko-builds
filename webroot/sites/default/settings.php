@@ -727,25 +727,26 @@ $databases['default']['default'] = array (
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
 );
+
 $settings['install_profile'] = 'oiko_profile';
+
 $config_directories['sync'] = '../config/sync';
 
-$settings['trusted_host_patterns'] = array(
-  '^olmit\.lnx\.warwick\.ac\.uk$',
-  '^oikoumene\.warwick\.ac\.uk',
-  '^oiko\.world',
-  '^www\.oiko\.world$',
-  '^oiko.loc$'
-);
-
 $settings['config_readonly'] = TRUE;
+
 ini_set('memory_limit', '256M');
 ini_set('max_execution_time', 120);
 
 $config['config_split.config_split.oiko_world']['status'] = FALSE;
-$config['config_split.config_split.medmus']['status'] = FALSE;
+$config['config_split.config_split.medmus']['status'] = TRUE;
+$settings['cidoc_show_entities_without_temporal_data_on_map'] = FALSE;
+$settings['medmus_share_auto_delete_enabled'] = FALSE;
+  
+$config_directories['sync'] = '/opt/drupal/config/sync';
+//  $config_directories['export'] = '../config/export';
 
+$settings['container_yamls'][] = DRUPAL_ROOT . '/sites/development.services.yml';
+ 
 if (file_exists(__DIR__ . '/settings.local.php')) {
   include __DIR__ . '/settings.local.php';
 }
-
