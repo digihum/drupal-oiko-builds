@@ -110,7 +110,7 @@
         "drupal/entity_reference_revisions": "^1.10",
         "drupal/entity_share": "^3.0",
         "drupal/eu_cookie_compliance": "^1.0",
-        "drupal/eva": "^2.0",
+        "drupal/eva": "*",
         "drupal/field_group": "^3.0.0",
         "drupal/geocoder": "^3.34||^4.9",
         "drupal/geocoder_autocomplete": "^2.0",
@@ -196,10 +196,13 @@
                 "Fixes the API docs to include a missing hook": "https://www.drupal.org/files/issues/leaflet-add-hook_leaflet_map_info_alter-2746721-2.patch"
             },
             "drupal/field_group": {
-                "https://git.drupalcode.org/project/field_group/-/merge_requests/34.diff": "https://git.drupalcode.org/project/field_group/-/merge_requests/34.diff"
+                "https://git.drupalcode.org/project/field_group/-/merge_requests/34.diff": "https://git.drupalcode.org/project/field_group/-/merge_requests/34.patch"
             },
             "drupal/entity_share": {
                 "Allow notification of entity changes": "https://www.drupal.org/files/issues/2020-07-30/entity_share-automatic_synchronization-WIP-3080629-11.patch"
+            },
+            "drupal/leaflet_widget": {
+                "leaflet widget for drupal 9": "patches/leaflet_widget_for_d9.patch"
             }
         },
         "composer-version": "^1.8.4"
@@ -207,7 +210,7 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "8.0.29"
+            "php": "8.0"
         },
         "allow-plugins": {
             "composer/installers": true,
