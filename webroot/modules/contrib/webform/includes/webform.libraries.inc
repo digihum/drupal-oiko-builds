@@ -58,7 +58,7 @@ function webform_library_info_alter(&$libraries, $extension) {
   // If chosen_lib.module is installed, then update the dependency.
   if (\Drupal::moduleHandler()->moduleExists('chosen_lib')) {
     if (isset($libraries['webform.element.chosen'])) {
-      $dependencies =& $libraries['webform.element.chosen']['dependencies'];
+      $dependencies = &$libraries['webform.element.chosen']['dependencies'];
       foreach ($dependencies as $index => $dependency) {
         if ($dependency === 'webform/libraries.jquery.chosen') {
           $dependencies[$index] = 'chosen_lib/chosen';
@@ -72,7 +72,7 @@ function webform_library_info_alter(&$libraries, $extension) {
   // If select2.module is installed, then update the dependency.
   if (\Drupal::moduleHandler()->moduleExists('select2')) {
     if (isset($libraries['webform.element.select2'])) {
-      $dependencies =& $libraries['webform.element.select2']['dependencies'];
+      $dependencies = &$libraries['webform.element.select2']['dependencies'];
       foreach ($dependencies as $index => $dependency) {
         if ($dependency === 'webform/libraries.jquery.select2') {
           $dependencies[$index] = 'select2/select2';
@@ -80,19 +80,6 @@ function webform_library_info_alter(&$libraries, $extension) {
         }
       }
     }
-  }
-
-  // Remove dependency issue fixed in Drupal 8.8.x for webform.element.buttons.
-  //
-  // @see https://www.drupal.org/project/drupal/issues/2933980
-  // @see https://www.drupal.org/project/drupal/issues/2926155
-  if (isset($libraries['webform.element.buttons'])
-    && (floatval(\Drupal::VERSION) >= 8.8)) {
-    unset(
-      $libraries['webform.element.buttons']['js']['/core/assets/vendor/jquery.ui/ui/form-reset-mixin-min.js'],
-      $libraries['webform.element.buttons']['js']['/core/assets/vendor/jquery.ui/ui/escape-selector-min.js'],
-      $libraries['webform.element.buttons']['js']['/core/assets/vendor/jquery.ui/ui/widgets/checkboxradio-min.js']
-    );
   }
 
   /** @var \Drupal\webform\WebformLibrariesManagerInterface $libraries_manager */
@@ -153,7 +140,7 @@ function _webform_library_info_alter_recursive(array &$library, array $cdn) {
     }
 
     // Ignore the CDN's associative array.
-    if ($key == 'cdn') {
+    if ($key === 'cdn') {
       continue;
     }
 

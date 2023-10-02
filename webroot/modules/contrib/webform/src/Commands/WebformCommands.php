@@ -2,7 +2,7 @@
 // @codingStandardsIgnoreFile
 
 /**
- * This is file was generated using Drush. DO NOT EDIT. 
+ * This is file was generated using Drush. DO NOT EDIT.
  *
  * @see drush webform-generate-commands
  * @see \Drupal\webform\Commands\DrushCliServiceBase::generate_commands_drush9
@@ -24,7 +24,7 @@ class WebformCommands extends WebformCommandsBase {
    * @hook validate webform:export
    */
   public function drush_webform_export_validate(CommandData $commandData) {
-    $arguments = $commandData->arguments();
+    $arguments = array_values($commandData->arguments());
     array_shift($arguments);
     call_user_func_array([$this->cliService, 'drush_webform_export_validate'], $arguments);
   }
@@ -52,6 +52,7 @@ class WebformCommands extends WebformCommandsBase {
    * @option range-latest Integer specifying the latest X submissions will be downloaded. Used if "range-type" is "latest" or no other range options are provided.
    * @option range-start The submission ID or start date at which to start exporting.
    * @option range-end The submission ID or end date at which to end exporting.
+   * @option uid The ID of the user who submitted the form.
    * @option order The submission order "asc" (default) or "desc".
    * @option state Submission state to be included: "completed", "draft" or "all" (default).
    * @option sticky Flagged/starred submission status.
@@ -59,7 +60,7 @@ class WebformCommands extends WebformCommandsBase {
    * @option destination The full path and filename in which the CSV or archive should be stored. If omitted the CSV file or archive will be outputted to the command line.
    * @aliases wfx,webform-export
    */
-  public function drush_webform_export($webform = NULL, array $options = ['exporter' => NULL, 'delimiter' => NULL, 'multiple-delimiter' => NULL, 'file-name' => NULL, 'archive-type' => NULL, 'header-format' => NULL, 'options-item-format' => NULL, 'options-single-format' => NULL, 'options-multiple-format' => NULL, 'entity-reference-items' => NULL, 'excluded-columns' => NULL, 'uuid' => NULL, 'entity-type' => NULL, 'entity-id' => NULL, 'range-type' => NULL, 'range-latest' => NULL, 'range-start' => NULL, 'range-end' => NULL, 'order' => NULL, 'state' => NULL, 'sticky' => NULL, 'files' => NULL, 'destination' => NULL]) {
+  public function drush_webform_export($webform = NULL, array $options = ['exporter' => NULL, 'delimiter' => NULL, 'multiple-delimiter' => NULL, 'file-name' => NULL, 'archive-type' => NULL, 'header-format' => NULL, 'options-item-format' => NULL, 'options-single-format' => NULL, 'options-multiple-format' => NULL, 'entity-reference-items' => NULL, 'excluded-columns' => NULL, 'uuid' => NULL, 'entity-type' => NULL, 'entity-id' => NULL, 'range-type' => NULL, 'range-latest' => NULL, 'range-start' => NULL, 'range-end' => NULL, 'uid' => NULL, 'order' => NULL, 'state' => NULL, 'sticky' => NULL, 'files' => NULL, 'destination' => NULL]) {
     $this->cliService->drush_webform_export($webform);
   }
 
@@ -71,7 +72,7 @@ class WebformCommands extends WebformCommandsBase {
    * @hook validate webform:import
    */
   public function drush_webform_import_validate(CommandData $commandData) {
-    $arguments = $commandData->arguments();
+    $arguments = array_values($commandData->arguments());
     array_shift($arguments);
     call_user_func_array([$this->cliService, 'drush_webform_import_validate'], $arguments);
   }
@@ -100,7 +101,7 @@ class WebformCommands extends WebformCommandsBase {
    * @hook validate webform:purge
    */
   public function drush_webform_purge_validate(CommandData $commandData) {
-    $arguments = $commandData->arguments();
+    $arguments = array_values($commandData->arguments());
     array_shift($arguments);
     call_user_func_array([$this->cliService, 'drush_webform_purge_validate'], $arguments);
   }
@@ -133,7 +134,7 @@ class WebformCommands extends WebformCommandsBase {
    * @hook validate webform:tidy
    */
   public function drush_webform_tidy_validate(CommandData $commandData) {
-    $arguments = $commandData->arguments();
+    $arguments = array_values($commandData->arguments());
     array_shift($arguments);
     call_user_func_array([$this->cliService, 'drush_webform_tidy_validate'], $arguments);
   }
@@ -167,22 +168,6 @@ class WebformCommands extends WebformCommandsBase {
    */
   public function drush_webform_libraries_status() {
     $this->cliService->drush_webform_libraries_status();
-  }
-
-  /****************************************************************************/
-  // drush webform:libraries:make. DO NOT EDIT.
-  /****************************************************************************/
-
-  /**
-   * Generates libraries YAML to be included in a drush.make.yml files.
-   *
-   * @command webform:libraries:make
-   * @usage webform:libraries:make
-   *   Generates libraries YAML to be included in a drush.make.yml file.
-   * @aliases wflm,webform-libraries-make
-   */
-  public function drush_webform_libraries_make() {
-    $this->cliService->drush_webform_libraries_make();
   }
 
   /****************************************************************************/
@@ -242,7 +227,7 @@ class WebformCommands extends WebformCommandsBase {
    * @hook validate webform:generate
    */
   public function drush_webform_generate_validate(CommandData $commandData) {
-    $arguments = $commandData->arguments();
+    $arguments = array_values($commandData->arguments());
     array_shift($arguments);
     call_user_func_array([$this->cliService, 'drush_webform_generate_validate'], $arguments);
   }
@@ -303,7 +288,7 @@ class WebformCommands extends WebformCommandsBase {
    * @hook validate webform:docs
    */
   public function drush_webform_docs_validate(CommandData $commandData) {
-    $arguments = $commandData->arguments();
+    $arguments = array_values($commandData->arguments());
     array_shift($arguments);
     call_user_func_array([$this->cliService, 'drush_webform_docs_validate'], $arguments);
   }
@@ -312,7 +297,7 @@ class WebformCommands extends WebformCommandsBase {
    * Generates HTML documentation.
    *
    * @command webform:docs
-   * @usage webform:repair
+   * @usage webform:docs
    *   Generates HTML documentation used by the Webform module's documentation pages.
    * @aliases wfd,webform-docs
    */
@@ -328,7 +313,7 @@ class WebformCommands extends WebformCommandsBase {
    * @hook validate webform:composer:update
    */
   public function drush_webform_composer_update_validate(CommandData $commandData) {
-    $arguments = $commandData->arguments();
+    $arguments = array_values($commandData->arguments());
     array_shift($arguments);
     call_user_func_array([$this->cliService, 'drush_webform_composer_update_validate'], $arguments);
   }

@@ -43,7 +43,7 @@ abstract class WebformExporterBase extends PluginBase implements WebformExporter
   protected $entityTypeManager;
 
   /**
-   * Webform submission storage.
+   * The webform submission storage.
    *
    * @var \Drupal\webform\WebformSubmissionStorageInterface
    */
@@ -263,7 +263,7 @@ abstract class WebformExporterBase extends PluginBase implements WebformExporter
    * {@inheritdoc}
    */
   public function getFileTempDirectory() {
-    return $this->configFactory->get('webform.settings')->get('export.temp_directory') ?: file_directory_temp();
+    return $this->configFactory->get('webform.settings')->get('export.temp_directory') ?: \Drupal::service('file_system')->getTempDirectory();
   }
 
   /**
@@ -334,17 +334,17 @@ abstract class WebformExporterBase extends PluginBase implements WebformExporter
    * {@inheritdoc}
    */
   public function getArchiveType() {
-    return ($this->configuration['archive_type'] === static::ARCHIVE_ZIP
+    return ($this->configuration['archive_type'] === WebformExporterInterface::ARCHIVE_ZIP
       && class_exists('\ZipArchive'))
-      ? static::ARCHIVE_ZIP
-      : static::ARCHIVE_TAR;
+      ? WebformExporterInterface::ARCHIVE_ZIP
+      : WebformExporterInterface::ARCHIVE_TAR;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getArchiveFileExtension() {
-    return ($this->getArchiveType() === static::ARCHIVE_ZIP)
+    return ($this->getArchiveType() === WebformExporterInterface::ARCHIVE_ZIP)
       ? 'zip'
       : 'tar.gz';
   }
@@ -358,7 +358,7 @@ abstract class WebformExporterBase extends PluginBase implements WebformExporter
       'close' => FALSE,
     ];
 
-    if ($this->getArchiveType() === static::ARCHIVE_ZIP) {
+    if ($this->getArchiveType() === WebformExporterInterface::ARCHIVE_ZIP) {
       $this->addToZipFile($path, $name, $options);
     }
     else {
@@ -392,7 +392,7 @@ abstract class WebformExporterBase extends PluginBase implements WebformExporter
       $this->archive = new \Archive_Tar($this->getArchiveFilePath(), 'gz');
     }
 
-    if (file_exists($path)) {
+    if (@file_exists($path)) {
       if (is_dir($path)) {
         // Add directory to Tar archive.
         $this->archive->addModify((array) $path, $name, $options['remove_path']);
@@ -431,7 +431,7 @@ abstract class WebformExporterBase extends PluginBase implements WebformExporter
       $this->archive->open($this->getArchiveFilePath(), $flags);
     }
 
-    if (file_exists($path)) {
+    if (@file_exists($path)) {
       if (is_dir($path)) {
         // Add directory to ZIP file.
         $options += ['add_path' => $name . '/'];
@@ -439,7 +439,7 @@ abstract class WebformExporterBase extends PluginBase implements WebformExporter
       }
       else {
         // Add file to ZIP file.
-        // Get file name from the path and remove path option..
+        // Get file name from the path and remove path option.
         $file_name = $path;
         if ($options['remove_path']) {
           $file_name = preg_replace('#^' . $options['remove_path'] . '#', '', $file_name);

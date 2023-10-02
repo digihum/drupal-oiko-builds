@@ -32,6 +32,10 @@ class Fieldset extends FieldGroupFormatterBase {
       '#title' => $this->getSetting('fieldset_label_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel())),
       '#attributes' => [],
       '#description' => $this->getSetting('description'),
+      '#description_display' => 'after',
+      // Prevent \Drupal\content_translation\ContentTranslationHandler::addTranslatabilityClue()
+      // from adding an incorrect suffix to the field group title.
+      '#multilingual' => TRUE,
     ];
 
     // When a fieldset has a description, an id is required.

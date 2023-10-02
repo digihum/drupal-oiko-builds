@@ -54,7 +54,7 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
    *   The plugin_id for the formatter.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \stdClass $group
+   * @param object $group
    *   The group object.
    * @param array $settings
    *   The formatter settings.
@@ -93,6 +93,13 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
       '#title' => $this->t('Field group label'),
       '#default_value' => $this->label,
       '#weight' => -5,
+    ];
+
+    $form['show_empty_fields'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Display element also when empty'),
+      '#description' => $this->t('Display this field group even if the contained fields are currently empty.'),
+      '#default_value' => $this->getSetting('show_empty_fields'),
     ];
 
     $form['fieldset_label_html'] = [
@@ -134,9 +141,14 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
       $summary[] = $this->pluginDefinition['label'] . ': ' . $this->getSetting('formatter');
     }
 
+    if ($this->getSetting('show_empty_fields')) {
+      $summary[] = $this->t('Show Empty Fields');
+    }
+
     if ($this->getSetting('fieldset_label_html')) {
-      $summary[] = $this->t('HTML: @fieldset_label_html',
-        ['@fieldset_label_html' => $this->getSetting('fieldset_label_html')]);
+      $summary[] = $this->t('HTML: @fieldset_label_html', [
+        '@fieldset_label_html' => $this->getSetting('fieldset_label_html'),
+      ]);
     }
 
     if ($this->getSetting('id')) {
@@ -194,6 +206,7 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
     $element['#group_name'] = $this->group->group_name;
     $element['#entity_type'] = $this->group->entity_type;
     $element['#bundle'] = $this->group->bundle;
+    $element['#show_empty_fields'] = $this->getSetting('show_empty_fields');
   }
 
   /**

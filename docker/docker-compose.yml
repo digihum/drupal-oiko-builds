@@ -8,8 +8,8 @@ services:
     volumes:
       - ./data:/var/lib/mysql
       - type: bind
-        source: ./seed/medmus.prod.20230921.sql
-        target: /docker-entrypoint-initdb.d/medmus.prod.20230921.sql
+        source: ./seed/oiko.backup.20210203.sql
+        target: /docker-entrypoint-initdb.d/oiko.backup.20210203.sql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: drupal

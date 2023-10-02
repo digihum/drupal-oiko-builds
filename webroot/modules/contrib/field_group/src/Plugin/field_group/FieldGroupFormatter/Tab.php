@@ -117,6 +117,7 @@ class Tab extends FieldGroupFormatterBase {
     $defaults = [
       'formatter' => 'closed',
       'description' => '',
+      'show_empty_fields' => FALSE,
     ] + parent::defaultSettings($context);
 
     if ($context == 'form') {

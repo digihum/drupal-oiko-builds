@@ -1,0 +1,11 @@
+--- src/Plugin/field_group/FieldGroupFormatter/AccordionItem.php
++++ src/Plugin/field_group/FieldGroupFormatter/AccordionItem.php
+@@ -37,7 +39,7 @@ class AccordionItem extends FieldGroupFormatterBase {
+     $element += [
+       '#type' => 'field_group_accordion_item',
+       '#effect' => $this->getSetting('effect'),
+-      '#title' => $this->getLabel(),
++      '#title' => $this->getSetting('fieldset_label_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel())),
+     ];
+ 
+     if ($this->getSetting('id')) {

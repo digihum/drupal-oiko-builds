@@ -50,7 +50,7 @@ abstract class DateBase extends WebformElementBase {
     $element['#theme_wrappers'] = ['form_element'];
 
     // Must manually process #states.
-    // @see drupal_process_states().
+    // @see \Drupal\Core\Form\FormHelper::processStates
     if (!empty($element['#states'])) {
       $element['#attached']['library'][] = 'core/drupal.states';
       $element['#wrapper_attributes']['data-drupal-states'] = Json::encode($element['#states']);
@@ -231,9 +231,17 @@ abstract class DateBase extends WebformElementBase {
     $form['default']['default_value']['#description'] .= '<br /><br />' . $this->t("You may use tokens. Tokens should use the 'html_date' or 'html_datetime' date format. (i.e. @date_format)", ['@date_format' => '[current-user:field_date_of_birth:date:html_date]']);
 
     // Allow custom date formats to be entered.
-    $form['display']['format']['#type'] = 'webform_select_other';
-    $form['display']['format']['#other__option_label'] = $this->t('Custom date format…');
-    $form['display']['format']['#other__description'] = $this->t('A user-defined date format. See the <a href="http://php.net/manual/function.date.php">PHP manual</a> for available options.');
+    $form['display']['item']['format']['#options']['custom'] = $this->t('Custom HTML/text…');
+    $form['display']['item']['format']['#type'] = 'webform_select_other';
+    $form['display']['item']['format']['#other__option_label'] = $this->t('Custom date format…');
+    $form['display']['item']['format']['#other__description'] = $this->t('A user-defined date format. See the <a href="http://php.net/manual/function.date.php">PHP manual</a> for available options.');
+    $format_custom_states = [
+      'visible' => [':input[name="properties[format][select]"]' => ['value' => 'custom']],
+      'required' => [':input[name="properties[format][select]"]' => ['value' => 'custom']],
+    ];
+    $form['display']['item']['format_html']['#states'] = $format_custom_states;
+    $form['display']['item']['format_text']['#states'] = $format_custom_states;
+    $form['display']['item']['twig']['#states'] = $format_custom_states;
 
     $form['date'] = [
       '#type' => 'fieldset',
@@ -666,7 +674,7 @@ abstract class DateBase extends WebformElementBase {
   protected static function formatDate($custom_format, $timestamp = NULL) {
     /** @var \Drupal\Core\Datetime\DateFormatterInterface $date_formatter */
     $date_formatter = \Drupal::service('date.formatter');
-    return $date_formatter->format($timestamp ?: time(), 'custom', $custom_format);
+    return $date_formatter->format($timestamp ?: \Drupal::time()->getRequestTime(), 'custom', $custom_format);
   }
 
 }

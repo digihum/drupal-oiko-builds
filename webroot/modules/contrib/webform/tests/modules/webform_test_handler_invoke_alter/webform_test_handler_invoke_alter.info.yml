@@ -1,12 +1,12 @@
-name: 'Webform module handler invoke alter tests'
+name: 'Webform Handler Invoke test'
 type: module
-description: 'Support module for webform that provides handler invoke alter tests.'
-package: Testing
-core_version_requirement: ^8.7.7 || ^9
+description: 'Support module for webform handler invoke alter testing.'
+package: 'Webform Testing'
+core_version_requirement: ^8.8
 dependencies:
   - 'webform:webform'
 
-# Information added by Drupal.org packaging script on 2020-05-05
-version: '8.x-5.11'
+# Information added by Drupal.org packaging script on 2021-12-07
+version: '8.x-5.31'
 project: 'webform'
-datestamp: 1588690393
+datestamp: 1638915778

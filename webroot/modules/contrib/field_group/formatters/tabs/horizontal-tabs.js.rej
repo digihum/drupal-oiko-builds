@@ -1,0 +1,11 @@
+--- formatters/tabs/horizontal-tabs.js
++++ formatters/tabs/horizontal-tabs.js
+@@ -56,7 +56,7 @@
+             summaryElement = $this.find('> summary');
+           }
+ 
+-          var summaryText = summaryElement.clone().children().remove().end().text().trim() || summaryElement.find('> span:first-child').text().trim();
++          var summaryText = summaryElement.clone().html().trim() || summaryElement.find('> span:first-child').html().trim();
+           var horizontal_tab = new Drupal.horizontalTab({
+             title: summaryText,
+             details: $this

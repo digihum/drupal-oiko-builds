@@ -1,0 +1,14 @@
+--- src/Plugin/field_group/FieldGroupFormatter/Tabs.php
++++ src/Plugin/field_group/FieldGroupFormatter/Tabs.php
+@@ -3,9 +3,11 @@
+ namespace Drupal\field_group\Plugin\field_group\FieldGroupFormatter;
+ 
+ use Drupal\Component\Utility\Html;
++use Drupal\Component\Utility\Xss;
+ use Drupal\Core\Form\FormState;
+ use Drupal\Core\Render\Element;
+ use Drupal\Core\Render\Element\VerticalTabs;
++use Drupal\Core\Render\Markup;
+ use Drupal\field_group\Element\HorizontalTabs;
+ use Drupal\field_group\FieldGroupFormatterBase;
+ 

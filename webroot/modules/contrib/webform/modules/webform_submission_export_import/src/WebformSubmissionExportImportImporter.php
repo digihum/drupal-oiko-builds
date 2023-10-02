@@ -51,14 +51,14 @@ class WebformSubmissionExportImportImporter implements WebformSubmissionExportIm
   protected $entityTypeManager;
 
   /**
-   * Webform submission storage.
+   * The webform submission storage.
    *
    * @var \Drupal\webform\WebformSubmissionStorageInterface
    */
   protected $entityStorage;
 
   /**
-   * Webform element manager.
+   * The webform element manager.
    *
    * @var \Drupal\webform\Plugin\WebformElementManagerInterface
    */
@@ -416,7 +416,7 @@ class WebformSubmissionExportImportImporter implements WebformSubmissionExportIm
       // Get CSV values.
       $values = fgetcsv($handle);
       // Complete ignored empty rows.
-      if (empty($values) || $values == ['']) {
+      if (empty($values) || $values === ['']) {
         continue;
       }
       $index++;
@@ -425,8 +425,8 @@ class WebformSubmissionExportImportImporter implements WebformSubmissionExportIm
       // Track row specific warnings and errors.
       $stats['warnings'][$index] = [];
       $stats['errors'][$index] = [];
-      $row_warnings =& $stats['warnings'][$index];
-      $row_errors =& $stats['errors'][$index];
+      $row_warnings = &$stats['warnings'][$index];
+      $row_errors = &$stats['errors'][$index];
 
       // Make sure expected number of columns and values are equal.
       if (count($column_names) !== count($values)) {
@@ -578,7 +578,7 @@ class WebformSubmissionExportImportImporter implements WebformSubmissionExportIm
 
     // Set source entity.
     // Load or convert the source entity id to an internal ID.
-    if ($source_entity) {
+    if ($source_entity && !isset($record['entity_type']) && !isset($record['entity_id'])) {
       $record['entity_type'] = $source_entity->getEntityTypeId();
       $record['entity_id'] = $source_entity->id();
     }
@@ -766,7 +766,7 @@ class WebformSubmissionExportImportImporter implements WebformSubmissionExportIm
 
       // Check URL status code.
       $file_headers = @get_headers($new_file_uri);
-      if (!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+      if (!$file_headers || $file_headers[0] === 'HTTP/1.1 404 Not Found') {
         $errors[] = $this->t('[@element_key] URL (@url) returns 404 file not found.', $t_args);
         continue;
       }

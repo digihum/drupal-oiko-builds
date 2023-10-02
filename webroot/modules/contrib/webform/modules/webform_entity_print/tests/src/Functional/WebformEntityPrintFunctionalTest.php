@@ -3,6 +3,8 @@
 namespace Drupal\Tests\webform_entity_print\Functional;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\user\Entity\Role;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 
@@ -68,11 +70,24 @@ body {
     $this->assertRaw('<th>textfield</th>');
     $this->assertRaw('<table class="webform-submission-table" data-striping="1">');
 
+    $this->drupalLogout();
+
+    // Check PDF link token support.
+    // Allow anonymous users to access print version.
+    $role_object = Role::load(AccountInterface::ANONYMOUS_ROLE);
+    $role_object->grantPermission('entity print access type webform_submission');
+    $role_object->save();
+    $token = $submission->getToken();
+    $this->drupalGet("/webform/test_entity_print/submissions/$sid", ['query' => ['token' => $token]]);
+    $this->assertLinkByHref("{$base_path}print/pdf/webform_submission/$sid?view_mode=html&token=$token");
+
+    $this->drupalLogin($this->rootUser);
+
     // Check PDF link customizable.
     $edit = [
       'third_party_settings[webform_entity_print][export_types][pdf][link_text]' => 'Generate PDF',
     ];
-    $this->drupalPostForm('/admin/structure/webform/config', $edit, t('Save configuration'));
+    $this->drupalPostForm('/admin/structure/webform/config', $edit, 'Save configuration');
     $this->drupalGet("/admin/structure/webform/manage/test_entity_print/submission/$sid");
     $this->assertNoLink('Download PDF');
     $this->assertLink('Generate PDF');
@@ -81,7 +96,7 @@ body {
     $edit = [
       'third_party_settings[webform_entity_print][export_types][pdf][enabled]' => FALSE,
     ];
-    $this->drupalPostForm('/admin/structure/webform/config', $edit, t('Save configuration'));
+    $this->drupalPostForm('/admin/structure/webform/config', $edit, 'Save configuration');
     $this->drupalGet("/admin/structure/webform/manage/test_entity_print/submission/$sid");
     $this->assertNoLink('Download PDF');
 
@@ -98,7 +113,7 @@ body {
     $edit = [
       'exporter' => 'webform_entity_print:pdf',
     ];
-    $this->drupalPostForm('/admin/structure/webform/manage/test_entity_print/results/download', $edit, t('Download'));
+    $this->drupalPostForm('/admin/structure/webform/manage/test_entity_print/results/download', $edit, 'Download');
 
     // Load the tar and get a list of files.
     $files = $this->getArchiveContents($submission_exporter->getArchiveFilePath());
