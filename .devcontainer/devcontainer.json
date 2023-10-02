@@ -22,7 +22,6 @@
 	"customizations": {
 		"codespaces": {
 		"openFiles": [
-			"/drupal/seeds/settings.local.php",
 			"/drupal/docker-compose.yml"
 		]
 		},
