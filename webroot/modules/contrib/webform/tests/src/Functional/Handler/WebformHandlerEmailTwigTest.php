@@ -8,7 +8,7 @@ use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 /**
  * Tests for email webform handler Twig functionality.
  *
- * @group Webform
+ * @group webform
  */
 class WebformHandlerEmailTwigTest extends WebformBrowserTestBase {
 
@@ -31,7 +31,7 @@ class WebformHandlerEmailTwigTest extends WebformBrowserTestBase {
 
     // Check sending a basic email via a submission.
     $sent_email = $this->getLastEmail();
-    $this->assertEqual($sent_email['params']['body'], '<p>Submitted values are:</p>
+    $this->assertEquals($sent_email['params']['body'], '<p>Submitted values are:</p>
   <b>First name</b><br />John<br /><br />
 
   <b>Last name</b><br />Smith<br /><br />

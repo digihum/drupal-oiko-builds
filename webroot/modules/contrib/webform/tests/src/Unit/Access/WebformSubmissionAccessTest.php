@@ -3,6 +3,7 @@
 namespace Drupal\Tests\webform\Unit\Access;
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\webform\Access\WebformSubmissionAccess;
 
 /**
@@ -19,6 +20,17 @@ class WebformSubmissionAccessTest extends WebformAccessTestBase {
    * @covers ::checkWizardPagesAccess
    */
   public function testWebformSubmissionAccess() {
+    // Mock Drupal service container.
+    $this->container = new ContainerBuilder();
+    \Drupal::setContainer($this->container);
+
+    // Mock module handler.
+    $module_handler = $this->createMock('Drupal\Core\Extension\ModuleHandlerInterface');
+    $module_handler->expects($this->any())
+      ->method('moduleExists')
+      ->will($this->returnValue(FALSE));
+    $this->container->set('module_handler', $module_handler);
+
     // Mock anonymous account.
     $anonymous_account = $this->mockAccount();
 
@@ -71,7 +83,7 @@ class WebformSubmissionAccessTest extends WebformAccessTestBase {
       ->method('getWebform')
       ->will($this->returnValue($webform_wizard));
 
-    /**************************************************************************/
+    /* ********************************************************************** */
 
     // Check resend (email) message access.
     $this->assertEquals(AccessResult::forbidden(), WebformSubmissionAccess::checkResendAccess($webform_submission, $anonymous_account));
@@ -80,7 +92,6 @@ class WebformSubmissionAccessTest extends WebformAccessTestBase {
     // Check wizard page access.
     $this->assertEquals(AccessResult::neutral(), WebformSubmissionAccess::checkWizardPagesAccess($webform_submission));
     $this->assertEquals(AccessResult::allowed(), WebformSubmissionAccess::checkWizardPagesAccess($webform_wizard_submission));
-
   }
 
 }

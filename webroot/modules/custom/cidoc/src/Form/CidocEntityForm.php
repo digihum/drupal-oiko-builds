@@ -437,7 +437,7 @@ class CidocEntityForm extends ContentEntityForm {
    *
    * @see \Drupal\Core\Field\WidgetBase::setWidgetState()
    */
-  public function setWidgetState(FormStateInterface $form_state, $source_field, $property_name = NULL, array $set) {
+  public function setWidgetState(FormStateInterface $form_state, $source_field, array $set, $property_name = NULL) {
     $parents = array('field_storage', '#parents', 'cidoc_properties_' . $source_field, '#fields');
     if ($property_name) {
       $parents[] = $property_name;

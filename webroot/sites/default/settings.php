@@ -714,9 +714,7 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
  *
  * Keep this code block at the end of this file to take full effect.
  */
-# if (file_exists(__DIR__ . '/settings.local.php')) {
-#   include __DIR__ . '/settings.local.php';
-# }
+
 $databases['default']['default'] = array (
   'database' => 'db_prod_2',
   'username' => 'drupal',
@@ -727,16 +725,15 @@ $databases['default']['default'] = array (
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
 );
-$settings['install_profile'] = 'oiko_profile';
-$config_directories['sync'] = '../config/sync';
+#$settings['install_profile'] = 'oiko_profile';
 
-$settings['trusted_host_patterns'] = array(
+$settings['trusted_host_patterns'] = [
   '^olmit\.lnx\.warwick\.ac\.uk$',
   '^oikoumene\.warwick\.ac\.uk',
   '^oiko\.world',
   '^www\.oiko\.world$',
   '^oiko.loc$'
-);
+];
 
 $settings['config_readonly'] = TRUE;
 ini_set('memory_limit', '256M');
@@ -748,4 +745,3 @@ $config['config_split.config_split.medmus']['status'] = FALSE;
 if (file_exists(__DIR__ . '/settings.local.php')) {
   include __DIR__ . '/settings.local.php';
 }
-

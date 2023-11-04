@@ -17,9 +17,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
 
   /**
-   * The entity type manager.
+   * The entity manager.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var \Drupal\Core\Entity\EntityManagerInterface
    */
   protected $entityManager;
 
@@ -101,13 +101,8 @@ class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
       return FALSE;
     }
 
-    // Trigger an event to modify the configuration value.
-    $event = new ConfigPreRevertEvent($type, $name, $value, NULL);
-    $this->dispatcher->dispatch($event, ConfigRevertInterface::PRE_IMPORT);
-    $value = $event->getValue();
-
     // Save it as a new config entity or simple config.
-    if ($type === 'system.simple') {
+    if ($type == 'system.simple') {
       $this->configFactory->getEditable($full_name)->setData($value)->save();
     }
     else {
@@ -118,7 +113,7 @@ class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
 
     // Trigger an event notifying of this change.
     $event = new ConfigRevertEvent($type, $name);
-    $this->dispatcher->dispatch($event, ConfigRevertInterface::IMPORT);
+    $this->dispatcher->dispatch(ConfigRevertInterface::IMPORT, $event);
 
     return TRUE;
   }
@@ -142,19 +137,13 @@ class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
     }
 
     // Make sure the configuration exists currently in active storage.
-    $active_value = $this->activeConfigStorage->read($full_name);
-    if (!$active_value) {
+    if (!$this->activeConfigStorage->read($full_name)) {
       return FALSE;
     }
 
-    // Trigger an event to modify the active configuration value.
-    $event = new ConfigPreRevertEvent($type, $name, $value, $active_value);
-    $this->dispatcher->dispatch($event, ConfigRevertInterface::PRE_REVERT);
-    $value = $event->getValue();
-
     // Load the current config and replace the value, retaining the config
     // hash (which is part of the _core config key's value).
-    if ($type === 'system.simple') {
+    if ($type == 'system.simple') {
       $config = $this->configFactory->getEditable($full_name);
       $core = $config->get('_core');
       $config
@@ -176,7 +165,7 @@ class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
 
     // Trigger an event notifying of this change.
     $event = new ConfigRevertEvent($type, $name);
-    $this->dispatcher->dispatch($event, ConfigRevertInterface::REVERT);
+    $this->dispatcher->dispatch(ConfigRevertInterface::REVERT, $event);
 
     return TRUE;
   }
@@ -197,29 +186,11 @@ class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
     if (!$config) {
       return FALSE;
     }
+    $config->delete();
 
     // Trigger an event notifying of this change.
     $event = new ConfigRevertEvent($type, $name);
-    $this->dispatcher->dispatch($event, ConfigDeleteInterface::PRE_DELETE);
-
-    if ($type === 'system.simple') {
-      $config->delete();
-    }
-    else {
-      // Delete a config entity instance, updating all its dependants.
-      $definition = $this->entityManager->getDefinition($type);
-      $id = $config->get($definition->getKey('id'));
-      $entity_storage = $this->entityManager->getStorage($type);
-      $entity = $entity_storage->load($id);
-      if (!$entity) {
-        return FALSE;
-      }
-      $entity->delete();
-    }
-
-    // Trigger an event notifying of this change.
-    $event = new ConfigRevertEvent($type, $name);
-    $this->dispatcher->dispatch($event, ConfigDeleteInterface::DELETE);
+    $this->dispatcher->dispatch(ConfigDeleteInterface::DELETE, $event);
     return TRUE;
   }
 
@@ -261,7 +232,7 @@ class ConfigReverter implements ConfigRevertInterface, ConfigDeleteInterface {
    *   The config item's full name, or FALSE if there is an error.
    */
   protected function getFullName($type, $name) {
-    if ($type === 'system.simple' || !$type) {
+    if ($type == 'system.simple' || !$type) {
       return $name;
     }
 

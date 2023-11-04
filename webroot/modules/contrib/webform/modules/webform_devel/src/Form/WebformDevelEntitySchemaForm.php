@@ -7,7 +7,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\webform\Form\WebformEntityAjaxFormTrait;
 use Drupal\webform\Utility\WebformDialogHelper;
-use Drupal\webform_devel\WebformDevelSchemaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -25,22 +24,12 @@ class WebformDevelEntitySchemaForm extends EntityForm {
   protected $scheme;
 
   /**
-   * Constructs a WebformDevelEntitySchemaForm.
-   *
-   * @param \Drupal\webform_devel\WebformDevelSchemaInterface $webform_devel_scheme
-   *   The webform devel scheme service.
-   */
-  public function __construct(WebformDevelSchemaInterface $webform_devel_scheme) {
-    $this->scheme = $webform_devel_scheme;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('webform_devel.schema')
-    );
+    $instance = parent::create($container);
+    $instance->scheme = $container->get('webform_devel.schema');
+    return $instance;
   }
 
   /**
@@ -65,19 +54,19 @@ class WebformDevelEntitySchemaForm extends EntityForm {
       $rows[$element_key] = [];
 
       foreach ($element as $key => $value) {
-        if ($key === 'options') {
+        if ($key === 'options_value' || $key === 'options_text') {
           $value = implode('; ', array_slice($value, 0, 12)) . (count($value) > 12 ? '; …' : '');
         }
         $rows[$element_key][$key] = ['#markup' => $value];
       }
 
-      if ($element['datatype'] == 'Composite') {
+      if ($element['datatype'] === 'Composite') {
         $rows[$element_key]['#attributes']['class'][] = 'webform-devel-schema-composite';
       }
 
       if ($webform_ui_exists) {
         // Only add 'Edit' link to main element and not composite sub-elements.
-        if (strpos($element_key, '.') === FALSE) {
+        if (strpos($element_key, '.') === FALSE && $webform->getElement($element_key)) {
           $element_url = new Url(
             'entity.webform_ui.element.edit_form',
             ['webform' => $webform->id(), 'key' => $element_key],

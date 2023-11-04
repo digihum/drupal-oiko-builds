@@ -3,9 +3,9 @@
 namespace Drupal\webform\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\webform\Entity\Webform;
 use Drupal\webform\Plugin\WebformElementWizardPageInterface;
 use Drupal\webform\Utility\WebformElementHelper;
-use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionInterface;
 
 /**
@@ -16,6 +16,7 @@ use Drupal\webform\WebformSubmissionInterface;
  *   label = @Translation("Wizard page"),
  *   description = @Translation("Provides an element to display multiple form elements as a page in a multi-step form wizard."),
  *   category = @Translation("Wizard"),
+ *   hidden = TRUE,
  * )
  */
 class WebformWizardPage extends Details implements WebformElementWizardPageInterface {
@@ -29,6 +30,8 @@ class WebformWizardPage extends Details implements WebformElementWizardPageInter
       'open' => FALSE,
       'prev_button_label' => '',
       'next_button_label' => '',
+      // Attributes.
+      'attributes' => [],
       // Submission display.
       'format' => $this->getItemDefaultFormat(),
       'format_html' => '',
@@ -46,7 +49,7 @@ class WebformWizardPage extends Details implements WebformElementWizardPageInter
     return array_merge(parent::defineTranslatableProperties(), ['prev_button_label', 'next_button_label']);
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -114,34 +117,19 @@ class WebformWizardPage extends Details implements WebformElementWizardPageInter
       '#type' => 'textfield',
       '#title' => $this->t('Previous page button label'),
       '#description' => $this->t('This is used for the Next Page button on the page before this page break.') . '<br /><br />' .
-      $this->t('Defaults to: %value', ['%value' => $this->getDefaultSettings($webform, 'wizard_prev_button_label')]),
+      $this->t('Defaults to: %value', ['%value' => $webform->getSetting('wizard_prev_button_label', TRUE)]),
     ];
     $form['wizard_page']['next_button_label'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Next page button label'),
       '#description' => $this->t('This is used for the Previous Page button on the page after this page break.') . '<br /><br />' .
-      $this->t('Defaults to: %value', ['%value' => $this->getDefaultSettings($webform, 'wizard_next_button_label')]),
+      $this->t('Defaults to: %value', ['%value' => $webform->getSetting('wizard_next_button_label', TRUE)]),
     ];
 
     // Wizard pages only support visible or hidden state.
     $form['conditional_logic']['states']['#multiple'] = FALSE;
 
     return $form;
-  }
-
-  /**
-   * Get default from webform or global settings.
-   *
-   * @param \Drupal\webform\WebformInterface $webform
-   *   A webform.
-   * @param string $name
-   *   The name of the setting.
-   *
-   * @return string
-   *   The setting's value.
-   */
-  protected function getDefaultSettings(WebformInterface $webform, $name) {
-    return $webform->getSetting($name) ?: \Drupal::config('webform.settings')->get("settings.default_$name");
   }
 
   /**
@@ -165,10 +153,22 @@ class WebformWizardPage extends Details implements WebformElementWizardPageInter
    * {@inheritdoc}
    */
   public function showPage(array &$element) {
-    // When showing a wizard page, page render it as container instead of the
-    // default details element.
+    // When showing a wizard page, page render it as a container, fieldset or
+    // section instead of the default details element.
     // @see \Drupal\webform\Element\WebformWizardPage
-    $element['#type'] = 'container';
+    $webform_id = $element['#webform'];
+    $webform = Webform::load($webform_id);
+    $page_type = $webform->getSetting('wizard_page_type') ?: 'container';
+    $element['#type'] = $page_type;
+
+    // Set section title tag.
+    // @see \Drupal\webform\Plugin\WebformElement\WebformSection
+    if ($page_type === 'webform_section') {
+      $element['#title_tag'] = $webform->getSetting('wizard_page_title_tag');
+    }
+
+    // Unset default details properties.
+    unset($element['#open']);
   }
 
   /**

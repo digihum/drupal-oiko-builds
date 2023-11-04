@@ -65,8 +65,8 @@ class WebformSubmissionGenerate implements WebformSubmissionGenerateInterface {
     $this->tokenManager = $token_manager;
     $this->elementManager = $element_manager;
 
-    $this->types = Yaml::decode($this->configFactory->get('webform.settings')->get('test.types') ?: '');
-    $this->names = Yaml::decode($this->configFactory->get('webform.settings')->get('test.names') ?: '');
+    $this->types = Yaml::decode($this->configFactory->get('webform.settings')->get('test.types') ?: '') ?: [];
+    $this->names = Yaml::decode($this->configFactory->get('webform.settings')->get('test.names') ?: '') ?: [];
   }
 
   /**
@@ -219,7 +219,7 @@ class WebformSubmissionGenerate implements WebformSubmissionGenerateInterface {
     }
 
     // Return default values.
-    return (isset($this->names['default'])) ? $this->names['default'] : NULL;
+    return $this->names['default'] ?? NULL;
   }
 
 }

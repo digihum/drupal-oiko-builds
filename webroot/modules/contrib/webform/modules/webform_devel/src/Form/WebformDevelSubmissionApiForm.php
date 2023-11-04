@@ -3,14 +3,12 @@
 namespace Drupal\webform_devel\Form;
 
 use Drupal\Component\Utility\Variable;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
-use Drupal\webform\WebformRequestInterface;
+use Drupal\webform\EntityStorage\WebformEntityStorageTrait;
 use Drupal\webform\WebformSubmissionForm;
-use Drupal\webform\WebformSubmissionGenerateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -18,15 +16,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class WebformDevelSubmissionApiForm extends FormBase {
 
-  /**
-   * Webform submission storage.
-   *
-   * @var \Drupal\webform\WebformSubmissionStorageInterface
-   */
-  protected $submissionStorage;
+  use WebformEntityStorageTrait;
 
   /**
-   * Webform request handler.
+   * The webform request handler.
    *
    * @var \Drupal\webform\WebformRequestInterface
    */
@@ -40,30 +33,14 @@ class WebformDevelSubmissionApiForm extends FormBase {
   protected $generate;
 
   /**
-   * Constructs a WebformDevelSubmissionApiForm object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\webform\WebformRequestInterface $request_handler
-   *   The webform request handler.
-   * @param \Drupal\webform\WebformSubmissionGenerateInterface $submission_generate
-   *   The webform submission generation service.
-   */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, WebformRequestInterface $request_handler, WebformSubmissionGenerateInterface $submission_generate) {
-    $this->submissionStorage = $entity_type_manager->getStorage('webform_submission');
-    $this->requestHandler = $request_handler;
-    $this->generate = $submission_generate;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('entity_type.manager'),
-      $container->get('webform.request'),
-      $container->get('webform_submission.generate')
-    );
+    $instance = parent::create($container);
+    $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->requestHandler = $container->get('webform.request');
+    $instance->generate = $container->get('webform_submission.generate');
+    return $instance;
   }
 
   /**
@@ -79,7 +56,7 @@ class WebformDevelSubmissionApiForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     /** @var \Drupal\webform\WebformInterface $webform */
     /** @var \Drupal\Core\Entity\EntityInterface $source_entity */
-    list($webform, $source_entity) = $this->requestHandler->getWebformEntities();
+    [$webform, $source_entity] = $this->requestHandler->getWebformEntities();
 
     $values = [];
 
@@ -92,7 +69,7 @@ class WebformDevelSubmissionApiForm extends FormBase {
       $values['entity_id'] = $source_entity->id();
 
     }
-    WebformSubmission::preCreate($this->submissionStorage, $values);
+    WebformSubmission::preCreate($this->getSubmissionStorage(), $values);
 
     // Generate data as last value.
     unset($values['data']);
@@ -132,12 +109,12 @@ class WebformDevelSubmissionApiForm extends FormBase {
 $values = ' . Variable::export($values) . ';
 
 // Check that the webform is open.
-$webform = \Drupal\webform\entity\Webform::load(\'' . $webform->id() . '\'); 
+$webform = \Drupal\webform\entity\Webform::load(\'' . $webform->id() . '\');
 $is_open = \Drupal\webform\WebformSubmissionForm::isOpen($webform);
 if ($is_open === TRUE) {
   // Validate webform submission values.
   $errors = \Drupal\webform\WebformSubmissionForm::validateFormValues($values);
-  
+
   // Submit webform submission values.
   if (empty($errors)) {
     $webform_submission = \Drupal\webform\WebformSubmissionForm::submitFormValues($values);

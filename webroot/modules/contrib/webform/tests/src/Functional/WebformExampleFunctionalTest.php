@@ -2,14 +2,12 @@
 
 namespace Drupal\Tests\webform\Functional;
 
-use Drupal\Tests\BrowserTestBase;
-
 /**
  * Example of webform browser test.
  *
  * @group webform_browser
  */
-class WebformExampleFunctionalTest extends BrowserTestBase {
+class WebformExampleFunctionalTest extends WebformBrowserTestBase {
 
   /**
    * {@inheritdoc}
@@ -20,9 +18,11 @@ class WebformExampleFunctionalTest extends BrowserTestBase {
    * Test get.
    */
   public function testGet() {
+    $assert_session = $this->assertSession();
+
     $this->drupalGet('/webform/contact');
-    $this->verbose('hi');
-    $this->assertSession()->responseContains('Contact');
+    $this->debug('hi');
+    $assert_session->responseContains('Contact');
   }
 
 }

@@ -44,8 +44,7 @@ class ConfigListerTest extends ConfigUpdateUnitTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp(): void {
-    parent::setUp();
+  protected function setUp() {
     $lister = $this->getMockBuilder('Drupal\config_update\ConfigListerWithProviders')
       ->setConstructorArgs([
         $this->getEntityManagerMock(),
@@ -55,7 +54,7 @@ class ConfigListerTest extends ConfigUpdateUnitTestBase {
         $this->getModuleHandlerMock(),
         $this->getThemeHandlerMock(),
       ])
-      ->onlyMethods(['listProvidedItems', 'getProfileName'])
+      ->setMethods(['listProvidedItems', 'getProfileName'])
       ->getMock();
 
     $lister->method('getProfileName')

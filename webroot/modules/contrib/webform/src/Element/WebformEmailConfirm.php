@@ -2,6 +2,7 @@
 
 namespace Drupal\webform\Element;
 
+use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Element\FormElement;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Utility\WebformElementHelper;
@@ -166,16 +167,15 @@ class WebformEmailConfirm extends FormElement {
    */
   public static function validateWebformEmailConfirm(&$element, FormStateInterface $form_state, &$complete_form) {
     if (isset($element['flexbox'])) {
-      $mail_element =& $element['flexbox'];
+      $mail_element = &$element['flexbox']; // phpcs:ignore
     }
     else {
-      $mail_element =& $element;
+      $mail_element = &$element;
     }
 
     $mail_1 = trim($mail_element['mail_1']['#value']);
     $mail_2 = trim($mail_element['mail_2']['#value']);
-    $has_access = (!isset($element['#access']) || $element['#access'] === TRUE);
-    if ($has_access) {
+    if (Element::isVisibleElement($element)) {
       // Compare email addresses.
       if ((!empty($mail_1) || !empty($mail_2)) && strcmp($mail_1, $mail_2)) {
         $form_state->setError($element, t('The specified email addresses do not match.'));
@@ -184,7 +184,7 @@ class WebformEmailConfirm extends FormElement {
         // NOTE: Only mail_1 needs to be validated since mail_2 is the same value.
         // Verify the required value.
         if ($mail_element['mail_1']['#required'] && empty($mail_1)) {
-          $required_error_title = (isset($mail_element['mail_1']['#title'])) ? $mail_element['mail_1']['#title'] : NULL;
+          $required_error_title = $mail_element['mail_1']['#title'] ?? NULL;
           WebformElementHelper::setRequiredError($element, $form_state, $required_error_title);
         }
         // Verify that the value is not longer than #maxlength.

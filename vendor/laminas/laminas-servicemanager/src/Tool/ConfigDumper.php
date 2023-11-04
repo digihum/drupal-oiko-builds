@@ -8,10 +8,7 @@ use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use ReflectionClass;
-<<<<<<< HEAD
-=======
 use ReflectionNamedType;
->>>>>>> feature/medmus-d9
 use ReflectionParameter;
 use Traversable;
 
@@ -42,23 +39,11 @@ class ConfigDumper
 return %s;
 EOC;
 
-<<<<<<< HEAD
-    private ?ContainerInterface $container;
-
-    public function __construct(?ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
-    /**
-     * @param array $config
-=======
     public function __construct(private ?ContainerInterface $container = null)
     {
     }
 
     /**
->>>>>>> feature/medmus-d9
      * @param string $className
      * @param bool $ignoreUnresolved
      * @return array
@@ -95,11 +80,7 @@ EOC;
 
         foreach ($constructorArguments as $constructorArgument) {
             $type         = $constructorArgument->getType();
-<<<<<<< HEAD
-            $argumentType = null !== $type && ! $type->isBuiltin() ? $type->getName() : null;
-=======
             $argumentType = $type instanceof ReflectionNamedType && ! $type->isBuiltin() ? $type->getName() : null;
->>>>>>> feature/medmus-d9
 
             if ($argumentType === null) {
                 if ($ignoreUnresolved) {
@@ -142,10 +123,6 @@ EOC;
     }
 
     /**
-<<<<<<< HEAD
-     * @param array $config
-=======
->>>>>>> feature/medmus-d9
      * @param string $className
      * @return array
      */
@@ -156,10 +133,6 @@ EOC;
     }
 
     /**
-<<<<<<< HEAD
-     * @param array $config
-=======
->>>>>>> feature/medmus-d9
      * @return array
      * @throws InvalidArgumentException If ConfigAbstractFactory configuration
      *     value is not an array.
@@ -185,10 +158,6 @@ EOC;
     }
 
     /**
-<<<<<<< HEAD
-     * @param array $config
-=======
->>>>>>> feature/medmus-d9
      * @param string $className
      * @return array
      */
@@ -209,10 +178,6 @@ EOC;
     }
 
     /**
-<<<<<<< HEAD
-     * @param array $config
-=======
->>>>>>> feature/medmus-d9
      * @return string
      */
     public function dumpConfigFile(array $config)
@@ -272,18 +237,10 @@ EOC;
     }
 
     /**
-<<<<<<< HEAD
-     * @param mixed $value
-     * @param int $indentLevel
-     * @return string
-     */
-    private function createConfigValue($value, $indentLevel)
-=======
      * @param int $indentLevel
      * @return string
      */
     private function createConfigValue(mixed $value, $indentLevel)
->>>>>>> feature/medmus-d9
     {
         if (is_array($value) || $value instanceof Traversable) {
             return $this->prepareConfig($value, $indentLevel + 1);

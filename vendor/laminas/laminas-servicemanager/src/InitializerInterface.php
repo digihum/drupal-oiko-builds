@@ -29,14 +29,7 @@ interface InitializerInterface extends Initializer\InitializerInterface
     /**
      * Initialize
      *
-<<<<<<< HEAD
-     * @param mixed $instance
-     * @return mixed
-     */
-    public function initialize($instance, ServiceLocatorInterface $serviceLocator);
-=======
      * @return mixed
      */
     public function initialize(mixed $instance, ServiceLocatorInterface $serviceLocator);
->>>>>>> feature/medmus-d9
 }

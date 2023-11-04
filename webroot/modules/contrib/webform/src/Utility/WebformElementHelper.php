@@ -4,9 +4,7 @@ namespace Drupal\webform\Utility;
 
 use Drupal\Component\Render\MarkupInterface;
 use Drupal\Component\Serialization\Json;
-use Drupal\Component\Utility\Xss;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Markup;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Template\Attribute;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
@@ -55,7 +53,7 @@ class WebformElementHelper {
    * @var array
    */
   public static $allowedProperties = [
-    # webform_validation.module.
+    // webform_validation.module.
     '#equal_stepwise_validate' => '#equal_stepwise_validate',
   ];
 
@@ -74,6 +72,40 @@ class WebformElementHelper {
   protected static $allowedSubPropertiesRegExp;
 
   /**
+   * Checks if the key is string and a property.
+   *
+   * @param string $key
+   *   The key to check.
+   *
+   * @return bool
+   *   TRUE of the key is string and a property., FALSE otherwise.
+   */
+  public static function property($key) {
+    return ($key && is_string($key) && $key[0] == '#');
+  }
+
+  /**
+   * Gets properties of a structured array element (keys beginning with '#').
+   *
+   * @param array $element
+   *   An element array to return properties for.
+   *
+   * @return array
+   *   An array of property keys for the element.
+   */
+  public static function properties(array $element) {
+    // Prevent "Exception: Notice: Trying to access array offset on value
+    // of type int" by removing all numeric keys.
+    // This issue is trigged when an element's YAML #option have numeric keys.
+    foreach ($element as $key => $value) {
+      if (is_int($key)) {
+        unset($element[$key]);
+      }
+    }
+    return Element::properties($element);
+  }
+
+  /**
    * Determine if an element and its key is a renderable array.
    *
    * @param array|mixed $element
@@ -86,6 +118,21 @@ class WebformElementHelper {
    */
   public static function isElement($element, $key) {
     return (Element::child($key) && is_array($element));
+  }
+
+  /**
+   * Determine if an element is accessible.
+   *
+   * @param array|mixed $element
+   *   An element.
+   *
+   * @return bool
+   *   TRUE if an element is accessible.
+   *
+   * @see \Drupal\Core\Render\Element::isVisibleElement
+   */
+  public static function isAccessibleElement($element) {
+    return (isset($element['#access']) && $element['#access'] === FALSE) ? FALSE : TRUE;
   }
 
   /**
@@ -246,7 +293,7 @@ class WebformElementHelper {
   public static function getProperties(array $element) {
     $properties = [];
     foreach ($element as $key => $value) {
-      if (Element::property($key)) {
+      if (static::property($key)) {
         $properties[$key] = $value;
       }
     }
@@ -264,7 +311,7 @@ class WebformElementHelper {
    */
   public static function removeProperties(array $element) {
     foreach ($element as $key => $value) {
-      if (Element::property($key)) {
+      if (static::property($key)) {
         unset($element[$key]);
       }
     }
@@ -314,21 +361,14 @@ class WebformElementHelper {
    *   A webform element that is missing the 'data-drupal-states' attribute.
    */
   public static function fixStatesWrapper(array &$element) {
-    if (empty($element['#states'])) {
-      return;
-    }
-
     $attributes = [];
-
-    // Set .js-form-wrapper which is targeted by states.js hide/show logic.
-    $attributes['class'][] = 'js-form-wrapper';
 
     // Add .js-webform-states-hidden to hide elements when they are being rendered.
     $attributes_properties = ['#wrapper_attributes', '#attributes'];
     foreach ($attributes_properties as $attributes_property) {
       if (isset($element[$attributes_property]) && isset($element[$attributes_property]['class'])) {
         $index = array_search('js-webform-states-hidden', $element[$attributes_property]['class']);
-        if ($index !== FALSE) {
+        if ($index !== FALSE && $index !== NULL) {
           unset($element[$attributes_property]['class'][$index]);
           $attributes['class'][] = 'js-webform-states-hidden';
           break;
@@ -336,27 +376,39 @@ class WebformElementHelper {
       }
     }
 
-    $attributes['data-drupal-states'] = Json::encode($element['#states']);
+    // Do not add wrapper if there is no #states and
+    // is no .js-webform-states-hidden class.
+    if (empty($element['#states']) && empty($attributes)) {
+      return;
+    }
+
+    // Set .js-form-wrapper which is targeted by states.js hide/show logic.
+    $attributes['class'][] = 'js-form-wrapper';
+
+    // Move the element's #states the wrapper's #states.
+    if (isset($element['#states'])) {
+      $attributes['data-drupal-states'] = Json::encode($element['#states']);
+
+      // Copy #states to #_webform_states property which can be used by the
+      // WebformSubmissionConditionsValidator.
+      // @see \Drupal\webform\WebformSubmissionConditionsValidator
+      $element['#_webform_states'] = $element['#states'];
+
+      // Remove #states property to prevent nesting.
+      unset($element['#states']);
+    }
+
+    // If there are attributes for the wrapper do not add it.
+    if (empty($attributes)) {
+      return;
+    }
 
     $element += ['#prefix' => '', '#suffix' => ''];
-
-    // ISSUE: JSON is being corrupted when the prefix is rendered.
-    // $element['#prefix'] = '<div ' . new Attribute($attributes) . '>' . $element['#prefix'];
-    // WORKAROUND: Safely set filtered #prefix to FormattableMarkup.
-    $allowed_tags = isset($element['#allowed_tags']) ? $element['#allowed_tags'] : Xss::getHtmlTagList();
-    $element['#prefix'] = Markup::create('<div' . new Attribute($attributes) . '>' . Xss::filter($element['#prefix'], $allowed_tags));
+    $element['#prefix'] = '<div' . new Attribute($attributes) . '>' . $element['#prefix'];
     $element['#suffix'] = $element['#suffix'] . '</div>';
 
     // Attach library.
     $element['#attached']['library'][] = 'core/drupal.states';
-
-    // Copy #states to #_webform_states property which can be used by the
-    // WebformSubmissionConditionsValidator.
-    // @see \Drupal\webform\WebformSubmissionConditionsValidator
-    $element['#_webform_states'] = $element['#states'];
-
-    // Remove #states property to prevent nesting.
-    unset($element['#states']);
   }
 
   /**
@@ -371,7 +423,7 @@ class WebformElementHelper {
   public static function getIgnoredProperties(array $element) {
     $ignored_properties = [];
     foreach ($element as $key => $value) {
-      if (Element::property($key)) {
+      if (static::property($key)) {
         if (self::isIgnoredProperty($key)) {
           // Computed elements use #ajax as boolean and should not be ignored.
           // @see \Drupal\webform\Element\WebformComputedBase
@@ -380,7 +432,7 @@ class WebformElementHelper {
             $ignored_properties[$key] = $key;
           }
         }
-        elseif ($key == '#element' && is_array($value) && isset($element['#type']) && $element['#type'] === 'webform_composite') {
+        elseif ($key === '#element' && is_array($value) && isset($element['#type']) && $element['#type'] === 'webform_composite') {
           foreach ($value as $composite_value) {
 
             // Multiple sub composite elements are not supported.
@@ -416,7 +468,7 @@ class WebformElementHelper {
    */
   public static function removeIgnoredProperties(array $element) {
     foreach ($element as $key => $value) {
-      if ($key && is_string($key) && Element::property($key) && self::isIgnoredProperty($key)) {
+      if (static::property($key) && self::isIgnoredProperty($key)) {
         // Computed elements use #ajax as boolean and should not be ignored.
         // @see \Drupal\webform\Element\WebformComputedBase
         $is_ajax_computed = ($key === '#ajax' && is_bool($value));
@@ -452,7 +504,7 @@ class WebformElementHelper {
       $allowedSubProperties = self::$allowedProperties;
       $ignoredSubProperties = self::$ignoredProperties;
       // Allow #weight as sub property. This makes it easier for developer to
-      // sort composite sub-elements
+      // sort composite sub-elements.
       unset($ignoredSubProperties['#weight']);
       self::$ignoredSubPropertiesRegExp = '/__(' . implode('|', array_keys(WebformArrayHelper::removePrefix($ignoredSubProperties))) . ')$/';
       self::$allowedSubPropertiesRegExp = '/__(' . implode('|', array_keys(WebformArrayHelper::removePrefix($allowedSubProperties))) . ')$/';
@@ -525,7 +577,7 @@ class WebformElementHelper {
 
     foreach ($element as $key => &$value) {
       // Make sure to only merge properties.
-      if (!Element::property($key) || empty($translation[$key])) {
+      if (!static::property($key) || empty($translation[$key])) {
         continue;
       }
 
@@ -555,7 +607,7 @@ class WebformElementHelper {
   public static function getFlattened(array $elements) {
     $flattened_elements = [];
     foreach ($elements as $key => &$element) {
-      if (!WebformElementHelper::isElement($element, $key)) {
+      if (!self::isElement($element, $key)) {
         continue;
       }
 
@@ -578,11 +630,11 @@ class WebformElementHelper {
    */
   public static function &getElement(array &$elements, $name) {
     foreach (Element::children($elements) as $element_name) {
-      if ($element_name == $name) {
+      if ($element_name === $name) {
         return $elements[$element_name];
       }
       elseif (is_array($elements[$element_name])) {
-        $child_elements =& $elements[$element_name];
+        $child_elements = &$elements[$element_name];
         if ($element = &static::getElement($child_elements, $name)) {
           return $element;
         }
@@ -632,18 +684,18 @@ class WebformElementHelper {
     }
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Validate callbacks to trigger or suppress validation.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // ISSUE: Hidden elements still need to call #element_validate because
   // certain elements, including managed_file, checkboxes, password_confirm,
   // etc…, will also massage the submitted values via #element_validate.
   //
   // SOLUTION: Call #element_validate for all hidden elements but suppresses
   // #element_validate errors.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Set element validate callback.

@@ -1,0 +1,9 @@
+BasicShib 9.x-2.0-dev, 2021-07-13
+-----------------------------------
+- Issue #d9 core compatibility submited update to version_core_requirement to
+  the info.yml file.
+- Issue #3036887 onrequest event priority added
+- Issue #3036894 Adds redirection after login
+- Bumps the dev branch up to 9.x, after resolving branch naming issues
+- Adds Drupal 10 compatibility version 2.0.1
+- Updated core_version_requirement: ^9 || ^10, tag 2.0.2

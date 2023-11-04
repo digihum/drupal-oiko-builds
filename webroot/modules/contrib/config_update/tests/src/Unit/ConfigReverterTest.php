@@ -25,8 +25,7 @@ class ConfigReverterTest extends ConfigUpdateUnitTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp(): void {
-    parent::setUp();
+  protected function setUp() {
     $this->configReverter = new ConfigReverter(
       $this->getEntityManagerMock(),
       $this->getConfigStorageMock('active'),
@@ -115,19 +114,18 @@ class ConfigReverterTest extends ConfigUpdateUnitTestBase {
 
     // Call the importer and test the Boolean result.
     $result = $this->configReverter->import($type, $name);
-    $this->assertEquals($expected, $result);
+    $this->assertEquals($result, $expected);
 
     if ($result) {
       // Verify that the config is correct after import, and logging worked.
-      $this->assertEquals($config_after, $this->configStorage[$config_name]);
-      $this->assertCount(2, $this->dispatchedEvents);
-      $this->assertEquals(ConfigRevertInterface::PRE_IMPORT, $this->dispatchedEvents[0][0]);
-      $this->assertEquals(ConfigRevertInterface::IMPORT, $this->dispatchedEvents[1][0]);
+      $this->assertEquals($this->configStorage[$config_name], $config_after);
+      $this->assertEquals(count($this->dispatchedEvents), 1);
+      $this->assertEquals($this->dispatchedEvents[0][0], ConfigRevertInterface::IMPORT);
     }
     else {
       // Verify that the config didn't change and no events were logged.
-      $this->assertEquals($save_config, $this->configStorage);
-      $this->assertCount(0, $this->dispatchedEvents);
+      $this->assertEquals($this->configStorage, $save_config);
+      $this->assertEquals(count($this->dispatchedEvents), 0);
     }
   }
 
@@ -175,28 +173,6 @@ class ConfigReverterTest extends ConfigUpdateUnitTestBase {
         ['in.optional' => 'before'],
         ['in.optional' => 'optional', '_core' => 'core_for_in.optional'],
       ],
-      // Will be altered if the extension config exists.
-      [
-        'system.simple',
-        'in.extension.pre_import',
-        'in.extension.pre_import',
-        TRUE,
-        ['prop' => 'unaltered_value'],
-        [
-          'prop' => 'altered_value',
-          'new_prop' => 'new_value',
-          '_core' => 'core_for_in.extension.pre_import',
-        ],
-      ],
-      // Will not be altered if the extension config doesn't exist.
-      [
-        'system.simple',
-        'missing2,pre_import',
-        'missing2.pre_import',
-        FALSE,
-        FALSE,
-        FALSE,
-      ],
       [
         'unknown',
         'in.extension',
@@ -230,19 +206,18 @@ class ConfigReverterTest extends ConfigUpdateUnitTestBase {
 
     // Call the reverter and test the Boolean result.
     $result = $this->configReverter->revert($type, $name);
-    $this->assertEquals($expected, $result);
+    $this->assertEquals($result, $expected);
 
     if ($result) {
       // Verify that the config is correct after revert, and logging worked.
-      $this->assertEquals($config_after, $this->configStorage[$config_name]);
-      $this->assertCount(2, $this->dispatchedEvents);
-      $this->assertEquals(ConfigRevertInterface::PRE_REVERT, $this->dispatchedEvents[0][0]);
-      $this->assertEquals(ConfigRevertInterface::REVERT, $this->dispatchedEvents[1][0]);
+      $this->assertEquals($this->configStorage[$config_name], $config_after);
+      $this->assertEquals(count($this->dispatchedEvents), 1);
+      $this->assertEquals($this->dispatchedEvents[0][0], ConfigRevertInterface::REVERT);
     }
     else {
       // Verify that the config didn't change and no events were logged.
-      $this->assertEquals($save_config, $this->configStorage);
-      $this->assertCount(0, $this->dispatchedEvents);
+      $this->assertEquals($this->configStorage, $save_config);
+      $this->assertEquals(count($this->dispatchedEvents), 0);
     }
   }
 
@@ -254,34 +229,6 @@ class ConfigReverterTest extends ConfigUpdateUnitTestBase {
       // Elements: type, name, config name, return value,
       // config to set up before, config expected after. See also
       // getFromExtensionProvider().
-      // The active config's 'prop' property will not be reverted.
-      [
-        'system.simple',
-        'in.extension.pre_revert',
-        'in.extension.pre_revert',
-        TRUE,
-        ['prop' => 'unaltered_value'],
-        [
-          'prop' => 'active.pre_revert_value',
-          'new_prop' => 'new_value',
-          '_core' => 'core_for_in.extension.pre_revert',
-        ],
-      ],
-      // The active config's 'prop' property will not be reverted.
-      [
-        'foo',
-        'pre_revert',
-        'foo.bar.pre_revert',
-        TRUE,
-        ['foo.bar.pre_revert' => 'active', 'id' => 'one'],
-        [
-          'foo.bar.pre_revert' => 'extension',
-          'id' => 'pre_revert',
-          'prop' => 'active.pre_revert_value',
-          'new_prop' => 'new_value',
-          '_core' => 'core_for_foo.bar.pre_revert',
-        ],
-      ],
       [
         'system.simple',
         'in.extension',
@@ -351,29 +298,25 @@ class ConfigReverterTest extends ConfigUpdateUnitTestBase {
    * @covers \Drupal\config_update\ConfigReverter::delete
    * @dataProvider deleteProvider
    */
-  public function testDelete($type, $name, $config_name, $expected, $config_before = NULL) {
+  public function testDelete($type, $name, $config_name, $expected) {
     // Clear dispatch log.
     $this->dispatchedEvents = [];
-    if ($config_name && $config_before) {
-      $this->configStorage[$config_name] = $config_before;
-    }
     $save_config = $this->configStorage;
 
-    // Call the deleter and test the Boolean result.
+    // Call the deleteer and test the Boolean result.
     $result = $this->configReverter->delete($type, $name);
-    $this->assertEquals($expected, $result);
+    $this->assertEquals($result, $expected);
 
     if ($result) {
       // Verify that the config is missing after delete, and logging worked.
-      $this->assertNotTrue(isset($this->configStorage[$config_name]));
-      $this->assertCount(2, $this->dispatchedEvents);
-      $this->assertEquals(ConfigDeleteInterface::PRE_DELETE, $this->dispatchedEvents[0][0]);
-      $this->assertEquals(ConfigDeleteInterface::DELETE, $this->dispatchedEvents[1][0]);
+      $this->assertTrue(!isset($this->configStorage[$config_name]));
+      $this->assertEquals(count($this->dispatchedEvents), 1);
+      $this->assertEquals($this->dispatchedEvents[0][0], ConfigDeleteInterface::DELETE);
     }
     else {
       // Verify that the config didn't change and no events were logged.
-      $this->assertEquals($save_config, $this->configStorage);
-      $this->assertCount(0, $this->dispatchedEvents);
+      $this->assertEquals($this->configStorage, $save_config);
+      $this->assertEquals(count($this->dispatchedEvents), 0);
     }
   }
 
@@ -382,8 +325,7 @@ class ConfigReverterTest extends ConfigUpdateUnitTestBase {
    */
   public function deleteProvider() {
     return [
-      // Elements: type, name, config name, return value,
-      // config to set up before (optional).
+      // Elements: type, name, config name, return value.
       [
         'system.simple',
         'in.extension',
@@ -395,7 +337,6 @@ class ConfigReverterTest extends ConfigUpdateUnitTestBase {
         'one',
         'foo.bar.one',
         TRUE,
-        ['foo.bar.one' => 'before', 'id' => 'one'],
       ],
       [
         'unknown',

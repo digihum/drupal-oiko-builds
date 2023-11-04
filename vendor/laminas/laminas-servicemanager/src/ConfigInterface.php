@@ -26,11 +26,7 @@ use Psr\Container\ContainerInterface;
  * @psalm-type FactoriesConfigurationType = array<
  *      string,
  *      (class-string<Factory\FactoryInterface>|Factory\FactoryInterface)
-<<<<<<< HEAD
- *      |callable(ContainerInterface,string,array<mixed>|null):object
-=======
  *      |callable(ContainerInterface,?string,?array<mixed>|null):object
->>>>>>> feature/medmus-d9
  * >
  * @psalm-type InitializersConfigurationType = array<
  *      array-key,
@@ -52,12 +48,8 @@ use Psr\Container\ContainerInterface;
  *     invokables?: array<string,string>,
  *     lazy_services?: LazyServicesConfigurationType,
  *     services?: array<string,object|array>,
-<<<<<<< HEAD
- *     shared?:array<string,bool>
-=======
  *     shared?:array<string,bool>,
  *     ...
->>>>>>> feature/medmus-d9
  * }
  */
 interface ConfigInterface

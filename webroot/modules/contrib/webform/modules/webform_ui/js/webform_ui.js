@@ -8,6 +8,22 @@
   'use strict';
 
   /**
+   * Move toggle weight element to the first child of the edit form.
+   *
+   * This ensure the toggle weight link is aligned with the add element actions.
+   *
+   * @type {Drupal~behavior}
+   */
+  Drupal.behaviors.webformUiElementsToggleWeight = {
+    attach: function (context, settings) {
+      $(context).find('form.webform-edit-form').once('webform-ui-elements-toggle-weight').each(function () {
+        var $form = $(this);
+        $form.find('.tabledrag-toggle-weight-wrapper').prependTo($form);
+      });
+    }
+  };
+
+  /**
    * Remove .button-primary class from .action-links .button-secondary.
    *
    * The seven.theme adds the .button-primary class to all actions.
@@ -59,7 +75,7 @@
               $row = $row[direction]();
               $cell = $row.find('td').eq(index).find(tagName);
               if ($cell.length) {
-                $cell.focus();
+                $cell.trigger('focus');
                 break;
               }
             }
@@ -75,18 +91,17 @@
             var direction = (event.which === 37) ? 'prev' : 'next';
             var $focus;
 
-
             // Move keyboard focus within operations dropbutton.
             if ($(this).closest('.webform-dropbutton').length) {
               if (direction === 'next' &&
                 this.tagName === 'A' &&
                 $(this).parent('.dropbutton-action').length) {
-                $cell.find('button').focus();
+                $cell.find('button').trigger('focus');
                 event.preventDefault();
                 return;
               }
               else if (direction === 'prev' && this.tagName === 'BUTTON') {
-                $cell.find('a').focus();
+                $cell.find('a').trigger('focus');
                 event.preventDefault();
                 return;
               }
@@ -96,7 +111,7 @@
               $cell = $cell[direction]();
               $focus = $cell.find('a:visible, input:visible, select:visible');
               if ($focus.length) {
-                $focus.focus();
+                $focus.trigger('focus');
                 event.preventDefault();
                 return;
               }

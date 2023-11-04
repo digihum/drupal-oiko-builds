@@ -2,6 +2,7 @@
 
 namespace Drupal\webform\Element;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\Element\RenderElement;
 use Drupal\webform\Entity\Webform as WebformEntity;
@@ -76,6 +77,13 @@ class Webform extends RenderElement {
 
         // Build the webform.
         $element['webform_build'] = $webform->getSubmissionForm($values);
+
+        // Add url.path to cache contexts.
+        $meta = new CacheableMetadata();
+        $meta->setCacheContexts(['url.path']);
+        $renderer = \Drupal::service('renderer');
+        $renderer->addCacheableDependency($element, $meta);
+        static::addCacheableDependency($element, $webform);
       }
       elseif ($webform->getSetting('form_access_denied') !== WebformInterface::ACCESS_DENIED_DEFAULT) {
         // Set access denied message.
@@ -95,6 +103,19 @@ class Webform extends RenderElement {
       if ($element['#information'] === FALSE
         && isset($element['webform_build']['information'])) {
         $element['webform_build']['information']['#access'] = FALSE;
+      }
+    }
+
+    // Allow anonymous drafts to be restored.
+    // @see \Drupal\webform\WebformSubmissionForm::buildForm
+    if (\Drupal::currentUser()->isAnonymous()
+      && $webform->getSetting('draft') === WebformInterface::DRAFT_ALL) {
+      $element['#cache']['max-age'] = 0;
+      // @todo Remove once bubbling of element's max-age to page cache is fixed.
+      // @see https://www.drupal.org/project/webform/issues/3015760
+      // @see https://www.drupal.org/project/drupal/issues/2352009
+      if (\Drupal::moduleHandler()->moduleExists('page_cache')) {
+        \Drupal::service(('page_cache_kill_switch'))->trigger();
       }
     }
 
@@ -125,9 +146,10 @@ class Webform extends RenderElement {
     $attributes['class'][] = 'webform-access-denied';
 
     $build = [
-      '#type' => 'container',
+      '#theme' => 'webform_access_denied',
       '#attributes' => $attributes,
-      'message' => WebformHtmlEditor::checkMarkup($message),
+      '#message' => WebformHtmlEditor::checkMarkup($message),
+      '#webform' => $webform,
     ];
 
     return static::addCacheableDependency($build, $webform);

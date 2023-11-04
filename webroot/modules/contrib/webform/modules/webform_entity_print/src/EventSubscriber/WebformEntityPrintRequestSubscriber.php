@@ -21,7 +21,7 @@ class WebformEntityPrintRequestSubscriber implements EventSubscriberInterface {
   protected $routeMatch;
 
   /**
-   * Constructs a new WebformEntityPrintRequestSubscriber.
+   * Constructs a WebformEntityPrintRequestSubscriber object.
    *
    * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
    *   The current route match.
@@ -34,7 +34,7 @@ class WebformEntityPrintRequestSubscriber implements EventSubscriberInterface {
    * Set custom webform entity print submission view mode.
    */
   public function requestSetViewMode(GetResponseEvent $event) {
-    if ($event->getRequestType() != HttpKernelInterface::MASTER_REQUEST) {
+    if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
       return;
     }
 

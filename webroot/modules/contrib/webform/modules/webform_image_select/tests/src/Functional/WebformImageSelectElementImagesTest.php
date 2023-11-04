@@ -7,7 +7,7 @@ use Drupal\Tests\webform\Functional\Element\WebformElementBrowserTestBase;
 /**
  * Tests for webform image select images element.
  *
- * @group Webform
+ * @group webform_image_select
  */
 class WebformImageSelectElementImagesTest extends WebformElementBrowserTestBase {
 
@@ -22,9 +22,12 @@ class WebformImageSelectElementImagesTest extends WebformElementBrowserTestBase 
    * Tests webform images select images element.
    */
   public function testElementOptions() {
+    $assert_session = $this->assertSession();
+
     // Check default value handling.
-    $this->drupalPostForm('/webform/test_element_images', [], t('Submit'));
-    $this->assertRaw("webform_image_select_images: {  }
+    $this->drupalGet('/webform/test_element_images');
+    $this->submitForm([], 'Submit');
+    $assert_session->responseContains("webform_image_select_images: {  }
 webform_image_select_images_default_value:
   kitten_1:
     text: 'Cute Kitten 1'
@@ -54,12 +57,13 @@ webform_image_select_element_images_custom:
     src: 'http://placekitten.com/270/200'");
 
     // Check unique key validation with image src.
+    $this->drupalGet('/webform/test_element_images');
     $edit = [
       'webform_image_select_images[images][items][0][src]' => 'src01',
       'webform_image_select_images[images][items][1][src]' => 'src02',
     ];
-    $this->drupalPostForm('/webform/test_element_images', $edit, t('Submit'));
-    $this->assertRaw("The <em class=\"placeholder\">Image value</em> '' is already in use. It must be unique.");
+    $this->submitForm($edit, 'Submit');
+    $assert_session->responseContains("The <em class=\"placeholder\">Image value</em> '' is already in use. It must be unique.");
   }
 
 }

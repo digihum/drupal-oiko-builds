@@ -6,9 +6,10 @@ use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Render\Element;
 use Drupal\webform\Utility\WebformArrayHelper;
+use Drupal\webform\Utility\WebformFormHelper;
 
 /**
- * Provides a trait for webform composite form elements.
+ * Trait for webform composite form elements.
  *
  * Any form element that is comprised of several distinct parts can use this
  * trait to add support for a composite title or description.
@@ -68,14 +69,14 @@ trait WebformCompositeFormElementTrait {
     $element['#attached']['library'][] = 'webform/webform.composite';
 
     // Set theme wrapper to wrapper type.
-    $wrapper_type = (isset($element['#wrapper_type'])) ? $element['#wrapper_type'] : 'fieldset';
+    $wrapper_type = $element['#wrapper_type'] ?? 'fieldset';
     $element['#theme_wrappers'][] = $wrapper_type;
 
     // Apply wrapper specific enhancements.
     switch ($wrapper_type) {
       case 'fieldset':
         // Set the element's title attribute to show #title as a tooltip, if needed.
-        if (isset($element['#title']) && $element['#title_display'] == 'attribute') {
+        if (isset($element['#title']) && $element['#title_display'] === 'attribute') {
           $element['#attributes']['title'] = $element['#title'];
           if (!empty($element['#required'])) {
             // Append an indication that this fieldset is required.
@@ -98,7 +99,7 @@ trait WebformCompositeFormElementTrait {
       case 'form_element':
         // Process #states for #wrapper_attributes.
         // @see template_preprocess_form_element().
-        webform_process_states($element, '#wrapper_attributes');
+        WebformFormHelper::processStates($element, '#wrapper_attributes');
         break;
     }
 

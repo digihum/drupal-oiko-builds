@@ -29,6 +29,7 @@ class Select extends OptionsBase {
       'multiple_error' => '',
       'empty_option' => '',
       'empty_value' => '',
+      'sort_options' => FALSE,
       'select2' => FALSE,
       'choices' => FALSE,
       'chosen' => FALSE,
@@ -39,7 +40,7 @@ class Select extends OptionsBase {
     return $properties;
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -152,7 +153,7 @@ class Select extends OptionsBase {
     $form['options']['choices'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Choices'),
-      '#description' => $this->t('Replace select element with <a href=":href">Choice.js</a> select box.', [':href' => 'https://joshuajohnson.co.uk/Choices/']),
+      '#description' => $this->t('Replace select element with <a href=":href">Choice.js</a> select box.', [':href' => 'https://choices-js.github.io/Choices/']),
       '#return_value' => TRUE,
       '#states' => [
         'disabled' => [

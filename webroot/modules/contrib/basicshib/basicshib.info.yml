@@ -1,0 +1,13 @@
+name: BasicShib
+description: BasicShib Shibboleth authentication
+package: Authentication
+
+type: module
+core_version_requirement: ^9 || ^10
+
+configure: basicshib.settings
+
+# Information added by Drupal.org packaging script on 2023-07-14
+version: '2.0.2'
+project: 'basicshib'
+datestamp: 1689357416

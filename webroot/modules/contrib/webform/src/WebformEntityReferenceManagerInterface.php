@@ -9,19 +9,19 @@ use Drupal\Core\Entity\EntityInterface;
  */
 interface WebformEntityReferenceManagerInterface {
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // User data methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
-   * Is the current request a webform croute where the user can specific a webform.
+   * Is the current request a webform route where the user can specify a webform.
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   A fieldable content entity.
    *
    * @return bool
-   *   TRUE if the current request a webform croute where the user can
-   *   specific a webform.
+   *   TRUE if the current request a webform route where the user can
+   *   specify a webform.
    */
   public function isUserWebformRoute(EntityInterface $entity);
 
@@ -54,9 +54,9 @@ interface WebformEntityReferenceManagerInterface {
    */
   public function deleteUserWebformId(EntityInterface $entity);
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Field methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Determine if the entity has a webform entity reference field.
@@ -113,9 +113,9 @@ interface WebformEntityReferenceManagerInterface {
    */
   public function getWebforms(EntityInterface $entity = NULL);
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Table methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Get the table names for all webform field instances.

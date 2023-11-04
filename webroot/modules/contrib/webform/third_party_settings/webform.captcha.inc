@@ -33,8 +33,7 @@ function captcha_webform_admin_third_party_settings_form_alter(&$form, FormState
     '#type' => 'checkbox',
     '#title' => t('Replace <em>Add CAPTCHA administration links to forms</em> with CAPTCHA webform element'),
     '#description' => t('If checked and <a href=":href">Add CAPTCHA administration links to forms</a> is enabled, the CAPTCHA fieldset added to every form will create a new CAPTCHA webform element instead of tracking each webform\'s id.', $t_args) . '<br/><br/>' .
-      t('It changes the "@from" link label and behavior to "@to"', $t_args)
-    ,
+      t('It changes the "@from" link label and behavior to "@to"', $t_args),
     '#default_value' => $replace_administration_mode,
     '#return_value' => TRUE,
   ];
@@ -66,9 +65,9 @@ function captcha_webform_submission_form_alter(&$form, FormStateInterface $form_
     return;
   }
 
-  // If the webform already has a CAPTCHA point is alread configured, do not
+  // If the webform already has a CAPTCHA point is already configured, do not
   // do anything.
-  /* @var \Drupal\captcha\CaptchaPointInterface $captcha_point */
+  /** @var \Drupal\captcha\CaptchaPointInterface $captcha_point */
   $captcha_point = \Drupal::entityTypeManager()
     ->getStorage('captcha_point')
     ->load($form_id);
@@ -80,7 +79,7 @@ function captcha_webform_submission_form_alter(&$form, FormStateInterface $form_
 }
 
 /**
- * After buld callback to add warning to CAPTCHA placement.
+ * After build callback to add warning to CAPTCHA placement.
  */
 function _captcha_webform_submission_form_after_build(array $form, FormStateInterface $form_state) {
   // Make sure 'Add CAPTCHA administration links to forms' is appended to the
@@ -101,7 +100,7 @@ function _captcha_webform_submission_form_after_build(array $form, FormStateInte
 
   // If the webform has a CAPTCHA element, display a link to edit the element.
   $elements = $webform->getElementsInitializedAndFlattened();
-  foreach ($elements as $key => $element) {
+  foreach ($elements as $key => &$element) {
     if (WebformElementHelper::isType($element, 'captcha')) {
       // Update the details element's title.
       $form['captcha']['#title'] = t('CAPTCHA: challenge enabled');
@@ -118,6 +117,7 @@ function _captcha_webform_submission_form_after_build(array $form, FormStateInte
           '#url' => Url::fromRoute($route_name, $route_parameters, $route_options),
           '#prefix' => '<em>',
           '#suffix' => '</em>',
+          '#parents' => [],
         ];
       }
       else {
@@ -141,6 +141,7 @@ function _captcha_webform_submission_form_after_build(array $form, FormStateInte
       '#type' => 'link',
       '#title' => t('Add CAPTCHA element to this webform for untrusted users.'),
       '#url' => Url::fromRoute($route_name, $route_parameters, $route_options),
+      '#parents' => [],
     ];
   }
   else {

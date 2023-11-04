@@ -16,7 +16,8 @@
       this.href = this.href.split('?')[0];
 
       // Add ?_webform_test={webform} to the current page's URL.
-      if (/webform\/([^/]+)\/test/.test(this.href)) {
+      // phpcs:ignore
+      if (/webform\/([^/]+)\/test$/.test(this.href)) {
         this.href = window.location.pathname + '?_webform_test=' + RegExp.$1;
       }
     });
