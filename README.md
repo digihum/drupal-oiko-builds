@@ -1,26 +1,7 @@
 Oiko
 ====
 
-[![Build Status](https://jenkins.computerminds.co.uk/buildStatus/icon?job=Oiko - Functional Testing - Site Install)](https://jenkins.computerminds.co.uk/job/Oiko - Functional Testing - Site Install)
-
-Getting started for developers
-------------------------------
-
-We are using composer to assemble the codebase. If you haven't done so already you'll need to install composer (https://getcomposer.org/download/).
-
-Clone the codebase to a location of your choice, and run the following in that location to bring in the dependencies:
-
-    composer install && composer update --lock
-
-
-Adding contrib modules
-----------------------
-
-To add a contrib module, find the module you wish to use on drupal.org and then head to https://packagist.drupal-composer.org/ and search for the package. Add using
-
-    composer require drupal/feeds:2.*
-
-from the repo root to add the module to the composer.json file.
+This Oiko Builds repository contains the source code for the Oiko.world project 
 
 Site installation
 -----------------
