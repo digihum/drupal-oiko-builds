@@ -1,10 +1,10 @@
-MedMus
+Oiko
 ====
 
 Codespaces
 ----------
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/digihum/drupal-oiko-builds/tree/feature/medmus-d8-codespace)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/digihum/drupal-oiko-builds/tree/feature/oiko-d8-codespace)
 
 To use in Codespaces: 
 
