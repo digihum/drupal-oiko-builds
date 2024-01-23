@@ -1,0 +1,33 @@
+uuid: 8b282d14-955c-4f45-859a-ea1dceac3cc5
+langcode: en
+status: true
+dependencies: {  }
+id: p145_separated
+label: 'P145 separated'
+bidirectional: false
+reverse_label: 'P145 left by'
+friendly_label: separated
+reverse_friendly_label: 'left by'
+domain_bundles:
+  - e86_leaving
+range_bundles:
+  - e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: generic
+    sub_property: p146_separated_from
+    title_template: '@target_name leaves @source_name'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: '<p>Name of the group left. This generates a Leaving event.</p>'
+child_events:
+  domain: 0
+  range: 0

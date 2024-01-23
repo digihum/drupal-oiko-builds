@@ -1,0 +1,7 @@
+fetchUrl: 'https://medmel.seai.uniroma1.it/php/getStaffId.php'
+embedUrl: 'https://medmel.seai.uniroma1.it/embed.html?id='
+multipleEmbedUrl: 'https://medmel.seai.uniroma1.it/embedAll.html?id='
+iframeHeight: '700'
+certName: medmel-seai-uniroma1-it-chain.pem
+cert:
+  - '202'

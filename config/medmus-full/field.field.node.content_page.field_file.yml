@@ -1,0 +1,27 @@
+uuid: 985e6c14-1b1b-4e04-a7b0-9c343cf378f0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_file
+    - node.type.content_page
+  module:
+    - file
+id: node.content_page.field_file
+field_name: field_file
+entity_type: node
+bundle: content_page
+label: file
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]'
+  file_extensions: 'txt json js'
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

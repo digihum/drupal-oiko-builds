@@ -1,0 +1,996 @@
+uuid: cac54c6f-0068-4dfc-aa5c-ec20edb3d7a1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.cidoc_entity.field_date
+  module:
+    - cidoc
+    - csv_serialization
+    - edtf
+    - rest
+    - serialization
+id: auth_2
+label: 'author''s activity date'
+module: views
+description: ''
+tag: ''
+base_table: cidoc_entity
+base_field: id
+display:
+  default:
+    display_plugin: default
+    id: default
+    display_title: Master
+    position: 0
+    display_options:
+      access:
+        type: none
+        options: {  }
+      cache:
+        type: tag
+        options: {  }
+      query:
+        type: views_query
+        options:
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_comment: ''
+          query_tags: {  }
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        type: none
+        options:
+          offset: 0
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          override: true
+          sticky: false
+          caption: ''
+          summary: ''
+          description: ''
+          columns:
+            name: name
+            name_1: name_1
+            name_2: name_2
+            field_date: field_date
+          info:
+            name:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            name_1:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            name_2:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_date:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          default: '-1'
+          empty_table: false
+      row:
+        type: fields
+        options:
+          inline: {  }
+          separator: ''
+          hide_empty: false
+          default_field_elements: true
+      fields:
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+        name_2:
+          id: name_2
+          table: cidoc_entity
+          field: name
+          relationship: related_entities
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+        field_date:
+          id: field_date
+          table: cidoc_entity__field_date
+          field: field_date
+          relationship: related_entities
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: "{{ field_date__value }}\r\n"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: edtf_edtf_formatter
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+        edit_cidoc_entity:
+          id: edit_cidoc_entity
+          table: cidoc_entity
+          field: edit_cidoc_entity
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: ''
+          label: 'Link to edit CIDOC entity'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          text: edit
+          output_url_as_text: false
+          absolute: false
+          entity_type: cidoc_entity
+          plugin_id: entity_link_edit
+      filters:
+        status:
+          value: '1'
+          table: cidoc_entity
+          field: status
+          plugin_id: boolean
+          entity_type: cidoc_entity
+          entity_field: status
+          id: status
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+          group: 1
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: ''
+          operator: starts
+          value: 'Activity of'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: name_op
+            label: Name
+            description: ''
+            use_operator: false
+            operator: name_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: name
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              content_editor: '0'
+              forum_user: '0'
+              moderator: '0'
+              moderated_contributor: '0'
+              pure_html_user: '0'
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
+      sorts:
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+      header: {  }
+      footer: {  }
+      empty: {  }
+      relationships:
+        related_entities_reverse:
+          id: related_entities_reverse
+          table: cidoc_entity
+          field: related_entities_reverse
+          relationship: none
+          group_type: group
+          admin_label: Activity
+          required: true
+          limit_bundles:
+            p14_carried_out_by: p14_carried_out_by
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p9_consists_of: 0
+            p10_falls_within: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p45_consists_of: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p128_carries: 0
+            p131_is_identified_by: 0
+            p134_continued: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa4_has_muse: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa12_has_adoptive_child: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pa19_has_language: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pc10_has_melodic_scheme: 0
+            pc11_has_spouse: 0
+            pc12_has_intertextual_relationsh: 0
+            pc13_has_response: 0
+            pc14_has_indirect_source: 0
+          limit_types:
+            e7_activity: e7_activity
+            e5_event: 0
+            e6_destruction: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+            ec10_marriage: 0
+            ec11_melodic_scheme: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_reverse
+        related_entities:
+          id: related_entities
+          table: cidoc_entity
+          field: related_entities
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: T-S
+          required: false
+          limit_bundles:
+            p4_has_time_span: p4_has_time_span
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p7_took_place_at: 0
+            p9_consists_of: 0
+            p10_falls_within: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p45_consists_of: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p128_carries: 0
+            p131_is_identified_by: 0
+            p134_continued: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa4_has_muse: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa12_has_adoptive_child: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pa19_has_language: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pc10_has_melodic_scheme: 0
+            pc11_has_spouse: 0
+            pc12_has_intertextual_relationsh: 0
+            pc13_has_response: 0
+            pc14_has_indirect_source: 0
+          limit_types:
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+            ec10_marriage: 0
+            ec11_melodic_scheme: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
+      arguments: {  }
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+      tags:
+        - 'config:field.storage.cidoc_entity.field_date'
+  rest_export_1:
+    display_plugin: rest_export
+    id: rest_export_1
+    display_title: 'REST export'
+    position: 1
+    display_options:
+      display_extenders: {  }
+      path: authors-activity-date
+      row:
+        type: data_field
+        options:
+          field_options: {  }
+      style:
+        type: serializer
+        options:
+          formats:
+            csv: csv
+      fields:
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: '{{name|raw}}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+        field_date:
+          id: field_date
+          table: cidoc_entity__field_date
+          field: field_date
+          relationship: related_entities
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: "{{ field_date__value }}\r\n"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: edtf_human_readable_formatter
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+      defaults:
+        fields: false
+      pager:
+        type: some
+        options:
+          items_per_page: 0
+          offset: 0
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - request_format
+      tags:
+        - 'config:field.storage.cidoc_entity.field_date'
+  rest_export_2:
+    display_plugin: rest_export
+    id: rest_export_2
+    display_title: 'REST export 2'
+    position: 2
+    display_options:
+      display_extenders: {  }
+      style:
+        type: serializer
+        options:
+          uses_fields: false
+          formats:
+            json: json
+      row:
+        type: data_field
+        options:
+          field_options:
+            id:
+              alias: id
+              raw_output: false
+            field_date:
+              alias: date
+              raw_output: false
+      path: authDate
+      fields:
+        id:
+          id: id
+          table: cidoc_entity
+          field: id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: id
+          plugin_id: field
+        field_date:
+          id: field_date
+          table: cidoc_entity__field_date
+          field: field_date
+          relationship: related_entities
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: "{{ field_date__value }}\r\n"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: edtf_edtf_formatter
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+      defaults:
+        fields: false
+      pager:
+        type: some
+        options:
+          items_per_page: 0
+          offset: 0
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - request_format
+      tags:
+        - 'config:field.storage.cidoc_entity.field_date'

@@ -130,11 +130,11 @@
         "drupal/shib_auth": "1.x-dev",
         "drupal/squid_autocomplete": "1.0-alpha5",
         "drupal/stage_file_proxy": "*",
-        "drupal/upgrade_status": "^3",
+        "drupal/upgrade_status": "^3.19",
         "drupal/views_bulk_operations": "^2.6.0",
         "drupal/views_fields_on_off": "^1.0@alpha",
         "drupal/webform": "^5.11",
-        "drush/drush": "^8.3.4",
+        "drush/drush": "^10.0.0",
         "leaflet/leaflet": "1.0.3",
         "leaflet/leaflet.draw": "^0.3.0",
         "oomphinc/composer-installers-extender": "dev-master",
@@ -183,6 +183,9 @@
             "drush/contrib/{$name}": [
                 "type:drupal-drush"
             ]
+        },
+        "patchLevel": {
+            "drupal/core": "-p2"
         },
         "patches": {
             "drupal/core": {

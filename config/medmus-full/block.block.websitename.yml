@@ -1,0 +1,25 @@
+uuid: 8cdae2fb-1a8a-48e2-8d27-88029a6b852a
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:simple_block:f1d8037d-b120-4f10-8b9c-bb135a6b69ef'
+  module:
+    - block_content
+  theme:
+    - medmus
+id: websitename
+theme: medmus
+region: user_header
+weight: -10
+provider: null
+plugin: 'block_content:f1d8037d-b120-4f10-8b9c-bb135a6b69ef'
+settings:
+  id: 'block_content:f1d8037d-b120-4f10-8b9c-bb135a6b69ef'
+  label: 'Website name'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

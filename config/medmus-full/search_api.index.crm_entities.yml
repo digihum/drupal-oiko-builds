@@ -1,0 +1,227 @@
+uuid: c48904d8-2c55-4f53-b62c-694cbf5959ce
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+    - search_api
+  config:
+    - search_api.server.db_search_backend
+    - core.entity_view_mode.cidoc_entity.search_index
+id: crm_entities
+name: 'CRM Entities'
+description: ''
+read_only: false
+field_settings:
+  child_events:
+    label: 'Child event count'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: cidoc_child_events
+    type: integer
+  has_geodata:
+    label: 'Has geospatial data'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: cidoc_has_geodata
+    type: boolean
+  internal_name:
+    label: 'Internal name'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: internal_name
+    type: text
+    boost: !!float 2
+    dependencies:
+      module:
+        - cidoc
+  name:
+    label: Name
+    datasource_id: 'entity:cidoc_entity'
+    property_path: name
+    type: text
+    boost: !!float 5
+    dependencies:
+      module:
+        - cidoc
+  rendered_item:
+    label: 'Rendered HTML output'
+    property_path: rendered_item
+    type: text
+    configuration:
+      roles:
+        anonymous: anonymous
+      view_mode:
+        'entity:cidoc_entity':
+          e12_production: search_index
+          e21_person: search_index
+          e35_title: search_index
+          e41_appellation: search_index
+          e42_identifier: search_index
+          e52_time_span: search_index
+          e53_place: search_index
+          e55_type: search_index
+          e56_language: search_index
+          e57_material: search_index
+          e5_event: search_index
+          e65_creation: search_index
+          e66_formation: search_index
+          e67_birth: search_index
+          e68_dissolution: search_index
+          e69_death: search_index
+          e6_destruction: search_index
+          e74_group: search_index
+          e7_activity: search_index
+          e85_joining: search_index
+          e86_leaving: search_index
+          e9_move: search_index
+          ec10_marriage: search_index
+          ec11_melodic_scheme: search_index
+          ec1_work: search_index
+          ec2_genre: search_index
+          ec3_formal_feature: search_index
+          ec4_syllabic_scheme: search_index
+          ec5_rhyme_scheme: search_index
+          ec6_music: search_index
+          ec7_source: search_index
+          ec8_manuscript: search_index
+          ec9_print: search_index
+  status:
+    label: 'Publishing status'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: status
+    type: boolean
+    dependencies:
+      module:
+        - cidoc
+  user_id:
+    label: 'Authored by'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: user_id
+    type: integer
+    dependencies:
+      module:
+        - cidoc
+datasource_settings:
+  'entity:cidoc_entity':
+    bundles:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  cidoc: {  }
+  html_filter:
+    fields:
+      - rendered_item
+    title: true
+    alt: true
+    tags:
+      b: 2
+      h1: 5
+      h2: 3
+      h3: 2
+      strong: 2
+    weights:
+      preprocess_index: -10
+      preprocess_query: -10
+    all_fields: false
+  ignore_character:
+    fields:
+      - internal_name
+      - name
+      - rendered_item
+    ignorable: '[''¿¡!?,.:;]'
+    weights:
+      preprocess_index: -8
+      preprocess_query: -8
+    ignorable_classes:
+      - Pc
+      - Pd
+      - Pe
+      - Pf
+      - Pi
+      - Po
+      - Ps
+    all_fields: false
+  ignorecase:
+    fields:
+      - internal_name
+      - name
+      - rendered_item
+    weights:
+      preprocess_index: -9
+      preprocess_query: -9
+    all_fields: false
+  language_with_fallback: {  }
+  rendered_item: {  }
+  stopwords:
+    fields:
+      - internal_name
+      - name
+      - rendered_item
+    stopwords:
+      - a
+      - an
+      - and
+      - are
+      - as
+      - at
+      - be
+      - but
+      - by
+      - for
+      - if
+      - in
+      - into
+      - is
+      - it
+      - 'no'
+      - not
+      - of
+      - 'on'
+      - or
+      - s
+      - such
+      - t
+      - that
+      - the
+      - their
+      - then
+      - there
+      - these
+      - they
+      - this
+      - to
+      - was
+      - will
+      - with
+    weights:
+      preprocess_index: -5
+      preprocess_query: -5
+    all_fields: false
+  tokenizer:
+    fields:
+      - internal_name
+      - name
+      - rendered_item
+    spaces: ''
+    overlap_cjk: 1
+    minimum_word_size: '3'
+    weights:
+      preprocess_index: -7
+      preprocess_query: -7
+    all_fields: false
+  transliteration:
+    fields:
+      - internal_name
+      - name
+      - rendered_item
+    weights:
+      preprocess_index: -6
+      preprocess_query: -6
+    all_fields: false
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  index_directly: true
+  cron_limit: 50
+server: db_search_backend

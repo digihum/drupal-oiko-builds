@@ -1,0 +1,132 @@
+uuid: bdad5b3e-5585-4902-9ed3-b7241e34af57
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec6_music
+    - core.entity_view_mode.cidoc_entity.preview
+  module:
+    - entity_reference_revisions
+    - field_group
+    - text
+third_party_settings:
+  field_group:
+    group_ec6_muci_:
+      children:
+        - name
+        - internal_name
+        - significance
+        - content
+        - cidoc_properties
+        - citation
+        - user_id
+        - cidoc_admin_links
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: 'style="border-bottom: 2px solid #657986;"'
+        effect: none
+        speed: fast
+      label: 'EC6 Music'
+id: cidoc_entity.ec6_music.preview
+targetEntityType: cidoc_entity
+bundle: ec6_music
+mode: preview
+content:
+  cidoc_admin_links:
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  cidoc_properties:
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  citation:
+    region: content
+    type: entity_reference_revisions_entity_view
+    label: inline
+    settings:
+      view_mode: default
+      link: ''
+    weight: 6
+    third_party_settings: {  }
+  content:
+    region: content
+    type: text_default
+    label: visually_hidden
+    settings: {  }
+    weight: 4
+    third_party_settings: {  }
+  internal_name:
+    region: content
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    weight: 2
+    third_party_settings: {  }
+  name:
+    region: content
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    weight: 1
+    third_party_settings: {  }
+  significance:
+    region: content
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    weight: 3
+    third_party_settings: {  }
+  user_id:
+    type: entity_reference_label
+    weight: 7
+    region: content
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+hidden:
+  'cidoc_properties:domain:p102_has_title': true
+  'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p48_has_preferred_identifier': true
+  'cidoc_properties:domain:p67_refers_to': true
+  'cidoc_properties:domain:p72_has_language': true
+  'cidoc_properties:domain:pc10_has_melodic_scheme': true
+  'cidoc_properties:domain:pc1_has_metrical_affinities_with': true
+  'cidoc_properties:domain:pc2_is_contrafactum_of': true
+  'cidoc_properties:domain:pc3_has_genre': true
+  'cidoc_properties:domain:pc4_has_formal_feature': true
+  'cidoc_properties:domain:pc5_has_expression': true
+  'cidoc_properties:domain:pc8_has_syllabic_scheme': true
+  'cidoc_properties:domain:pc9_has_rhyme_scheme': true
+  'cidoc_properties:range:p128_carries': true
+  'cidoc_properties:range:p12_occurred_in_the_presence_of': true
+  'cidoc_properties:range:p67_refers_to': true
+  'cidoc_properties:range:p94_has_created': true
+  'cidoc_properties:range:pc2_is_contrafactum_of': true
+  'cidoc_properties:range:pc5_has_expression': true
+  'cidoc_properties:range:pc7_has_music': true
+  cidoc_properties_transcript: true
+  cidoc_temporal_summary: true
+  has_music_entity_view_1: true
+  map_link: true
+  search_api_excerpt: true
+  timeline_link: true
+  timeline_logo: true
+  timeline_preselect_option: true

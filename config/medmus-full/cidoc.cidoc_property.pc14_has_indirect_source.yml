@@ -1,0 +1,31 @@
+uuid: 581bd804-0f22-4c87-9d2d-7f5bde5fdae2
+langcode: en
+status: true
+dependencies: {  }
+id: pc14_has_indirect_source
+label: 'PC14 has indirect source'
+bidirectional: false
+reverse_label: 'PC14 is indirect source of'
+friendly_label: 'Indirect source'
+reverse_friendly_label: 'Is indirect source of'
+domain_bundles:
+  - ec1_work
+range_bundles:
+  - ec1_work
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

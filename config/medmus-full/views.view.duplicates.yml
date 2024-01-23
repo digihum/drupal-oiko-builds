@@ -1,0 +1,528 @@
+uuid: 305f08a8-5616-4ada-bc2d-a6c06c07a418
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e12_production
+    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_entity_bundle.e35_title
+    - cidoc.cidoc_entity_bundle.e41_appellation
+    - cidoc.cidoc_entity_bundle.e42_identifier
+    - cidoc.cidoc_entity_bundle.e52_time_span
+    - cidoc.cidoc_entity_bundle.e53_place
+    - cidoc.cidoc_entity_bundle.e55_type
+    - cidoc.cidoc_entity_bundle.e56_language
+    - cidoc.cidoc_entity_bundle.e57_material
+    - cidoc.cidoc_entity_bundle.e5_event
+    - cidoc.cidoc_entity_bundle.e65_creation
+    - cidoc.cidoc_entity_bundle.e66_formation
+    - cidoc.cidoc_entity_bundle.e67_birth
+    - cidoc.cidoc_entity_bundle.e68_dissolution
+    - cidoc.cidoc_entity_bundle.e69_death
+    - cidoc.cidoc_entity_bundle.e6_destruction
+    - cidoc.cidoc_entity_bundle.e74_group
+    - cidoc.cidoc_entity_bundle.e7_activity
+    - cidoc.cidoc_entity_bundle.e85_joining
+    - cidoc.cidoc_entity_bundle.e86_leaving
+    - cidoc.cidoc_entity_bundle.e9_move
+    - cidoc.cidoc_entity_bundle.ec10_marriage
+    - cidoc.cidoc_entity_bundle.ec11_melodic_scheme
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_entity_bundle.ec2_genre
+    - cidoc.cidoc_entity_bundle.ec3_formal_feature
+    - cidoc.cidoc_entity_bundle.ec4_syllabic_scheme
+    - cidoc.cidoc_entity_bundle.ec5_rhyme_scheme
+    - cidoc.cidoc_entity_bundle.ec6_music
+    - cidoc.cidoc_entity_bundle.ec7_source
+    - cidoc.cidoc_entity_bundle.ec8_manuscript
+    - cidoc.cidoc_entity_bundle.ec9_print
+    - user.role.administrator
+    - user.role.content_editor
+  module:
+    - cidoc
+    - options
+    - user
+id: duplicates
+label: 'Check duplicates'
+module: views
+description: ''
+tag: ''
+base_table: cidoc_entity
+base_field: id
+display:
+  default:
+    display_plugin: default
+    id: default
+    display_title: Master
+    position: 0
+    display_options:
+      access:
+        type: role
+        options:
+          role:
+            administrator: administrator
+            content_editor: content_editor
+      cache:
+        type: tag
+        options: {  }
+      query:
+        type: views_query
+        options:
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_comment: ''
+          query_tags: {  }
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        type: mini
+        options:
+          items_per_page: 100
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: ‹‹
+            next: ››
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+      style:
+        type: html_list
+        options:
+          grouping:
+            -
+              field: name
+              rendered: true
+              rendered_strip: true
+          row_class: ''
+          default_row_class: true
+          type: ul
+          wrapper_class: item-list
+          class: ''
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline:
+            name_1: name_1
+            name: name
+            edit_cidoc_entity: edit_cidoc_entity
+          separator: '-'
+          hide_empty: true
+      fields:
+        name_2:
+          id: name_2
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: "<a href=\"/dupl/{{name_2|raw|url_encode|replace({\"%26%23039%3B\":\"\\'\"})}}\" target=\"_blank\">{{name_2|replace({'’': \"'\"})|raw}}</a>\r\n\r\n"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: count
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: true
+            text: '{{name|replace({''’'': "\''"})}} ENTITIES WITH THIS NAME'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          set_precision: false
+          precision: 0
+          decimal: .
+          separator: ', '
+          format_plural: 0
+          format_plural_string: !!binary MQNAY291bnQ=
+          prefix: ''
+          suffix: ''
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns:
+            value: value
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+      filters:
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: name_op
+            label: Name
+            description: ''
+            use_operator: false
+            operator: name_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: name
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              content_editor: '0'
+              forum_user: '0'
+              moderator: '0'
+              moderated_contributor: '0'
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
+        field_exclude_from_duplicates__value:
+          id: field_exclude_from_duplicates__value
+          table: cidoc_entity__field_exclude_from_duplicates_
+          field: field_exclude_from_duplicates__value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: not
+          value:
+            'yes': 'yes'
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          plugin_id: list_field
+        combine:
+          id: combine
+          table: views
+          field: combine
+          plugin_id: combine
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+        bundle:
+          id: bundle
+          table: cidoc_entity
+          field: bundle
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: in
+          value:
+            all: all
+            e12_production: e12_production
+            e21_person: e21_person
+            e35_title: e35_title
+            e41_appellation: e41_appellation
+            e42_identifier: e42_identifier
+            e5_event: e5_event
+            e52_time_span: e52_time_span
+            e53_place: e53_place
+            e55_type: e55_type
+            e56_language: e56_language
+            e57_material: e57_material
+            e6_destruction: e6_destruction
+            e65_creation: e65_creation
+            e66_formation: e66_formation
+            e67_birth: e67_birth
+            e68_dissolution: e68_dissolution
+            e69_death: e69_death
+            e7_activity: e7_activity
+            e74_group: e74_group
+            e85_joining: e85_joining
+            e86_leaving: e86_leaving
+            e9_move: e9_move
+            ec1_work: ec1_work
+            ec10_marriage: ec10_marriage
+            ec11_melodic_scheme: ec11_melodic_scheme
+            ec2_genre: ec2_genre
+            ec3_formal_feature: ec3_formal_feature
+            ec4_syllabic_scheme: ec4_syllabic_scheme
+            ec5_rhyme_scheme: ec5_rhyme_scheme
+            ec6_music: ec6_music
+            ec7_source: ec7_source
+            ec8_manuscript: ec8_manuscript
+            ec9_print: ec9_print
+            '--all-events--': '--all-events--'
+            '--all-main--': '--all-main--'
+          group: 1
+          exposed: true
+          expose:
+            operator_id: bundle_op
+            label: Class
+            description: ''
+            use_operator: false
+            operator: bundle_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: bundle
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              content_editor: '0'
+              forum_user: '0'
+              moderator: '0'
+              moderated_contributor: '0'
+              pure_html_user: '0'
+              replicator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: cidoc_entity
+          entity_field: bundle
+          plugin_id: cidoc_bundle
+      sorts:
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: count
+          admin_label: ''
+          order: DESC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+        name_1:
+          id: name_1
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+      title: Duplicates
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content:
+            value: "<div data-align=\"right\" style=\"position:sticky !important;\"><a href=\"/admin/cidoc/cidoc-entities\" target=\"_blank\"><h3>Search All entities</h3></a></div>\r\n<div>If you find that two contents need to have the same name, you can edit one of them by changing its \"exclude from duplicates\" option. NB: not all classes have this feature.<div>"
+            format: basic_html
+          plugin_id: text
+      footer: {  }
+      empty: {  }
+      relationships: {  }
+      arguments: {  }
+      display_extenders: {  }
+      group_by: true
+      filter_groups:
+        operator: OR
+        groups:
+          1: AND
+          2: OR
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user.roles
+      tags: {  }
+  page_1:
+    display_plugin: page
+    id: page_1
+    display_title: Page
+    position: 1
+    display_options:
+      display_extenders: {  }
+      path: duplicates
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user.roles
+      tags: {  }

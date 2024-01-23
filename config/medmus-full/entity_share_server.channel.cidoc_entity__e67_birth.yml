@@ -1,0 +1,19 @@
+uuid: null
+langcode: en
+status: true
+dependencies: {  }
+id: cidoc_entity__e67_birth
+label: 'E67 Birth'
+channel_entity_type: cidoc_entity
+channel_bundle: e67_birth
+channel_langcode: und
+channel_filters: null
+channel_groups: null
+channel_sorts:
+  changed:
+    path: changed
+    direction: DESC
+    weight: 0
+channel_searches: null
+authorized_users:
+  d045948c-d47c-4fcc-83c9-c91a1439995a: d045948c-d47c-4fcc-83c9-c91a1439995a

@@ -730,7 +730,7 @@ $databases['default']['default'] = array (
 
 $settings['install_profile'] = 'oiko_profile';
 
-$config_directories['sync'] = '../config/sync';
+$settings['config_sync_directory'] = '../config/medmus-full';
 
 $settings['config_readonly'] = TRUE;
 
@@ -741,12 +741,9 @@ $config['config_split.config_split.oiko_world']['status'] = FALSE;
 $config['config_split.config_split.medmus']['status'] = TRUE;
 $settings['cidoc_show_entities_without_temporal_data_on_map'] = FALSE;
 $settings['medmus_share_auto_delete_enabled'] = FALSE;
-  
-$config_directories['sync'] = '/opt/drupal/config/sync';
-//  $config_directories['export'] = '../config/export';
 
 $settings['container_yamls'][] = DRUPAL_ROOT . '/sites/development.services.yml';
- 
+
 if (file_exists(__DIR__ . '/settings.local.php')) {
   include __DIR__ . '/settings.local.php';
 }

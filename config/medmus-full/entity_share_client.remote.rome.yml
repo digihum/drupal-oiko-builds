@@ -1,0 +1,13 @@
+uuid: 4d48bf65-693a-410b-a16c-31452132ce2e
+langcode: en
+status: true
+dependencies: {  }
+id: rome
+label: Rome
+url: 'https://parli.seai.uniroma1.it'
+auth:
+  pid: basic_auth_with_header
+  uuid: 2fbf75cf-2f58-4727-bdcf-437344e69c7d
+  data:
+    credential_provider: entity_share
+    storage_key: 2fbf75cf-2f58-4727-bdcf-437344e69c7d

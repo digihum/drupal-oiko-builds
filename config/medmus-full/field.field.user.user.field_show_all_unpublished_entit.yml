@@ -1,0 +1,24 @@
+uuid: 522a9844-ef80-440c-b294-17618761319a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_show_all_unpublished_entit
+  module:
+    - user
+id: user.user.field_show_all_unpublished_entit
+field_name: field_show_all_unpublished_entit
+entity_type: user
+bundle: user
+label: 'Show all unpublished entities on map'
+description: 'If checked then unpublished entities created by other users will be displayed on the map, if you have access to view them.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

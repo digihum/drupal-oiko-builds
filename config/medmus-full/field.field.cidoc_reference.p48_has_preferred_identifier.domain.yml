@@ -1,0 +1,55 @@
+uuid: 8b3082ac-6d47-4222-af70-71f7c17486a5
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - cidoc.cidoc_entity_bundle.e41_appellation
+    - cidoc.cidoc_entity_bundle.e42_identifier
+    - cidoc.cidoc_entity_bundle.e52_time_span
+    - cidoc.cidoc_entity_bundle.e55_type
+    - cidoc.cidoc_entity_bundle.e5_event
+    - cidoc.cidoc_entity_bundle.ec11_melodic_scheme
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_entity_bundle.ec4_syllabic_scheme
+    - cidoc.cidoc_entity_bundle.ec5_rhyme_scheme
+    - cidoc.cidoc_entity_bundle.ec6_music
+    - cidoc.cidoc_entity_bundle.ec7_source
+    - cidoc.cidoc_entity_bundle.ec8_manuscript
+    - cidoc.cidoc_entity_bundle.ec9_print
+    - cidoc.cidoc_property.p48_has_preferred_identifier
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.p48_has_preferred_identifier.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: p48_has_preferred_identifier
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e5_event: e5_event
+      e21_person: e21_person
+      e41_appellation: e41_appellation
+      e42_identifier: e42_identifier
+      e52_time_span: e52_time_span
+      e55_type: e55_type
+      ec1_work: ec1_work
+      ec4_syllabic_scheme: ec4_syllabic_scheme
+      ec5_rhyme_scheme: ec5_rhyme_scheme
+      ec6_music: ec6_music
+      ec7_source: ec7_source
+      ec8_manuscript: ec8_manuscript
+      ec9_print: ec9_print
+      ec11_melodic_scheme: ec11_melodic_scheme
+    auto_create_bundle: e5_event
+field_type: entity_reference

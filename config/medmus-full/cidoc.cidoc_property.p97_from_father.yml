@@ -1,0 +1,35 @@
+uuid: 8a5b7156-a886-433c-b1de-cb77749327b1
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: XKGESprT6_DOgiUJX9nuglbihwzzazFJ1O4ofHul8hs
+id: p97_from_father
+label: 'P97 by father'
+bidirectional: false
+reverse_label: 'P97 was father for'
+friendly_label: Father
+reverse_friendly_label: 'Was father for'
+domain_bundles:
+  - e67_birth
+range_bundles:
+  - e21_person
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: generic
+    sub_property: p98_brought_into_life
+    title_template: '@bundle_name of @source_name'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: '<p>Name of son/daughter of which this person is <strong>father</strong>. This generates an event Birth.</p>'
+child_events:
+  domain: 0
+  range: 0

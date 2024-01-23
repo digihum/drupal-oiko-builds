@@ -1,0 +1,39 @@
+uuid: 7070622e-6d02-4050-bed0-905be0232d87
+langcode: en
+status: true
+dependencies: {  }
+id: p139_has_alternative_form
+label: 'P139 has alternative form'
+bidirectional: false
+reverse_label: 'P139 has alternative form'
+friendly_label: 'Alternative form'
+reverse_friendly_label: 'Alternative form'
+domain_bundles:
+  - e35_title
+  - e41_appellation
+  - e42_identifier
+  - ec4_syllabic_scheme
+  - ec5_rhyme_scheme
+range_bundles:
+  - e35_title
+  - e41_appellation
+  - e42_identifier
+  - ec4_syllabic_scheme
+  - ec5_rhyme_scheme
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

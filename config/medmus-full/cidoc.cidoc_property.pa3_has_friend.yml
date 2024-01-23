@@ -1,0 +1,31 @@
+uuid: b1b6ad1e-79ce-453a-abd5-d51427e2c5d4
+langcode: en
+status: true
+dependencies: {  }
+id: pa3_has_friend
+label: 'PA3 has friend'
+bidirectional: true
+reverse_label: 'PA3 has friend'
+friendly_label: 'Has friend'
+reverse_friendly_label: ''
+domain_bundles:
+  - e21_person
+range_bundles:
+  - e21_person
+editability:
+  domain: true
+  range: false
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

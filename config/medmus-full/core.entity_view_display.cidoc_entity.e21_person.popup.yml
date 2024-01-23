@@ -1,0 +1,636 @@
+uuid: eb264e03-4c45-4c38-bd8b-4489cfbb929c
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - core.entity_view_mode.cidoc_entity.popup
+    - field.field.cidoc_entity.e21_person.field_generation
+    - field.field.cidoc_entity.e21_person.field_notes
+  module:
+    - entity_reference_revisions
+    - field_group
+    - text
+third_party_settings:
+  field_group:
+    group_activities_and_places:
+      children: {  }
+      parent_name: ''
+      weight: 10
+      label: '<span class="fa fa-calendar">&nbsp;&nbsp;</span>Key activities and places'
+      format_type: html_element
+      format_settings:
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+        fieldset_label_html: true
+      region: content
+    group_appellations:
+      children:
+        - 'cidoc_properties:domain:p48_has_preferred_identifier'
+        - is_referred_to_by_entity_view_2
+        - is_referred_to_by_entity_view_1
+      parent_name: ''
+      weight: 5
+      format_type: html_element
+      format_settings:
+        id: ''
+        classes: ''
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        fieldset_label_html: true
+      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Also known as'
+      region: content
+    group_influences:
+      children: {  }
+      parent_name: ''
+      weight: 8
+      format_type: html_element
+      format_settings:
+        id: ''
+        classes: ''
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        fieldset_label_html: true
+      label: '<span class="fa fa-exchange">&nbsp;&nbsp;</span>Influences'
+      region: content
+    group_family:
+      children:
+        - was_born_in__entity_view_2
+        - 'cidoc_properties:domain:pa7_has_sibling'
+        - married_to_entity_view_1
+        - childrens_with_entity_view_2
+        - childrens_with_entity_view_3
+        - 'cidoc_properties:domain:pa11_has_ancestor'
+        - 'cidoc_properties:domain:pa17_has_godfather'
+        - 'cidoc_properties:domain:pa15_has_child-in-law'
+        - 'cidoc_properties:domain:pa18_has_godmother'
+        - 'cidoc_properties:domain:pa14_has_relative'
+        - 'cidoc_properties:domain:pa13_has_illegitimate_child'
+        - 'cidoc_properties:domain:pa12_has_adoptive_child'
+        - 'cidoc_properties:domain:pa10_has_grandchild'
+        - 'cidoc_properties:domain:pa16_has_sibling-in-law'
+        - 'cidoc_properties:domain:pa9_has_aunt_or_uncle'
+        - 'cidoc_properties:domain:pa8_has_cousin'
+        - 'cidoc_properties:range:pa9_has_aunt_or_uncle'
+        - 'cidoc_properties:range:pa17_has_godfather'
+        - 'cidoc_properties:range:pa18_has_godmother'
+        - 'cidoc_properties:range:pa13_has_illegitimate_child'
+        - 'cidoc_properties:range:pa15_has_child-in-law'
+        - 'cidoc_properties:range:pa16_has_sibling-in-law'
+        - 'cidoc_properties:domain:pa6_has_murder_victim'
+        - 'cidoc_properties:domain:pa5_has_lover'
+        - 'cidoc_properties:domain:pa4_has_muse'
+        - 'cidoc_properties:domain:pa3_has_friend'
+        - 'cidoc_properties:domain:pa2_has_acquaintance'
+        - 'cidoc_properties:domain:pa1_has_patron'
+        - 'cidoc_properties:range:pa4_has_muse'
+        - 'cidoc_properties:range:pa1_has_patron'
+      parent_name: ''
+      weight: 7
+      format_type: html_element
+      format_settings:
+        fieldset_label_html: true
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+      label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Relationships'
+      region: content
+    group_lifetime:
+      children:
+        - was_born_in__entity_view_1
+        - died_in_entity_view_1
+        - activity_of_author_entity_view_2
+        - activity_of_author_entity_view_1
+      parent_name: ''
+      weight: 6
+      format_type: html_element
+      format_settings:
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+        fieldset_label_html: true
+      label: '<span class="fa fa-id-card-o">&nbsp;&nbsp;</span>Lifetime'
+      region: content
+    group_events:
+      children:
+        - carried_out_by__entity_view_1
+        - participated_in_entity_view_1
+        - 'cidoc_properties:range:p12_occurred_in_the_presence_of'
+        - 'cidoc_properties:range:p13_destroyed'
+        - 'cidoc_properties:range:pa12_has_adoptive_child'
+        - 'cidoc_properties:range:pa11_has_ancestor'
+        - 'cidoc_properties:range:pa10_has_grandchild'
+      parent_name: ''
+      weight: 11
+      format_type: html_element
+      format_settings:
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+        fieldset_label_html: true
+      label: '<span class="fa fa-calendar-o">&nbsp;&nbsp;</span>Events and Activities'
+      region: content
+    group_groups:
+      children:
+        - 'cidoc_properties:range:p145_separated'
+        - 'cidoc_properties:range:p143_joined'
+      parent_name: ''
+      weight: 12
+      format_type: html_element
+      format_settings:
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+        fieldset_label_html: true
+      label: '<span class="fa fa-users">&nbsp;&nbsp;</span>Groups'
+      region: content
+    group_works:
+      children:
+        - creation_info_entity_view_1
+        - rejected_or_debated_attributions__entity_view_1
+      parent_name: ''
+      weight: 9
+      format_type: html_element
+      region: content
+      format_settings:
+        fieldset_label_html: true
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+      label: '<span class="fa fa-pen-nib" aria-hidden="true">&nbsp;&nbsp;</span>Works'
+    group_birth:
+      children: {  }
+      parent_name: ''
+      weight: 40
+      format_type: html_element
+      region: hidden
+      format_settings:
+        fieldset_label_html: true
+        element: span
+        show_label: true
+        label_element: span
+        label_element_classes: ''
+        attributes: 'style="font-weight: bold;"'
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+      label: Birth
+id: cidoc_entity.e21_person.popup
+targetEntityType: cidoc_entity
+bundle: e21_person
+mode: popup
+content:
+  activity_of_author_entity_view_1:
+    weight: 24
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  activity_of_author_entity_view_2:
+    weight: 23
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  carried_out_by__entity_view_1:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  childrens_with_entity_view_1:
+    weight: 25
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  childrens_with_entity_view_2:
+    weight: 27
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  childrens_with_entity_view_3:
+    weight: 28
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  cidoc_admin_links:
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p143_joined':
+    weight: 18
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p145_separated':
+    weight: 17
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p72_has_language':
+    weight: 17
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa10_has_grandchild':
+    weight: 36
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa11_has_ancestor':
+    weight: 29
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa12_has_adoptive_child':
+    weight: 35
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa13_has_illegitimate_child':
+    weight: 34
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa14_has_relative':
+    weight: 33
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa15_has_child-in-law':
+    weight: 31
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa16_has_sibling-in-law':
+    weight: 37
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa17_has_godfather':
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa18_has_godmother':
+    weight: 32
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa1_has_patron':
+    weight: 51
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa2_has_acquaintance':
+    weight: 50
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa3_has_friend':
+    weight: 49
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa4_has_muse':
+    weight: 48
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa5_has_lover':
+    weight: 47
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa6_has_murder_victim':
+    weight: 46
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa7_has_sibling':
+    weight: 25
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa8_has_cousin':
+    weight: 39
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa9_has_aunt_or_uncle':
+    weight: 38
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p107_has_current_or_former_membe':
+    weight: 12
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p12_occurred_in_the_presence_of':
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p13_destroyed':
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p143_joined':
+    weight: 23
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p145_separated':
+    weight: 22
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p15_was_influenced_by':
+    weight: 15
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p16_used_specific_object':
+    weight: 16
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p17_was_motivated_by':
+    weight: 14
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:p25_moved':
+    weight: 13
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:range:pa10_has_grandchild':
+    weight: 16
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa11_has_ancestor':
+    weight: 15
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa12_has_adoptive_child':
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa13_has_illegitimate_child':
+    weight: 43
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa15_has_child-in-law':
+    weight: 44
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa16_has_sibling-in-law':
+    weight: 45
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa17_has_godfather':
+    weight: 41
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa18_has_godmother':
+    weight: 42
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa1_has_patron':
+    weight: 53
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa2_has_acquaintance':
+    weight: 40
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa3_has_friend':
+    weight: 39
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa4_has_muse':
+    weight: 52
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa6_has_murder_victim':
+    weight: 33
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pa9_has_aunt_or_uncle':
+    weight: 40
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pc7_has_music':
+    weight: 35
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  cidoc_temporal_summary:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  citation:
+    type: entity_reference_revisions_entity_view
+    weight: 14
+    region: content
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+  content:
+    type: text_default
+    weight: 13
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  creation_info_entity_view_1:
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  died_in_entity_view_1:
+    weight: 22
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  is_referred_to_by_entity_view_1:
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  is_referred_to_by_entity_view_2:
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  map_of_places_people_went_entity_view_1:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  map_of_places_people_went_references__entity_view_1:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  married_to_entity_view_1:
+    weight: 26
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    type: string
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    region: content
+  p108_produced_by_entity_view_1:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  participated_in_entity_view_1:
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  places_people_went_entity_view_1:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  rejected_or_debated_attributions__entity_view_1:
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  significance:
+    type: entity_reference_entity_view
+    weight: 2
+    label: visually_hidden
+    settings:
+      view_mode: primary_historical_significance_pill
+      link: false
+    third_party_settings: {  }
+    region: content
+  was_born_in__entity_view_1:
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  was_born_in__entity_view_2:
+    weight: 24
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  activities_of_person_sorted_by_t_s__entity_view_1: true
+  activities_of_person_sorted_by_t_s__entity_view_2: true
+  activities_of_person_sorted_by_t_s_perform_entity_view_2: true
+  appelations_entity_view_1: true
+  cidoc_properties: true
+  'cidoc_properties:domain:p131_is_identified_by': true
+  'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:p2_has_type': true
+  'cidoc_properties:domain:p45_consists_of': true
+  'cidoc_properties:domain:pa19_has_language': true
+  'cidoc_properties:range:p100_was_death_of': true
+  'cidoc_properties:range:p11_had_participant': true
+  'cidoc_properties:range:p14_carried_out_by': true
+  'cidoc_properties:range:p67_refers_to': true
+  'cidoc_properties:range:p96_by_mother': true
+  'cidoc_properties:range:p97_from_father': true
+  'cidoc_properties:range:p98_brought_into_life': true
+  'cidoc_properties:range:pc11_has_spouse': true
+  'cidoc_properties:range:pc6_has_alternative_attribution': true
+  cidoc_properties_transcript: true
+  duplicate_of_p134_continues_entity_view_1: true
+  duplicate_of_p15_was_influenced_by_entity_view_1: true
+  e6_destroyed_entity_view_1: true
+  field_generation: true
+  field_notes: true
+  internal_name: true
+  key_achievements_entity_view_1: true
+  lifespan_entity_view_1: true
+  map_link: true
+  p108_produced_object_entity_view_1: true
+  p11_participae_entity_view_1: true
+  p12_present_at_entity_view_1: true
+  p15_was_influenced_by_entity_view_1: true
+  p4_has_time_span_entity_view_1: true
+  people_entity_view_1: true
+  person_death_entity_view_1: true
+  person_killed_entity_view_1: true
+  person_parents_entity_view_1: true
+  search_api_excerpt: true
+  timeline_link: true
+  timeline_logo: true
+  timeline_preselect_option: true
+  user_id: true

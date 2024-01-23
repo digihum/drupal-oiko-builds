@@ -1,0 +1,20 @@
+uuid: ea82091c-1feb-4cd5-9fb8-b1446244823b
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - medmus
+id: medmus_powered
+theme: medmus
+region: primary_menu
+weight: -14
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }

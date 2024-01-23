@@ -1,0 +1,18 @@
+uuid: null
+langcode: en
+status: true
+dependencies: {  }
+id: cidoc_reference__pa12_has_adoptive_child
+label: 'PA12 has adoptive child'
+channel_entity_type: cidoc_reference
+channel_bundle: pa12_has_adoptive_child
+channel_langcode: und
+channel_filters: null
+channel_groups: null
+channel_sorts:
+  changed:
+    path: changed
+    direction: DESC
+    weight: 0
+channel_searches: null
+authorized_users: {  }

@@ -1,0 +1,20 @@
+uuid: 9f489ff0-69f8-41e8-ae3a-5cd003453a8b
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - oiko
+id: oiko_powered
+theme: oiko
+region: primary_menu
+weight: -11
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }

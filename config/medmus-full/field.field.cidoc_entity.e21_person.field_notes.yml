@@ -1,0 +1,19 @@
+uuid: f5b3c038-1eeb-43a6-92a4-3099e04384d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - field.storage.cidoc_entity.field_notes
+id: cidoc_entity.e21_person.field_notes
+field_name: field_notes
+entity_type: cidoc_entity
+bundle: e21_person
+label: Notes
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,20 @@
+uuid: 1a3444ce-7f40-45b3-a7a6-01b32cde3bb1
+langcode: en
+status: true
+dependencies:
+  module:
+    - medmus_leaflet
+  theme:
+    - medmus
+id: maptagsblock
+theme: medmus
+region: sidebar_legend
+weight: -17
+provider: null
+plugin: map_tags_block
+settings:
+  id: map_tags_block
+  label: Activities
+  provider: medmus_leaflet
+  label_display: visible
+visibility: {  }
