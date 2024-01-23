@@ -3,8 +3,6 @@
 namespace Drupal\field_group\Plugin\field_group\FieldGroupFormatter;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Component\Utility\Xss;
-use Drupal\Core\Render\Markup;
 use Drupal\field_group\FieldGroupFormatterBase;
 
 /**
@@ -29,9 +27,13 @@ class Fieldset extends FieldGroupFormatterBase {
 
     $element += [
       '#type' => 'fieldset',
-      '#title' => $this->getSetting('fieldset_label_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel())),
+      '#title' => $this->getLabel(),
       '#attributes' => [],
       '#description' => $this->getSetting('description'),
+      '#description_display' => 'after',
+      // Prevent \Drupal\content_translation\ContentTranslationHandler::addTranslatabilityClue()
+      // from adding an incorrect suffix to the field group title.
+      '#multilingual' => TRUE,
     ];
 
     // When a fieldset has a description, an id is required.

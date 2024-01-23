@@ -3,12 +3,10 @@
 namespace Drupal\field_group\Plugin\field_group\FieldGroupFormatter;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Component\Utility\Xss;
-use Drupal\Core\Render\Markup;
 use Drupal\field_group\FieldGroupFormatterBase;
 
 /**
- * Details element.
+ * Plugin implementation of the 'details' formatter.
  *
  * @FieldGroupFormatter(
  *   id = "details",
@@ -29,8 +27,9 @@ class Details extends FieldGroupFormatterBase {
 
     $element += [
       '#type' => 'details',
-      '#title' => $this->getSetting('fieldset_label_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel())),
+      '#title' => $this->getLabel(),
       '#open' => $this->getSetting('open'),
+      '#show_empty_fields' => $this->getSetting('show_empty_fields'),
       '#description' => $this->getSetting('description'),
     ];
 

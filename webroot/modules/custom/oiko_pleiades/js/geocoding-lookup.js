@@ -62,7 +62,7 @@
             var data = {location: $source.find(':input').val().trim()};
             $.get(url, data, function(data) {
               // If we get some data back, update the target widget :)
-              $target.find('textarea').val(data.wkt).trigger('change');
+              $target.find('textarea').val(data.geojson).trigger('change');
               $banner_button.text(Drupal.t('Done.'));
             }).
             fail(function() {

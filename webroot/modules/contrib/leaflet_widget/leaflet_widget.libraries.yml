@@ -1,30 +1,12 @@
-wicket-leaflet:
-  remote: https://github.com/tnightingale/Leaflet.widget
-  version: v1.3.2
-  license:
-    name: GPLv3
-    url: https://github.com/arthur-e/Wicket/blob/master/LICENSE
-    gpl-compatible: true
-  js:
-    /libraries/Wicket/wicket.js: {}
-    /libraries/Wicket/wicket-leaflet.js: {}
-  dependencies:
-    - leaflet/leaflet
-
-leaflet.draw:
-  remote: https://github.com/Leaflet/Leaflet.draw
-  version: v0.3.0
-  license:
-      name: MIT
-      url: https://github.com/Leaflet/Leaflet.draw/blob/master/MIT-LICENSE.md
-      gpl-compatible: true
-  js:
-    /libraries/Leaflet.draw/dist/leaflet.draw.js: {}
+leaflet-pm:
+  version: 2.0.2
   css:
     theme:
-      /libraries/Leaflet.draw/dist/leaflet.draw.css:
-        preprocess: false
+      '//unpkg.com/leaflet.pm@latest/dist/leaflet.pm.css': {type: external, minified: true}
+  js:
+    '//unpkg.com/leaflet.pm@latest/dist/leaflet.pm.min.js': {type: external, minified: true}
   dependencies:
+    - core/jquery
     - leaflet/leaflet
 
 widget:
@@ -34,4 +16,3 @@ widget:
   dependencies:
     - leaflet/leaflet-drupal
     - leaflet_widget/wicket-leaflet
-    - leaflet_widget/leaflet.draw

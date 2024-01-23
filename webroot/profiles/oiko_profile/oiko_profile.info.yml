@@ -75,7 +75,6 @@ dependencies:
 #  - geofield
 #  - geofield_gmap
 #  - kint
-  - leaflet_widget
 #  - leaflet_views
   - metatag
   - metatag_facebook

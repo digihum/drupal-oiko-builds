@@ -3682,49 +3682,49 @@
                 },
                 {
                         "name": "drupal/field_group",
-                        "version": "3.0.0",
-                        "version_normalized": "3.0.0.0",
+                        "version": "3.3.0",
+                        "version_normalized": "3.3.0.0",
                         "source": {
                                 "type": "git",
                                 "url": "https://git.drupalcode.org/project/field_group.git",
-                                "reference": "8.x-3.0"
+                                "reference": "8.x-3.3"
                         },
                         "dist": {
                                 "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/field_group-8.x-3.0.zip",
-                                "reference": "8.x-3.0",
-                                "shasum": "8d87cdc4abc417aa4d411bffcaeb0a3ef1afa497"
+                                "url": "https://ftp.drupal.org/files/projects/field_group-8.x-3.3.zip",
+                                "reference": "8.x-3.3",
+                                "shasum": "c7a423b1d7643ee40dd1543d72fa04e8ac1756e4"
                         },
                         "require": {
-                                "drupal/core": "^8 || ^9"
+                                "drupal/core": "^8.8 || ^9"
+                        },
+                        "require-dev": {
+                                "drupal/jquery_ui_accordion": "^1.0"
                         },
                         "type": "drupal-module",
                         "extra": {
                                 "drupal": {
-                                        "version": "8.x-3.0",
-                                        "datestamp": "1580250787",
+                                        "version": "8.x-3.3",
+                                        "datestamp": "1663516404",
                                         "security-coverage": {
                                                 "status": "covered",
                                                 "message": "Covered by Drupal's security advisory policy"
                                         }
-                                },
-                                "patches_applied": {
-                                        "https://www.drupal.org/files/issues/2019-12-18/3024409-27.patch": "https://www.drupal.org/files/issues/2019-12-18/3024409-27.patch"
                                 }
                         },
                         "installation-source": "dist",
                         "notification-url": "https://packages.drupal.org/8/downloads",
                         "license": [
-                                "GPL-2.0+"
+                                "GPL-2.0-or-later"
                         ],
                         "authors": [
                                 {
-                                        "name": "Hydra",
-                                        "homepage": "https://www.drupal.org/user/647364"
+                                        "name": "Anybody",
+                                        "homepage": "https://www.drupal.org/user/291091"
                                 },
                                 {
-                                        "name": "Stalski",
-                                        "homepage": "https://www.drupal.org/user/322618"
+                                        "name": "Hydra",
+                                        "homepage": "https://www.drupal.org/user/647364"
                                 },
                                 {
                                         "name": "jyve",
@@ -3735,6 +3735,10 @@
                                         "homepage": "https://www.drupal.org/user/361625"
                                 },
                                 {
+                                        "name": "Stalski",
+                                        "homepage": "https://www.drupal.org/user/322618"
+                                },
+                                {
                                         "name": "swentel",
                                         "homepage": "https://www.drupal.org/user/107403"
                                 }
@@ -3742,7 +3746,8 @@
                         "description": "Provides the field_group module.",
                         "homepage": "https://www.drupal.org/project/field_group",
                         "support": {
-                                "source": "https://git.drupalcode.org/project/field_group"
+                                "source": "https://git.drupalcode.org/project/field_group",
+                                "issues": "https://www.drupal.org/project/issues/field_group"
                         },
                         "install-path": "../../webroot/modules/contrib/field_group"
                 },
@@ -4312,12 +4317,18 @@
                 },
                 {
                         "name": "drupal/leaflet",
-                        "version": "dev-1.x",
-                        "version_normalized": "dev-1.x",
+                        "version": "1.46.0",
+                        "version_normalized": "1.46.0.0",
                         "source": {
                                 "type": "git",
                                 "url": "https://git.drupalcode.org/project/leaflet.git",
-                                "reference": "a3274e4"
+                                "reference": "8.x-1.46"
+                        },
+                        "dist": {
+                                "type": "zip",
+                                "url": "https://ftp.drupal.org/files/projects/leaflet-8.x-1.46.zip",
+                                "reference": "8.x-1.46",
+                                "shasum": "82da6a309b29c5e7cdcd54f4602379450982c317"
                         },
                         "require": {
                                 "drupal/core": "^8.8 || ^9",
@@ -4325,27 +4336,16 @@
                         },
                         "type": "drupal-module",
                         "extra": {
-                                "branch-alias": {
-                                        "dev-1.x": "1.x-dev"
-                                },
                                 "drupal": {
-                                        "version": "8.x-1.x-dev",
-                                        "datestamp": "1595632839",
+                                        "version": "8.x-1.46",
+                                        "datestamp": "1605466674",
                                         "security-coverage": {
-                                                "status": "not-covered",
-                                                "message": "Dev releases are not covered by Drupal security advisories."
+                                                "status": "covered",
+                                                "message": "Covered by Drupal's security advisory policy"
                                         }
-                                },
-                                "patches_applied": {
-                                        "New version of geofield uses composer for geophp dependency, geophp_load not needed": "https://www.drupal.org/files/issues/leaflet-remove_geophp_load_call-2731917-2.patch",
-                                        "Fixes Incorrect parameter icon_url in Drupal.Leaflet.prototype.create_icon": "https://www.drupal.org/files/issues/leaflet-fix_incorrect_parameter_name_in_create_icon-2732267-2.patch",
-                                        "Fixes maps not working on HTTPS": "https://www.drupal.org/files/issues/leaflet-ssl_support-2753703-2_0.patch",
-                                        "Fixes the API docs to include a missing hook": "https://www.drupal.org/files/issues/leaflet-add-hook_leaflet_map_info_alter-2746721-2.patch",
-                                        "Allows use of geometrycollection": "https://www.drupal.org/files/issues/leaflet-2799311-geometry-collection.patch",
-                                        "https://www.drupal.org/node/2858091#comment-11971355": "https://www.drupal.org/files/issues/leaflet-2858091-no-features-on-ajax.patch"
                                 }
                         },
-                        "installation-source": "source",
+                        "installation-source": "dist",
                         "notification-url": "https://packages.drupal.org/8/downloads",
                         "license": [
                                 "GPL-2.0+"
@@ -4392,18 +4392,64 @@
                 },
                 {
                         "name": "drupal/leaflet_widget",
-                        "version": "dev-8.x-2.x",
-                        "version_normalized": "dev-8.x-2.x",
+                        "version": "2.0.0-alpha1",
+                        "version_normalized": "2.0.0.0-alpha1",
                         "source": {
                                 "type": "git",
-                                "url": "https://github.com/computerminds/leaflet_widget.git",
-                                "reference": "origin/8.x-1.x"
+                                "url": "https://git.drupalcode.org/project/leaflet_widget.git",
+                                "reference": "8.x-2.0-alpha1"
+                        },
+                        "dist": {
+                                "type": "zip",
+                                "url": "https://ftp.drupal.org/files/projects/leaflet_widget-8.x-2.0-alpha1.zip",
+                                "reference": "8.x-2.0-alpha1",
+                                "shasum": "257c7271971704265950b44b71d8e5897d63ccd3"
                         },
                         "require": {
-                                "composer/installers": "^1.0.21"
+                                "drupal/core": "~8.0",
+                                "drupal/geofield": "^1.0@beta",
+                                "drupal/leaflet": "^1.0@beta"
                         },
                         "type": "drupal-module",
-                        "installation-source": "source",
+                        "extra": {
+                                "drupal": {
+                                        "version": "8.x-2.0-alpha1",
+                                        "datestamp": "1549982580",
+                                        "security-coverage": {
+                                                "status": "not-covered",
+                                                "message": "Project has not opted into security advisory coverage!"
+                                        }
+                                }
+                        },
+                        "installation-source": "dist",
+                        "notification-url": "https://packages.drupal.org/8/downloads",
+                        "license": [
+                                "GPL-2.0+"
+                        ],
+                        "authors": [
+                                {
+                                        "name": "See contributors",
+                                        "homepage": "https://www.drupal.org/node/1802616/committers"
+                                },
+                                {
+                                        "name": "ayalon",
+                                        "homepage": "https://www.drupal.org/user/419226"
+                                },
+                                {
+                                        "name": "das-peter",
+                                        "homepage": "https://www.drupal.org/user/762870"
+                                },
+                                {
+                                        "name": "tnightingale",
+                                        "homepage": "https://www.drupal.org/user/144323"
+                                }
+                        ],
+                        "description": "Provides the leaflet_widget module.",
+                        "homepage": "https://www.drupal.org/project/leaflet_widget/",
+                        "support": {
+                                "source": "https://cgit.drupalcode.org/leaflet_widget",
+                                "issues": "https://www.drupal.org/project/issues/leaflet_widget"
+                        },
                         "install-path": "../../webroot/modules/contrib/leaflet_widget"
                 },
                 {

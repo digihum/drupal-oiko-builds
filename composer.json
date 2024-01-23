@@ -11,22 +11,6 @@
         {
             "type": "package",
             "package": {
-                "name": "drupal/leaflet_widget",
-                "version": "dev-8.x-2.x",
-                "type": "drupal-module",
-                "require": {
-                    "composer/installers": "^1.0.21"
-                },
-                "source": {
-                    "type": "git",
-                    "url": "https://github.com/computerminds/leaflet_widget.git",
-                    "reference": "origin/8.x-1.x"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
                 "name": "arthur-e/wicket",
                 "version": "1.3.2",
                 "type": "drupal-library",
@@ -108,7 +92,7 @@
         "drupal/entity_share": "^3.0@beta",
         "drupal/eu_cookie_compliance": "^1.0",
         "drupal/eva": "^2.0",
-        "drupal/field_group": "^3.0.0",
+        "drupal/field_group": "^3.3",
         "drupal/gdpr": "^1.0",
         "drupal/geocoder": "^2.0",
         "drupal/geocoder_autocomplete": "^1.0",
@@ -117,8 +101,8 @@
         "drupal/honeypot": "^1.24",
         "drupal/http_auth": "^1.0",
         "drupal/key_auth": "^1.1",
-        "drupal/leaflet": "1.x-dev#a3274e4",
-        "drupal/leaflet_widget": "dev-8.x-2.x",
+        "drupal/leaflet": "^1.46",
+        "drupal/leaflet_widget": "^2.0@alpha",
         "drupal/metatag": "^1.0",
         "drupal/migrate_plus": "2.0-beta1",
         "drupal/migrate_upgrade": "2.0-beta1",
@@ -191,17 +175,6 @@
         "patches": {
             "drupal/core": {
                 "Use entity's cache tags for their entity cache entries": "https://www.drupal.org/files/issues/persistent-entity-cache-tags-2537588-10.patch"
-            },
-            "drupal/leaflet": {
-                "New version of geofield uses composer for geophp dependency, geophp_load not needed": "https://www.drupal.org/files/issues/leaflet-remove_geophp_load_call-2731917-2.patch",
-                "Fixes Incorrect parameter icon_url in Drupal.Leaflet.prototype.create_icon": "https://www.drupal.org/files/issues/leaflet-fix_incorrect_parameter_name_in_create_icon-2732267-2.patch",
-                "Fixes maps not working on HTTPS": "https://www.drupal.org/files/issues/leaflet-ssl_support-2753703-2_0.patch",
-                "Fixes the API docs to include a missing hook": "https://www.drupal.org/files/issues/leaflet-add-hook_leaflet_map_info_alter-2746721-2.patch",
-                "Allows use of geometrycollection": "https://www.drupal.org/files/issues/leaflet-2799311-geometry-collection.patch",
-                "https://www.drupal.org/node/2858091#comment-11971355": "https://www.drupal.org/files/issues/leaflet-2858091-no-features-on-ajax.patch"
-            },
-            "drupal/field_group": {
-                "https://www.drupal.org/files/issues/2019-12-18/3024409-27.patch": "https://www.drupal.org/files/issues/2019-12-18/3024409-27.patch"
             },
             "drupal/shib_auth": {
                 "https://www.drupal.org/files/issues/2020-02-27/shib_auth-admin-permissions.patch": "https://www.drupal.org/files/issues/2020-02-27/shib_auth-admin-permissions.patch"

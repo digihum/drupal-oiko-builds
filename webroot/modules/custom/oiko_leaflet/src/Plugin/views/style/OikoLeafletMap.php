@@ -294,7 +294,7 @@ class OikoLeafletMap extends StylePluginBase {
         $map['settings']['tap'] = FALSE;
       }
 
-      return leaflet_render_map($map, $data, $height);
+      return \Drupal::service('leaflet.service')->leafletRenderMap($map, $data, $height);
     }
     else {
       return array();
