@@ -180,16 +180,10 @@ display:
           clear_on_exposed: false
           action_title: Action
           selected_actions:
-            publish_cidoc: 0
-            comment_delete_action: 0
-            views_bulk_operations_delete_entity: views_bulk_operations_delete_entity
-            pathauto_update_alias: 0
-            'entity:publish_action:cidoc_entity': 0
-            'entity:save_action:cidoc_entity': 0
-            'entity:unpublish_action:cidoc_entity': 0
-          preconfiguration:
-            views_bulk_operations_delete_entity:
-              label_override: ''
+            -
+              action_id: views_bulk_operations_delete_entity
+              preconfiguration:
+                label_override: ''
           plugin_id: views_bulk_operations_bulk_form
         bundle:
           id: bundle

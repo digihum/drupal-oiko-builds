@@ -128,13 +128,10 @@ display:
           clear_on_exposed: false
           action_title: Action
           selected_actions:
-            comment_delete_action: 0
-            entity_share_client_set_import_policy_default: entity_share_client_set_import_policy_default
-            views_bulk_operations_delete_entity: 0
-            pathauto_update_alias: 0
-          preconfiguration:
-            entity_share_client_set_import_policy_default:
-              label_override: 'Set to syncing'
+            -
+              action_id: entity_share_client_set_import_policy_default
+              preconfiguration:
+                label_override: 'Set to syncing'
           plugin_id: views_bulk_operations_bulk_form
         entity_bundle:
           id: entity_bundle

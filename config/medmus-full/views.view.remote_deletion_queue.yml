@@ -228,16 +228,14 @@ display:
           clear_on_exposed: false
           action_title: Action
           selected_actions:
-            comment_delete_action: 0
-            medmus_share_deletion_entity_keep: medmus_share_deletion_entity_keep
-            medmus_share_deletion_entity_delete: medmus_share_deletion_entity_delete
-            views_bulk_operations_delete_entity: 0
-            pathauto_update_alias: 0
-          preconfiguration:
-            medmus_share_deletion_entity_keep:
-              label_override: 'Keep selected entities'
-            medmus_share_deletion_entity_delete:
-              label_override: 'Delete selected entities'
+            -
+              action_id: medmus_share_deletion_entity_keep
+              preconfiguration:
+                label_override: 'Keep selected entities'
+            -
+              action_id: medmus_share_deletion_entity_delete
+              preconfiguration:
+                label_override: 'Delete selected entities'
           plugin_id: views_bulk_operations_bulk_form
         entity_type_id:
           id: entity_type_id

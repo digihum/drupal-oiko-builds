@@ -482,17 +482,17 @@
                 },
                 {
                         "name": "consolidation/annotated-command",
-                        "version": "2.12.1",
-                        "version_normalized": "2.12.1.0",
+                        "version": "2.12.2",
+                        "version_normalized": "2.12.2.0",
                         "source": {
                                 "type": "git",
                                 "url": "https://github.com/consolidation/annotated-command.git",
-                                "reference": "0ee361762df2274f360c085e3239784a53f850b5"
+                                "reference": "2472a23610cba1d86dcb783a81a21259473b059e"
                         },
                         "dist": {
                                 "type": "zip",
-                                "url": "https://api.github.com/repos/consolidation/annotated-command/zipball/0ee361762df2274f360c085e3239784a53f850b5",
-                                "reference": "0ee361762df2274f360c085e3239784a53f850b5",
+                                "url": "https://api.github.com/repos/consolidation/annotated-command/zipball/2472a23610cba1d86dcb783a81a21259473b059e",
+                                "reference": "2472a23610cba1d86dcb783a81a21259473b059e",
                                 "shasum": ""
                         },
                         "require": {
@@ -509,7 +509,7 @@
                                 "phpunit/phpunit": "^6",
                                 "squizlabs/php_codesniffer": "^2.7"
                         },
-                        "time": "2020-10-11T04:30:03+00:00",
+                        "time": "2022-01-03T00:23:44+00:00",
                         "type": "library",
                         "extra": {
                                 "scenarios": {
@@ -587,6 +587,10 @@
                                 }
                         ],
                         "description": "Initialize Symfony Console commands from annotated command class methods.",
+                        "support": {
+                                "issues": "https://github.com/consolidation/annotated-command/issues",
+                                "source": "https://github.com/consolidation/annotated-command/tree/2.12.2"
+                        },
                         "install-path": "../consolidation/annotated-command"
                 },
                 {
@@ -1429,42 +1433,6 @@
                                 "notation"
                         ],
                         "install-path": "../dflydev/dot-access-data"
-                },
-                {
-                        "name": "dnoegel/php-xdg-base-dir",
-                        "version": "v0.1.1",
-                        "version_normalized": "0.1.1.0",
-                        "source": {
-                                "type": "git",
-                                "url": "https://github.com/dnoegel/php-xdg-base-dir.git",
-                                "reference": "8f8a6e48c5ecb0f991c2fdcf5f154a47d85f9ffd"
-                        },
-                        "dist": {
-                                "type": "zip",
-                                "url": "https://api.github.com/repos/dnoegel/php-xdg-base-dir/zipball/8f8a6e48c5ecb0f991c2fdcf5f154a47d85f9ffd",
-                                "reference": "8f8a6e48c5ecb0f991c2fdcf5f154a47d85f9ffd",
-                                "shasum": ""
-                        },
-                        "require": {
-                                "php": ">=5.3.2"
-                        },
-                        "require-dev": {
-                                "phpunit/phpunit": "~7.0|~6.0|~5.0|~4.8.35"
-                        },
-                        "time": "2019-12-04T15:06:13+00:00",
-                        "type": "library",
-                        "installation-source": "dist",
-                        "autoload": {
-                                "psr-4": {
-                                        "XdgBaseDir\\": "src/"
-                                }
-                        },
-                        "notification-url": "https://packagist.org/downloads/",
-                        "license": [
-                                "MIT"
-                        ],
-                        "description": "implementation of xdg base directory specification for php",
-                        "install-path": "../dnoegel/php-xdg-base-dir"
                 },
                 {
                         "name": "doctrine/annotations",
@@ -3015,31 +2983,35 @@
                 },
                 {
                         "name": "drupal/csv_serialization",
-                        "version": "1.0.0-alpha1",
-                        "version_normalized": "1.0.0.0-alpha1",
+                        "version": "1.5.0",
+                        "version_normalized": "1.5.0.0",
                         "source": {
                                 "type": "git",
                                 "url": "https://git.drupalcode.org/project/csv_serialization.git",
-                                "reference": "8.x-1.0-alpha1"
+                                "reference": "8.x-1.5"
                         },
                         "dist": {
                                 "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/csv_serialization-8.x-1.0-alpha1.zip",
-                                "reference": "8.x-1.0-alpha1",
-                                "shasum": "595023535417d282f7e30b99d3984205b388af00"
+                                "url": "https://ftp.drupal.org/files/projects/csv_serialization-8.x-1.5.zip",
+                                "reference": "8.x-1.5",
+                                "shasum": "7bdc1f1f410ce3f394887d1c130dc42ef760dda2"
                         },
                         "require": {
-                                "drupal/core": "^8",
-                                "league/csv": "^7.1"
+                                "drupal/core": "^8.7.12 || ^9.0",
+                                "league/csv": "^8.0"
+                        },
+                        "require-dev": {
+                                "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+                                "drupal/coder": "^8.3"
                         },
                         "type": "drupal-module",
                         "extra": {
                                 "drupal": {
-                                        "version": "8.x-1.0-alpha1",
-                                        "datestamp": "1470318601",
+                                        "version": "8.x-1.5",
+                                        "datestamp": "1612800374",
                                         "security-coverage": {
-                                                "status": "not-covered",
-                                                "message": "Alpha releases are not covered by Drupal security advisories."
+                                                "status": "covered",
+                                                "message": "Covered by Drupal's security advisory policy"
                                         }
                                 }
                         },
@@ -3052,6 +3024,10 @@
                                 {
                                         "name": "grasmash",
                                         "homepage": "https://www.drupal.org/user/455714"
+                                },
+                                {
+                                        "name": "markdorison",
+                                        "homepage": "https://www.drupal.org/user/346106"
                                 }
                         ],
                         "description": "Provides CSV as a serialization format.",
@@ -4832,27 +4808,30 @@
                 },
                 {
                         "name": "drupal/r4032login",
-                        "version": "dev-1.x",
-                        "version_normalized": "dev-1.x",
+                        "version": "2.1.0",
+                        "version_normalized": "2.1.0.0",
                         "source": {
                                 "type": "git",
                                 "url": "https://git.drupalcode.org/project/r4032login.git",
-                                "reference": "90904367bc60e14320ee1478d934ca6dce34233d"
+                                "reference": "2.1.0"
+                        },
+                        "dist": {
+                                "type": "zip",
+                                "url": "https://ftp.drupal.org/files/projects/r4032login-2.1.0.zip",
+                                "reference": "2.1.0",
+                                "shasum": "2004f3ea4a4d4e0f08cdcd75f6f89c3f58d903fa"
                         },
                         "require": {
-                                "drupal/core": "~8.0"
+                                "drupal/core": "^8.8 || ^9"
                         },
                         "type": "drupal-module",
                         "extra": {
-                                "branch-alias": {
-                                        "dev-1.x": "1.x-dev"
-                                },
                                 "drupal": {
-                                        "version": "8.x-1.1+3-dev",
-                                        "datestamp": "1578675183",
+                                        "version": "2.1.0",
+                                        "datestamp": "1615710471",
                                         "security-coverage": {
-                                                "status": "not-covered",
-                                                "message": "Dev releases are not covered by Drupal security advisories."
+                                                "status": "covered",
+                                                "message": "Covered by Drupal's security advisory policy"
                                         }
                                 }
                         },
@@ -4863,44 +4842,52 @@
                         ],
                         "authors": [
                                 {
-                                        "name": "Bevan",
-                                        "homepage": "https://www.drupal.org/user/49989"
-                                },
-                                {
-                                        "name": "Nixou",
-                                        "homepage": "https://www.drupal.org/user/2304734"
-                                },
-                                {
-                                        "name": "RobLoach",
-                                        "homepage": "https://www.drupal.org/user/61114"
-                                },
-                                {
-                                        "name": "Sk8erPeter",
-                                        "homepage": "https://www.drupal.org/user/1441344"
-                                },
-                                {
                                         "name": "bdone",
                                         "homepage": "https://www.drupal.org/user/687670"
+                                },
+                                {
+                                        "name": "Bevan",
+                                        "homepage": "https://www.drupal.org/user/49989"
                                 },
                                 {
                                         "name": "deekayen",
                                         "homepage": "https://www.drupal.org/user/972"
                                 },
                                 {
+                                        "name": "Grayle",
+                                        "homepage": "https://www.drupal.org/user/3145497"
+                                },
+                                {
                                         "name": "lotyrin",
                                         "homepage": "https://www.drupal.org/user/216580"
+                                },
+                                {
+                                        "name": "markdorison",
+                                        "homepage": "https://www.drupal.org/user/346106"
                                 },
                                 {
                                         "name": "ms2011",
                                         "homepage": "https://www.drupal.org/user/108440"
                                 },
                                 {
+                                        "name": "Nixou",
+                                        "homepage": "https://www.drupal.org/user/2304734"
+                                },
+                                {
                                         "name": "pwolanin",
                                         "homepage": "https://www.drupal.org/user/49851"
                                 },
                                 {
+                                        "name": "RobLoach",
+                                        "homepage": "https://www.drupal.org/user/61114"
+                                },
+                                {
                                         "name": "shrop",
                                         "homepage": "https://www.drupal.org/user/14767"
+                                },
+                                {
+                                        "name": "Sk8erPeter",
+                                        "homepage": "https://www.drupal.org/user/1441344"
                                 }
                         ],
                         "description": "Redirect anonymous users from 403 Access Denied pages to the /user/login page.",
@@ -4987,21 +4974,21 @@
                 },
                 {
                         "name": "drupal/sharemessage",
-                        "version": "1.0.0-beta3",
-                        "version_normalized": "1.0.0.0-beta3",
+                        "version": "1.0.0-beta4",
+                        "version_normalized": "1.0.0.0-beta4",
                         "source": {
                                 "type": "git",
                                 "url": "https://git.drupalcode.org/project/sharemessage.git",
-                                "reference": "8.x-1.0-beta3"
+                                "reference": "8.x-1.0-beta4"
                         },
                         "dist": {
                                 "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/sharemessage-8.x-1.0-beta3.zip",
-                                "reference": "8.x-1.0-beta3",
-                                "shasum": "ee681d2db503bf2cc1024974e2e18e41cf42306e"
+                                "url": "https://ftp.drupal.org/files/projects/sharemessage-8.x-1.0-beta4.zip",
+                                "reference": "8.x-1.0-beta4",
+                                "shasum": "5624ed860c6c4059093fd7de25519b508d9930bd"
                         },
                         "require": {
-                                "drupal/core": "~8.0"
+                                "drupal/core": "^8.8 || ^9"
                         },
                         "require-dev": {
                                 "drupal/token": "*"
@@ -5009,8 +4996,8 @@
                         "type": "drupal-module",
                         "extra": {
                                 "drupal": {
-                                        "version": "8.x-1.0-beta3",
-                                        "datestamp": "1571729286",
+                                        "version": "8.x-1.0-beta4",
+                                        "datestamp": "1607549479",
                                         "security-coverage": {
                                                 "status": "not-covered",
                                                 "message": "Project has not opted into security advisory coverage!"
@@ -5108,27 +5095,27 @@
                 },
                 {
                         "name": "drupal/squid_autocomplete",
-                        "version": "1.0.0-alpha5",
-                        "version_normalized": "1.0.0.0-alpha5",
+                        "version": "1.0.0-alpha6",
+                        "version_normalized": "1.0.0.0-alpha6",
                         "source": {
                                 "type": "git",
                                 "url": "https://git.drupalcode.org/project/squid_autocomplete.git",
-                                "reference": "8.x-1.0-alpha5"
+                                "reference": "8.x-1.0-alpha6"
                         },
                         "dist": {
                                 "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/squid_autocomplete-8.x-1.0-alpha5.zip",
-                                "reference": "8.x-1.0-alpha5",
-                                "shasum": "26fdb34d9191b4a105a721544b02295418e5f360"
+                                "url": "https://ftp.drupal.org/files/projects/squid_autocomplete-8.x-1.0-alpha6.zip",
+                                "reference": "8.x-1.0-alpha6",
+                                "shasum": "fbe889feb986c54d4ff9bb10cd6d8b22c2d0d17f"
                         },
                         "require": {
-                                "drupal/core": "~8.0"
+                                "drupal/core": "^8 || ^9"
                         },
                         "type": "drupal-module",
                         "extra": {
                                 "drupal": {
-                                        "version": "8.x-1.0-alpha5",
-                                        "datestamp": "1469525639",
+                                        "version": "8.x-1.0-alpha6",
+                                        "datestamp": "1631950090",
                                         "security-coverage": {
                                                 "status": "not-covered",
                                                 "message": "Project has not opted into security advisory coverage!"
@@ -5230,27 +5217,27 @@
                 },
                 {
                         "name": "drupal/token",
-                        "version": "1.7.0",
-                        "version_normalized": "1.7.0.0",
+                        "version": "1.10.0",
+                        "version_normalized": "1.10.0.0",
                         "source": {
                                 "type": "git",
                                 "url": "https://git.drupalcode.org/project/token.git",
-                                "reference": "8.x-1.7"
+                                "reference": "8.x-1.10"
                         },
                         "dist": {
                                 "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/token-8.x-1.7.zip",
-                                "reference": "8.x-1.7",
-                                "shasum": "c7e3a3757282e4c94e3c1fff08d01e22155cb853"
+                                "url": "https://ftp.drupal.org/files/projects/token-8.x-1.10.zip",
+                                "reference": "8.x-1.10",
+                                "shasum": "8b81224ab0420221b292e8d3b66d0da726317400"
                         },
                         "require": {
-                                "drupal/core": "^8.7.7 || ^9"
+                                "drupal/core": "^8.8 || ^9"
                         },
                         "type": "drupal-module",
                         "extra": {
                                 "drupal": {
-                                        "version": "8.x-1.7",
-                                        "datestamp": "1589314266",
+                                        "version": "8.x-1.10",
+                                        "datestamp": "1638619775",
                                         "security-coverage": {
                                                 "status": "covered",
                                                 "message": "Covered by Drupal's security advisory policy"
@@ -5265,7 +5252,7 @@
                         "installation-source": "dist",
                         "notification-url": "https://packages.drupal.org/8/downloads",
                         "license": [
-                                "GPL-2.0+"
+                                "GPL-2.0-or-later"
                         ],
                         "authors": [
                                 {
@@ -5429,27 +5416,33 @@
                 },
                 {
                         "name": "drupal/views_bulk_operations",
-                        "version": "2.6.0",
-                        "version_normalized": "2.6.0.0",
+                        "version": "3.13.0",
+                        "version_normalized": "3.13.0.0",
                         "source": {
                                 "type": "git",
                                 "url": "https://git.drupalcode.org/project/views_bulk_operations.git",
-                                "reference": "8.x-2.6"
+                                "reference": "8.x-3.13"
                         },
                         "dist": {
                                 "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/views_bulk_operations-8.x-2.6.zip",
-                                "reference": "8.x-2.6",
-                                "shasum": "517b671adb55c3ad023032607d360dab77db9f22"
+                                "url": "https://ftp.drupal.org/files/projects/views_bulk_operations-8.x-3.13.zip",
+                                "reference": "8.x-3.13",
+                                "shasum": "70583d08b91be3b5e008f571589425c2176eb73b"
                         },
                         "require": {
-                                "drupal/core": "~8.5"
+                                "drupal/core": "^8.8 || ^9"
+                        },
+                        "require-dev": {
+                                "drush/drush": "^10"
+                        },
+                        "suggest": {
+                                "drush/drush": "^9 || ^10"
                         },
                         "type": "drupal-module",
                         "extra": {
                                 "drupal": {
-                                        "version": "8.x-2.6",
-                                        "datestamp": "1580924749",
+                                        "version": "8.x-3.13",
+                                        "datestamp": "1619697066",
                                         "security-coverage": {
                                                 "status": "covered",
                                                 "message": "Covered by Drupal's security advisory policy"
@@ -5457,14 +5450,14 @@
                                 },
                                 "drush": {
                                         "services": {
-                                                "drush.services.yml": "^9"
+                                                "drush.services.yml": "^9 || ^10"
                                         }
                                 }
                         },
                         "installation-source": "dist",
                         "notification-url": "https://packages.drupal.org/8/downloads",
                         "license": [
-                                "GPL-2.0+"
+                                "GPL-2.0-or-later"
                         ],
                         "authors": [
                                 {
@@ -5472,16 +5465,8 @@
                                         "homepage": "https://www.drupal.org/u/graber"
                                 },
                                 {
-                                        "name": "Jon Pugh",
-                                        "homepage": "https://www.drupal.org/user/17028"
-                                },
-                                {
-                                        "name": "bojanz",
-                                        "homepage": "https://www.drupal.org/user/86106"
-                                },
-                                {
-                                        "name": "infojunkie",
-                                        "homepage": "https://www.drupal.org/user/48424"
+                                        "name": "Graber",
+                                        "homepage": "https://www.drupal.org/user/1599440"
                                 },
                                 {
                                         "name": "joelpittet",
@@ -5491,7 +5476,7 @@
                         "description": "Adds an ability to perform bulk operations on selected entities from view results. Provides an API to create such operations.",
                         "homepage": "https://www.drupal.org/project/views_bulk_operations",
                         "support": {
-                                "source": "https://git.drupalcode.org/project/views_bulk_operations",
+                                "source": "https://git.drupalcode.org/project/views_bulk_operations/-/tree/8.x-3.x",
                                 "issues": "https://www.drupal.org/project/issues/views_bulk_operations?version=8.x",
                                 "docs": "https://www.drupal.org/docs/8/modules/views-bulk-operations-vbo"
                         },
@@ -7120,32 +7105,32 @@
                 },
                 {
                         "name": "league/csv",
-                        "version": "7.2.0",
-                        "version_normalized": "7.2.0.0",
+                        "version": "8.2.3",
+                        "version_normalized": "8.2.3.0",
                         "source": {
                                 "type": "git",
                                 "url": "https://github.com/thephpleague/csv.git",
-                                "reference": "69bafa6ff924fbf9effe4275d6eb16be81a853ef"
+                                "reference": "d2aab1e7bde802582c3879acf03d92716577c76d"
                         },
                         "dist": {
                                 "type": "zip",
-                                "url": "https://api.github.com/repos/thephpleague/csv/zipball/69bafa6ff924fbf9effe4275d6eb16be81a853ef",
-                                "reference": "69bafa6ff924fbf9effe4275d6eb16be81a853ef",
+                                "url": "https://api.github.com/repos/thephpleague/csv/zipball/d2aab1e7bde802582c3879acf03d92716577c76d",
+                                "reference": "d2aab1e7bde802582c3879acf03d92716577c76d",
                                 "shasum": ""
                         },
                         "require": {
                                 "ext-mbstring": "*",
-                                "php": ">=5.4.0"
+                                "php": ">=5.5.0"
                         },
                         "require-dev": {
-                                "fabpot/php-cs-fixer": "^1.9",
+                                "friendsofphp/php-cs-fixer": "^1.9",
                                 "phpunit/phpunit": "^4.0"
                         },
-                        "time": "2015-11-02T07:36:25+00:00",
+                        "time": "2018-02-06T08:27:03+00:00",
                         "type": "library",
                         "extra": {
                                 "branch-alias": {
-                                        "dev-master": "7.2-dev"
+                                        "dev-master": "8.2-dev"
                                 }
                         },
                         "installation-source": "dist",
@@ -7176,6 +7161,11 @@
                                 "read",
                                 "write"
                         ],
+                        "support": {
+                                "forum": "https://groups.google.com/forum/#!forum/thephpleague",
+                                "issues": "https://github.com/thephpleague/csv/issues",
+                                "source": "https://github.com/thephpleague/csv/tree/8.x"
+                        },
                         "install-path": "../league/csv"
                 },
                 {
@@ -7677,17 +7667,17 @@
                 },
                 {
                         "name": "nikic/php-parser",
-                        "version": "v4.10.2",
-                        "version_normalized": "4.10.2.0",
+                        "version": "v4.18.0",
+                        "version_normalized": "4.18.0.0",
                         "source": {
                                 "type": "git",
                                 "url": "https://github.com/nikic/PHP-Parser.git",
-                                "reference": "658f1be311a230e0907f5dfe0213742aff0596de"
+                                "reference": "1bcbb2179f97633e98bbbc87044ee2611c7d7999"
                         },
                         "dist": {
                                 "type": "zip",
-                                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/658f1be311a230e0907f5dfe0213742aff0596de",
-                                "reference": "658f1be311a230e0907f5dfe0213742aff0596de",
+                                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/1bcbb2179f97633e98bbbc87044ee2611c7d7999",
+                                "reference": "1bcbb2179f97633e98bbbc87044ee2611c7d7999",
                                 "shasum": ""
                         },
                         "require": {
@@ -7698,7 +7688,7 @@
                                 "ircmaxell/php-yacc": "^0.0.7",
                                 "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0 || ^9.0"
                         },
-                        "time": "2020-09-26T10:30:38+00:00",
+                        "time": "2023-12-10T21:03:43+00:00",
                         "bin": [
                                 "bin/php-parse"
                         ],
@@ -7728,6 +7718,10 @@
                                 "parser",
                                 "php"
                         ],
+                        "support": {
+                                "issues": "https://github.com/nikic/PHP-Parser/issues",
+                                "source": "https://github.com/nikic/PHP-Parser/tree/v4.18.0"
+                        },
                         "install-path": "../nikic/php-parser"
                 },
                 {
@@ -8385,21 +8379,20 @@
                 },
                 {
                         "name": "psy/psysh",
-                        "version": "v0.10.4",
-                        "version_normalized": "0.10.4.0",
+                        "version": "v0.10.12",
+                        "version_normalized": "0.10.12.0",
                         "source": {
                                 "type": "git",
                                 "url": "https://github.com/bobthecow/psysh.git",
-                                "reference": "a8aec1b2981ab66882a01cce36a49b6317dc3560"
+                                "reference": "a0d9981aa07ecfcbea28e4bfa868031cca121e7d"
                         },
                         "dist": {
                                 "type": "zip",
-                                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/a8aec1b2981ab66882a01cce36a49b6317dc3560",
-                                "reference": "a8aec1b2981ab66882a01cce36a49b6317dc3560",
+                                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/a0d9981aa07ecfcbea28e4bfa868031cca121e7d",
+                                "reference": "a0d9981aa07ecfcbea28e4bfa868031cca121e7d",
                                 "shasum": ""
                         },
                         "require": {
-                                "dnoegel/php-xdg-base-dir": "0.1.*",
                                 "ext-json": "*",
                                 "ext-tokenizer": "*",
                                 "nikic/php-parser": "~4.0|~3.0|~2.0|~1.3",
@@ -8418,14 +8411,14 @@
                                 "ext-readline": "Enables support for arrow-key history navigation, and showing and manipulating command history.",
                                 "hoa/console": "A pure PHP readline implementation. You'll want this if your PHP install doesn't already support readline or libedit."
                         },
-                        "time": "2020-05-03T19:32:03+00:00",
+                        "time": "2021-11-30T14:05:36+00:00",
                         "bin": [
                                 "bin/psysh"
                         ],
                         "type": "library",
                         "extra": {
                                 "branch-alias": {
-                                        "dev-master": "0.10.x-dev"
+                                        "dev-main": "0.10.x-dev"
                                 }
                         },
                         "installation-source": "dist",
@@ -8456,6 +8449,10 @@
                                 "interactive",
                                 "shell"
                         ],
+                        "support": {
+                                "issues": "https://github.com/bobthecow/psysh/issues",
+                                "source": "https://github.com/bobthecow/psysh/tree/v0.10.12"
+                        },
                         "install-path": "../psy/psysh"
                 },
                 {

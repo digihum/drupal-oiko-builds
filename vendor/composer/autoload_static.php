@@ -54,10 +54,6 @@ class ComposerStaticInite2cb2abed408c64b9f306078a7c9469a
         array (
             'cweagans\\Composer\\' => 18,
         ),
-        'X' => 
-        array (
-            'XdgBaseDir\\' => 11,
-        ),
         'W' => 
         array (
             'Wikimedia\\Composer\\Merge\\V2\\' => 28,
@@ -201,10 +197,6 @@ class ComposerStaticInite2cb2abed408c64b9f306078a7c9469a
         'cweagans\\Composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/cweagans/composer-patches/src',
-        ),
-        'XdgBaseDir\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/dnoegel/php-xdg-base-dir/src',
         ),
         'Wikimedia\\Composer\\Merge\\V2\\' => 
         array (

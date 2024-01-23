@@ -8,7 +8,6 @@ dependencies:
   - edtf
   - field
   - field_group
-  - geocoder_autocomplete
   - geofield
   - leaflet_widget
   - link

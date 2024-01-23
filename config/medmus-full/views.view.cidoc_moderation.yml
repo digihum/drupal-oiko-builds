@@ -126,12 +126,10 @@ display:
           clear_on_exposed: true
           action_title: Action
           selected_actions:
-            publish_cidoc: publish_cidoc
-            views_bulk_operations_delete_entity: 0
-            pathauto_update_alias: 0
-          preconfiguration:
-            publish_cidoc:
-              label_override: Publish
+            -
+              action_id: publish_cidoc
+              preconfiguration:
+                label_override: Publish
           plugin_id: views_bulk_operations_bulk_form
         name:
           id: name

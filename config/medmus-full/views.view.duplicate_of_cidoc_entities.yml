@@ -247,20 +247,18 @@ display:
           clear_on_exposed: false
           action_title: Action
           selected_actions:
-            publish_cidoc: 0
-            comment_delete_action: 0
-            views_bulk_operations_delete_entity: views_bulk_operations_delete_entity
-            pathauto_update_alias: 0
-            'entity:save_action:cidoc_entity': 0
-            'entity:unpublish_action:cidoc_entity': 'entity:unpublish_action:cidoc_entity'
-            'entity:publish_action:cidoc_entity': 'entity:publish_action:cidoc_entity'
-          preconfiguration:
-            views_bulk_operations_delete_entity:
-              label_override: ''
-            'entity:unpublish_action:cidoc_entity':
-              label_override: Unpublish
-            'entity:publish_action:cidoc_entity':
-              label_override: Publish
+            -
+              action_id: views_bulk_operations_delete_entity
+              preconfiguration:
+                label_override: ''
+            -
+              action_id: 'entity:unpublish_action:cidoc_entity'
+              preconfiguration:
+                label_override: Unpublish
+            -
+              action_id: 'entity:publish_action:cidoc_entity'
+              preconfiguration:
+                label_override: Publish
           plugin_id: views_bulk_operations_bulk_form
         name:
           id: name
@@ -1657,20 +1655,18 @@ display:
           clear_on_exposed: false
           action_title: Action
           selected_actions:
-            publish_cidoc: 0
-            comment_delete_action: 0
-            views_bulk_operations_delete_entity: views_bulk_operations_delete_entity
-            pathauto_update_alias: 0
-            'entity:save_action:cidoc_entity': 0
-            'entity:unpublish_action:cidoc_entity': 'entity:unpublish_action:cidoc_entity'
-            'entity:publish_action:cidoc_entity': 'entity:publish_action:cidoc_entity'
-          preconfiguration:
-            views_bulk_operations_delete_entity:
-              label_override: ''
-            'entity:unpublish_action:cidoc_entity':
-              label_override: Unpublish
-            'entity:publish_action:cidoc_entity':
-              label_override: Publish
+            -
+              action_id: views_bulk_operations_delete_entity
+              preconfiguration:
+                label_override: ''
+            -
+              action_id: 'entity:unpublish_action:cidoc_entity'
+              preconfiguration:
+                label_override: Unpublish
+            -
+              action_id: 'entity:publish_action:cidoc_entity'
+              preconfiguration:
+                label_override: Publish
           plugin_id: views_bulk_operations_bulk_form
         name:
           id: name
@@ -2884,20 +2880,18 @@ display:
           clear_on_exposed: false
           action_title: Action
           selected_actions:
-            publish_cidoc: 0
-            comment_delete_action: 0
-            views_bulk_operations_delete_entity: views_bulk_operations_delete_entity
-            pathauto_update_alias: 0
-            'entity:save_action:cidoc_entity': 0
-            'entity:unpublish_action:cidoc_entity': 'entity:unpublish_action:cidoc_entity'
-            'entity:publish_action:cidoc_entity': 'entity:publish_action:cidoc_entity'
-          preconfiguration:
-            views_bulk_operations_delete_entity:
-              label_override: ''
-            'entity:unpublish_action:cidoc_entity':
-              label_override: Unpublish
-            'entity:publish_action:cidoc_entity':
-              label_override: Publish
+            -
+              action_id: views_bulk_operations_delete_entity
+              preconfiguration:
+                label_override: ''
+            -
+              action_id: 'entity:unpublish_action:cidoc_entity'
+              preconfiguration:
+                label_override: Unpublish
+            -
+              action_id: 'entity:publish_action:cidoc_entity'
+              preconfiguration:
+                label_override: Publish
           plugin_id: views_bulk_operations_bulk_form
         name:
           id: name
@@ -4168,20 +4162,18 @@ display:
           clear_on_exposed: false
           action_title: Action
           selected_actions:
-            publish_cidoc: 0
-            comment_delete_action: 0
-            views_bulk_operations_delete_entity: views_bulk_operations_delete_entity
-            pathauto_update_alias: 0
-            'entity:save_action:cidoc_entity': 0
-            'entity:unpublish_action:cidoc_entity': 'entity:unpublish_action:cidoc_entity'
-            'entity:publish_action:cidoc_entity': 'entity:publish_action:cidoc_entity'
-          preconfiguration:
-            views_bulk_operations_delete_entity:
-              label_override: ''
-            'entity:unpublish_action:cidoc_entity':
-              label_override: Unpublish
-            'entity:publish_action:cidoc_entity':
-              label_override: Publish
+            -
+              action_id: views_bulk_operations_delete_entity
+              preconfiguration:
+                label_override: ''
+            -
+              action_id: 'entity:unpublish_action:cidoc_entity'
+              preconfiguration:
+                label_override: Unpublish
+            -
+              action_id: 'entity:publish_action:cidoc_entity'
+              preconfiguration:
+                label_override: Publish
           plugin_id: views_bulk_operations_bulk_form
         name:
           id: name
@@ -5986,20 +5978,18 @@ display:
           clear_on_exposed: false
           action_title: Action
           selected_actions:
-            publish_cidoc: 0
-            comment_delete_action: 0
-            views_bulk_operations_delete_entity: views_bulk_operations_delete_entity
-            pathauto_update_alias: 0
-            'entity:save_action:cidoc_entity': 0
-            'entity:unpublish_action:cidoc_entity': 'entity:unpublish_action:cidoc_entity'
-            'entity:publish_action:cidoc_entity': 'entity:publish_action:cidoc_entity'
-          preconfiguration:
-            views_bulk_operations_delete_entity:
-              label_override: ''
-            'entity:unpublish_action:cidoc_entity':
-              label_override: Unpublish
-            'entity:publish_action:cidoc_entity':
-              label_override: Publish
+            -
+              action_id: views_bulk_operations_delete_entity
+              preconfiguration:
+                label_override: ''
+            -
+              action_id: 'entity:unpublish_action:cidoc_entity'
+              preconfiguration:
+                label_override: Unpublish
+            -
+              action_id: 'entity:publish_action:cidoc_entity'
+              preconfiguration:
+                label_override: Publish
           plugin_id: views_bulk_operations_bulk_form
         name:
           id: name
@@ -7400,20 +7390,18 @@ display:
           clear_on_exposed: false
           action_title: Action
           selected_actions:
-            publish_cidoc: 0
-            comment_delete_action: 0
-            views_bulk_operations_delete_entity: views_bulk_operations_delete_entity
-            pathauto_update_alias: 0
-            'entity:save_action:cidoc_entity': 0
-            'entity:unpublish_action:cidoc_entity': 'entity:unpublish_action:cidoc_entity'
-            'entity:publish_action:cidoc_entity': 'entity:publish_action:cidoc_entity'
-          preconfiguration:
-            views_bulk_operations_delete_entity:
-              label_override: ''
-            'entity:unpublish_action:cidoc_entity':
-              label_override: Unpublish
-            'entity:publish_action:cidoc_entity':
-              label_override: Publish
+            -
+              action_id: views_bulk_operations_delete_entity
+              preconfiguration:
+                label_override: ''
+            -
+              action_id: 'entity:unpublish_action:cidoc_entity'
+              preconfiguration:
+                label_override: Unpublish
+            -
+              action_id: 'entity:publish_action:cidoc_entity'
+              preconfiguration:
+                label_override: Publish
           plugin_id: views_bulk_operations_bulk_form
         name:
           id: name
