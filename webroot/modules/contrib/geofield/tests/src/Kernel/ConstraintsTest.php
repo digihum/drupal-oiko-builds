@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\geofield\Kernel;
 
+use Drupal\geofield\GeoPHP\GeoPHPWrapper;
 use Drupal\geofield\Plugin\Validation\Constraint\GeoConstraint;
 use Drupal\geofield\Plugin\Validation\Constraint\GeoConstraintValidator;
-use Drupal\geofield\GeoPHP\GeoPHPWrapper;
 use Drupal\KernelTests\KernelTestBase;
 
 /**
@@ -19,7 +19,7 @@ class ConstraintsTest extends KernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['geofield'];
+  protected static $modules = ['geofield'];
 
   /**
    * Tests GeoType constraint.
@@ -34,9 +34,7 @@ class ConstraintsTest extends KernelTestBase {
     $constraint = new GeoConstraint();
     $this->assertEquals('"@value" is not a valid geospatial content.', $constraint->message, 'Correct constraint message found.');
 
-    $execution_context = $this->getMockBuilder('\Drupal\Core\TypedData\Validation\ExecutionContext')
-      ->disableOriginalConstructor()
-      ->getMock();
+    $execution_context = $this->createMock('\Drupal\Core\TypedData\Validation\ExecutionContext');
 
     if ($expected_violation_count) {
       $execution_context->expects($this->exactly($expected_violation_count))

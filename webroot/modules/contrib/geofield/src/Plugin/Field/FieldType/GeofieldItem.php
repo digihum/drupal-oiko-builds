@@ -2,10 +2,12 @@
 
 namespace Drupal\geofield\Plugin\Field\FieldType;
 
+use Drupal\Component\Plugin\Exception\PluginException;
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Field\FieldDefinitionInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
@@ -34,30 +36,27 @@ class GeofieldItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public static function defaultFieldSettings() {
-    return [
-      'backend' => 'geofield_backend_default',
-    ] + parent::defaultFieldSettings();
+    return [] + parent::defaultFieldSettings();
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function schema(FieldStorageDefinitionInterface $field) {
+  public static function schema(FieldStorageDefinitionInterface $field_definition) {
+    /** @var \Drupal\geofield\Plugin\GeofieldBackendManager $backend_manager */
     $backend_manager = \Drupal::service('plugin.manager.geofield_backend');
-    $backend_plugin = NULL;
-
-    /* @var \Drupal\geofield\Plugin\GeofieldBackendPluginInterface $backend_plugin */
-    if (isset($field->settings['backend']) && $backend_manager->getDefinition($field->getSetting('backend')) != NULL) {
-      $backend_plugin = $backend_manager->createInstance($field->getSetting('backend'));
+    try {
+      /** @var \Drupal\geofield\Plugin\GeofieldBackendPluginInterface $backend_plugin */
+      if (!empty($field_definition->getSetting('backend')) && $backend_manager->getDefinition($field_definition->getSetting('backend')) != NULL) {
+        $backend_plugin = $backend_manager->createInstance($field_definition->getSetting('backend'));
+      }
     }
-
-    if ($backend_plugin === NULL) {
-      $backend_plugin = $backend_manager->createInstance('geofield_backend_default');
+    catch (PluginException $e) {
+      \Drupal::service('logger.factory')->get('geofield')->error($e->getMessage());
     }
-
     return [
       'columns' => [
-        'value' => $backend_plugin->schema(),
+        'value' => isset($backend_plugin) ? $backend_plugin->schema() : [],
         'geo_type' => [
           'type' => 'varchar',
           'default' => '',
@@ -160,28 +159,30 @@ class GeofieldItem extends FieldItemBase {
   /**
    * {@inheritdoc}
    */
-  public function fieldSettingsForm(array $form, FormStateInterface $form_state) {
-    // Backend plugins need to define requirement/settings methods,
-    // allow them to inject data here.
-    $element = [];
+  public function storageSettingsForm(array &$form, FormStateInterface $form_state, $has_data) {
+    $settings = $this->getSettings();
 
+    // Provides a field for the geofield storage backend plugin.
     $backend_manager = \Drupal::service('plugin.manager.geofield_backend');
-
     $backends = $backend_manager->getDefinitions();
     $backend_options = [];
-
+    $backend_descriptions_list = '<ul>';
     foreach ($backends as $id => $backend) {
       $backend_options[$id] = $backend['admin_label'];
+      $backend_descriptions_list .= '<li>' . $backend['admin_label'] . ': ' . $backend['description'] . '</li>';
     }
-
     $element['backend'] = [
       '#type' => 'select',
-      '#title' => $this->t('Storage Backend'),
-      '#default_value' => $this->getSetting('backend'),
+      '#title' => $this->t('Storage backend'),
+      '#default_value' => $settings['backend'],
       '#options' => $backend_options,
-      '#description' => $this->t("Select the Geospatial storage backend you would like to use to store geofield geometry data. If you don't know what this means, select 'Default'."),
+      '#description' => [
+        '#markup' => $this->t('Select the Backend for storing Geofield data. The following are available: @backend_descriptions_list', [
+          '@backend_descriptions_list' => new FormattableMarkup($backend_descriptions_list, []),
+        ]),
+      ],
+      '#disabled' => $has_data,
     ];
-
     return $element;
   }
 
@@ -190,7 +191,16 @@ class GeofieldItem extends FieldItemBase {
    */
   public function isEmpty() {
     $value = $this->get('value')->getValue();
-    return !isset($value) || $value === '';
+    if (!empty($value)) {
+      /** @var \Drupal\geofield\GeoPHP\GeoPHPInterface $geo_php_wrapper */
+      // Note: Geofield FieldType doesn't support Dependency Injection yet
+      // (https://www.drupal.org/node/2053415).
+      $geo_php_wrapper = \Drupal::service('geofield.geophp');
+      /** @var \Geometry|null $geometry */
+      $geometry = $geo_php_wrapper->load($value);
+      return $geometry instanceof \Geometry ? $geometry->isEmpty() : FALSE;
+    }
+    return TRUE;
   }
 
   /**
@@ -205,12 +215,18 @@ class GeofieldItem extends FieldItemBase {
    * Populates computed variables.
    */
   protected function populateComputedValues() {
+    // Populate values only if $this->>value is not NULL.
+    // @see https://www.drupal.org/project/geofield/issues/3256644
+    // As passing null to parameter #2 ($data) of type string is deprecated in
+    // fwrite() of geoPHP::detectFormat()
+    // @see https://php.watch/versions/8.1/internal-func-non-nullable-null-deprecation
+    if ($this->value !== NULL) {
+      /** @var \Geometry $geom */
+      $geom = \Drupal::service('geofield.geophp')->load($this->value);
+    }
 
-    /* @var \Geometry $geom */
-    $geom = \Drupal::service('geofield.geophp')->load($this->value);
-
-    if (!empty($geom)) {
-      /* @var \Point $centroid */
+    if (!empty($geom) && !$geom->isEmpty()) {
+      /** @var \Point $centroid */
       $centroid = $geom->getCentroid();
       $bounding = $geom->getBBox();
 
@@ -229,17 +245,10 @@ class GeofieldItem extends FieldItemBase {
   /**
    * {@inheritdoc}
    */
-  public function prepareCache() {
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
-    $value = [
+    return [
       'value' => \Drupal::service('geofield.wkt_generator')->WktGenerateGeometry(),
     ];
-    return $value;
   }
 
 }

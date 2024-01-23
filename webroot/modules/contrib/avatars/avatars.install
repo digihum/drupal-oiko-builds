@@ -22,9 +22,12 @@ function avatars_install() {
     'alt_field_required' => '',
   ];
 
+  /** @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface $displayRepo */
+  $displayRepo = \Drupal::service('entity_display.repository');
+
   // Shows avatar generator setting
   if (FieldConfig::loadByName('user', 'user', AK_FIELD_AVATAR_GENERATOR)) {
-    entity_get_form_display('user', 'user', 'default')
+    $displayRepo->getFormDisplay('user', 'user', 'default')
       ->setComponent(AK_FIELD_AVATAR_GENERATOR, [
         'type' => 'avatars_generator_preview',
       ])
@@ -34,7 +37,7 @@ function avatars_install() {
   // Drupals picture
   if (FieldConfig::loadByName('user', 'user', AK_FIELD_PICTURE_ACTIVE)) {
     // Hide Drupal picture on form
-    entity_get_form_display('user', 'user', 'default')
+    $displayRepo->getFormDisplay('user', 'user', 'default')
       ->removeComponent(AK_FIELD_PICTURE_ACTIVE)
       ->save();
   }
@@ -59,7 +62,7 @@ function avatars_install() {
       ->save();
   }
 
-  entity_get_display('user', 'user', 'default')
+  $displayRepo->getViewDisplay('user', 'user', 'default')
     ->setComponent(AK_FIELD_PICTURE_ACTIVE, [])
     ->save();
 
@@ -85,11 +88,11 @@ function avatars_install() {
     ->save();
 
     // Make it visible on form
-    entity_get_form_display('user', 'user', 'default')
+    $displayRepo->getFormDisplay('user', 'user', 'default')
       ->setComponent(AK_FIELD_PICTURE_USER, [])
       ->save();
     // Hide it on view
-    entity_get_display('user', 'user', 'default')
+    $displayRepo->getViewDisplay('user', 'user', 'default')
       ->removeComponent(AK_FIELD_PICTURE_USER)
       ->save();
   }
@@ -141,7 +144,9 @@ function avatars_update_8002() {
  * Remove allowed_values_function.
  */
 function avatars_update_8003() {
-  entity_get_form_display('user', 'user', 'default')
+  /** @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface $displayRepo */
+  $displayRepo = \Drupal::service('entity_display.repository');
+  $displayRepo->getFormDisplay('user', 'user', 'default')
     ->setComponent(AK_FIELD_AVATAR_GENERATOR, [
       'type' => 'avatars_generator_preview',
     ])

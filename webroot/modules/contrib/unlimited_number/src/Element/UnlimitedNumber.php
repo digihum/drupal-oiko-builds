@@ -53,7 +53,7 @@ class UnlimitedNumber extends FormElement {
 
     $element['unlimited_number'] = [
       '#type' => 'radios',
-      '#options' => NULL,
+      '#options' => [],
       '#title' => $element['#title'],
       '#description' => $element['#description'],
       '#required' => !empty($element['#required']),

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\AvatarGeneratorStorage.
- */
-
 namespace Drupal\avatars;
 
 use Drupal\Core\Config\Entity\ConfigEntityStorage;

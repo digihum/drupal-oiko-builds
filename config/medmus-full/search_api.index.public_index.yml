@@ -28,15 +28,17 @@ datasource_settings:
         - e21_person
         - e74_group
 processor_settings:
+  cidoc: {  }
+  rendered_item: {  }
   add_url: {  }
   aggregated_field: {  }
-  cidoc: {  }
+  entity_type: {  }
   language_with_fallback: {  }
-  rendered_item: {  }
 tracker_settings:
   default:
     indexing_order: fifo
 options:
   index_directly: true
   cron_limit: 50
+  track_changes_in_references: true
 server: db_search_backend

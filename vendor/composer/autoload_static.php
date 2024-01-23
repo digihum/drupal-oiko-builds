@@ -688,7 +688,7 @@ class ComposerStaticInite2cb2abed408c64b9f306078a7c9469a
         'TypeError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/TypeError.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
-        'geoPHP' => __DIR__ . '/..' . '/phayes/geophp/geoPHP.inc',
+        'geoPHP' => __DIR__ . '/..' . '/itamair/geophp/geoPHP.inc',
     );
 
     public static function getInitializer(ClassLoader $loader)

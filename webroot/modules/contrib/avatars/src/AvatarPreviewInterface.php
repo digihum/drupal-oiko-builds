@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\AvatarPreviewInterface.
- */
-
 namespace Drupal\avatars;
 
 use Drupal\Core\Entity\ContentEntityInterface;
@@ -104,7 +99,7 @@ interface AvatarPreviewInterface extends ContentEntityInterface {
   /**
    * Get associated avatar file.
    *
-   * @return \Drupal\file\FileInterface|NULL
+   * @return \Drupal\file\FileInterface|null
    *   A file entity.
    */
   public function getAvatar();
@@ -112,7 +107,7 @@ interface AvatarPreviewInterface extends ContentEntityInterface {
   /**
    * Set associated avatar file.
    *
-   * @param \Drupal\file\FileInterface|NULL $file
+   * @param \Drupal\file\FileInterface|null $file
    *   A file entity, or NULL if the generator did not create an avatar.
    *
    * @return \Drupal\avatars\AvatarPreviewInterface
@@ -166,7 +161,7 @@ interface AvatarPreviewInterface extends ContentEntityInterface {
    * @param \Drupal\user\UserInterface $user
    *   A user entity.
    *
-   * @return \Drupal\avatars\AvatarPreviewInterface|FALSE
+   * @return \Drupal\avatars\AvatarPreviewInterface|false
    *   An avatar preview entity, or FALSE if it does not exist.
    */
   public static function getAvatarPreview(AvatarGeneratorInterface $avatar_generator, UserInterface $user);

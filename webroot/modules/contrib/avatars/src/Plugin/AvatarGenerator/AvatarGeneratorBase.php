@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\Plugin\AvatarGenerator\AvatarGeneratorBase.
- */
-
 namespace Drupal\avatars\Plugin\AvatarGenerator;
 
 use Drupal\Component\Plugin\PluginBase;

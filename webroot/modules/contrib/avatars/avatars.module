@@ -41,6 +41,9 @@ function avatars_cron() {
   /** @var \Drupal\avatars\AvatarGeneratorStorageInterface $avatars_generator_storage */
   $avatars_generator_storage = \Drupal::entityTypeManager()->getStorage('avatar_generator');
   $avatars_generators = $avatars_generator_storage->getEnabledAvatarGenerators();
+  /** @var \Drupal\Component\Datetime\TimeInterface $timeService */
+  $timeService = \Drupal::time();
+  $now = $timeService->getRequestTime();
 
   // Remove expired previews.
   foreach ($avatars_generators as $avatar_generator) {
@@ -52,12 +55,12 @@ function avatars_cron() {
 
     if ($definition['dynamic']) {
       $offset = $intervals['dynamic'] > 0 ? $intervals['dynamic'] : 0;
-      $query->condition('created', REQUEST_TIME - $offset, '<');
+      $query->condition('created', $now - $offset, '<');
     }
     else {
       $offset = $intervals['static'] > 0 ? $intervals['static'] : 0;
       if ($offset) {
-        $query->condition('created', REQUEST_TIME - $offset, '<');
+        $query->condition('created', $now - $offset, '<');
         $query->condition('scope', AvatarPreviewInterface::SCOPE_TEMPORARY, '=');
       }
       else {

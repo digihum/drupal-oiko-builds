@@ -14,7 +14,6 @@ popup_agreed_enabled: false
 popup_bg_hex: '212121'
 popup_clicking_confirmation: true
 popup_delay: 1
-popup_disagree_button_message: 'Read privacy policy'
 popup_enabled: true
 popup_find_more_button_message: 'Read privacy policy'
 popup_height: null
@@ -31,7 +30,6 @@ popup_width: 100%
 method: default
 disagree_button_label: 'No, thanks'
 disabled_javascripts: ''
-whitelisted_cookies: ''
 consent_storage_method: do_not_store
 withdraw_message:
   value: '<h2>We use cookies on this site to enhance your user experience</h2><p>You have given your consent for us to set cookies.</p>'
@@ -39,13 +37,27 @@ withdraw_message:
 withdraw_action_button_label: 'Withdraw consent'
 withdraw_tab_button_label: 'Privacy settings'
 withdraw_enabled: false
-popup_info_template: legacy
-cookie_categories: ''
+popup_info_template: new
 enable_save_preferences_button: true
 save_preferences_button_label: 'Save preferences'
 accept_all_categories_button_label: 'Accept all cookies'
-fix_first_cookie_category: true
-select_all_categories_by_default: false
 withdraw_button_on_info_popup: false
 domain_all_sites: false
 uuid: 323a3968-8bf6-4e2a-895a-af9fb5e5cb76
+popup_more_info_button_message: 'Read privacy policy'
+reload_options: 0
+reload_routes_list: ''
+containing_element: body
+settings_tab_enabled: false
+automatic_cookies_removal: true
+set_cookie_session_zero_on_disagree: 0
+cookie_policy_version: 1.0.0
+cookie_value_disagreed: '0'
+cookie_value_agreed_show_thank_you: '1'
+cookie_value_agreed: '2'
+accessibility_focus: false
+close_button_enabled: false
+reject_button_enabled: false
+reject_button_label: ''
+close_button_action: close_banner
+allowed_cookies: ''

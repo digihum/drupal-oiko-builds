@@ -5,6 +5,7 @@ namespace Drupal\ctools;
 use Drupal\Core\Plugin\Context\Context;
 use Drupal\Core\Plugin\Context\ContextDefinition;
 use Drupal\Core\Plugin\Context\ContextInterface;
+use Drupal\Core\Plugin\Context\EntityContextDefinition;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\Core\TypedData\ComplexDataDefinitionInterface;
 use Drupal\Core\TypedData\DataReferenceDefinitionInterface;
@@ -13,6 +14,9 @@ use Drupal\Core\TypedData\ListDataDefinitionInterface;
 use Drupal\Core\TypedData\ListInterface;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
 
+/**
+ * Typed Data Resolver Service.
+ */
 class TypedDataResolver {
 
   /**
@@ -30,6 +34,8 @@ class TypedDataResolver {
   protected $translation;
 
   /**
+   * Typed Data Resolver Service constructor.
+   *
    * @param \Drupal\Core\TypedData\TypedDataManagerInterface $manager
    *   The typed data manager.
    * @param \Drupal\Core\StringTranslation\TranslationInterface $translation
@@ -54,9 +60,10 @@ class TypedDataResolver {
    *
    * @return \Drupal\Core\Plugin\Context\Context
    *   A context object that represents the definition & value of the property.
+   *
    * @throws \Exception
    */
-  public function getContextFromProperty($property_path, ContextInterface $context) {
+  public function getContextFromProperty(string $property_path, ContextInterface $context) {
     $value = NULL;
     $data_definition = NULL;
     if ($context->hasContextValue()) {
@@ -122,7 +129,12 @@ class TypedDataResolver {
         $data_definition = $data_definition->getTargetDefinition();
       }
     }
-    $context_definition = new ContextDefinition($data_definition->getDataType(), $data_definition->getLabel(), $data_definition->isRequired(), FALSE, $data_definition->getDescription());
+    if (strpos($data_definition->getDataType(), 'entity:') === 0) {
+      $context_definition = new EntityContextDefinition($data_definition->getDataType(), $data_definition->getLabel(), $data_definition->isRequired(), FALSE, $data_definition->getDescription());
+    }
+    else {
+      $context_definition = new ContextDefinition($data_definition->getDataType(), $data_definition->getLabel(), $data_definition->isRequired(), FALSE, $data_definition->getDescription());
+    }
     return new Context($context_definition, $value);
   }
 
@@ -139,7 +151,7 @@ class TypedDataResolver {
    * TypedDataResolver which will convert it to an appropriate ContextInterface
    * object.
    *
-   * @param $token
+   * @param string $token
    *   A ":" delimited set of tokens representing
    * @param \Drupal\Core\Plugin\Context\ContextInterface[] $contexts
    *   The array of available contexts.
@@ -149,17 +161,17 @@ class TypedDataResolver {
    *
    * @throws \Drupal\ctools\ContextNotFoundException
    */
-  public function convertTokenToContext($token, $contexts) {
+  public function convertTokenToContext(string $token, array $contexts) {
     // If the requested token is already a context, just return it.
     if (isset($contexts[$token])) {
       return $contexts[$token];
     }
     else {
-      list($base, $property_path) = explode(':', $token, 2);
+      [$base, $property_path] = explode(':', $token, 2);
       // A base must always be set. This method recursively calls itself
       // setting bases for this reason.
       if (!empty($contexts[$base])) {
-        return $this->getContextFromProperty($property_path,  $contexts[$base]);
+        return $this->getContextFromProperty($property_path, $contexts[$base]);
       }
       // @todo improve this exception message.
       throw new ContextNotFoundException("The requested context was not found in the supplied array of contexts.");
@@ -172,12 +184,12 @@ class TypedDataResolver {
    * @param string $token
    *   The token related to a context in the contexts array.
    * @param \Drupal\Core\Plugin\Context\ContextInterface[] $contexts
-   *  An array of contexts from which to extract our token's label.
+   *   An array of contexts from which to extract our token's label.
    *
    * @return \Drupal\Core\StringTranslation\TranslatableMarkup
    *   The administrative label of $token.
    */
-  public function getLabelByToken($token, $contexts) {
+  public function getLabelByToken(string $token, array $contexts) {
     // @todo Optimize this by allowing to limit the desired token?
     $tokens = $this->getTokensForContexts($contexts);
     if (isset($tokens[$token])) {
@@ -194,7 +206,7 @@ class TypedDataResolver {
    * @return array
    *   An array of token keys and corresponding labels.
    */
-  public function getTokensForContexts($contexts) {
+  public function getTokensForContexts(array $contexts) {
     $tokens = [];
     foreach ($contexts as $context_id => $context) {
       $data_definition = $context->getContextDefinition()->getDataDefinition();
@@ -211,6 +223,7 @@ class TypedDataResolver {
    * Returns tokens for a complex data definition.
    *
    * @param \Drupal\Core\TypedData\ComplexDataDefinitionInterface $complex_data_definition
+   *   Complex Data Definition.
    *
    * @return array
    *   An array of token keys and corresponding labels.

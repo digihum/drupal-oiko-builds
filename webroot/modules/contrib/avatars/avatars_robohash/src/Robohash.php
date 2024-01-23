@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars_robohash\Robohash.
- */
-
 namespace Drupal\avatars_robohash;
 
 use Drupal\avatars\Exception\AvatarException;
@@ -15,10 +10,10 @@ use Drupal\avatars\AvatarBase;
  */
 class Robohash extends AvatarBase implements RobohashInterface {
 
-  /*
+  /**
    * The background to use, or NULL to use default.
    *
-   * @var string|NULL
+   * @var string|null
    */
   protected $background;
 
@@ -85,7 +80,7 @@ class Robohash extends AvatarBase implements RobohashInterface {
   /**
    * {@inheritdoc}
    */
-  static public function getTypes() {
+  public static function getTypes() {
     return [
       'robot' => 'Robot',
       'monster' => 'Monster',
@@ -96,7 +91,7 @@ class Robohash extends AvatarBase implements RobohashInterface {
   /**
    * {@inheritdoc}
    */
-  static public function getTypesMap() {
+  public static function getTypesMap() {
     return [
       'robot' => 1,
       'monster' => 2,

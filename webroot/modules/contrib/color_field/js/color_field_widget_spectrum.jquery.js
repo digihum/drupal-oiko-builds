@@ -20,16 +20,15 @@
 
       var $context = $(context);
 
-
-      $context.find('.js-color-field-widget-spectrum').each(function (index, element) {
+      $context.find('.js-color-field-widget-spectrum').once('colorFieldSpectrum').each(function (index, element) {
         var $element = $(element);
         var $element_color = $element.find('.js-color-field-widget-spectrum__color');
         var $element_opacity = $element.find('.js-color-field-widget-spectrum__opacity');
         var spectrum_settings = settings.color_field.color_field_widget_spectrum[$element.attr('id')];
 
         // Hide the widget labels if the widgets are being shown.
-        if (!spectrum_settings.show_input) {
-          $('.js-color-field-widget-spectrum').find('label').hide();
+        if (!spectrum_settings.show_input || !spectrum_settings.show_alpha) {
+          $element.find('label').hide();
           $element_opacity.hide();
         }
 
@@ -40,17 +39,20 @@
           showAlpha: spectrum_settings.show_alpha,
           showPalette: spectrum_settings.show_palette,
           showPaletteOnly: spectrum_settings.show_palette_only,
-          palette: JSON.parse('[' + spectrum_settings.palette + ']'),
+          palette:  spectrum_settings.palette,
           showButtons: spectrum_settings.show_buttons,
           allowEmpty: spectrum_settings.allow_empty,
+          chooseText: spectrum_settings.choose_text,
+          cancelText: spectrum_settings.cancel_text,
+          appendTo: $element_color.parent(),
 
-          change: function(tinycolor) {
+          change: function (tinycolor) {
             var hexColor = '';
             var opacity = '';
 
             if (tinycolor) {
               hexColor = tinycolor.toHexString();
-              opacity = tinycolor._roundA;
+              opacity = Math.round((tinycolor._roundA + Number.EPSILON) * 100) / 100;
             }
 
             $element_color.val(hexColor);

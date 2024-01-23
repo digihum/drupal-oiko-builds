@@ -2,11 +2,10 @@ name: Robohash
 type: module
 description: 'Adds Robohash avatar generators for Avatar Kit.'
 package: Avatars
-# core: 8.x
+core_version_requirement: ^8.8 || ^9
 dependencies:
   - avatars
-# Information added by Drupal.org packaging script on 2017-10-09
-version: '8.x-1.0'
-core: '8.x'
+# Information added by Drupal.org packaging script on 2022-06-29
+version: '8.x-1.2'
 project: 'avatars'
-datestamp: 1507559646
+datestamp: 1656484958

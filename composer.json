@@ -142,7 +142,8 @@
         "wikimedia/composer-merge-plugin": "^2.1.0"
     },
     "conflict": {
-        "drupal/drupal": "*"
+        "drupal/drupal": "*",
+        "drupal/unlimited_number": ">2.0.2"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

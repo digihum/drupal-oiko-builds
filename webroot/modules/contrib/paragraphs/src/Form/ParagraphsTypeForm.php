@@ -9,6 +9,7 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\field_ui\FieldUI;
 use Drupal\paragraphs\ParagraphsBehaviorManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\paragraphs\ParagraphsTypeInterface;
 
 /**
  * Form controller for paragraph type forms.
@@ -68,7 +69,7 @@ class ParagraphsTypeForm extends EntityForm {
     $paragraphs_type = $this->entity;
 
     if (!$paragraphs_type->isNew()) {
-      $form['#title'] = (t('Edit %title paragraph type', [
+      $form['#title'] = ($this->t('Edit %title paragraph type', [
         '%title' => $paragraphs_type->label(),
       ]));
     }
@@ -95,7 +96,7 @@ class ParagraphsTypeForm extends EntityForm {
     $form['icon_file'] = [
       '#title' => $this->t('Paragraph type icon'),
       '#type' => 'managed_file',
-      '#upload_location' => 'public://paragraphs_type_icon/',
+      '#upload_location' => ParagraphsTypeInterface::ICON_UPLOAD_LOCATION,
       '#upload_validators' => [
         'file_validate_extensions' => ['png jpg svg'],
       ],
@@ -106,17 +107,18 @@ class ParagraphsTypeForm extends EntityForm {
     }
 
     $form['description'] = [
-      '#title' => t('Description'),
+      '#title' => $this->t('Description'),
       '#type' => 'textarea',
       '#default_value' => $paragraphs_type->getDescription(),
-      '#description' => t('This text will be displayed on the <em>Add new paragraph</em> page.'),
+      '#description' => $this->t('This text will be displayed on the <em>Add new paragraph</em> page.'),
     ];
 
     // Loop over the plugins that can be applied to this paragraph type.
     if ($behavior_plugin_definitions = $this->paragraphsBehaviorManager->getApplicableDefinitions($paragraphs_type)) {
       $form['message'] = [
         '#type' => 'container',
-        '#markup' => $this->t('Behavior plugins are only supported by the EXPERIMENTAL paragraphs widget.', [], ['context' => 'paragraphs']),
+        '#markup' => $this->t('Behavior plugins are only supported by the stable paragraphs widget.', [], ['context' =>
+          'paragraphs']),
         '#attributes' => ['class' => ['messages', 'messages--warning']]
       ];
       $form['behavior_plugins'] = [
@@ -168,12 +170,16 @@ class ParagraphsTypeForm extends EntityForm {
     $paragraphs_type = $this->entity;
 
     $icon_file = $form_state->getValue(['icon_file', '0']);
-    // Set the file UUID to the paragraph configuration.
+    // Set the icon file UUID and default value to the paragraph configuration.
     if (!empty($icon_file) && $file = $this->entityTypeManager->getStorage('file')->load($icon_file)) {
       $paragraphs_type->set('icon_uuid', $file->uuid());
+      $paragraphs_type->set(
+        'icon_default',
+        'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file->getFileUri())));
     }
     else {
       $paragraphs_type->set('icon_uuid', NULL);
+      $paragraphs_type->set('icon_default', NULL);
     }
 
     if ($behavior_plugin_definitions = $this->paragraphsBehaviorManager->getApplicableDefinitions($paragraphs_type)) {
@@ -208,8 +214,8 @@ class ParagraphsTypeForm extends EntityForm {
           }
         }
         else {
-          // The plugin is not enabled, reset to default configuration.
-          $behavior_plugin->setConfiguration([]);
+          // The plugin is not enabled, remove it from the paragraphs type.
+          $paragraphs_type->getBehaviorPlugins()->removeInstanceId($id);
         }
       }
     }

@@ -2,14 +2,14 @@
 
 namespace Drupal\geofield\Plugin\views\argument;
 
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Logger\LoggerChannelTrait;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\geofield\Plugin\GeofieldProximitySourceManager;
 use Drupal\geofield\WktGenerator;
 use Drupal\views\Plugin\views\argument\Formula;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\geofield\Plugin\GeofieldProximitySourceManager;
-use Drupal\Core\Render\Markup;
-use Drupal\geofield\Exception\ProximityUnavailableException;
 
 /**
  * Argument handler for geofield proximity.
@@ -23,8 +23,7 @@ use Drupal\geofield\Exception\ProximityUnavailableException;
  */
 class GeofieldProximityArgument extends Formula implements ContainerFactoryPluginInterface {
 
-  protected $operator = '<';
-  protected $proximity = '';
+  use LoggerChannelTrait;
 
   /**
    * The WktGenerator object.
@@ -84,7 +83,7 @@ class GeofieldProximityArgument extends Formula implements ContainerFactoryPlugi
         'value' => 'GEOFIELD_FEET',
       ],
       'nmi' => [
-        'label' => $this->T('Nautical MIles'),
+        'label' => $this->T('Nautical Miles'),
         'value' => 'GEOFIELD_NAUTICAL_MILES',
       ],
     ];
@@ -95,7 +94,7 @@ class GeofieldProximityArgument extends Formula implements ContainerFactoryPlugi
    * Get the markup list of the Unites.
    *
    * @return string
-   *   The the markup list of the Unites.
+   *   The markup list of the Unites.
    */
   protected function unitsListMarkup() {
     $markup = '';
@@ -136,13 +135,11 @@ class GeofieldProximityArgument extends Formula implements ContainerFactoryPlugi
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    /** @var \Drupal\geofield\WktGenerator $wkt_generator */
-    $wkt_generator = $container->get('geofield.wkt_generator');
     return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $wkt_generator,
+      $container->get('geofield.wkt_generator'),
       $container->get('plugin.manager.geofield_proximity_source')
     );
   }
@@ -152,7 +149,7 @@ class GeofieldProximityArgument extends Formula implements ContainerFactoryPlugi
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
-    $form['description']['#markup'] .= $this->t('<br/><u>Proximity format should be in the following format: <strong>"40.73,-73.93<=5[unit]"</strong>, where [unit] should be one of the following key value:</u>@units_decodes.', [
+    $form['description']['#markup'] .= $this->t('<br><u>Proximity format should be in the following format: <strong>"40.73,-73.93<=5[unit]"</strong></u>, where the operator might be also: ><br>and [unit] should be one of the following key value: @units_decodes.<br><u>Note:</u> Use dot (.) as decimal separator, and not comma (,), otherwise results won\'t be accurate.', [
       '@units_decodes' => Markup::create($this->unitsListMarkup()),
     ]);
   }
@@ -187,7 +184,7 @@ class GeofieldProximityArgument extends Formula implements ContainerFactoryPlugi
       }
     }
     catch (\Exception $e) {
-      watchdog_exception('geofield', $e);
+      $this->getLogger('geofield')->error($e->getMessage());
     }
 
   }
@@ -211,30 +208,23 @@ class GeofieldProximityArgument extends Formula implements ContainerFactoryPlugi
    *   The calculated values.
    */
   public function getParsedReferenceLocation() {
-    // Cache the vales so this only gets processed once.
-    static $values;
-
-    if (!isset($values)) {
-      // Process argument values into an array.
-      preg_match('/^([0-9\-.]+),+([0-9\-.]+)([<>=]+)([0-9.]+)(.*$)/', $this->getValue(), $values);
-      // Validate and return the passed argument.
-      $values = is_array($values) && !empty($values) ? [
-        'lat' => (isset($values[1]) && is_numeric($values[1]) && $values[1] >= -90 && $values[1] <= 90) ? floatval($values[1]) : FALSE,
-        'lon' => (isset($values[2]) && is_numeric($values[2]) && $values[2] >= -180 && $values[2] <= 180) ? floatval($values[2]) : FALSE,
-        'operator' => (isset($values[3]) && in_array($values[3], [
-          '<>',
-          '=',
-          '>=',
-          '<=',
-          '>',
-          '<',
-        ])) ? $values[3] : '<=',
-        'distance' => (isset($values[4])) ? floatval($values[4]) : FALSE,
-        'units' => (isset($values[5]) && array_key_exists($values[5], $this->units)) ? $this->units[$values[5]]['value'] : NULL,
-      ] : FALSE;
-
-    }
-    return $values;
+    // Process argument values into an array.
+    preg_match('/^([0-9\-.]+),+([0-9\-.]+)([<>=]+)([0-9.]+)(.*$)/', trim((string) $this->getValue()), $values);
+    // Validate and return the passed argument.
+    return is_array($values) && !empty($values) ? [
+      'lat' => (isset($values[1]) && is_numeric($values[1]) && $values[1] >= -90 && $values[1] <= 90) ? floatval($values[1]) : FALSE,
+      'lon' => (isset($values[2]) && is_numeric($values[2]) && $values[2] >= -180 && $values[2] <= 180) ? floatval($values[2]) : FALSE,
+      'operator' => (isset($values[3]) && in_array($values[3], [
+        '<>',
+        '=',
+        '>=',
+        '<=',
+        '>',
+        '<',
+      ])) ? $values[3] : '<=',
+      'distance' => (isset($values[4])) ? floatval($values[4]) : FALSE,
+      'units' => (isset($values[5]) && array_key_exists($values[5], $this->units)) ? $this->units[$values[5]]['value'] : 'GEOFIELD_KILOMETERS',
+    ] : FALSE;
   }
 
 }

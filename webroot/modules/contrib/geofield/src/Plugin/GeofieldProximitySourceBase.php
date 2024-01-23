@@ -85,7 +85,7 @@ abstract class GeofieldProximitySourceBase extends PluginBase implements Geofiel
 
     // If the given value is not a valid option, throw an error.
     if (!in_array($units, $this->getUnitsOptions())) {
-      $message = t('Invalid units supplied.');
+      $message = $this->t('Invalid units supplied.');
       \Drupal::logger('geofield')->error($message);
       return FALSE;
     }
@@ -127,9 +127,7 @@ abstract class GeofieldProximitySourceBase extends PluginBase implements Geofiel
    */
   public function getProximity($lat, $lon) {
     if (!$this->isValidLocation($lat, $lon)) {
-      throw new InvalidPointException($this->t('@proximity_handler reports Invalid Point coordinates', [
-        '@proximity_handler' => get_class($this),
-      ]));
+      throw new InvalidPointException(sprintf('%s reports Invalid Point coordinates', get_class($this)));
     }
 
     // Fetch the value of the units that have been set for this class. The
@@ -156,10 +154,8 @@ abstract class GeofieldProximitySourceBase extends PluginBase implements Geofiel
         * sin($destination_latitude)
       );
 
-    if (!is_numeric($proximity) || !abs($proximity) > 0) {
-      throw new ProximityUnavailableException($this->t('@proximity_handler not able to calculate valid Proximity value', [
-        '@proximity_handler' => get_class($this),
-      ]));
+    if (!is_numeric($proximity)) {
+      throw new ProximityUnavailableException(sprintf('%s not able to calculate valid Proximity value', get_class($this)));
     }
 
     return $proximity;
@@ -172,13 +168,12 @@ abstract class GeofieldProximitySourceBase extends PluginBase implements Geofiel
   public function getHaversineOptions() {
 
     $origin = $this->getOrigin();
-    if ($this->isEmptyLocation($origin['lat'], $origin['lon'])) {
+    if (!$origin || !isset($origin['lat']) || !isset($origin['lon'])) {
+      throw new HaversineUnavailableException('Not able to calculate Haversine Options due to invalid Proximity Origin definition.');
+    }
+    if ($this->isEmptyLocation($origin['lat'], $origin['lon']) || !$this->isValidLocation($origin['lat'], $origin['lon'])) {
       return NULL;
     }
-    if (!$origin || !$this->isValidLocation($origin['lat'], $origin['lon'])) {
-      throw new HaversineUnavailableException('Not able to calculate Haversine Options due to invalid Proximity origin location.');
-    }
-
     return [
       'origin_latitude' => $origin['lat'],
       'origin_longitude' => $origin['lon'],

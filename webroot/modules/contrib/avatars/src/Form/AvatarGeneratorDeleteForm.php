@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\Form\AvatarGeneratorDeleteForm.
- */
-
 namespace Drupal\avatars\Form;
 
 use Drupal\Core\Entity\EntityConfirmFormBase;
@@ -44,9 +39,9 @@ class AvatarGeneratorDeleteForm extends EntityConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->entity->delete();
-    drupal_set_message(t('Avatar generator %label was deleted.', array(
+    $this->messenger()->addStatus(t('Avatar generator %label was deleted.', [
       '%label' => $this->entity->label(),
-    )));
+    ]));
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

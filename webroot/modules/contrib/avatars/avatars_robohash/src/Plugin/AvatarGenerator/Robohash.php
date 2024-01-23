@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars_robohash\Plugin\AvatarGenerator\Robohash.
- */
-
 namespace Drupal\avatars_robohash\Plugin\AvatarGenerator;
 
 use Drupal\avatars\Plugin\AvatarGenerator\AvatarGeneratorBase;

@@ -105,53 +105,24 @@ datasource_settings:
       default: true
       selected: {  }
 processor_settings:
+  cidoc: {  }
+  rendered_item: {  }
   add_url: {  }
   aggregated_field: {  }
-  cidoc: {  }
-  html_filter:
-    fields:
-      - rendered_item
-    title: true
-    alt: true
-    tags:
-      b: 2
-      h1: 5
-      h2: 3
-      h3: 2
-      strong: 2
-    weights:
-      preprocess_index: -10
-      preprocess_query: -10
-    all_fields: false
-  ignore_character:
+  entity_type: {  }
+  tokenizer:
     fields:
       - internal_name
       - name
       - rendered_item
-    ignorable: '[''¿¡!?,.:;]'
+    spaces: ''
+    overlap_cjk: 1
+    minimum_word_size: '3'
     weights:
-      preprocess_index: -8
-      preprocess_query: -8
-    ignorable_classes:
-      - Pc
-      - Pd
-      - Pe
-      - Pf
-      - Pi
-      - Po
-      - Ps
+      preprocess_index: -7
+      preprocess_query: -7
     all_fields: false
-  ignorecase:
-    fields:
-      - internal_name
-      - name
-      - rendered_item
-    weights:
-      preprocess_index: -9
-      preprocess_query: -9
-    all_fields: false
-  language_with_fallback: {  }
-  rendered_item: {  }
+    ignored: ._-
   stopwords:
     fields:
       - internal_name
@@ -197,17 +168,14 @@ processor_settings:
       preprocess_index: -5
       preprocess_query: -5
     all_fields: false
-  tokenizer:
+  ignorecase:
     fields:
       - internal_name
       - name
       - rendered_item
-    spaces: ''
-    overlap_cjk: 1
-    minimum_word_size: '3'
     weights:
-      preprocess_index: -7
-      preprocess_query: -7
+      preprocess_index: -9
+      preprocess_query: -9
     all_fields: false
   transliteration:
     fields:
@@ -218,10 +186,45 @@ processor_settings:
       preprocess_index: -6
       preprocess_query: -6
     all_fields: false
+  ignore_character:
+    fields:
+      - internal_name
+      - name
+      - rendered_item
+    ignorable: '[''¿¡!?,.:;]'
+    weights:
+      preprocess_index: -8
+      preprocess_query: -8
+    ignorable_classes:
+      - Pc
+      - Pd
+      - Pe
+      - Pf
+      - Pi
+      - Po
+      - Ps
+    all_fields: false
+  language_with_fallback: {  }
+  html_filter:
+    fields:
+      - rendered_item
+    title: true
+    alt: true
+    tags:
+      b: 2
+      h1: 5
+      h2: 3
+      h3: 2
+      strong: 2
+    weights:
+      preprocess_index: -10
+      preprocess_query: -10
+    all_fields: false
 tracker_settings:
   default:
     indexing_order: fifo
 options:
   index_directly: true
   cron_limit: 50
+  track_changes_in_references: true
 server: db_search_backend
