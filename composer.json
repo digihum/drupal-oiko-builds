@@ -98,7 +98,7 @@
         "drupal/config_split": "^1.0.0",
         "drupal/config_update": "1.x-dev#f84f49be150c2032921e2cb99ffea5dbcb5f89ca",
         "drupal/core-composer-scaffold": "^8.9.20",
-        "drupal/core-recommended": "~8.8.10",
+        "drupal/core-recommended": "~8.9.0",
         "drupal/css_editor": "^1.2",
         "drupal/csv_serialization": "1.0-alpha1",
         "drupal/ctools": "^3.0",
