@@ -1,6 +1,5 @@
 .drush-cache-rebuild
-webroot/sites/*/files/css
-webroot/sites/*/files/js
+webroot/sites/*/files/*
 webroot/sites/*/settings.local.php
 webroot/sites/*/settings.php
 webroot/sites/*/services.yml
@@ -9,4 +8,4 @@ docker/data/*
 docker/files/*
 # don't save sql files
 docker/seed/*.sql
-
+.idea/*
