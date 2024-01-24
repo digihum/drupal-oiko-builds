@@ -9,14 +9,14 @@ third_party_settings:
     item_color: blue
 _core:
   default_config_hash: KTl5rL8t6eVkL-S7173frU5ysqUSiMr9KQqSUCSKXcc
-crm_entity: e5_event
 id: e5_event
 label: 'E5 Event'
-friendly_label: Event
-weight: -13
+crm_entity: e5_event
 group: auxiliary
+weight: -13
 description: "<p>This class comprises changes of states in cultural, social or physical systems, regardless of\r\nscale, brought about by a series or group of coherent physical, cultural, technological or legal\r\nphenomena. Such changes of state will affect instances of E77 Persistent Item or its subclasses.</p>\r\n\r\n<p>The distinction between an E5 Event and an E4 Period is partly a question of the scale of\r\nobservation. Viewed at a coarse level of detail, an E5 Event is an ‘instantaneous’ change of\r\nstate. At a fine level, the E5 Event can be analysed into its component phenomena within a\r\nspace and time frame, and as such can be seen as an E4 Period. The reverse is not necessarily\r\nthe case: not all instances of E4 Period give rise to a noteworthy change of state.</p>"
 examples: "<ul>\r\n<li>the birth of Cleopatra (E67 Birth)</li>\r\n<li>the destruction of Herculaneum by volcanic eruption in 79 AD (E6 Destruction)</li>\r\n<li>World War II (E7 Activity)</li>\r\n<li>the Battle of Stalingrad (E7 Activity)</li>\r\n<li>the Yalta Conference (E7 Activity)</li>\r\n<li>my birthday celebration 28-6-1995 (E7 Activity)</li>\r\n<li>the falling of a tile from my roof last Sunday (E5 Event)</li>\r\n<li>the CIDOC Conference 2003 (E7 Activity)</li>\r\n</ul>"
 geoserializers:
   event: event
   move: '0'
+friendly_label: Event

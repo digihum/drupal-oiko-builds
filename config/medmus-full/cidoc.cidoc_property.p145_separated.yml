@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p145_separated
 label: 'P145 separated'
-bidirectional: false
 reverse_label: 'P145 left by'
-friendly_label: separated
-reverse_friendly_label: 'left by'
 domain_bundles:
   - e86_leaving
 range_bundles:
@@ -20,8 +17,11 @@ timesubwidget:
     type: 'no'
   range:
     type: generic
-    sub_property: p146_separated_from
     title_template: '@target_name leaves @source_name'
+    sub_property: p146_separated_from
+bidirectional: false
+friendly_label: separated
+reverse_friendly_label: 'left by'
 widget_description:
   domain: ''
   range: ''

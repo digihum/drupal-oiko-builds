@@ -4,14 +4,14 @@ status: true
 dependencies: {  }
 _core:
   default_config_hash: 8TV53Wp1El6pkDIhImLilko_cFSW16OBVUnbhq_NbM0
-crm_entity: e9_move
 id: e9_move
 label: 'E9 Move'
-friendly_label: Move
-weight: -10
+crm_entity: e9_move
 group: auxiliary
+weight: -10
 description: "<p>This class comprises changes of the physical location of the instances of E19 Physical Object.</p>\r\n\r\n<p>Note, that the class E9 Move inherits the property P7 took place at (witnessed): E53 Place.\r\nThis property should be used to describe the trajectory or a larger area within which a move\r\ntakes place, whereas the properties P26 moved to (was destination of), P27 moved from (was\r\norigin of) describe the start and end points only. Moves may also be documented to consist of\r\nother moves (via P9 consists of (forms part of)), in order to describe intermediate stages on a\r\ntrajectory. In that case, start and end points of the partial moves should match appropriately\r\nbetween each other and with the overall event.</p>"
 examples: "<ul>\r\n<li>the relocation of London Bridge from the UK to the USA</li>\r\n<li>the movement of the exhibition “Treasures of Tut-Ankh-Amun” 1976-1979</li>\r\n</ul>"
 geoserializers:
   event: event
   move: move
+friendly_label: Move

@@ -6,10 +6,7 @@ _core:
   default_config_hash: DfGdXWpOJGY-HF3HJRasOuU02oiRxiYg36uB-Gq9Y4A
 id: p11_had_participant
 label: 'P11 had participant'
-bidirectional: false
 reverse_label: 'P11 participated in'
-friendly_label: 'Had participant'
-reverse_friendly_label: 'Participated in'
 domain_bundles:
   - e5_event
   - e6_destruction
@@ -35,8 +32,13 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Had participant'
+reverse_friendly_label: 'Participated in'
 widget_description:
-  domain: "\n\n"
+  domain: |+
+
+
 autocomplete_description:
   domain: ''
   range: ''

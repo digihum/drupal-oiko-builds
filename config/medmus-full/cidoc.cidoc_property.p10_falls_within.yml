@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p10_falls_within
 label: 'P10 falls within'
-bidirectional: false
 reverse_label: 'P10 contains'
-friendly_label: 'Falls within'
-reverse_friendly_label: Contains
 domain_bundles:
   - e5_event
   - e6_destruction
@@ -44,6 +41,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Falls within'
+reverse_friendly_label: Contains
 widget_description:
   domain: '</p> Name of E7 Activity that happened during this E7 Activity.<p>'
   range: '</p> Name of E7 Activity during which this E7 Activity has happened.<p>'

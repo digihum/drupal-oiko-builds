@@ -69,13 +69,14 @@
         "ext-json": "*",
         "arthur-e/wicket": "^1.3.2",
         "composer/installers": "^1.7",
-        "computerminds/cidoc-crm": "^1.1.0",
+        "computerminds/cidoc-crm": "^1.2.0",
         "cweagans/composer-patches": "^1.7.3",
-        "drupal/admin_toolbar": "^2.0",
+        "drupal/admin_toolbar": "^2.5",
         "drupal/avatars": "^1.0@beta",
         "drupal/color_field": "^2.0",
-        "drupal/core-composer-scaffold": "^8.9.20",
-        "drupal/core-recommended": "~8.9.0",
+        "drupal/composer_deploy": "^1.7",
+        "drupal/core-composer-scaffold": "~9.5.0",
+        "drupal/core-recommended": "~9.5.0",
         "drupal/css_editor": "^1.2",
         "drupal/csv_serialization": "^1.5",
         "drupal/ctools": "^3.0",
@@ -98,15 +99,16 @@
         "drupal/search_api": "^1.0",
         "drupal/sharemessage": "^1.0@beta",
         "drupal/squid_autocomplete": "^1.0@alpha",
-        "drupal/upgrade_status": "^3.19",
+        "drupal/upgrade_status": "^4.0",
         "drupal/views_bulk_operations": "^3.13",
         "drupal/views_delimited_list": "^2.0@alpha",
         "drupal/views_fields_on_off": "^1.0@alpha",
-        "drupal/webform": "^5.11",
-        "drush/drush": "^10.0.0",
+        "drupal/webform": "^6.0",
+        "drush/drush": "^11.6",
         "leaflet/leaflet": "1.0.3",
         "leaflet/leaflet.draw": "^0.3.0",
         "oomphinc/composer-installers-extender": "dev-master",
+        "php-http/guzzle6-adapter": "^1.1",
         "phpwatch/array_key_first_last-polyfill": "dev-master",
         "wikimedia/composer-merge-plugin": "^2.1.0"
     },
@@ -158,9 +160,6 @@
             "drupal/core": "-p2"
         },
         "patches": {
-            "drupal/core": {
-                "Use entity's cache tags for their entity cache entries": "https://www.drupal.org/files/issues/persistent-entity-cache-tags-2537588-10.patch"
-            },
             "drupal/entity_share": {
                 "Allow notification of entity changes": "https://www.drupal.org/files/issues/2020-07-30/entity_share-automatic_synchronization-WIP-3080629-11.patch"
             }
@@ -170,14 +169,15 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "7.2"
+            "php": "7.4"
         },
         "allow-plugins": {
             "composer/installers": true,
             "oomphinc/composer-installers-extender": true,
             "drupal/core-composer-scaffold": true,
             "cweagans/composer-patches": true,
-            "wikimedia/composer-merge-plugin": true
+            "wikimedia/composer-merge-plugin": true,
+            "php-http/discovery": true
         }
     }
 }

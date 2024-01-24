@@ -21,13 +21,13 @@ default_value_callback: ''
 settings:
   handler: 'default:cidoc_entity'
   handler_settings:
-    auto_create: true
-    sort:
-      field: name
-      direction: ASC
     target_bundles:
       ec7_source: ec7_source
       ec8_manuscript: ec8_manuscript
       ec9_print: ec9_print
+    sort:
+      field: name
+      direction: ASC
+    auto_create: true
     auto_create_bundle: ec7_source
 field_type: entity_reference

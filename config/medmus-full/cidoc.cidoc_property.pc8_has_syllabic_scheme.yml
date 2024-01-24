@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pc8_has_syllabic_scheme
 label: 'PC8 has syllabic scheme'
-bidirectional: false
 reverse_label: 'PC8 is syllabic scheme of'
-friendly_label: 'Syllabic scheme'
-reverse_friendly_label: 'Is syllabic scheme of'
 domain_bundles:
   - ec1_work
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Syllabic scheme'
+reverse_friendly_label: 'Is syllabic scheme of'
 widget_description:
   domain: "<p>This property links lyrics with its corresponding syllabic scheme.</p>\r\n<ul>\r\n<li>BdT 240.6 PC8 has syllabic scheme 08 07 08 08 07' 08 08 07' (EC4)</li>\r\n</ul>\r\n"
   range: ''

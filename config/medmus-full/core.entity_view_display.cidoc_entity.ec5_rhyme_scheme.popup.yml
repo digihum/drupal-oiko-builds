@@ -13,45 +13,45 @@ bundle: ec5_rhyme_scheme
 mode: popup
 content:
   cidoc_admin_links:
+    settings: {  }
+    third_party_settings: {  }
     weight: 1
     region: content
+  'cidoc_properties:domain:p1_is_identified_by':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p1_is_identified_by':
     weight: 3
     region: content
+  'cidoc_properties:domain:p2_has_type':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p2_has_type':
     weight: 4
     region: content
+  'cidoc_properties:domain:p48_has_preferred_identifier':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p48_has_preferred_identifier':
     weight: 2
     region: content
-    settings: {  }
-    third_party_settings: {  }
   content:
-    region: content
-    label: hidden
     type: text_default
-    weight: 7
+    label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 7
+    region: content
   is_rhyme_scheme_of_entity_view_1:
+    settings: {  }
+    third_party_settings: {  }
     weight: 6
     region: content
-    settings: {  }
-    third_party_settings: {  }
   name:
-    region: content
     type: string
     label: hidden
     settings:
       link_to_entity: false
-    weight: 0
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   cidoc_properties: true
   'cidoc_properties:range:p67_refers_to': true

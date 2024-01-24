@@ -1,17 +1,17 @@
-third_party_settings:
-  shortcut:
-    module_link: true
 _core:
   default_config_hash: 8GyocqC2nyRrMjMdTwkLg8XLON-hZQ68wsuOEjxmCx0
+favicon:
+  use_default: true
 features:
-  node_user_picture: true
   comment_user_picture: true
   comment_user_verification: true
   favicon: true
+  node_user_picture: true
 logo:
   use_default: true
-favicon:
-  use_default: true
+third_party_settings:
+  shortcut:
+    module_link: true
 css_enabled: 0
 css: '#css-editor-preview {height: 800px;}'
 plaintext_enabled: 0

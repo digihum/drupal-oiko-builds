@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa9_has_aunt_or_uncle
 label: 'PA9 has aunt or uncle'
-bidirectional: false
 reverse_label: 'PA9 has niece or nephew'
-friendly_label: 'Aunt or uncle'
-reverse_friendly_label: Nephew
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Aunt or uncle'
+reverse_friendly_label: Nephew
 widget_description:
   domain: ''
   range: ''

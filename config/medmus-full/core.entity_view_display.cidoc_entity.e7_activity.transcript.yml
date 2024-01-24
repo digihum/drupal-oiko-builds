@@ -14,107 +14,107 @@ bundle: e7_activity
 mode: transcript
 content:
   cidoc_properties_transcript:
+    settings: {  }
+    third_party_settings: {  }
     weight: 3
     region: content
+  cidoc_temporal_summary:
     settings: {  }
     third_party_settings: {  }
-  cidoc_temporal_summary:
     weight: 1
     region: content
-    settings: {  }
-    third_party_settings: {  }
   citation:
     type: entity_reference_revisions_entity_view
-    weight: 6
-    region: content
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 6
+    region: content
   content:
     type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
     weight: 5
     region: content
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
   duplicate_of_p15_influenced_entity_view_1:
-    weight: 12
     settings: {  }
     third_party_settings: {  }
+    weight: 12
     region: content
   duplicate_of_p15_was_influenced_by_entity_view_1:
-    weight: 12
     settings: {  }
     third_party_settings: {  }
+    weight: 12
     region: content
   name:
-    label: hidden
     type: string
-    weight: 0
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 0
     region: content
   p108_has_produced_entity_view_1:
-    weight: 10
     settings: {  }
     third_party_settings: {  }
+    weight: 10
     region: content
   p108_produced_by_entity_view_1:
-    weight: 10
     settings: {  }
     third_party_settings: {  }
+    weight: 10
     region: content
   p10_falls_within_entity_view_1:
-    weight: 3
     settings: {  }
     third_party_settings: {  }
+    weight: 3
     region: content
   p10_includes_entity_view_1:
-    weight: 10
     settings: {  }
     third_party_settings: {  }
+    weight: 10
     region: content
   p15_influenced_entity_view_1:
-    weight: 11
     settings: {  }
     third_party_settings: {  }
+    weight: 11
     region: content
   p15_was_influenced_by_entity_view_1:
-    weight: 9
     settings: {  }
     third_party_settings: {  }
+    weight: 9
     region: content
   p4_has_time_span_entity_view_1:
-    weight: 5
     settings: {  }
     third_party_settings: {  }
+    weight: 5
     region: content
   p9__entity_view_1:
-    weight: 12
     settings: {  }
     third_party_settings: {  }
+    weight: 12
     region: content
   p9_forms_part_of_entity_view_1:
-    weight: 10
     settings: {  }
     third_party_settings: {  }
+    weight: 10
     region: content
   people_entity_view_1:
-    weight: 6
     settings: {  }
     third_party_settings: {  }
+    weight: 6
     region: content
   significance:
     type: entity_reference_entity_view
-    weight: 2
     label: visually_hidden
     settings:
       view_mode: primary_historical_significance_pill
       link: false
     third_party_settings: {  }
+    weight: 2
     region: content
 hidden:
   cidoc_admin_links: true

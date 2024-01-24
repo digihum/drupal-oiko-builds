@@ -15,6 +15,6 @@ plugin: map_tags_block
 settings:
   id: map_tags_block
   label: Activities
-  provider: medmus_leaflet
   label_display: visible
+  provider: medmus_leaflet
 visibility: {  }

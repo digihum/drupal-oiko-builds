@@ -18,8 +18,10 @@ translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
-  file_extensions: 'png gif jpg jpeg'
+  handler: 'default:file'
+  handler_settings: {  }
   file_directory: pictures
+  file_extensions: 'png gif jpg jpeg'
   max_filesize: '128 KB'
   max_resolution: 1024x1024
   min_resolution: 100x100
@@ -33,6 +35,4 @@ settings:
     title: ''
     width: null
     height: null
-  handler: 'default:file'
-  handler_settings: {  }
 field_type: image

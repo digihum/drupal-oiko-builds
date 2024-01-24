@@ -16,18 +16,18 @@ third_party_settings:
     group_temporal:
       children:
         - 'cidoc_properties:domain:p4_has_time_span'
+      label: When
+      region: content
       parent_name: group_tabset
       weight: 4
-      label: When
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_tabset:
       children:
         - group_temporal
@@ -37,109 +37,109 @@ third_party_settings:
         - group_descriptive_text
         - group_also_known_as
         - group_hierarchy
+      label: 'Main details'
+      region: content
       parent_name: group_main_deets
       weight: 4
-      label: 'Main details'
       format_type: tabs
       format_settings:
-        fieldset_label_html: true
-        direction: horizontal
-        id: ''
         classes: ''
-      region: content
+        id: ''
+        direction: horizontal
+        fieldset_label_html: true
     group_where:
       children:
         - 'cidoc_properties:domain:p7_took_place_at'
+      label: Where
+      region: content
       parent_name: group_tabset
       weight: 5
-      label: Where
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_descriptive_text:
       children:
         - content
+      label: 'Descriptive text'
+      region: content
       parent_name: group_tabset
       weight: 8
-      label: 'Descriptive text'
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_who:
       children:
         - 'cidoc_properties:domain:p11_had_participant'
+      label: People/groups
+      region: content
       parent_name: group_tabset
       weight: 6
-      label: People/groups
       format_type: tab
       format_settings:
+        classes: ''
+        id: ''
         formatter: closed
         description: ''
         required_fields: true
-        id: ''
-        classes: ''
         fieldset_label_html: true
-      region: content
     group_what:
       children:
         - 'cidoc_properties:domain:p13_destroyed'
         - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
+      label: Things
+      region: content
       parent_name: group_tabset
       weight: 7
-      label: Things
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_data:
       children:
         - group_main_deets
         - group_oiko_world_settings
+      label: 'Main data entry'
+      region: content
       parent_name: ''
       weight: 1
-      label: 'Main data entry'
       format_type: tabs
       format_settings:
-        direction: horizontal
-        id: ''
         classes: ''
+        id: ''
+        direction: horizontal
         fieldset_label_html: true
-      region: content
     group_main_deets:
       children:
         - name
         - internal_name
         - citation
         - group_tabset
+      label: 'Main details'
+      region: content
       parent_name: group_data
       weight: 3
-      label: 'Main details'
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_oiko_world_settings:
       children:
         - status
@@ -148,49 +148,49 @@ third_party_settings:
         - timeline_preselect_option
         - timeline_logo
         - path
+      label: 'Connecting Medieval Music settings'
+      region: content
       parent_name: group_data
       weight: 20
       format_type: tab
       format_settings:
-        id: ''
         classes: ''
+        id: ''
         formatter: closed
         description: ''
         required_fields: true
         fieldset_label_html: true
-      label: 'Connecting Medieval Music settings'
-      region: content
     group_also_known_as:
       children:
         - 'cidoc_properties:domain:p48_has_preferred_identifier'
+      label: 'Also known as'
+      region: content
       parent_name: group_tabset
       weight: 9
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: 'Also known as'
+        fieldset_label_html: false
     group_hierarchy:
       children:
         - 'cidoc_properties:domain:p9_consists_of'
         - 'cidoc_properties:range:p9_consists_of'
+      label: Hierarchy
+      region: content
       parent_name: group_tabset
       weight: 10
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: Hierarchy
+        fieldset_label_html: false
 _core:
   default_config_hash: MCecFoOh1b0B-sp83OJ4_942EIMUo6UJjL0R5-XB0xk
 id: cidoc_entity.e6_destruction.default
@@ -220,9 +220,9 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:p134_continued':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p13_destroyed':
     weight: 20
     region: content
@@ -230,24 +230,24 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:p14_carried_out_by':
     weight: 13
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p15_was_influenced_by':
     weight: 22
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p16_used_specific_object':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p17_was_motivated_by':
     weight: 24
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p48_has_preferred_identifier':
     weight: 20
     region: content
@@ -270,9 +270,9 @@ content:
     third_party_settings: {  }
   'cidoc_properties:range:p134_continued':
     weight: 21
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p15_was_influenced_by':
     weight: 23
     region: content
@@ -291,6 +291,7 @@ content:
   citation:
     type: entity_reference_paragraphs
     weight: 3
+    region: content
     settings:
       title: Citation
       title_plural: Citations
@@ -299,7 +300,6 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
-    region: content
   class_description:
     weight: 0
     region: content
@@ -308,27 +308,27 @@ content:
   content:
     type: text_textarea
     weight: 0
+    region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    region: content
   internal_name:
     type: string_textfield
     weight: 2
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
   name:
     type: string_textfield
     weight: 1
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
   path:
     type: path
     weight: 126
@@ -338,30 +338,30 @@ content:
   significance:
     type: options_select
     weight: 122
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 120
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   timeline_logo:
     type: image_image
     weight: 125
+    region: content
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
-    region: content
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
     weight: 124
+    region: content
     settings:
       display_label: true
-    region: content
     third_party_settings: {  }
   user_id:
     type: entity_reference_autocomplete
@@ -369,9 +369,9 @@ content:
     region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p10_falls_within': true

@@ -18,9 +18,9 @@ tips:
     plugin: text
     label: '1/5 Navigate'
     weight: -100
+    location: top
     attributes: null
     body: "<p><i class=\"fa fa-search\" aria-hidden=\"true\"></i> Search the system for something you're looking for to add to your timeline. You can add multiple entries to compare what is happening in different places at the same time (and delete any at any time).\r\n<p><img alt=\"Pinch and Zoom\" data-entity-type=\"file\" data-entity-uuid=\"618e02d9-3f84-4285-8b72-7facdb2b87fc\" src=\"/sites/default/files/inline-images/pinch_zoom_0.png\" /> Pinch and zoom on the timeline to see shorter or longer periods of time </p>\r\n<p><i class=\"fa fa-arrows-h\" aria-hidden=\"true\"></i> Slide across the timeline bar at the bottom of the page to change the focus of your timeline, or set the boundary markers to cover a particular period</p>\r\n<p><img alt=\"Timeline Rectangle Icon\" data-entity-type=\"file\" data-entity-uuid=\"c3b06cce-5255-4905-811d-3769374c5c59\" src=\"/sites/default/files/inline-images/timeline_rectangle.png\" /> Click on an entry in any of your timelines to find out more about each one"
-    location: top
     next_label: null
     previous_label: null
     information_bar: null
@@ -29,10 +29,10 @@ tips:
     plugin: text
     label: '2/5 Console'
     weight: -99
+    location: null
     attributes:
       data-class: sidebar-tabs
     body: "<p><i class=\"fa fa-bars fa-2x\" title=\"Icon for Main menu\"></i> Read more about the Oiko.world project, the data entry process and the technical specifications, as well as T&Cs. You can also replay tours at any time from the main menu.</p>\r\n<p><i class=\"fa fa-filter fa-2x\" title=\"Legend\"></i> See the different kinds of data available in Oiko.world, filter what you want to see, as well as catch up on recent discussions about entries</p>\r\n<p><i class=\"fa fa-map-marker fa-2x\" title=\"Information\"></i> See the full information for each entry in your timelines, as well as bookmark entries for later comparison.</p>"
-    location: null
     next_label: null
     previous_label: null
     information_bar: null
@@ -41,10 +41,10 @@ tips:
     plugin: text
     label: '3/5 Activity Panel'
     weight: -98
+    location: top
     attributes:
       data-class: l-content-header-user
     body: "<p><i class=\"fa fa-bullhorn fa-2x\" title=\"icon  for feedback\"></i> Send us your feedback on Oiko.world</p>\r\n<p><i class=\"fa fa-bookmark-o fa-2x\"></i> Track your journey through Oiko.world and see your list of bookmarked entries</p>\r\n<p><i class=\"fa fa-comments-o fa-2x\"></i> Contribute to discussions</p>\r\n<p><i class=\"fa fa-user-circle-o fa-2x\" title=\"icon  for feedback\"></i> By setting up an account and logging-in to Oiko.world (it's free!) you can join discussions on individual entries</p>"
-    location: top
     next_label: null
     previous_label: null
     information_bar: null
@@ -53,10 +53,10 @@ tips:
     plugin: text
     label: '4/5 Information'
     weight: -97
+    location: left
     attributes:
       data-id: cidoc-popup-tabs
     body: "<p><i class=\"fa fa-map-marker fa-2x\"></i> Click on the Info icon when something on the map is selected for information about this entry.</p>\r\n<p><strong>Info</strong>\r\nSee information relating to the selected item.</p>\r\n<p>\r\n<strong>Discuss</strong>\r\nRead and contribute to the discussion about the selected item.</p>\r\n<p><strong>Share</strong>\r\nShare a link to the selected item on social media.</p>\r\n<p><i class=\"fa fa-plus-circle fa-2x\"></i> Click on this to add this item to your Added Events</p>"
-    location: left
     next_label: null
     previous_label: null
     information_bar: 1
@@ -65,10 +65,10 @@ tips:
     plugin: text
     label: '5/5 Map'
     weight: -96
+    location: top
     attributes:
       data-id: footer
     body: "Don't forget - the timeline view is only the half of Oiko.world!\r\n\r\n<p><i class=\"fa fa-map-o fa-2x\"></i> Press this button to see the ancient world through a different lens in the Map view."
-    location: top
     next_label: null
     previous_label: null
     information_bar: null

@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa18_has_godmother
 label: 'PA18 has godmother'
-bidirectional: false
 reverse_label: 'PA18 is godmother of'
-friendly_label: Godmother
-reverse_friendly_label: 'Godmother of'
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Godmother
+reverse_friendly_label: 'Godmother of'
 widget_description:
   domain: ''
   range: ''

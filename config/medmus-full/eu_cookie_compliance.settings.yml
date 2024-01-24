@@ -1,63 +1,63 @@
-domain: ''
-domains_option: 1
-domains_list: ''
-eu_only: false
-exclude_paths: "/admin\r\n/admin/*\r\n/batch\r\n/node/add*\r\n/node/*/*\r\n/user/*/*"
-export:
-  folder: custom
 langcode: en
-popup_agreed:
-  value: '<h2>Thank you for accepting cookies</h2><p>You can now hide this message or find out more about cookies.</p>'
-  format: restricted_html
-popup_agree_button_message: 'I agree'
-popup_agreed_enabled: false
-popup_bg_hex: '212121'
-popup_clicking_confirmation: true
-popup_delay: 1
+uuid: 323a3968-8bf6-4e2a-895a-af9fb5e5cb76
 popup_enabled: true
-popup_find_more_button_message: 'Read privacy policy'
-popup_height: null
-popup_hide_agreed: false
-popup_hide_button_message: Hide
+popup_clicking_confirmation: true
+eu_only: false
+popup_position: true
 popup_info:
   value: '<h2>We use cookies on this website to enhance your user experience. Read more in our <a href="https://oiko.world/privacy-policy#cookies">privacy policy</a>.</h2>'
   format: restricted_html
+popup_info_template: new
+popup_agree_button_message: 'I agree'
+popup_more_info_button_message: 'Read privacy policy'
+popup_agreed_enabled: false
+popup_hide_agreed: false
+disagree_button_label: 'No, thanks'
+popup_agreed:
+  value: '<h2>Thank you for accepting cookies</h2><p>You can now hide this message or find out more about cookies.</p>'
+  format: restricted_html
+popup_find_more_button_message: 'Read privacy policy'
+popup_hide_button_message: Hide
 popup_link: 'https://oiko.world/privacy-policy#cookies'
 popup_link_new_window: true
-popup_position: true
-popup_text_hex: ffffff
+popup_height: null
 popup_width: 100%
+popup_delay: 1
+popup_bg_hex: '212121'
+popup_text_hex: ffffff
+domain: ''
+domains_option: 1
+domains_list: ''
+exclude_paths: "/admin\r\n/admin/*\r\n/batch\r\n/node/add*\r\n/node/*/*\r\n/user/*/*"
+set_cookie_session_zero_on_disagree: 0
+reload_options: 0
+reload_routes_list: ''
 method: default
-disagree_button_label: 'No, thanks'
 disabled_javascripts: ''
+automatic_cookies_removal: true
+allowed_cookies: ''
 consent_storage_method: do_not_store
 withdraw_message:
   value: '<h2>We use cookies on this site to enhance your user experience</h2><p>You have given your consent for us to set cookies.</p>'
   format: plain_text
-withdraw_action_button_label: 'Withdraw consent'
 withdraw_tab_button_label: 'Privacy settings'
+withdraw_action_button_label: 'Withdraw consent'
 withdraw_enabled: false
-popup_info_template: new
-enable_save_preferences_button: true
+withdraw_button_on_info_popup: false
 save_preferences_button_label: 'Save preferences'
 accept_all_categories_button_label: 'Accept all cookies'
-withdraw_button_on_info_popup: false
+enable_save_preferences_button: true
 domain_all_sites: false
-uuid: 323a3968-8bf6-4e2a-895a-af9fb5e5cb76
-popup_more_info_button_message: 'Read privacy policy'
-reload_options: 0
-reload_routes_list: ''
-containing_element: body
 settings_tab_enabled: false
-automatic_cookies_removal: true
-set_cookie_session_zero_on_disagree: 0
+containing_element: body
 cookie_policy_version: 1.0.0
 cookie_value_disagreed: '0'
 cookie_value_agreed_show_thank_you: '1'
 cookie_value_agreed: '2'
 accessibility_focus: false
-close_button_enabled: false
-reject_button_enabled: false
-reject_button_label: ''
 close_button_action: close_banner
-allowed_cookies: ''
+reject_button_label: ''
+reject_button_enabled: false
+close_button_enabled: false
+export:
+  folder: custom

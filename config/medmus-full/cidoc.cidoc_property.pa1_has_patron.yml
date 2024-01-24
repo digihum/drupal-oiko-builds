@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa1_has_patron
 label: 'PA1 has patron'
-bidirectional: false
 reverse_label: 'PA1 is patron of'
-friendly_label: Patron
-reverse_friendly_label: 'Is patron of'
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Patron
+reverse_friendly_label: 'Is patron of'
 widget_description:
   domain: ''
   range: ''

@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class RelatedMapMarkersController extends ControllerBase {
 
   /**
-   * Drupal\Core\Entity\EntityManager definition.
+   * Drupal\Core\Entity\EntityTypeManager definition.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */

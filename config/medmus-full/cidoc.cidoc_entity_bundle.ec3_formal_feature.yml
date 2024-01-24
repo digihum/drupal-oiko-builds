@@ -2,14 +2,14 @@ uuid: 3618ba47-3b1e-4770-9d05-c0e265c83e06
 langcode: en
 status: true
 dependencies: {  }
-crm_entity: ec3_formal_feature
 id: ec3_formal_feature
 label: 'EC3 Formal Feature'
-friendly_label: 'Formal features'
-weight: 9
+crm_entity: ec3_formal_feature
 group: auxiliary
+weight: 9
 description: '<p>This class contains the rhyme scheme in a stanza of a EC1 Work.</p>'
 examples: "<ul>\r\n<li>Strophic</li>\r\n<li>Prose</li>\r\n<li>Laisses of assonating decasyllables</li>\r\n<li>Couplets of octosyllables</li>\r\n</ul>"
 geoserializers:
   event: '0'
   move: '0'
+friendly_label: 'Formal features'

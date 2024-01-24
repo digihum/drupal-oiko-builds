@@ -4,14 +4,14 @@ status: true
 dependencies: {  }
 _core:
   default_config_hash: _YzOIhXTrlqnN5a5n74E-Jzm5VdQawUQF6tbwGM72Lg
-crm_entity: e68_dissolution
 id: e68_dissolution
 label: 'E68 Dissolution'
-friendly_label: Dissolution
-weight: -4
+crm_entity: e68_dissolution
 group: auxiliary
+weight: -4
 description: "<p>This class comprises the events that result in the formal or informal termination of an E74\r\nGroup of people.\r\nIf the dissolution was deliberate, the Dissolution event should also be instantiated as an E7\r\nActivity.</p>"
 examples: "<ul>\r\n<li>the fall of the Roman Empire</li>\r\n<li>the liquidation of Enron Corporation</li>\r\n</ul>"
 geoserializers:
   event: event
   move: '0'
+friendly_label: Dissolution

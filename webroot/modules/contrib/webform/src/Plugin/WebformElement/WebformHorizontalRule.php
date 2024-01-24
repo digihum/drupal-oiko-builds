@@ -31,11 +31,11 @@ class WebformHorizontalRule extends WebformElementBase implements WebformElement
       'states' => [],
       'attributes' => [],
       // Markup settings.
-      'display_on' => static::DISPLAY_ON_FORM,
+      'display_on' => WebformElementDisplayOnInterface::DISPLAY_ON_FORM,
     ];
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -58,7 +58,7 @@ class WebformHorizontalRule extends WebformElementBase implements WebformElement
     parent::prepare($element, $webform_submission);
 
     // Hide element if it should not be displayed on 'form'.
-    if (!$this->isDisplayOn($element, static::DISPLAY_ON_FORM)) {
+    if (!$this->isDisplayOn($element, WebformElementDisplayOnInterface::DISPLAY_ON_FORM)) {
       $element['#access'] = FALSE;
     }
   }
@@ -68,7 +68,7 @@ class WebformHorizontalRule extends WebformElementBase implements WebformElement
    */
   public function buildHtml(array $element, WebformSubmissionInterface $webform_submission, array $options = []) {
     // Hide element if it should not be displayed on 'view'.
-    if (!$this->isDisplayOn($element, static::DISPLAY_ON_VIEW)) {
+    if (!$this->isDisplayOn($element, WebformElementDisplayOnInterface::DISPLAY_ON_VIEW)) {
       return [];
     }
 
@@ -80,7 +80,7 @@ class WebformHorizontalRule extends WebformElementBase implements WebformElement
    */
   public function buildText(array $element, WebformSubmissionInterface $webform_submission, array $options = []) {
     // Hide element if it should not be displayed on 'view'.
-    if (!$this->isDisplayOn($element, static::DISPLAY_ON_VIEW)) {
+    if (!$this->isDisplayOn($element, WebformElementDisplayOnInterface::DISPLAY_ON_VIEW)) {
       return [];
     }
 

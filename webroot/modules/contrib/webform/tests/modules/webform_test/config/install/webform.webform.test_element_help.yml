@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -36,7 +37,12 @@ elements: |
   help_xss:
     '#type': textfield
     '#title': help_xss
-    '#help': '{This is an example of help with <b>XSS <script>alert("XSS")</b>}'
+    '#help_title': '{This is an example of help title with <b>XSS <script>alert("XSS")</script></b> <img src="x" onerror="confirm(document.domain)" />}'
+    '#help': '{This is an example of help content with <b>XSS <script>alert("XSS")</script></b> <img src="x" onerror="confirm(document.domain)" />}'
+  help_empty:
+    '#type': textfield
+    '#title': help_empty
+    '#help': '[webform_submission:values:not_valid:clear]'
   help_checkbox:
     '#type': checkbox
     '#title': help_checkbox
@@ -123,16 +129,16 @@ elements: |
     '#title': help_before_details
     '#help': '{This is an example of help}'
     '#help_display': element_before
-    'help_before_details':
+    help_before_details:
       '#markup': '{This is markup}'
   help_after_details:
     '#type': details
     '#title': help_after_details
     '#help': '{This is an example of help}'
     '#help_display': element_after
-    'help_after_details':
+    help_after_details:
       '#markup': '{This is markup}'
-  
+
 css: ''
 javascript: ''
 settings:
@@ -144,7 +150,7 @@ settings:
   page: true
   page_submit_path: ''
   page_confirm_path: ''
-  page_admin_theme: false
+  page_theme_name: ''
   form_title: source_entity_webform
   form_submit_once: false
   form_exception_message: ''
@@ -153,7 +159,7 @@ settings:
   form_previous_submissions: true
   form_confidential: false
   form_confidential_message: ''
-  form_remote_addr: true
+  form_disable_remote_addr: false
   form_convert_anonymous: false
   form_prepopulate: false
   form_prepopulate_source_entity: false
@@ -174,6 +180,14 @@ settings:
   form_access_denied_message: ''
   form_access_denied_attributes: {  }
   form_file_limit: ''
+  form_method: ''
+  form_action: ''
+  form_attributes: {  }
+  share: false
+  share_node: false
+  share_theme_name: ''
+  share_title: true
+  share_page_body_attributes: {  }
   submission_label: ''
   submission_log: false
   submission_views: {  }
@@ -199,11 +213,19 @@ settings:
   wizard_progress_percentage: false
   wizard_progress_link: false
   wizard_progress_states: false
+  wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
   wizard_confirmation_label: ''
   wizard_track: ''
+  wizard_prev_button_label: ''
+  wizard_next_button_label: ''
+  wizard_toggle: false
+  wizard_toggle_show_label: ''
+  wizard_toggle_hide_label: ''
   preview: 0
   preview_label: ''
   preview_title: ''
@@ -249,6 +271,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:

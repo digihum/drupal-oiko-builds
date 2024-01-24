@@ -21,7 +21,7 @@ if (class_exists('\Drupal\file\Element\ManagedFile')) {
      *
      * @var string
      *
-     * @see http://www.w3schools.com/tags/att_input_accept.asp
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept
      */
     protected static $accept;
 
@@ -40,7 +40,7 @@ if (class_exists('\Drupal\file\Element\ManagedFile')) {
     public static function preRenderWebformManagedFile($element) {
       // Set accept and capture attributes.
       if (isset($element['upload']) && static::$accept) {
-        $element['upload']['#attributes']['accept'] = static::$accept;;
+        $element['upload']['#attributes']['accept'] = static::$accept;
       }
 
       // Add class name to wrapper attributes.

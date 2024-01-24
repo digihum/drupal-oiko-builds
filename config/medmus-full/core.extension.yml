@@ -1,3 +1,5 @@
+_core:
+  default_config_hash: m2GVq11UAOVuNgj8x0t5fMOPujpvQQ_zxLoaly1BMEU
 module:
   admin_toolbar: 0
   anonymizer: 0
@@ -61,6 +63,7 @@ module:
   metatag_facebook: 0
   metatag_open_graph: 0
   metatag_twitter_cards: 0
+  mysql: 0
   node: 0
   oiko_app: 0
   oiko_cidoc: 0
@@ -110,10 +113,7 @@ module:
   eu_cookie_compliance: 1001
 theme:
   stable: 0
-  classy: 0
   seven: 0
   oiko: 0
   medmus: 0
-_core:
-  default_config_hash: m2GVq11UAOVuNgj8x0t5fMOPujpvQQ_zxLoaly1BMEU
 profile: oiko_profile

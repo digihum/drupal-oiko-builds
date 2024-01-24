@@ -2,14 +2,14 @@ uuid: 91376368-305a-4d98-98c3-1d2538cb3cbd
 langcode: en
 status: true
 dependencies: {  }
-crm_entity: e57_material
 id: e57_material
 label: 'E57 Material'
-friendly_label: Material
-weight: 6
+crm_entity: e57_material
 group: auxiliary
+weight: 6
 description: "<p>This class is a specialization of E55 Type and comprises the concepts of materials.</p>\r\n\r\n<p>Instances of E57 Material may denote properties of matter before its use, during its use, and as\r\nincorporated in an object, such as ultramarine powder, tempera paste, reinforced concrete.\r\nDiscrete pieces of raw-materials kept in museums, such as bricks, sheets of fabric, pieces of\r\nmetal, should be modelled individually in the same way as other objects. Discrete used or\r\nprocessed pieces, such as the stones from Nefer Titi's temple, should be modelled as parts (cf.\r\nP46 is composed of).</p>\r\n\r\n<p>This type is used categorically in the model without reference to instances of it, i.e. the Model\r\ndoes not foresee the description of instances of instances of E57 Material, e.g.: “instances of\r\ngold”.</p>\r\n\r\n<p>It is recommended that internationally or nationally agreed codes and terminology are used.</p>"
 examples: "<ul>\r\n<li>brick</li>\r\n<li>gold</li>\r\n<li>aluminium</li>\r\n<li>polycarbonate</li>\r\n<li>resin</li>\r\n</ul>"
 geoserializers:
   event: '0'
   move: '0'
+friendly_label: Material

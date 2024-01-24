@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p87_is_identified_by
 label: 'P87 is identified by'
-bidirectional: false
 reverse_label: 'P87 identifies'
-friendly_label: 'Is identified by'
-reverse_friendly_label: Identifies
 domain_bundles:
   - e53_place
 range_bundles:
@@ -22,6 +19,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Is identified by'
+reverse_friendly_label: Identifies
 widget_description:
   domain: 'Alternative appellation, such modern appellation or translation. (Acre;  Akko)'
   range: ''

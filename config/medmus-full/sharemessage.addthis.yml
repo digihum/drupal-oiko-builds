@@ -1,3 +1,5 @@
+_core:
+  default_config_hash: 1ZP4yOa3kO5hTFlcZMEhL7EJ3rYsBFkoBpHJgn0w53U
 addthis_profile_id: ''
 additional_services: true
 counter: false
@@ -8,5 +10,3 @@ shared_video_height: 270
 services:
   facebook: facebook
   tweet: tweet
-_core:
-  default_config_hash: 1ZP4yOa3kO5hTFlcZMEhL7EJ3rYsBFkoBpHJgn0w53U

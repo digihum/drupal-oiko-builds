@@ -2,14 +2,14 @@ uuid: 71700a92-b9a9-4b55-ab2f-4246b3c4b2a0
 langcode: en
 status: true
 dependencies: {  }
-crm_entity: e55_type
 id: e55_type
 label: 'E55 Type'
-friendly_label: Type
-weight: 4
+crm_entity: e55_type
 group: auxiliary
+weight: 4
 description: "<p>This class comprises concepts denoted by terms from thesauri and controlled vocabularies\r\nused to characterize and classify instances of CRM classes. Instances of E55 Type represent\r\nconcepts in contrast to instances of E41 Appellation which are used to name instances of\r\nCRM classes.</p>\r\n\r\n<p>E55 Type is the CRM’s interface to domain specific ontologies and thesauri. These can be\r\nrepresented in the CRM as subclasses of E55 Type, forming hierarchies of terms, i.e. instances\r\nof E55 Type linked via P127 has broader term (has narrower term). Such hierarchies may be\r\nextended with additional properties.</p>"
 examples: "<ul>\r\n<li>weight, length, depth [types of E54]</li>\r\n<li>portrait, sketch, animation [types of E38]</li>\r\n<li>French, English, German [E56]</li>\r\n<li>excellent, good, poor [types of E3]</li>\r\n<li>Ford Model T, chop stick [types of E22]</li>\r\n<li>cave, doline, scratch [types of E26]</li>\r\n<li>poem, short story [types of E33]</li>\r\n<li>wedding, earthquake, skirmish [types of E5]</li>\r\n</ul>"
 geoserializers:
   event: '0'
   move: '0'
+friendly_label: Type

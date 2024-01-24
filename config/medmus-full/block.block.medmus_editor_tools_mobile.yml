@@ -15,6 +15,6 @@ plugin: editor_tools
 settings:
   id: editor_tools
   label: 'Editor Tools'
-  provider: oiko_cidoc
   label_display: visible
+  provider: oiko_cidoc
 visibility: {  }

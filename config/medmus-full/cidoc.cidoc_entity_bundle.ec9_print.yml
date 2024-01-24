@@ -2,14 +2,14 @@ uuid: 7ec2b086-d3e0-44fa-9f3c-2013afbc1b38
 langcode: en
 status: true
 dependencies: {  }
-crm_entity: ec9_print
 id: ec9_print
 label: 'EC9 Print'
-friendly_label: Print
-weight: 14
+crm_entity: ec9_print
 group: auxiliary
+weight: 14
 description: '<p>This class comprises all identifiable physical object that carry linguistic and/or visual information printed.</p>'
 examples: "<ul>\r\n<li>The specimen of the Editio Princeps of the Machiavelli’s Principe preserved in the Vatican Library.</li>\r\n</ul>\r\n\r\n<p>This is should be distinct from the E33 Linguistic Object that is the text carried by EC9 Print, which is independent from the carrier itself (ex. “The text of Editio Princeps of Machiavelli’s De Principatibus”).</p>"
 geoserializers:
   event: '0'
   move: '0'
+friendly_label: Print

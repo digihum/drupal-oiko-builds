@@ -2,12 +2,12 @@ uuid: c48904d8-2c55-4f53-b62c-694cbf5959ce
 langcode: en
 status: true
 dependencies:
-  module:
-    - cidoc
-    - search_api
   config:
     - search_api.server.db_search_backend
     - core.entity_view_mode.cidoc_entity.search_index
+  module:
+    - cidoc
+    - search_api
 id: crm_entities
 name: 'CRM Entities'
 description: ''
@@ -105,25 +105,59 @@ datasource_settings:
       default: true
       selected: {  }
 processor_settings:
-  cidoc: {  }
-  rendered_item: {  }
   add_url: {  }
   aggregated_field: {  }
+  cidoc: {  }
   entity_type: {  }
-  tokenizer:
+  html_filter:
+    weights:
+      preprocess_index: -10
+      preprocess_query: -10
+    all_fields: false
+    fields:
+      - rendered_item
+    title: true
+    alt: true
+    tags:
+      b: 2
+      h1: 5
+      h2: 3
+      h3: 2
+      strong: 2
+  ignore_character:
+    weights:
+      preprocess_index: -8
+      preprocess_query: -8
+    all_fields: false
     fields:
       - internal_name
       - name
       - rendered_item
-    spaces: ''
-    overlap_cjk: 1
-    minimum_word_size: '3'
+    ignorable: '[''¿¡!?,.:;]'
+    ignorable_classes:
+      - Pc
+      - Pd
+      - Pe
+      - Pf
+      - Pi
+      - Po
+      - Ps
+  ignorecase:
     weights:
-      preprocess_index: -7
-      preprocess_query: -7
+      preprocess_index: -9
+      preprocess_query: -9
     all_fields: false
-    ignored: ._-
+    fields:
+      - internal_name
+      - name
+      - rendered_item
+  language_with_fallback: {  }
+  rendered_item: {  }
   stopwords:
+    weights:
+      preprocess_index: -5
+      preprocess_query: -5
+    all_fields: false
     fields:
       - internal_name
       - name
@@ -164,67 +198,33 @@ processor_settings:
       - was
       - will
       - with
+  tokenizer:
     weights:
-      preprocess_index: -5
-      preprocess_query: -5
+      preprocess_index: -7
+      preprocess_query: -7
     all_fields: false
-  ignorecase:
     fields:
       - internal_name
       - name
       - rendered_item
-    weights:
-      preprocess_index: -9
-      preprocess_query: -9
-    all_fields: false
+    spaces: ''
+    ignored: ._-
+    overlap_cjk: 1
+    minimum_word_size: '3'
   transliteration:
-    fields:
-      - internal_name
-      - name
-      - rendered_item
     weights:
       preprocess_index: -6
       preprocess_query: -6
     all_fields: false
-  ignore_character:
     fields:
       - internal_name
       - name
       - rendered_item
-    ignorable: '[''¿¡!?,.:;]'
-    weights:
-      preprocess_index: -8
-      preprocess_query: -8
-    ignorable_classes:
-      - Pc
-      - Pd
-      - Pe
-      - Pf
-      - Pi
-      - Po
-      - Ps
-    all_fields: false
-  language_with_fallback: {  }
-  html_filter:
-    fields:
-      - rendered_item
-    title: true
-    alt: true
-    tags:
-      b: 2
-      h1: 5
-      h2: 3
-      h3: 2
-      strong: 2
-    weights:
-      preprocess_index: -10
-      preprocess_query: -10
-    all_fields: false
 tracker_settings:
   default:
     indexing_order: fifo
 options:
-  index_directly: true
   cron_limit: 50
+  index_directly: true
   track_changes_in_references: true
 server: db_search_backend

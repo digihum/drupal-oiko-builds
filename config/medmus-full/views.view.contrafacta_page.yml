@@ -16,79 +16,12 @@ base_table: cidoc_entity
 base_field: id
 display:
   default:
-    display_plugin: default
     id: default
     display_title: Master
+    display_plugin: default
     position: 0
     display_options:
-      access:
-        type: none
-        options: {  }
-      cache:
-        type: tag
-        options: {  }
-      query:
-        type: views_query
-        options:
-          disable_sql_rewrite: false
-          distinct: false
-          replica: false
-          query_comment: ''
-          query_tags: {  }
-      exposed_form:
-        type: basic
-        options:
-          submit_button: Apply
-          reset_button: true
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      pager:
-        type: full
-        options:
-          items_per_page: 200
-          offset: 0
-          id: 0
-          total_pages: null
-          tags:
-            previous: '‹ Previous'
-            next: 'Next ›'
-            first: '« First'
-            last: 'Last »'
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          quantity: 5
-      style:
-        type: default
-        options:
-          grouping:
-            -
-              field: id
-              rendered: true
-              rendered_strip: false
-          row_class: ''
-          default_row_class: true
-      row:
-        type: fields
-        options:
-          default_field_elements: true
-          inline:
-            name_2: name_2
-            name: name
-            name_3: name_3
-            name_1: name_1
-            field_geodata: field_geodata
-            field_geodata_1: field_geodata_1
-          separator: ''
-          hide_empty: false
+      title: Contrafacta
       fields:
         name_2:
           id: name_2
@@ -97,6 +30,9 @@ display:
           relationship: related_entities
           group_type: group
           admin_label: 'model''s author'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -152,9 +88,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name:
           id: name
           table: cidoc_entity
@@ -162,6 +95,9 @@ display:
           relationship: none
           group_type: group
           admin_label: 'Model incipit'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -217,9 +153,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_3:
           id: name_3
           table: cidoc_entity
@@ -227,6 +160,9 @@ display:
           relationship: related_entities_1
           group_type: group
           admin_label: 'Contrafactum author'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -282,9 +218,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_1:
           id: name_1
           table: cidoc_entity
@@ -292,6 +225,9 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: 'Contrafactum incipit'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -347,9 +283,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_4:
           id: name_4
           table: cidoc_entity
@@ -357,6 +290,9 @@ display:
           relationship: related_entities_2
           group_type: group
           admin_label: 'Model language'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -412,9 +348,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_5:
           id: name_5
           table: cidoc_entity
@@ -422,6 +355,9 @@ display:
           relationship: related_entities_3
           group_type: group
           admin_label: 'Contrafactum language'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -477,9 +413,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         internal_name:
           id: internal_name
           table: cidoc_entity
@@ -487,6 +420,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: internal_name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -542,9 +478,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: internal_name
-          plugin_id: field
         internal_name_1:
           id: internal_name_1
           table: cidoc_entity
@@ -552,6 +485,9 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: internal_name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -607,9 +543,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: internal_name
-          plugin_id: field
         name_6:
           id: name_6
           table: cidoc_entity
@@ -617,6 +550,9 @@ display:
           relationship: related_entities_4
           group_type: group
           admin_label: 'model rs'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -672,9 +608,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_7:
           id: name_7
           table: cidoc_entity
@@ -682,6 +615,9 @@ display:
           relationship: related_entities_5
           group_type: group
           admin_label: 'model ss'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -737,9 +673,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_8:
           id: name_8
           table: cidoc_entity
@@ -747,6 +680,9 @@ display:
           relationship: related_entities_6
           group_type: group
           admin_label: 'contr rs'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -802,9 +738,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_9:
           id: name_9
           table: cidoc_entity
@@ -812,6 +745,9 @@ display:
           relationship: related_entities_7
           group_type: group
           admin_label: 'contr ss'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -867,9 +803,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_10:
           id: name_10
           table: cidoc_entity
@@ -877,6 +810,9 @@ display:
           relationship: related_entities_9
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -939,9 +875,6 @@ display:
           format_plural_string: !!binary MQNAY291bnQ=
           prefix: ''
           suffix: ''
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_11:
           id: name_11
           table: cidoc_entity
@@ -949,6 +882,9 @@ display:
           relationship: related_entities_10
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -1004,9 +940,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_12:
           id: name_12
           table: cidoc_entity
@@ -1014,6 +947,9 @@ display:
           relationship: related_entities_11
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -1069,9 +1005,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_13:
           id: name_13
           table: cidoc_entity
@@ -1079,6 +1012,9 @@ display:
           relationship: related_entities_12
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -1134,9 +1070,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_14:
           id: name_14
           table: cidoc_entity
@@ -1144,6 +1077,9 @@ display:
           relationship: related_entities_13
           group_type: group
           admin_label: 'model''s music'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -1199,9 +1135,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_15:
           id: name_15
           table: cidoc_entity
@@ -1209,6 +1142,9 @@ display:
           relationship: related_entities_14
           group_type: group
           admin_label: 'contrafactum''s music'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: true
           alter:
@@ -1264,9 +1200,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         nothing:
           id: nothing
           table: views
@@ -1274,6 +1207,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: custom
           label: ''
           exclude: false
           alter:
@@ -1315,30 +1249,114 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: false
-          plugin_id: custom
+      pager:
+        type: full
+        options:
+          offset: 0
+          items_per_page: 200
+          total_pages: null
+          id: 0
+          tags:
+            next: 'Next ›'
+            previous: '‹ Previous'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 5
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: true
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      access:
+        type: none
+        options: {  }
+      cache:
+        type: tag
+        options: {  }
+      empty: {  }
+      sorts:
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: related_entities
+          group_type: group
+          admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: name
+          exposed: false
+        name_2:
+          id: name_2
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: 'Model''s incipit'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: name_2
+          exposed: false
+        name_1:
+          id: name_1
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_1
+          group_type: group
+          admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: name_1
+          exposed: false
+      arguments: {  }
       filters:
         status:
-          value: '1'
+          id: status
           table: cidoc_entity
           field: status
-          plugin_id: boolean
           entity_type: cidoc_entity
           entity_field: status
-          id: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
           expose:
             operator: ''
             operator_limit_selection: false
             operator_list: {  }
-          group: 1
         bundle:
           id: bundle
           table: cidoc_entity
           field: bundle
-          value:
-            ec1_work: ec1_work
           entity_type: cidoc_entity
           entity_field: bundle
           plugin_id: cidoc_bundle
+          value:
+            ec1_work: ec1_work
           expose:
             operator_limit_selection: false
             operator_list: {  }
@@ -1349,6 +1367,9 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: 'not empty'
           value: ''
           group: 1
@@ -1380,9 +1401,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         combine:
           id: combine
           table: views
@@ -1390,6 +1408,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: combine
           operator: contains
           value: ''
           group: 1
@@ -1431,7 +1450,6 @@ display:
           fields:
             name_2: name_2
             name_3: name_3
-          plugin_id: combine
         combine_1:
           id: combine_1
           table: views
@@ -1439,6 +1457,7 @@ display:
           relationship: none
           group_type: group
           admin_label: Language
+          plugin_id: combine
           operator: contains
           value: ''
           group: 1
@@ -1480,54 +1499,37 @@ display:
           fields:
             name_4: name_4
             name_5: name_5
-          plugin_id: combine
-      sorts:
-        name:
-          id: name
-          table: cidoc_entity
-          field: name
-          relationship: related_entities
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: standard
-        name_2:
-          id: name_2
-          table: cidoc_entity
-          field: name
-          relationship: none
-          group_type: group
-          admin_label: 'Model''s incipit'
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: standard
-        name_1:
-          id: name_1
-          table: cidoc_entity
-          field: name
-          relationship: related_entities_1
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: standard
-      title: Contrafacta
-      header: {  }
-      footer: {  }
-      empty: {  }
+      style:
+        type: default
+        options:
+          grouping:
+            -
+              field: id
+              rendered: true
+              rendered_strip: false
+          row_class: ''
+          default_row_class: true
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline:
+            name_2: name_2
+            name: name
+            name_3: name_3
+            name_1: name_1
+            field_geodata: field_geodata
+            field_geodata_1: field_geodata_1
+          separator: ''
+          hide_empty: false
+      query:
+        type: views_query
+        options:
+          query_comment: ''
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_tags: {  }
       relationships:
         related_entities_reverse_1:
           id: related_entities_reverse_1
@@ -1536,6 +1538,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'domain of P94 has created'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_reverse
           required: false
           limit_bundles:
             p94_has_created: p94_has_created
@@ -1639,8 +1643,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_reverse
         related_entities:
           id: related_entities
           table: cidoc_entity
@@ -1648,6 +1650,8 @@ display:
           relationship: related_entities_reverse_1
           group_type: group
           admin_label: 'range of P14 carried out by'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             p14_carried_out_by: p14_carried_out_by
@@ -1751,8 +1755,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_reverse:
           id: related_entities_reverse
           table: cidoc_entity
@@ -1760,6 +1762,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'range of PC2 is model of'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_reverse
           required: false
           limit_bundles:
             pc2_is_contrafactum_of: pc2_is_contrafactum_of
@@ -1863,8 +1867,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_reverse
         related_entities_reverse_2:
           id: related_entities_reverse_2
           table: cidoc_entity
@@ -1872,6 +1874,8 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: 'domain of P94 has created'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_reverse
           required: false
           limit_bundles:
             p94_has_created: p94_has_created
@@ -1975,8 +1979,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_reverse
         related_entities_1:
           id: related_entities_1
           table: cidoc_entity
@@ -1984,6 +1986,8 @@ display:
           relationship: related_entities_reverse_2
           group_type: group
           admin_label: 'range of P14 carried out by'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             p14_carried_out_by: p14_carried_out_by
@@ -2087,8 +2091,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_2:
           id: related_entities_2
           table: cidoc_entity
@@ -2096,6 +2098,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'range of PA19 has language'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pa19_has_language: pa19_has_language
@@ -2199,8 +2203,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_3:
           id: related_entities_3
           table: cidoc_entity
@@ -2208,6 +2210,8 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: 'range of PA19 has language'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pa19_has_language: pa19_has_language
@@ -2311,8 +2315,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_4:
           id: related_entities_4
           table: cidoc_entity
@@ -2320,6 +2322,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'range of PC9 has rhyme scheme [model rs]'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pc9_has_rhyme_scheme: pc9_has_rhyme_scheme
@@ -2423,8 +2427,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_5:
           id: related_entities_5
           table: cidoc_entity
@@ -2432,6 +2434,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'range of PC8 has syllabic scheme [model ss]'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pc8_has_syllabic_scheme: pc8_has_syllabic_scheme
@@ -2535,8 +2539,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_6:
           id: related_entities_6
           table: cidoc_entity
@@ -2544,6 +2546,8 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: 'range of PC9 has rhyme scheme [contr rs]'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pc9_has_rhyme_scheme: pc9_has_rhyme_scheme
@@ -2647,8 +2651,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_7:
           id: related_entities_7
           table: cidoc_entity
@@ -2656,6 +2658,8 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: 'range of PC8 has syllabic scheme [contr ss]'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pc8_has_syllabic_scheme: pc8_has_syllabic_scheme
@@ -2759,8 +2763,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_9:
           id: related_entities_9
           table: cidoc_entity
@@ -2768,6 +2770,8 @@ display:
           relationship: related_entities_reverse_1
           group_type: group
           admin_label: 'range of P7 took place at [Model place]'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             p7_took_place_at: p7_took_place_at
@@ -2871,8 +2875,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_10:
           id: related_entities_10
           table: cidoc_entity
@@ -2880,6 +2882,8 @@ display:
           relationship: related_entities_reverse_2
           group_type: group
           admin_label: 'range of P7 took place at [contrafactum place]'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             p7_took_place_at: p7_took_place_at
@@ -2983,8 +2987,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_11:
           id: related_entities_11
           table: cidoc_entity
@@ -2992,6 +2994,8 @@ display:
           relationship: related_entities_reverse_1
           group_type: group
           admin_label: 'range of P4 has time-span [model t-s]'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             p4_has_time_span: p4_has_time_span
@@ -3095,8 +3099,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_12:
           id: related_entities_12
           table: cidoc_entity
@@ -3104,6 +3106,8 @@ display:
           relationship: related_entities_reverse_2
           group_type: group
           admin_label: 'range of P4 has time-span [contrafactum  t-s]'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             p4_has_time_span: p4_has_time_span
@@ -3207,8 +3211,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_13:
           id: related_entities_13
           table: cidoc_entity
@@ -3216,6 +3218,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'range of PC7 has music [model''s music]'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pc7_has_music: pc7_has_music
@@ -3319,8 +3323,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_14:
           id: related_entities_14
           table: cidoc_entity
@@ -3328,6 +3330,8 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: 'range of PC7 has music [contrafactum ]'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pc7_has_music: pc7_has_music
@@ -3431,11 +3435,10 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
-      arguments: {  }
-      display_extenders: {  }
       group_by: true
+      header: {  }
+      footer: {  }
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -3445,40 +3448,431 @@ display:
         - url.query_args
       tags: {  }
   expandy_page:
-    display_plugin: page
     id: expandy_page
     display_title: 'Expandy page'
+    display_plugin: page
     position: 1
     display_options:
-      display_extenders: {  }
-      path: contrafacta-page4
+      fields:
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: 'Model incipit'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: true
+            text: '<em>{{name}}</em>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        name_1:
+          id: name_1
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: 'Contrafactum incipit'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: true
+            text: '<em>{{name_1}}</em>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        internal_name:
+          id: internal_name
+          table: cidoc_entity
+          field: internal_name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: internal_name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        internal_name_1:
+          id: internal_name_1
+          table: cidoc_entity
+          field: internal_name
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: internal_name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        id:
+          id: id
+          table: cidoc_entity
+          field: id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: id
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        id_1:
+          id: id_1
+          table: cidoc_entity
+          field: id
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: id
+          plugin_id: field
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
       filters:
         status:
-          value: '1'
+          id: status
           table: cidoc_entity
           field: status
-          plugin_id: boolean
           entity_type: cidoc_entity
           entity_field: status
-          id: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
           expose:
             operator: ''
             operator_limit_selection: false
             operator_list: {  }
-          group: 1
         bundle:
           id: bundle
           table: cidoc_entity
           field: bundle
-          value:
-            ec1_work: ec1_work
           entity_type: cidoc_entity
           entity_field: bundle
           plugin_id: cidoc_bundle
+          value:
+            ec1_work: ec1_work
+          group: 1
           expose:
             operator_limit_selection: false
             operator_list: {  }
-          group: 1
         name:
           id: name
           table: cidoc_entity
@@ -3486,6 +3880,9 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: 'not empty'
           value: ''
           group: 1
@@ -3517,9 +3914,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_1:
           id: name_1
           table: cidoc_entity
@@ -3527,6 +3921,9 @@ display:
           relationship: related_entities
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: contains
           value: ''
           group: 1
@@ -3565,9 +3962,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_2:
           id: name_2
           table: cidoc_entity
@@ -3575,6 +3969,9 @@ display:
           relationship: related_entities_1
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: contains
           value: ''
           group: 1
@@ -3613,9 +4010,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         combine:
           id: combine
           table: views
@@ -3623,6 +4017,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: combine
           operator: contains
           value: ''
           group: 1
@@ -3664,7 +4059,6 @@ display:
           fields:
             name: name
             name_1: name_1
-          plugin_id: combine
         combine_1:
           id: combine_1
           table: views
@@ -3672,6 +4066,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: combine
           operator: contains
           value: ''
           group: 1
@@ -3713,7 +4108,6 @@ display:
           fields:
             internal_name: internal_name
             internal_name_1: internal_name_1
-          plugin_id: combine
         name_3:
           id: name_3
           table: cidoc_entity
@@ -3721,6 +4115,9 @@ display:
           relationship: related_entities_2
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: '='
           value: ''
           group: 1
@@ -3788,9 +4185,6 @@ display:
                 title: ''
                 operator: '='
                 value: ''
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_4:
           id: name_4
           table: cidoc_entity
@@ -3798,6 +4192,9 @@ display:
           relationship: related_entities_3
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: '='
           value: ''
           group: 1
@@ -3861,9 +4258,6 @@ display:
                 title: Occitan
                 operator: '='
                 value: Occitan
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_5:
           id: name_5
           table: cidoc_entity
@@ -3871,6 +4265,9 @@ display:
           relationship: related_entities_4
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: '='
           value: ''
           group: 1
@@ -3910,9 +4307,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_6:
           id: name_6
           table: cidoc_entity
@@ -3920,6 +4314,9 @@ display:
           relationship: related_entities_5
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: '='
           value: ''
           group: 1
@@ -3959,422 +4356,16 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
-      defaults:
-        filters: false
-        filter_groups: false
-        fields: false
-        relationships: false
-        group_by: false
       filter_groups:
         operator: AND
         groups:
           1: AND
-      menu:
-        type: normal
-        title: Contrafacta
-        description: ''
-        expanded: false
-        parent: ''
-        weight: -48
-        context: '0'
-        menu_name: main
-        enabled: false
-      fields:
-        name:
-          id: name
-          table: cidoc_entity
-          field: name
-          relationship: none
-          group_type: group
-          admin_label: 'Model incipit'
-          label: ''
-          exclude: true
-          alter:
-            alter_text: true
-            text: '<em>{{name}}</em>'
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: true
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
-        name_1:
-          id: name_1
-          table: cidoc_entity
-          field: name
-          relationship: related_entities_reverse
-          group_type: group
-          admin_label: 'Contrafactum incipit'
-          label: ''
-          exclude: true
-          alter:
-            alter_text: true
-            text: '<em>{{name_1}}</em>'
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: true
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
-        internal_name:
-          id: internal_name
-          table: cidoc_entity
-          field: internal_name
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: internal_name
-          plugin_id: field
-        internal_name_1:
-          id: internal_name_1
-          table: cidoc_entity
-          field: internal_name
-          relationship: related_entities_reverse
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: internal_name
-          plugin_id: field
-        id:
-          id: id
-          table: cidoc_entity
-          field: id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: number_integer
-          settings:
-            thousand_separator: ''
-            prefix_suffix: true
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: id
-          plugin_id: field
-        id_1:
-          id: id_1
-          table: cidoc_entity
-          field: id
-          relationship: related_entities_reverse
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: number_integer
-          settings:
-            thousand_separator: ''
-            prefix_suffix: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: id
-          plugin_id: field
+      defaults:
+        group_by: false
+        relationships: false
+        fields: false
+        filters: false
+        filter_groups: false
       relationships:
         related_entities_reverse_1:
           id: related_entities_reverse_1
@@ -4383,6 +4374,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'domain of P94 has created'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_reverse
           required: false
           limit_bundles:
             p94_has_created: p94_has_created
@@ -4486,8 +4479,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_reverse
         related_entities:
           id: related_entities
           table: cidoc_entity
@@ -4495,6 +4486,8 @@ display:
           relationship: related_entities_reverse_1
           group_type: group
           admin_label: 'range of P14 carried out by'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             p14_carried_out_by: p14_carried_out_by
@@ -4598,8 +4591,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_reverse:
           id: related_entities_reverse
           table: cidoc_entity
@@ -4607,6 +4598,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'range of PC2 is model of [contrafactum]'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_reverse
           required: true
           limit_bundles:
             pc2_is_contrafactum_of: pc2_is_contrafactum_of
@@ -4710,8 +4703,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_reverse
         related_entities_reverse_2:
           id: related_entities_reverse_2
           table: cidoc_entity
@@ -4719,6 +4710,8 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: 'domain of P94 has created [contrafactum]'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_reverse
           required: false
           limit_bundles:
             p94_has_created: p94_has_created
@@ -4822,8 +4815,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_reverse
         related_entities_1:
           id: related_entities_1
           table: cidoc_entity
@@ -4831,6 +4822,8 @@ display:
           relationship: related_entities_reverse_2
           group_type: group
           admin_label: 'range of P14 carried out by [contrafactum]'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             p14_carried_out_by: p14_carried_out_by
@@ -4934,8 +4927,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_2:
           id: related_entities_2
           table: cidoc_entity
@@ -4943,6 +4934,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'range of PA19 has language'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pa19_has_language: pa19_has_language
@@ -5046,8 +5039,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_3:
           id: related_entities_3
           table: cidoc_entity
@@ -5055,6 +5046,8 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: 'range of PA19 has language'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pa19_has_language: pa19_has_language
@@ -5158,8 +5151,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_4:
           id: related_entities_4
           table: cidoc_entity
@@ -5167,6 +5158,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'domain of PC8 has syllabic scheme'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pc8_has_syllabic_scheme: pc8_has_syllabic_scheme
@@ -5270,8 +5263,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_5:
           id: related_entities_5
           table: cidoc_entity
@@ -5279,6 +5270,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'domain of PC9 has rhyme scheme'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             p1_is_identified_by: 0
@@ -5382,10 +5375,20 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
       group_by: false
       display_description: ''
+      display_extenders: {  }
+      path: contrafacta-page4
+      menu:
+        type: normal
+        title: Contrafacta
+        description: ''
+        weight: -48
+        enabled: false
+        expanded: false
+        menu_name: main
+        parent: ''
+        context: '0'
     cache_metadata:
       max-age: -1
       contexts:
@@ -5395,9 +5398,9 @@ display:
         - url.query_args
       tags: {  }
   page_1:
-    display_plugin: page
     id: page_1
     display_title: Page
+    display_plugin: page
     position: 1
     display_options:
       display_extenders: {  }
@@ -5411,40 +5414,38 @@ display:
         - url.query_args
       tags: {  }
   page_2:
-    display_plugin: page
     id: page_2
     display_title: Page
+    display_plugin: page
     position: 1
     display_options:
-      display_extenders: {  }
-      path: contrafacta-page2
       filters:
         status:
-          value: '1'
+          id: status
           table: cidoc_entity
           field: status
-          plugin_id: boolean
           entity_type: cidoc_entity
           entity_field: status
-          id: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
           expose:
             operator: ''
             operator_limit_selection: false
             operator_list: {  }
-          group: 1
         bundle:
           id: bundle
           table: cidoc_entity
           field: bundle
-          value:
-            ec1_work: ec1_work
           entity_type: cidoc_entity
           entity_field: bundle
           plugin_id: cidoc_bundle
+          value:
+            ec1_work: ec1_work
+          group: 1
           expose:
             operator_limit_selection: false
             operator_list: {  }
-          group: 1
         name:
           id: name
           table: cidoc_entity
@@ -5452,6 +5453,9 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: 'not empty'
           value: ''
           group: 1
@@ -5483,9 +5487,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_1:
           id: name_1
           table: cidoc_entity
@@ -5493,6 +5494,9 @@ display:
           relationship: related_entities
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: contains
           value: ''
           group: 1
@@ -5531,9 +5535,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_2:
           id: name_2
           table: cidoc_entity
@@ -5541,6 +5542,9 @@ display:
           relationship: related_entities_1
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: contains
           value: ''
           group: 1
@@ -5579,9 +5583,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         combine:
           id: combine
           table: views
@@ -5589,6 +5590,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: combine
           operator: contains
           value: ''
           group: 1
@@ -5630,7 +5632,6 @@ display:
           fields:
             name: name
             name_1: name_1
-          plugin_id: combine
         combine_1:
           id: combine_1
           table: views
@@ -5638,6 +5639,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: combine
           operator: contains
           value: ''
           group: 1
@@ -5679,7 +5681,6 @@ display:
           fields:
             internal_name: internal_name
             internal_name_1: internal_name_1
-          plugin_id: combine
         name_3:
           id: name_3
           table: cidoc_entity
@@ -5687,6 +5688,9 @@ display:
           relationship: related_entities_2
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: '='
           value: ''
           group: 1
@@ -5754,9 +5758,6 @@ display:
                 title: ''
                 operator: '='
                 value: ''
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_4:
           id: name_4
           table: cidoc_entity
@@ -5764,6 +5765,9 @@ display:
           relationship: related_entities_3
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: '='
           value: ''
           group: 1
@@ -5827,26 +5831,25 @@ display:
                 title: Occitan
                 operator: '='
                 value: Occitan
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
-      defaults:
-        filters: false
-        filter_groups: false
       filter_groups:
         operator: AND
         groups:
           1: AND
+      defaults:
+        filters: false
+        filter_groups: false
+      display_extenders: {  }
+      path: contrafacta-page2
       menu:
         type: normal
         title: Contrafacta
         description: ''
-        expanded: false
-        parent: ''
         weight: -41
-        context: '0'
-        menu_name: main
         enabled: false
+        expanded: false
+        menu_name: main
+        parent: ''
+        context: '0'
     cache_metadata:
       max-age: -1
       contexts:
@@ -5856,40 +5859,786 @@ display:
         - url.query_args
       tags: {  }
   page_3:
-    display_plugin: page
     id: page_3
     display_title: 'simplified contrafacta'
+    display_plugin: page
     position: 1
     display_options:
-      display_extenders: {  }
-      path: contrafacta-page3
+      title: Contrafacta
+      fields:
+        name_2:
+          id: name_2
+          table: cidoc_entity
+          field: name
+          relationship: related_entities
+          group_type: group
+          admin_label: 'model''s author'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: 'Model incipit'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: true
+            text: '<em>{{name}}</em>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        name_3:
+          id: name_3
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_1
+          group_type: group
+          admin_label: 'Contrafactum author'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: entity_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        name_1:
+          id: name_1
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: 'Contrafactum incipit'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: true
+            text: '<em>{{name_1}}</em>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        name_4:
+          id: name_4
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_2
+          group_type: group
+          admin_label: 'Model language'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        name_5:
+          id: name_5
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_3
+          group_type: group
+          admin_label: 'Contrafactum language'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        internal_name:
+          id: internal_name
+          table: cidoc_entity
+          field: internal_name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: internal_name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        internal_name_1:
+          id: internal_name_1
+          table: cidoc_entity
+          field: internal_name
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: internal_name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        name_14:
+          id: name_14
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_13
+          group_type: group
+          admin_label: 'model''s music'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        name_15:
+          id: name_15
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_14
+          group_type: group
+          admin_label: 'contrafactum''s music'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        nothing:
+          id: nothing
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: custom
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: "\t\t<table class=\"contrafacta_table\">\t    \r\n\t\t    <tr>\r\n\t\t\t\t<td>\r\n\t\t\t\t\t{{ name_2 }}<br/>\r\n\t\t\t\t\t{{ name }} {% if name_14 %} ♩{% endif %}\t\_\_\_\_\_\_\_\_\t--->\r\n\t\t\t\t</td>\t\t\t\r\n\t\t\t\t<td>\r\n\t\t\t\t\t{{ name_3 }}<br/>\r\n\t\t\t\t\t{{ name_1 }} {% if name_15%} ♪ {%endif%}\t<br/>\r\n\t\t\t\t</td>\r\n\t\t\t</tr>\r\n\t\t</table>"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
+      sorts:
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: related_entities
+          group_type: group
+          admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: name
+          exposed: false
+        name_2:
+          id: name_2
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: 'Model''s incipit'
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: name_2
+          exposed: false
+        name_1:
+          id: name_1
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_1
+          group_type: group
+          admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: name_1
+          exposed: false
+      arguments: {  }
       filters:
         status:
-          value: '1'
+          id: status
           table: cidoc_entity
           field: status
-          plugin_id: boolean
           entity_type: cidoc_entity
           entity_field: status
-          id: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
           expose:
             operator: ''
             operator_limit_selection: false
             operator_list: {  }
-          group: 1
         bundle:
           id: bundle
           table: cidoc_entity
           field: bundle
-          value:
-            ec1_work: ec1_work
           entity_type: cidoc_entity
           entity_field: bundle
           plugin_id: cidoc_bundle
+          value:
+            ec1_work: ec1_work
+          group: 1
           expose:
             operator_limit_selection: false
             operator_list: {  }
-          group: 1
         name:
           id: name
           table: cidoc_entity
@@ -5897,6 +6646,9 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: 'not empty'
           value: ''
           group: 1
@@ -5928,9 +6680,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_1:
           id: name_1
           table: cidoc_entity
@@ -5938,6 +6687,9 @@ display:
           relationship: related_entities
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: contains
           value: ''
           group: 1
@@ -5976,9 +6728,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_2:
           id: name_2
           table: cidoc_entity
@@ -5986,6 +6735,9 @@ display:
           relationship: related_entities_1
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: contains
           value: ''
           group: 1
@@ -6024,9 +6776,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         combine:
           id: combine
           table: views
@@ -6034,6 +6783,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: combine
           operator: contains
           value: ''
           group: 1
@@ -6075,7 +6825,6 @@ display:
           fields:
             name: name
             name_1: name_1
-          plugin_id: combine
         combine_1:
           id: combine_1
           table: views
@@ -6083,6 +6832,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: combine
           operator: contains
           value: ''
           group: 1
@@ -6124,7 +6874,6 @@ display:
           fields:
             internal_name: internal_name
             internal_name_1: internal_name_1
-          plugin_id: combine
         name_5:
           id: name_5
           table: cidoc_entity
@@ -6132,6 +6881,9 @@ display:
           relationship: related_entities_13
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: '='
           value: ''
           group: 1
@@ -6171,9 +6923,6 @@ display:
                 title: 'Does not have music'
                 operator: empty
                 value: ''
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_6:
           id: name_6
           table: cidoc_entity
@@ -6181,6 +6930,9 @@ display:
           relationship: related_entities_14
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: '='
           value: ''
           group: 1
@@ -6224,9 +6976,6 @@ display:
                 title: ''
                 operator: '='
                 value: ''
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_3:
           id: name_3
           table: cidoc_entity
@@ -6234,6 +6983,9 @@ display:
           relationship: related_entities_2
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: '='
           value: ''
           group: 1
@@ -6297,9 +7049,6 @@ display:
                 title: Occitan
                 operator: '='
                 value: Occitan
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_4:
           id: name_4
           table: cidoc_entity
@@ -6307,6 +7056,9 @@ display:
           relationship: related_entities_3
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: '='
           value: ''
           group: 1
@@ -6370,777 +7122,40 @@ display:
                 title: Occitan
                 operator: '='
                 value: Occitan
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
-      defaults:
-        filters: false
-        filter_groups: false
-        fields: false
-        sorts: false
-        relationships: false
-        arguments: false
-        style: false
-        row: false
-        title: false
-        header: false
       filter_groups:
         operator: AND
         groups:
           1: AND
-      menu:
-        type: normal
-        title: Contrafacta
-        description: ''
-        expanded: false
-        parent: ''
-        weight: -39
-        context: '0'
-        menu_name: main
-        enabled: false
-      fields:
-        name_2:
-          id: name_2
-          table: cidoc_entity
-          field: name
-          relationship: related_entities
-          group_type: group
-          admin_label: 'model''s author'
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline:
+            name_2: name_2
+            name: name
+            name_3: name_3
+            name_1: name_1
+            field_geodata: field_geodata
+            field_geodata_1: field_geodata_1
+          separator: ''
           hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
-        name:
-          id: name
-          table: cidoc_entity
-          field: name
-          relationship: none
-          group_type: group
-          admin_label: 'Model incipit'
-          label: ''
-          exclude: true
-          alter:
-            alter_text: true
-            text: '<em>{{name}}</em>'
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: true
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
-        name_3:
-          id: name_3
-          table: cidoc_entity
-          field: name
-          relationship: related_entities_1
-          group_type: group
-          admin_label: 'Contrafactum author'
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: entity_id
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
-        name_1:
-          id: name_1
-          table: cidoc_entity
-          field: name
-          relationship: related_entities_reverse
-          group_type: group
-          admin_label: 'Contrafactum incipit'
-          label: ''
-          exclude: true
-          alter:
-            alter_text: true
-            text: '<em>{{name_1}}</em>'
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: true
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
-        name_4:
-          id: name_4
-          table: cidoc_entity
-          field: name
-          relationship: related_entities_2
-          group_type: group
-          admin_label: 'Model language'
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
-        name_5:
-          id: name_5
-          table: cidoc_entity
-          field: name
-          relationship: related_entities_3
-          group_type: group
-          admin_label: 'Contrafactum language'
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
-        internal_name:
-          id: internal_name
-          table: cidoc_entity
-          field: internal_name
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: internal_name
-          plugin_id: field
-        internal_name_1:
-          id: internal_name_1
-          table: cidoc_entity
-          field: internal_name
-          relationship: related_entities_reverse
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: internal_name
-          plugin_id: field
-        name_14:
-          id: name_14
-          table: cidoc_entity
-          field: name
-          relationship: related_entities_13
-          group_type: group
-          admin_label: 'model''s music'
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
-        name_15:
-          id: name_15
-          table: cidoc_entity
-          field: name
-          relationship: related_entities_14
-          group_type: group
-          admin_label: 'contrafactum''s music'
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
-        nothing:
-          id: nothing
-          table: views
-          field: nothing
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: false
-          alter:
-            alter_text: true
-            text: "\t\t<table class=\"contrafacta_table\">\t    \r\n\t\t    <tr>\r\n\t\t\t\t<td>\r\n\t\t\t\t\t{{ name_2 }}<br/>\r\n\t\t\t\t\t{{ name }} {% if name_14 %} ♩{% endif %}\t\_\_\_\_\_\_\_\_\t--->\r\n\t\t\t\t</td>\t\t\t\r\n\t\t\t\t<td>\r\n\t\t\t\t\t{{ name_3 }}<br/>\r\n\t\t\t\t\t{{ name_1 }} {% if name_15%} ♪ {%endif%}\t<br/>\r\n\t\t\t\t</td>\r\n\t\t\t</tr>\r\n\t\t</table>"
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: false
-          plugin_id: custom
-      sorts:
-        name:
-          id: name
-          table: cidoc_entity
-          field: name
-          relationship: related_entities
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: standard
-        name_2:
-          id: name_2
-          table: cidoc_entity
-          field: name
-          relationship: none
-          group_type: group
-          admin_label: 'Model''s incipit'
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: standard
-        name_1:
-          id: name_1
-          table: cidoc_entity
-          field: name
-          relationship: related_entities_1
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: standard
+      defaults:
+        title: false
+        style: false
+        row: false
+        relationships: false
+        fields: false
+        sorts: false
+        arguments: false
+        filters: false
+        filter_groups: false
+        header: false
       relationships:
         related_entities_reverse_1:
           id: related_entities_reverse_1
@@ -7149,6 +7164,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'model creation event'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_reverse
           required: false
           limit_bundles:
             p94_has_created: p94_has_created
@@ -7252,8 +7269,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_reverse
         related_entities:
           id: related_entities
           table: cidoc_entity
@@ -7261,6 +7276,8 @@ display:
           relationship: related_entities_reverse_1
           group_type: group
           admin_label: 'model''s author'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             p14_carried_out_by: p14_carried_out_by
@@ -7364,8 +7381,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_reverse:
           id: related_entities_reverse
           table: cidoc_entity
@@ -7373,6 +7388,8 @@ display:
           relationship: none
           group_type: group
           admin_label: contrafactum
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_reverse
           required: false
           limit_bundles:
             pc2_is_contrafactum_of: pc2_is_contrafactum_of
@@ -7476,8 +7493,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_reverse
         related_entities_reverse_2:
           id: related_entities_reverse_2
           table: cidoc_entity
@@ -7485,6 +7500,8 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: 'contrafactum creation'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_reverse
           required: false
           limit_bundles:
             p94_has_created: p94_has_created
@@ -7588,8 +7605,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_reverse
         related_entities_1:
           id: related_entities_1
           table: cidoc_entity
@@ -7597,6 +7612,8 @@ display:
           relationship: related_entities_reverse_2
           group_type: group
           admin_label: 'Contrafactum Author'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             p14_carried_out_by: p14_carried_out_by
@@ -7700,8 +7717,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_2:
           id: related_entities_2
           table: cidoc_entity
@@ -7709,6 +7724,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'Model''s language'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pa19_has_language: pa19_has_language
@@ -7812,8 +7829,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_3:
           id: related_entities_3
           table: cidoc_entity
@@ -7821,6 +7836,8 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: 'contrafactum language'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pa19_has_language: pa19_has_language
@@ -7924,8 +7941,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_13:
           id: related_entities_13
           table: cidoc_entity
@@ -7933,6 +7948,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'model''s music'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pc7_has_music: pc7_has_music
@@ -8036,8 +8053,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
         related_entities_14:
           id: related_entities_14
           table: cidoc_entity
@@ -8045,6 +8060,8 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: 'contrafactum music'
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             pc7_has_music: pc7_has_music
@@ -8148,29 +8165,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
-      arguments: {  }
-      style:
-        type: default
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-      row:
-        type: fields
-        options:
-          default_field_elements: true
-          inline:
-            name_2: name_2
-            name: name
-            name_3: name_3
-            name_1: name_1
-            field_geodata: field_geodata
-            field_geodata_1: field_geodata_1
-          separator: ''
-          hide_empty: false
-      title: Contrafacta
       display_description: ''
       header:
         result:
@@ -8180,9 +8174,21 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: result
           empty: true
           content: 'Displaying @start - @end of @total'
-          plugin_id: result
+      display_extenders: {  }
+      path: contrafacta-page3
+      menu:
+        type: normal
+        title: Contrafacta
+        description: ''
+        weight: -39
+        enabled: false
+        expanded: false
+        menu_name: main
+        parent: ''
+        context: '0'
     cache_metadata:
       max-age: -1
       contexts:

@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p94_has_created
 label: 'P94 has created'
-bidirectional: false
 reverse_label: 'P94 was created by'
-friendly_label: Created
-reverse_friendly_label: 'Was created by'
 domain_bundles:
   - e65_creation
 range_bundles:
@@ -28,8 +25,11 @@ timesubwidget:
     type: 'no'
   range:
     type: generic
-    sub_property: p14_carried_out_by
     title_template: '@bundle_name of @target_name (@source_name)'
+    sub_property: p14_carried_out_by
+bidirectional: false
+friendly_label: Created
+reverse_friendly_label: 'Was created by'
 widget_description:
   domain: ''
   range: ''

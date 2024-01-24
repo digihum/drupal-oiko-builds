@@ -1,7 +1,16 @@
 uuid: 59cf8a06-3976-4d88-b7db-bdb83c7ac1a2
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - node.type.forum
+    - taxonomy.vocabulary.forums
+    - taxonomy.vocabulary.source_books
+  module:
+    - forum
+    - node
+    - oiko_cidoc
+    - taxonomy
 id: moderator
 label: Moderator
 weight: 5

@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p48_has_preferred_identifier
 label: 'P48 has preferred identifier'
-bidirectional: false
 reverse_label: 'P48 is preferred identifier of'
-friendly_label: Identifier
-reverse_friendly_label: 'Is preferred identifier'
 domain_bundles:
   - e5_event
   - e21_person
@@ -33,6 +30,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Identifier
+reverse_friendly_label: 'Is preferred identifier'
 widget_description:
   domain: ''
   range: 'Specify Identifier. (Ex. BdT 355.1;   BnVent;   Paris BnF fr. 22540;  Frank 544:1)'

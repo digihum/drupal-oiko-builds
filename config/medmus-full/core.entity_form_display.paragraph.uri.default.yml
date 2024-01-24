@@ -15,13 +15,13 @@ bundle: uri
 mode: default
 content:
   field_uri:
+    type: link_default
     weight: 0
+    region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-    type: link_default
-    region: content
 hidden:
   created: true
   status: true

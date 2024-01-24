@@ -18,7 +18,7 @@ translatable: true
 default_value:
   -
     color: '#FF2600'
-    opacity: '0.2'
+    opacity: 0.2
 default_value_callback: ''
 settings:
   opacity: 1

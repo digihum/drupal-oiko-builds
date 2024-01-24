@@ -10,4 +10,8 @@ _core:
 id: marital_status
 label: 'Marital status'
 category: Demographic
-options: "Single: Single\nMarried: Married\nDivorced: Divorced\nWidowed: Widowed\n"
+options: |
+  Single: Single
+  Married: Married
+  Divorced: Divorced
+  Widowed: Widowed

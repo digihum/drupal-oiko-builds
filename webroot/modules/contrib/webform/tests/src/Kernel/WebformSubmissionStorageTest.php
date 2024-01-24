@@ -19,17 +19,14 @@ class WebformSubmissionStorageTest extends KernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['system', 'user', 'path', 'field', 'webform'];
+  public static $modules = ['system', 'user', 'path', 'path_alias', 'field', 'webform'];
 
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
-    // @todo Remove once Drupal 8.8.x is only supported.
-    if (floatval(\Drupal::VERSION) >= 8.8) {
-      $this->installEntitySchema('path_alias');
-    }
+    $this->installEntitySchema('path_alias');
     $this->installSchema('webform', ['webform']);
     $this->installConfig('webform');
     $this->installEntitySchema('webform_submission');
@@ -107,7 +104,7 @@ class WebformSubmissionStorageTest extends KernelTestBase {
       $result[$submission->serial()] = $submission;
     }
     foreach ($purged as $sequence_id) {
-      $this->assertFalse(isset($result[$sequence_id]), 'Webform submission with sequence ' . $sequence_id . ' is purged.');
+      $this->assertArrayNotHasKey($sequence_id, $result, 'Webform submission with sequence ' . $sequence_id . ' is purged.');
     }
     $this->assertEquals(count($webform_submissions_definition) - count($purged), count($result), 'Remaining webform submissions are not purged.');
   }
@@ -118,6 +115,7 @@ class WebformSubmissionStorageTest extends KernelTestBase {
    * @see testPurge()
    */
   public function providerPurge() {
+    // phpcs:disable Drupal.Commenting.InlineComment.SpacingBefore
     // The structure of each test case data is the following:
     // 0: (string) The webform 'purge' setting
     // 1: (array) Array of webform submissions to create in the webforms. It
@@ -127,6 +125,7 @@ class WebformSubmissionStorageTest extends KernelTestBase {
     //       that it becomes eligible for purging based on its creation time
     // 2: (array) Array of webform submission sequence IDs that should be purged
     //    in the test.
+    // phpcs:enable Drupal.Commenting.InlineComment.SpacingBefore
     $tests = [];
 
     // Test that only drafts are purged.

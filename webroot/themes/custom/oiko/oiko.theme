@@ -405,17 +405,8 @@ function oiko_theme_suggestions_region_alter(array &$suggestions, array $variabl
  */
 function oiko_element_info_alter(&$elements) {
   if (isset($elements['view']['#pre_render'])) {
-    $elements['view']['#pre_render'][] = 'oiko_remove_theme_wrappers';
+    $elements['view']['#pre_render'][] = '\Drupal\oiko\OikoThemeHelpers::oiko_remove_theme_wrappers';
   }
-}
-
-
-/**
- * pre_render callback that removes #theme_wrappers
- */
-function oiko_remove_theme_wrappers($element) {
-  $element['#theme_wrappers'] = array();
-  return $element;
 }
 
 

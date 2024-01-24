@@ -17,8 +17,8 @@ plugin: 'block_content:142a5f8c-d993-44d1-9e6a-aa68ad90b189'
 settings:
   id: 'block_content:142a5f8c-d993-44d1-9e6a-aa68ad90b189'
   label: 'List of works'
-  provider: block_content
   label_display: '0'
+  provider: block_content
   status: true
   info: ''
   view_mode: full

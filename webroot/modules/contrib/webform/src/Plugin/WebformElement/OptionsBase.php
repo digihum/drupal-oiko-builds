@@ -79,7 +79,7 @@ abstract class OptionsBase extends WebformElementBase {
     return $properties;
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -238,6 +238,11 @@ abstract class OptionsBase extends WebformElementBase {
 
     // Process custom options properties.
     if ($this->hasProperty('options__properties')) {
+      // Unset #options__properties that are not array to prevent errors.
+      if (isset($element['#options__properties'])
+        && !is_array($element['#options__properties'])) {
+        unset($element['#options__properties']);
+      }
       $this->setElementDefaultCallback($element, 'process');
       $element['#process'][] = [get_class($this), 'processOptionsProperties'];
     }
@@ -262,7 +267,7 @@ abstract class OptionsBase extends WebformElementBase {
     }
 
     foreach ($element['#options__properties'] as $option_key => $options__properties) {
-      if (!isset($element[$option_key])) {
+      if (!isset($element[$option_key]) || !is_array($options__properties)) {
         continue;
       }
 
@@ -270,7 +275,7 @@ abstract class OptionsBase extends WebformElementBase {
       $options__properties = WebformElementHelper::removeIgnoredProperties($options__properties);
 
       foreach ($options__properties as $property => $value) {
-        $option_element =& $element[$option_key];
+        $option_element = &$element[$option_key];
         if (in_array($property, ['#attributes', '#wrapper_attributes', '#label_attributes'])) {
           // Apply attributes.
           $option_element += [$property => []];
@@ -322,12 +327,24 @@ abstract class OptionsBase extends WebformElementBase {
     $value = $this->getValue($element, $webform_submission, $options);
 
     $format = $this->getItemFormat($element);
+    $options = OptGroup::flattenOptions($element['#options'] ?? []);
     switch ($format) {
       case 'raw':
         return $value;
 
+      case 'text_description':
+        if ($options && isset($options[$value])) {
+          $options_description = $this->hasProperty('options_description_display');
+          $text = WebformOptionsHelper::getOptionText($value, $element['#options'], $options_description);
+          $description = WebformOptionsHelper::getOptionDescription($value, $element['#options'], $options_description);
+          return ['#markup' => $text . ($description ? PHP_EOL . '<div class="description">' . $description . '</div>' : '')];
+        }
+        else {
+          return $value;
+        }
+
       case 'description':
-        if (isset($element['#options'])) {
+        if ($options && isset($options[$value])) {
           $options_description = $this->hasProperty('options_description_display');
           if ($options_description) {
             $description = WebformOptionsHelper::getOptionDescription($value, $element['#options'], $options_description);
@@ -338,23 +355,16 @@ abstract class OptionsBase extends WebformElementBase {
 
       case 'value':
       default:
-        if (isset($element['#options'])) {
+        if ($options && isset($options[$value])) {
           $options_description = $this->hasProperty('options_description_display');
-          $value = WebformOptionsHelper::getOptionText($value, $element['#options'], $options_description);
-        }
-
-        // Build a render array that uses #plain_text so that
-        // HTML characters are escaped.
-        // @see \Drupal\Core\Render\Renderer::ensureMarkupIsSafe
-        if ($value === '0') {
-          // Issue #2765609: #plain_text doesn't render empty-like values
-          // (e.g. 0 and "0").
-          // Workaround: Use #markup until this issue is fixed.
-          // @todo Remove workaround once only Drupal 8.7.x is supported.
-          $build = ['#markup' => $value];
+          $build = [
+            '#markup' => WebformOptionsHelper::getOptionText($value, $options, $options_description),
+          ];
         }
         else {
-          $build = ['#plain_text' => $value];
+          $build = [
+            '#plain_text' => $value,
+          ];
         }
 
         $options += ['prefixing' => TRUE];
@@ -380,6 +390,15 @@ abstract class OptionsBase extends WebformElementBase {
     switch ($format) {
       case 'raw':
         return $value;
+
+      case 'text_description':
+        if (isset($element['#options'])) {
+          $options_description = $this->hasProperty('options_description_display');
+          $text = WebformOptionsHelper::getOptionText($value, $element['#options'], $options_description);
+          $description = WebformOptionsHelper::getOptionDescription($value, $element['#options'], $options_description);
+          return $text . ($description ? ' - ' . MailFormatHelper::htmlToText($description) : '');
+        }
+        return '';
 
       case 'description':
         if (isset($element['#options'])) {
@@ -418,9 +437,14 @@ abstract class OptionsBase extends WebformElementBase {
    * {@inheritdoc}
    */
   public function getItemFormats() {
-    return parent::getItemFormats() + [
-      'description' => $this->t('Option description'),
-    ];
+    $formats = parent::getItemFormats();
+    if ($this->hasProperty('options_description_display')) {
+      $formats += [
+        'description' => $this->t('Option description'),
+        'text_description' => $this->t('Option text and description'),
+      ];
+    }
+    return $formats;
   }
 
   /**
@@ -437,7 +461,7 @@ abstract class OptionsBase extends WebformElementBase {
     $format = $this->getItemsFormat($element);
     if (strpos($format, 'checklist:') === 0) {
       // Get checked/unchecked icons.
-      list(, $checked_type) = explode(':', $format);
+      [, $checked_type] = explode(':', $format);
       switch ($checked_type) {
         case 'crosses':
           $checked = '✖ ';
@@ -457,9 +481,10 @@ abstract class OptionsBase extends WebformElementBase {
       // Build list of checked and unchecked options.
       $build = [];
       $options_description = $this->hasProperty('options_description_display');
-      foreach ($element['#options'] as $option_value => $option_text) {
-        if ($options_description && strpos($option_text, WebformOptionsHelper::DESCRIPTION_DELIMITER) !== FALSE) {
-          list($option_text) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $option_text);
+      $flattened_options = OptGroup::flattenOptions($element['#options']);
+      foreach ($flattened_options as $option_value => $option_text) {
+        if ($options_description && WebformOptionsHelper::hasOptionDescription($option_text)) {
+          [$option_text] = WebformOptionsHelper::splitOption($option_text);
         }
         $build[$option_value] = [
           '#prefix' => isset($values[$option_value]) ? $checked : $unchecked,
@@ -490,7 +515,7 @@ abstract class OptionsBase extends WebformElementBase {
     $format = $this->getItemsFormat($element);
     if (strpos($format, 'checklist:') === 0) {
       // Get checked/unchecked icons.
-      list(, $checked_type) = explode(':', $format);
+      [, $checked_type] = explode(':', $format);
       switch ($checked_type) {
         case 'crosses':
           $checked = '✖';
@@ -510,9 +535,10 @@ abstract class OptionsBase extends WebformElementBase {
       // Build list of checked and unchecked options.
       $list = [];
       $options_description = $this->hasProperty('options_description_display');
-      foreach ($element['#options'] as $option_value => $option_text) {
-        if ($options_description && strpos($option_text, WebformOptionsHelper::DESCRIPTION_DELIMITER) !== FALSE) {
-          list($option_text) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $option_text);
+      $flattened_options = OptGroup::flattenOptions($element['#options']);
+      foreach ($flattened_options as $option_value => $option_text) {
+        if ($options_description && WebformOptionsHelper::hasOptionDescription($option_text)) {
+          [$option_text] = WebformOptionsHelper::splitOption($option_text);
         }
         $list[] = ((isset($values[$option_value])) ? $checked : $unchecked) . ' ' . $option_text;
         unset($values[$option_value]);
@@ -524,7 +550,7 @@ abstract class OptionsBase extends WebformElementBase {
       return implode(PHP_EOL, $list);
     }
     else {
-        return parent::formatTextItems($element, $webform_submission, $options);
+      return parent::formatTextItems($element, $webform_submission, $options);
     }
   }
 
@@ -633,17 +659,17 @@ abstract class OptionsBase extends WebformElementBase {
    */
   public function buildExportHeader(array $element, array $options) {
     $options_format = ($element['#webform_multiple'] ? $options['options_multiple_format'] : $options['options_single_format']);
-    if ($options_format == 'separate' && isset($element['#options'])) {
+    if ($options_format === 'separate' && isset($element['#options'])) {
       $header = [];
       foreach ($element['#options'] as $option_value => $option_text) {
         // Note: If $option_text is an array (typically a tableselect row)
         // always use $option_value.
-        $title = ($options['options_item_format'] == 'key' || is_array($option_text)) ? $option_value : $option_text;
+        $title = ($options['options_item_format'] === 'key' || is_array($option_text)) ? $option_value : $option_text;
         $header[] = $title;
       }
       // Add 'Other' option to header.
       if ($this instanceof WebformElementOtherInterface) {
-        $header[] = ($options['options_item_format'] == 'key') ? 'other' : $this->t('Other');
+        $header[] = ($options['options_item_format'] === 'key') ? 'other' : $this->t('Other');
       }
       return $this->prefixExportHeader($header, $element, $options);
     }
@@ -656,9 +682,9 @@ abstract class OptionsBase extends WebformElementBase {
    * {@inheritdoc}
    */
   public function buildExportRecord(array $element, WebformSubmissionInterface $webform_submission, array $export_options) {
-    $element_options = (isset($element['#options'])) ? $element['#options'] : [];
+    $element_options = $element['#options'] ?? [];
     $options_format = ($element['#webform_multiple'] ? $export_options['options_multiple_format'] : $export_options['options_single_format']);
-    if ($options_format == 'separate') {
+    if ($options_format === 'separate') {
       $value = $this->getRawValue($element, $webform_submission);
 
       $record = [];
@@ -675,7 +701,7 @@ abstract class OptionsBase extends WebformElementBase {
           unset($value[$option_value]);
           $record[] = ($deltas) ? ($deltas[$option_value] + 1) : 'X';
         }
-        elseif ($value == $option_value) {
+        elseif ($value === $option_value) {
           $value = '';
           $record[] = ($deltas) ? ($deltas[$option_value] + 1) : 'X';
         }
@@ -690,7 +716,7 @@ abstract class OptionsBase extends WebformElementBase {
       return $record;
     }
     else {
-      if ($export_options['options_item_format'] == 'key') {
+      if ($export_options['options_item_format'] === 'key') {
         $element['#format'] = 'raw';
       }
       return parent::buildExportRecord($element, $webform_submission, $export_options);
@@ -715,7 +741,7 @@ abstract class OptionsBase extends WebformElementBase {
    */
   protected function getElementSelectorInputsOptions(array $element) {
     if ($other_type = $this->getOptionsOtherType()) {
-      list($type) = explode(' ', $this->getPluginLabel());
+      [$type] = explode(' ', $this->getPluginLabel());
       $title = $this->getAdminLabel($element);
       $name = $other_type;
 
@@ -767,7 +793,7 @@ abstract class OptionsBase extends WebformElementBase {
 
     $plugin_id = $this->getPluginId();
     $name = $element['#webform_key'];
-    $options = OptGroup::flattenOptions($element['#options']);
+    $options = isset($element['#options']) ? OptGroup::flattenOptions($element['#options']) : [];
     if ($this->getElementSelectorInputsOptions($element)) {
       $other_type = $this->getOptionsOtherType();
       $multiple = ($this->hasMultipleValues($element) && $other_type === 'select') ? '[]' : '';
@@ -794,7 +820,7 @@ abstract class OptionsBase extends WebformElementBase {
       /** @var \Drupal\webform\Element\WebformOtherBase $class */
       $class = $this->getFormElementClassDefinition();
       $type = $class::getElementType();
-      if (is_array($value) && count($value) === 2 && isset($value[$type]) && isset($value['other'])) {
+      if (is_array($value) && count($value) === 2 && array_key_exists($type, $value) && isset($value['other'])) {
         $value = $class::processValue($element, $value);
       }
 
@@ -810,6 +836,11 @@ abstract class OptionsBase extends WebformElementBase {
         }
       }
       else {
+        // If the trigger is 'filled or 'empty' then return the value.
+        if ($trigger === 'filled' || $trigger === 'empty') {
+          return $value;
+        }
+
         if ($this->hasMultipleValues($element)) {
           // Return array of valid #options.
           return array_intersect($value, array_keys($options));
@@ -864,7 +895,9 @@ abstract class OptionsBase extends WebformElementBase {
         'two_columns' => $this->t('Two columns'),
         'three_columns' => $this->t('Three columns'),
         'side_by_side' => $this->t('Side by side'),
-        'buttons' => $this->t('Buttons'),
+        'buttons' => $this->t('Buttons - flexbox'),
+        'buttons_horizontal' => $this->t('Buttons - horizontal'),
+        'buttons_vertical' => $this->t('Buttons - vertical'),
       ],
     ];
     $form['options']['options_display_container']['options_description_display'] = [
@@ -905,12 +938,28 @@ abstract class OptionsBase extends WebformElementBase {
       ],
     ];
 
+    // Sort options (only applies to select menus).
+    // @see template_preprocess_select()
+    // @see webform_preprocess_select()
+    $form['options']['sort_options'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Sort options'),
+      '#description' => $this->t('Sort the options by their (translated) labels.'),
+      '#return_value' => TRUE,
+    ];
+
     $form['options']['options_randomize'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Randomize options'),
       '#description' => $this->t('Randomizes the order of the options when they are displayed in the webform.'),
       '#return_value' => TRUE,
     ];
+
+    if ($this->hasProperty('options_randomize') && $this->hasProperty('sort_options')) {
+      $form['options']['options_randomize']['#states']['visible'] = [
+        ':input[name="properties[sort_options]"]' => ['checked' => FALSE],
+      ];
+    }
 
     // Other.
     $states_textfield_or_number = [
@@ -1051,7 +1100,8 @@ abstract class OptionsBase extends WebformElementBase {
     $form['options_properties'] = [
       '#type' => 'details',
       '#title' => $this->t('Options (custom) properties'),
-      '#access' => $this->currentUser->hasPermission('edit webform source'),
+      '#access' => $this->hasProperty('options__properties')
+        && $this->currentUser->hasPermission('edit webform source'),
     ];
     $form['options_properties']['options__properties'] = [
       '#type' => 'webform_codemirror',

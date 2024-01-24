@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p9_consists_of
 label: 'P9 consists of'
-bidirectional: false
 reverse_label: 'P9 forms part of'
-friendly_label: 'Consist of'
-reverse_friendly_label: 'Forms part of'
 domain_bundles:
   - e5_event
   - e6_destruction
@@ -44,6 +41,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Consist of'
+reverse_friendly_label: 'Forms part of'
 widget_description:
   domain: '<p>Name of an E7 Activity that is a distict part of this E7 Activity.</p>'
   range: '<p>Name of an E7 Activity or E5 event of which this E7 Activity is a distict part.</p>'

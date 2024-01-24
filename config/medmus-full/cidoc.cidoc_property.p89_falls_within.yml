@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p89_falls_within
 label: 'P89 falls within'
-bidirectional: false
 reverse_label: 'P89 contains'
-friendly_label: 'Falls within'
-reverse_friendly_label: Contains
 domain_bundles:
   - e53_place
 range_bundles:
@@ -20,8 +17,13 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Falls within'
+reverse_friendly_label: Contains
 widget_description:
-  domain: "\n\n"
+  domain: |+
+
+
 autocomplete_description:
   domain: ''
   range: ''

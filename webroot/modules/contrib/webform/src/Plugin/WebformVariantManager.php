@@ -32,7 +32,7 @@ class WebformVariantManager extends DefaultPluginManager implements WebformVaria
   protected $configFactory;
 
   /**
-   * Constructs a WebformVariantManager.
+   * Constructs a WebformVariantManager object.
    *
    * @param \Traversable $namespaces
    *   An object that implements \Traversable which contains the root paths
@@ -55,9 +55,9 @@ class WebformVariantManager extends DefaultPluginManager implements WebformVaria
   /**
    * {@inheritdoc}
    */
-  public function getSortedDefinitions(array $definitions = NULL) {
+  public function getSortedDefinitions(array $definitions = NULL, $sort_by = 'label') {
     // Sort the plugins first by category, then by label.
-    $definitions = $this->traitGetSortedDefinitions($definitions);
+    $definitions = $this->traitGetSortedDefinitions($definitions, $sort_by);
     return $definitions;
   }
 
@@ -75,7 +75,7 @@ class WebformVariantManager extends DefaultPluginManager implements WebformVaria
    * {@inheritdoc}
    */
   public function removeExcludeDefinitions(array $definitions) {
-    $definitions = isset($definitions) ? $definitions : $this->getDefinitions();
+    $definitions = $definitions ?? $this->getDefinitions();
 
     // Exclude 'broken' variant.
     unset($definitions['broken']);

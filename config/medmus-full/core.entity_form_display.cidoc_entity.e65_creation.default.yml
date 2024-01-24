@@ -16,18 +16,18 @@ third_party_settings:
     group_temporal:
       children:
         - 'cidoc_properties:domain:p4_has_time_span'
+      label: When
+      region: content
       parent_name: group_tabset
       weight: 4
-      label: When
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_tabset:
       children:
         - group_temporal
@@ -36,94 +36,94 @@ third_party_settings:
         - group_what
         - group_hierarchy
         - group_descriptive_text
+      label: 'Main details'
+      region: content
       parent_name: group_main_deets
       weight: 5
-      label: 'Main details'
       format_type: tabs
       format_settings:
-        fieldset_label_html: true
-        direction: horizontal
-        id: ''
         classes: ''
-      region: content
+        id: ''
+        direction: horizontal
+        fieldset_label_html: true
     group_where:
       children:
         - 'cidoc_properties:domain:p7_took_place_at'
+      label: Where
+      region: content
       parent_name: group_tabset
       weight: 5
-      label: Where
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_descriptive_text:
       children:
         - 'cidoc_properties:domain:p48_has_preferred_identifier'
         - content
+      label: 'Descriptive text'
+      region: content
       parent_name: group_tabset
       weight: 9
-      label: 'Descriptive text'
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_who:
       children:
         - 'cidoc_properties:domain:p14_carried_out_by'
         - 'cidoc_properties:domain:pc6_has_alternative_attribution'
         - 'cidoc_properties:domain:p11_had_participant'
+      label: 'Author(s) and People involved'
+      region: content
       parent_name: group_tabset
       weight: 6
-      label: 'Author(s) and People involved'
       format_type: tab
       format_settings:
-        description: "- use <strong>P14 CARRIED OUT BY</strong> to associate the Author(s) to the work created.<br/>\r\n- use <strong>P11 PARTICIPATED IN</strong> to specify any other person who had an indirect role in the creation of the work (as a sponsor, dedicatee, muse, audience)."
-        formatter: closed
-        fieldset_label_html: true
-        required_fields: true
-        id: ''
         classes: ''
-      region: content
+        id: ''
+        formatter: closed
+        description: "- use <strong>P14 CARRIED OUT BY</strong> to associate the Author(s) to the work created.<br/>\r\n- use <strong>P11 PARTICIPATED IN</strong> to specify any other person who had an indirect role in the creation of the work (as a sponsor, dedicatee, muse, audience)."
+        required_fields: true
+        fieldset_label_html: true
     group_what:
       children:
         - 'cidoc_properties:domain:p94_has_created'
         - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
+      label: Things
+      region: content
       parent_name: group_tabset
       weight: 7
-      label: Things
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_data:
       children:
         - group_main_deets
         - group_oiko_world_settings
+      label: 'Main data entry'
+      region: content
       parent_name: ''
       weight: 1
-      label: 'Main data entry'
       format_type: tabs
       format_settings:
-        direction: horizontal
-        id: ''
         classes: ''
+        id: ''
+        direction: horizontal
         fieldset_label_html: true
-      region: content
     group_main_deets:
       children:
         - name
@@ -131,18 +131,18 @@ third_party_settings:
         - citation
         - significance
         - group_tabset
+      label: 'Main details'
+      region: content
       parent_name: group_data
       weight: 3
-      label: 'Main details'
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_oiko_world_settings:
       children:
         - status
@@ -150,33 +150,33 @@ third_party_settings:
         - timeline_preselect_option
         - timeline_logo
         - path
+      label: 'Connecting Medieval Music settings'
+      region: content
       parent_name: group_data
       weight: 20
       format_type: tab
       format_settings:
-        id: ''
         classes: ''
+        id: ''
         formatter: closed
         description: ''
         required_fields: true
         fieldset_label_html: true
-      label: 'Connecting Medieval Music settings'
-      region: content
     group_hierarchy:
       children:
         - 'cidoc_properties:domain:p9_consists_of'
+      label: Hierarchy
+      region: content
       parent_name: group_tabset
       weight: 8
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: Hierarchy
+        fieldset_label_html: false
 _core:
   default_config_hash: MCecFoOh1b0B-sp83OJ4_942EIMUo6UJjL0R5-XB0xk
 id: cidoc_entity.e65_creation.default
@@ -272,6 +272,7 @@ content:
   citation:
     type: entity_reference_paragraphs
     weight: 3
+    region: content
     settings:
       title: Citation
       title_plural: Citations
@@ -280,7 +281,6 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
-    region: content
   class_description:
     weight: 0
     region: content
@@ -289,27 +289,27 @@ content:
   content:
     type: text_textarea
     weight: 21
+    region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    region: content
   internal_name:
     type: string_textfield
     weight: 2
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
   name:
     type: string_textfield
     weight: 1
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
   path:
     type: path
     weight: 124
@@ -319,30 +319,30 @@ content:
   significance:
     type: options_select
     weight: 4
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 120
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   timeline_logo:
     type: image_image
     weight: 123
+    region: content
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
-    region: content
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
     weight: 122
+    region: content
     settings:
       display_label: true
-    region: content
     third_party_settings: {  }
   user_id:
     type: entity_reference_autocomplete
@@ -350,9 +350,9 @@ content:
     region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p10_falls_within': true

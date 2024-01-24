@@ -15,6 +15,6 @@ plugin: discussion_notifcations
 settings:
   id: discussion_notifcations
   label: Discussions
-  provider: oiko_forum
   label_display: visible
+  provider: oiko_forum
 visibility: {  }

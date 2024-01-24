@@ -15,83 +15,83 @@ third_party_settings:
     group_when:
       children:
         - 'cidoc_properties:domain:p4_has_time_span'
+      label: When
+      region: content
       parent_name: group_main_d
       weight: 26
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: When
+        fieldset_label_html: false
     group_where:
       children:
         - 'cidoc_properties:domain:p7_took_place_at'
+      label: Where
+      region: content
       parent_name: group_main_d
       weight: 27
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: Where
+        fieldset_label_html: false
     group_people_:
       children:
         - 'cidoc_properties:domain:p143_joined'
         - 'cidoc_properties:domain:p144_joined_with'
+      label: 'People / Groups'
+      region: content
       parent_name: group_main_d
       weight: 28
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: 'People / Groups'
+        fieldset_label_html: false
     group_hierarchy:
       children:
         - 'cidoc_properties:domain:p9_consists_of'
         - 'cidoc_properties:range:p9_consists_of'
         - 'cidoc_properties:domain:p134_continued'
         - 'cidoc_properties:range:p134_continued'
+      label: Hierarchy
+      region: content
       parent_name: group_main_d
       weight: 30
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: Hierarchy
+        fieldset_label_html: false
     group_man_details:
       children:
         - name
         - significance
         - group_main_d
         - citation
+      label: 'Main details'
+      region: content
       parent_name: ''
       weight: 1
       format_type: tabs
-      region: content
       format_settings:
-        direction: horizontal
-        id: ''
         classes: ''
+        id: ''
+        direction: horizontal
         fieldset_label_html: false
-      label: 'Main details'
     group_main_d:
       children:
         - group_when
@@ -100,49 +100,49 @@ third_party_settings:
         - group_type
         - group_hierarchy
         - group_connecting_medieval_
+      label: 'Main details'
+      region: content
       parent_name: group_man_details
       weight: 24
       format_type: tabs
-      region: content
       format_settings:
-        direction: horizontal
-        id: ''
         classes: ''
+        id: ''
+        direction: horizontal
         fieldset_label_html: false
-      label: 'Main details'
     group_connecting_medieval_:
       children:
         - timeline_preselect_option
         - timeline_logo
         - path
         - status
+      label: 'Connecting Medieval Music'
+      region: content
       parent_name: group_main_d
       weight: 31
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: 'Connecting Medieval Music'
+        fieldset_label_html: false
     group_type:
       children:
         - 'cidoc_properties:domain:p2_has_type'
+      label: Type
+      region: content
       parent_name: group_main_d
       weight: 29
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: Type
+        fieldset_label_html: false
 id: cidoc_entity.e85_joining.default
 targetEntityType: cidoc_entity
 bundle: e85_joining
@@ -196,6 +196,7 @@ content:
   citation:
     type: entity_reference_paragraphs
     weight: 25
+    region: content
     settings:
       title: Citation
       title_plural: Citations
@@ -203,7 +204,6 @@ content:
       add_mode: button
       form_display_mode: default
       default_paragraph_type: ''
-    region: content
     third_party_settings: {  }
   class_description:
     weight: 0
@@ -232,25 +232,25 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 8
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   timeline_logo:
     type: image_image
     weight: 6
+    region: content
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
-    region: content
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
     weight: 5
+    region: content
     settings:
       display_label: true
-    region: content
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p10_falls_within': true

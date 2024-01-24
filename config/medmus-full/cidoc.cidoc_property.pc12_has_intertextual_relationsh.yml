@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pc12_has_intertextual_relationsh
 label: 'PC12 is intertextual source for'
-bidirectional: false
 reverse_label: 'PC12 has intertextual source'
-friendly_label: 'Is intertextual source for'
-reverse_friendly_label: 'Has intertextual source'
 domain_bundles:
   - ec1_work
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Is intertextual source for'
+reverse_friendly_label: 'Has intertextual source'
 widget_description:
   domain: ''
   range: ''

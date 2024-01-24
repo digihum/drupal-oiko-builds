@@ -17,34 +17,34 @@ third_party_settings:
       children:
         - group_main_deets
         - group_oiko_world_settings
+      label: 'Main data entry'
+      region: content
       parent_name: ''
       weight: 1
-      label: 'Main data entry'
       format_type: tabs
       format_settings:
-        fieldset_label_html: true
-        direction: horizontal
-        id: ''
         classes: ''
-      region: content
+        id: ''
+        direction: horizontal
+        fieldset_label_html: true
     group_main_deets:
       children:
         - name
         - status
         - significance
         - group_main_details
+      label: 'Main details'
+      region: content
       parent_name: group_main
       weight: 4
-      label: 'Main details'
       format_type: tab
       format_settings:
-        description: ''
-        formatter: open
-        fieldset_label_html: true
-        required_fields: true
-        id: ''
         classes: ''
-      region: content
+        id: ''
+        formatter: open
+        description: ''
+        required_fields: true
+        fieldset_label_html: true
     group_main_details:
       children:
         - group_birth_and_death
@@ -54,64 +54,64 @@ third_party_settings:
         - group_relationships
         - group_joining_leaving
         - group_descriptive_text
+      label: 'Main details'
+      region: content
       parent_name: group_main_deets
       weight: 4
-      label: 'Main details'
       format_type: tabs
       format_settings:
-        fieldset_label_html: true
-        direction: horizontal
-        id: ''
         classes: ''
-      region: content
+        id: ''
+        direction: horizontal
+        fieldset_label_html: true
     group_appellations:
       children:
         - 'cidoc_properties:domain:p131_is_identified_by'
         - 'cidoc_properties:domain:p48_has_preferred_identifier'
+      label: 'Also known as'
+      region: content
       parent_name: group_main_details
       weight: 23
-      label: 'Also known as'
       format_type: tab
       format_settings:
-        description: "- use <strong>P131 IS IDENTIFIED BY</strong> to create an alternative appellation. </br>\r\n     (Ex: Gugliemo IX [P21 Person] P131 IS IDENTIFIED BY  Coms de Peitieus [E41 Appellation])<br/>\r\n     <i>NB: you will be able to populate the instance of E41 Appellation, specifying alternative forms and what is the language of the Appellation. </i><br/><br/>\r\n- use <strong>P48 HAS PREFERRED IDENTIFIER</strong> to associate a number or an alphanumeric string to this Person</br>\r\n     (Ex. BnVent; BdT 70)\r\n"
-        formatter: closed
-        fieldset_label_html: true
-        required_fields: true
-        id: ''
         classes: ''
-      region: content
+        id: ''
+        formatter: closed
+        description: "- use <strong>P131 IS IDENTIFIED BY</strong> to create an alternative appellation. </br>\r\n     (Ex: Gugliemo IX [P21 Person] P131 IS IDENTIFIED BY  Coms de Peitieus [E41 Appellation])<br/>\r\n     <i>NB: you will be able to populate the instance of E41 Appellation, specifying alternative forms and what is the language of the Appellation. </i><br/><br/>\r\n- use <strong>P48 HAS PREFERRED IDENTIFIER</strong> to associate a number or an alphanumeric string to this Person</br>\r\n     (Ex. BnVent; BdT 70)\r\n"
+        required_fields: true
+        fieldset_label_html: true
     group_birth_and_death:
       children:
         - 'cidoc_properties:range:p98_brought_into_life'
         - 'cidoc_properties:range:p100_was_death_of'
+      label: 'Birth and Death'
+      region: content
       parent_name: group_main_details
       weight: 22
-      label: 'Birth and Death'
       format_type: tab
       format_settings:
-        description: '<h4><strong><u>DATES</u> OF BIRTH AND DEATH.</strong></h4>'
-        formatter: closed
-        fieldset_label_html: true
-        required_fields: true
-        id: ''
         classes: ''
-      region: content
+        id: ''
+        formatter: closed
+        description: '<h4><strong><u>DATES</u> OF BIRTH AND DEATH.</strong></h4>'
+        required_fields: true
+        fieldset_label_html: true
     group_joining_leaving:
       children:
         - 'cidoc_properties:range:p143_joined'
         - 'cidoc_properties:range:p145_separated'
+      label: Joining/Leaving
+      region: content
       parent_name: group_main_details
       weight: 27
       format_type: tab
       format_settings:
-        description: "\r\n"
-        formatter: closed
-        fieldset_label_html: true
-        required_fields: true
-        id: ''
         classes: ''
-      label: Joining/Leaving
-      region: content
+        id: ''
+        formatter: closed
+        description: "\r\n"
+        required_fields: true
+        fieldset_label_html: true
     group_oiko_world_settings:
       children:
         - field_notes
@@ -122,49 +122,49 @@ third_party_settings:
         - field_generation
         - path
         - citation
+      label: 'Connecting Medieval Music settings'
+      region: content
       parent_name: group_main
       weight: 5
       format_type: tab
       format_settings:
-        id: ''
         classes: ''
+        id: ''
         formatter: closed
         description: ''
         required_fields: true
         fieldset_label_html: true
-      label: 'Connecting Medieval Music settings'
-      region: content
     group_activities:
       children:
         - 'cidoc_properties:range:p14_carried_out_by'
         - 'cidoc_properties:range:p11_had_participant'
+      label: Activities
+      region: content
       parent_name: group_main_details
       weight: 25
       format_type: tab
-      region: content
       format_settings:
-        description: "- use <strong>P14 PERFORMED</strong> only to create <u>E7 Activity or E9 Move</u>.<br/>\r\n       (Ex. Richard I is King of England; Jaufre Rudel's journey to Jerusalem)<br/>\r\n- use <strong>P11 PARTICIPATED IN</strong> only to create <u>E5 Event</u>. Use if the person does not have a specific role in the event.<br/>   \r\n   (Ex. Battle of Bouvines;  Copaccio Conspiracy; Earthquake of Canterbury;   Shipwreck of the White Ship)"
-        formatter: closed
-        required_fields: true
-        id: ''
         classes: ''
+        id: ''
+        formatter: closed
+        description: "- use <strong>P14 PERFORMED</strong> only to create <u>E7 Activity or E9 Move</u>.<br/>\r\n       (Ex. Richard I is King of England; Jaufre Rudel's journey to Jerusalem)<br/>\r\n- use <strong>P11 PARTICIPATED IN</strong> only to create <u>E5 Event</u>. Use if the person does not have a specific role in the event.<br/>   \r\n   (Ex. Battle of Bouvines;  Copaccio Conspiracy; Earthquake of Canterbury;   Shipwreck of the White Ship)"
+        required_fields: true
         fieldset_label_html: false
-      label: Activities
     group_descriptive_text:
       children:
         - content
+      label: 'Descriptive text'
+      region: content
       parent_name: group_main_details
       weight: 28
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: 'Descriptive text'
+        fieldset_label_html: false
     group_relationships:
       children:
         - group_spouse
@@ -177,18 +177,18 @@ third_party_settings:
         - group_sibligs
         - group_ancestors
         - group_relatives_unspecifyied_
+      label: Relationships
+      region: content
       parent_name: group_main_details
       weight: 26
       format_type: tab
-      region: content
       format_settings:
-        description: ''
-        formatter: closed
-        required_fields: true
-        id: ''
         classes: ''
+        id: ''
+        formatter: closed
+        description: ''
+        required_fields: true
         fieldset_label_html: false
-      label: Relationships
     group_for_:
       children:
         - 'cidoc_properties:domain:pa12_has_adoptive_child'
@@ -205,193 +205,193 @@ third_party_settings:
         - 'cidoc_properties:range:pa16_has_sibling-in-law'
         - 'cidoc_properties:range:pa4_has_muse'
         - 'cidoc_properties:range:pc6_has_alternative_attribution'
+      label: 'For later'
+      region: hidden
       parent_name: ''
       weight: 10
       format_type: tab
-      region: hidden
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: 'For later'
+        fieldset_label_html: false
     group_godparents:
       children:
         - 'cidoc_properties:domain:pa17_has_godfather'
         - 'cidoc_properties:domain:pa18_has_godmother'
         - 'cidoc_properties:range:pa17_has_godfather'
         - 'cidoc_properties:range:pa18_has_godmother'
+      label: Godparents
+      region: content
       parent_name: group_relationships
       weight: 25
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: Godparents
+        fieldset_label_html: false
     group_uncle_nephew_cousing:
       children:
         - 'cidoc_properties:domain:pa9_has_aunt_or_uncle'
         - 'cidoc_properties:range:pa9_has_aunt_or_uncle'
         - 'cidoc_properties:domain:pa8_has_cousin'
+      label: 'Uncle, nephew, cousin'
+      region: content
       parent_name: group_relationships
       weight: 26
       format_type: tab
-      region: content
       format_settings:
-        description: "Use this field exclusively if the same information cannot be specified through a chain of parent-children relationships.\r\n"
-        formatter: closed
-        required_fields: true
-        id: ''
         classes: ''
+        id: ''
+        formatter: closed
+        description: "Use this field exclusively if the same information cannot be specified through a chain of parent-children relationships.\r\n"
+        required_fields: true
         fieldset_label_html: false
-      label: 'Uncle, nephew, cousin'
     group_patron_:
       children:
         - 'cidoc_properties:domain:pa1_has_patron'
         - 'cidoc_properties:range:pa1_has_patron'
+      label: Patronage
+      region: content
       parent_name: group_relationships
       weight: 22
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: Patronage
+        fieldset_label_html: false
     group_lover:
       children:
         - 'cidoc_properties:domain:pa5_has_lover'
+      label: Lover
+      region: content
       parent_name: group_relationships
       weight: 24
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: Lover
+        fieldset_label_html: false
     group_ancestors:
       children:
         - 'cidoc_properties:domain:pa10_has_grandchild'
         - 'cidoc_properties:range:pa10_has_grandchild'
         - 'cidoc_properties:domain:pa11_has_ancestor'
         - 'cidoc_properties:range:pa11_has_ancestor'
+      label: Ancestors/descendants
+      region: content
       parent_name: group_relationships
       weight: 28
       format_type: tab
-      region: content
       format_settings:
-        description: "Use this field exclusively if the same information cannot be specified through a chain of parent-children relationship.\r\n"
-        formatter: closed
-        required_fields: true
-        id: ''
         classes: ''
+        id: ''
+        formatter: closed
+        description: "Use this field exclusively if the same information cannot be specified through a chain of parent-children relationship.\r\n"
+        required_fields: true
         fieldset_label_html: false
-      label: Ancestors/descendants
     group_sibligs:
       children:
         - 'cidoc_properties:domain:pa7_has_sibling'
+      label: Sibligs
+      region: content
       parent_name: group_relationships
       weight: 27
       format_type: tab
-      region: content
       format_settings:
-        description: "Use this field exclusively if the same information cannot be specified through a chain of parent-children relationship.\r\n"
-        formatter: closed
-        required_fields: true
-        id: ''
         classes: ''
+        id: ''
+        formatter: closed
+        description: "Use this field exclusively if the same information cannot be specified through a chain of parent-children relationship.\r\n"
+        required_fields: true
         fieldset_label_html: false
-      label: Sibligs
     group_relatives_unspecifyied_:
       children:
         - 'cidoc_properties:domain:pa14_has_relative'
+      label: 'Relatives (unspecified)'
+      region: content
       parent_name: group_relationships
       weight: 29
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: 'Use this field exclusively if more precise information is unavailable.'
+        id: ''
         formatter: closed
+        description: 'Use this field exclusively if more precise information is unavailable.'
         required_fields: true
-      label: 'Relatives (unspecified)'
+        fieldset_label_html: false
     group_type:
       children:
         - 'cidoc_properties:domain:p2_has_type'
+      label: Type
+      region: content
       parent_name: group_main_details
       weight: 24
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: 'Select the type of person you are describing. It can be an <strong>Author</strong>, a <strong>Patron</strong>, a <strong>Political figure</strong>, a <strong>Loved woman</strong>, a <strong>Jongleur</strong>.'
+        id: ''
         formatter: closed
+        description: 'Select the type of person you are describing. It can be an <strong>Author</strong>, a <strong>Patron</strong>, a <strong>Political figure</strong>, a <strong>Loved woman</strong>, a <strong>Jongleur</strong>.'
         required_fields: true
-      label: Type
+        fieldset_label_html: false
     group_children:
       children:
         - 'cidoc_properties:range:p96_by_mother'
         - 'cidoc_properties:range:p97_from_father'
+      label: Children
+      region: content
       parent_name: group_relationships
       weight: 21
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: Children
+        fieldset_label_html: false
     group_friendship:
       children:
         - 'cidoc_properties:domain:pa3_has_friend'
+      label: Friend
+      region: content
       parent_name: group_relationships
       weight: 23
       format_type: tab
-      region: content
       format_settings:
-        description: ''
-        formatter: closed
-        required_fields: true
-        id: ''
         classes: ''
+        id: ''
+        formatter: closed
+        description: ''
+        required_fields: true
         fieldset_label_html: false
-      label: Friend
     group_spouse:
       children:
         - 'cidoc_properties:range:pc11_has_spouse'
+      label: Spouse
+      region: content
       parent_name: group_relationships
       weight: 20
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: Spouse
+        fieldset_label_html: false
 _core:
   default_config_hash: Aj22CJLv9ahqROhzHE69hCdT6k8DeOQz5tCzmv1GFiE
 id: cidoc_entity.e21_person.default
@@ -406,14 +406,14 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:p143_joined':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p145_separated':
     weight: 21
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p2_has_type':
     weight: 2
     region: content
@@ -501,9 +501,9 @@ content:
     third_party_settings: {  }
   'cidoc_properties:range:p144_joined_with':
     weight: 5
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p145_separated':
     weight: 0
     region: content
@@ -511,9 +511,9 @@ content:
     third_party_settings: {  }
   'cidoc_properties:range:p146_separated_from':
     weight: 4
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:range:p14_carried_out_by':
     weight: 29
     region: content
@@ -605,19 +605,19 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_generation:
+    type: options_select
     weight: 65
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   field_notes:
+    type: string_textarea
     weight: 60
+    region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: string_textarea
-    region: content
   internal_name:
     type: string_textfield
     weight: 62
@@ -629,46 +629,46 @@ content:
   name:
     type: string_textfield
     weight: 1
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
   path:
     type: path
     weight: 66
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   significance:
     type: options_select
     weight: 3
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 2
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
     weight: 64
+    region: content
     settings:
       display_label: true
     third_party_settings: {  }
-    region: content
   user_id:
     type: entity_reference_autocomplete
     weight: 63
     region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true

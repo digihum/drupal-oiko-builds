@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pc11_has_spouse
 label: 'PC11 has spouse'
-bidirectional: false
 reverse_label: 'PC11 is spouse in'
-friendly_label: Spouse
-reverse_friendly_label: Spouse
 domain_bundles:
   - ec10_marriage
 range_bundles:
@@ -20,8 +17,11 @@ timesubwidget:
     type: 'no'
   range:
     type: generic
-    sub_property: pc11_has_spouse
     title_template: 'Marriage of @target_name and @source_name'
+    sub_property: pc11_has_spouse
+bidirectional: false
+friendly_label: Spouse
+reverse_friendly_label: Spouse
 widget_description:
   domain: ''
   range: ''

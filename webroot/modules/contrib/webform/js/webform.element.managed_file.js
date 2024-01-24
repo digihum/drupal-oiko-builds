@@ -19,7 +19,7 @@
         .once('webform-auto-file-upload')
         .on('submit', function (event) {
           var $form = $(this);
-          if ($form.data('webform-auto-file-uploads') > 0 && blockSubmit($form)) {
+          if ($form.data('webform-auto-file-uploads') > 0 && Drupal.webformManagedFileBlockSubmit($form)) {
             event.preventDefault();
             return false;
           }
@@ -95,15 +95,23 @@
    * @return {boolean}
    *   TRUE if form submit should be blocked.
    */
-  function blockSubmit(form) {
+  Drupal.webformManagedFileBlockSubmit = function (form) {
     if ($(form).data('webform-auto-file-uploads') < 0) {
       return false;
     }
 
     var message = Drupal.t('File upload in progress. Uploaded file may be lost.') +
       '\n' +
-      Drupal.t('Do you want to continue?');
-    return !window.confirm(message);
+      Drupal.t('Click OK to submit the form without finishing the file upload or cancel to return to form.');
+    var result = !window.confirm(message);
+
+    // If submit once behavior is available, make sure to clear it if the form
+    // can be submitted.
+    if (result && Drupal.behaviors.webformSubmitOnce) {
+      setTimeout(function () {Drupal.behaviors.webformSubmitOnce.clear();});
+    }
+
+    return result;
   }
 
 })(jQuery, Drupal);

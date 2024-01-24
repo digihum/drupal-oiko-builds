@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pc4_has_formal_feature
 label: 'PC4 has formal feature'
-bidirectional: false
 reverse_label: 'PC4 is formal feature of'
-friendly_label: 'Formal features'
-reverse_friendly_label: 'Is formal feature of'
 domain_bundles:
   - ec1_work
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Formal features'
+reverse_friendly_label: 'Is formal feature of'
 widget_description:
   domain: "<p>Defines formal feature of an EC1 work, including general metrical features.</p>\r\n<ul>\r\n<li>BdT 366,1 PC4 has formal feature (is formal feature of) Strophic</li>\r\n<li>The Chanson de Roland PC4 has formal feature (is formal feature of) Laisses of assonating decasyllables</li>\r\n<li>The Roman de Tristan en prose PC4 has formal feature (is formal feature of) Prose</li>\r\n</ul>\r\n"
   range: ''

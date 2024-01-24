@@ -15,8 +15,8 @@ plugin: main_cidoc_search
 settings:
   id: main_cidoc_search
   label: 'Main cidoc search'
-  provider: oiko_app
   label_display: '0'
+  provider: oiko_app
   placeholder_map: Search
   no_search_map: 'Search for events, people, groups, places, manuscripts...'
   placeholder_timeline: 'Search groups and people'

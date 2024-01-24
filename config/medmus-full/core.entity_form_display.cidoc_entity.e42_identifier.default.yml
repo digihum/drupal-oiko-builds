@@ -20,16 +20,16 @@ third_party_settings:
         - group_aux_deets
         - group_descriptive_text
         - group_oiko_world_settings
+      label: 'Main data entry'
+      region: content
       parent_name: ''
       weight: 1
-      label: 'Main data entry'
       format_type: tabs
       format_settings:
-        direction: horizontal
-        id: ''
         classes: ''
+        id: ''
+        direction: horizontal
         fieldset_label_html: true
-      region: content
     group_main_deets:
       children:
         - name
@@ -37,63 +37,63 @@ third_party_settings:
         - citation
         - 'cidoc_properties:range:p48_has_preferred_identifier'
         - 'cidoc_properties:domain:p2_has_type'
+      label: 'Main details'
+      region: content
       parent_name: group_main_details
       weight: 2
-      label: 'Main details'
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_aux_deets:
       children:
         - 'cidoc_properties:domain:p139_has_alternative_form'
         - 'cidoc_properties:domain:p48_has_preferred_identifier'
+      label: 'Auxiliary details'
+      region: content
       parent_name: group_main_details
       weight: 3
-      label: 'Auxiliary details'
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_other:
       children:
         - group_influence
+      label: 'Other details'
+      region: hidden
       parent_name: ''
       weight: 12
-      label: 'Other details'
       format_type: tabs
       format_settings:
-        direction: vertical
         classes: ''
         id: ''
+        direction: vertical
         fieldset_label_html: true
-      region: hidden
     group_influence:
       children:
         - 'cidoc_properties:range:p128_carries'
         - 'cidoc_properties:range:p94_has_created'
+      label: 'Influence and motivation'
+      region: hidden
       parent_name: group_other
       weight: 3
-      label: 'Influence and motivation'
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: hidden
     group_oiko_world_settings:
       children:
         - status
@@ -103,32 +103,32 @@ third_party_settings:
         - timeline_logo
         - path
         - field_exclude_from_duplicates_
+      label: 'Connecting Medieval Music settings'
+      region: content
       parent_name: group_main_details
       weight: 5
       format_type: tab
       format_settings:
-        id: ''
         classes: ''
+        id: ''
         formatter: closed
         description: ''
         required_fields: true
         fieldset_label_html: true
-      label: 'Connecting Medieval Music settings'
-      region: content
     group_descriptive_text:
       children:
         - content
+      label: 'Descriptive text'
+      region: content
       parent_name: group_main_details
       weight: 4
       format_type: fieldset
-      region: content
       format_settings:
-        fieldset_label_html: true
-        id: ''
         classes: ''
+        id: ''
         description: ''
         required_fields: true
-      label: 'Descriptive text'
+        fieldset_label_html: true
 id: cidoc_entity.e42_identifier.default
 targetEntityType: cidoc_entity
 bundle: e42_identifier
@@ -167,6 +167,7 @@ content:
   citation:
     type: entity_reference_paragraphs
     weight: 5
+    region: content
     settings:
       title: Citation
       title_plural: Citations
@@ -175,7 +176,6 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
-    region: content
   class_description:
     weight: 0
     region: content
@@ -190,27 +190,27 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_exclude_from_duplicates_:
+    type: options_select
     weight: 126
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   internal_name:
     type: string_textfield
     weight: 4
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
   name:
     type: string_textfield
     weight: 3
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
   path:
     type: path
     weight: 125
@@ -220,30 +220,30 @@ content:
   significance:
     type: options_select
     weight: 121
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 120
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   timeline_logo:
     type: image_image
     weight: 124
+    region: content
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
-    region: content
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
     weight: 123
+    region: content
     settings:
       display_label: true
-    region: content
     third_party_settings: {  }
   user_id:
     type: entity_reference_autocomplete
@@ -251,9 +251,9 @@ content:
     region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p102_has_title': true

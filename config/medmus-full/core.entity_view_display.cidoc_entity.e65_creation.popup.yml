@@ -13,139 +13,139 @@ bundle: e65_creation
 mode: popup
 content:
   cidoc_admin_links:
+    settings: {  }
+    third_party_settings: {  }
     weight: 3
     region: content
+  'cidoc_properties:domain:p10_falls_within':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p10_falls_within':
     weight: 18
     region: content
+  'cidoc_properties:domain:p11_had_participant':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p11_had_participant':
     weight: 9
     region: content
+  'cidoc_properties:domain:p12_occurred_in_the_presence_of':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p12_occurred_in_the_presence_of':
     weight: 8
     region: content
+  'cidoc_properties:domain:p134_continued':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p134_continued':
     weight: 17
     region: content
+  'cidoc_properties:domain:p14_carried_out_by':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p14_carried_out_by':
     weight: 7
     region: content
+  'cidoc_properties:domain:p2_has_type':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p2_has_type':
     weight: 11
     region: content
+  'cidoc_properties:domain:p48_has_preferred_identifier':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p48_has_preferred_identifier':
     weight: 12
     region: content
+  'cidoc_properties:domain:p4_has_time_span':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p4_has_time_span':
     weight: 13
     region: content
+  'cidoc_properties:domain:p7_took_place_at':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p7_took_place_at':
     weight: 6
     region: content
+  'cidoc_properties:domain:p94_has_created':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p94_has_created':
     weight: 5
     region: content
+  'cidoc_properties:domain:p9_consists_of':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p9_consists_of':
     weight: 16
     region: content
+  'cidoc_properties:domain:pc7_has_music':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:pc7_has_music':
     weight: 13
     region: content
+  'cidoc_properties:range:p10_falls_within':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p10_falls_within':
     weight: 19
     region: content
+  'cidoc_properties:range:p134_continued':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p134_continued':
     weight: 20
     region: content
+  'cidoc_properties:range:p67_refers_to':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p67_refers_to':
     weight: 14
     region: content
+  'cidoc_properties:range:p9_consists_of':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p9_consists_of':
     weight: 21
     region: content
+  cidoc_temporal_summary:
     settings: {  }
     third_party_settings: {  }
-  cidoc_temporal_summary:
     weight: 1
     region: content
-    settings: {  }
-    third_party_settings: {  }
   content:
-    region: content
-    label: hidden
     type: text_default
-    weight: 15
+    label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 15
+    region: content
   duplicate_of_p7_took_place_at_entity_view_3:
+    settings: {  }
+    third_party_settings: {  }
     weight: 12
     region: content
+  maps_of_things_happened_in_activity_entity_view_1:
     settings: {  }
     third_party_settings: {  }
-  maps_of_things_happened_in_activity_entity_view_1:
     weight: 10
     region: content
-    settings: {  }
-    third_party_settings: {  }
   name:
-    region: content
     type: string
     label: hidden
     settings:
       link_to_entity: false
+    third_party_settings: {  }
     weight: 0
-    third_party_settings: {  }
+    region: content
   p7_took_place_at_map_entity_view_1:
-    weight: 4
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 4
+    region: content
   p7_took_place_at_map_entity_view_3:
-    weight: 4
-    region: content
     settings: {  }
     third_party_settings: {  }
-  significance:
+    weight: 4
     region: content
+  significance:
     type: entity_reference_entity_view
     label: visually_hidden
     settings:
       view_mode: primary_historical_significance_pill
       link: false
-    weight: 2
     third_party_settings: {  }
+    weight: 2
+    region: content
 hidden:
   cidoc_properties: true
   'cidoc_properties:domain:p1_is_identified_by': true

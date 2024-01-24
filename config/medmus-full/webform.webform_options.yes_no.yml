@@ -10,4 +10,6 @@ _core:
 id: yes_no
 label: Yes/No
 category: General
-options: "Yes: Yes\nNo: No\n"
+options: |
+  Yes: Yes
+  No: No

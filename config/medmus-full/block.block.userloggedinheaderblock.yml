@@ -15,6 +15,6 @@ plugin: user_logged_in
 settings:
   id: user_logged_in
   label: 'User profile'
-  provider: oiko_forum
   label_display: visible
+  provider: oiko_forum
 visibility: {  }

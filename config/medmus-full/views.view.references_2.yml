@@ -20,146 +20,11 @@ base_table: cidoc_reference
 base_field: id
 display:
   default:
-    display_plugin: default
     id: default
     display_title: Master
+    display_plugin: default
     position: 0
     display_options:
-      access:
-        type: role
-        options:
-          role:
-            administrator: administrator
-            content_editor: content_editor
-      cache:
-        type: tag
-        options: {  }
-      query:
-        type: views_query
-        options:
-          disable_sql_rewrite: false
-          distinct: false
-          replica: false
-          query_comment: ''
-          query_tags: {  }
-      exposed_form:
-        type: basic
-        options:
-          submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      pager:
-        type: full
-        options:
-          items_per_page: 100
-          offset: 0
-          id: 0
-          total_pages: null
-          tags:
-            previous: ‹‹
-            next: ››
-            first: '« First'
-            last: 'Last »'
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          quantity: 9
-      style:
-        type: table
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          uses_fields: true
-          override: true
-          sticky: false
-          caption: ''
-          summary: ''
-          description: ''
-          columns:
-            views_bulk_operations_bulk_form_1: views_bulk_operations_bulk_form_1
-            domain: domain
-            property: property
-            range: range
-            view_cidoc_reference: view_cidoc_reference
-            delete_cidoc_reference: delete_cidoc_reference
-            edit_cidoc_reference: edit_cidoc_reference
-            user_id: user_id
-          info:
-            views_bulk_operations_bulk_form_1:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            domain:
-              sortable: true
-              default_sort_order: asc
-              align: views-align-left
-              separator: ''
-              empty_column: false
-              responsive: ''
-            property:
-              sortable: true
-              default_sort_order: asc
-              align: views-align-left
-              separator: ''
-              empty_column: false
-              responsive: ''
-            range:
-              sortable: true
-              default_sort_order: asc
-              align: views-align-left
-              separator: ''
-              empty_column: false
-              responsive: ''
-            view_cidoc_reference:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            delete_cidoc_reference:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            edit_cidoc_reference:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            user_id:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: '-1'
-          empty_table: false
-      row:
-        type: fields
-        options:
-          default_field_elements: true
-          inline:
-            operations: operations
-            domain: domain
-          separator: ''
-          hide_empty: false
       fields:
         views_bulk_operations_bulk_form_1:
           id: views_bulk_operations_bulk_form_1
@@ -168,6 +33,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: views_bulk_operations_bulk_form
           label: 'Views bulk operations'
           exclude: false
           alter:
@@ -213,14 +79,13 @@ display:
           batch_size: 100
           form_step: true
           buttons: true
-          clear_on_exposed: true
           action_title: Action
+          clear_on_exposed: true
           selected_actions:
             -
               action_id: views_bulk_operations_delete_entity
               preconfiguration:
                 label_override: ''
-          plugin_id: views_bulk_operations_bulk_form
         domain:
           id: domain
           table: cidoc_reference__domain
@@ -228,6 +93,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: From
           exclude: false
           alter:
@@ -283,7 +149,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         property:
           id: property
           table: cidoc_reference
@@ -291,6 +156,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_reference
+          entity_field: property
+          plugin_id: field
           label: ''
           exclude: false
           alter:
@@ -346,9 +214,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_reference
-          entity_field: property
-          plugin_id: field
         range:
           id: range
           table: cidoc_reference__range
@@ -356,6 +221,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: ''
           exclude: false
           alter:
@@ -411,7 +277,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         view_cidoc_reference:
           id: view_cidoc_reference
           table: cidoc_reference_revision
@@ -419,6 +284,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_reference
+          plugin_id: entity_link
           label: ''
           exclude: false
           alter:
@@ -463,8 +330,6 @@ display:
           text: view
           output_url_as_text: false
           absolute: false
-          entity_type: cidoc_reference
-          plugin_id: entity_link
         delete_cidoc_reference:
           id: delete_cidoc_reference
           table: cidoc_reference_revision
@@ -472,6 +337,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_reference
+          plugin_id: entity_link_delete
           label: ''
           exclude: false
           alter:
@@ -516,8 +383,6 @@ display:
           text: delete
           output_url_as_text: false
           absolute: false
-          entity_type: cidoc_reference
-          plugin_id: entity_link_delete
         edit_cidoc_reference:
           id: edit_cidoc_reference
           table: cidoc_reference_revision
@@ -525,6 +390,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_reference
+          plugin_id: entity_link_edit
           label: ''
           exclude: false
           alter:
@@ -569,8 +436,6 @@ display:
           text: edit
           output_url_as_text: false
           absolute: false
-          entity_type: cidoc_reference
-          plugin_id: entity_link_edit
         user_id:
           id: user_id
           table: cidoc_reference
@@ -578,6 +443,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_reference
+          entity_field: user_id
+          plugin_id: field
           label: 'Authored by'
           exclude: false
           alter:
@@ -633,9 +501,65 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+      pager:
+        type: full
+        options:
+          offset: 0
+          items_per_page: 100
+          total_pages: null
+          id: 0
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      access:
+        type: role
+        options:
+          role:
+            administrator: administrator
+            content_editor: content_editor
+      cache:
+        type: tag
+        options: {  }
+      empty: {  }
+      sorts:
+        changed:
+          id: changed
+          table: cidoc_reference
+          field: changed
+          relationship: none
+          group_type: group
+          admin_label: ''
           entity_type: cidoc_reference
-          entity_field: user_id
-          plugin_id: field
+          entity_field: changed
+          plugin_id: date
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: changed
+          exposed: false
+          granularity: second
+      arguments: {  }
       filters:
         status:
           id: status
@@ -644,6 +568,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_reference
+          entity_field: status
+          plugin_id: boolean
           operator: '='
           value: All
           group: 1
@@ -680,9 +607,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          plugin_id: boolean
-          entity_type: cidoc_reference
-          entity_field: status
         property:
           id: property
           table: cidoc_reference
@@ -690,6 +614,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_reference
+          entity_field: property
+          plugin_id: bundle
           operator: in
           value: {  }
           group: 1
@@ -727,9 +654,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_reference
-          entity_field: property
-          plugin_id: bundle
         range_target_id:
           id: range_target_id
           table: cidoc_reference__range
@@ -737,6 +661,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: numeric
           operator: empty
           value:
             min: ''
@@ -758,9 +683,9 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-            placeholder: ''
             min_placeholder: ''
             max_placeholder: ''
+            placeholder: ''
           is_grouped: false
           group_info:
             label: ''
@@ -773,7 +698,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          plugin_id: numeric
         domain_target_id:
           id: domain_target_id
           table: cidoc_reference__domain
@@ -781,6 +705,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: numeric
           operator: 'not empty'
           value:
             min: ''
@@ -802,9 +727,9 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-            placeholder: ''
             min_placeholder: ''
             max_placeholder: ''
+            placeholder: ''
           is_grouped: false
           group_info:
             label: ''
@@ -817,26 +742,101 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          plugin_id: numeric
-      sorts:
-        changed:
-          id: changed
-          table: cidoc_reference
-          field: changed
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: DESC
-          exposed: false
-          expose:
-            label: ''
-          granularity: second
-          entity_type: cidoc_reference
-          entity_field: changed
-          plugin_id: date
-      header: {  }
-      footer: {  }
-      empty: {  }
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          uses_fields: true
+          columns:
+            views_bulk_operations_bulk_form_1: views_bulk_operations_bulk_form_1
+            domain: domain
+            property: property
+            range: range
+            view_cidoc_reference: view_cidoc_reference
+            delete_cidoc_reference: delete_cidoc_reference
+            edit_cidoc_reference: edit_cidoc_reference
+            user_id: user_id
+          default: '-1'
+          info:
+            views_bulk_operations_bulk_form_1:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            domain:
+              sortable: true
+              default_sort_order: asc
+              align: views-align-left
+              separator: ''
+              empty_column: false
+              responsive: ''
+            property:
+              sortable: true
+              default_sort_order: asc
+              align: views-align-left
+              separator: ''
+              empty_column: false
+              responsive: ''
+            range:
+              sortable: true
+              default_sort_order: asc
+              align: views-align-left
+              separator: ''
+              empty_column: false
+              responsive: ''
+            view_cidoc_reference:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            delete_cidoc_reference:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            edit_cidoc_reference:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            user_id:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline:
+            operations: operations
+            domain: domain
+          separator: ''
+          hide_empty: false
+      query:
+        type: views_query
+        options:
+          query_comment: ''
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_tags: {  }
       relationships:
         domain:
           id: domain
@@ -845,8 +845,8 @@ display:
           relationship: none
           group_type: group
           admin_label: 'domain: CIDOC entity'
-          required: false
           plugin_id: standard
+          required: false
         user_id:
           id: user_id
           table: cidoc_reference
@@ -854,11 +854,12 @@ display:
           relationship: none
           group_type: group
           admin_label: User
-          required: false
           entity_type: cidoc_reference
           entity_field: user_id
           plugin_id: standard
-      arguments: {  }
+          required: false
+      header: {  }
+      footer: {  }
       display_extenders: {  }
     cache_metadata:
       max-age: 0
@@ -872,9 +873,9 @@ display:
         - 'config:field.storage.cidoc_reference.domain'
         - 'config:field.storage.cidoc_reference.range'
   page_1:
-    display_plugin: page
     id: page_1
     display_title: Page
+    display_plugin: page
     position: 1
     display_options:
       display_extenders: {  }
@@ -891,48 +892,11 @@ display:
         - 'config:field.storage.cidoc_reference.domain'
         - 'config:field.storage.cidoc_reference.range'
   page_2:
-    display_plugin: page
     id: page_2
     display_title: 'Page 2'
+    display_plugin: page
     position: 2
     display_options:
-      display_extenders: {  }
-      relationships:
-        user_id:
-          id: user_id
-          table: cidoc_reference
-          field: user_id
-          relationship: none
-          group_type: group
-          admin_label: User
-          required: false
-          entity_type: cidoc_reference
-          entity_field: user_id
-          plugin_id: standard
-        domain:
-          id: domain
-          table: cidoc_reference__domain
-          field: domain
-          relationship: none
-          group_type: group
-          admin_label: 'domain: CIDOC entity'
-          required: false
-          plugin_id: standard
-        range:
-          id: range
-          table: cidoc_reference__range
-          field: range
-          relationship: none
-          group_type: group
-          admin_label: 'range: CIDOC entity'
-          required: false
-          plugin_id: standard
-      defaults:
-        relationships: false
-        fields: false
-        filters: false
-        filter_groups: false
-      path: references2
       fields:
         views_bulk_operations_bulk_form_1:
           id: views_bulk_operations_bulk_form_1
@@ -941,6 +905,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: views_bulk_operations_bulk_form
           label: 'Views bulk operations'
           exclude: false
           alter:
@@ -986,14 +951,13 @@ display:
           batch_size: 100
           form_step: true
           buttons: true
-          clear_on_exposed: true
           action_title: Action
+          clear_on_exposed: true
           selected_actions:
             -
               action_id: views_bulk_operations_delete_entity
               preconfiguration:
                 label_override: ''
-          plugin_id: views_bulk_operations_bulk_form
         domain:
           id: domain
           table: cidoc_reference__domain
@@ -1001,6 +965,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: Domain
           exclude: false
           alter:
@@ -1056,7 +1021,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         property:
           id: property
           table: cidoc_reference
@@ -1064,6 +1028,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_reference
+          entity_field: property
+          plugin_id: field
           label: Property
           exclude: false
           alter:
@@ -1119,9 +1086,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_reference
-          entity_field: property
-          plugin_id: field
         range:
           id: range
           table: cidoc_reference__range
@@ -1129,6 +1093,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: Range
           exclude: false
           alter:
@@ -1184,7 +1149,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         view_cidoc_reference:
           id: view_cidoc_reference
           table: cidoc_reference_revision
@@ -1192,6 +1156,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_reference
+          plugin_id: entity_link
           label: ''
           exclude: false
           alter:
@@ -1236,8 +1202,6 @@ display:
           text: view
           output_url_as_text: false
           absolute: false
-          entity_type: cidoc_reference
-          plugin_id: entity_link
         delete_cidoc_reference:
           id: delete_cidoc_reference
           table: cidoc_reference_revision
@@ -1245,6 +1209,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_reference
+          plugin_id: entity_link_delete
           label: ''
           exclude: false
           alter:
@@ -1289,8 +1255,6 @@ display:
           text: delete
           output_url_as_text: false
           absolute: false
-          entity_type: cidoc_reference
-          plugin_id: entity_link_delete
         edit_cidoc_reference:
           id: edit_cidoc_reference
           table: cidoc_reference_revision
@@ -1298,6 +1262,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_reference
+          plugin_id: entity_link_edit
           label: ''
           exclude: false
           alter:
@@ -1342,8 +1308,6 @@ display:
           text: edit
           output_url_as_text: false
           absolute: false
-          entity_type: cidoc_reference
-          plugin_id: entity_link_edit
         name:
           id: name
           table: users_field_data
@@ -1351,6 +1315,9 @@ display:
           relationship: user_id
           group_type: group
           admin_label: ''
+          entity_type: user
+          entity_field: name
+          plugin_id: field
           label: Author
           exclude: false
           alter:
@@ -1406,9 +1373,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: user
-          entity_field: name
-          plugin_id: field
       filters:
         status:
           id: status
@@ -1417,6 +1381,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_reference
+          entity_field: status
+          plugin_id: boolean
           operator: '='
           value: All
           group: 1
@@ -1453,9 +1420,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          plugin_id: boolean
-          entity_type: cidoc_reference
-          entity_field: status
         property:
           id: property
           table: cidoc_reference
@@ -1463,6 +1427,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_reference
+          entity_field: property
+          plugin_id: bundle
           operator: in
           value: {  }
           group: 1
@@ -1500,9 +1467,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_reference
-          entity_field: property
-          plugin_id: bundle
         name:
           id: name
           table: cidoc_entity
@@ -1510,6 +1474,9 @@ display:
           relationship: domain
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: contains
           value: ''
           group: 1
@@ -1548,9 +1515,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         name_1:
           id: name_1
           table: cidoc_entity_revision
@@ -1558,6 +1522,9 @@ display:
           relationship: range
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: contains
           value: ''
           group: 1
@@ -1596,9 +1563,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
         uid:
           id: uid
           table: users_field_data
@@ -1606,6 +1570,9 @@ display:
           relationship: user_id
           group_type: group
           admin_label: ''
+          entity_type: user
+          entity_field: uid
+          plugin_id: user_name
           operator: in
           value: {  }
           group: 1
@@ -1644,13 +1611,47 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: user
-          entity_field: uid
-          plugin_id: user_name
       filter_groups:
         operator: AND
         groups:
           1: AND
+      defaults:
+        relationships: false
+        fields: false
+        filters: false
+        filter_groups: false
+      relationships:
+        user_id:
+          id: user_id
+          table: cidoc_reference
+          field: user_id
+          relationship: none
+          group_type: group
+          admin_label: User
+          entity_type: cidoc_reference
+          entity_field: user_id
+          plugin_id: standard
+          required: false
+        domain:
+          id: domain
+          table: cidoc_reference__domain
+          field: domain
+          relationship: none
+          group_type: group
+          admin_label: 'domain: CIDOC entity'
+          plugin_id: standard
+          required: false
+        range:
+          id: range
+          table: cidoc_reference__range
+          field: range
+          relationship: none
+          group_type: group
+          admin_label: 'range: CIDOC entity'
+          plugin_id: standard
+          required: false
+      display_extenders: {  }
+      path: references2
     cache_metadata:
       max-age: 0
       contexts:

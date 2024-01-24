@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\webform\FunctionalJavaScript\Wizard;
+namespace Drupal\Tests\webform\FunctionalJavascript\Wizard;
 
 use Drupal\webform\Entity\Webform;
 use Drupal\Tests\webform\FunctionalJavascript\WebformWebDriverTestBase;
@@ -8,7 +8,7 @@ use Drupal\Tests\webform\FunctionalJavascript\WebformWebDriverTestBase;
 /**
  * Tests for webform basic wizard.
  *
- * @group Webform
+ * @group webform_javascript
  */
 class WebformWizardBasicJavaScriptTest extends WebformWebDriverTestBase {
 
@@ -23,19 +23,17 @@ class WebformWizardBasicJavaScriptTest extends WebformWebDriverTestBase {
    * Test webform basic wizard.
    */
   public function testBasicWizard() {
-    global $base_path;
-
     $session = $this->getSession();
     $page = $session->getPage();
     $assert_session = $this->assertSession();
 
     $webform = Webform::load('test_form_wizard_basic');
 
-    /**************************************************************************/
+    /* ********************************************************************** */
 
     // Check page 1 URL.
     $this->drupalGet('/webform/test_form_wizard_basic');
-    $this->assertRaw('Element 1');
+    $assert_session->responseContains('Element 1');
     $this->assertQuery();
 
     // Check page 2 URL.
@@ -50,7 +48,7 @@ class WebformWizardBasicJavaScriptTest extends WebformWebDriverTestBase {
 
     // Check page 1 URL with ?page=*.
     $this->drupalGet('/webform/test_form_wizard_basic');
-    $this->assertRaw('Element 1');
+    $assert_session->responseContains('Element 1');
     $this->assertQuery();
 
     // Check page 2 URL with ?page=2.
@@ -65,7 +63,7 @@ class WebformWizardBasicJavaScriptTest extends WebformWebDriverTestBase {
 
     // Check page 1 URL with custom param.
     $this->drupalGet('/webform/test_form_wizard_basic', ['query' => ['custom_param' => '1']]);
-    $this->assertRaw('Element 1');
+    $assert_session->responseContains('Element 1');
     $this->assertQuery('custom_param=1');
 
     // Check page 2 URL with ?page=2.
@@ -77,6 +75,30 @@ class WebformWizardBasicJavaScriptTest extends WebformWebDriverTestBase {
     $page->pressButton('edit-wizard-prev');
     $assert_session->waitForText('Element 1');
     $this->assertQuery('custom_param=1&page=page_1');
+
+    /* ********************************************************************** */
+
+    // Set the webform to use ajax.
+    $webform->setSetting('ajax', TRUE);
+    $webform->save();
+
+    // There should be no announcements when first visiting the form.
+    $this->drupalGet('/webform/test_form_wizard_basic');
+    $assert_session->responseContains('Element 1');
+    $this->assertEquals('', $page->findById('drupal-live-announce')->getText());
+
+    // Check announcements on next and previous pages.
+    $page->pressButton('Next >');
+    $assert_session->waitForText('"Test: Webform: Wizard basic: Page 2" loaded. (2 of 4)');
+
+    $page->pressButton('< Previous');
+    $assert_session->waitForText('"Test: Webform: Wizard basic: Page 1" loaded. (1 of 4)');
+
+    $page->pressButton('Next >');
+    $assert_session->waitForText('"Test: Webform: Wizard basic: Page 2" loaded. (2 of 4)');
+
+    $page->pressButton('Preview');
+    $assert_session->waitForText('"Test: Webform: Wizard basic: Preview" loaded. (3 of 4)');
   }
 
   /**
@@ -85,7 +107,7 @@ class WebformWizardBasicJavaScriptTest extends WebformWebDriverTestBase {
    * @param string $expected_query
    *   The expected query string.
    */
-  protected function assertQuery($expected_query = '') {
+  protected function assertQuery($expected_query = ''): void {
     $actual_query = parse_url($this->getSession()->getCurrentUrl(), PHP_URL_QUERY) ?: '';
     $this->assertEquals($expected_query, $actual_query);
   }

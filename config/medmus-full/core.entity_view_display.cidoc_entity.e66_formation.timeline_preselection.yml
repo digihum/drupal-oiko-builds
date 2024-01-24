@@ -15,34 +15,46 @@ bundle: e66_formation
 mode: timeline_preselection
 content:
   cidoc_temporal_summary:
-    weight: 1
     settings: {  }
     third_party_settings: {  }
+    weight: 1
     region: content
   content:
     type: text_trimmed
-    weight: 3
     label: hidden
     settings:
       trim_length: 120
     third_party_settings: {  }
+    weight: 3
+    region: content
+  maps_of_things_happened_in_activity_entity_view_1:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
     region: content
   name:
     type: string
-    weight: 2
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 2
+    region: content
+  p7_took_place_at_map_entity_view_3:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
     region: content
   timeline_logo:
     type: image
-    weight: 0
     label: hidden
     settings:
-      image_style: comparative_timeline_logo
       image_link: ''
+      image_style: comparative_timeline_logo
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
+    weight: 0
     region: content
 hidden:
   cidoc_admin_links: true

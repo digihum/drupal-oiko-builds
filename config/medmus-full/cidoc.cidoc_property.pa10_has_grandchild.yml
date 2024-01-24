@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa10_has_grandchild
 label: 'PA10 has grandchild'
-bidirectional: false
 reverse_label: 'PA10 has grandparent'
-friendly_label: Granchild
-reverse_friendly_label: Grandparent
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Granchild
+reverse_friendly_label: Grandparent
 widget_description:
   domain: ''
   range: ''

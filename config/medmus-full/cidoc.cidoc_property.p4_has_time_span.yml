@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p4_has_time_span
 label: 'P4 has time-span'
-bidirectional: false
 reverse_label: 'P4 is time-span of'
-friendly_label: 'Has time-span'
-reverse_friendly_label: 'Is time-span of'
 domain_bundles:
   - e5_event
   - e6_destruction
@@ -32,6 +29,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Has time-span'
+reverse_friendly_label: 'Is time-span of'
 widget_description:
   domain: ''
   range: ''

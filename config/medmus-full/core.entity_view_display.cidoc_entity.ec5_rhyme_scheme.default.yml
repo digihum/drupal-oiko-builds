@@ -10,41 +10,41 @@ bundle: ec5_rhyme_scheme
 mode: default
 content:
   'cidoc_properties:domain:p1_is_identified_by':
+    settings: {  }
+    third_party_settings: {  }
     weight: 2
     region: content
+  'cidoc_properties:domain:p2_has_type':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p2_has_type':
     weight: 4
     region: content
+  'cidoc_properties:domain:p48_has_preferred_identifier':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p48_has_preferred_identifier':
     weight: 3
     region: content
-    settings: {  }
-    third_party_settings: {  }
   internal_name:
-    label: inline
     type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
     weight: 1
     region: content
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
   is_rhyme_scheme_of_entity_view_1:
-    weight: 5
-    region: content
     settings: {  }
     third_party_settings: {  }
-  name:
-    label: hidden
-    type: string
-    weight: 0
+    weight: 5
     region: content
+  name:
+    type: string
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   cidoc_admin_links: true
   cidoc_properties: true

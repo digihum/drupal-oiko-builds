@@ -6,10 +6,7 @@ _core:
   default_config_hash: ZVWtMfUD1bVuAwzQdPDX7c3-lp4j4vH3zF42upChAXg
 id: p95_has_formed
 label: 'P95 has formed'
-bidirectional: false
 reverse_label: 'P95 was formed by'
-friendly_label: 'Has formed'
-reverse_friendly_label: 'Was formed by'
 domain_bundles:
   - e66_formation
 range_bundles:
@@ -22,8 +19,13 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Has formed'
+reverse_friendly_label: 'Was formed by'
 widget_description:
-  domain: "\n\n"
+  domain: |+
+
+
 autocomplete_description:
   domain: ''
   range: ''

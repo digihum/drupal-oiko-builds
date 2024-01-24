@@ -164,7 +164,7 @@ class WebformDevelEntityFormApiExportForm extends WebformDevelEntityFormApiBaseF
     $webform = $this->getEntity();
 
     // Get the Tar archive.
-    $archive_file_path = file_directory_temp() . '/' . $webform->id() . '.tar.gz';
+    $archive_file_path = \Drupal::service('file_system')->getTempDirectory() . '/' . $webform->id() . '.tar.gz';
     $archive = new \Archive_Tar($archive_file_path, 'gz');
 
     // Add code to archive.
@@ -184,19 +184,17 @@ class WebformDevelEntityFormApiExportForm extends WebformDevelEntityFormApiBaseF
     $form_state->setResponse($response);
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Helper functions.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
-   * Set webform elements default values using test data..
+   * Set webform elements default values using test data.
    *
    * @param array $elements
    *   An render array representing elements.
    */
   protected function setDefaultValues(array &$elements) {
-    /** @var \Drupal\webform\WebformInterface $webform */
-    $webform = $this->getEntity();
     $flattened_elements =& WebformFormHelper::flattenElements($elements);
     foreach ($flattened_elements as $element_key => &$element) {
       $element_plugin = $this->elementManager->getElementInstance($element);
@@ -235,7 +233,7 @@ class {{ class_name }}SettingsForm extends ConfigFormBase {
   protected $tokenManager;
 
   /**
-   * The webform element (plugin) manager.
+   * The webform element plugin manager.
    *
    * @var \Drupal\webform\Plugin\WebformElementManagerInterface
    */

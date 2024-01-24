@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa2_has_acquaintance
 label: 'PA2 has acquaintance'
-bidirectional: true
 reverse_label: 'PA2 has acquaintance'
-friendly_label: ''
-reverse_friendly_label: ''
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: true
+friendly_label: ''
+reverse_friendly_label: ''
 widget_description:
   domain: ''
   range: ''

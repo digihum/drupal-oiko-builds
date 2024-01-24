@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pc6_has_alternative_attribution
 label: 'PC6 has alternative attribution'
-bidirectional: false
 reverse_label: 'PC6 is alternative attribution of'
-friendly_label: 'Has alternative attribution'
-reverse_friendly_label: 'Is alternative attribution of'
 domain_bundles:
   - e65_creation
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Has alternative attribution'
+reverse_friendly_label: 'Is alternative attribution of'
 widget_description:
   domain: ''
   range: ''

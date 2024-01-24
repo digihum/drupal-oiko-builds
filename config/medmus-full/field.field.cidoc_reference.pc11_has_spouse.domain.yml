@@ -19,11 +19,11 @@ default_value_callback: ''
 settings:
   handler: 'default:cidoc_entity'
   handler_settings:
-    auto_create: true
+    target_bundles:
+      ec10_marriage: ec10_marriage
     sort:
       field: name
       direction: ASC
-    target_bundles:
-      ec10_marriage: ec10_marriage
+    auto_create: true
     auto_create_bundle: ec10_marriage
 field_type: entity_reference

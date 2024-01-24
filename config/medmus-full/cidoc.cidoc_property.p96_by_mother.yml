@@ -6,10 +6,7 @@ _core:
   default_config_hash: 9qfD9NCHMyXU6IwyZk8mnHLpTPaQVGhjiY6hAU9ZV2U
 id: p96_by_mother
 label: 'P96 by mother'
-bidirectional: false
 reverse_label: 'P96 gave birth'
-friendly_label: Mother
-reverse_friendly_label: 'Gave birth'
 domain_bundles:
   - e67_birth
 range_bundles:
@@ -22,8 +19,11 @@ timesubwidget:
     type: 'no'
   range:
     type: generic
-    sub_property: p98_brought_into_life
     title_template: '@bundle_name of @source_name'
+    sub_property: p98_brought_into_life
+bidirectional: false
+friendly_label: Mother
+reverse_friendly_label: 'Gave birth'
 widget_description:
   domain: ''
   range: ''

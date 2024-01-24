@@ -1,7 +1,15 @@
 uuid: 4b02bd63-8f23-4467-b468-520d25e4722c
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - avatars
+    - cidoc
+    - comment
+    - eu_cookie_compliance
+    - sharemessage
+    - system
+    - tour
 _core:
   default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
 id: authenticated

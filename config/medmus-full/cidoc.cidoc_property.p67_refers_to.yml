@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p67_refers_to
 label: 'P67 refers to'
-bidirectional: false
 reverse_label: 'P67 is referred to by'
-friendly_label: 'Refers to'
-reverse_friendly_label: 'Is referred to by'
 domain_bundles:
   - e35_title
   - ec1_work
@@ -35,6 +32,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Refers to'
+reverse_friendly_label: 'Is referred to by'
 widget_description:
   domain: ''
   range: ''

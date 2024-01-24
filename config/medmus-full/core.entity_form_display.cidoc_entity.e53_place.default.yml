@@ -26,118 +26,118 @@ third_party_settings:
         - group_hierarchy
         - group_aux_deets
         - group_oiko_world_settings
+      label: 'Main data entry'
+      region: content
       parent_name: ''
       weight: 1
-      label: 'Main data entry'
       format_type: tabs
       format_settings:
-        direction: horizontal
-        id: ''
         classes: ''
+        id: ''
+        direction: horizontal
         fieldset_label_html: true
-      region: content
     group_main_deets:
       children:
         - name
         - internal_name
         - 'cidoc_properties:domain:p2_has_type'
         - group_main_details
+      label: 'Main details'
+      region: content
       parent_name: group_main
       weight: 4
-      label: 'Main details'
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_aux_deets:
       children:
         - 'cidoc_properties:range:p7_took_place_at'
         - 'cidoc_properties:range:p67_refers_to'
         - content
+      label: 'Auxiliary details'
+      region: content
       parent_name: group_main
       weight: 8
-      label: 'Auxiliary details'
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_main_details:
       children:
         - group_geodata
         - citation
+      label: 'Main details'
+      region: content
       parent_name: group_main_deets
       weight: 4
-      label: 'Main details'
       format_type: tabs
       format_settings:
-        fieldset_label_html: true
-        direction: horizontal
-        id: ''
         classes: ''
-      region: content
+        id: ''
+        direction: horizontal
+        fieldset_label_html: true
     group_appellations:
       children:
         - 'cidoc_properties:domain:p87_is_identified_by'
+      label: 'Also known as'
+      region: content
       parent_name: group_main
       weight: 6
-      label: 'Also known as'
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_geodata:
       children:
         - field_location_lookup
         - field_pleiades_uri
         - field_geodata
+      label: Geodata
+      region: content
       parent_name: group_main_details
       weight: 10
-      label: Geodata
       format_type: html_element
       format_settings:
+        classes: ''
+        id: ''
         element: div
         show_label: true
         label_element: h1
         label_element_classes: ''
-        required_fields: true
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: ''
+        required_fields: true
         fieldset_label_html: false
-      region: content
     group_hierarchy:
       children:
         - 'cidoc_properties:domain:p89_falls_within'
         - 'cidoc_properties:range:p89_falls_within'
+      label: Hierarchy
+      region: content
       parent_name: group_main
       weight: 7
-      label: Hierarchy
       format_type: tab
       format_settings:
-        id: ''
         classes: ''
+        id: ''
         formatter: closed
         description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_oiko_world_settings:
       children:
         - field_level_2
@@ -147,18 +147,18 @@ third_party_settings:
         - timeline_preselect_option
         - timeline_logo
         - path
+      label: 'Connecting Medieval Music settings'
+      region: content
       parent_name: group_main
       weight: 9
       format_type: tab
       format_settings:
-        id: ''
         classes: ''
+        id: ''
         formatter: closed
         description: ''
         required_fields: true
         fieldset_label_html: true
-      label: 'Connecting Medieval Music settings'
-      region: content
 _core:
   default_config_hash: VxRWdj-0iwzs3U38Vo_QDcWLA4YyVB2KteXHYWkxZpM
 id: cidoc_entity.e53_place.default
@@ -178,9 +178,9 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:p131_is_identified_by':
     weight: 4
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p2_has_type':
     weight: 3
     region: content
@@ -193,9 +193,9 @@ content:
     third_party_settings: {  }
   'cidoc_properties:domain:p88_consists_of':
     weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   'cidoc_properties:domain:p89_falls_within':
     weight: 4
     region: content
@@ -219,6 +219,7 @@ content:
   citation:
     type: entity_reference_paragraphs
     weight: 11
+    region: content
     settings:
       title: Citation
       title_plural: Citations
@@ -227,7 +228,6 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
-    region: content
   class_description:
     weight: 0
     region: content
@@ -242,7 +242,9 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_geodata:
+    type: leaflet_widget_default
     weight: 13
+    region: content
     settings:
       map:
         leaflet_map: 'Ancient Terrain'
@@ -347,14 +349,12 @@ content:
           popup: 0
         control: 0
     third_party_settings: {  }
-    type: leaflet_widget_default
-    region: content
   field_level_2:
+    type: options_select
     weight: 26
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   field_location_lookup:
     type: string_textfield
     weight: 11
@@ -364,72 +364,72 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_pleiades_uri:
+    type: link_default
     weight: 12
+    region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-    type: link_default
-    region: content
   internal_name:
     type: string_textfield
     weight: 2
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
   name:
     type: string_textfield
     weight: 1
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
   path:
     type: path
     weight: 32
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   significance:
     type: options_select
     weight: 28
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 27
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   timeline_logo:
     type: image_image
     weight: 31
+    region: content
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
-    region: content
   timeline_preselect_option:
     type: boolean_checkbox
     weight: 30
+    region: content
     settings:
       display_label: true
     third_party_settings: {  }
-    region: content
   user_id:
     type: entity_reference_autocomplete
     weight: 29
     region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true

@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pc9_has_rhyme_scheme
 label: 'PC9 has rhyme scheme'
-bidirectional: false
 reverse_label: 'PC9 is rhyme scheme of'
-friendly_label: 'Rhyme scheme'
-reverse_friendly_label: 'Is rhyme scheme of'
 domain_bundles:
   - ec1_work
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Rhyme scheme'
+reverse_friendly_label: 'Is rhyme scheme of'
 widget_description:
   domain: "<p>This property links lyrics with the one</p>\r\n<ul>\r\n<li>BdT 240.6 PC8 has rhyme scheme a b b a c d d c (EC5)</li>\r\n</ul>\r\n"
   range: ''

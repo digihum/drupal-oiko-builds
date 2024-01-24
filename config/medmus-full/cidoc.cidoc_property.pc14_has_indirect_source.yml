@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pc14_has_indirect_source
 label: 'PC14 has indirect source'
-bidirectional: false
 reverse_label: 'PC14 is indirect source of'
-friendly_label: 'Indirect source'
-reverse_friendly_label: 'Is indirect source of'
 domain_bundles:
   - ec1_work
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Indirect source'
+reverse_friendly_label: 'Is indirect source of'
 widget_description:
   domain: ''
   range: ''

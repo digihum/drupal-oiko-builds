@@ -1,7 +1,16 @@
 uuid: b504d3bb-b57d-4fee-952b-29a85c2ab51e
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - cidoc
+    - entity_share_async
+    - entity_share_server
+    - key_auth
+    - medmus_cidoc
+    - node
+    - system
+    - taxonomy
 id: replicator
 label: Replicator
 weight: 8

@@ -19,93 +19,11 @@ base_table: cidoc_entity
 base_field: id
 display:
   default:
-    display_plugin: default
     id: default
     display_title: Master
+    display_plugin: default
     position: 0
     display_options:
-      access:
-        type: none
-        options: {  }
-      cache:
-        type: tag
-        options: {  }
-      query:
-        type: views_query
-        options:
-          disable_sql_rewrite: false
-          distinct: false
-          replica: false
-          query_comment: ''
-          query_tags: {  }
-      exposed_form:
-        type: basic
-        options:
-          submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      pager:
-        type: none
-        options:
-          offset: 0
-      style:
-        type: table
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          override: true
-          sticky: false
-          caption: ''
-          summary: ''
-          description: ''
-          columns:
-            name: name
-            name_1: name_1
-            name_2: name_2
-            field_date: field_date
-          info:
-            name:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            name_1:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            name_2:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_date:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: '-1'
-          empty_table: false
-      row:
-        type: fields
-        options:
-          inline: {  }
-          separator: ''
-          hide_empty: false
-          default_field_elements: true
       fields:
         name:
           id: name
@@ -114,6 +32,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: false
           alter:
@@ -169,9 +90,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         name_2:
           id: name_2
           table: cidoc_entity
@@ -179,6 +97,9 @@ display:
           relationship: related_entities
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: false
           alter:
@@ -234,9 +155,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         field_date:
           id: field_date
           table: cidoc_entity__field_date
@@ -244,6 +162,7 @@ display:
           relationship: related_entities
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: ''
           exclude: false
           alter:
@@ -298,7 +217,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         edit_cidoc_entity:
           id: edit_cidoc_entity
           table: cidoc_entity
@@ -306,6 +224,8 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          plugin_id: entity_link_edit
           label: 'Link to edit CIDOC entity'
           exclude: false
           alter:
@@ -350,22 +270,58 @@ display:
           text: edit
           output_url_as_text: false
           absolute: false
+      pager:
+        type: none
+        options:
+          offset: 0
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      access:
+        type: none
+        options: {  }
+      cache:
+        type: tag
+        options: {  }
+      empty: {  }
+      sorts:
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
           entity_type: cidoc_entity
-          plugin_id: entity_link_edit
+          entity_field: name
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: name
+          exposed: false
+      arguments: {  }
       filters:
         status:
-          value: '1'
+          id: status
           table: cidoc_entity
           field: status
-          plugin_id: boolean
           entity_type: cidoc_entity
           entity_field: status
-          id: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
           expose:
             operator: ''
             operator_limit_selection: false
             operator_list: {  }
-          group: 1
         name:
           id: name
           table: cidoc_entity
@@ -373,6 +329,9 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
           operator: starts
           value: 'Activity of'
           group: 1
@@ -411,27 +370,68 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: string
-      sorts:
-        name:
-          id: name
-          table: cidoc_entity
-          field: name
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: standard
-      header: {  }
-      footer: {  }
-      empty: {  }
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          columns:
+            name: name
+            name_1: name_1
+            name_2: name_2
+            field_date: field_date
+          default: '-1'
+          info:
+            name:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            name_1:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            name_2:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_date:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline: {  }
+          separator: ''
+          hide_empty: false
+      query:
+        type: views_query
+        options:
+          query_comment: ''
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_tags: {  }
       relationships:
         related_entities_reverse:
           id: related_entities_reverse
@@ -440,6 +440,8 @@ display:
           relationship: none
           group_type: group
           admin_label: Activity
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_reverse
           required: true
           limit_bundles:
             p14_carried_out_by: p14_carried_out_by
@@ -543,8 +545,6 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_reverse
         related_entities:
           id: related_entities
           table: cidoc_entity
@@ -552,6 +552,8 @@ display:
           relationship: related_entities_reverse
           group_type: group
           admin_label: T-S
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
           required: false
           limit_bundles:
             p4_has_time_span: p4_has_time_span
@@ -655,9 +657,8 @@ display:
             ec9_print: 0
             ec10_marriage: 0
             ec11_melodic_scheme: 0
-          entity_type: cidoc_entity
-          plugin_id: cidoc_related_entity_forward
-      arguments: {  }
+      header: {  }
+      footer: {  }
       display_extenders: {  }
     cache_metadata:
       max-age: -1
@@ -667,22 +668,11 @@ display:
       tags:
         - 'config:field.storage.cidoc_entity.field_date'
   rest_export_1:
-    display_plugin: rest_export
     id: rest_export_1
     display_title: 'REST export'
+    display_plugin: rest_export
     position: 1
     display_options:
-      display_extenders: {  }
-      path: authors-activity-date
-      row:
-        type: data_field
-        options:
-          field_options: {  }
-      style:
-        type: serializer
-        options:
-          formats:
-            csv: csv
       fields:
         name:
           id: name
@@ -691,6 +681,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
           label: ''
           exclude: false
           alter:
@@ -746,9 +739,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: name
-          plugin_id: field
         field_date:
           id: field_date
           table: cidoc_entity__field_date
@@ -756,6 +746,7 @@ display:
           relationship: related_entities
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: ''
           exclude: false
           alter:
@@ -810,14 +801,24 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
-      defaults:
-        fields: false
       pager:
         type: some
         options:
-          items_per_page: 0
           offset: 0
+          items_per_page: 0
+      style:
+        type: serializer
+        options:
+          formats:
+            csv: csv
+      row:
+        type: data_field
+        options:
+          field_options: {  }
+      defaults:
+        fields: false
+      display_extenders: {  }
+      path: authors-activity-date
     cache_metadata:
       max-age: -1
       contexts:
@@ -827,29 +828,11 @@ display:
       tags:
         - 'config:field.storage.cidoc_entity.field_date'
   rest_export_2:
-    display_plugin: rest_export
     id: rest_export_2
     display_title: 'REST export 2'
+    display_plugin: rest_export
     position: 2
     display_options:
-      display_extenders: {  }
-      style:
-        type: serializer
-        options:
-          uses_fields: false
-          formats:
-            json: json
-      row:
-        type: data_field
-        options:
-          field_options:
-            id:
-              alias: id
-              raw_output: false
-            field_date:
-              alias: date
-              raw_output: false
-      path: authDate
       fields:
         id:
           id: id
@@ -858,6 +841,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          entity_field: id
+          plugin_id: field
           label: ''
           exclude: false
           alter:
@@ -914,9 +900,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: cidoc_entity
-          entity_field: id
-          plugin_id: field
         field_date:
           id: field_date
           table: cidoc_entity__field_date
@@ -924,6 +907,7 @@ display:
           relationship: related_entities
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: ''
           exclude: false
           alter:
@@ -978,14 +962,31 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
-      defaults:
-        fields: false
       pager:
         type: some
         options:
-          items_per_page: 0
           offset: 0
+          items_per_page: 0
+      style:
+        type: serializer
+        options:
+          uses_fields: false
+          formats:
+            json: json
+      row:
+        type: data_field
+        options:
+          field_options:
+            id:
+              alias: id
+              raw_output: false
+            field_date:
+              alias: date
+              raw_output: false
+      defaults:
+        fields: false
+      display_extenders: {  }
+      path: authDate
     cache_metadata:
       max-age: -1
       contexts:

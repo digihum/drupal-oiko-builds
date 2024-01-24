@@ -15,123 +15,12 @@ base_table: search_api_index_author_attributable_content
 base_field: search_api_id
 display:
   default:
-    display_plugin: default
     id: default
     display_title: Master
+    display_plugin: default
     position: 0
     display_options:
-      access:
-        type: none
-        options: {  }
-      cache:
-        type: none
-        options: {  }
-      query:
-        type: views_query
-        options:
-          bypass_access: false
-          skip_access: false
-      exposed_form:
-        type: basic
-        options:
-          submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      pager:
-        type: full
-        options:
-          items_per_page: 20
-          offset: 0
-          id: 1
-          total_pages: null
-          tags:
-            previous: ‹‹
-            next: ››
-            first: '« First'
-            last: 'Last »'
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          quantity: 5
-      style:
-        type: table
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          override: true
-          sticky: false
-          caption: ''
-          summary: ''
-          description: ''
-          columns:
-            name: name
-            title: name
-            changed: changed
-            changed_1: changed
-            bundle: bundle
-            type: bundle
-            id: id
-            nid: id
-          info:
-            name:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            title:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            changed:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            changed_1:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            bundle:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            type:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            id:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            nid:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: '-1'
-          empty_table: false
-      row:
-        type: fields
-        options:
-          inline: {  }
-          separator: ''
-          hide_empty: false
-          default_field_elements: true
+      title: 'Your content'
       fields:
         name:
           id: name
@@ -140,6 +29,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          plugin_id: search_api_field
           label: Title
           exclude: false
           alter:
@@ -200,8 +91,6 @@ display:
           fallback_options:
             link_to_item: false
             multi_separator: ', '
-          entity_type: cidoc_entity
-          plugin_id: search_api_field
         title:
           id: title
           table: search_api_datasource_author_attributable_content_entity_node
@@ -209,6 +98,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: node
+          plugin_id: search_api_field
           label: 'Node Title'
           exclude: false
           alter:
@@ -269,8 +160,6 @@ display:
           fallback_options:
             link_to_item: false
             multi_separator: ', '
-          entity_type: node
-          plugin_id: search_api_field
         changed:
           id: changed
           table: search_api_datasource_author_attributable_content_entity_cidoc_entity
@@ -278,6 +167,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          plugin_id: search_api_field
           label: 'Last edited'
           exclude: false
           alter:
@@ -341,8 +232,6 @@ display:
             timezone: ''
             link_to_item: false
             multi_separator: ', '
-          entity_type: cidoc_entity
-          plugin_id: search_api_field
         changed_1:
           id: changed_1
           table: search_api_datasource_author_attributable_content_entity_node
@@ -350,6 +239,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: node
+          plugin_id: search_api_field
           label: Changed
           exclude: false
           alter:
@@ -413,8 +304,6 @@ display:
             timezone: ''
             link_to_item: false
             multi_separator: ', '
-          entity_type: node
-          plugin_id: search_api_field
         bundle:
           id: bundle
           table: search_api_datasource_author_attributable_content_entity_cidoc_entity
@@ -422,6 +311,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          plugin_id: search_api_field
           label: Type
           exclude: false
           alter:
@@ -485,8 +376,6 @@ display:
             display_methods:
               cidoc_entity_bundle:
                 display_method: label
-          entity_type: cidoc_entity
-          plugin_id: search_api_field
         type:
           id: type
           table: search_api_datasource_author_attributable_content_entity_node
@@ -494,6 +383,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: node
+          plugin_id: search_api_field
           label: 'Node Type'
           exclude: false
           alter:
@@ -557,8 +448,6 @@ display:
             display_methods:
               node_type:
                 display_method: label
-          entity_type: node
-          plugin_id: search_api_field
         id:
           id: id
           table: search_api_datasource_author_attributable_content_entity_cidoc_entity
@@ -566,6 +455,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          plugin_id: search_api_field
           label: Actions
           exclude: false
           alter:
@@ -635,8 +526,6 @@ display:
             format_plural_values:
               - '1'
               - '@count'
-          entity_type: cidoc_entity
-          plugin_id: search_api_field
         nid:
           id: nid
           table: search_api_datasource_author_attributable_content_entity_node
@@ -644,6 +533,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: node
+          plugin_id: search_api_field
           label: 'Node Actions'
           exclude: false
           alter:
@@ -713,104 +604,43 @@ display:
             format_plural_values:
               - '1'
               - '@count'
-          entity_type: node
-          plugin_id: search_api_field
-      filters:
-        cidoc_user_id:
-          id: cidoc_user_id
-          table: search_api_index_author_attributable_content
-          field: cidoc_user_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: or
-          value:
-            - '0'
-          group: 1
-          exposed: false
+      pager:
+        type: full
+        options:
+          offset: 0
+          items_per_page: 20
+          total_pages: null
+          id: 1
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« First'
+            last: 'Last »'
           expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-            operator_limit_selection: false
-            operator_list: {  }
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: search_api_user
-        node_uid:
-          id: node_uid
-          table: search_api_index_author_attributable_content
-          field: node_uid
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: or
-          value:
-            - '0'
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-            operator_limit_selection: false
-            operator_list: {  }
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: search_api_user
-      sorts:
-        changed:
-          id: changed
-          table: search_api_index_author_attributable_content
-          field: changed
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: DESC
-          exposed: false
-          expose:
-            label: ''
-          plugin_id: search_api
-      header: {  }
-      footer: {  }
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 5
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      access:
+        type: none
+        options: {  }
+      cache:
+        type: none
+        options: {  }
       empty:
         area:
           id: area
@@ -819,20 +649,191 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: text
           empty: true
-          tokenize: false
           content:
             value: 'No content created yet.'
             format: basic_html
-          plugin_id: text
-      relationships: {  }
+          tokenize: false
+      sorts:
+        changed:
+          id: changed
+          table: search_api_index_author_attributable_content
+          field: changed
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: changed
+          exposed: false
       arguments: {  }
-      display_extenders: {  }
-      title: 'Your content'
+      filters:
+        cidoc_user_id:
+          id: cidoc_user_id
+          table: search_api_index_author_attributable_content
+          field: cidoc_user_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_user
+          operator: or
+          value:
+            - '0'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        node_uid:
+          id: node_uid
+          table: search_api_index_author_attributable_content
+          field: node_uid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_user
+          operator: or
+          value:
+            - '0'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
       filter_groups:
         operator: AND
         groups:
           1: OR
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          columns:
+            name: name
+            title: name
+            changed: changed
+            changed_1: changed
+            bundle: bundle
+            type: bundle
+            id: id
+            nid: id
+          default: '-1'
+          info:
+            name:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            title:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            changed:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            changed_1:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            bundle:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            type:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            id:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            nid:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline: {  }
+          separator: ''
+          hide_empty: false
+      query:
+        type: views_query
+        options:
+          bypass_access: false
+          skip_access: false
+      relationships: {  }
+      header: {  }
+      footer: {  }
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -841,9 +842,9 @@ display:
         - url.query_args
       tags: {  }
   embed:
-    display_plugin: embed
     id: embed
     display_title: Embed
+    display_plugin: embed
     position: 1
     display_options:
       display_extenders: {  }

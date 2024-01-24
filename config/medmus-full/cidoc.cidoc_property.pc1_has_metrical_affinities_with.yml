@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pc1_has_metrical_affinities_with
 label: 'PC1 has metrical affinities with'
-bidirectional: true
 reverse_label: 'PC1 has metrical affinities with'
-friendly_label: 'Metrical affinities'
-reverse_friendly_label: ''
 domain_bundles:
   - ec1_work
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: true
+friendly_label: 'Metrical affinities'
+reverse_friendly_label: ''
 widget_description:
   domain: ''
   range: ''

@@ -27,8 +27,9 @@ function cidoc_cidoc_entity_storage_load($entities) {
   if (\Drupal::state()->get('cidoc.populate_temporal_date_for_cache', 1)) {
     /** @var \Drupal\cidoc\Entity\CidocEntity $entity */
     foreach ($entities as $entity) {
-      $entity->getTemporalInformation();
-      $entity->getGeospatialData();
+      // @TODO: Convert these methods to store their data elsewhere. and then remove this code.
+//      $entity->getTemporalInformation();
+//      $entity->getGeospatialData();
     }
   }
 }

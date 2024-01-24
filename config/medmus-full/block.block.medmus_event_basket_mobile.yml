@@ -15,6 +15,6 @@ plugin: event_basket
 settings:
   id: event_basket
   label: 'My events'
-  provider: oiko_event_basket
   label_display: visible
+  provider: oiko_event_basket
 visibility: {  }

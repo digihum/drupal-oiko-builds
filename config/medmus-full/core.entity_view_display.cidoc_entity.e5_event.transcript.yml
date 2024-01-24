@@ -14,48 +14,48 @@ bundle: e5_event
 mode: transcript
 content:
   cidoc_properties_transcript:
+    settings: {  }
+    third_party_settings: {  }
     weight: 3
     region: content
+  cidoc_temporal_summary:
     settings: {  }
     third_party_settings: {  }
-  cidoc_temporal_summary:
     weight: 1
     region: content
-    settings: {  }
-    third_party_settings: {  }
   citation:
     type: entity_reference_revisions_entity_view
-    weight: 5
-    region: content
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 5
+    region: content
   content:
     type: text_default
-    weight: 4
-    region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
-  name:
-    label: hidden
-    type: string
-    weight: 0
+    weight: 4
     region: content
+  name:
+    type: string
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 0
+    region: content
   significance:
     type: entity_reference_entity_view
-    weight: 2
-    region: content
     label: visually_hidden
     settings:
       view_mode: primary_historical_significance_pill
       link: false
     third_party_settings: {  }
+    weight: 2
+    region: content
 hidden:
   cidoc_admin_links: true
   cidoc_properties: true

@@ -4,10 +4,12 @@ namespace Drupal\webform_image_select\Element;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Element\FormElement;
 use Drupal\Core\Url;
 use Drupal\webform\Entity\WebformOptions as WebformOptionsEntity;
 use Drupal\webform\Utility\WebformElementHelper;
+use Drupal\webform\Utility\WebformFormHelper;
 
 /**
  * Provides a form element for managing webform element options.
@@ -85,7 +87,7 @@ class WebformImageSelectElementImages extends FormElement {
       '#type' => 'select',
       '#description' => t('Please select <a href=":href">predefined images</a> or enter custom image.', $t_args),
       '#options' => [
-        self::CUSTOM_OPTION => t('Custom images…'),
+        static::CUSTOM_OPTION => t('Custom images…'),
       ] + $webform_images,
       '#attributes' => [
         'class' => [$class_name],
@@ -112,7 +114,7 @@ class WebformImageSelectElementImages extends FormElement {
     $element['#element_validate'] = [[get_called_class(), 'validateWebformImageSelectElementImages']];
 
     if (!empty($element['#states'])) {
-      webform_process_states($element, '#wrapper_attributes');
+      WebformFormHelper::processStates($element, '#wrapper_attributes');
     }
 
     return $element;
@@ -126,12 +128,11 @@ class WebformImageSelectElementImages extends FormElement {
     $custom_value = NestedArray::getValue($form_state->getValues(), $element['custom']['#parents']);
 
     $value = $options_value;
-    if ($options_value == self::CUSTOM_OPTION) {
+    if ($options_value === static::CUSTOM_OPTION) {
       $value = $custom_value;
     }
 
-    $has_access = (!isset($element['#access']) || $element['#access'] === TRUE);
-    if ($element['#required'] && empty($value) && $has_access) {
+    if (Element::isVisibleElement($element) && $element['#required'] && empty($value)) {
       WebformElementHelper::setRequiredError($element, $form_state);
     }
 

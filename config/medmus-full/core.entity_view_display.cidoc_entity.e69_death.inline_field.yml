@@ -11,27 +11,27 @@ bundle: e69_death
 mode: inline_field
 content:
   'cidoc_properties:domain:p4_has_time_span':
-    weight: 0
     settings: {  }
     third_party_settings: {  }
+    weight: 0
     region: content
   name:
     type: string
-    weight: 0
     label: hidden
     settings:
       link_to_entity: true
     third_party_settings: {  }
+    weight: 0
     region: content
   p108_has_produced_entity_view_1:
-    weight: 4
     settings: {  }
     third_party_settings: {  }
+    weight: 4
     region: content
   p108_produced_by_entity_view_1:
-    weight: 5
     settings: {  }
     third_party_settings: {  }
+    weight: 5
     region: content
 hidden:
   cidoc_admin_links: true

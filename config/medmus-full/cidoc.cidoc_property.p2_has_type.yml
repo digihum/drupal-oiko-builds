@@ -6,10 +6,7 @@ _core:
   default_config_hash: zv3Zg8kskkA3WfZgGaseyAuN3PW6SoFa-0yH-1w0XEU
 id: p2_has_type
 label: 'P2 has type'
-bidirectional: false
 reverse_label: 'P2 is type of'
-friendly_label: Type
-reverse_friendly_label: 'Is type of'
 domain_bundles:
   - e5_event
   - e6_destruction
@@ -54,6 +51,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Type
+reverse_friendly_label: 'Is type of'
 widget_description:
   domain: ''
   range: ''

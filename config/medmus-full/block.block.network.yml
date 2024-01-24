@@ -17,8 +17,8 @@ plugin: 'block_content:647ad45a-b2f4-47cb-a38f-1624644e9005'
 settings:
   id: 'block_content:647ad45a-b2f4-47cb-a38f-1624644e9005'
   label: Network
-  provider: block_content
   label_display: visible
+  provider: block_content
   status: true
   info: ''
   view_mode: full

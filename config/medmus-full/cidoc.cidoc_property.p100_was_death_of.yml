@@ -6,10 +6,7 @@ _core:
   default_config_hash: 03azs6l1Hwm8iYfVvflfsLPKcPtwD3bG30W4HwelK78
 id: p100_was_death_of
 label: 'P100 was death of'
-bidirectional: false
 reverse_label: 'P100 died in'
-friendly_label: 'Was death of'
-reverse_friendly_label: 'Died in'
 domain_bundles:
   - e69_death
 range_bundles:
@@ -22,6 +19,9 @@ timesubwidget:
     type: 'no'
   range:
     type: time
+bidirectional: false
+friendly_label: 'Was death of'
+reverse_friendly_label: 'Died in'
 widget_description:
   domain: ''
   range: ''

@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa19_has_language
 label: 'PA19 has language'
-bidirectional: false
 reverse_label: 'PA19 is language of'
-friendly_label: Language
-reverse_friendly_label: 'Is language of'
 domain_bundles:
   - e21_person
   - e35_title
@@ -28,6 +25,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Language
+reverse_friendly_label: 'Is language of'
 widget_description:
   domain: ''
   range: ''

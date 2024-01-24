@@ -13,102 +13,102 @@ bundle: e41_appellation
 mode: default
 content:
   'cidoc_properties:domain:p102_has_title':
-    weight: 20
     settings: {  }
     third_party_settings: {  }
+    weight: 20
     region: content
   'cidoc_properties:domain:p139_has_alternative_form':
-    weight: 20
     settings: {  }
     third_party_settings: {  }
+    weight: 20
     region: content
   'cidoc_properties:domain:p1_is_identified_by':
-    weight: 20
     settings: {  }
     third_party_settings: {  }
+    weight: 20
     region: content
   'cidoc_properties:domain:p2_has_type':
-    weight: 20
     settings: {  }
     third_party_settings: {  }
+    weight: 20
     region: content
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 20
     settings: {  }
     third_party_settings: {  }
+    weight: 20
     region: content
   'cidoc_properties:domain:pa19_has_language':
-    weight: 20
     settings: {  }
     third_party_settings: {  }
+    weight: 20
     region: content
   'cidoc_properties:range:p128_carries':
-    weight: 21
     settings: {  }
     third_party_settings: {  }
+    weight: 21
     region: content
   'cidoc_properties:range:p12_occurred_in_the_presence_of':
-    weight: 21
     settings: {  }
     third_party_settings: {  }
+    weight: 21
     region: content
   'cidoc_properties:range:p131_is_identified_by':
-    weight: 21
     settings: {  }
     third_party_settings: {  }
+    weight: 21
     region: content
   'cidoc_properties:range:p139_has_alternative_form':
-    weight: 21
     settings: {  }
     third_party_settings: {  }
+    weight: 21
     region: content
   'cidoc_properties:range:p1_is_identified_by':
-    weight: 21
     settings: {  }
     third_party_settings: {  }
+    weight: 21
     region: content
   'cidoc_properties:range:p67_refers_to':
-    weight: 21
     settings: {  }
     third_party_settings: {  }
+    weight: 21
     region: content
   'cidoc_properties:range:p87_is_identified_by':
-    weight: 21
     settings: {  }
     third_party_settings: {  }
+    weight: 21
     region: content
   'cidoc_properties:range:p94_has_created':
-    weight: 21
     settings: {  }
     third_party_settings: {  }
+    weight: 21
     region: content
   field_exclude_from_duplicates_:
-    weight: 22
+    type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: list_default
+    weight: 22
     region: content
   internal_name:
-    label: inline
     type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
     weight: -3
     region: content
+  name:
+    type: string
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-  name:
-    label: hidden
-    type: string
     weight: -4
     region: content
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
   timeline_link:
-    weight: 0
     settings: {  }
     third_party_settings: {  }
+    weight: 0
     region: content
 hidden:
   cidoc_admin_links: true

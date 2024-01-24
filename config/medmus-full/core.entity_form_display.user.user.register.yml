@@ -21,40 +21,40 @@ mode: register
 content:
   account:
     weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   avatars_user_picture:
+    type: image_image
     weight: 2
+    region: content
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
-    type: image_image
-    region: content
   field_terms_and_privacy:
+    type: boolean_checkbox
     weight: 6
+    region: content
     settings:
       display_label: true
     third_party_settings: {  }
-    type: boolean_checkbox
-    region: content
   google_analytics:
     weight: 4
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   language:
     weight: 3
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   path:
     type: path
     weight: 5
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
   avatars_avatar_generator: true
   field_contact_preference: true

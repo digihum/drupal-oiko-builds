@@ -6,6 +6,9 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+// phpcs:disable DrupalPractice.General.OptionsT.TforValue
+// phpcs:disable DrupalPractice.General.DescriptionT.DescriptionT
+
 /**
  * Example: Webform Custom (Configuration) Form configuration settings form.
  */
@@ -19,7 +22,7 @@ class WebformExampleCustomFormSettingsForm extends ConfigFormBase {
   protected $tokenManager;
 
   /**
-   * The webform element (plugin) manager.
+   * The webform element plugin manager.
    *
    * @var \Drupal\webform\Plugin\WebformElementManagerInterface
    */
@@ -226,15 +229,15 @@ class WebformExampleCustomFormSettingsForm extends ConfigFormBase {
       '#images' => [
         'kitten_1' => [
           'text' => 'Cute Kitten 1',
-          'src' => 'http://placekitten.com/220/200',
+          'src' => 'https://placekitten.com/220/200',
         ],
         'kitten_2' => [
           'text' => 'Cute Kitten 2',
-          'src' => 'http://placekitten.com/180/200',
+          'src' => 'https://placekitten.com/180/200',
         ],
         'kitten_3' => [
           'text' => 'Cute Kitten 3',
-          'src' => 'http://placekitten.com/130/200',
+          'src' => 'https://placekitten.com/130/200',
         ],
       ],
       '#default_value' => $config->get('webform_image_select'),
@@ -318,10 +321,10 @@ class WebformExampleCustomFormSettingsForm extends ConfigFormBase {
           '#type' => 'textfield',
           '#title' => 'Last name',
         ],
-        'gender' => [
+        'sex' => [
           '#type' => 'webform_select_other',
-          '#options' => 'gender',
-          '#title' => 'Gender',
+          '#options' => 'sex',
+          '#title' => 'Sex',
         ],
         'martial_status' => [
           '#type' => 'webform_select_other',

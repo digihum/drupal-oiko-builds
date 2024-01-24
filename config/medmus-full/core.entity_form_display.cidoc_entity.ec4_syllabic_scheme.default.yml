@@ -16,32 +16,32 @@ third_party_settings:
     group_descriptive_text:
       children:
         - content
+      label: 'Descriptive text'
+      region: content
       parent_name: group_main_deets
       weight: 8
-      label: 'Descriptive text'
       format_type: fieldset
       format_settings:
+        classes: ''
+        id: ''
         description: ''
+        required_fields: true
         formatter: open
         fieldset_label_html: true
-        required_fields: true
-        id: ''
-        classes: ''
-      region: content
     group_data:
       children:
         - group_main_deets
         - group_oiko_world_settings
+      label: 'Main data entry'
+      region: content
       parent_name: ''
       weight: 1
-      label: 'Main data entry'
       format_type: tabs
       format_settings:
-        direction: horizontal
-        id: ''
         classes: ''
+        id: ''
+        direction: horizontal
         fieldset_label_html: true
-      region: content
     group_main_deets:
       children:
         - name
@@ -51,18 +51,18 @@ third_party_settings:
         - 'cidoc_properties:domain:p48_has_preferred_identifier'
         - 'cidoc_properties:domain:p139_has_alternative_form'
         - group_descriptive_text
+      label: 'Main details'
+      region: content
       parent_name: group_data
       weight: 3
-      label: 'Main details'
       format_type: tab
       format_settings:
-        formatter: closed
-        description: ''
         classes: ''
         id: ''
+        formatter: closed
+        description: ''
         required_fields: true
         fieldset_label_html: true
-      region: content
     group_oiko_world_settings:
       children:
         - status
@@ -71,18 +71,18 @@ third_party_settings:
         - timeline_preselect_option
         - timeline_logo
         - path
+      label: 'Connecting Medieval Music settings'
+      region: content
       parent_name: group_data
       weight: 5
       format_type: tab
       format_settings:
-        id: ''
         classes: ''
+        id: ''
         formatter: closed
         description: ''
         required_fields: true
         fieldset_label_html: true
-      label: 'Connecting Medieval Music settings'
-      region: content
 _core:
   default_config_hash: wy6wGXCXt2AqnVdVxorIQVb3dn0lnsNhSljZtN-XFv0
 id: cidoc_entity.ec4_syllabic_scheme.default
@@ -283,6 +283,7 @@ content:
   citation:
     type: entity_reference_paragraphs
     weight: 3
+    region: content
     settings:
       title: Citation
       title_plural: Citations
@@ -291,7 +292,6 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
-    region: content
   class_description:
     weight: 0
     region: content
@@ -300,27 +300,27 @@ content:
   content:
     type: text_textarea
     weight: 0
+    region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    region: content
   internal_name:
     type: string_textfield
     weight: 2
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
   name:
     type: string_textfield
     weight: 1
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
   path:
     type: path
     weight: 17
@@ -330,30 +330,30 @@ content:
   significance:
     type: options_select
     weight: 13
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 12
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   timeline_logo:
     type: image_image
     weight: 16
+    region: content
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
-    region: content
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
     weight: 15
+    region: content
     settings:
       display_label: true
-    region: content
     third_party_settings: {  }
   user_id:
     type: entity_reference_autocomplete
@@ -361,9 +361,9 @@ content:
     region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p1_is_identified_by': true

@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p45_consists_of
 label: 'P45 consists of'
-bidirectional: false
 reverse_label: 'P45 is incorporated in'
-friendly_label: Material
-reverse_friendly_label: 'Is material of'
 domain_bundles:
   - e21_person
   - ec7_source
@@ -23,6 +20,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Material
+reverse_friendly_label: 'Is material of'
 widget_description:
   domain: '<p>Type in the Material of this Source (Parchment, Paper)</p>'
   range: ''

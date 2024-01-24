@@ -5,16 +5,21 @@
  * Theme hooks, preprocessor, and suggestions.
  */
 
+use Drupal\Core\Render\Element;
 use Drupal\file\Entity\File;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Template\Attribute;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\webform\Element\WebformSelectOther;
+use Drupal\webform\Plugin\WebformElement\Radios as WebformRadios;
+use Drupal\webform\Plugin\WebformElement\WebformEntityRadios;
 use Drupal\webform\Utility\WebformAccessibilityHelper;
 use Drupal\webform\Utility\WebformElementHelper;
 
-/******************************************************************************/
+/* ************************************************************************** */
 // Theme hooks.
-/******************************************************************************/
+/* ************************************************************************** */
 
 /**
  * Implements hook_theme().
@@ -27,12 +32,21 @@ function webform_theme() {
     'webform_help_video_youtube' => [
       'variables' => ['youtube_id' => NULL, 'autoplay' => TRUE],
     ],
-
+    'webform_help_support' => [
+      'variables' => [
+        'account' => [],
+        'membership' => [],
+        'contribution' => [],
+      ],
+    ],
     'webform' => [
       'render element' => 'element',
     ],
     'webform_actions' => [
       'render element' => 'element',
+    ],
+    'webform_access_denied' => [
+      'variables' => ['message' => '', 'attributes' => [], 'webform' => NULL],
     ],
 
     'webform_handler_action_summary' => [
@@ -171,6 +185,7 @@ function webform_theme() {
         'webform_submission' => NULL,
         'current_page' => NULL,
         'operation' => NULL,
+        'pages' => [],
       ],
     ],
 
@@ -181,6 +196,7 @@ function webform_theme() {
         'current_page' => NULL,
         'operation' => NULL,
         'max_pages' => 10,
+        'pages' => [],
       ],
     ],
 
@@ -191,6 +207,7 @@ function webform_theme() {
         'current_page' => NULL,
         'operation' => NULL,
         'max_pages' => 10,
+        'pages' => [],
       ],
     ],
   ];
@@ -216,12 +233,12 @@ function webform_theme_registry_alter(&$theme_registry) {
   }
 }
 
-/******************************************************************************/
+/* ************************************************************************** */
 // Preprocessors.
-/******************************************************************************/
+/* ************************************************************************** */
 
 /**
- * Prepares variables for single local action link templates.
+ * Implements preprocess_menu_local_action() for single local action link templates.
  *
  * Applies custom link attributes to local actions.
  * Custom attributes are used to open Webform UI modals.
@@ -255,7 +272,7 @@ function webform_preprocess_menu_local_action(&$variables) {
 }
 
 /**
- * Prepares variables for checkboxes templates.
+ * Implements hook_preprocess_checkboxes() for checkboxes templates.
  *
  * @see \Drupal\webform\Plugin\WebformElement\OptionsBase
  */
@@ -268,7 +285,7 @@ function webform_preprocess_checkboxes(&$variables) {
 }
 
 /**
- * Prepares variables for radios templates.
+ * Implements hook_preprocess_radios() for radios templates.
  *
  * @see \Drupal\webform\Plugin\WebformElement\OptionsBase
  */
@@ -281,6 +298,33 @@ function webform_preprocess_radios(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_select() for select templates.
+ */
+function webform_preprocess_select(&$variables) {
+  if (!WebformElementHelper::isWebformElement($variables['element'])) {
+    return;
+  }
+
+  $element = $variables['element'];
+
+  // When options are sorted (viu #sort_options: true) make sure the
+  // select '_other_' options is always last.
+  // @see \Drupal\webform\Element\WebformOtherBase::processWebformOther
+  // @see template_preprocess_select().
+  if (!empty($element['#sort_options']) && !empty($element['#webform_other'])) {
+    $options = &$variables['options'];
+    foreach ($options as $index => $option) {
+      if ($option['value'] === WebformSelectOther::OTHER_OPTION) {
+        unset($options[$index]);
+        $options[] = $option;
+        $options = array_values($options);
+        break;
+      }
+    }
+  }
+}
+
+/**
  * Prepares variable for status_messages.
  */
 function webform_preprocess_status_messages(&$variables) {
@@ -289,12 +333,12 @@ function webform_preprocess_status_messages(&$variables) {
   }
 }
 
-/******************************************************************************/
+/* ************************************************************************** */
 // Preprocess tables.
-/******************************************************************************/
+/* ************************************************************************** */
 
 /**
- * Prepares variables for table templates.
+ * Implements hook_preprocess_table() for table templates.
  */
 function webform_preprocess_table(&$variables) {
   // Add links to 'Translate' webform tab.
@@ -320,7 +364,7 @@ function webform_preprocess_table(&$variables) {
 
       // Get language from edit link.
       $route_parameters = $row['cells'][1]['content']['#links']['edit']['url']->getRouteParameters();
-      $langcode = (isset($route_parameters['langcode'])) ? $route_parameters['langcode'] : NULL;
+      $langcode = $route_parameters['langcode'] ?? NULL;
       $language = \Drupal::languageManager()->getLanguage($langcode);
 
       // Convert the first cell in the row to a link.
@@ -333,16 +377,26 @@ function webform_preprocess_table(&$variables) {
   }
 }
 
-/******************************************************************************/
+/* ************************************************************************** */
 // Preprocess containers.
-/******************************************************************************/
+/* ************************************************************************** */
 
 /**
- * Prepares variables for datetime form element templates.
+ * Implements hook_preprocess_datetime_form() for datetime form element templates.
  */
 function webform_preprocess_datetime_form(&$variables) {
   if (!WebformElementHelper::isWebformElement($variables['element'])) {
     return;
+  }
+
+  $element = $variables['element'];
+
+  // Date and time custom placeholder.
+  if (isset($element['#date_date_placeholder']) && isset($variables['content']['date'])) {
+    $variables['content']['date']['#attributes']['placeholder'] = $element['#date_date_placeholder'];
+  }
+  if (isset($element['#date_time_placeholder']) && isset($variables['content']['time'])) {
+    $variables['content']['time']['#attributes']['placeholder'] = $element['#date_time_placeholder'];
   }
 
   // Add .container-inline to datetime form wrapper which is missing from the
@@ -353,7 +407,7 @@ function webform_preprocess_datetime_form(&$variables) {
 }
 
 /**
- * Prepares variables for details element templates.
+ * Implements hook_preprocess_details() for details element templates.
  */
 function webform_preprocess_details(&$variables) {
   if (!WebformElementHelper::isWebformElement($variables['element'])) {
@@ -380,7 +434,7 @@ function webform_preprocess_details(&$variables) {
 }
 
 /**
- * Prepares variables for fieldset element templates.
+ * Implements hook_preprocess_fieldset() for fieldset templates.
  */
 function webform_preprocess_fieldset(&$variables) {
   if (!WebformElementHelper::isWebformElement($variables['element'])) {
@@ -391,25 +445,6 @@ function webform_preprocess_fieldset(&$variables) {
   _webform_preprocess_element($variables, ['legend', 'title']);
 
   $element = &$variables['element'];
-
-  // If the description is displayed 'before' we need to move it to the
-  // fieldset's prefix.
-  // @see fieldset.html.twig
-  if (isset($element['#description_display']) && $element['#description_display'] === 'before' && !empty($variables['description']['content'])) {
-    if (isset($variables['prefix'])) {
-      if (is_array($variables['prefix'])) {
-        $variables['prefix'] = ['prefix' => $variables['prefix']];
-      }
-      else {
-        $variables['prefix'] = ['prefix' => ['#markup' => $variables['prefix']]];
-      }
-    }
-    else {
-      $variables['prefix'] = [];
-    }
-    $variables['prefix']['description'] = $variables['description']['content'];
-    unset($variables['description']['content']);
-  }
 
   // Apply inline title defined by radios, checkboxes, and buttons.
   // @see \Drupal\webform\Plugin\WebformElement\OptionsBase::prepare
@@ -431,21 +466,45 @@ function webform_preprocess_fieldset(&$variables) {
     $variables['attributes']['class'][] = 'webform-type-' . Html::getClass($element['#type']);
   }
 
-  // Remove invalid 'required' and 'aria-required' attributes from fieldset.
+  // Remove invalid 'required' attributes from fieldset.
+  //
+  // Issue #3174459: W3C Validation: required attribute not allowed on
+  // fieldset tag.
+  // @see https://www.drupal.org/project/drupal/issues/3174459
   if (isset($element['#webform_key'])) {
-    unset(
-      $variables['attributes']['required'],
-      $variables['attributes']['aria-required']
-    );
+    unset($variables['attributes']['required']);
+  }
+
+  // Add aria-required="true" only on fieldsets containing required
+  // radiobuttons.
+  //
+  // Issue #3240249: Aria-required on fieldset trigger accessibility fails.
+  // @see https://www.drupal.org/project/webform/issues/3240249
+  // @see https://www.drupal.org/project/webform/issues/3277192
+  /** @var \Drupal\webform\Plugin\WebformElementManagerInterface $element_manager */
+  $element_manager = \Drupal::service('plugin.manager.webform.element');
+  $element_plugin = $element_manager->getElementInstance($element);
+  $is_radios = ($element_plugin instanceof WebformRadios || $element_plugin instanceof WebformEntityRadios);
+  if ($is_radios) {
+    $id = $variables['attributes']['id'] . '-legend';
+    $variables['legend']['attributes']['id'] = $id;
+
+    if (isset($variables['attributes']['aria-required'])) {
+      // The aria-required is _not_ necessary on a fieldset of radio elements.
+      unset($variables['attributes']['aria-required']);
+    }
+  }
+  elseif (isset($variables['attributes']['aria-required'])) {
+    unset($variables['attributes']['aria-required']);
   }
 }
 
-/******************************************************************************/
+/* ************************************************************************** */
 // Preprocess form element.
-/******************************************************************************/
+/* ************************************************************************** */
 
 /**
- * Prepares variables for form element templates.
+ * Implements hook_preprocess_form_element() for form element templates.
  */
 function webform_preprocess_form_element(&$variables) {
   if (!WebformElementHelper::isWebformElement($variables['element'])) {
@@ -455,17 +514,40 @@ function webform_preprocess_form_element(&$variables) {
   // Setup description, help, and more.
   _webform_preprocess_element($variables, ['label', '#title']);
 
+  // Make sure the #description_display is always applied to account for
+  // #more which is placed in the #description.
+  // @see template_preprocess_form_element()
+  if (isset($variables['description'])) {
+    $element = &$variables['element'];
+    $variables['description_display'] = $element['#description_display'];
+  }
+
+  // Issue #2700439: Description class not added to
+  // form-element.html.twig template.
+  // @see https://www.drupal.org/project/drupal/issues/2700439
+  if (isset($variables['description_display']) && $variables['description_display'] === 'before') {
+    // Add system .description class.
+    if (isset($variables['description'])) {
+      if (empty($variables['description']['attributes'])) {
+        $variables['description']['attributes'] = new Attribute();
+      }
+      $variables['description']['attributes']->addClass('description');
+    }
+  }
+
   // Add missing classes to the Claro theme's form elements.
   // @see core/modules/system/templates/form-element.html.twig
   // @see claro/templates/form-element.html.twig
-  // @todo Once Claro is stable determine if this code should removed.
+  // @todo Once Claro and Oliver are stable determine if this code is needed.
   static $is_claro_theme;
+  static $is_olivero_theme;
   if (!isset($is_claro_theme)) {
     /** @var \Drupal\webform\WebformThemeManagerInterface $theme_manager */
     $theme_manager = \Drupal::service('webform.theme_manager');
     $is_claro_theme = $theme_manager->isActiveTheme('claro');
+    $is_olivero_theme = $theme_manager->isActiveTheme('olivero');
   }
-  if ($is_claro_theme) {
+  if ($is_claro_theme || $is_olivero_theme) {
     // Add system .form-type-TYPE class.
     if (!empty($variables['type'])) {
       $variables['attributes']['class'][] = 'form-type-' . Html::getClass($variables['type']);
@@ -473,25 +555,28 @@ function webform_preprocess_form_element(&$variables) {
 
     // Add system .description class.
     if (isset($variables['description'])) {
+      if (empty($variables['description']['attributes'])) {
+        $variables['description']['attributes'] = new Attribute();
+      }
       $variables['description']['attributes']->addClass('description');
     }
   }
 }
 
 /**
- * Prepares variables for form label templates.
+ * Implements hook_preprocess_form_element_label() for form element label templates.
  */
 function webform_preprocess_form_element_label(&$variables) {
   $element = &$variables['element'];
 
   // Fix variable title #markup tha contains a render array which is most
-  // likely a help tooltip.
+  // likely a Help tooltip.
   // @see template_preprocess_form_element_label()
   // @see webform_preprocess_form_element()
   if (isset($variables['title'])
     && is_array($variables['title'])
     && is_array($variables['title']['#markup'])) {
-      $variables['title'] = $variables['title']['#markup'];
+    $variables['title'] = $variables['title']['#markup'];
   }
 
   // Remove label 'for' attribute.
@@ -502,12 +587,12 @@ function webform_preprocess_form_element_label(&$variables) {
   }
 }
 
-/******************************************************************************/
+/* ************************************************************************** */
 // Preprocess file/image elements.
-/******************************************************************************/
+/* ************************************************************************** */
 
 /**
- * Prepares variables for file managed file templates.
+ * Implements hook_preprocess_file_managed_file() for file managed file templates.
  *
  * @see https://stackoverflow.com/questions/21842274/cross-browser-custom-styling-for-file-upload-button
  * @see template_preprocess_file_managed_file()
@@ -523,7 +608,7 @@ function webform_preprocess_file_managed_file(&$variables) {
   }
 
   // Don't alter hidden file upload input.
-  if (isset($element['upload']['#access']) && $element['upload']['#access'] === FALSE) {
+  if (!Element::isVisibleElement($element['upload'])) {
     return;
   }
 
@@ -534,8 +619,8 @@ function webform_preprocess_file_managed_file(&$variables) {
   $label = [
     '#type' => 'html_tag',
     '#tag' => 'label',
-    '#value' => (isset($element['#button__title'])) ? $element['#button__title'] : (empty($element['#multiple']) ? t('Choose file') : t('Choose files')),
-    '#attributes' => (isset($element['#button__attributes'])) ? $element['#button__attributes'] : [],
+    '#value' => $element['#button__title'] ?? (empty($element['#multiple']) ? t('Choose file') : t('Choose files')),
+    '#attributes' => $element['#button__attributes'] ?? [],
   ];
 
   // Add 'for' attribute.
@@ -564,17 +649,35 @@ function webform_preprocess_file_managed_file(&$variables) {
 }
 
 /**
- * Prepares variables for file upload help text templates.
+ * Implements hook_preprocess_file_upload_help() for file upload help text templates.
+ *
+ * @see \Drupal\webform\Plugin\WebformElement\WebformManagedFileBase::prepare
  */
 function webform_preprocess_file_upload_help(&$variables) {
   $upload_validators = $variables['upload_validators'];
+
   if (isset($upload_validators['webform_file_limit']) && $upload_validators['webform_file_limit'][0]) {
     $variables['descriptions'][] = t('@size limit per form.', ['@size' => format_size($upload_validators['webform_file_limit'][0])]);
+  }
+
+  // Issue #3136578: Comma-separate the list of allowed file extensions.
+  // @see https://www.drupal.org/project/drupal/issues/3136578
+  if (isset($upload_validators['webform_file_validate_extensions'])) {
+    foreach ($variables['descriptions'] as $index => $description) {
+      if ($description instanceof TranslatableMarkup
+        && $description->getUntranslatedString() === 'Allowed types: @extensions.') {
+        $arguments = $description->getArguments();
+        if (is_string($arguments['@extensions']) && strpos($arguments['@extensions'], ',') === FALSE) {
+          $arguments['@extensions'] = preg_replace('/ +/', ', ', $arguments['@extensions']);
+          $variables['descriptions'][$index] = new TranslatableMarkup($description->getUntranslatedString(), $arguments);
+        }
+      }
+    }
   }
 }
 
 /**
- * Prepares variables for file link templates.
+ * Implements hook_preprocess_file_link() for file link templates.
  *
  * @see webform_file_access
  */
@@ -589,38 +692,30 @@ function webform_preprocess_file_link(&$variables) {
   }
 
   // Add file size variable to Claro theme.
-  if (empty($variables['file_size']) && \Drupal::service('webform.theme_manager')->isActiveTheme('claro')) {
+  if (empty($variables['file_size'])
+    && $file->getSize()
+    && \Drupal::service('webform.theme_manager')->isActiveTheme('claro')) {
     $variables['file_size'] = format_size($file->getSize(), \Drupal::languageManager()->getCurrentLanguage()->getId());
   }
 }
 
 /**
- * Prepares variables for image.
+ * Implements hook_preprocess_image() for image templates.
  *
  * Make sure the image src for the 'webform_image_file' src is an absolute URL.
  */
 function webform_preprocess_image(&$variables) {
   global $base_url;
-  if (isset($variables['attributes']['class']) && in_array('webform-image-file', (array) $variables['attributes']['class'])) {
+  if (isset($variables['attributes']['class'])
+    && in_array('webform-image-file', (array) $variables['attributes']['class'])
+    && !preg_match('#^https?://#', $variables['attributes']['src'])) {
     $variables['attributes']['src'] = $base_url . preg_replace('/^' . preg_quote(base_path(), '/') . '/', '/', $variables['attributes']['src']);
   }
 }
 
-/******************************************************************************/
-// Preprocess webform specific elements.
-/******************************************************************************/
-
-/**
- * Prepares variables for webform section element templates.
- */
-function webform_preprocess_webform_section(&$variables) {
-  // Setup description, help, and more.
-  _webform_preprocess_element($variables);
-}
-
-/******************************************************************************/
+/* ************************************************************************** */
 // Preprocess helpers.
-/******************************************************************************/
+/* ************************************************************************** */
 
 /**
  * Prepares variables for checkboxes and radios options templates.
@@ -629,11 +724,14 @@ function webform_preprocess_webform_section(&$variables) {
  * reset the element's 'attributes';
  */
 function _webform_preprocess_options(array &$variables) {
-  $element =& $variables['element'];
+  $element = &$variables['element'];
 
   $variables['attributes']['class'][] = Html::getClass('js-webform-' . $element['#type']);
 
   if (!empty($element['#options_display'])) {
+    if (strpos($element['#options_display'], 'buttons_') === 0) {
+      $variables['attributes']['class'][] = 'webform-options-display-buttons';
+    }
     $variables['attributes']['class'][] = Html::getClass('webform-options-display-' . $element['#options_display']);
     $variables['#attached']['library'][] = 'webform/webform.element.options';
   }
@@ -652,8 +750,8 @@ function _webform_preprocess_options(array &$variables) {
  * @see /webform/templates/webform-section.html.twig
  */
 function _webform_preprocess_element(array &$variables, $title_parents = ['title']) {
-  $element =& $variables['element'];
-  $type = (isset($element['#type'])) ? $element['#type'] : '';
+  $element = &$variables['element'];
+  $type = $element['#type'] ?? '';
 
   // Fix details 'description' property which does not have description.content.
   // @see template_preprocess_details
@@ -733,7 +831,7 @@ function _webform_preprocess_description_help(array &$variables) {
   // Move #description to #help for webform admin routes.
   if (\Drupal::config('webform.settings')->get('ui.description_help')
     && \Drupal::service('webform.request')->isWebformAdminRoute()
-    && \Drupal::routeMatch()->getRouteName() != 'webform.contribute.settings'
+    && \Drupal::routeMatch()->getRouteName() !== 'webform.contribute.settings'
     && !isset($element['#help'])
     && !empty($element['#title']) && (empty($element['#title_display']) || !in_array($element['#title_display'], ['attribute', 'invisible']))
     && !empty($element['#description']) && (empty($element['#description_display']) || !in_array($element['#description_display'], ['invisible']))
@@ -761,14 +859,14 @@ function _webform_preprocess_description_help(array &$variables) {
  * Append #help to title or element variable.
  */
 function _webform_preprocess_help(array &$variables, $title_parents = ['title']) {
-  $element =& $variables['element'];
-  $type = (isset($element['#type'])) ? $element['#type'] : '';
+  $element = &$variables['element'];
+  $type = $element['#type'] ?? '';
 
   if (empty($element['#help'])) {
     return;
   }
 
-  $help_display = (isset($element['#help_display'])) ? $element['#help_display'] : 'title_after';
+  $help_display = $element['#help_display'] ?? 'title_after';
 
   // Determine target variable (aka render element).
   $targets = [
@@ -792,7 +890,7 @@ function _webform_preprocess_help(array &$variables, $title_parents = ['title'])
   }
   else {
     $variables += [$target => []];
-    $target_element =& $variables[$target];
+    $target_element = &$variables[$target];
   }
 
   // Default #help_title to element's #title.
@@ -828,7 +926,7 @@ function _webform_preprocess_help(array &$variables, $title_parents = ['title'])
 
   // Place help before the target.
   if (isset($build[$target])) {
-    if (($target == 'title' && $title_display === 'inline')
+    if (($target === 'title' && $title_display === 'inline')
       || $help_display === 'title_before'
       || $help_display === 'element_before') {
       $build[$target]['#weight'] = 0;
@@ -870,9 +968,9 @@ function _webform_preprocess_form_element_description_more(array &$variables) {
   ] + array_intersect_key($element, array_flip(['#more', '#more_title']));
 }
 
-/******************************************************************************/
+/* ************************************************************************** */
 // Theme suggestions.
-/******************************************************************************/
+/* ************************************************************************** */
 
 /**
  * Provides alternate named suggestions for a specific theme hook.
@@ -888,10 +986,10 @@ function _webform_preprocess_form_element_description_more(array &$variables) {
 function _webform_theme_suggestions(array $variables, $hook) {
   $suggestions = [];
 
-  if ($hook == 'webform' && isset($variables['element']) && isset($variables['element']['#webform_id'])) {
+  if ($hook === 'webform' && isset($variables['element']) && isset($variables['element']['#webform_id'])) {
     $suggestions[] = $hook . '__' . $variables['element']['#webform_id'];
   }
-  elseif ($hook == 'webform_submission_form' && isset($variables['form']) && isset($variables['form']['#webform_id'])) {
+  elseif ($hook === 'webform_submission_form' && isset($variables['form']) && isset($variables['form']['#webform_id'])) {
     $suggestions[] = $hook . '__' . $variables['form']['#webform_id'];
   }
   elseif (strpos($hook, 'webform_element_base_') === 0 || strpos($hook, 'webform_container_base_') === 0) {
@@ -951,7 +1049,7 @@ function _webform_devel_hook_theme_suggestions_generate() {
   print '<pre>';
   foreach ($theme as $hook => $info) {
     $suggestion = FALSE;
-    if ($hook == 'webform') {
+    if ($hook === 'webform') {
       $suggestion = TRUE;
     }
     elseif (strpos($hook, 'webform_element_base_') === 0 || strpos($hook, 'webform_container_base_') === 0) {
@@ -978,10 +1076,10 @@ function webform_theme_suggestions_$hook(array \$variables) {
   exit;
 }
 
-/******************************************************************************/
+/* ************************************************************************** */
 // Webform theme suggestions.
 // Generate using _webform_devel_hook_theme_suggestions_generate();
-/******************************************************************************/
+/* ************************************************************************** */
 
 /**
  * Implements hook_theme_suggestions_HOOK().
@@ -1109,9 +1207,9 @@ function webform_theme_suggestions_webform_progress_tracker(array $variables) {
   return _webform_theme_suggestions($variables, 'webform_progress_tracker');
 }
 
-/******************************************************************************/
+/* ************************************************************************** */
 // Custom theme suggestions.
-/******************************************************************************/
+/* ************************************************************************** */
 
 /**
  * Add webform options display suggestions to radios and checkboxes.
@@ -1132,7 +1230,7 @@ function _webform_theme_suggestions_options(array $variables, $type) {
 
   $element = $variables['element'];
   $suggestions = [];
-  if (!empty($element['#options_display']) && $element['#options_display'] === 'buttons') {
+  if (!empty($element['#options_display']) && strpos($element['#options_display'], 'buttons') === 0) {
     $suggestions[] = $type . '__webform_' . $element['#options_display'];
   }
   return $suggestions;

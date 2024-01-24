@@ -21,7 +21,7 @@ abstract class WebformEntityPrintFunctionalTestBase extends WebformBrowserTestBa
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     // Use test print engine.

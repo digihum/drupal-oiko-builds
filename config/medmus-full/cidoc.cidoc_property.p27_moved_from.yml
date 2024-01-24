@@ -6,10 +6,7 @@ _core:
   default_config_hash: _k7Iq3SxYXmj8rwHGRStHtAiKGGPeNemIOzywJNJ3dE
 id: p27_moved_from
 label: 'P27 moved from'
-bidirectional: false
 reverse_label: 'P27 was origin of'
-friendly_label: 'Moved from'
-reverse_friendly_label: 'Was origin of'
 domain_bundles:
   - e9_move
 range_bundles:
@@ -22,8 +19,13 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Moved from'
+reverse_friendly_label: 'Was origin of'
 widget_description:
-  domain: "\n\n"
+  domain: |+
+
+
 autocomplete_description:
   domain: ''
   range: ''

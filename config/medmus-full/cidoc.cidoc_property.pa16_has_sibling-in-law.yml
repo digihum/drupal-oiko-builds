@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa16_has_sibling-in-law
 label: 'PA16 has sibling-in-law'
-bidirectional: false
 reverse_label: 'PA16 has sibling-in-law'
-friendly_label: null
-reverse_friendly_label: null
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: null
+reverse_friendly_label: null
 widget_description: {  }
 autocomplete_description: {  }
 child_events: {  }

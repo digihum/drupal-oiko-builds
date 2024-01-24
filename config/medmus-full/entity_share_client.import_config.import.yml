@@ -14,10 +14,13 @@ import_processor_settings:
       post_entity_save: 0
       prepare_importable_entity_data: -100
   entity_reference:
-    max_recursion_depth: -1
     weights:
       process_entity: 10
+    max_recursion_depth: -1
   medmus_share_unpublished_by_default:
+    weights:
+      prepare_importable_entity_data: 0
+      process_entity: 0
     entity_type_ids:
       cidoc_entity: cidoc_entity
       avatars_preview: 0
@@ -36,17 +39,14 @@ import_processor_settings:
       user: 0
       webform_submission: 0
       paragraph: 0
-    weights:
-      prepare_importable_entity_data: 0
-      process_entity: 0
   physical_file:
     weights:
       process_entity: 0
   revision:
-    enforce_new_revision: true
-    translation_affected: false
     weights:
       process_entity: 10
+    enforce_new_revision: true
+    translation_affected: false
   skip_imported:
     weights:
       is_entity_importable: -5

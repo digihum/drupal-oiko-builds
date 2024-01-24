@@ -2,12 +2,12 @@ uuid: 7a22c97f-8a92-4a0d-9a0a-eac6b842caa8
 langcode: en
 status: true
 dependencies:
+  config:
+    - search_api.server.db_search_backend
   module:
     - cidoc
     - node
     - search_api
-  config:
-    - search_api.server.db_search_backend
 id: author_attributable_content
 name: 'Author attributable content'
 description: 'Used for aggregate lists of what a user has done.'
@@ -22,11 +22,19 @@ field_settings:
       fields:
         - 'entity:cidoc_entity/changed'
         - 'entity:node/changed'
-  cidoc_name:
-    label: Name
+  cidoc_bundle:
+    label: Class
     datasource_id: 'entity:cidoc_entity'
-    property_path: name
+    property_path: bundle
     type: string
+    dependencies:
+      module:
+        - cidoc
+  cidoc_changed:
+    label: Changed
+    datasource_id: 'entity:cidoc_entity'
+    property_path: changed
+    type: date
     dependencies:
       module:
         - cidoc
@@ -38,11 +46,11 @@ field_settings:
     dependencies:
       module:
         - cidoc
-  cidoc_changed:
-    label: Changed
+  cidoc_name:
+    label: Name
     datasource_id: 'entity:cidoc_entity'
-    property_path: changed
-    type: date
+    property_path: name
+    type: string
     dependencies:
       module:
         - cidoc
@@ -62,14 +70,14 @@ field_settings:
     dependencies:
       module:
         - cidoc
-  cidoc_bundle:
-    label: Class
-    datasource_id: 'entity:cidoc_entity'
-    property_path: bundle
-    type: string
+  node_changed:
+    label: Changed
+    datasource_id: 'entity:node'
+    property_path: changed
+    type: date
     dependencies:
       module:
-        - cidoc
+        - node
   node_status:
     label: Published
     datasource_id: 'entity:node'
@@ -94,14 +102,6 @@ field_settings:
     dependencies:
       module:
         - node
-  node_changed:
-    label: Changed
-    datasource_id: 'entity:node'
-    property_path: changed
-    type: date
-    dependencies:
-      module:
-        - node
 datasource_settings:
   'entity:cidoc_entity':
     bundles:
@@ -115,17 +115,17 @@ datasource_settings:
       default: true
       selected: {  }
 processor_settings:
-  cidoc: {  }
-  rendered_item: {  }
   add_url: {  }
   aggregated_field: {  }
+  cidoc: {  }
   entity_type: {  }
   language_with_fallback: {  }
+  rendered_item: {  }
 tracker_settings:
   default:
     indexing_order: fifo
 options:
-  index_directly: true
   cron_limit: 50
+  index_directly: true
   track_changes_in_references: true
 server: db_search_backend

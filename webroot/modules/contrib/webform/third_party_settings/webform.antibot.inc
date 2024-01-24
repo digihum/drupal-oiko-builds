@@ -24,6 +24,19 @@ define('WEBFORM_ANTIBOT_DISABLED_WEBFORM', 2);
 define('WEBFORM_ANTIBOT_ENABLED_WEBFORM', 3);
 
 /**
+ * Determine if antibot is enabled for webform submissions.
+ *
+ * @return bool
+ *   TRUE if antibot is enabled for webform submissions.
+ */
+function _webform_antibot_enabled() {
+  /** @var \Drupal\Core\Path\PathMatcherInterface $path_matcher */
+  $path_matcher = \Drupal::service('path.matcher');
+  $form_ids = \Drupal::config('antibot.settings')->get('form_ids') ?? [];
+  return $path_matcher->matchPath('webform_submission_asdas', implode("\n", $form_ids));
+}
+
+/**
  * Alter webform third party settings webforms to include Antibot configuration.
  *
  * @param array $form
@@ -39,6 +52,10 @@ define('WEBFORM_ANTIBOT_ENABLED_WEBFORM', 3);
  *   The label to displayed within the checkbox titles.
  */
 function _webform_antibot_form(array &$form, FormStateInterface $form_state, $antibot, $antibot_state, $label) {
+  if (_webform_antibot_enabled()) {
+    return;
+  }
+
   $t_args = [
     '%label' => $label,
     ':href_antibot' => Url::fromRoute('antibot.settings')->toString(),
@@ -59,17 +76,17 @@ function _webform_antibot_form(array &$form, FormStateInterface $form_state, $an
     '#return_value' => TRUE,
   ];
 
-  if ($antibot_state != WEBFORM_ANTIBOT_NEUTRAL) {
+  $antibot_state = (int) $antibot_state;
+  if ($antibot_state !== WEBFORM_ANTIBOT_NEUTRAL) {
     $form['third_party_settings']['antibot']['antibot']['#attributes']['disabled'] = 'disabled';
     $form_state->set('antibot_disabled', TRUE);
-    if ($antibot_state == WEBFORM_ANTIBOT_ENABLED_WEBFORM) {
+    if ($antibot_state === WEBFORM_ANTIBOT_ENABLED_WEBFORM) {
       $form['third_party_settings']['antibot']['antibot']['#default_value'] = 1;
       $form['third_party_settings']['antibot']['antibot']['#description'] = t('<a href=":href_webform">Antibot protection</a> is enabled for all webforms.', $t_args);
     }
   }
 
   $form['#validate'][] = '_webform_antibot_form_validate';
-
 }
 
 /**
@@ -79,9 +96,6 @@ function _webform_antibot_form_validate(&$form, FormStateInterface $form_state) 
   $third_party_settings = $form_state->getValue('third_party_settings');
   if ($form_state->get('antibot_disabled') || empty($third_party_settings['antibot']['antibot'])) {
     unset($third_party_settings['antibot']['antibot']);
-  }
-  if (empty($third_party_settings['antibot'])) {
-    unset($third_party_settings['antibot']);
   }
   $form_state->setValue('third_party_settings', $third_party_settings);
 }
@@ -136,6 +150,10 @@ function antibot_webform_third_party_settings_form_alter(&$form, FormStateInterf
  * Implements hook_webform_submission_form_alter().
  */
 function antibot_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (_webform_antibot_enabled()) {
+    return;
+  }
+
   // Only add an Antibot when a webform is initially load.
   // After a webform is submitted, via a multi-step webform and/or saving a draft,
   // we can skip adding an Antibot.

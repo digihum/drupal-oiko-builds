@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p131_is_identified_by
 label: 'P131 is identified by'
-bidirectional: false
 reverse_label: 'P131 identifies'
-friendly_label: Appellation
-reverse_friendly_label: Identifies
 domain_bundles:
   - e21_person
   - e74_group
@@ -23,6 +20,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Appellation
+reverse_friendly_label: Identifies
 widget_description:
   domain: ''
   range: ''

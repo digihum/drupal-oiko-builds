@@ -25,20 +25,20 @@ content:
     settings: {  }
     third_party_settings: {  }
   avatars_user_picture:
+    type: image_image
     weight: 1
+    region: content
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
-    type: image_image
-    region: content
   field_contact_preference:
     type: boolean_checkbox
     weight: 3
+    region: content
     settings:
       display_label: true
     third_party_settings: {  }
-    region: content
   field_show_all_unpublished_entit:
     type: boolean_checkbox
     weight: 4

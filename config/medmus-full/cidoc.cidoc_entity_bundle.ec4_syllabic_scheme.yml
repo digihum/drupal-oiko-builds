@@ -2,14 +2,14 @@ uuid: 7f12f6fa-19d9-40d7-b337-833638ad94a7
 langcode: en
 status: true
 dependencies: {  }
-crm_entity: ec4_syllabic_scheme
 id: ec4_syllabic_scheme
 label: 'EC4 Syllabic Scheme'
-friendly_label: 'Syllabic scheme'
-weight: 10
+crm_entity: ec4_syllabic_scheme
 group: auxiliary
+weight: 10
 description: '<p>This class contains the count of syllables per line stanza until the last stressed syllable of a stanza in a EC1 Work. The presence of a last unstressed syllable (feminine rhyme) is defined by an apostrophe.</p>'
 examples: "<ul>\r\n<li>10 10 10 10 10 10 10</li>\r\n<li>5’ 7 5’ 7 8 8 8 8</li>\r\n</ul>"
 geoserializers:
   event: '0'
   move: '0'
+friendly_label: 'Syllabic scheme'

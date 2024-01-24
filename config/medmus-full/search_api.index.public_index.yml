@@ -2,11 +2,11 @@ uuid: 3496ae3b-a19a-437f-826d-b46fbe060767
 langcode: en
 status: true
 dependencies:
+  config:
+    - search_api.server.db_search_backend
   module:
     - cidoc
     - search_api
-  config:
-    - search_api.server.db_search_backend
 id: public_index
 name: 'Public Index'
 description: ''
@@ -28,17 +28,17 @@ datasource_settings:
         - e21_person
         - e74_group
 processor_settings:
-  cidoc: {  }
-  rendered_item: {  }
   add_url: {  }
   aggregated_field: {  }
+  cidoc: {  }
   entity_type: {  }
   language_with_fallback: {  }
+  rendered_item: {  }
 tracker_settings:
   default:
     indexing_order: fifo
 options:
-  index_directly: true
   cron_limit: 50
+  index_directly: true
   track_changes_in_references: true
 server: db_search_backend

@@ -22,7 +22,7 @@ use Drupal\webform\WebformSubmissionForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * Trait class for Webform Ajax support.
+ * Trait for webform ajax support.
  */
 trait WebformAjaxFormTrait {
 
@@ -135,7 +135,7 @@ trait WebformAjaxFormTrait {
         continue;
       }
 
-      $actions =& $form[$element_key];
+      $actions = &$form[$element_key];
       foreach (Element::children($actions) as $action_key) {
         if (WebformElementHelper::isType($actions[$action_key], 'submit')) {
           $actions[$action_key]['#ajax'] = [
@@ -161,9 +161,11 @@ trait WebformAjaxFormTrait {
     $wrapper_attributes = new Attribute($wrapper_attributes);
 
     $form['#form_wrapper_id'] = $wrapper_id;
-    $form['#prefix'] = '<a id="' . $wrapper_id . '-content" tabindex="-1" aria-hidden="true"></a>';
+
+    $form += ['#prefix' => '', '#suffix' => ''];
+    $form['#prefix'] .= '<span id="' . $wrapper_id . '-content"></span>';
     $form['#prefix'] .= '<div' . $wrapper_attributes . '>';
-    $form['#suffix'] = '</div>';
+    $form['#suffix'] = '</div>' . $form['#suffix'];
 
     // Add Ajax library which contains 'Scroll to top' Ajax command and
     // Ajax callback for confirmation back to link.
@@ -188,7 +190,7 @@ trait WebformAjaxFormTrait {
    *   to a URL
    */
   public function submitAjaxForm(array &$form, FormStateInterface $form_state) {
-    $scroll_top_target = (isset($form['#webform_ajax_scroll_top'])) ? $form['#webform_ajax_scroll_top'] : 'form';
+    $scroll_top_target = $form['#webform_ajax_scroll_top'] ?? 'form';
 
     if ($form_state->hasAnyErrors()) {
       // Display validation errors and scroll to the top of the page.
@@ -386,14 +388,14 @@ trait WebformAjaxFormTrait {
     }
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Drupal.announce handling.
   //
   // Announcements are stored in the user session because the $form_state
   // is already serialized (and can't be altered) when announcements
   // are added to Ajax response.
   // @see \Drupal\webform\Form\WebformAjaxFormTrait::submitAjaxForm
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Queue announcement with Ajax response.
@@ -408,12 +410,11 @@ trait WebformAjaxFormTrait {
    * @see \Drupal\webform\Form\WebformAjaxFormTrait::submitAjaxForm
    */
   protected function announce($text, $priority = 'polite') {
-    $announcements = $this->getAnnouncements();
+    $announcements =& drupal_static('webform_announcements', []);
     $announcements[] = [
       'text' => $text,
       'priority' => $priority,
     ];
-    $this->setAnnouncements($announcements);
   }
 
   /**
@@ -423,8 +424,7 @@ trait WebformAjaxFormTrait {
    *   An associative array of announcements.
    */
   protected function getAnnouncements() {
-    $session = $this->getRequest()->getSession();
-    return $session->get('announcements') ?: [];
+    return drupal_static('webform_announcements', []);
   }
 
   /**
@@ -434,18 +434,15 @@ trait WebformAjaxFormTrait {
    *   An associative array of announcements.
    */
   protected function setAnnouncements(array $announcements) {
-    $session = $this->getRequest()->getSession();
-    $session->set('announcements', $announcements);
-    $session->save();
+    $this->resetAnnouncements();
+    drupal_static('webform_announcements', $announcements);
   }
 
   /**
    * Reset announcements.
    */
   protected function resetAnnouncements() {
-    $session = $this->getRequest()->getSession();
-    $session->remove('announcements');
-    $session->save();
+    drupal_static_reset('webform_announcements');
   }
 
 }

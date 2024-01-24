@@ -6,10 +6,7 @@ _core:
   default_config_hash: AGj3x9yRFGNTUnUw6hm_8EV3CTemtPJ8smkw5B6gnsw
 id: p14_carried_out_by
 label: 'P14 carried out by'
-bidirectional: false
 reverse_label: 'P14 performed'
-friendly_label: 'Carried out by'
-reverse_friendly_label: Performed
 domain_bundles:
   - e7_activity
   - e9_move
@@ -30,8 +27,13 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Carried out by'
+reverse_friendly_label: Performed
 widget_description:
-  domain: "\n\n"
+  domain: |+
+
+
 autocomplete_description:
   domain: ''
   range: ''

@@ -28,49 +28,49 @@ third_party_settings:
         - group_journal_article
         - group_containedi
         - field_pp_
+      label: Article
+      region: content
       parent_name: group_main
       weight: 17
       format_type: tab
-      region: content
       format_settings:
-        description: ''
-        formatter: open
-        required_fields: true
-        id: ''
         classes: ''
+        id: ''
+        formatter: open
+        description: ''
+        required_fields: true
         fieldset_label_html: false
-      label: Article
     group_monographs:
       children:
         - field_editor
         - field_place_of_publication
         - field_publisher
+      label: 'Monograph - Critical edition - Collective work'
+      region: content
       parent_name: group_main
       weight: 18
       format_type: tab
-      region: content
       format_settings:
-        description: ''
-        formatter: open
-        required_fields: true
-        id: ''
         classes: ''
+        id: ''
+        formatter: open
+        description: ''
+        required_fields: true
         fieldset_label_html: false
-      label: 'Monograph - Critical edition - Collective work'
     group_main_de:
       children:
         - group_main
         - group_au
+      label: 'Main details'
+      region: content
       parent_name: ''
       weight: 0
       format_type: tabs
-      region: content
       format_settings:
-        direction: horizontal
-        id: ''
         classes: ''
+        id: ''
+        direction: horizontal
         fieldset_label_html: false
-      label: 'Main details'
     group_main:
       children:
         - name
@@ -80,66 +80,66 @@ third_party_settings:
         - group_articles
         - group_monographs
         - field_year
+      label: 'Main details'
+      region: content
       parent_name: group_main_de
       weight: 11
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: open
+        description: ''
         required_fields: true
-      label: 'Main details'
+        fieldset_label_html: false
     group_au:
       children:
         - description
         - status
+      label: 'Auxiliary details'
+      region: content
       parent_name: group_main_de
       weight: 12
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: 'Auxiliary details'
+        fieldset_label_html: false
     group_containedi:
       children:
         - field_collective_work
         - field_volume
+      label: 'Contained in Collective work'
+      region: content
       parent_name: group_articles
       weight: 23
       format_type: tab
-      region: content
       format_settings:
-        description: ''
-        formatter: open
-        required_fields: true
-        id: ''
         classes: ''
+        id: ''
+        formatter: open
+        description: ''
+        required_fields: true
         fieldset_label_html: false
-      label: 'Contained in Collective work'
     group_journal_article:
       children:
         - field_journal
         - field_issue_fascicule
+      label: 'Journal Article'
+      region: content
       parent_name: group_articles
       weight: 20
       format_type: tab
-      region: content
       format_settings:
-        description: ''
-        formatter: open
-        required_fields: true
-        id: ''
         classes: ''
+        id: ''
+        formatter: open
+        description: ''
+        required_fields: true
         fieldset_label_html: false
-      label: 'Journal Article'
 id: taxonomy_term.source_books.default
 targetEntityType: taxonomy_term
 bundle: source_books
@@ -148,135 +148,135 @@ content:
   description:
     type: text_textarea
     weight: 13
+    region: content
     settings:
-      placeholder: ''
       rows: 5
+      placeholder: ''
     third_party_settings: {  }
-    region: content
   field_author:
+    type: entity_reference_autocomplete
     weight: 14
+    region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_collective_work:
+    type: entity_reference_autocomplete
     weight: 12
+    region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_editor:
+    type: entity_reference_autocomplete
     weight: 16
+    region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_issue_fascicule:
+    type: string_textfield
     weight: 22
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_journal:
+    type: entity_reference_autocomplete
     weight: 21
+    region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_link:
+    type: link_default
     weight: 25
+    region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-    type: link_default
-    region: content
   field_place_of_publication:
+    type: string_textfield
     weight: 17
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_pp_:
+    type: string_textfield
     weight: 24
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_publisher:
+    type: string_textfield
     weight: 18
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_source_type:
+    type: options_buttons
     weight: 13
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_buttons
-    region: content
   field_title_long:
+    type: text_textarea
     weight: 16
+    region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: text_textarea
-    region: content
   field_volume:
+    type: string_textfield
     weight: 13
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_year:
+    type: string_textfield
     weight: 19
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   name:
     type: string_textfield
     weight: 12
+    region: content
     settings:
       size: 60
       placeholder: 'Ex: Marshall 1980'
     third_party_settings: {  }
-    region: content
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 14
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
 hidden:
   path: true

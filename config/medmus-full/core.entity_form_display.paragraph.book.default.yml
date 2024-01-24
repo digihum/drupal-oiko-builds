@@ -17,23 +17,23 @@ bundle: book
 mode: default
 content:
   field_book:
+    type: squid_entity_reference_autocomplete
     weight: 0
+    region: content
     settings:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
       match_limit: 10
     third_party_settings: {  }
-    type: squid_entity_reference_autocomplete
-    region: content
   field_pages:
+    type: string_textfield
     weight: 2
+    region: content
     settings:
       size: 60
       placeholder: '6 or 265-287'
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_volume:
     type: string_textfield
     weight: 1

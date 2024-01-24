@@ -11,11 +11,11 @@ pattern: 'content/[node:title]'
 selection_criteria:
   b05cd2d8-a61e-42f3-8e8f-2bc85e7821c0:
     id: node_type
-    bundles:
-      content_page: content_page
     negate: false
     context_mapping:
       node: node
+    bundles:
+      content_page: content_page
 selection_logic: and
 weight: -5
 relationships: {  }

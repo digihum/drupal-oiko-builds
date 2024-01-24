@@ -16,21 +16,21 @@ content:
   citation:
     type: entity_reference_citations
     weight: 1
+    region: content
     settings:
       title: Citation
       title_plural: Citations
       edit_mode: preview
       add_mode: dropdown
       form_display_mode: default
-    region: content
     third_party_settings: {  }
   domain:
     type: squid_entity_reference_autocomplete_tags
     weight: 26
+    region: content
     settings:
       match_limit: 10
     third_party_settings: {  }
-    region: content
   langcode:
     type: language_select
     weight: 10
@@ -41,9 +41,9 @@ content:
   range:
     type: squid_entity_reference_autocomplete_tags
     weight: 27
+    region: content
     settings:
       match_limit: 10
     third_party_settings: {  }
-    region: content
 hidden:
   user_id: true

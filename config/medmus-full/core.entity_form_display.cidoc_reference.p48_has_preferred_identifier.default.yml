@@ -18,24 +18,24 @@ content:
   citation:
     type: entity_reference_citations
     weight: 0
+    region: content
     settings:
       title: Citation
       title_plural: Citations
       edit_mode: preview
       add_mode: dropdown
       form_display_mode: default
-    region: content
     third_party_settings: {  }
   domain:
     type: squid_entity_reference_autocomplete_tags
     weight: 2
+    region: content
     settings:
       match_operator: CONTAINS
       match_limit: '10'
       size: '40'
       placeholder: ''
     third_party_settings: {  }
-    region: content
   langcode:
     type: language_select
     weight: 1
@@ -46,13 +46,13 @@ content:
   range:
     type: squid_entity_reference_autocomplete_tags
     weight: 3
+    region: content
     settings:
       match_operator: CONTAINS
       match_limit: '10'
       size: '40'
       placeholder: ''
     third_party_settings: {  }
-    region: content
 hidden:
   field_identifier_type: true
   user_id: true

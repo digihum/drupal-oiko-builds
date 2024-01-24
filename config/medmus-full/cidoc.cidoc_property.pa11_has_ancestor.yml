@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa11_has_ancestor
 label: 'PA11 has ancestor'
-bidirectional: false
 reverse_label: 'PA11 has offspring'
-friendly_label: Ancestor
-reverse_friendly_label: Descendant
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Ancestor
+reverse_friendly_label: Descendant
 widget_description:
   domain: ''
   range: ''

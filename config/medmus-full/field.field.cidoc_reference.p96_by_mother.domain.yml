@@ -21,11 +21,11 @@ default_value_callback: ''
 settings:
   handler: 'default:cidoc_entity'
   handler_settings:
-    auto_create: true
+    target_bundles:
+      e67_birth: e67_birth
     sort:
       field: name
       direction: ASC
-    target_bundles:
-      e67_birth: e67_birth
+    auto_create: true
     auto_create_bundle: e67_birth
 field_type: entity_reference

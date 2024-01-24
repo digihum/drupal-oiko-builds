@@ -4,15 +4,12 @@ namespace Drupal\webform\Plugin\Block;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\webform\Element\WebformHtmlEditor;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Utility\WebformDateHelper;
-use Drupal\webform\WebformRequestInterface;
-use Drupal\webform\WebformTokenManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -55,7 +52,7 @@ class WebformSubmissionLimitBlock extends BlockBase implements ContainerFactoryP
   protected $entityTypeManager;
 
   /**
-   * Webform request handler.
+   * The webform request handler.
    *
    * @var \Drupal\webform\WebformRequestInterface
    */
@@ -69,44 +66,15 @@ class WebformSubmissionLimitBlock extends BlockBase implements ContainerFactoryP
   protected $tokenManager;
 
   /**
-   * Creates a WebformSubmissionLimitBlock instance.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\Session\AccountInterface $account
-   *   The current user.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   * @param \Drupal\webform\WebformRequestInterface $request_handler
-   *   The webform request handler.
-   * @param \Drupal\webform\WebformTokenManagerInterface $token_manager
-   *   The webform token manager.
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, AccountInterface $account, EntityTypeManagerInterface $entity_type_manager, WebformRequestInterface $request_handler, WebformTokenManagerInterface $token_manager) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->currentUser = $account;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->requestHandler = $request_handler;
-    $this->tokenManager = $token_manager;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('current_user'),
-      $container->get('entity_type.manager'),
-      $container->get('webform.request'),
-      $container->get('webform.token_manager')
-    );
+    $instance = new static($configuration, $plugin_id, $plugin_definition);
+    $instance->currentUser = $container->get('current_user');
+    $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->requestHandler = $container->get('webform.request');
+    $instance->tokenManager = $container->get('webform.token_manager');
+    return $instance;
   }
 
   /**
@@ -143,7 +111,7 @@ class WebformSubmissionLimitBlock extends BlockBase implements ContainerFactoryP
         'webform' => $this->t('Current webform'),
         'user' => $this->t('Current user'),
       ],
-      '#ajax' => self::getTokenAjaxSettings(),
+      '#ajax' => static::getTokenAjaxSettings(),
       '#default_value' => $this->configuration['type'],
       '#parents' => ['settings', 'type'],
     ];
@@ -151,7 +119,7 @@ class WebformSubmissionLimitBlock extends BlockBase implements ContainerFactoryP
       '#title' => $this->t('Restrict limit and total submissions to current or specified source entity'),
       '#type' => 'checkbox',
       '#return_value' => TRUE,
-      '#ajax' => self::getTokenAjaxSettings(),
+      '#ajax' => static::getTokenAjaxSettings(),
       '#default_value' => $this->configuration['source_entity'],
       '#parents' => ['settings', 'source_entity'],
     ];
@@ -164,7 +132,7 @@ class WebformSubmissionLimitBlock extends BlockBase implements ContainerFactoryP
     ];
 
     // Tokens.
-    $form['tokens'] = self::buildTokens($this->configuration['type'], $this->configuration['source_entity']);
+    $form['tokens'] = static::buildTokens($this->configuration['type'], $this->configuration['source_entity']);
 
     // Progress.
     $form['progress'] = [
@@ -338,9 +306,9 @@ class WebformSubmissionLimitBlock extends BlockBase implements ContainerFactoryP
     return 0;
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Replace [limit], [total], and [webform] tokens.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Replace tokens in text.
@@ -384,7 +352,7 @@ class WebformSubmissionLimitBlock extends BlockBase implements ContainerFactoryP
    */
   protected function getLimit() {
     $name = ($this->configuration['source_entity']) ? 'entity_' : '';
-    $name .= ($this->configuration['type'] == 'user') ? 'limit_user' : 'limit_total';
+    $name .= ($this->configuration['type'] === 'user') ? 'limit_user' : 'limit_total';
     return $this->getWebform()->getSetting($name) ?: FALSE;
   }
 
@@ -396,7 +364,7 @@ class WebformSubmissionLimitBlock extends BlockBase implements ContainerFactoryP
    */
   protected function getInterval() {
     $name = ($this->configuration['source_entity']) ? 'entity_' : '';
-    $name .= ($this->configuration['type'] == 'user') ? 'limit_user_interval' : 'limit_total_interval';
+    $name .= ($this->configuration['type'] === 'user') ? 'limit_user_interval' : 'limit_total_interval';
     return $this->getWebform()->getSetting($name);
   }
 
@@ -425,9 +393,9 @@ class WebformSubmissionLimitBlock extends BlockBase implements ContainerFactoryP
     );
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Get submission limit webform, source entity, and/or user.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Get the webform.
@@ -503,12 +471,12 @@ class WebformSubmissionLimitBlock extends BlockBase implements ContainerFactoryP
    *   The current user account or NULL if the user limit is not being displayed.
    */
   protected function getCurrentUser() {
-    return ($this->configuration['type'] == 'user') ? $this->currentUser : NULL;
+    return ($this->configuration['type'] === 'user') ? $this->currentUser : NULL;
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Ajax token callback.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Get token refresh Ajax settings.
@@ -529,7 +497,7 @@ class WebformSubmissionLimitBlock extends BlockBase implements ContainerFactoryP
    */
   public static function tokenAjaxCallback(array &$form, FormStateInterface $form_state) {
     $settings = $form_state->getValue('settings');
-    return self::buildTokens($settings['type'], $settings['source_entity']);
+    return static::buildTokens($settings['type'], $settings['source_entity']);
   }
 
   /**
@@ -550,14 +518,14 @@ class WebformSubmissionLimitBlock extends BlockBase implements ContainerFactoryP
     $token_manager = \Drupal::service('webform.token_manager');
 
     // Get token name and descriptions.
-    module_load_include('inc', 'webform', 'webform.tokens');
+    \Drupal::moduleHandler()->loadInclude('webform', 'tokens.inc');
     $token_info = webform_token_info();
     $tokens = $token_info['tokens']['webform_submission'];
 
     $token_types = ['limit', 'interval', 'total', 'remaining'];
     $rows = [];
     foreach ($token_types as $token_type) {
-      $token_name = self::getTokenName($token_type, $type, $source_entity);
+      $token_name = static::getTokenName($token_type, $type, $source_entity);
       $rows[] = [
         ['data' => '[' . $token_type . ']', 'style' => 'vertical-align: top'],
         [

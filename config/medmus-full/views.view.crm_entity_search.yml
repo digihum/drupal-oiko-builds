@@ -22,60 +22,11 @@ base_table: search_api_index_crm_entities
 base_field: search_api_id
 display:
   default:
-    display_plugin: default
     id: default
     display_title: Master
+    display_plugin: default
     position: 0
     display_options:
-      access:
-        type: perm
-        options:
-          perm: 'view published cidoc entities'
-      cache:
-        type: none
-        options: {  }
-      query:
-        type: views_query
-        options:
-          bypass_access: false
-          skip_access: false
-      exposed_form:
-        type: basic
-        options:
-          submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      pager:
-        type: mini
-        options:
-          items_per_page: 10
-          offset: 0
-          id: 0
-          total_pages: null
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          tags:
-            previous: ‹‹
-            next: ››
-      style:
-        type: serializer
-      row:
-        type: fields
-        options:
-          inline: {  }
-          separator: ''
-          hide_empty: false
-          default_field_elements: true
       fields:
         id:
           id: id
@@ -84,6 +35,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -153,8 +106,6 @@ display:
             format_plural_values:
               - '1'
               - '@count'
-          entity_type: cidoc_entity
-          plugin_id: search_api_field
         name:
           id: name
           table: search_api_datasource_crm_entities_entity_cidoc_entity
@@ -162,6 +113,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -222,8 +175,6 @@ display:
           fallback_options:
             link_to_item: false
             multi_separator: ', '
-          entity_type: cidoc_entity
-          plugin_id: search_api_field
         bundle:
           id: bundle
           table: search_api_datasource_crm_entities_entity_cidoc_entity
@@ -231,6 +182,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -294,8 +247,6 @@ display:
             display_methods:
               cidoc_entity_bundle:
                 display_method: label
-          entity_type: cidoc_entity
-          plugin_id: search_api_field
         field_icon_color:
           id: field_icon_color
           table: search_api_entity_taxonomy_term
@@ -303,6 +254,8 @@ display:
           relationship: significance
           group_type: group
           admin_label: ''
+          entity_type: taxonomy_term
+          plugin_id: search_api_field
           label: ''
           exclude: true
           alter:
@@ -364,8 +317,6 @@ display:
             use_highlighting: false
             multi_type: separator
             multi_separator: ', '
-          entity_type: taxonomy_term
-          plugin_id: search_api_field
         bundle_1:
           id: bundle_1
           table: search_api_datasource_crm_entities_entity_cidoc_entity
@@ -373,6 +324,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -438,47 +391,42 @@ display:
             display_methods:
               cidoc_entity_bundle:
                 display_method: label
-          entity_type: cidoc_entity
-          plugin_id: search_api_field
-      filters:
-        status:
-          id: status
-          table: search_api_index_crm_entities
-          field: status
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: '='
-          value: '1'
-          group: 1
-          exposed: false
+      pager:
+        type: mini
+        options:
+          offset: 0
+          items_per_page: 10
+          total_pages: null
+          id: 0
+          tags:
+            next: ››
+            previous: ‹‹
           expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            operator_limit_selection: false
-            operator_list: {  }
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: search_api_boolean
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      access:
+        type: perm
+        options:
+          perm: 'view published cidoc entities'
+      cache:
+        type: none
+        options: {  }
+      empty: {  }
       sorts:
         search_api_relevance:
           id: search_api_relevance
@@ -487,11 +435,12 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api
           order: ASC
-          exposed: false
           expose:
             label: ''
-          plugin_id: search_api
+            field_identifier: search_api_relevance
+          exposed: false
         name:
           id: name
           table: search_api_index_crm_entities
@@ -499,11 +448,12 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api
           order: ASC
-          exposed: false
           expose:
             label: ''
-          plugin_id: search_api
+            field_identifier: name
+          exposed: false
         internal_name:
           id: internal_name
           table: search_api_index_crm_entities
@@ -511,25 +461,12 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api
           order: ASC
-          exposed: false
           expose:
             label: ''
-          plugin_id: search_api
-      header: {  }
-      footer: {  }
-      empty: {  }
-      relationships:
-        significance:
-          id: significance
-          table: search_api_datasource_crm_entities_entity_cidoc_entity
-          field: significance
-          relationship: none
-          group_type: group
-          admin_label: 'Primary historical significance'
-          required: false
-          entity_type: cidoc_entity
-          plugin_id: search_api
+            field_identifier: internal_name
+          exposed: false
       arguments:
         search_api_fulltext:
           id: search_api_fulltext
@@ -538,6 +475,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api_fulltext
           default_action: empty
           exception:
             value: all
@@ -562,9 +500,74 @@ display:
           break_phrase: false
           not: false
           parse_mode: terms
-          fields: {  }
           conjunction: AND
-          plugin_id: search_api_fulltext
+          fields: {  }
+      filters:
+        status:
+          id: status
+          table: search_api_index_crm_entities
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_boolean
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      style:
+        type: serializer
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline: {  }
+          separator: ''
+          hide_empty: false
+      query:
+        type: views_query
+        options:
+          bypass_access: false
+          skip_access: false
+      relationships:
+        significance:
+          id: significance
+          table: search_api_datasource_crm_entities_entity_cidoc_entity
+          field: significance
+          relationship: none
+          group_type: group
+          admin_label: 'Primary historical significance'
+          entity_type: cidoc_entity
+          plugin_id: search_api
+          required: false
+      header: {  }
+      footer: {  }
       display_extenders: {  }
     cache_metadata:
       max-age: -1
@@ -578,229 +581,15 @@ display:
       tags:
         - 'config:field.storage.taxonomy_term.field_icon_color'
   json_output:
-    display_plugin: rest_export
     id: json_output
     display_title: 'Map search'
+    display_plugin: rest_export
     position: 1
     display_options:
-      display_extenders: {  }
-      path: search/crm-entities/%
       pager:
         type: none
         options:
           offset: 0
-      style:
-        type: serializer
-        options:
-          uses_fields: false
-          formats:
-            json: json
-      row:
-        type: data_field
-        options:
-          field_options:
-            id:
-              alias: ''
-              raw_output: false
-            name:
-              alias: ''
-              raw_output: false
-            bundle:
-              alias: ''
-              raw_output: false
-            bundle_1:
-              alias: color
-              raw_output: false
-      auth: {  }
-      display_description: ''
-      filters:
-        has_geodata:
-          id: has_geodata
-          table: search_api_index_crm_entities
-          field: has_geodata
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: '='
-          value: '0'
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: 'Has geospatial data'
-            description: ''
-            use_operator: false
-            operator: has_geodata_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: has_geodata
-            required: true
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              content_editor: '0'
-              forum_user: '0'
-              moderator: '0'
-              moderated_contributor: '0'
-          is_grouped: false
-          group_info:
-            label: 'Has geospatial data'
-            description: ''
-            identifier: has_geodata
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: '1'
-            default_group_multiple: {  }
-            group_items:
-              1:
-                title: 'All entities'
-                operator: '='
-                value: All
-              2:
-                title: Events
-                operator: '='
-                value: '1'
-              3:
-                title: 'People, works, mss...'
-                operator: '='
-                value: '0'
-          plugin_id: search_api_boolean
-        status:
-          id: status
-          table: search_api_index_crm_entities
-          field: status
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: '='
-          value: '1'
-          group: 2
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            operator_limit_selection: false
-            operator_list: {  }
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: search_api_boolean
-        user_id:
-          id: user_id
-          table: search_api_index_crm_entities
-          field: user_id
-          relationship: none
-          group_type: group
-          admin_label: 'Changed to current user by oiko_app_views_pre_build'
-          operator: or
-          value:
-            - '0'
-          group: 2
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-            operator_limit_selection: false
-            operator_list: {  }
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: search_api_user
-        name:
-          id: name
-          table: search_api_index_crm_entities
-          field: name
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: '!='
-          value:
-            min: ''
-            max: ''
-            value: 'Creation of'
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            placeholder: ''
-            min_placeholder: ''
-            max_placeholder: ''
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: search_api_text
-      defaults:
-        filters: false
-        filter_groups: false
-        arguments: false
-      filter_groups:
-        operator: AND
-        groups:
-          1: AND
-          2: OR
       arguments:
         name:
           id: name
@@ -809,6 +598,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api
           default_action: empty
           exception:
             value: all
@@ -832,271 +622,6 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
-          plugin_id: search_api
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - request_format
-        - url
-        - user.permissions
-      tags:
-        - 'config:field.storage.taxonomy_term.field_icon_color'
-  rest_export_1:
-    display_plugin: rest_export
-    id: rest_export_1
-    display_title: 'Comparative timeline search'
-    position: 2
-    display_options:
-      display_extenders: {  }
-      path: search/timeline-crm-entities/%
-      auth: {  }
-      display_description: ''
-      row:
-        type: data_field
-        options:
-          field_options:
-            id:
-              alias: ''
-              raw_output: false
-            name:
-              alias: ''
-              raw_output: false
-            bundle:
-              alias: ''
-              raw_output: false
-            field_icon_color:
-              alias: color
-              raw_output: false
-      filters:
-        status:
-          id: status
-          table: search_api_index_crm_entities
-          field: status
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: '='
-          value: '1'
-          group: 2
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            operator_limit_selection: false
-            operator_list: {  }
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: search_api_boolean
-        child_events:
-          id: child_events
-          table: search_api_index_crm_entities
-          field: child_events
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: '>='
-          value:
-            min: ''
-            max: ''
-            value: '1'
-          group: 1
-          exposed: false
-          expose:
-            operator_id: child_events_op
-            label: 'Child event count'
-            description: null
-            use_operator: false
-            operator: child_events_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: child_events
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            placeholder: null
-            min_placeholder: null
-            max_placeholder: null
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: search_api_numeric
-        user_id:
-          id: user_id
-          table: search_api_index_crm_entities
-          field: user_id
-          relationship: none
-          group_type: group
-          admin_label: 'Changed to current user by oiko_app_views_pre_build'
-          operator: or
-          value:
-            - '0'
-          group: 2
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-            operator_limit_selection: false
-            operator_list: {  }
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: search_api_user
-      defaults:
-        filters: false
-        filter_groups: false
-        sorts: false
-        fields: true
-      filter_groups:
-        operator: AND
-        groups:
-          1: AND
-          2: OR
-      sorts:
-        search_api_relevance:
-          id: search_api_relevance
-          table: search_api_index_crm_entities
-          field: search_api_relevance
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: DESC
-          exposed: false
-          expose:
-            label: ''
-          plugin_id: search_api
-        child_events:
-          id: child_events
-          table: search_api_index_crm_entities
-          field: child_events
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: DESC
-          exposed: false
-          expose:
-            label: ''
-          plugin_id: search_api
-        name:
-          id: name
-          table: search_api_index_crm_entities
-          field: name
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          plugin_id: search_api
-        internal_name:
-          id: internal_name
-          table: search_api_index_crm_entities
-          field: internal_name
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          plugin_id: search_api
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - request_format
-        - url
-        - user.permissions
-      tags:
-        - 'config:field.storage.taxonomy_term.field_icon_color'
-  rest_export_2:
-    display_plugin: rest_export
-    id: rest_export_2
-    display_title: 'Map search2'
-    position: 1
-    display_options:
-      display_extenders: {  }
-      path: search/crm-entities/%
-      pager:
-        type: none
-        options:
-          offset: 0
-      style:
-        type: serializer
-        options:
-          uses_fields: false
-          formats:
-            json: json
-      row:
-        type: data_field
-        options:
-          field_options:
-            id:
-              alias: ''
-              raw_output: false
-            name:
-              alias: ''
-              raw_output: false
-            bundle:
-              alias: ''
-              raw_output: false
-            field_icon_color:
-              alias: color
-              raw_output: false
-      auth: {  }
-      display_description: ''
       filters:
         has_geodata:
           id: has_geodata
@@ -1105,6 +630,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api_boolean
           operator: '='
           value: '0'
           group: 1
@@ -1153,7 +679,6 @@ display:
                 title: 'People, works, mss...'
                 operator: '='
                 value: '0'
-          plugin_id: search_api_boolean
         status:
           id: status
           table: search_api_index_crm_entities
@@ -1161,6 +686,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api_boolean
           operator: '='
           value: '1'
           group: 2
@@ -1171,14 +697,14 @@ display:
             description: ''
             use_operator: false
             operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
             identifier: ''
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
-            operator_limit_selection: false
-            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -1191,7 +717,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          plugin_id: search_api_boolean
         user_id:
           id: user_id
           table: search_api_index_crm_entities
@@ -1199,6 +724,7 @@ display:
           relationship: none
           group_type: group
           admin_label: 'Changed to current user by oiko_app_views_pre_build'
+          plugin_id: search_api_user
           operator: or
           value:
             - '0'
@@ -1210,6 +736,8 @@ display:
             description: ''
             use_operator: false
             operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
             identifier: ''
             required: false
             remember: false
@@ -1217,8 +745,6 @@ display:
             remember_roles:
               authenticated: authenticated
             reduce: false
-            operator_limit_selection: false
-            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -1231,19 +757,101 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          plugin_id: search_api_user
-      defaults:
-        filters: false
-        filter_groups: false
-        sorts: false
-        fields: false
-        arguments: false
-        relationships: false
+        name:
+          id: name
+          table: search_api_index_crm_entities
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_text
+          operator: '!='
+          value:
+            min: ''
+            max: ''
+            value: 'Creation of'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
       filter_groups:
         operator: AND
         groups:
           1: AND
           2: OR
+      style:
+        type: serializer
+        options:
+          uses_fields: false
+          formats:
+            json: json
+      row:
+        type: data_field
+        options:
+          field_options:
+            id:
+              alias: ''
+              raw_output: false
+            name:
+              alias: ''
+              raw_output: false
+            bundle:
+              alias: ''
+              raw_output: false
+            bundle_1:
+              alias: color
+              raw_output: false
+      defaults:
+        arguments: false
+        filters: false
+        filter_groups: false
+      display_description: ''
+      display_extenders: {  }
+      path: search/crm-entities/%
+      auth: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - request_format
+        - url
+        - user.permissions
+      tags:
+        - 'config:field.storage.taxonomy_term.field_icon_color'
+  rest_export_1:
+    id: rest_export_1
+    display_title: 'Comparative timeline search'
+    display_plugin: rest_export
+    position: 2
+    display_options:
       sorts:
         search_api_relevance:
           id: search_api_relevance
@@ -1252,11 +860,25 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          order: ASC
-          exposed: false
+          plugin_id: search_api
+          order: DESC
           expose:
             label: ''
+            field_identifier: search_api_relevance
+          exposed: false
+        child_events:
+          id: child_events
+          table: search_api_index_crm_entities
+          field: child_events
+          relationship: none
+          group_type: group
+          admin_label: ''
           plugin_id: search_api
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: child_events
+          exposed: false
         name:
           id: name
           table: search_api_index_crm_entities
@@ -1264,11 +886,12 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api
           order: ASC
-          exposed: false
           expose:
             label: ''
-          plugin_id: search_api
+            field_identifier: name
+          exposed: false
         internal_name:
           id: internal_name
           table: search_api_index_crm_entities
@@ -1276,11 +899,181 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api
           order: ASC
-          exposed: false
           expose:
             label: ''
-          plugin_id: search_api
+            field_identifier: internal_name
+          exposed: false
+      filters:
+        status:
+          id: status
+          table: search_api_index_crm_entities
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_boolean
+          operator: '='
+          value: '1'
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        child_events:
+          id: child_events
+          table: search_api_index_crm_entities
+          field: child_events
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_numeric
+          operator: '>='
+          value:
+            min: ''
+            max: ''
+            value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: child_events_op
+            label: 'Child event count'
+            description: null
+            use_operator: false
+            operator: child_events_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: child_events
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: null
+            max_placeholder: null
+            placeholder: null
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        user_id:
+          id: user_id
+          table: search_api_index_crm_entities
+          field: user_id
+          relationship: none
+          group_type: group
+          admin_label: 'Changed to current user by oiko_app_views_pre_build'
+          plugin_id: search_api_user
+          operator: or
+          value:
+            - '0'
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+          2: OR
+      row:
+        type: data_field
+        options:
+          field_options:
+            id:
+              alias: ''
+              raw_output: false
+            name:
+              alias: ''
+              raw_output: false
+            bundle:
+              alias: ''
+              raw_output: false
+            field_icon_color:
+              alias: color
+              raw_output: false
+      defaults:
+        fields: true
+        sorts: false
+        filters: false
+        filter_groups: false
+      display_description: ''
+      display_extenders: {  }
+      path: search/timeline-crm-entities/%
+      auth: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - request_format
+        - url
+        - user.permissions
+      tags:
+        - 'config:field.storage.taxonomy_term.field_icon_color'
+  rest_export_2:
+    id: rest_export_2
+    display_title: 'Map search2'
+    display_plugin: rest_export
+    position: 1
+    display_options:
       fields:
         id:
           id: id
@@ -1289,6 +1082,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -1358,8 +1153,6 @@ display:
             format_plural_values:
               - '1'
               - '@count'
-          entity_type: cidoc_entity
-          plugin_id: search_api_field
         name:
           id: name
           table: search_api_datasource_crm_entities_entity_cidoc_entity
@@ -1367,6 +1160,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -1427,8 +1222,6 @@ display:
           fallback_options:
             link_to_item: false
             multi_separator: ', '
-          entity_type: cidoc_entity
-          plugin_id: search_api_field
         bundle:
           id: bundle
           table: search_api_datasource_crm_entities_entity_cidoc_entity
@@ -1436,6 +1229,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: cidoc_entity
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -1499,8 +1294,6 @@ display:
             display_methods:
               cidoc_entity_bundle:
                 display_method: label
-          entity_type: cidoc_entity
-          plugin_id: search_api_field
         field_icon_color:
           id: field_icon_color
           table: search_api_entity_taxonomy_term
@@ -1508,6 +1301,8 @@ display:
           relationship: significance
           group_type: group
           admin_label: ''
+          entity_type: taxonomy_term
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -1567,8 +1362,50 @@ display:
           fallback_options:
             link_to_item: false
             multi_separator: ', '
-          entity_type: taxonomy_term
-          plugin_id: search_api_field
+      pager:
+        type: none
+        options:
+          offset: 0
+      sorts:
+        search_api_relevance:
+          id: search_api_relevance
+          table: search_api_index_crm_entities
+          field: search_api_relevance
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: search_api_relevance
+          exposed: false
+        name:
+          id: name
+          table: search_api_index_crm_entities
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: name
+          exposed: false
+        internal_name:
+          id: internal_name
+          table: search_api_index_crm_entities
+          field: internal_name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: internal_name
+          exposed: false
       arguments:
         search_api_fulltext:
           id: search_api_fulltext
@@ -1577,6 +1414,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api_fulltext
           default_action: empty
           exception:
             value: all
@@ -1601,9 +1439,177 @@ display:
           break_phrase: false
           not: false
           parse_mode: terms
-          fields: {  }
           conjunction: AND
-          plugin_id: search_api_fulltext
+          fields: {  }
+      filters:
+        has_geodata:
+          id: has_geodata
+          table: search_api_index_crm_entities
+          field: has_geodata
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_boolean
+          operator: '='
+          value: '0'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: 'Has geospatial data'
+            description: ''
+            use_operator: false
+            operator: has_geodata_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: has_geodata
+            required: true
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              content_editor: '0'
+              forum_user: '0'
+              moderator: '0'
+              moderated_contributor: '0'
+          is_grouped: false
+          group_info:
+            label: 'Has geospatial data'
+            description: ''
+            identifier: has_geodata
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: '1'
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: 'All entities'
+                operator: '='
+                value: All
+              2:
+                title: Events
+                operator: '='
+                value: '1'
+              3:
+                title: 'People, works, mss...'
+                operator: '='
+                value: '0'
+        status:
+          id: status
+          table: search_api_index_crm_entities
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_boolean
+          operator: '='
+          value: '1'
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        user_id:
+          id: user_id
+          table: search_api_index_crm_entities
+          field: user_id
+          relationship: none
+          group_type: group
+          admin_label: 'Changed to current user by oiko_app_views_pre_build'
+          plugin_id: search_api_user
+          operator: or
+          value:
+            - '0'
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+          2: OR
+      style:
+        type: serializer
+        options:
+          uses_fields: false
+          formats:
+            json: json
+      row:
+        type: data_field
+        options:
+          field_options:
+            id:
+              alias: ''
+              raw_output: false
+            name:
+              alias: ''
+              raw_output: false
+            bundle:
+              alias: ''
+              raw_output: false
+            field_icon_color:
+              alias: color
+              raw_output: false
+      defaults:
+        relationships: false
+        fields: false
+        sorts: false
+        arguments: false
+        filters: false
+        filter_groups: false
       relationships:
         significance:
           id: significance
@@ -1612,9 +1618,13 @@ display:
           relationship: none
           group_type: group
           admin_label: 'Primary historical significance'
-          required: false
           entity_type: cidoc_entity
           plugin_id: search_api
+          required: false
+      display_description: ''
+      display_extenders: {  }
+      path: search/crm-entities/%
+      auth: {  }
     cache_metadata:
       max-age: -1
       contexts:

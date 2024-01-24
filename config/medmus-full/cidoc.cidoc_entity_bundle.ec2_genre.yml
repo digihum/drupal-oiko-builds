@@ -2,14 +2,14 @@ uuid: 81fa48e5-ff1a-4499-a73e-246fdc3e12c6
 langcode: en
 status: true
 dependencies: {  }
-crm_entity: ec2_genre
 id: ec2_genre
 label: 'EC2 Genre'
-friendly_label: Genre
-weight: 8
+crm_entity: ec2_genre
 group: auxiliary
+weight: 8
 description: '<p>Literary genre, when possible, according to the thesaurus "Library of Congress Genre/Form Terms" (LCGFT), http://id.loc.gov/authorities/genreForms.html</p>'
 examples: "<ul>\r\n<li>Tensos (ELC1)</li>\r\n<li>Crusading songs (ELC1)</li>\r\n<li>Romances (EC5)</li>\r\n<li>Epic Poetry (EC5)</li>\r\n</ul>"
 geoserializers:
   event: '0'
   move: '0'
+friendly_label: Genre

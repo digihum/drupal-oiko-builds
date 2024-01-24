@@ -2,14 +2,14 @@ uuid: e7cd709a-94ae-4ea3-b80b-3d921aab4836
 langcode: en
 status: true
 dependencies: {  }
-crm_entity: ec8_manuscript
 id: ec8_manuscript
 label: 'EC8 Manuscript'
-friendly_label: Manuscript
-weight: -15
+crm_entity: ec8_manuscript
 group: auxiliary
+weight: -15
 description: '<p>This class comprises all identifiable physical object that carry linguistic (and/or visual) information written by hand.</p>'
 examples: "<ul>\r\n<li>Manuscript A of the Troubadour repertoire (EC8)</li>\r\n<li>Paris, BnF, fr. 856</li>\r\n</ul>"
 geoserializers:
   event: '0'
   move: '0'
+friendly_label: Manuscript

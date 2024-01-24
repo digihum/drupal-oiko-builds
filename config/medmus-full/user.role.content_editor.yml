@@ -1,7 +1,25 @@
 uuid: 5c41ff13-e246-496b-afd9-7de3b949f5f1
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.basic_html
+    - node.type.content_page
+    - node.type.forum
+    - taxonomy.vocabulary.empire
+    - taxonomy.vocabulary.language
+    - taxonomy.vocabulary.role
+    - taxonomy.vocabulary.source_books
+  module:
+    - cidoc
+    - field_ui
+    - filter
+    - node
+    - oiko_app
+    - oiko_pleiades
+    - system
+    - taxonomy
+    - toolbar
 _core:
   default_config_hash: hr_ZEupVQLCAoH0rO4mUCuyQ3OYsHGx7axnpQ3r4UYA
 id: content_editor
@@ -12,7 +30,6 @@ permissions:
   - 'access administration pages'
   - 'access cidoc entity overview'
   - 'access content overview'
-  - 'access geocoder autocomplete'
   - 'access pleiades lookup'
   - 'access taxonomy overview'
   - 'access toolbar'

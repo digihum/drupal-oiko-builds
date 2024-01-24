@@ -6,10 +6,7 @@ _core:
   default_config_hash: 6kFpcVQxfsl1ZsVLa6tt-w6rulqlIS1H44QaCTXeM1E
 id: p12_occurred_in_the_presence_of
 label: 'P12 occurred in the presence of'
-bidirectional: false
 reverse_label: 'P12 was present at'
-friendly_label: 'Occurred in the presence of'
-reverse_friendly_label: 'Was present at'
 domain_bundles:
   - e5_event
   - e6_destruction
@@ -48,6 +45,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Occurred in the presence of'
+reverse_friendly_label: 'Was present at'
 widget_description:
   domain: "\r\n"
   range: ''

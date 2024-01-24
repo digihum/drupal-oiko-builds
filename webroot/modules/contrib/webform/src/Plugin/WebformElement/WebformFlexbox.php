@@ -11,7 +11,7 @@ use Drupal\webform\WebformSubmissionInterface;
  * @WebformElement(
  *   id = "webform_flexbox",
  *   default_key = "flexbox",
- *   api = "http://www.w3schools.com/css/css3_flexbox.asp",
+ *   api = "https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox",
  *   label = @Translation("Flexbox layout"),
  *   description = @Translation("Provides a flex(ible) box container used to layout elements in multiple columns."),
  *   category = @Translation("Containers"),
@@ -29,14 +29,14 @@ class WebformFlexbox extends Container {
     ] + parent::defineDefaultProperties();
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
    */
   protected function build($format, array &$element, WebformSubmissionInterface $webform_submission, array $options = []) {
     /** @var \Drupal\webform\WebformSubmissionViewBuilderInterface $view_builder */
-    $view_builder = \Drupal::entityTypeManager()->getViewBuilder('webform_submission');
+    $view_builder = $this->entityTypeManager->getViewBuilder('webform_submission');
     return $view_builder->buildElements($element, $webform_submission, $options, $format);
   }
 

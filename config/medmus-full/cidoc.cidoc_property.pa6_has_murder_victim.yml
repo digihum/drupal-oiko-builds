@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa6_has_murder_victim
 label: 'PA6 has murder victim'
-bidirectional: true
 reverse_label: 'PA6 has murderer'
-friendly_label: ''
-reverse_friendly_label: ''
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: true
+friendly_label: ''
+reverse_friendly_label: ''
 widget_description:
   domain: ''
   range: ''

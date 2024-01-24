@@ -20,18 +20,18 @@ third_party_settings:
         - 'cidoc_properties:domain:pc11_has_spouse'
         - 'cidoc_properties:domain:p11_had_participant'
         - 'cidoc_properties:domain:p12_occurred_in_the_presence_of'
+      label: 'Main details'
+      region: content
       parent_name: group_main_details1
       weight: 1
       format_type: tab
-      region: content
       format_settings:
-        description: ''
-        formatter: open
-        required_fields: true
-        id: ''
         classes: ''
+        id: ''
+        formatter: open
+        description: ''
+        required_fields: true
         fieldset_label_html: false
-      label: 'Main details'
     group_auxiliary_details:
       children:
         - status
@@ -40,32 +40,32 @@ third_party_settings:
         - timeline_logo
         - path
         - citation
+      label: 'Auxiliary details'
+      region: content
       parent_name: group_main_details1
       weight: 2
       format_type: tab
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         formatter: closed
+        description: ''
         required_fields: true
-      label: 'Auxiliary details'
+        fieldset_label_html: false
     group_main_details1:
       children:
         - group_main_details
         - group_auxiliary_details
+      label: 'Main details'
+      region: content
       parent_name: ''
       weight: 0
       format_type: tabs
-      region: content
       format_settings:
-        direction: horizontal
-        id: ''
         classes: ''
+        id: ''
+        direction: horizontal
         fieldset_label_html: false
-      label: 'Main details'
 id: cidoc_entity.ec10_marriage.default
 targetEntityType: cidoc_entity
 bundle: ec10_marriage
@@ -99,6 +99,7 @@ content:
   citation:
     type: entity_reference_paragraphs
     weight: 12
+    region: content
     settings:
       title: Citation
       title_plural: Citations
@@ -106,7 +107,6 @@ content:
       add_mode: button
       form_display_mode: default
       default_paragraph_type: ''
-    region: content
     third_party_settings: {  }
   name:
     type: string_textfield
@@ -130,25 +130,25 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 7
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   timeline_logo:
     type: image_image
     weight: 10
+    region: content
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
-    region: content
     third_party_settings: {  }
   timeline_preselect_option:
     type: boolean_checkbox
     weight: 9
+    region: content
     settings:
       display_label: true
-    region: content
     third_party_settings: {  }
 hidden:
   'cidoc_properties:domain:p10_falls_within': true

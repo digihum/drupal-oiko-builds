@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa5_has_lover
 label: 'PA5 has lover'
-bidirectional: true
 reverse_label: 'PA5 has lover'
-friendly_label: Lover
-reverse_friendly_label: ''
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: true
+friendly_label: Lover
+reverse_friendly_label: ''
 widget_description:
   domain: ''
   range: ''

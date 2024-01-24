@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa8_has_cousin
 label: 'PA8 has cousin'
-bidirectional: true
 reverse_label: 'PA8 has cousin'
-friendly_label: Cousin
-reverse_friendly_label: ''
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: true
+friendly_label: Cousin
+reverse_friendly_label: ''
 widget_description:
   domain: ''
   range: ''

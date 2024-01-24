@@ -15,8 +15,8 @@ plugin: map_legend_block
 settings:
   id: map_legend_block
   label: 'Type of activity'
-  provider: oiko_leaflet
   label_display: visible
+  provider: oiko_leaflet
   marker_description: ''
   cluster_description: ''
   path_description: ''

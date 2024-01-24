@@ -13,12 +13,12 @@ bundle: p134_continued
 mode: range
 content:
   domain:
-    label: inline
     type: entity_reference_label
-    weight: 0
+    label: inline
     settings:
       link: true
     third_party_settings: {  }
+    weight: 0
     region: content
 hidden:
   citation: true

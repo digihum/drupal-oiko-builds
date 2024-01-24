@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa7_has_sibling
 label: 'PA7 has sibling'
-bidirectional: true
 reverse_label: 'PA7 has sibling'
-friendly_label: Sibling
-reverse_friendly_label: ''
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: true
+friendly_label: Sibling
+reverse_friendly_label: ''
 widget_description:
   domain: ''
   range: ''

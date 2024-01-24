@@ -10,4 +10,8 @@ _core:
 id: creditcard_codes
 label: 'Credit card codes'
 category: Payment
-options: "VI: 'Visa'\nMC: 'Mastercard'\nAE: 'American Express'\nDC: 'Discover'\n"
+options: |
+  VI: 'Visa'
+  MC: 'Mastercard'
+  AE: 'American Express'
+  DC: 'Discover'

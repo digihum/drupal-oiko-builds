@@ -85,12 +85,12 @@ class WebformSignature extends FormElement {
   }
 
   /**
-  +   * Webform element validation handler for #type 'signature'.
-  +   */
+   * Webform element validation handler for #type 'signature'.
+   */
   public static function validateWebformSignature(&$element, FormStateInterface $form_state, &$complete_form) {
     $value = $element['#value'];
     if (!static::isSignatureValid($value)) {
-      $t_args = ['@title' => isset($element['#title']) ? $element['#title'] : t('Form')];
+      $t_args = ['@title' => $element['#title'] ?? t('Form')];
       $form_state->setError($element, t('@title contains an invalid signature.', $t_args));
     }
   }

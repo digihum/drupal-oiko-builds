@@ -17,8 +17,8 @@ plugin: 'block_content:0d124045-1270-4f52-a6e4-09262cfa148f'
 settings:
   id: 'block_content:0d124045-1270-4f52-a6e4-09262cfa148f'
   label: People
-  provider: block_content
   label_display: visible
+  provider: block_content
   status: true
   info: ''
   view_mode: full

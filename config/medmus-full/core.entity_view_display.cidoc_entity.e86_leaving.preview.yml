@@ -18,14 +18,14 @@ third_party_settings:
         - content
         - cidoc_properties
         - user_id
+      label: 'E86 Leaving'
       parent_name: ''
+      region: content
       weight: 0
       format_type: html_element
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
+        id: ''
         element: div
         show_label: true
         label_element: h3
@@ -33,56 +33,56 @@ third_party_settings:
         attributes: 'style="border-bottom: 2px solid #657986;"'
         effect: none
         speed: fast
-      label: 'E86 Leaving'
+        fieldset_label_html: false
 id: cidoc_entity.e86_leaving.preview
 targetEntityType: cidoc_entity
 bundle: e86_leaving
 mode: preview
 content:
   cidoc_properties:
-    weight: 5
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 5
+    region: content
   content:
     type: text_default
-    weight: 4
-    region: content
     label: above
     settings: {  }
     third_party_settings: {  }
-  internal_name:
-    label: inline
-    type: string
-    weight: 2
+    weight: 4
     region: content
+  internal_name:
+    type: string
+    label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-  name:
-    label: hidden
-    type: string
-    weight: 1
+    weight: 2
     region: content
+  name:
+    type: string
+    label: hidden
     settings:
       link_to_entity: true
     third_party_settings: {  }
+    weight: 1
+    region: content
   significance:
     type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
     weight: 3
     region: content
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
   user_id:
     type: entity_reference_label
-    weight: 6
-    region: content
     label: above
     settings:
       link: true
     third_party_settings: {  }
+    weight: 6
+    region: content
 hidden:
   cidoc_admin_links: true
   'cidoc_properties:domain:p11_had_participant': true

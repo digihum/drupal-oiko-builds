@@ -6,6 +6,7 @@ use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\EventSubscriber\MainContentViewSubscriber;
 use Drupal\Core\Form\FormBuilderInterface;
+use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\Core\Url;
 use Drupal\views\Views;
 
@@ -17,8 +18,11 @@ use Drupal\views\Views;
  *   admin_label = @Translation("User logged out header block"),
  * )
  */
-class UserLoggedOut extends BlockBase {
+class UserLoggedOut extends BlockBase  implements TrustedCallbackInterface {
 
+  public static function trustedCallbacks() {
+    return ['renderPlaceholderFormAction'];
+  }
 
   /**
    * #lazy_builder callback; renders a form action URL.

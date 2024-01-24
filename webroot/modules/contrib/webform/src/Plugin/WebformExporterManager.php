@@ -31,7 +31,7 @@ class WebformExporterManager extends DefaultPluginManager implements WebformExpo
   protected $configFactory;
 
   /**
-   * Constructs a WebformExporterManager.
+   * Constructs a WebformExporterManager object.
    *
    * @param \Traversable $namespaces
    *   An object that implements \Traversable which contains the root paths
@@ -54,9 +54,9 @@ class WebformExporterManager extends DefaultPluginManager implements WebformExpo
   /**
    * {@inheritdoc}
    */
-  public function getSortedDefinitions(array $definitions = NULL) {
+  public function getSortedDefinitions(array $definitions = NULL, $sort_by = 'label') {
     // Sort the plugins first by category, then by label.
-    $definitions = $this->traitGetSortedDefinitions($definitions);
+    $definitions = $this->traitGetSortedDefinitions($definitions, $sort_by);
     return $definitions;
   }
 
@@ -64,7 +64,7 @@ class WebformExporterManager extends DefaultPluginManager implements WebformExpo
    * {@inheritdoc}
    */
   public function removeExcludeDefinitions(array $definitions) {
-    $definitions = isset($definitions) ? $definitions : $this->getDefinitions();
+    $definitions = $definitions ?? $this->getDefinitions();
     $excluded = $this->configFactory->get('webform.settings')->get('export.excluded_exporters');
     return $excluded ? array_diff_key($definitions, $excluded) : $definitions;
   }

@@ -66,6 +66,24 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
   public function serial();
 
   /**
+   * Gets the langcode of the field values held in the object.
+   *
+   * @return string
+   *   The langcode.
+   */
+  public function getLangcode();
+
+  /**
+   * Sets the langcode of the field values held in the object.
+   *
+   * @param string $langcode
+   *   The langcode.
+   *
+   * @return $this
+   */
+  public function setLangcode($langcode);
+
+  /**
    * Returns the time that the submission was created.
    *
    * @return int
@@ -140,6 +158,8 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
   /**
    * Get the submission's sticky flag.
    *
+   * Please note that the sticky flag is displayed as a star.
+   *
    * @return string
    *   The submission's stick flag.
    */
@@ -147,6 +167,8 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
 
   /**
    * Sets the submission's sticky flag.
+   *
+   * Please note that the sticky flag is displayed as a star.
    *
    * @param bool $sticky
    *   The submission's stick flag.
@@ -244,6 +266,8 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
 
   /**
    * Returns the submission sticky status.
+   *
+   * Please note that the sticky flag is displayed as a star.
    *
    * @return bool
    *   TRUE if the submission is sticky.
@@ -358,10 +382,18 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
   public function getElementOriginalData($key);
 
   /**
+   * Get a webform submission data as a hash view.
+   *
+   * @return string
+   *   Webform submission data as a hash view.
+   */
+  public function getDataHash();
+
+  /**
    * Gets the webform submission's token.
    *
-   * @return array
-   *   The webform submission data.
+   * @return string
+   *   The webform submission token.
    */
   public function getToken();
 

@@ -59,9 +59,9 @@ class CidocEntitySelection extends DefaultSelection {
     }
     $target_type = $this->configuration['target_type'];
     $handler_settings = $this->configuration['handler_settings'];
-    $entity_type = $this->entityManager->getDefinition($target_type);
+    $entity_type = $this->entityTypeManager->getDefinition($target_type);
 
-    $query = $this->entityManager->getStorage($target_type)->getQuery();
+    $query = $this->entityTypeManager->getStorage($target_type)->getQuery();
 
 
     $query->condition($entity_type->getKey('bundle'), ['e82_actor_appellation'], 'IN');
@@ -125,7 +125,7 @@ class CidocEntitySelection extends DefaultSelection {
     }
 
     $options = array();
-    $entities = $this->entityManager->getStorage($target_type)->loadMultiple($result);
+    $entities = $this->entityTypeManager->getStorage($target_type)->loadMultiple($result);
     foreach ($entities as $entity_id => $entity) {
       /** @var \Drupal\cidoc\Entity\CidocEntity $entity */
       $bundle = $entity->bundle();
@@ -137,10 +137,10 @@ class CidocEntitySelection extends DefaultSelection {
           /** @var CidocReference $reference */
           foreach ($references['p131_is_identified_by'] as $reference) {
             $actor_entity_id = $reference->getDomain();
-            $actor = $this->entityManager->getStorage($target_type)->load($actor_entity_id);
+            $actor = $this->entityTypeManager->getStorage($target_type)->load($actor_entity_id);
             $actor_bundle = $actor->bundle();
-            $translation = $this->entityManager->getTranslationFromContext($entity);
-            $actor_translation = $this->entityManager->getTranslationFromContext($actor);
+            $translation = $this->entityTypeManager->getTranslationFromContext($entity);
+            $actor_translation = $this->entityTypeManager->getTranslationFromContext($actor);
             $label = $translation->label() . ' (' .  $actor_translation->label() . ')';
             $internal_name = $actor_translation->getName(FALSE);
             if ($internal_name) {
@@ -152,7 +152,7 @@ class CidocEntitySelection extends DefaultSelection {
       }
       else {
         /** @var CidocEntity $translation */
-        $translation = $this->entityManager->getTranslationFromContext($entity);
+        $translation = $this->entityTypeManager->getTranslationFromContext($entity);
         $label = $translation->label();
         // Show label with internal name if available.
         $internal_name = $translation->getName(FALSE);
@@ -178,9 +178,9 @@ class CidocEntitySelection extends DefaultSelection {
     }
     $target_type = $this->configuration['target_type'];
     $handler_settings = $this->configuration['handler_settings'];
-    $entity_type = $this->entityManager->getDefinition($target_type);
+    $entity_type = $this->entityTypeManager->getDefinition($target_type);
 
-    $query = $this->entityManager->getStorage($target_type)->getQuery();
+    $query = $this->entityTypeManager->getStorage($target_type)->getQuery();
 
     // If 'target_bundles' is NULL, all bundles are referenceable, no further
     // conditions are needed.

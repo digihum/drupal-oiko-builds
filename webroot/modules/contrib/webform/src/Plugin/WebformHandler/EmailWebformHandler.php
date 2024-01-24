@@ -4,31 +4,21 @@ namespace Drupal\webform\Plugin\WebformHandler;
 
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Mail\MailManagerInterface;
+use Drupal\Core\Form\OptGroup;
 use Drupal\Core\Render\Markup;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\webform\Element\WebformAjaxElementTrait;
 use Drupal\webform\Element\WebformMessage;
 use Drupal\webform\Element\WebformSelectOther;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
-use Drupal\webform\Plugin\WebformElementManagerInterface;
 use Drupal\webform\Plugin\WebformHandlerBase;
 use Drupal\webform\Plugin\WebformHandlerMessageInterface;
 use Drupal\webform\Twig\WebformTwigExtension;
-use Drupal\webform\Utility\Mail;
 use Drupal\webform\Utility\WebformElementHelper;
+use Drupal\webform\Utility\WebformMailHelper;
 use Drupal\webform\Utility\WebformOptionsHelper;
-use Drupal\webform\WebformSubmissionConditionsValidatorInterface;
 use Drupal\webform\WebformSubmissionInterface;
-use Drupal\webform\WebformThemeManagerInterface;
-use Drupal\webform\WebformTokenManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -121,7 +111,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
   protected $themeManager;
 
   /**
-   * A webform element plugin manager.
+   * The webform element plugin manager.
    *
    * @var \Drupal\webform\Plugin\WebformElementManagerInterface
    */
@@ -137,37 +127,16 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, LoggerChannelFactoryInterface $logger_factory, ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entity_type_manager, WebformSubmissionConditionsValidatorInterface $conditions_validator, AccountInterface $current_user, ModuleHandlerInterface $module_handler, LanguageManagerInterface $language_manager, MailManagerInterface $mail_manager, WebformThemeManagerInterface $theme_manager, WebformTokenManagerInterface $token_manager, WebformElementManagerInterface $element_manager) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $logger_factory, $config_factory, $entity_type_manager, $conditions_validator);
-    $this->currentUser = $current_user;
-    $this->moduleHandler = $module_handler;
-    $this->languageManager = $language_manager;
-    $this->mailManager = $mail_manager;
-    $this->themeManager = $theme_manager;
-    $this->tokenManager = $token_manager;
-    $this->elementManager = $element_manager;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('logger.factory'),
-      $container->get('config.factory'),
-      $container->get('entity_type.manager'),
-      $container->get('webform_submission.conditions_validator'),
-      $container->get('current_user'),
-      $container->get('module_handler'),
-      $container->get('language_manager'),
-      $container->get('plugin.manager.mail'),
-      $container->get('webform.theme_manager'),
-      $container->get('webform.token_manager'),
-      $container->get('plugin.manager.webform.element')
-    );
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->currentUser = $container->get('current_user');
+    $instance->moduleHandler = $container->get('module_handler');
+    $instance->languageManager = $container->get('language_manager');
+    $instance->mailManager = $container->get('plugin.manager.mail');
+    $instance->themeManager = $container->get('webform.theme_manager');
+    $instance->tokenManager = $container->get('webform.token_manager');
+    $instance->elementManager = $container->get('plugin.manager.webform.element');
+    return $instance;
   }
 
   /**
@@ -208,28 +177,6 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     return [
       '#settings' => $settings,
     ] + parent::getSummary();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setConfiguration(array $configuration) {
-    parent::setConfiguration($configuration);
-
-    // Make sure 'default' is converted to '_default'.
-    // @see https://www.drupal.org/project/webform/issues/2980470
-    // @see webform_update_8131()
-    // @todo Webform 8.x-6.x: Remove the below code.
-    $default_configuration = $this->defaultConfiguration();
-    foreach ($this->configuration as $key => $value) {
-      if ($value === 'default'
-        && isset($default_configuration[$key])
-        && $default_configuration[$key] === static::DEFAULT_VALUE) {
-        $this->configuration[$key] = static::DEFAULT_VALUE;
-      }
-    }
-
-    return $this;
   }
 
   /**
@@ -329,9 +276,9 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
    *   along with the default configuration values.
    */
   public function getEmailConfiguration() {
-    $configuration = $this->getConfiguration();
+    $settings = $this->getSettings();
     $email = [];
-    foreach ($configuration['settings'] as $key => $value) {
+    foreach ($settings as $key => $value) {
       $email[$key] = ($value === static::DEFAULT_VALUE) ? $this->getDefaultConfigurationValue($key) : $value;
     }
     return $email;
@@ -456,8 +403,8 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       '[current-user:account-name]' => 'Current user account name',
       '[webform:author:display-name]' => 'Webform author display name',
       '[webform:author:account-name]' => 'Webform author account name',
-      '[webform_submission:author:display-name]' => 'Webform submission author display name',
-      '[webform_submission:author:account-name]' => 'Webform submission author account name',
+      '[webform_submission:user:display-name]' => 'Webform submission author display name',
+      '[webform_submission:user:account-name]' => 'Webform submission author account name',
     ];
 
     // Disable client-side HTML5 validation which is having issues with hidden
@@ -469,6 +416,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     $form['to'] = [
       '#type' => 'details',
       '#title' => $this->t('Send to'),
+      '#help' => $this->t('This is the "To:" email header which will be the person(s) responsible for receiving this webform.'),
       '#open' => TRUE,
     ];
     $form['to']['to_mail'] = $this->buildElement('to_mail', $this->t('To email'), $this->t('To email address'), TRUE, $mail_element_options, $options_element_options, $roles_element_options, $other_element_email_options);
@@ -505,12 +453,29 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     // From.
     $form['from'] = [
       '#type' => 'details',
-      '#title' => $this->t('Send from'),
+      '#title' => $this->t('Send from (website/domain)'),
+      '#help' => $this->t('This is the "From:" email header which should come from <em>you</em>.  It should be your brand, company, organization, or website entity.'),
       '#open' => TRUE,
     ];
     $form['from']['from_mail'] = $this->buildElement('from_mail', $this->t('From email'), $this->t('From email address'), TRUE, $mail_element_options, $options_element_options, NULL, $other_element_email_options);
     $form['from']['from_name'] = $this->buildElement('from_name', $this->t('From name'), $this->t('From name'), FALSE, $name_element_options, NULL, NULL, $other_element_name_options);
     $form['from']['token_tree_link'] = $this->buildTokenTreeElement();
+    // 'From name' is not used if it contains multiple email addresses.
+    $form['from']['from_name']['from_name']['#states'] = [
+      '!visible' => [
+        ':input[name="settings[from_mail][other]"]' => ['value' => ['pattern' => ',']],
+      ],
+    ];
+
+    // Settings: Reply-to.
+    $form['reply_to'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Reply to (individual/organization)'),
+      '#help' => $this->t('The "Reply-To:" email header is used for replying to the email that is received.  For example, if you collect a customers email, you would want to reply-to them. If you collect a lead generation form and want to reply to the coordinator, you would reply-to them.'),
+      '#open' => TRUE,
+    ];
+    $form['reply_to']['reply_to'] = $this->buildElement('reply_to', $this->t('Reply-to email'), $this->t('Reply-to email address'), FALSE, $mail_element_options, NULL, NULL, $other_element_email_options);
+    $form['reply_to']['token_tree_link'] = $this->buildTokenTreeElement($token_types);
 
     // Message.
     $form['message'] = [
@@ -547,7 +512,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     // webform_token() Twig function.
     // @see \Drupal\webform\Twig\WebformTwigExtension
     $twig_default_body = $body_custom_default_values[$body_default_format];
-    $twig_default_body = preg_replace('/(\[[^]]+\])/', '{{ webform_token(\'\1\', webform_submission) }}', $twig_default_body);
+    $twig_default_body = preg_replace('/(\[[^]]+\])/', '{{ webform_token(\'\1\', webform_submission, [], options) }}', $twig_default_body);
     $body_custom_default_values['twig'] = $twig_default_body;
 
     // Look at the 'body' and determine the body select and custom
@@ -573,7 +538,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       '#default_value' => $body_select_default_value,
     ];
     foreach ($body_default_values as $format => $default_value) {
-      if ($format == 'html') {
+      if ($format === 'html') {
         $form['message']['body_custom_' . $format] = [
           '#type' => 'webform_html_editor',
           '#format' => $this->configFactory->get('webform.settings')->get('html_editor.mail_format'),
@@ -592,11 +557,11 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
         '#states' => [
           'visible' => [
             ':input[name="settings[body]"]' => ['value' => WebformSelectOther::OTHER_OPTION],
-            ':input[name="settings[html]"]' => ['checked' => ($format == 'html') ? TRUE : FALSE],
+            ':input[name="settings[html]"]' => ['checked' => ($format === 'html') ? TRUE : FALSE],
           ],
           'required' => [
             ':input[name="settings[body]"]' => ['value' => WebformSelectOther::OTHER_OPTION],
-            ':input[name="settings[html]"]' => ['checked' => ($format == 'html') ? TRUE : FALSE],
+            ':input[name="settings[html]"]' => ['checked' => ($format === 'html') ? TRUE : FALSE],
           ],
         ],
       ];
@@ -615,7 +580,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
         '#states' => [
           'visible' => [
             ':input[name="settings[body]"]' => ['value' => static::DEFAULT_VALUE],
-            ':input[name="settings[html]"]' => ['checked' => ($format == 'html') ? TRUE : FALSE],
+            ':input[name="settings[html]"]' => ['checked' => ($format === 'html') ? TRUE : FALSE],
           ],
         ],
       ];
@@ -723,10 +688,11 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
         ':href_smtp' => 'https://www.drupal.org/project/smtp',
         ':href_mailsystem' => 'https://www.drupal.org/project/mailsystem',
         ':href_swiftmailer' => 'https://www.drupal.org/project/swiftmailer',
+        ':href_symfony_mailer' => 'https://www.drupal.org/project/symfony_mailer',
       ];
       $form['attachments']['attachments_message'] = [
         '#type' => 'webform_message',
-        '#message_message' => $this->t('To send email attachments, please install and configure the <a href=":href_smtp">SMTP Authentication Support</a> module or the <a href=":href_mailsystem">Mail System</a> and <a href=":href_swiftmailer">SwiftMailer</a> module.', $t_args),
+        '#message_message' => $this->t('To send email attachments, please install and configure the <a href=":href_smtp">SMTP Authentication Support</a> module, the <a href=":href_mailsystem">Mail System</a> and <a href=":href_swiftmailer">SwiftMailer</a> module or the <a href=":href_symfony_mailer">Symfony Mailer</a> module.', $t_args),
         '#message_type' => 'warning',
         '#message_close' => TRUE,
         '#message_storage' => WebformMessage::STORAGE_SESSION,
@@ -773,8 +739,6 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
         ],
       ],
     ];
-    // Settings: Reply-to.
-    $form['additional']['reply_to'] = $this->buildElement('reply_to', $this->t('Reply-to email'), $this->t('Reply-to email address'), FALSE, $mail_element_options, NULL, NULL, $other_element_email_options);
     // Settings: Return path.
     $form['additional']['return_path'] = $this->buildElement('return_path', $this->t('Return path'), $this->t('Return path email address'), FALSE, $mail_element_options, NULL, NULL, $other_element_email_options);
     // Settings: Sender mail.
@@ -932,10 +896,10 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     foreach ($this->configuration as $configuration_key => $configuration_value) {
       // Get configuration name (to, cc, bcc, from, name, subject, mail)
       // and type (mail, options, or text).
-      list($configuration_name, $configuration_type) = (strpos($configuration_key, '_') !== FALSE) ? explode('_', $configuration_key) : [$configuration_key, 'text'];
+      [$configuration_name, $configuration_type] = (strpos($configuration_key, '_') !== FALSE) ? explode('_', $configuration_key) : [$configuration_key, 'text'];
 
       // Set options and continue.
-      if ($configuration_type == 'options') {
+      if ($configuration_type === 'options') {
         $message[$configuration_key] = $configuration_value;
         continue;
       }
@@ -949,13 +913,13 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       }
 
       // Set email addresses.
-      if ($configuration_type == 'mail') {
+      if ($configuration_type === 'mail') {
         $emails = $this->getMessageEmails($webform_submission, $configuration_name, $configuration_value);
         $configuration_value = implode(',', array_unique($emails));
       }
 
       // If Twig enabled render and body, render the Twig template.
-      if ($configuration_key == 'body' && $this->configuration['twig']) {
+      if ($configuration_key === 'body' && $this->configuration['twig']) {
         $message[$configuration_key] = WebformTwigExtension::renderTwigTemplate($webform_submission, $configuration_value, $token_options);
       }
       else {
@@ -1036,8 +1000,8 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       $email_options = WebformOptionsHelper::decodeConfig($this->configuration[$configuration_name . '_options']);
 
       // Set default email address.
-      if (!empty($email_options[self::DEFAULT_OPTION])) {
-        $emails[] = $email_options[self::DEFAULT_OPTION];
+      if (!empty($email_options[static::DEFAULT_OPTION])) {
+        $emails[] = $email_options[static::DEFAULT_OPTION];
       }
 
       // Get submission email addresses as an array.
@@ -1051,8 +1015,8 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
 
       // Set empty email address.
       if (empty($options_values)) {
-        if (!empty($email_options[self::EMPTY_OPTION])) {
-          $emails[] = $email_options[self::EMPTY_OPTION];
+        if (!empty($email_options[static::EMPTY_OPTION])) {
+          $emails[] = $email_options[static::EMPTY_OPTION];
         }
       }
       // Loop through options values and collect email addresses.
@@ -1062,8 +1026,8 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
             $emails[] = $email_options[$option_value];
           }
           // Set other email address.
-          elseif (!empty($email_options[self::OTHER_OPTION])) {
-            $emails[] = $email_options[self::OTHER_OPTION];
+          elseif (!empty($email_options[static::OTHER_OPTION])) {
+            $emails[] = $email_options[static::OTHER_OPTION];
           }
         }
       }
@@ -1131,8 +1095,22 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       $element = $elements[$element_attachment];
       /** @var \Drupal\webform\Plugin\WebformElementAttachmentInterface $element_plugin */
       $element_plugin = $this->elementManager->getElementInstance($element);
-      $attachments = array_merge($attachments, $element_plugin->getAttachments($element, $webform_submission));
+      $attachments = array_merge($attachments, $element_plugin->getEmailAttachments($element, $webform_submission));
     }
+
+    // For SwiftMailer && Mime Mail use filecontent and not the filepath.
+    // @see \Drupal\swiftmailer\Plugin\Mail\SwiftMailer::attachAsMimeMail
+    // @see \Drupal\mimemail\Utility\MimeMailFormatHelper::mimeMailFile
+    // @see https://www.drupal.org/project/webform/issues/3232756
+    if ($this->moduleHandler->moduleExists('swiftmailer')
+      || $this->moduleHandler->moduleExists('mimemail')) {
+      foreach ($attachments as &$attachment) {
+        if (isset($attachment['filecontent']) && isset($attachment['filepath'])) {
+          unset($attachment['filepath']);
+        }
+      }
+    }
+
     return $attachments;
   }
 
@@ -1140,31 +1118,14 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
    * {@inheritdoc}
    */
   public function sendMessage(WebformSubmissionInterface $webform_submission, array $message) {
+    // Validate message.
+    if (!$this->validateMessage($webform_submission, $message)) {
+      return FALSE;
+    }
+
     $to = $message['to_mail'];
     $from = $message['from_mail'];
-
-    // Remove less than (<) and greater (>) than from name.
-    // @todo Figure out the proper way to encode special characters.
-    // Note: PhpMail call.
-    $message['from_name'] = preg_replace('/[<>]/', '', $message['from_name']);
-
-    if (!empty($message['from_name'])) {
-      $from = Mail::formatDisplayName($message['from_name']) . ' <' . $from . '>';
-    }
-
     $current_langcode = $this->languageManager->getCurrentLanguage()->getId();
-
-    // Don't send the message if To, CC, and BCC is empty.
-    if (!$this->hasRecipient($webform_submission, $message)) {
-      if ($this->configuration['debug']) {
-        $t_args = [
-          '%form' => $this->getWebform()->label(),
-          '%handler' => $this->label(),
-        ];
-        $this->messenger()->addWarning($this->t('%form: Email not sent for %handler handler because a <em>To</em>, <em>CC</em>, or <em>BCC</em> email was not provided.', $t_args), TRUE);
-      }
-      return;
-    }
 
     // Render body using webform email message (wrapper) template.
     $build = [
@@ -1178,13 +1139,11 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     $theme_name = $this->configuration['theme_name'];
     $message['body'] = trim((string) $this->themeManager->renderPlain($build, $theme_name));
 
+    // Html body needs to be Markup so that relative URLs are converted
+    // to absolute.
+    // @see \Drupal\Core\Mail\MailManager::doMail
     if ($this->configuration['html']) {
-      switch ($this->getMailSystemFormatter()) {
-        case 'swiftmailer':
-          // SwiftMailer requires that the body be valid Markup.
-          $message['body'] = Markup::create($message['body']);
-          break;
-      }
+      $message['body'] = Markup::create($message['body']);
     }
 
     // Send message.
@@ -1246,6 +1205,109 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
   }
 
   /**
+   * Validate webform submission message email addresses.
+   *
+   * Removes invalid and logs 'To', 'Cc', and 'Bcc' email addresses.
+   *
+   * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
+   *   A webform submission.
+   * @param array $message
+   *   An array of message parameters.
+   *
+   * @return bool
+   *   TRUE is webform submission message email addresses are valid.
+   *   FALSE is invalid 'From' email address or no To, Cc, or Bcc
+   *   is assigned.
+   */
+  protected function validateMessage(WebformSubmissionInterface $webform_submission, array &$message) {
+    $email_fields = [
+      'from_mail' => $this->t('From'),
+      'to_mail' => $this->t('To'),
+      'cc_mail' => $this->t('Cc'),
+      'bcc_mail' => $this->t('Bcc'),
+      'reply_to' => $this->t('Reply-to'),
+      'return_path' => $this->t('Return path'),
+      'sender_mail' => $this->t('Sender'),
+    ];
+    foreach ($email_fields as $email_field_name => $email_field_label) {
+      if (empty($message[$email_field_name])) {
+        continue;
+      }
+
+      $email_addresses = preg_split('/\s*,\s*/', $message[$email_field_name]);
+      foreach ($email_addresses as $index => $email_address) {
+        // Remove empty email addresses from missing elements
+        // and do not display or log any warnings.
+        if (empty($email_address)) {
+          unset($email_addresses[$index]);
+          continue;
+        }
+
+        if (WebformMailHelper::validateAddress($email_address)) {
+          continue;
+        }
+
+        // Unset invalid email addresses.
+        unset($email_addresses[$index]);
+
+        // If debugging is enabled then display warning.
+        if ($this->configuration['debug']) {
+          $t_args = [
+            '@type' => $email_field_label,
+            '%form' => $this->getWebform()->label(),
+            '%handler' => $this->label(),
+            '%email' => $email_address,
+          ];
+          if ($email_field_name === 'from_mail') {
+            $this->messenger()->addWarning($this->t('%form: Email not sent for %handler handler because the <em>@type</em> email (%email) is not valid.', $t_args));
+          }
+          else {
+            $this->messenger()->addWarning($this->t('%form: The <em>@type</em> email address (%email) for %handler handler  is not valid.', $t_args));
+          }
+        }
+        // Log unset or invalid email address.
+        $context = [
+          '@type' => $email_field_label,
+          '@form' => $this->getWebform()->label(),
+          '@handler' => $this->label(),
+          '@email' => $email_address,
+        ];
+        if ($email_field_name === 'from_mail') {
+          $this->getLogger('webform_submission')->error("@form: Email not sent for '@handler' handler because the '@type' email (@email) is not valid.", $context);
+          return FALSE;
+        }
+        else {
+          $this->getLogger('webform_submission')->error("@form: The '@type' email address (@email) for '@handler' handler is not valid.", $context);
+        }
+      }
+
+      // Update email addresses.
+      $message[$email_field_name] = implode(',', $email_addresses);
+    }
+
+    // Don't send the message if To, CC, and BCC is empty.
+    if (!$this->hasRecipient($webform_submission, $message)) {
+      // If debugging is enabled then display warning.
+      if ($this->configuration['debug']) {
+        $t_args = [
+          '%form' => $this->getWebform()->label(),
+          '%handler' => $this->label(),
+        ];
+        $this->messenger()->addWarning($this->t('%form: Email not sent for %handler handler because a <em>To</em>, <em>CC</em>, or <em>BCC</em> email was not provided.', $t_args), TRUE);
+      }
+      // Log unset or invalid email address.
+      $context = [
+        '@form' => $this->getWebform()->label(),
+        '@handler' => $this->label(),
+      ];
+      $this->getLogger('webform_submission')->error("@form: Email not sent for @handler handler because a To, CC, or BCC email was not provided", $context);
+      return FALSE;
+    }
+
+    return TRUE;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function hasRecipient(WebformSubmissionInterface $webform_submission, array $message) {
@@ -1280,7 +1342,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     ];
     $element['from_divider'] = ['#markup' => '<hr/>'];
     $element['from_mail'] = [
-      '#type' => 'webform_email_multiple',
+      '#type' => 'email',
       '#title' => $this->t('From email'),
       '#required' => TRUE,
       '#default_value' => $message['from_mail'],
@@ -1290,6 +1352,12 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       '#title' => $this->t('From name'),
       '#required' => TRUE,
       '#default_value' => $message['from_name'],
+    ];
+    $element['reply_to_divider'] = ['#markup' => '<hr/>'];
+    $element['reply_to'] = [
+      '#type' => 'email',
+      '#title' => $this->t('Reply to'),
+      '#default_value' => $message['reply_to'],
     ];
     $element['message_divider'] = ['#markup' => '<hr/>'];
     $element['subject'] = [
@@ -1302,10 +1370,6 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       '#title' => $this->t('Message'),
       '#required' => TRUE,
       '#default_value' => $message['body'],
-    ];
-    $element['reply_to'] = [
-      '#type' => 'value',
-      '#value' => $message['reply_to'],
     ];
     $element['return_path'] = [
       '#type' => 'value',
@@ -1361,7 +1425,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
   protected function supportsAttachments() {
     // If 'system.mail.interface.default' is 'test_mail_collector'
     // allow email attachments during testing.
-    if ($this->configFactory->get('system.mail')->get('interface.default') == 'test_mail_collector') {
+    if ($this->configFactory->get('system.mail')->get('interface.default') === 'test_mail_collector') {
       return TRUE;
     }
 
@@ -1372,12 +1436,13 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       return TRUE;
     }
 
-    // The Mail System module, which supports a variety of mail handlers,
-    // and the SMTP module support attachments.
+    // The Mail System module, which supports a variety of mail handlers, the
+    // SMTP module and Symfony Mailer support attachments.
     $mailsystem_installed = $this->moduleHandler->moduleExists('mailsystem');
     $smtp_enabled = $this->moduleHandler->moduleExists('smtp')
       && $this->configFactory->get('smtp.settings')->get('smtp_on');
-    return $mailsystem_installed || $smtp_enabled;
+    $symfony_mailer_installed = $this->moduleHandler->moduleExists('symfony_mailer');
+    return $mailsystem_installed || $smtp_enabled || $symfony_mailer_installed;
   }
 
   /**
@@ -1411,7 +1476,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       'subject' => $this->t('Subject'),
     ];
     foreach ($values as $name => $title) {
-      if ($title == '---') {
+      if ($title === '---') {
         $build[$name] = ['#markup' => '<hr />'];
       }
       elseif (!empty($message[$name])) {
@@ -1505,8 +1570,8 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
    * @return array
    *   A select other element.
    */
-  protected function buildElement($name, $title, $label, $required = FALSE, array $element_options, array $options_options = NULL, array $role_options = NULL, array $other_options = NULL) {
-    list($element_name, $element_type) = (strpos($name, '_') !== FALSE) ? explode('_', $name) : [$name, 'text'];
+  protected function buildElement($name, $title, $label, $required = FALSE, array $element_options = [], array $options_options = NULL, array $role_options = NULL, array $other_options = NULL) {
+    [$element_name, $element_type] = (strpos($name, '_') !== FALSE) ? explode('_', $name) : [$name, 'text'];
 
     $default_option = $this->getDefaultConfigurationValue($name);
 
@@ -1515,7 +1580,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     if ($default_option) {
       $options[(string) $this->t('Default')] = [static::DEFAULT_VALUE => $default_option];
     }
-    if ($element_options) {
+    if (!empty($element_options)) {
       $options[(string) $this->t('Elements')] = $element_options;
     }
     if ($options_options) {
@@ -1538,7 +1603,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       '#other__title' => $title,
       '#other__title_display' => 'invisible',
       '#other__placeholder' => $this->t('Enter @label…', ['@label' => $label]),
-      '#other__type' => ($element_type == 'mail') ? 'webform_email_multiple' : 'textfield',
+      '#other__type' => ($element_type === 'mail') ? 'webform_email_multiple' : 'textfield',
       '#other__allow_tokens' => TRUE,
       '#required' => $required,
       '#default_value' => $this->configuration[$name],
@@ -1554,25 +1619,33 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       $element[$name]['#other__maxlength'] = NULL;
     }
 
+    // Tweak elements.
+    switch ($name) {
+      case 'from_mail':
+        $element[$name]['#other__description'] = $this->t('Multiple email addresses may be separated by commas. Emails are only sent to cc and bcc addresses if a To email address is provided.')
+          . ' '
+          . $this->t("If multiple email addresses are entered the '@name' will be not included in the email.", ['@name' => $this->t('From name')]);
+        break;
+
+      case 'reply_to':
+        $element[$name]['#description'] = $this->t('The email address that a recipient will see when they replying to an email.');
+        break;
+
+      case 'return_path':
+        $element[$name]['#description'] = $this->t('The email address to which bounce messages are delivered.');
+        break;
+
+      case 'sender_mail':
+        $element[$name]['#description'] = $this->t('The email address submitting the message, if other than shown by the From header');
+        break;
+    }
+
     // Use multiple email for reply_to, return_path, and sender_mail because
     // it supports tokens.
     if (in_array($name, ['reply_to', 'return_path', 'sender_mail'])) {
       $element[$name]['#other__type'] = 'webform_email_multiple';
       $element[$name]['#other__cardinality'] = 1;
       $element[$name]['#other__description'] = '';
-      switch ($name) {
-        case 'reply_to':
-          $element[$name]['#description'] = $this->t('The email address that a recipient will see when they replying to an email.');
-          break;
-
-        case 'return_path':
-          $element[$name]['#description'] = $this->t('The email address to which bounce messages are delivered.');
-          break;
-
-        case 'sender_mail':
-          $element[$name]['#description'] = $this->t('The email address submitting the message, if other than shown by the From header');
-          break;
-      }
       $t_args = ['@title' => $title];
       if ($default_email = $this->getDefaultConfigurationValue($name)) {
         $t_args['%email'] = $default_email;
@@ -1600,17 +1673,17 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       $options_element = $this->webform->getElement($token_element_name);
 
       // Set mapping options.
-      $mapping_options = $options_element['#options'];
+      $mapping_options = OptGroup::flattenOptions($options_element['#options']);
       array_walk($mapping_options, function (&$value, $key) {
         $value = '<b>' . $value . '</b>';
       });
       if (preg_match('/_other$/', $options_element['#type'])) {
-        $mapping_options[self::OTHER_OPTION] = $this->t("Other (Used when 'other' value is entered)");
+        $mapping_options[static::OTHER_OPTION] = $this->t("Other (Used when 'other' value is entered)");
       }
       if (empty($options_element['#required'])) {
-        $mapping_options[self::EMPTY_OPTION] = $this->t('Empty (Used when no option is selected)');
+        $mapping_options[static::EMPTY_OPTION] = $this->t('Empty (Used when no option is selected)');
       }
-      $mapping_options[self::DEFAULT_OPTION] = $this->t('Default (This email address will always be included)');
+      $mapping_options[static::DEFAULT_OPTION] = $this->t('Default (This email address will always be included)');
 
       // Set placeholder emails.
       $destination_placeholder_emails = ['example@example.com', '[site:mail]'];
@@ -1667,10 +1740,10 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       ];
       if (!empty($attachment['_fileurl'])) {
         $t_args[':href'] = $attachment['_fileurl'];
-        $build[] = ['#markup' => $this->t('<strong><a href=":href">@filename</a></strong> (@filemime) - @filesize ', $t_args)];
+        $build[] = ['#markup' => $this->t('<strong><a href=":href">@filename</a></strong> (@filemime) - @filesize', $t_args)];
       }
       else {
-        $build[] = ['#markup' => $this->t('<strong>@filename</strong> (@filemime) - @filesize ', $t_args)];
+        $build[] = ['#markup' => $this->t('<strong>@filename</strong> (@filemime) - @filesize', $t_args)];
       }
     }
     return $build;
@@ -1688,7 +1761,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
    *   The element key or NULL if token can not be parsed.
    */
   protected function getElementKeyFromToken($token, $format = 'raw') {
-    if (preg_match('/^\[webform_submission:values:([^:]+):' . $format . '\]$/', $token, $match)) {
+    if ($token && preg_match('/^\[webform_submission:values:([^:]+):' . $format . '\]$/', $token, $match)) {
       return $match[1];
     }
     else {

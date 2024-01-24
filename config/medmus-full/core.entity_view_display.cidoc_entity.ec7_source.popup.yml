@@ -13,119 +13,119 @@ bundle: ec7_source
 mode: popup
 content:
   cidoc_admin_links:
+    settings: {  }
+    third_party_settings: {  }
     weight: 3
     region: content
+  'cidoc_properties:domain:p102_has_title':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p102_has_title':
     weight: 5
     region: content
+  'cidoc_properties:domain:p1_is_identified_by':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p1_is_identified_by':
     weight: 6
     region: content
+  'cidoc_properties:domain:p2_has_type':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p2_has_type':
     weight: 8
     region: content
+  'cidoc_properties:domain:p45_consists_of':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p45_consists_of':
     weight: 9
     region: content
+  'cidoc_properties:domain:p48_has_preferred_identifier':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:p48_has_preferred_identifier':
     weight: 7
     region: content
+  'cidoc_properties:domain:pa19_has_language':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:domain:pa19_has_language':
     weight: 20
     region: content
+  'cidoc_properties:range:p108_has_produced':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p108_has_produced':
     weight: 16
     region: content
+  'cidoc_properties:range:p12_occurred_in_the_presence_of':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p12_occurred_in_the_presence_of':
     weight: 17
     region: content
+  'cidoc_properties:range:p13_destroyed':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p13_destroyed':
     weight: 18
     region: content
+  'cidoc_properties:range:p67_refers_to':
     settings: {  }
     third_party_settings: {  }
-  'cidoc_properties:range:p67_refers_to':
     weight: 19
     region: content
+  cidoc_temporal_summary:
     settings: {  }
     third_party_settings: {  }
-  cidoc_temporal_summary:
     weight: 1
     region: content
-    settings: {  }
-    third_party_settings: {  }
   content:
-    region: content
-    label: hidden
     type: text_default
-    weight: 4
+    label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 4
+    region: content
   ms_language_entity_view_1:
+    settings: {  }
+    third_party_settings: {  }
     weight: 14
     region: content
+  mss_associated_with_shelfmark_entity_view_1:
     settings: {  }
     third_party_settings: {  }
-  mss_associated_with_shelfmark_entity_view_1:
     weight: 10
     region: content
-    settings: {  }
-    third_party_settings: {  }
   name:
-    region: content
     type: string
     label: hidden
     settings:
       link_to_entity: false
-    weight: 0
     third_party_settings: {  }
+    weight: 0
+    region: content
   production_info_entity_view_1:
+    settings: {  }
+    third_party_settings: {  }
     weight: 13
     region: content
+  production_info_entity_view_2:
     settings: {  }
     third_party_settings: {  }
-  production_info_entity_view_2:
     weight: 12
     region: content
+  production_info_entity_view_3:
     settings: {  }
     third_party_settings: {  }
-  production_info_entity_view_3:
     weight: 11
     region: content
-    settings: {  }
-    third_party_settings: {  }
   significance:
-    region: content
     type: entity_reference_entity_view
     label: visually_hidden
     settings:
       view_mode: primary_historical_significance_pill
       link: false
-    weight: 2
     third_party_settings: {  }
-  works_contained_in_ms_entity_view_1:
-    weight: 15
+    weight: 2
     region: content
+  works_contained_in_ms_entity_view_1:
     settings: {  }
     third_party_settings: {  }
+    weight: 15
+    region: content
 hidden:
   cidoc_properties: true
   'cidoc_properties:domain:p128_carries': true

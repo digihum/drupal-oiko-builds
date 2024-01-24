@@ -9,7 +9,7 @@ use Drupal\webform\WebformInterface;
 /**
  * Tests for webform element #states selectors.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementStatesSelectorsTest extends WebformElementBrowserTestBase {
 
@@ -30,7 +30,7 @@ class WebformElementStatesSelectorsTest extends WebformElementBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     // Create 'tags' vocabulary.
@@ -75,11 +75,11 @@ class WebformElementStatesSelectorsTest extends WebformElementBrowserTestBase {
 
     // Check the value element is excluded.
     $selectors = $webform->getElementsSelectorOptions();
-    $this->assert(!isset($selectors[':input[name="value"]']));
+    $this->assertArrayNotHasKey(':input[name="value"]', $selectors);
 
     // Check the value element is included.
     $selectors = $webform->getElementsSelectorOptions(['excluded_elements' => []]);
-    $this->assertEqual($selectors[':input[name="value"]'], 'Value [Value]');
+    $this->assertEquals($selectors[':input[name="value"]'], 'Value [Value]');
   }
 
 }

@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa3_has_friend
 label: 'PA3 has friend'
-bidirectional: true
 reverse_label: 'PA3 has friend'
-friendly_label: 'Has friend'
-reverse_friendly_label: ''
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: true
+friendly_label: 'Has friend'
+reverse_friendly_label: ''
 widget_description:
   domain: ''
   range: ''

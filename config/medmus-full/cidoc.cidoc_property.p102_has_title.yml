@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p102_has_title
 label: 'P102 has title'
-bidirectional: false
 reverse_label: 'P102 is title of'
-friendly_label: Title
-reverse_friendly_label: 'Is title of'
 domain_bundles:
   - e35_title
   - e41_appellation
@@ -32,6 +29,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Title
+reverse_friendly_label: 'Is title of'
 widget_description:
   domain: ''
   range: ''

@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pc2_is_contrafactum_of
 label: 'PC2 is contrafactum of'
-bidirectional: false
 reverse_label: 'PC2 is model of'
-friendly_label: 'Contrafactum of'
-reverse_friendly_label: 'Model of'
 domain_bundles:
   - ec1_work
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Contrafactum of'
+reverse_friendly_label: 'Model of'
 widget_description:
   domain: "<p>Lyric which copied metrical and/or musical correspondence to a previous composition.</p>\r\n<ul>\r\n<li>BdT 434.21 is contrafactum of (is model of) BdT 366,9</li>\r\n</ul>\r\n"
   range: ''

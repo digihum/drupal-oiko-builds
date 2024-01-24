@@ -6,10 +6,7 @@ _core:
   default_config_hash: OcT714zVohOZRkOPSJGacLlwZaAB4zZqD0Jb7bPlSLQ
 id: p7_took_place_at
 label: 'P7 took place at'
-bidirectional: false
 reverse_label: 'P7 witnessed'
-friendly_label: 'Took place at'
-reverse_friendly_label: Witnessed
 domain_bundles:
   - e5_event
   - e6_destruction
@@ -34,8 +31,13 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: 'Took place at'
+reverse_friendly_label: Witnessed
 widget_description:
-  domain: "\n\n"
+  domain: |+
+
+
 autocomplete_description:
   domain: ''
   range: ''

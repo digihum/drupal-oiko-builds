@@ -7,7 +7,10 @@ use Drupal\Core\Form\OptGroup;
 use Drupal\Core\Render\Element as RenderElement;
 use Drupal\Core\Render\Element;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\file\Entity\File;
 use Drupal\webform\Entity\WebformOptions;
+use Drupal\webform\Plugin\WebformElementAttachmentInterface;
+use Drupal\webform\Plugin\WebformElementCompositeInterface;
 use Drupal\webform\Plugin\WebformElementComputedInterface;
 use Drupal\webform\Plugin\WebformElementEntityReferenceInterface;
 use Drupal\webform\Utility\WebformArrayHelper;
@@ -16,29 +19,12 @@ use Drupal\webform\Utility\WebformOptionsHelper;
 use Drupal\webform\Plugin\WebformElementBase;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a base for composite elements.
  */
-abstract class WebformCompositeBase extends WebformElementBase {
-
-  /**
-   * Composite elements defined in the webform composite form element.
-   *
-   * @var array
-   *
-   * @see \Drupal\webform\Element\WebformCompositeBase::processWebformComposite
-   */
-  protected $compositeElement;
-
-  /**
-   * Initialized composite element.
-   *
-   * @var array
-   *
-   * @see \Drupal\webform\Element\WebformCompositeBase::processWebformComputed
-   */
-  protected $initializedCompositeElement;
+abstract class WebformCompositeBase extends WebformElementBase implements WebformElementCompositeInterface, WebformElementAttachmentInterface {
 
   /**
    * Track managed file elements.
@@ -47,9 +33,41 @@ abstract class WebformCompositeBase extends WebformElementBase {
    */
   protected $elementsManagedFiles = [];
 
-  /****************************************************************************/
+  /**
+   * The file system service.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
+
+  /**
+   * The renderer.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
+   * The webform submission generation service.
+   *
+   * @var \Drupal\webform\WebformSubmissionGenerateInterface
+   */
+  protected $generate;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->fileSystem = $container->get('file_system');
+    $instance->renderer = $container->get('renderer');
+    $instance->generate = $container->get('webform_submission.generate');
+    return $instance;
+  }
+
+  /* ************************************************************************ */
   // Property definitions.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -106,9 +124,16 @@ abstract class WebformCompositeBase extends WebformElementBase {
     ] + parent::defineDefaultMultipleProperties();
   }
 
-  /****************************************************************************/
+  /**
+   * {@inheritdoc}
+   */
+  protected function defineTranslatableProperties() {
+    return array_merge(parent::defineTranslatableProperties(), ['default_value']);
+  }
+
+  /* ************************************************************************ */
   // Property methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -117,9 +142,9 @@ abstract class WebformCompositeBase extends WebformElementBase {
     return ($this->getManagedFiles($element)) ? TRUE : FALSE;
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Element relationship methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -128,9 +153,9 @@ abstract class WebformCompositeBase extends WebformElementBase {
     return [];
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Element rendering methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -195,9 +220,9 @@ abstract class WebformCompositeBase extends WebformElementBase {
     }
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Table methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -255,9 +280,9 @@ abstract class WebformCompositeBase extends WebformElementBase {
     }
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // #states API methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -273,8 +298,7 @@ abstract class WebformCompositeBase extends WebformElementBase {
     $selectors = [];
     $composite_elements = $this->getInitializedCompositeElement($element);
     foreach ($composite_elements as $composite_key => $composite_element) {
-      $has_access = (!isset($composite_elements['#access']) || $composite_elements['#access']);
-      if ($has_access && isset($composite_element['#type'])) {
+      if (Element::isVisibleElement($composite_elements) && isset($composite_element['#type'])) {
         $element_plugin = $this->elementManager->getElementInstance($composite_element);
         $composite_element['#webform_key'] = "{$name}[{$composite_key}]";
         $selectors += OptGroup::flattenOptions($element_plugin->getElementSelectorOptions($composite_element));
@@ -296,8 +320,7 @@ abstract class WebformCompositeBase extends WebformElementBase {
     $source_values = [];
     $composite_elements = $this->getInitializedCompositeElement($element);
     foreach ($composite_elements as $composite_key => $composite_element) {
-      $has_access = (!isset($composite_elements['#access']) || $composite_elements['#access']);
-      if ($has_access && isset($composite_element['#type'])) {
+      if (Element::isVisibleElement($composite_elements) && isset($composite_element['#type'])) {
         $element_plugin = $this->elementManager->getElementInstance($composite_element);
         $composite_element['#webform_key'] = "{$name}[{$composite_key}]";
         $source_values += $element_plugin->getElementSelectorSourceValues($composite_element);
@@ -306,9 +329,9 @@ abstract class WebformCompositeBase extends WebformElementBase {
     return $source_values;
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Display submission value methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -414,14 +437,14 @@ abstract class WebformCompositeBase extends WebformElementBase {
     // Get header.
     $header = [];
     foreach (RenderElement::children($composite_elements) as $composite_key) {
-      if (isset($composite_elements[$composite_key]['#access']) && $composite_elements[$composite_key]['#access'] === FALSE) {
+      if (!Element::isVisibleElement($composite_elements[$composite_key])) {
         unset($composite_elements[$composite_key]);
         continue;
       }
 
       $composite_element = $composite_elements[$composite_key];
       $header[$composite_key] = [
-        'data' => (isset($composite_element['#title'])) ? $composite_element['#title'] : $composite_key,
+        'data' => $composite_element['#title'] ?? $composite_key,
         'bgcolor' => '#eee',
       ];
     }
@@ -511,7 +534,7 @@ abstract class WebformCompositeBase extends WebformElementBase {
     $composite_elements = $this->getInitializedCompositeElement($element);
     foreach (RenderElement::children($composite_elements) as $composite_key) {
       $composite_element = $composite_elements[$composite_key];
-      $composite_title = (isset($composite_element['#title']) && $format != 'raw') ? $composite_element['#title'] : $composite_key;
+      $composite_title = (isset($composite_element['#title']) && $format !== 'raw') ? $composite_element['#title'] : $composite_key;
       $composite_value = $this->formatCompositeHtml($element, $webform_submission, ['composite_key' => $composite_key] + $options);
       if ($composite_value !== '') {
         $items[$composite_key] = [
@@ -547,11 +570,11 @@ abstract class WebformCompositeBase extends WebformElementBase {
     foreach (RenderElement::children($composite_elements) as $composite_key) {
       $composite_element = $composite_elements[$composite_key];
 
-      $composite_title = (isset($composite_element['#title']) && $format != 'raw') ? $composite_element['#title'] : $composite_key;
+      $composite_title = (isset($composite_element['#title']) && $format !== 'raw') ? $composite_element['#title'] : $composite_key;
 
       $composite_value = $this->formatCompositeText($element, $webform_submission, ['composite_key' => $composite_key] + $options);
       if (is_array($composite_value)) {
-        $composite_value = \Drupal::service('renderer')->renderPlain($composite_value);
+        $composite_value = $this->renderer->renderPlain($composite_value);
       }
 
       if ($composite_value !== '') {
@@ -614,6 +637,13 @@ abstract class WebformCompositeBase extends WebformElementBase {
     $options['webform_key'] = $element['#webform_key'];
     $composite_element = $this->getInitializedCompositeElement($element, $options['composite_key']);
     $composite_plugin = $this->elementManager->getElementInstance($composite_element);
+
+    // Exclude attachments for composite element.
+    // @see \Drupal\webform\WebformSubmissionViewBuilder::isElementVisible
+    if (!empty($options['exclude_attachments']) && $composite_plugin instanceof WebformElementAttachmentInterface) {
+      return '';
+    }
+
     $format_function = 'format' . $type;
     return $composite_plugin->$format_function($composite_element, $webform_submission, $options);
   }
@@ -657,8 +687,8 @@ abstract class WebformCompositeBase extends WebformElementBase {
    */
   public function getItemFormats() {
     return parent::getItemFormats() + [
-        'list' => $this->t('List'),
-      ];
+      'list' => $this->t('List'),
+    ];
   }
 
   /**
@@ -680,9 +710,9 @@ abstract class WebformCompositeBase extends WebformElementBase {
     ];
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Export methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -731,11 +761,11 @@ abstract class WebformCompositeBase extends WebformElementBase {
     $header = [];
     foreach (RenderElement::children($composite_elements) as $composite_key) {
       $composite_element = $composite_elements[$composite_key];
-      if (isset($composite_element['#access']) && $composite_element['#access'] === FALSE) {
+      if (!Element::isVisibleElement($composite_element)) {
         continue;
       }
 
-      if ($options['header_format'] == 'label' && !empty($composite_element['#title'])) {
+      if ($options['header_format'] === 'label' && !empty($composite_element['#title'])) {
         $header[] = $composite_element['#title'];
       }
       else {
@@ -753,7 +783,7 @@ abstract class WebformCompositeBase extends WebformElementBase {
     $value = $this->getValue($element, $webform_submission);
 
     if ($this->hasMultipleValues($element)) {
-      $element['#format'] = ($export_options['header_format'] == 'label') ? 'list' : 'raw';
+      $element['#format'] = ($export_options['header_format'] === 'label') ? 'list' : 'raw';
       $export_options['multiple_delimiter'] = PHP_EOL . '---' . PHP_EOL;
       return parent::buildExportRecord($element, $webform_submission, $export_options);
     }
@@ -762,23 +792,23 @@ abstract class WebformCompositeBase extends WebformElementBase {
     $composite_elements = $this->getInitializedCompositeElement($element);
     foreach (RenderElement::children($composite_elements) as $composite_key) {
       $composite_element = $composite_elements[$composite_key];
-      if (isset($composite_element['#access']) && $composite_element['#access'] === FALSE) {
+      if (!Element::isVisibleElement($composite_element)) {
         continue;
       }
 
-      if ($export_options['composite_element_item_format'] == 'label' && $composite_element['#type'] != 'textfield' && !empty($composite_element['#options'])) {
+      if ($export_options['composite_element_item_format'] === 'label' && $composite_element['#type'] !== 'textfield' && !empty($composite_element['#options'])) {
         $record[] = WebformOptionsHelper::getOptionText($value[$composite_key], $composite_element['#options']);
       }
       else {
-        $record[] = (isset($value[$composite_key])) ? $value[$composite_key] : NULL;
+        $record[] = $value[$composite_key] ?? NULL;
       }
     }
     return $record;
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Test methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -787,9 +817,6 @@ abstract class WebformCompositeBase extends WebformElementBase {
     if (empty($element['#webform_composite_elements'])) {
       $this->initialize($element);
     }
-
-    /** @var \Drupal\webform\WebformSubmissionGenerateInterface $generate */
-    $generate = \Drupal::service('webform_submission.generate');
 
     $composite_elements = $this->getInitializedCompositeElement($element);
     $composite_elements = WebformElementHelper::getFlattened($composite_elements);
@@ -803,16 +830,16 @@ abstract class WebformCompositeBase extends WebformElementBase {
 
       $value = [];
       foreach (RenderElement::children($composite_elements) as $composite_key) {
-        $value[$composite_key] = $generate->getTestValue($webform, $composite_key, $composite_elements[$composite_key], $options);
+        $value[$composite_key] = $this->generate->getTestValue($webform, $composite_key, $composite_elements[$composite_key], $options);
       }
       $values[] = $value;
     }
     return $values;
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Element configuration methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -887,7 +914,7 @@ abstract class WebformCompositeBase extends WebformElementBase {
     $form['composite']['choices'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Choices'),
-      '#description' => $this->t('Replace select element with <a href=":href">Choice.js</a> select box.', [':href' => 'https://joshuajohnson.co.uk/Choices/']),
+      '#description' => $this->t('Replace select element with <a href=":href">Choice.js</a> select box.', [':href' => 'https://choices-js.github.io/Choices/']),
       '#return_value' => TRUE,
       '#states' => [
         'disabled' => [
@@ -955,7 +982,7 @@ abstract class WebformCompositeBase extends WebformElementBase {
         '#help' => '<b>' . $this->t('Key') . ':</b> ' . $this->t('The machine-readable name.') .
           '<hr/><b>' . $this->t('Title') . ':</b> ' . $this->t('This is used as a descriptive label when displaying this webform element.') .
           '<hr/><b>' . $this->t('Placeholder') . ':</b> ' . $this->t('The placeholder will be shown in the element until the user starts entering a value.') .
-          '<hr/><b>' . $this->t('Description') . ':</b> ' . $this->t('A short description of the element used as help for the user when he/she uses the webform.') .
+          '<hr/><b>' . $this->t('Description') . ':</b> ' . $this->t('A short description of the element used as help for the user when they use the webform.') .
           '<hr/><b>' . $this->t('Help text') . ':</b> ' . $this->t('A tooltip displayed after the title.') .
           '<hr/><b>' . $this->t('Title display') . ':</b> ' . $this->t('A tooltip displayed after the title.'),
         '#help_title' => $this->t('Labels'),
@@ -990,8 +1017,8 @@ abstract class WebformCompositeBase extends WebformElementBase {
     $rows = [];
     $composite_elements = $this->getCompositeElements();
     foreach ($composite_elements as $composite_key => $composite_element) {
-      $title = (isset($composite_element['#title'])) ? $composite_element['#title'] : $composite_key;
-      $type = isset($composite_element['#type']) ? $composite_element['#type'] : NULL;
+      $title = $composite_element['#title'] ?? $composite_key;
+      $type = $composite_element['#type'] ?? NULL;
       $t_args = ['@title' => $title];
       $state_disabled = [
         'disabled' => [
@@ -1023,6 +1050,7 @@ abstract class WebformCompositeBase extends WebformElementBase {
             $composite_key . '__title' => [
               '#type' => 'textfield',
               '#title' => $this->t('@title title', $t_args),
+              '#maxlength' => NULL,
               '#title_display' => 'invisible',
               '#description' => $this->t('This is used as a descriptive label when displaying this webform element.'),
               '#description_display' => 'invisible',
@@ -1043,7 +1071,7 @@ abstract class WebformCompositeBase extends WebformElementBase {
               '#type' => 'textarea',
               '#title' => $this->t('@title help text', $t_args),
               '#title_display' => 'invisible',
-              '#description' => $this->t('A short description of the element used as help for the user when he/she uses the webform.'),
+              '#description' => $this->t('A short description of the element used as help for the user when they use the webform.'),
               '#description_display' => 'invisible',
               '#rows' => 2,
               '#placeholder' => $this->t('Enter help text…'),
@@ -1071,7 +1099,7 @@ abstract class WebformCompositeBase extends WebformElementBase {
                 'inline' => $this->t('Inline'),
                 'invisible' => $this->t('Invisible'),
               ],
-              '#empty_option' => $this->t('Select title display… '),
+              '#empty_option' => $this->t('Select title display…'),
               '#states' => $state_disabled,
             ],
           ],
@@ -1099,7 +1127,7 @@ abstract class WebformCompositeBase extends WebformElementBase {
         ];
       }
 
-      if ($type == 'tel') {
+      if ($type === 'tel') {
         $row['settings']['data'][$composite_key . '__type'] = [
           '#type' => 'select',
           '#title' => $this->t('@title type', $t_args),
@@ -1156,7 +1184,7 @@ abstract class WebformCompositeBase extends WebformElementBase {
         /** @var \Drupal\webform_ui\Form\WebformUiElementEditForm $form_object */
         $form_object = $form_state->getFormObject();
         $element = $form_object->getElement();
-        $composite_options_default_value = (isset($element['#' . $composite_key . '__options'])) ? $element['#' . $composite_key . '__options'] : NULL;
+        $composite_options_default_value = $element['#' . $composite_key . '__options'] ?? NULL;
         if ($composite_options_default_value && (is_array($composite_options_default_value) || !isset($composite_options[$composite_options_default_value]))) {
           $webform = $form_object->getWebform();
           if ($this->currentUser->hasPermission('edit webform source')
@@ -1183,12 +1211,12 @@ abstract class WebformCompositeBase extends WebformElementBase {
             '#required' => TRUE,
             '#attributes' => ['style' => 'width: 100%;'],
             '#states' => $state_disabled + [
-                'invisible' => [
-                  ':input[name="properties[' . $composite_key . '__type]"]' => [
-                    'value' => 'textfield',
-                  ],
+              'invisible' => [
+                ':input[name="properties[' . $composite_key . '__type]"]' => [
+                  'value' => 'textfield',
                 ],
               ],
+            ],
           ];
         }
         else {
@@ -1232,9 +1260,9 @@ abstract class WebformCompositeBase extends WebformElementBase {
     return $properties;
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Composite element methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Initialize and cache #webform_composite_elements.
@@ -1259,7 +1287,7 @@ abstract class WebformCompositeBase extends WebformElementBase {
    */
   protected function initializeCompositeElementsRecursive(array &$element, array &$composite_elements) {
     foreach ($composite_elements as $composite_key => &$composite_element) {
-      if (Element::property($composite_key)) {
+      if (WebformElementHelper::property($composite_key)) {
         continue;
       }
 
@@ -1304,7 +1332,7 @@ abstract class WebformCompositeBase extends WebformElementBase {
   public function getInitializedCompositeElement(array $element, $composite_key = NULL) {
     $composite_elements = $element['#webform_composite_elements'];
     if (isset($composite_key)) {
-      return (isset($composite_elements[$composite_key])) ? $composite_elements[$composite_key] : NULL;
+      return $composite_elements[$composite_key] ?? NULL;
     }
     else {
       return $composite_elements;
@@ -1332,9 +1360,9 @@ abstract class WebformCompositeBase extends WebformElementBase {
     return $options;
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Composite managed file methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -1437,9 +1465,9 @@ abstract class WebformCompositeBase extends WebformElementBase {
     return $this->elementsManagedFiles[$id];
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Composite helper methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Determine if element type is supported by custom composite elements.
@@ -1480,6 +1508,64 @@ abstract class WebformCompositeBase extends WebformElementBase {
     }
 
     return TRUE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getEmailAttachments(array $element, WebformSubmissionInterface $webform_submission, array $options = []) {
+    $data = $webform_submission->getData();
+
+    // Get file ids.
+    $fids = [];
+    $composite_elements_managed_files = $this->getManagedFiles($element);
+    foreach ($composite_elements_managed_files as $composite_key) {
+      $fids = array_merge($fids, $this->getManagedFileIdsFromData($element, $data, $composite_key));
+    }
+
+    if (!$fids) {
+      return [];
+    }
+
+    // Get attachments.
+    $attachments = [];
+    $files = File::loadMultiple($fids);
+    foreach ($files as $file) {
+      $attachments[] = [
+        'filecontent' => file_get_contents($file->getFileUri()),
+        'filename' => $file->getFilename(),
+        'filemime' => $file->getMimeType(),
+        // File URIs that are not supported return FALSE, when this happens
+        // still use the file's URI as the file's path.
+        'filepath' => $this->fileSystem->realpath($file->getFileUri()) ?: $file->getFileUri(),
+        // URI is used when debugging or resending messages.
+        // @see \Drupal\webform\Plugin\WebformHandler\EmailWebformHandler::buildAttachments
+        '_fileurl' => $file->createFileUrl(FALSE),
+      ];
+    }
+    return $attachments;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getExportAttachments(array $element, WebformSubmissionInterface $webform_submission, array $options = []) {
+    // Managed files are bulk copied during an export.
+    return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function hasExportAttachments() {
+    return FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getExportAttachmentsBatchLimit() {
+    return NULL;
   }
 
 }

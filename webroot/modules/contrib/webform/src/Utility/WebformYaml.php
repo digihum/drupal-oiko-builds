@@ -18,7 +18,14 @@ class WebformYaml implements SerializationInterface {
   public static function encode($data) {
     // Convert \r\n to \n so that multiline strings are properly formatted.
     // @see \Symfony\Component\Yaml\Dumper::dump
-    static::normalize($data);
+    if (is_array($data)) {
+      static::normalize($data);
+    }
+
+    // If empty array then return an empty string instead of '{ }'.
+    if (is_array($data) && empty($data)) {
+      return '';
+    }
 
     $dumper = new Dumper(2);
     $yaml = $dumper->dump($data, PHP_INT_MAX, 0, SymfonyYaml::DUMP_EXCEPTION_ON_INVALID_TYPE | SymfonyYaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
@@ -33,7 +40,7 @@ class WebformYaml implements SerializationInterface {
    * {@inheritdoc}
    */
   public static function decode($raw) {
-    return Yaml::decode($raw);
+    return $raw ? Yaml::decode($raw) : [];
   }
 
   /**
@@ -89,9 +96,9 @@ class WebformYaml implements SerializationInterface {
     return self::encode(self::decode($yaml));
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Helper methods.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Convert \r\n to \n inside data.
@@ -99,7 +106,7 @@ class WebformYaml implements SerializationInterface {
    * @param array $data
    *   Data with all converted \r\n to \n.
    */
-  protected static function normalize(array &$data) {
+  public static function normalize(array &$data) {
     foreach ($data as $key => &$value) {
       if (is_string($value)) {
         $data[$key] = preg_replace('/\r\n?/', "\n", $value);

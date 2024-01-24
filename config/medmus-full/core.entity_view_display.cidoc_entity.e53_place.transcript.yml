@@ -15,48 +15,49 @@ third_party_settings:
   field_group:
     group_at_this_location:
       children: {  }
-      parent_name: ''
-      weight: 3
       label: 'At this location'
+      parent_name: ''
+      region: content
+      weight: 3
       format_type: html_element
       format_settings:
+        classes: ''
+        id: ''
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
-        classes: ''
-        id: ''
         fieldset_label_html: true
-      region: content
     group_people:
       children: {  }
-      parent_name: ''
-      weight: 4
       label: 'Related people'
+      parent_name: ''
+      region: content
+      weight: 4
       format_type: html_element
       format_settings:
+        classes: ''
+        id: ''
         element: div
         show_label: false
         label_element: h3
+        attributes: ''
         effect: none
         speed: fast
-        attributes: ''
-        classes: ''
-        id: ''
         fieldset_label_html: true
-      region: content
     group_movements:
       children: {  }
-      parent_name: ''
-      weight: 5
       label: Movements
+      parent_name: ''
+      region: content
+      weight: 5
       format_type: html_element
       format_settings:
         label: Movements
-        id: ''
         classes: ''
+        id: ''
         element: h3
         show_label: true
         label_element: h3
@@ -64,82 +65,81 @@ third_party_settings:
         effect: none
         speed: fast
         fieldset_label_html: true
-      region: content
 id: cidoc_entity.e53_place.transcript
 targetEntityType: cidoc_entity
 bundle: e53_place
 mode: transcript
 content:
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 20
     settings: {  }
     third_party_settings: {  }
+    weight: 20
     region: content
   'cidoc_properties:domain:p87_is_identified_by':
-    weight: 20
     settings: {  }
     third_party_settings: {  }
+    weight: 20
     region: content
   'cidoc_properties:domain:pa19_has_language':
-    weight: 20
     settings: {  }
     third_party_settings: {  }
+    weight: 20
     region: content
   'cidoc_properties:range:p67_refers_to':
-    weight: 21
     settings: {  }
     third_party_settings: {  }
+    weight: 21
     region: content
   cidoc_properties_transcript:
+    settings: {  }
+    third_party_settings: {  }
     weight: 2
     region: content
-    settings: {  }
-    third_party_settings: {  }
   events_at_this_location_entity_view_1:
-    weight: 3
     settings: {  }
     third_party_settings: {  }
+    weight: 3
     region: content
   events_witnessed_by_place_sort_ts__entity_view_1:
-    weight: 10
     settings: {  }
     third_party_settings: {  }
+    weight: 10
     region: content
   map_of_places_experiments__entity_view_4:
-    weight: 10
     settings: {  }
     third_party_settings: {  }
+    weight: 10
     region: content
   name:
-    label: hidden
     type: string
-    weight: 0
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 0
     region: content
   p26_destination_of_entity_view_1:
-    weight: 6
     settings: {  }
     third_party_settings: {  }
+    weight: 6
     region: content
   p27_moved_from_here_entity_view_1:
-    weight: 7
     settings: {  }
     third_party_settings: {  }
+    weight: 7
     region: content
   people_entity_view_1:
-    weight: 4
     settings: {  }
     third_party_settings: {  }
+    weight: 4
     region: content
   significance:
     type: entity_reference_label
-    weight: 1
     label: above
     settings:
       link: false
     third_party_settings: {  }
+    weight: 1
     region: content
 hidden:
   cidoc_admin_links: true

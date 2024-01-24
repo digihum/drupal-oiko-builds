@@ -15,13 +15,13 @@ bundle: p98_brought_into_life
 mode: range
 content:
   domain:
-    label: inline
     type: entity_reference_entity_view
-    weight: 0
+    label: inline
     settings:
       view_mode: inline_field
       link: false
     third_party_settings: {  }
+    weight: 0
     region: content
 hidden:
   citation: true

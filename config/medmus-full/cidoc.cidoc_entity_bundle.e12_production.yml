@@ -9,14 +9,14 @@ third_party_settings:
     item_color: yellow
 _core:
   default_config_hash: db9SS1hPeweeTPjVSq2ta7obYhWHOVhC3pI4lwcctwU
-crm_entity: e12_production
 id: e12_production
 label: 'E12 Production'
-friendly_label: Production
-weight: -9
+crm_entity: e12_production
 group: auxiliary
+weight: -9
 description: "<p>This class comprises activities that are designed to, and succeed in, creating one or more new\r\nitems.</p>\r\n\r\n<p>It specializes the notion of modification into production. The decision as to whether or not an\r\nobject is regarded as new is context sensitive. Normally, items are considered “new” if there is\r\nno obvious overall similarity between them and the consumed items and material used in their\r\nproduction. In other cases, an item is considered “new” because it becomes relevant to\r\ndocumentation by a modification. For example, the scribbling of a name on a potsherd may\r\nmake it a voting token. The original potsherd may not be worth documenting, in contrast to the\r\ninscribed one.</p>\r\n\r\n<p>This entity can be collective: the printing of a thousand books, for example, would normally be\r\nconsidered a single event.</p>\r\n\r\n<p>An event should also be documented using E81 Transformation if it results in the destruction\r\nof one or more objects and the simultaneous production of others using parts or material from\r\nthe originals. In this case, the new items have separate identities and matter is preserved, but\r\nidentity is not.</p>"
 examples: "<ul>\r\n<li>the construction of the SS Great Britain</li>\r\n<li>the first casting of the Little Mermaid from the harbour of Copenhagen</li>\r\n<li>Rembrandt’s creating of the seventh state of his etching “Woman sitting half dressed\r\nbeside a stove”, 1658, identified by Bartsch Number 197 (E12,E65,E81)</li>\r\n</ul>"
 geoserializers:
   event: event
   move: '0'
+friendly_label: Production

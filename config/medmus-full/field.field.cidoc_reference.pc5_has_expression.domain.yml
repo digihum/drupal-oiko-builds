@@ -20,12 +20,12 @@ default_value_callback: ''
 settings:
   handler: 'default:cidoc_entity'
   handler_settings:
-    auto_create: true
-    sort:
-      field: name
-      direction: ASC
     target_bundles:
       ec1_work: ec1_work
       ec6_music: ec6_music
+    sort:
+      field: name
+      direction: ASC
+    auto_create: true
     auto_create_bundle: ec1_work
 field_type: entity_reference

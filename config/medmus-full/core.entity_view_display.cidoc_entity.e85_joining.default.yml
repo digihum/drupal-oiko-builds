@@ -10,81 +10,81 @@ bundle: e85_joining
 mode: default
 content:
   'cidoc_properties:domain:p11_had_participant':
-    weight: 20
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 20
+    region: content
   'cidoc_properties:domain:p12_occurred_in_the_presence_of':
-    weight: 20
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 20
+    region: content
   'cidoc_properties:domain:p143_joined':
-    weight: 20
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 20
+    region: content
   'cidoc_properties:domain:p144_joined_with':
-    weight: 20
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 20
+    region: content
   'cidoc_properties:domain:p14_carried_out_by':
-    weight: 20
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 20
+    region: content
   'cidoc_properties:domain:p1_is_identified_by':
-    weight: 20
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 20
+    region: content
   'cidoc_properties:domain:p2_has_type':
-    weight: 20
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 20
+    region: content
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    weight: 20
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 20
+    region: content
   'cidoc_properties:domain:p4_has_time_span':
-    weight: 20
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 20
+    region: content
   'cidoc_properties:domain:p7_took_place_at':
-    weight: 20
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 20
+    region: content
   'cidoc_properties:range:p67_refers_to':
+    settings: {  }
+    third_party_settings: {  }
     weight: 21
     region: content
-    settings: {  }
-    third_party_settings: {  }
   internal_name:
-    label: inline
     type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
     weight: -3
     region: content
+  name:
+    type: string
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-  name:
-    label: hidden
-    type: string
     weight: -4
     region: content
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
   timeline_link:
-    weight: 0
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   cidoc_admin_links: true
   cidoc_properties: true

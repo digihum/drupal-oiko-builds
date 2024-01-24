@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pc7_has_music
 label: 'PC7 has music'
-bidirectional: false
 reverse_label: 'PC7 is music of'
-friendly_label: Music
-reverse_friendly_label: 'Is music of'
 domain_bundles:
   - ec1_work
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Music
+reverse_friendly_label: 'Is music of'
 widget_description:
   domain: "<p>This property links lyrics with one or more versions of its music</p>\r\n<ul>\r\n<li>Ex. \"Melody of BdT 366.2\"</li>\r\n</ul>\r\n"
   range: ''

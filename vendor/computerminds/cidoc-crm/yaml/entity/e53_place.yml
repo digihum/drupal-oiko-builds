@@ -2,7 +2,6 @@
 label: E53 Place
 superclasses:
   - e1_crm_entity
-  - ec13_thing_with_language
 properties:
   - p87_is_identified_by
   - p88_consists_of

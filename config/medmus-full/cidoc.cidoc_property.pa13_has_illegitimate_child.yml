@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa13_has_illegitimate_child
 label: 'PA13 has illegitimate child'
-bidirectional: false
 reverse_label: 'PA13 has illegitimate parent'
-friendly_label: ''
-reverse_friendly_label: ''
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: ''
+reverse_friendly_label: ''
 widget_description:
   domain: ''
   range: ''

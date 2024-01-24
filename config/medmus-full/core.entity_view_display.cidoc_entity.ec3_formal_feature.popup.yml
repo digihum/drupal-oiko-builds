@@ -13,86 +13,86 @@ bundle: ec3_formal_feature
 mode: popup
 content:
   cidoc_admin_links:
-    region: content
     type: text_default
     settings: {  }
+    third_party_settings: {  }
     weight: 3
-    third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p102_has_title':
-    region: content
+    settings: {  }
+    third_party_settings: {  }
     weight: 5
-    settings: {  }
-    third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p1_is_identified_by':
-    region: content
+    settings: {  }
+    third_party_settings: {  }
     weight: 6
-    settings: {  }
-    third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p2_has_type':
-    region: content
+    settings: {  }
+    third_party_settings: {  }
     weight: 7
-    settings: {  }
-    third_party_settings: {  }
+    region: content
   'cidoc_properties:domain:p48_has_preferred_identifier':
-    region: content
+    settings: {  }
+    third_party_settings: {  }
     weight: 8
-    settings: {  }
-    third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p128_carries':
-    region: content
+    settings: {  }
+    third_party_settings: {  }
     weight: 9
-    settings: {  }
-    third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p12_occurred_in_the_presence_of':
-    region: content
+    settings: {  }
+    third_party_settings: {  }
     weight: 10
-    settings: {  }
-    third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p67_refers_to':
-    region: content
+    settings: {  }
+    third_party_settings: {  }
     weight: 11
-    settings: {  }
-    third_party_settings: {  }
+    region: content
   'cidoc_properties:range:p94_has_created':
-    region: content
+    settings: {  }
+    third_party_settings: {  }
     weight: 12
-    settings: {  }
-    third_party_settings: {  }
+    region: content
   'cidoc_properties:range:pc4_has_formal_feature':
-    region: content
-    weight: 13
     settings: {  }
     third_party_settings: {  }
-  cidoc_temporal_summary:
+    weight: 13
     region: content
+  cidoc_temporal_summary:
     type: string
     settings: {  }
-    weight: 1
     third_party_settings: {  }
-  content:
+    weight: 1
     region: content
-    label: hidden
+  content:
     type: text_default
-    weight: 4
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-  name:
+    weight: 4
     region: content
+  name:
     type: string
     label: hidden
     settings:
       link_to_entity: false
-    weight: 0
     third_party_settings: {  }
-  significance:
+    weight: 0
     region: content
+  significance:
     type: entity_reference_entity_view
     label: visually_hidden
     settings:
       view_mode: primary_historical_significance_pill
       link: false
-    weight: 2
     third_party_settings: {  }
+    weight: 2
+    region: content
 hidden:
   cidoc_properties: true
   cidoc_properties_transcript: true

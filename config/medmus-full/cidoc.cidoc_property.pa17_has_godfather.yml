@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pa17_has_godfather
 label: 'PA17 has godfather'
-bidirectional: false
 reverse_label: 'PA17 is godfather of'
-friendly_label: Godfather
-reverse_friendly_label: 'Godfather of'
 domain_bundles:
   - e21_person
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Godfather
+reverse_friendly_label: 'Godfather of'
 widget_description:
   domain: ''
   range: ''

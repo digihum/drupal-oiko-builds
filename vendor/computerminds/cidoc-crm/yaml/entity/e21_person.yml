@@ -3,7 +3,6 @@ label: E21 Person
 superclasses:
   - e20_biological_object
   - e39_actor
-  - ec13_thing_with_language
 description: |
   This class comprises real persons who live or are assumed to have lived.
 

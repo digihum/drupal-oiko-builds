@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p134_continued
 label: 'P134 continued'
-bidirectional: false
 reverse_label: 'P134 was continued by'
-friendly_label: Continued
-reverse_friendly_label: 'Was continued by'
 domain_bundles:
   - e7_activity
   - e9_move
@@ -34,6 +31,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Continued
+reverse_friendly_label: 'Was continued by'
 widget_description:
   domain: '</p> Name of E7 Activity that continued this E7 Activity.<p>'
   range: '</p> Name of E7 Activity of which this E7 Activity is a continuation.<p>'

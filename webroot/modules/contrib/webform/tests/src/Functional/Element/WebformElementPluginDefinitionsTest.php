@@ -8,7 +8,7 @@ use Drupal\webform\Utility\WebformElementHelper;
 /**
  * Tests for webform element definitions.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementPluginDefinitionsTest extends WebformElementBrowserTestBase {
 
@@ -24,6 +24,7 @@ class WebformElementPluginDefinitionsTest extends WebformElementBrowserTestBase 
     'taxonomy',
     'webform',
     'webform_attachment',
+    'webform_cards',
     'webform_entity_print_attachment',
     'webform_image_select',
     'webform_location_geocomplete',
@@ -48,7 +49,7 @@ class WebformElementPluginDefinitionsTest extends WebformElementBrowserTestBase 
     $actual_definitions = $this->getActualElementDefinitions();
     $this->htmlOutput('<pre>' . htmlentities(Yaml::encode($actual_definitions)) . '</pre>');
     foreach ($actual_definitions as $key => $actual_definition) {
-      if ($expected_definitions[$key] != $actual_definition) {
+      if ($expected_definitions[$key] !== $actual_definition) {
         $this->htmlOutput('<pre>' . Yaml::encode([$key => $actual_definition]) . '</pre>');
       }
       $this->assertEquals($expected_definitions[$key], $actual_definition, "Expected and actual '$key' element definitions match.");
@@ -638,7 +639,7 @@ tel:
   dependencies: {  }
   default_key: ''
   category: 'Advanced elements'
-  description: "Provides a form element for entering a telephone number."
+  description: 'Provides a form element for entering a telephone number.'
   hidden: false
   multiline: false
   composite: false
@@ -751,6 +752,25 @@ value:
   class: Drupal\webform\Plugin\WebformElement\Value
   provider: webform
   input: true
+  container: false
+  root: false
+  multiple: false
+vertical_tabs:
+  dependencies: {  }
+  default_key: ''
+  category: 'Markup elements'
+  description: 'Provides a vertical tabs element.'
+  hidden: true
+  multiline: false
+  composite: false
+  states_wrapper: false
+  deprecated: false
+  deprecated_message: ''
+  id: vertical_tabs
+  label: 'Vertical tabs'
+  class: Drupal\webform\Plugin\WebformElement\VerticalTabs
+  provider: webform
+  input: false
   container: false
   root: false
   multiple: false
@@ -907,6 +927,25 @@ webform_autocomplete:
   container: false
   root: false
   multiple: true
+webform_card:
+  dependencies: {  }
+  default_key: ''
+  category: Cards
+  description: 'Provides an element for a fast clientside pagination.'
+  hidden: true
+  multiline: false
+  composite: false
+  states_wrapper: false
+  deprecated: false
+  deprecated_message: ''
+  id: webform_card
+  label: Card
+  class: Drupal\webform_cards\Plugin\WebformElement\WebformCard
+  provider: webform_cards
+  input: false
+  container: true
+  root: true
+  multiple: false
 webform_checkboxes_other:
   dependencies: {  }
   default_key: ''
@@ -930,7 +969,7 @@ webform_codemirror:
   dependencies: {  }
   default_key: ''
   category: 'Advanced elements'
-  description: 'Provides a form element for editing code in a number of programming languages and markup.'
+  description: 'Provides a form element for editing code in a number of programming languages and markup. Code editing support is provided by the <a href="https://codemirror.net">CodeMirror</a> library.'
   hidden: false
   multiline: true
   composite: false
@@ -1046,7 +1085,7 @@ webform_element:
   default_key: ''
   category: ''
   description: 'Provides a generic form element.'
-  hidden: false
+  hidden: true
   multiline: false
   composite: false
   states_wrapper: false
@@ -1187,7 +1226,7 @@ webform_flexbox:
   deprecated: false
   deprecated_message: ''
   id: webform_flexbox
-  api: 'http://www.w3schools.com/css/css3_flexbox.asp'
+  api: 'https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox'
   label: 'Flexbox layout'
   class: Drupal\webform\Plugin\WebformElement\WebformFlexbox
   provider: webform
@@ -1195,6 +1234,25 @@ webform_flexbox:
   container: true
   root: false
   multiple: false
+webform_height:
+  dependencies: {  }
+  default_key: ''
+  category: 'Advanced elements'
+  description: 'Provides a form element to collect height in feet and inches.'
+  hidden: false
+  multiline: false
+  composite: false
+  states_wrapper: false
+  deprecated: false
+  deprecated_message: ''
+  id: webform_height
+  label: 'Height (feet/inches)'
+  class: Drupal\webform\Plugin\WebformElement\WebformHeight
+  provider: webform
+  input: true
+  container: false
+  root: false
+  multiple: true
 webform_horizontal_rule:
   dependencies: {  }
   default_key: horizontal_rule
@@ -1487,7 +1545,7 @@ webform_rating:
   dependencies: {  }
   default_key: ''
   category: 'Advanced elements'
-  description: 'Provides a form element to rate something using an attractive voting widget.'
+  description: 'Provides a form element to rate something using an attractive voting widget. Rating widget is provided by the <a href="https://github.com/gjunge/rateit.js">RateIt</a> library.'
   hidden: false
   multiline: false
   composite: false
@@ -1516,6 +1574,25 @@ webform_same:
   id: webform_same
   label: 'Same as…'
   class: Drupal\webform\Plugin\WebformElement\WebformSame
+  provider: webform
+  input: true
+  container: false
+  root: false
+  multiple: false
+webform_scale:
+  dependencies: {  }
+  default_key: ''
+  category: 'Advanced elements'
+  description: 'Provides a form element for input of a numeric scale.'
+  hidden: false
+  multiline: false
+  composite: false
+  states_wrapper: false
+  deprecated: false
+  deprecated_message: ''
+  id: webform_scale
+  label: Scale
+  class: Drupal\webform\Plugin\WebformElement\WebformScale
   provider: webform
   input: true
   container: false
@@ -1563,7 +1640,7 @@ webform_signature:
   dependencies: {  }
   default_key: ''
   category: 'Advanced elements'
-  description: 'Provides a form element to collect electronic signatures from users.'
+  description: 'Provides a form element to collect electronic signatures from users. Signature support is provided by the <a href="https://github.com/szimek/signature_pad">Signature Pad</a> library.'
   hidden: false
   multiline: false
   composite: false
@@ -1576,6 +1653,44 @@ webform_signature:
   provider: webform
   input: true
   container: false
+  root: false
+  multiple: false
+webform_table:
+  dependencies: {  }
+  default_key: ''
+  category: Containers
+  description: 'Provides an element to render a table.'
+  hidden: false
+  multiline: false
+  composite: false
+  states_wrapper: false
+  deprecated: false
+  deprecated_message: ''
+  id: webform_table
+  label: Table
+  class: Drupal\webform\Plugin\WebformElement\WebformTable
+  provider: webform
+  input: false
+  container: true
+  root: false
+  multiple: false
+webform_table_row:
+  dependencies: {  }
+  default_key: ''
+  category: Containers
+  description: 'Provides an element to render a table row.'
+  hidden: true
+  multiline: false
+  composite: false
+  states_wrapper: false
+  deprecated: false
+  deprecated_message: ''
+  id: webform_table_row
+  label: 'Table row'
+  class: Drupal\webform\Plugin\WebformElement\WebformTableRow
+  provider: webform
+  input: false
+  container: true
   root: false
   multiple: false
 webform_table_sort:
@@ -1706,7 +1821,7 @@ webform_time:
   deprecated: false
   deprecated_message: ''
   id: webform_time
-  api: 'http://www.w3schools.com/tags/tag_time.asp'
+  api: 'https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time'
   label: Time
   class: Drupal\webform\Plugin\WebformElement\WebformTime
   provider: webform
@@ -1724,7 +1839,7 @@ webform_toggle:
   composite: false
   states_wrapper: false
   deprecated: true
-  deprecated_message: 'The Toogles library is not being maintained and has major accessibility issues. It has been <a href="https://www.drupal.org/project/webform/issues/2890861">deprecated</a> and will be removed before Webform 8.x-5.0.'
+  deprecated_message: 'The Toggles library is not being maintained and has major accessibility issues. It has been <a href="https://www.drupal.org/project/webform/issues/2890861">deprecated</a> and will be removed before Webform 8.x-5.0.'
   id: webform_toggle
   label: Toggle
   class: Drupal\webform_toggles\Plugin\WebformElement\WebformToggle
@@ -1743,7 +1858,7 @@ webform_toggles:
   composite: false
   states_wrapper: false
   deprecated: true
-  deprecated_message: 'The Toogles library is not being maintained and has major accessibility issues. It has been <a href="https://www.drupal.org/project/webform/issues/2890861">deprecated</a> and will be removed before Webform 8.x-5.0.'
+  deprecated_message: 'The Toggles library is not being maintained and has major accessibility issues. It has been <a href="https://www.drupal.org/project/webform/issues/2890861">deprecated</a> and will be removed before Webform 8.x-5.0.'
   id: webform_toggles
   label: Toggles
   class: Drupal\webform_toggles\Plugin\WebformElement\WebformToggles
@@ -1764,7 +1879,7 @@ webform_variant:
   deprecated: false
   deprecated_message: ''
   id: webform_variant
-  label: 'Variant [EXPERIMENTAL]'
+  label: Variant
   class: Drupal\webform\Plugin\WebformElement\WebformVariant
   provider: webform
   input: true
@@ -1796,7 +1911,7 @@ webform_wizard_page:
   default_key: ''
   category: Wizard
   description: 'Provides an element to display multiple form elements as a page in a multi-step form wizard.'
-  hidden: false
+  hidden: true
   multiline: false
   composite: false
   states_wrapper: false
@@ -1810,65 +1925,7 @@ webform_wizard_page:
   container: true
   root: true
   multiple: false
-webform_table:
-  dependencies: {  }
-  default_key: ''
-  category: Containers
-  description: 'Provides an element to render a table.'
-  hidden: false
-  multiline: false
-  composite: false
-  states_wrapper: false
-  deprecated: false
-  deprecated_message: ''
-  id: webform_table
-  label: Table
-  class: Drupal\webform\Plugin\WebformElement\WebformTable
-  provider: webform
-  input: false
-  container: true
-  root: false
-  multiple: false
-webform_table_row:
-  dependencies: {  }
-  default_key: ''
-  category: 'Containers'
-  description: 'Provides an element to render a table row.'
-  hidden: true
-  multiline: false
-  composite: false
-  states_wrapper: false
-  deprecated: false
-  deprecated_message: ''
-  id: webform_table_row
-  label: 'Table row'
-  class: Drupal\webform\Plugin\WebformElement\WebformTableRow
-  provider: webform
-  input: false
-  container: true
-  root: false
-  multiple: false
-webform_scale:
-  dependencies: {  }
-  default_key: ''
-  category: 'Advanced elements'
-  description: 'Provides a form element for input of a numeric scale.'
-  id: webform_scale
-  label: Scale
-  class: Drupal\webform\Plugin\WebformElement\WebformScale
-  provider: webform
-  input: true
-  container: false
-  root: false
-  multiple: false
-  hidden: false
-  multiline: false
-  composite: false
-  states_wrapper: false
-  deprecated: false
-  deprecated_message: ''
 YAML;
-
     return Yaml::decode($yaml);
   }
 

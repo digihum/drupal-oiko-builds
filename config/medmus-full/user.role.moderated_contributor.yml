@@ -1,7 +1,18 @@
 uuid: c775b282-376d-4324-aaf8-4815bf0e8199
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.basic_html
+    - node.type.narrative
+  module:
+    - cidoc
+    - contextual
+    - filter
+    - node
+    - oiko_cidoc
+    - oiko_pleiades
+    - system
 id: moderated_contributor
 label: 'Moderated contributor'
 weight: 6
@@ -10,7 +21,6 @@ permissions:
   - 'access cidoc entity overview'
   - 'access cidoc reference overview'
   - 'access contextual links'
-  - 'access geocoder autocomplete'
   - 'access pleiades lookup'
   - 'add cidoc entities'
   - 'create narrative content'

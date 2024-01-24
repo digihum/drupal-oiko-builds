@@ -27,10 +27,6 @@ default_value_callback: ''
 settings:
   handler: 'default:cidoc_entity'
   handler_settings:
-    auto_create: true
-    sort:
-      field: name
-      direction: ASC
     target_bundles:
       e35_title: e35_title
       e41_appellation: e41_appellation
@@ -41,5 +37,9 @@ settings:
       ec2_genre: ec2_genre
       ec3_formal_feature: ec3_formal_feature
       ec6_music: ec6_music
+    sort:
+      field: name
+      direction: ASC
+    auto_create: true
     auto_create_bundle: e35_title
 field_type: entity_reference

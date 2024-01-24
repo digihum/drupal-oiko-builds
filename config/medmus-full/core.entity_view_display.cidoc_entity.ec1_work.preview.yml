@@ -26,14 +26,14 @@ third_party_settings:
         - citation
         - creation_of_work_info_entity_view_3
         - field_notes
+      label: 'EC1 Work'
       parent_name: ''
+      region: content
       weight: 0
       format_type: html_element
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
+        id: ''
         element: div
         show_label: true
         label_element: h3
@@ -41,134 +41,134 @@ third_party_settings:
         attributes: 'style="border-bottom: 2px solid #657986;"'
         effect: none
         speed: fast
-      label: 'EC1 Work'
+        fieldset_label_html: false
 id: cidoc_entity.ec1_work.preview
 targetEntityType: cidoc_entity
 bundle: ec1_work
 mode: preview
 content:
   author_s_in_sidebar_entity_view_1:
-    weight: 10
     settings: {  }
     third_party_settings: {  }
+    weight: 10
     region: content
   cidoc_properties:
-    weight: 4
-    region: content
     settings: {  }
     third_party_settings: {  }
-  citation:
+    weight: 4
     region: content
+  citation:
     type: entity_reference_revisions_entity_view
     label: inline
     settings:
       view_mode: default
       link: ''
-    weight: 6
     third_party_settings: {  }
-  content:
+    weight: 6
     region: content
+  content:
     type: text_default
     label: visually_hidden
     settings: {  }
-    weight: 5
     third_party_settings: {  }
+    weight: 5
+    region: content
   creation_of_work_info_entity_view_3:
+    settings: {  }
+    third_party_settings: {  }
     weight: 7
     region: content
+  creation_of_work_info_entity_view_4:
     settings: {  }
     third_party_settings: {  }
-  creation_of_work_info_entity_view_4:
     weight: 1
     region: content
+  creation_of_work_info_entity_view_5:
     settings: {  }
     third_party_settings: {  }
-  creation_of_work_info_entity_view_5:
     weight: 2
     region: content
+  duplicate_of_maps_of_subevents_entity_view_1:
     settings: {  }
     third_party_settings: {  }
-  duplicate_of_maps_of_subevents_entity_view_1:
     weight: 3
     region: content
+  duplicate_of_places_of_work_composition_entity_view_1:
     settings: {  }
     third_party_settings: {  }
-  duplicate_of_places_of_work_composition_entity_view_1:
     weight: 4
     region: content
-    settings: {  }
-    third_party_settings: {  }
   field_notes:
     type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
     weight: 8
     region: content
-    label: above
-    settings: {  }
-    third_party_settings: {  }
   field_text:
     type: text_default
-    weight: 10
-    region: content
     label: above
     settings: {  }
     third_party_settings: {  }
+    weight: 10
+    region: content
   identifier_entity_view_1:
+    settings: {  }
+    third_party_settings: {  }
     weight: 5
     region: content
+  indirect_source_entity_view_1:
     settings: {  }
     third_party_settings: {  }
-  indirect_source_entity_view_1:
     weight: 6
     region: content
-    settings: {  }
-    third_party_settings: {  }
   internal_name:
-    region: content
     type: string
     label: inline
     settings:
       link_to_entity: false
-    weight: 2
     third_party_settings: {  }
-  medmel_iframe:
-    weight: 9
+    weight: 2
     region: content
+  medmel_iframe:
     settings: {  }
     third_party_settings: {  }
-  name:
+    weight: 9
     region: content
+  name:
     type: string
     label: hidden
     settings:
       link_to_entity: true
-    weight: 1
     third_party_settings: {  }
-  significance:
+    weight: 1
     region: content
+  significance:
     type: entity_reference_label
     label: inline
     settings:
       link: true
-    weight: 3
     third_party_settings: {  }
+    weight: 3
+    region: content
   sources_of_work_entity_view_2:
+    settings: {  }
+    third_party_settings: {  }
     weight: 7
     region: content
+  sources_of_work_entity_view_3:
     settings: {  }
     third_party_settings: {  }
-  sources_of_work_entity_view_3:
     weight: 8
     region: content
-    settings: {  }
-    third_party_settings: {  }
   user_id:
     type: entity_reference_label
-    weight: 11
-    region: content
     label: inline
     settings:
       link: true
     third_party_settings: {  }
+    weight: 11
+    region: content
 hidden:
   cidoc_admin_links: true
   'cidoc_properties:domain:p102_has_title': true

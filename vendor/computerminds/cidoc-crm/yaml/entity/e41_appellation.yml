@@ -2,7 +2,6 @@
 label: E41 Appellation
 superclasses:
   - e90_symbolic_object
-  - ec13_thing_with_language
 properties:
   - p139_has_alternative_form
 description: |

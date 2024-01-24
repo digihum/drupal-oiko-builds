@@ -4,6 +4,7 @@ namespace Drupal\webform\Plugin\WebformExporter;
 
 use Drupal\webform\Plugin\WebformExporterBase;
 use Drupal\webform\WebformSubmissionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines abstract tabular exporter used to build CSV files and HTML tables.
@@ -11,6 +12,13 @@ use Drupal\webform\WebformSubmissionInterface;
 abstract class TabularBaseWebformExporter extends WebformExporterBase {
 
   use FileHandleTraitWebformExporter;
+
+  /**
+   * The date formatter service.
+   *
+   * @var \Drupal\Core\Datetime\DateFormatterInterface
+   */
+  protected $dateFormatter;
 
   /**
    * An associative array containing webform elements keyed by name.
@@ -26,9 +34,18 @@ abstract class TabularBaseWebformExporter extends WebformExporterBase {
    */
   protected $fieldDefinitions;
 
-  /****************************************************************************/
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->dateFormatter = $container->get('date.formatter');
+    return $instance;
+  }
+
+  /* ************************************************************************ */
   // Header.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Build export header using webform submission field definitions and webform element columns.
@@ -46,7 +63,7 @@ abstract class TabularBaseWebformExporter extends WebformExporterBase {
       // Build a webform element for each field definition so that we can
       // use WebformElement::buildExportHeader(array $element, $export_options).
       $element = [
-        '#type' => ($field_definition['type'] == 'entity_reference') ? 'entity_autocomplete' : 'element',
+        '#type' => ($field_definition['type'] === 'entity_reference') ? 'entity_autocomplete' : 'element',
         '#admin_title' => '',
         '#title' => (string) $field_definition['title'],
         '#webform_key' => (string) $field_definition['name'],
@@ -61,9 +78,9 @@ abstract class TabularBaseWebformExporter extends WebformExporterBase {
     return $header;
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Record.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Build export record using a webform submission.
@@ -114,9 +131,7 @@ abstract class TabularBaseWebformExporter extends WebformExporterBase {
       case 'changed':
       case 'timestamp':
         if (!empty($webform_submission->$field_name->value)) {
-          /** @var \Drupal\Core\Datetime\DateFormatterInterface $date_formatter */
-          $date_formatter = \Drupal::service('date.formatter');
-          $record[] = $date_formatter->format($webform_submission->$field_name->value, 'custom', 'Y-m-d H:i:s');
+          $record[] = $this->dateFormatter->format($webform_submission->$field_name->value, 'custom', 'Y-m-d H:i:s');
         }
         else {
           $record[] = '';
@@ -134,15 +149,11 @@ abstract class TabularBaseWebformExporter extends WebformExporterBase {
 
       case 'entity_url':
       case 'entity_title':
-        if (empty($webform_submission->entity_type->value) || empty($webform_submission->entity_id->value)) {
-          $record[] = '';
-          break;
-        }
-        $entity_type = $webform_submission->entity_type->value;
-        $entity_id = $webform_submission->entity_id->value;
-        $entity = $this->entityTypeManager->getStorage($entity_type)->load($entity_id);
+        $entity = $webform_submission->getSourceEntity(TRUE);
         if ($entity) {
-          $record[] = ($field_type == 'entity_url' && $entity->hasLinkTemplate('canonical')) ? $entity->toUrl()->setOption('absolute', TRUE)->toString() : $entity->label();
+          $record[] = ($field_type === 'entity_url' && $entity->hasLinkTemplate('canonical'))
+            ? $entity->toUrl()->setOption('absolute', TRUE)->toString()
+            : $entity->label();
         }
         else {
           $record[] = '';
@@ -155,9 +166,9 @@ abstract class TabularBaseWebformExporter extends WebformExporterBase {
     }
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
   // Webform definitions and elements.
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * Get a webform's field definitions.
@@ -172,8 +183,8 @@ abstract class TabularBaseWebformExporter extends WebformExporterBase {
 
     $export_options = $this->getConfiguration();
 
-    $this->fieldDefinitions = $this->entityStorage->getFieldDefinitions();
-    $this->fieldDefinitions = $this->entityStorage->checkFieldDefinitionAccess($this->getWebform(), $this->fieldDefinitions);
+    $this->fieldDefinitions = $this->getSubmissionStorage()->getFieldDefinitions();
+    $this->fieldDefinitions = $this->getSubmissionStorage()->checkFieldDefinitionAccess($this->getWebform(), $this->fieldDefinitions);
     if ($export_options['excluded_columns']) {
       $this->fieldDefinitions = array_diff_key($this->fieldDefinitions, $export_options['excluded_columns']);
     }

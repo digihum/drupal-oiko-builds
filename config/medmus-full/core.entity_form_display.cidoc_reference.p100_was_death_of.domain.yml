@@ -20,6 +20,7 @@ content:
   citation:
     type: entity_reference_citations
     weight: 1
+    region: content
     settings:
       title: Citation
       title_plural: Citations
@@ -27,17 +28,16 @@ content:
       add_mode: dropdown
       form_display_mode: default
     third_party_settings: {  }
-    region: content
   range:
     type: squid_entity_reference_autocomplete_tags
+    weight: 0
+    region: content
     settings:
       match_operator: STARTS_WITH
       size: 60
       placeholder: 'Start typing to find a match or create new entity...'
       match_limit: 10
-    weight: 0
     third_party_settings: {  }
-    region: content
 hidden:
   domain: true
   langcode: true

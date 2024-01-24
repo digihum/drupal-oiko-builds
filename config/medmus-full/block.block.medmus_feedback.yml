@@ -17,8 +17,8 @@ plugin: webform_block
 settings:
   id: webform_block
   label: Feedback
-  provider: webform
   label_display: visible
+  provider: webform
   webform_id: feedback
   default_data: ''
   redirect: false

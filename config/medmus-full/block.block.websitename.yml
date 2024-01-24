@@ -17,8 +17,8 @@ plugin: 'block_content:f1d8037d-b120-4f10-8b9c-bb135a6b69ef'
 settings:
   id: 'block_content:f1d8037d-b120-4f10-8b9c-bb135a6b69ef'
   label: 'Website name'
-  provider: block_content
   label_display: '0'
+  provider: block_content
   status: true
   info: ''
   view_mode: full

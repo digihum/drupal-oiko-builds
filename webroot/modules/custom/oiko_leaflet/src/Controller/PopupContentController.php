@@ -20,7 +20,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 class PopupContentController extends ControllerBase {
 
   /**
-   * Drupal\Core\Entity\EntityManager definition.
+   * Drupal\Core\Entity\EntityTypeManager definition.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */

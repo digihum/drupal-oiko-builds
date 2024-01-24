@@ -22,14 +22,14 @@ third_party_settings:
         - e9_move_map_entity_view_1
         - user_id
         - cidoc_admin_links
+      label: 'E9 Move'
       parent_name: ''
+      region: content
       weight: 0
       format_type: html_element
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
+        id: ''
         element: div
         show_label: true
         label_element: h3
@@ -37,75 +37,75 @@ third_party_settings:
         attributes: 'style="border-bottom: 2px solid #657986;"'
         effect: none
         speed: fast
-      label: 'E9 Move'
+        fieldset_label_html: false
 id: cidoc_entity.e9_move.preview
 targetEntityType: cidoc_entity
 bundle: e9_move
 mode: preview
 content:
   cidoc_admin_links:
+    settings: {  }
+    third_party_settings: {  }
     weight: 9
     region: content
+  cidoc_properties:
     settings: {  }
     third_party_settings: {  }
-  cidoc_properties:
     weight: 5
     region: content
-    settings: {  }
-    third_party_settings: {  }
   citation:
     type: entity_reference_revisions_entity_view
-    weight: 6
     label: inline
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 6
     region: content
   content:
     type: text_default
-    weight: 4
     label: visually_hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 4
     region: content
   e9_move_map_entity_view_1:
-    weight: 7
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 7
+    region: content
   internal_name:
-    label: inline
     type: string
-    weight: 2
+    label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 2
     region: content
   name:
-    label: hidden
     type: string
-    weight: 1
+    label: hidden
     settings:
       link_to_entity: true
     third_party_settings: {  }
+    weight: 1
     region: content
   significance:
     type: entity_reference_label
-    weight: 3
     label: inline
     settings:
       link: true
     third_party_settings: {  }
+    weight: 3
     region: content
   user_id:
     type: entity_reference_label
-    weight: 8
-    region: content
     label: inline
     settings:
       link: true
     third_party_settings: {  }
+    weight: 8
+    region: content
 hidden:
   'cidoc_properties:domain:p10_falls_within': true
   'cidoc_properties:domain:p11_had_participant': true

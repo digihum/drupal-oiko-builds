@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: p143_joined
 label: 'P143 joined'
-bidirectional: false
 reverse_label: 'P143 was joined by'
-friendly_label: joined
-reverse_friendly_label: 'was joined by'
 domain_bundles:
   - e85_joining
 range_bundles:
@@ -21,8 +18,11 @@ timesubwidget:
     type: 'no'
   range:
     type: generic
-    sub_property: p144_joined_with
     title_template: '@target_name joins @source_name'
+    sub_property: p144_joined_with
+bidirectional: false
+friendly_label: joined
+reverse_friendly_label: 'was joined by'
 widget_description:
   domain: '<p>Person (or group) who joined the group.</p>'
   range: ''

@@ -18,13 +18,13 @@ plugin: 'views_block:stefano_map_of_manuscripts_production-block_1'
 settings:
   id: 'views_block:stefano_map_of_manuscripts_production-block_1'
   label: 'Places of Manuscripts Production'
-  provider: views
   label_display: '0'
+  provider: views
   views_label: 'Places of Manuscripts Production'
   items_per_page: none
 visibility:
   request_path:
     id: request_path
-    pages: /content/sources
     negate: false
     context_mapping: {  }
+    pages: /content/sources

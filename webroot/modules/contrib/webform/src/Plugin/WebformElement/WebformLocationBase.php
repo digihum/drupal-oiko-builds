@@ -46,7 +46,7 @@ abstract class WebformLocationBase extends WebformCompositeBase {
     foreach ($composite_elements as $composite_key => $composite_element) {
       $properties[$composite_key . '__title'] = (string) $composite_element['#title'];
       // The value is always visible and supports a custom placeholder.
-      if ($composite_key == 'value') {
+      if ($composite_key === 'value') {
         $properties[$composite_key . '__placeholder'] = '';
       }
       else {
@@ -56,7 +56,7 @@ abstract class WebformLocationBase extends WebformCompositeBase {
     return $properties;
   }
 
-  /****************************************************************************/
+  /* ************************************************************************ */
 
   /**
    * {@inheritdoc}
@@ -65,7 +65,7 @@ abstract class WebformLocationBase extends WebformCompositeBase {
     // Hide all composite elements by default.
     $composite_elements = $this->getCompositeElements();
     foreach ($composite_elements as $composite_key => $composite_element) {
-      if ($composite_key != 'value' && !isset($element['#' . $composite_key . '__access'])) {
+      if ($composite_key !== 'value' && !isset($element['#' . $composite_key . '__access'])) {
         $element['#' . $composite_key . '__access'] = FALSE;
       }
     }
@@ -82,7 +82,7 @@ abstract class WebformLocationBase extends WebformCompositeBase {
     $form['composite']['geolocation'] = [
       '#type' => 'checkbox',
       '#title' => $this->t("Use the browser's Geolocation as the default value"),
-      '#description' => $this->t('The <a href="http://www.w3schools.com/html/html5_geolocation.asp">HTML Geolocation API</a> is used to get the geographical position of a user. Since this can compromise privacy, the position is not available unless the user approves it.'),
+      '#description' => $this->t('The <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API">HTML Geolocation API</a> is used to get the geographical position of a user. Since this can compromise privacy, the position is not available unless the user approves it.'),
       '#return_value' => TRUE,
     ];
     $form['composite']['hidden'] = [
@@ -117,8 +117,8 @@ abstract class WebformLocationBase extends WebformCompositeBase {
     $rows = [];
     $composite_elements = $this->getCompositeElements();
     foreach ($composite_elements as $composite_key => $composite_element) {
-      $title = (isset($composite_element['#title'])) ? $composite_element['#title'] : $composite_key;
-      $type = isset($composite_element['#type']) ? $composite_element['#type'] : NULL;
+      $title = $composite_element['#title'] ?? $composite_key;
+      $type = $composite_element['#type'] ?? NULL;
       $t_args = ['@title' => $title];
       $attributes = ['style' => 'width: 100%; margin-bottom: 5px'];
 

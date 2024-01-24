@@ -4,6 +4,7 @@ namespace Drupal\webform\EntitySettings;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Form\OptGroup;
 use Drupal\webform\Utility\WebformDialogHelper;
 use Drupal\webform\Utility\WebformElementHelper;
 
@@ -29,7 +30,7 @@ abstract class WebformEntitySettingsBaseForm extends EntityForm {
   protected function actions(array $form, FormStateInterface $form_state) {
     $actions = parent::actions($form, $form_state);
     // Only display delete button on Settings > General tab/form.
-    if ($this->operation != 'settings') {
+    if ($this->operation !== 'settings') {
       unset($actions['delete']);
     }
 
@@ -82,6 +83,12 @@ abstract class WebformEntitySettingsBaseForm extends EntityForm {
         // Append default value to an element's description.
         $value = $default_settings["default_$key"];
         if (!is_array($value)) {
+          if (isset($element['#options'])) {
+            $flattened_options = OptGroup::flattenOptions($element['#options']);
+            if (isset($flattened_options[$value])) {
+              $value = $flattened_options[$value];
+            }
+          }
           $element['#description'] .= ($element['#description'] ? '<br /><br />' : '');
           $element['#description'] .= $this->t('Defaults to: %value', ['%value' => $value]);
         }
@@ -122,14 +129,16 @@ abstract class WebformEntitySettingsBaseForm extends EntityForm {
   protected function appendBehaviors(array &$element, array $behavior_elements, array $settings, array $default_settings) {
     $weight = 0;
     foreach ($behavior_elements as $behavior_key => $behavior_element) {
+      $behavior_element += ['states' => []];
       // Add group.
       if (isset($behavior_element['group'])) {
         $group = (string) $behavior_element['group'];
         if (!isset($element[$group])) {
           $element[$group] = [
+            '#type' => 'container',
+            '#prefix' => '<strong>',
+            '#suffix' => '</strong>',
             '#markup' => $group,
-            '#prefix' => '<div><strong>',
-            '#suffix' => '</strong></div>',
             '#weight' => $weight,
           ];
           $weight += 10;
@@ -141,6 +150,7 @@ abstract class WebformEntitySettingsBaseForm extends EntityForm {
           '#type' => 'checkbox',
           '#title' => $behavior_element['title'],
           '#description' => $behavior_element['all_description'],
+          '#states' => $behavior_element['states'],
           '#disabled' => TRUE,
           '#default_value' => TRUE,
           '#weight' => $weight,
@@ -158,6 +168,7 @@ abstract class WebformEntitySettingsBaseForm extends EntityForm {
           '#type' => 'checkbox',
           '#title' => $behavior_element['title'],
           '#description' => $behavior_element['form_description'],
+          '#states' => $behavior_element['states'],
           '#return_value' => TRUE,
           '#default_value' => $settings[$behavior_key],
           '#weight' => $weight,

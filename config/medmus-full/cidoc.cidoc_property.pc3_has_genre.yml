@@ -4,10 +4,7 @@ status: true
 dependencies: {  }
 id: pc3_has_genre
 label: 'PC3 has genre'
-bidirectional: false
 reverse_label: 'PC3 is genre of'
-friendly_label: Genre
-reverse_friendly_label: 'Genre of'
 domain_bundles:
   - ec1_work
 range_bundles:
@@ -20,6 +17,9 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
+bidirectional: false
+friendly_label: Genre
+reverse_friendly_label: 'Genre of'
 widget_description:
   domain: "<p>Defines the literary genre of a literary work.</p>\r\n<ul>\r\n<li>BdT 366,1 has genre (is genre of) Canso</li>\r\n<li>The Chanson de Roland has genre (is genre of) Chanson de geste</li>\r\n</ul>\r\n"
   range: ''

@@ -33,10 +33,6 @@ default_value_callback: ''
 settings:
   handler: 'default:cidoc_entity'
   handler_settings:
-    auto_create: true
-    sort:
-      field: name
-      direction: ASC
     target_bundles:
       e5_event: e5_event
       e6_destruction: e6_destruction
@@ -51,5 +47,9 @@ settings:
       e85_joining: e85_joining
       e86_leaving: e86_leaving
       ec10_marriage: ec10_marriage
+    sort:
+      field: name
+      direction: ASC
+    auto_create: true
     auto_create_bundle: e5_event
 field_type: entity_reference

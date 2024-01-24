@@ -19,11 +19,11 @@ default_value_callback: ''
 settings:
   handler: 'default:cidoc_entity'
   handler_settings:
-    auto_create: true
+    target_bundles:
+      ec2_genre: ec2_genre
     sort:
       field: name
       direction: ASC
-    target_bundles:
-      ec2_genre: ec2_genre
+    auto_create: true
     auto_create_bundle: ec2_genre
 field_type: entity_reference

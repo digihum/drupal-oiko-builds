@@ -20,14 +20,14 @@ third_party_settings:
         - cidoc_properties
         - citation
         - user_id
+      label: 'E57 Material'
       parent_name: ''
+      region: content
       weight: 0
       format_type: html_element
-      region: content
       format_settings:
-        fieldset_label_html: false
-        id: ''
         classes: ''
+        id: ''
         element: div
         show_label: true
         label_element: h3
@@ -35,65 +35,65 @@ third_party_settings:
         attributes: 'style="border-bottom: 2px solid #657986;"'
         effect: none
         speed: fast
-      label: 'E57 Material'
+        fieldset_label_html: false
 id: cidoc_entity.e57_material.preview
 targetEntityType: cidoc_entity
 bundle: e57_material
 mode: preview
 content:
   cidoc_properties:
-    weight: 5
-    region: content
     settings: {  }
     third_party_settings: {  }
-  citation:
+    weight: 5
     region: content
+  citation:
     type: entity_reference_revisions_entity_view
     label: above
     settings:
       view_mode: default
       link: ''
-    weight: 6
     third_party_settings: {  }
-  content:
+    weight: 6
     region: content
+  content:
     type: text_default
     label: visually_hidden
     settings: {  }
-    weight: 4
     third_party_settings: {  }
-  internal_name:
+    weight: 4
     region: content
+  internal_name:
     type: string
     label: above
     settings:
       link_to_entity: false
-    weight: 2
     third_party_settings: {  }
-  name:
+    weight: 2
     region: content
+  name:
     type: string
     label: hidden
     settings:
       link_to_entity: false
-    weight: 1
     third_party_settings: {  }
-  significance:
+    weight: 1
     region: content
+  significance:
     type: entity_reference_label
     label: above
     settings:
       link: true
-    weight: 3
     third_party_settings: {  }
+    weight: 3
+    region: content
   user_id:
     type: entity_reference_label
-    weight: 7
-    region: content
     label: above
     settings:
       link: true
     third_party_settings: {  }
+    weight: 7
+    region: content
 hidden:
   cidoc_admin_links: true
   'cidoc_properties:domain:p102_has_title': true

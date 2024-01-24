@@ -3,10 +3,7 @@
 namespace Drupal\inside_iframe\Theme;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Entity\EntityManagerInterface;
-use Drupal\Core\Routing\AdminContext;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Theme\ThemeNegotiatorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 

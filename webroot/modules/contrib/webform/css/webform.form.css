@@ -1,7 +1,21 @@
 /**
  * @file
- * Webform styles.
+ * Webform form styles.
  */
+
+/**
+ * This allows components to be hidden when a JS plugin provides the UI.
+ */
+html.js .js-webform-visually-hidden,
+html.js .js-webform-visually-hidden[style*="display: none"] {
+  position: absolute !important;
+  display: inline !important;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  width: 1px;
+  height: 1px;
+  word-wrap: normal;
+}
 
 /**
  * Element states.
@@ -15,6 +29,19 @@
 .js-form-wrapper.js-webform-states-hidden,
 .js-webform-text-format-hidden > .js-text-format-wrapper {
   display: none;
+}
+
+/**
+ * Form inline. (This is not included in all themes)
+ */
+.form--inline .form-item {
+  float: left; /* LTR */
+  margin-right: 0.5em; /* LTR */
+}
+[dir="rtl"] .form--inline .form-item {
+  float: right;
+  margin-right: 0;
+  margin-left: 0.5em;
 }
 
 /**
@@ -75,6 +102,15 @@
 }
 
 /**
+ * Clientside validation errors.
+
+ * @see webform_clientside_validation.ife.css
+ */
+.webform-submission-form strong.error.form-item--error-message {
+  display: block;
+}
+
+/**
  * Readonly inputs. (@see .form-disabled)
  * @see https://www.wufoo.com/html5/attributes/21-readonly.html
  */
@@ -89,7 +125,7 @@
 .webform-readonly input[type="time"],
 .webform-readonly input[type="url"],
 .webform-readonly textarea {
-  color: #717171;
+  color: #6B6B6B;
   border-color: #bbb;
   background: #ededed;
 }

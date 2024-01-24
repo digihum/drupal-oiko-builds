@@ -17,7 +17,7 @@ plugin: sharemessage_block
 settings:
   id: sharemessage_block
   label: Share
-  provider: sharemessage
   label_display: '0'
+  provider: sharemessage
   sharemessage: share_links_block
 visibility: {  }

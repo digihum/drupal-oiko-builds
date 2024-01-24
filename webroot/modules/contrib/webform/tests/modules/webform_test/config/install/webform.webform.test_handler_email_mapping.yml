@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -28,7 +29,7 @@ elements: |
   radios_other:
     '#type': webform_radios_other
     '#title': radios_other
-    '#options': gender
+    '#options': sex
     '#description': 'Check and enter ''Other'' to trigger an email.'
   
 css: ''
@@ -42,7 +43,7 @@ settings:
   page: true
   page_submit_path: ''
   page_confirm_path: ''
-  page_admin_theme: false
+  page_theme_name: ''
   form_title: source_entity_webform
   form_submit_once: false
   form_exception_message: ''
@@ -51,7 +52,7 @@ settings:
   form_previous_submissions: true
   form_confidential: false
   form_confidential_message: ''
-  form_remote_addr: true
+  form_disable_remote_addr: false
   form_convert_anonymous: false
   form_prepopulate: false
   form_prepopulate_source_entity: false
@@ -72,6 +73,14 @@ settings:
   form_access_denied_message: ''
   form_access_denied_attributes: {  }
   form_file_limit: ''
+  form_method: ''
+  form_action: ''
+  form_attributes: {  }
+  share: false
+  share_node: false
+  share_theme_name: ''
+  share_title: true
+  share_page_body_attributes: {  }
   submission_label: ''
   submission_log: false
   submission_views: {  }
@@ -97,11 +106,19 @@ settings:
   wizard_progress_percentage: false
   wizard_progress_link: false
   wizard_progress_states: false
+  wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
   wizard_confirmation_label: ''
   wizard_track: ''
+  wizard_prev_button_label: ''
+  wizard_next_button_label: ''
+  wizard_toggle: false
+  wizard_toggle_show_label: ''
+  wizard_toggle_hide_label: ''
   preview: 0
   preview_label: ''
   preview_title: ''
@@ -147,6 +164,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -198,6 +217,7 @@ handlers:
   select:
     id: email
     label: 'Select yes option'
+    notes: ''
     handler_id: select
     status: true
     conditions: {  }
@@ -236,6 +256,7 @@ handlers:
   empty:
     id: email
     label: 'Select empty'
+    notes: ''
     handler_id: empty
     status: true
     conditions: {  }
@@ -274,6 +295,7 @@ handlers:
   default:
     id: email
     label: 'Select default'
+    notes: ''
     handler_id: empty
     status: true
     conditions: {  }
@@ -312,6 +334,7 @@ handlers:
   checkboxes:
     id: email
     label: Checkboxes
+    notes: ''
     handler_id: checkboxes
     status: true
     conditions: {  }
@@ -352,6 +375,7 @@ handlers:
   radios_other:
     id: email
     label: 'Radios other'
+    notes: ''
     handler_id: radios_other
     status: true
     conditions: {  }

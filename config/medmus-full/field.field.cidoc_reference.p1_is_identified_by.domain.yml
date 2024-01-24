@@ -53,10 +53,6 @@ default_value_callback: ''
 settings:
   handler: 'default:cidoc_entity'
   handler_settings:
-    auto_create: true
-    sort:
-      field: name
-      direction: ASC
     target_bundles:
       e5_event: e5_event
       e6_destruction: e6_destruction
@@ -91,5 +87,9 @@ settings:
       ec9_print: ec9_print
       ec10_marriage: ec10_marriage
       ec11_melodic_scheme: ec11_melodic_scheme
+    sort:
+      field: name
+      direction: ASC
+    auto_create: true
     auto_create_bundle: e5_event
 field_type: entity_reference

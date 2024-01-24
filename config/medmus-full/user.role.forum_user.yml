@@ -1,7 +1,14 @@
 uuid: 2864a218-9bd0-4271-94f0-3425746fb670
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - node.type.forum
+  module:
+    - cidoc
+    - comment
+    - node
+    - system
 id: forum_user
 label: 'Forum user'
 weight: 4
