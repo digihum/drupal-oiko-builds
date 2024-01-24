@@ -49,7 +49,6 @@ module:
   key_auth: 0
   leaflet: 0
   leaflet_views: 0
-  leaflet_widget: 0
   link: 0
   medmus_cidoc: 0
   medmus_contrafacta: 0
