@@ -346,16 +346,16 @@
         },
         {
             "name": "computerminds/cidoc-crm",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/computerminds/cidoc-crm.git",
-                "reference": "ef166f1e46da7902aa7ff01116d8a65191728ad4"
+                "reference": "6a65d5a9d63ae46f4f35eb01de00c1498f436aae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/computerminds/cidoc-crm/zipball/ef166f1e46da7902aa7ff01116d8a65191728ad4",
-                "reference": "ef166f1e46da7902aa7ff01116d8a65191728ad4",
+                "url": "https://api.github.com/repos/computerminds/cidoc-crm/zipball/6a65d5a9d63ae46f4f35eb01de00c1498f436aae",
+                "reference": "6a65d5a9d63ae46f4f35eb01de00c1498f436aae",
                 "shasum": ""
             },
             "require": {
@@ -384,9 +384,9 @@
             "description": "A representation of the CIDOC-CRM in Yaml and readable via PHP.",
             "support": {
                 "issues": "https://github.com/computerminds/cidoc-crm/issues",
-                "source": "https://github.com/computerminds/cidoc-crm/tree/1.1.0"
+                "source": "https://github.com/computerminds/cidoc-crm/tree/master"
             },
-            "time": "2020-05-22T12:13:59+00:00"
+            "time": "2020-07-14T14:31:12+00:00"
         },
         {
             "name": "computerminds/php-edtf",
