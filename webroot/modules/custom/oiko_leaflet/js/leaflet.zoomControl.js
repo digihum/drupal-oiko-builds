@@ -1,10 +1,10 @@
 (function ($) {
   'use strict';
-  $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
+  $(document).on('leaflet.map', function(e, mapDefinition, map, mapid) {
 
-    if (drupalLeaflet.map_definition.hasOwnProperty('zoomControl') && drupalLeaflet.map_definition.zoomControl) {
+    if (mapDefinition.hasOwnProperty('zoomControl') && mapDefinition.zoomControl) {
       L.control.zoom({
-        position: drupalLeaflet.map_definition.zoomControl
+        position: mapDefinition.zoomControl
       }).addTo(map);
     }
   });

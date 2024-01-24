@@ -1,11 +1,12 @@
 (function ($) {
   'use strict';
-  $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
+  $(document).on('leaflet.map', function(e, mapDefinition, map, mapid) {
+    var drupalLeafletInstance = $('#'+ mapid).data('leaflet');
 
     // If the map is using non_geo_tray add in the non_geo_tray.
     if (mapDefinition.hasOwnProperty('non_geo_tray') && mapDefinition.non_geo_tray) {
       var previousSideBarRequest;
-      var works = L.oikoMedmusWorksLayer(drupalLeaflet);
+      var works = L.oikoMedmusWorksLayer(drupalLeafletInstance);
       works.addTo(map);
       var oikoLoaded = false;
 

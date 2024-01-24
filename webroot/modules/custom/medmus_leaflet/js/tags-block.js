@@ -38,7 +38,8 @@
     }
   };
 
-  $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
+  $(document).on('leaflet.map', function(e, mapDefinition, map, mapid) {
+    var drupalLeaflet = Drupal.Leaflet[mapid];
 
     drupalLeaflet.filteringLayerHelper = drupalLeaflet.filteringLayerHelper || [];
     drupalLeaflet.filteringLayerHelper.push(filterForTags);

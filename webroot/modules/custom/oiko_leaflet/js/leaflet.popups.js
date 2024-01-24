@@ -9,7 +9,8 @@
 
   var featureCache = {};
 
-  $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
+  $(document).on('leaflet.map', function(e, mapDefinition, map, mapid) {
+    var drupalLeaflet = Drupal.Leaflet[mapid];
     // Add the sidebar control if there's a sidebar control in the page markup.
     if (mapDefinition.sidebar && Drupal.oiko.hasOwnProperty('sidebar')) {
       drupalLeaflet.hasSidebar = true;
@@ -51,7 +52,8 @@
     }
   }
 
-  $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
+  $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeafletInstance) {
+    var drupalLeaflet = Drupal.Leaflet[drupalLeafletInstance.mapid];
     if (drupalLeaflet.hasSidebar) {
       // Remove the popup and add it back as a tooltip.
       if (typeof lFeature.unbindPopup !== 'undefined') {
@@ -102,12 +104,12 @@
             // Attempt to locate layers at this point.
             var intersectingLayers = [];
             var ll = [latLng.lat, latLng.lng];
-            var container_ll = drupalLeaflet.lMap.latLngToContainerPoint(ll);
+            var container_ll = drupalLeafletInstance.lMap.latLngToContainerPoint(ll);
 
-            drupalLeaflet.lMap.eachLayer(function(layer) {
+            drupalLeafletInstance.lMap.eachLayer(function(layer) {
               // Pick out other popupAggregated items at the event point.
               if (typeof layer.options.popupAggregated !== 'undefined' && layer instanceof L.Marker) {
-                if (container_ll.distanceTo(drupalLeaflet.lMap.latLngToContainerPoint(layer.getLatLng())) < tooltipFeatureRadius) {
+                if (container_ll.distanceTo(drupalLeafletInstance.lMap.latLngToContainerPoint(layer.getLatLng())) < tooltipFeatureRadius) {
                   intersectingLayers.push(layer);
                 }
               }
@@ -163,14 +165,14 @@
             // Attempt to locate layers at this point.
             var intersectingLayers = [];
             var ll = [latLng.lat, latLng.lng];
-            var container_ll = drupalLeaflet.lMap.latLngToContainerPoint(ll);
+            var container_ll = drupalLeafletInstance.lMap.latLngToContainerPoint(ll);
             var latlngs;
-            drupalLeaflet.lMap.eachLayer(function(layer) {
+            drupalLeafletInstance.lMap.eachLayer(function(layer) {
               // Handle lines between two points specially, so that we include
               // lines 'near' the point that was clicked.
               if ((layer instanceof L.Polyline) && (latlngs = layer.getLatLngs()) && (latlngs.length === 2)) {
-                var p1 = drupalLeaflet.lMap.latLngToContainerPoint(latlngs[0]);
-                var p2 = drupalLeaflet.lMap.latLngToContainerPoint(latlngs[1]);
+                var p1 = drupalLeafletInstance.lMap.latLngToContainerPoint(latlngs[0]);
+                var p2 = drupalLeafletInstance.lMap.latLngToContainerPoint(latlngs[1]);
                 if (L.LineUtil.pointToSegmentDistance(container_ll, p1, p2) < tooltipFeatureRadius) {
                   intersectingLayers.push(layer);
                 }
@@ -853,7 +855,12 @@ L.Layer.include({
   // @method isTooltipOpen(): boolean
   // Returns `true` if the tooltip bound to this layer is currently open.
   isMedmusTooltipOpen: function () {
-    return this._Medmustooltip.isOpen();
+    if (this._Medmustooltip) {
+      return this._Medmustooltip.isOpen();
+    }
+    else {
+      return false;
+    }
   },
 
   // @method setTooltipContent(content: String|HTMLElement|Tooltip): this

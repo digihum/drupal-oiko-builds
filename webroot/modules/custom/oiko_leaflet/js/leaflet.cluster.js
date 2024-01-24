@@ -1,18 +1,20 @@
 (function ($) {
   'use strict';
-  $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
+  $(document).on('leaflet.map', function(e, mapDefinition, map, mapid) {
+    var drupalLeaflet = Drupal.Leaflet[mapid];
+    var drupalLeafletInstance = $('#'+ mapid).data('leaflet');
 
     // If the map is using clustering add in the clusterer.
     if (mapDefinition.hasOwnProperty('clustering') && mapDefinition.clustering) {
-      drupalLeaflet.clusterFocusLayer = L.layerGroup();
-      drupalLeaflet.clusterer = L.markerClusterGroup({
+      drupalLeafletInstance.clusterFocusLayer = L.layerGroup();
+      drupalLeafletInstance.clusterer = L.markerClusterGroup({
         // Make the radius of the clusters quite small.
         maxClusterRadius: 10,
       });
 
       // Add our layers to tha map.
-      map.addLayer(drupalLeaflet.clusterer);
-      map.addLayer(drupalLeaflet.clusterFocusLayer);
+      map.addLayer(drupalLeafletInstance.clusterer);
+      map.addLayer(drupalLeafletInstance.clusterFocusLayer);
 
       var cloneOptions = function(options) {
         var ret = {};
@@ -64,48 +66,48 @@
         // Remove the layer from the mainlayer and add.
         var newLayer = cloneMarker(layer);
         if (newLayer) {
-          drupalLeaflet.clusterFocusLayer.addLayer(newLayer);
+          drupalLeafletInstance.clusterFocusLayer.addLayer(newLayer);
         }
       };
 
       // Move all the layers in our focus group back into the main layer.
       var unFocusAllLayers = function() {
-        drupalLeaflet.clusterFocusLayer.clearLayers();
+        drupalLeafletInstance.clusterFocusLayer.clearLayers();
       };
 
       if (L.Browser.touch) {
-        drupalLeaflet.clusterer.on('preclick', function (e) {
+        drupalLeafletInstance.clusterer.on('preclick', function (e) {
           if (e.layer.isMedmusTooltipOpen()) {
             // Only move the layer if the target is actually in a spidered
             // collection.
             if (e.target._spiderfied) {
-              drupalLeaflet.clusterer.unspiderfy();
+              drupalLeafletInstance.clusterer.unspiderfy();
               moveLayerToFocusGroup(e.layer);
             }
           }
         });
       }
       else {
-        drupalLeaflet.clusterer.on('click', function (e) {
+        drupalLeafletInstance.clusterer.on('click', function (e) {
           // Only move the layer if the target is actually in a spidered
           // collection.
           if (e.target._spiderfied) {
-            drupalLeaflet.clusterer.unspiderfy();
+            drupalLeafletInstance.clusterer.unspiderfy();
             moveLayerToFocusGroup(e.layer);
           }
         });
       }
 
-      drupalLeaflet.clusterer.on('spiderfied', function (e) {
+      drupalLeafletInstance.clusterer.on('spiderfied', function (e) {
         unFocusAllLayers();
       });
 
       // Set the clusterer be the main layer on the map for us.
-      drupalLeaflet.mainLayer = drupalLeaflet.clusterer;
+      drupalLeaflet.mainLayer = drupalLeafletInstance.clusterer;
     }
     else {
       // Set the lMap to be the main layer.
-      drupalLeaflet.mainLayer = drupalLeaflet.lMap;
+      drupalLeaflet.mainLayer = drupalLeafletInstance.lMap;
     }
   });
 

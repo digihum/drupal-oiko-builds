@@ -1,15 +1,15 @@
 (function ($) {
   'use strict';
-  $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
+  $(document).on('leaflet.map', function(e, mapDefinition, map, mapid) {
 
-    if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search) {
+    if (mapDefinition.hasOwnProperty('search') && mapDefinition.search) {
 
       var featureCache = {};
 
       // Build up a lovely map of Drupal feature id to lat/lon or bounds.
-      $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
+      $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeafletInstance) {
         var id;
-        if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search) {
+        if (mapDefinition.hasOwnProperty('search') && mapDefinition.search) {
           if (feature.hasOwnProperty('id') && feature.id && typeof feature.exclude_from_temporal_layer == 'undefined') {
             id = parseInt(feature.id, 10);
             if (feature.hasOwnProperty('lat') && feature.hasOwnProperty('lon')) {

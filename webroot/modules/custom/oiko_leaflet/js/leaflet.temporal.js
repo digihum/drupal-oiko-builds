@@ -29,11 +29,11 @@
     }
   };
 
-  $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
+  $(document).on('leaflet.map', function(e, mapDefinition, map, mapid) {
+    var drupalLeaflet = Drupal.Leaflet[mapid];
 
     window.globalDrupalLeaflet = drupalLeaflet;
-
-    if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
+    if (mapDefinition.hasOwnProperty('timeline') && mapDefinition.timeline) {
       // Half a year, either side of the selection point, thus a 1 year window.
       drupalLeaflet.timeSelectionWindowSize = 365.25 * 86400 / 2;
 
@@ -55,6 +55,7 @@
       drupalLeaflet.filteringLayerHelper = L.filterableLayerHelper(drupalLeaflet.temporalDisplayedLayerHelper, {}, drupalLeaflet.filteringLayerHelper);
       drupalLeaflet.filteringLayerHelper.addFilteringCallback(filterForCategories);
 
+
       $(window).bind('set.oiko.categories', function(e, categories) {
         // Update our record of the categories displayed.
         updateDisplayedCategories(categories);
@@ -65,8 +66,8 @@
         }, 25);
       });
 
-      $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
-        if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
+      $(document).on('leaflet.feature', function(e, lFeature, feature, leafletInstance) {
+        if (leafletInstance.map_definition.hasOwnProperty('timeline') && leafletInstance.map_definition.timeline) {
           if (feature.hasOwnProperty('temporal')) {
             lFeature.temporal = {
               start: parseInt(feature.temporal.minmin, 10),
@@ -75,14 +76,14 @@
           }
           if (typeof feature.exclude_from_temporal_layer == 'undefined') {
             // Add this feature to the temporal layer group.
-            drupalLeaflet.filteringLayerHelper
+            Drupal.Leaflet[leafletInstance.mapid].filteringLayerHelper
               .addLayer(lFeature, feature);
           }
         }
       });
 
       $(document).on('leaflet.features', function(e, initial, drupalLeaflet) {
-        if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
+        if (mapDefinition.hasOwnProperty('timeline') && mapDefinition.timeline) {
           Drupal.oiko.appModuleDoneLoading('temporal');
         }
       });
@@ -105,13 +106,13 @@
       };
 
       // Search support.
-      if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search || drupalLeaflet.map_definition.hasOwnProperty('sidebar') && drupalLeaflet.map_definition.sidebar) {
+      if (mapDefinition.hasOwnProperty('search') && mapDefinition.search || mapDefinition.hasOwnProperty('sidebar') && mapDefinition.sidebar) {
         var featureCache = {};
 
         // Build up a lovely map of Drupal feature id to a timestamp.
-        $(document).on('leaflet.feature', function(e, lFeature, feature, drupalLeaflet) {
+        $(document).on('leaflet.feature', function(e, lFeature, feature) {
           var id;
-          if (drupalLeaflet.map_definition.hasOwnProperty('search') && drupalLeaflet.map_definition.search || drupalLeaflet.map_definition.hasOwnProperty('sidebar') && drupalLeaflet.map_definition.sidebar) {
+          if (mapDefinition.hasOwnProperty('search') && mapDefinition.search || mapDefinition.hasOwnProperty('sidebar') && mapDefinition.sidebar) {
             if (feature.hasOwnProperty('id') && feature.id && typeof feature.exclude_from_temporal_layer == 'undefined') {
               var id = parseInt(feature.id, 10);
               if (feature.hasOwnProperty('temporal')) {
