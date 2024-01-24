@@ -1,4 +1,0 @@
-name: 'Add To Head'
-description: 'Allows arbitrary insertion of code into the head of specific pages'
-core: 8.x
-type: module

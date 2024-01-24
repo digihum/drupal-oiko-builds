@@ -1,4 +1,0 @@
-http_auth_settings:
-  title: 'HTTP Auth'
-  description: 'Users who have this permission can change the HTTP Auth settings.'
-  restrict access: TRUE

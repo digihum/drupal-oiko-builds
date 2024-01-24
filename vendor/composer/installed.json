@@ -1858,54 +1858,6 @@
                         "install-path": "../doctrine/lexer"
                 },
                 {
-                        "name": "drupal/add_to_head",
-                        "version": "dev-1.x",
-                        "version_normalized": "dev-1.x",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/add_to_head.git",
-                                "reference": "39f8613be397955708ab87c6b5348b876db66154"
-                        },
-                        "require": {
-                                "drupal/core": "~8.0"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "branch-alias": {
-                                        "dev-1.x": "1.x-dev"
-                                },
-                                "drupal": {
-                                        "version": "8.x-1.x-dev",
-                                        "datestamp": "1483121583",
-                                        "security-coverage": {
-                                                "status": "not-covered",
-                                                "message": "Dev releases are not covered by Drupal security advisories."
-                                        }
-                                }
-                        },
-                        "installation-source": "source",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0-or-later"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "colan",
-                                        "homepage": "https://www.drupal.org/user/58704"
-                                },
-                                {
-                                        "name": "nicholasThompson",
-                                        "homepage": "https://www.drupal.org/user/59351"
-                                }
-                        ],
-                        "description": "Allows arbitrary insertion of code into the head of specific pages",
-                        "homepage": "https://www.drupal.org/project/add_to_head",
-                        "support": {
-                                "source": "https://git.drupalcode.org/project/add_to_head"
-                        },
-                        "install-path": "../../webroot/modules/contrib/add_to_head"
-                },
-                {
                         "name": "drupal/admin_toolbar",
                         "version": "2.5.0",
                         "version_normalized": "2.5.0.0",
@@ -2035,57 +1987,6 @@
                                 "source": "https://git.drupalcode.org/project/avatars"
                         },
                         "install-path": "../../webroot/modules/contrib/avatars"
-                },
-                {
-                        "name": "drupal/browsersync",
-                        "version": "1.0.0-beta1",
-                        "version_normalized": "1.0.0.0-beta1",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/browsersync.git",
-                                "reference": "8.x-1.0-beta1"
-                        },
-                        "dist": {
-                                "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/browsersync-8.x-1.0-beta1.zip",
-                                "reference": "8.x-1.0-beta1",
-                                "shasum": "6183ef10ae1ec760e8fa601be8cb91a550c9331f"
-                        },
-                        "require": {
-                                "drupal/core": "~8.0"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "drupal": {
-                                        "version": "8.x-1.0-beta1",
-                                        "datestamp": "1455775140",
-                                        "security-coverage": {
-                                                "status": "not-covered",
-                                                "message": "Beta releases are not covered by Drupal security advisories."
-                                        }
-                                }
-                        },
-                        "installation-source": "dist",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0-or-later"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "Cottser",
-                                        "homepage": "https://www.drupal.org/user/1167326"
-                                },
-                                {
-                                        "name": "jorgegc",
-                                        "homepage": "https://www.drupal.org/user/834154"
-                                }
-                        ],
-                        "description": "Integrates Browsersync (Node.js module) with Drupal.",
-                        "homepage": "https://www.drupal.org/project/browsersync",
-                        "support": {
-                                "source": "https://git.drupalcode.org/project/browsersync"
-                        },
-                        "install-path": "../../webroot/modules/contrib/browsersync"
                 },
                 {
                         "name": "drupal/checklistapi",
@@ -2218,329 +2119,6 @@
                                 "issues": "https://www.drupal.org/project/issues/color_field?version=8.x"
                         },
                         "install-path": "../../webroot/modules/contrib/color_field"
-                },
-                {
-                        "name": "drupal/config_devel",
-                        "version": "1.8.0",
-                        "version_normalized": "1.8.0.0",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/config_devel.git",
-                                "reference": "8.x-1.8"
-                        },
-                        "dist": {
-                                "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/config_devel-8.x-1.8.zip",
-                                "reference": "8.x-1.8",
-                                "shasum": "325caa6c6d0ee39e938807892f9ec509e71b5fb7"
-                        },
-                        "require": {
-                                "drupal/core": "^8 || ^9"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "drupal": {
-                                        "version": "8.x-1.8",
-                                        "datestamp": "1609324318",
-                                        "security-coverage": {
-                                                "status": "covered",
-                                                "message": "Covered by Drupal's security advisory policy"
-                                        }
-                                }
-                        },
-                        "installation-source": "dist",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0+"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "alexpott",
-                                        "homepage": "https://www.drupal.org/user/157725"
-                                },
-                                {
-                                        "name": "benjy",
-                                        "homepage": "https://www.drupal.org/user/1852732"
-                                },
-                                {
-                                        "name": "chx",
-                                        "homepage": "https://www.drupal.org/user/9446"
-                                },
-                                {
-                                        "name": "joachim",
-                                        "homepage": "https://www.drupal.org/user/107701"
-                                },
-                                {
-                                        "name": "nedjo",
-                                        "homepage": "https://www.drupal.org/user/4481"
-                                },
-                                {
-                                        "name": "vijaycs85",
-                                        "homepage": "https://www.drupal.org/user/93488"
-                                }
-                        ],
-                        "description": "Helps developers work with configuration.",
-                        "homepage": "https://www.drupal.org/project/config_devel",
-                        "support": {
-                                "source": "https://git.drupalcode.org/project/config_devel"
-                        },
-                        "install-path": "../../webroot/modules/contrib/config_devel"
-                },
-                {
-                        "name": "drupal/config_filter",
-                        "version": "1.5.0",
-                        "version_normalized": "1.5.0.0",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/config_filter.git",
-                                "reference": "8.x-1.5"
-                        },
-                        "dist": {
-                                "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/config_filter-8.x-1.5.zip",
-                                "reference": "8.x-1.5",
-                                "shasum": "81210684c378dab856b3c2bce5eeaa58992d2efc"
-                        },
-                        "require": {
-                                "drupal/core": "^8 || ^9"
-                        },
-                        "suggest": {
-                                "drupal/config_split": "Split site configuration for different environments."
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "drupal": {
-                                        "version": "8.x-1.5",
-                                        "datestamp": "1572542288",
-                                        "security-coverage": {
-                                                "status": "covered",
-                                                "message": "Covered by Drupal's security advisory policy"
-                                        }
-                                }
-                        },
-                        "installation-source": "dist",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0+"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "Fabian Bircher",
-                                        "homepage": "https://www.drupal.org/u/bircher",
-                                        "email": "opensource@fabianbircher.com",
-                                        "role": "Maintainer"
-                                },
-                                {
-                                        "name": "Nuvole Web",
-                                        "homepage": "http://nuvole.org",
-                                        "email": "info@nuvole.org",
-                                        "role": "Maintainer"
-                                },
-                                {
-                                        "name": "pescetti",
-                                        "homepage": "https://www.drupal.org/user/436244"
-                                }
-                        ],
-                        "description": "Config Filter allows other modules to interact with a ConfigStorage through filter plugins.",
-                        "homepage": "https://www.drupal.org/project/config_filter",
-                        "keywords": [
-                                "Drupal",
-                                "configuration",
-                                "configuration management"
-                        ],
-                        "support": {
-                                "source": "http://cgit.drupalcode.org/config_filter",
-                                "issues": "https://www.drupal.org/project/issues/config_filter",
-                                "irc": "irc://irc.freenode.org/drupal-contribute"
-                        },
-                        "install-path": "../../webroot/modules/contrib/config_filter"
-                },
-                {
-                        "name": "drupal/config_readonly",
-                        "version": "1.0.0-beta2",
-                        "version_normalized": "1.0.0.0-beta2",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/config_readonly.git",
-                                "reference": "8.x-1.0-beta2"
-                        },
-                        "dist": {
-                                "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/config_readonly-8.x-1.0-beta2.zip",
-                                "reference": "8.x-1.0-beta2",
-                                "shasum": "d3309a69ee9950a3e696a407981673ce5b041a16"
-                        },
-                        "require": {
-                                "drupal/core": "~8.0"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "drupal": {
-                                        "version": "8.x-1.0-beta2",
-                                        "datestamp": "1519398184",
-                                        "security-coverage": {
-                                                "status": "not-covered",
-                                                "message": "Beta releases are not covered by Drupal security advisories."
-                                        }
-                                }
-                        },
-                        "installation-source": "dist",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0-or-later"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "beejeebus",
-                                        "homepage": "https://www.drupal.org/user/38580"
-                                },
-                                {
-                                        "name": "effulgentsia",
-                                        "homepage": "https://www.drupal.org/user/78040"
-                                },
-                                {
-                                        "name": "moshe weitzman",
-                                        "homepage": "https://www.drupal.org/user/23"
-                                },
-                                {
-                                        "name": "pwolanin",
-                                        "homepage": "https://www.drupal.org/user/49851"
-                                },
-                                {
-                                        "name": "scor",
-                                        "homepage": "https://www.drupal.org/user/52142"
-                                },
-                                {
-                                        "name": "wheatpenny",
-                                        "homepage": "https://www.drupal.org/user/1128182"
-                                }
-                        ],
-                        "description": "Enables making the active configuration store read-only to prevent configuration changes on a Drupal site.",
-                        "homepage": "https://www.drupal.org/project/config_readonly",
-                        "support": {
-                                "source": "https://git.drupalcode.org/project/config_readonly"
-                        },
-                        "install-path": "../../webroot/modules/contrib/config_readonly"
-                },
-                {
-                        "name": "drupal/config_split",
-                        "version": "1.4.0",
-                        "version_normalized": "1.4.0.0",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/config_split.git",
-                                "reference": "8.x-1.4"
-                        },
-                        "dist": {
-                                "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/config_split-8.x-1.4.zip",
-                                "reference": "8.x-1.4",
-                                "shasum": "938ea6c88834aa88bb310740758e56c1800e535b"
-                        },
-                        "require": {
-                                "drupal/config_filter": "*",
-                                "drupal/core": "~8.0"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "drupal": {
-                                        "version": "8.x-1.4",
-                                        "datestamp": "1537971780",
-                                        "security-coverage": {
-                                                "status": "covered",
-                                                "message": "Covered by Drupal's security advisory policy"
-                                        }
-                                },
-                                "drush": {
-                                        "services": {
-                                                "drush.services.yml": "^9"
-                                        }
-                                }
-                        },
-                        "installation-source": "dist",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0+"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "Fabian Bircher",
-                                        "homepage": "https://www.drupal.org/u/bircher",
-                                        "email": "opensource@fabianbircher.com",
-                                        "role": "Maintainer"
-                                },
-                                {
-                                        "name": "Nuvole Web",
-                                        "homepage": "http://nuvole.org",
-                                        "email": "info@nuvole.org",
-                                        "role": "Maintainer"
-                                },
-                                {
-                                        "name": "pescetti",
-                                        "homepage": "https://www.drupal.org/user/436244"
-                                }
-                        ],
-                        "description": "Configuration filter for importing and exporting extra config",
-                        "homepage": "https://www.drupal.org/project/config_split",
-                        "keywords": [
-                                "Drupal",
-                                "configuration",
-                                "configuration management"
-                        ],
-                        "support": {
-                                "source": "http://cgit.drupalcode.org/config_split",
-                                "issues": "https://www.drupal.org/project/issues/config_split",
-                                "irc": "irc://irc.freenode.org/drupal-contribute"
-                        },
-                        "install-path": "../../webroot/modules/contrib/config_split"
-                },
-                {
-                        "name": "drupal/config_update",
-                        "version": "dev-1.x",
-                        "version_normalized": "dev-1.x",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/config_update.git",
-                                "reference": "f84f49be150c2032921e2cb99ffea5dbcb5f89ca"
-                        },
-                        "require": {
-                                "drupal/core": "^8 || ^9"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "branch-alias": {
-                                        "dev-1.x": "1.x-dev"
-                                },
-                                "drupal": {
-                                        "version": "8.x-1.6+5-dev",
-                                        "datestamp": "1586352965",
-                                        "security-coverage": {
-                                                "status": "not-covered",
-                                                "message": "Dev releases are not covered by Drupal security advisories."
-                                        }
-                                }
-                        },
-                        "installation-source": "source",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0-or-later"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "jhodgdon",
-                                        "homepage": "https://www.drupal.org/user/155601"
-                                },
-                                {
-                                        "name": "nedjo",
-                                        "homepage": "https://www.drupal.org/user/4481"
-                                }
-                        ],
-                        "description": "Provides basic revert and update functionality for other modules",
-                        "homepage": "https://www.drupal.org/project/config_update",
-                        "support": {
-                                "source": "https://git.drupalcode.org/project/config_update"
-                        },
-                        "install-path": "../../webroot/modules/contrib/config_update"
                 },
                 {
                         "name": "drupal/core",
@@ -3132,147 +2710,6 @@
                                 "issues": "https://www.drupal.org/project/issues/ctools"
                         },
                         "install-path": "../../webroot/modules/contrib/ctools"
-                },
-                {
-                        "name": "drupal/devel",
-                        "version": "dev-1.x",
-                        "version_normalized": "dev-1.x",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/devel.git",
-                                "reference": "396490ca03a6065362606145695063873f619ec0"
-                        },
-                        "require": {
-                                "drupal/core": "~8.0",
-                                "symfony/var-dumper": "~2.7|^3"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "branch-alias": {
-                                        "dev-1.x": "1.x-dev"
-                                },
-                                "drupal": {
-                                        "version": "8.x-1.2+33-dev",
-                                        "datestamp": "1548796980",
-                                        "security-coverage": {
-                                                "status": "not-covered",
-                                                "message": "Dev releases are not covered by Drupal security advisories."
-                                        }
-                                },
-                                "drush": {
-                                        "services": {
-                                                "drush.services.yml": "^9"
-                                        }
-                                }
-                        },
-                        "installation-source": "source",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0+"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "Moshe Weitzman",
-                                        "homepage": "https://github.com/weitzman",
-                                        "email": "weitzman@tejasa.com",
-                                        "role": "Maintainer"
-                                },
-                                {
-                                        "name": "Hans Salvisberg",
-                                        "homepage": "https://www.drupal.org/u/salvis",
-                                        "email": "drupal@salvisberg.com",
-                                        "role": "Maintainer"
-                                },
-                                {
-                                        "name": "Luca Lusso",
-                                        "homepage": "https://www.drupal.org/u/lussoluca",
-                                        "role": "Maintainer"
-                                },
-                                {
-                                        "name": "Marco (willzyx)",
-                                        "homepage": "https://www.drupal.org/u/willzyx",
-                                        "role": "Maintainer"
-                                },
-                                {
-                                        "name": "See contributors",
-                                        "homepage": "https://www.drupal.org/node/3236/committers"
-                                }
-                        ],
-                        "description": "Various blocks, pages, and functions for developers.",
-                        "homepage": "http://drupal.org/project/devel",
-                        "support": {
-                                "source": "http://cgit.drupalcode.org/devel",
-                                "issues": "http://drupal.org/project/devel",
-                                "irc": "irc://irc.freenode.org/drupal-contribute"
-                        },
-                        "install-path": "../../webroot/modules/contrib/devel"
-                },
-                {
-                        "name": "drupal/devel_entity_updates",
-                        "version": "3.0.0",
-                        "version_normalized": "3.0.0.0",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/devel_entity_updates.git",
-                                "reference": "3.0.0"
-                        },
-                        "dist": {
-                                "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/devel_entity_updates-3.0.0.zip",
-                                "reference": "3.0.0",
-                                "shasum": "2fcbde815745117b11170598de0211b31dd2321e"
-                        },
-                        "require": {
-                                "drupal/core": "^8.7.7 || ^9",
-                                "drupal/devel": "*"
-                        },
-                        "conflict": {
-                                "drupal/core": "<8.7",
-                                "drush/drush": ">=9.0 <9.6"
-                        },
-                        "require-dev": {
-                                "drupal/devel": "^2 || ^3"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "drupal": {
-                                        "version": "3.0.0",
-                                        "datestamp": "1591220515",
-                                        "security-coverage": {
-                                                "status": "covered",
-                                                "message": "Covered by Drupal's security advisory policy"
-                                        }
-                                },
-                                "drush": {
-                                        "services": {
-                                                "drush.services.yml": "^9 || ^10"
-                                        }
-                                }
-                        },
-                        "installation-source": "dist",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0+"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "Francesco Placella (plach)",
-                                        "homepage": "https://www.drupal.org/u/plach",
-                                        "role": "Maintainer"
-                                },
-                                {
-                                        "name": "plach",
-                                        "homepage": "https://www.drupal.org/user/183211"
-                                }
-                        ],
-                        "description": "Provides developers an API and drush command to perform automatic entity updates.",
-                        "homepage": "http://drupal.org/project/devel_entity_updates",
-                        "support": {
-                                "source": "https://cgit.drupalcode.org/devel_entity_updates",
-                                "issues": "https://drupal.org/project/issues/devel_entity_updates",
-                                "irc": "irc://irc.freenode.org/drupal-contribute"
-                        },
-                        "install-path": "../../webroot/modules/contrib/devel_entity_updates"
                 },
                 {
                         "name": "drupal/editor_file",
@@ -3948,65 +3385,6 @@
                         "install-path": "../../webroot/modules/contrib/geocoder"
                 },
                 {
-                        "name": "drupal/geocoder_autocomplete",
-                        "version": "1.0.0",
-                        "version_normalized": "1.0.0.0",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/geocoder_autocomplete.git",
-                                "reference": "8.x-1.0"
-                        },
-                        "dist": {
-                                "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/geocoder_autocomplete-8.x-1.0.zip",
-                                "reference": "8.x-1.0",
-                                "shasum": "5e900f4126c9944df9b569dcd129ba397a1540bb"
-                        },
-                        "require": {
-                                "drupal/core": "~8.0"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "drupal": {
-                                        "version": "8.x-1.0",
-                                        "datestamp": "1484303583",
-                                        "security-coverage": {
-                                                "status": "covered",
-                                                "message": "Covered by Drupal's security advisory policy"
-                                        }
-                                }
-                        },
-                        "installation-source": "dist",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0+"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "anrikun",
-                                        "homepage": "https://www.drupal.org/user/410199"
-                                },
-                                {
-                                        "name": "itamair",
-                                        "homepage": "https://www.drupal.org/user/1179076"
-                                },
-                                {
-                                        "name": "sanduhrs",
-                                        "homepage": "https://www.drupal.org/user/28074"
-                                }
-                        ],
-                        "description": "Provides an autocomplete widget for textfields via the Google Geocoder API..",
-                        "homepage": "https://www.drupal.org/project/geocoder_autocomplete",
-                        "keywords": [
-                                "Drupal"
-                        ],
-                        "support": {
-                                "source": "http://cgit.drupalcode.org/geocoder_autocomplete",
-                                "issues": "http://drupal.org/project/issues/geocoder_autocomplete"
-                        },
-                        "install-path": "../../webroot/modules/contrib/geocoder_autocomplete"
-                },
-                {
                         "name": "drupal/geofield",
                         "version": "1.57.0",
                         "version_normalized": "1.57.0.0",
@@ -4215,61 +3593,6 @@
                         "install-path": "../../webroot/modules/contrib/honeypot"
                 },
                 {
-                        "name": "drupal/http_auth",
-                        "version": "1.0.0",
-                        "version_normalized": "1.0.0.0",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/http_auth.git",
-                                "reference": "8.x-1.0"
-                        },
-                        "dist": {
-                                "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/http_auth-8.x-1.0.zip",
-                                "reference": "8.x-1.0",
-                                "shasum": "79165a8c25653d9e881b7ff00fe45abfbb75a3a6"
-                        },
-                        "require": {
-                                "drupal/core": "~8.0"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "drupal": {
-                                        "version": "8.x-1.0",
-                                        "datestamp": "1505734144",
-                                        "security-coverage": {
-                                                "status": "covered",
-                                                "message": "Covered by Drupal's security advisory policy"
-                                        }
-                                }
-                        },
-                        "installation-source": "dist",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0-or-later"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "aliyayasir",
-                                        "homepage": "https://www.drupal.org/user/213804"
-                                },
-                                {
-                                        "name": "drupalnetworks",
-                                        "homepage": "https://www.drupal.org/user/846558"
-                                },
-                                {
-                                        "name": "sasiddiqui",
-                                        "homepage": "https://www.drupal.org/user/3100375"
-                                }
-                        ],
-                        "description": "This module allows you to set up HTTP authentication on your site. You can easily set username and password for HTTP Authentication. No server site configuration needed.",
-                        "homepage": "https://www.drupal.org/project/http_auth",
-                        "support": {
-                                "source": "https://git.drupalcode.org/project/http_auth"
-                        },
-                        "install-path": "../../webroot/modules/contrib/http_auth"
-                },
-                {
                         "name": "drupal/key_auth",
                         "version": "1.1.0",
                         "version_normalized": "1.1.0.0",
@@ -4390,68 +3713,6 @@
                                 "issues": "https://www.drupal.org/project/issues/leaflet"
                         },
                         "install-path": "../../webroot/modules/contrib/leaflet"
-                },
-                {
-                        "name": "drupal/leaflet_widget",
-                        "version": "2.0.0-alpha1",
-                        "version_normalized": "2.0.0.0-alpha1",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/leaflet_widget.git",
-                                "reference": "8.x-2.0-alpha1"
-                        },
-                        "dist": {
-                                "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/leaflet_widget-8.x-2.0-alpha1.zip",
-                                "reference": "8.x-2.0-alpha1",
-                                "shasum": "257c7271971704265950b44b71d8e5897d63ccd3"
-                        },
-                        "require": {
-                                "drupal/core": "~8.0",
-                                "drupal/geofield": "^1.0@beta",
-                                "drupal/leaflet": "^1.0@beta"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "drupal": {
-                                        "version": "8.x-2.0-alpha1",
-                                        "datestamp": "1549982580",
-                                        "security-coverage": {
-                                                "status": "not-covered",
-                                                "message": "Project has not opted into security advisory coverage!"
-                                        }
-                                }
-                        },
-                        "installation-source": "dist",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0+"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "See contributors",
-                                        "homepage": "https://www.drupal.org/node/1802616/committers"
-                                },
-                                {
-                                        "name": "ayalon",
-                                        "homepage": "https://www.drupal.org/user/419226"
-                                },
-                                {
-                                        "name": "das-peter",
-                                        "homepage": "https://www.drupal.org/user/762870"
-                                },
-                                {
-                                        "name": "tnightingale",
-                                        "homepage": "https://www.drupal.org/user/144323"
-                                }
-                        ],
-                        "description": "Provides the leaflet_widget module.",
-                        "homepage": "https://www.drupal.org/project/leaflet_widget/",
-                        "support": {
-                                "source": "https://cgit.drupalcode.org/leaflet_widget",
-                                "issues": "https://www.drupal.org/project/issues/leaflet_widget"
-                        },
-                        "install-path": "../../webroot/modules/contrib/leaflet_widget"
                 },
                 {
                         "name": "drupal/message",
@@ -4585,118 +3846,6 @@
                                 "docs": "https://www.drupal.org/docs/8/modules/metatag"
                         },
                         "install-path": "../../webroot/modules/contrib/metatag"
-                },
-                {
-                        "name": "drupal/migrate_plus",
-                        "version": "2.0.0-beta1",
-                        "version_normalized": "2.0.0.0-beta1",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/migrate_plus.git",
-                                "reference": "8.x-2.0-beta1"
-                        },
-                        "dist": {
-                                "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/migrate_plus-8.x-2.0-beta1.zip",
-                                "reference": "8.x-2.0-beta1",
-                                "shasum": "6fcce3f1fb3c40705548e050e12116e24c54d0d3"
-                        },
-                        "require": {
-                                "drupal/core": "^8.1"
-                        },
-                        "require-dev": {
-                                "drupal/migrate_example_advanced_setup": "*",
-                                "drupal/migrate_example_setup": "*",
-                                "drupal/migrate_source_json": "*"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "drupal": {
-                                        "version": "8.x-2.0-beta1",
-                                        "datestamp": "1470428639",
-                                        "security-coverage": {
-                                                "status": "not-covered",
-                                                "message": "Beta releases are not covered by Drupal security advisories."
-                                        }
-                                }
-                        },
-                        "installation-source": "dist",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0+"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "Mike Ryan",
-                                        "homepage": "https://www.drupal.org/u/mikeryan",
-                                        "role": "Maintainer"
-                                },
-                                {
-                                        "name": "mikeryan",
-                                        "homepage": "https://www.drupal.org/user/4420"
-                                }
-                        ],
-                        "description": "Enhancements to core migration support.",
-                        "homepage": "https://www.drupal.org/project/migrate_plus",
-                        "support": {
-                                "source": "https://cgit.drupalcode.org/migrate_plus",
-                                "error": "Invalid dependency: \"migrate_source_xml\" is an unknown drupal 8 package name",
-                                "issues": "https://www.drupal.org/project/issues/migrate_plus",
-                                "irc": "irc://irc.freenode.org/drupal-migrate"
-                        },
-                        "install-path": "../../webroot/modules/contrib/migrate_plus"
-                },
-                {
-                        "name": "drupal/migrate_upgrade",
-                        "version": "2.0.0-beta1",
-                        "version_normalized": "2.0.0.0-beta1",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/migrate_upgrade.git",
-                                "reference": "8.x-2.0-beta1"
-                        },
-                        "dist": {
-                                "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/migrate_upgrade-8.x-2.0-beta1.zip",
-                                "reference": "8.x-2.0-beta1",
-                                "shasum": "d5458312b74f2d6975b76d5f1115368b364c91b7"
-                        },
-                        "require": {
-                                "drupal/core": "^8.1",
-                                "drupal/migrate_plus": "*"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "drupal": {
-                                        "version": "8.x-2.0-beta1",
-                                        "datestamp": "1472752139",
-                                        "security-coverage": {
-                                                "status": "not-covered",
-                                                "message": "Beta releases are not covered by Drupal security advisories."
-                                        }
-                                }
-                        },
-                        "installation-source": "dist",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0-or-later"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "drupalspoons",
-                                        "homepage": "https://www.drupal.org/user/3647684"
-                                },
-                                {
-                                        "name": "mikeryan",
-                                        "homepage": "https://www.drupal.org/user/4420"
-                                }
-                        ],
-                        "description": "Drush support for direct upgrades from older Drupal versions.",
-                        "homepage": "https://www.drupal.org/project/migrate_upgrade",
-                        "support": {
-                                "source": "https://git.drupalcode.org/project/migrate_upgrade"
-                        },
-                        "install-path": "../../webroot/modules/contrib/migrate_upgrade"
                 },
                 {
                         "name": "drupal/paragraphs",
@@ -5074,73 +4223,6 @@
                         "install-path": "../../webroot/modules/contrib/sharemessage"
                 },
                 {
-                        "name": "drupal/shib_auth",
-                        "version": "dev-1.x",
-                        "version_normalized": "dev-1.x",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/shib_auth.git",
-                                "reference": "20de9a113f7dcc566a26bde324d016ce7f7633c3"
-                        },
-                        "require": {
-                                "drupal/core": "~8.0"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "branch-alias": {
-                                        "dev-1.x": "1.x-dev"
-                                },
-                                "drupal": {
-                                        "version": "8.x-1.x-dev",
-                                        "datestamp": "1569109384",
-                                        "security-coverage": {
-                                                "status": "not-covered",
-                                                "message": "Dev releases are not covered by Drupal security advisories."
-                                        }
-                                },
-                                "patches_applied": {
-                                        "https://www.drupal.org/files/issues/2020-02-27/shib_auth-admin-permissions.patch": "https://www.drupal.org/files/issues/2020-02-27/shib_auth-admin-permissions.patch"
-                                }
-                        },
-                        "installation-source": "source",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0-or-later"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "bajnokk",
-                                        "homepage": "https://www.drupal.org/user/250470"
-                                },
-                                {
-                                        "name": "dorion",
-                                        "homepage": "https://www.drupal.org/user/57442"
-                                },
-                                {
-                                        "name": "joelpittet",
-                                        "homepage": "https://www.drupal.org/user/160302"
-                                },
-                                {
-                                        "name": "martoni",
-                                        "homepage": "https://www.drupal.org/user/215678"
-                                },
-                                {
-                                        "name": "niif",
-                                        "homepage": "https://www.drupal.org/user/116318"
-                                },
-                                {
-                                        "name": "shafter",
-                                        "homepage": "https://www.drupal.org/user/496918"
-                                }
-                        ],
-                        "description": "Provides user authentication with Shibboleth (both v1.3 and v2.0) as well as some authorisation features (automatic role assignment based on Shibboleth attributes).",
-                        "homepage": "https://www.drupal.org/project/shib_auth",
-                        "support": {
-                                "source": "https://git.drupalcode.org/project/shib_auth"
-                        },
-                        "install-path": "../../webroot/modules/contrib/shib_auth"
-                },
-                {
                         "name": "drupal/squid_autocomplete",
                         "version": "1.0.0-alpha6",
                         "version_normalized": "1.0.0.0-alpha6",
@@ -5186,81 +4268,6 @@
                                 "source": "https://git.drupalcode.org/project/squid_autocomplete"
                         },
                         "install-path": "../../webroot/modules/contrib/squid_autocomplete"
-                },
-                {
-                        "name": "drupal/stage_file_proxy",
-                        "version": "1.0.0-rc1",
-                        "version_normalized": "1.0.0.0-RC1",
-                        "source": {
-                                "type": "git",
-                                "url": "https://git.drupalcode.org/project/stage_file_proxy.git",
-                                "reference": "8.x-1.0-rc1"
-                        },
-                        "dist": {
-                                "type": "zip",
-                                "url": "https://ftp.drupal.org/files/projects/stage_file_proxy-8.x-1.0-rc1.zip",
-                                "reference": "8.x-1.0-rc1",
-                                "shasum": "609dc94f9e6d5e4e0fe4c2f71f3134625a071860"
-                        },
-                        "require": {
-                                "drupal/core": "~8.0"
-                        },
-                        "type": "drupal-module",
-                        "extra": {
-                                "drupal": {
-                                        "version": "8.x-1.0-rc1",
-                                        "datestamp": "1572359596",
-                                        "security-coverage": {
-                                                "status": "not-covered",
-                                                "message": "RC releases are not covered by Drupal security advisories."
-                                        }
-                                }
-                        },
-                        "installation-source": "dist",
-                        "notification-url": "https://packages.drupal.org/8/downloads",
-                        "license": [
-                                "GPL-2.0+"
-                        ],
-                        "authors": [
-                                {
-                                        "name": "BarisW",
-                                        "homepage": "https://www.drupal.org/user/107229"
-                                },
-                                {
-                                        "name": "geek-merlin",
-                                        "homepage": "https://www.drupal.org/user/229048"
-                                },
-                                {
-                                        "name": "greggles",
-                                        "homepage": "https://www.drupal.org/user/36762"
-                                },
-                                {
-                                        "name": "markdorison",
-                                        "homepage": "https://www.drupal.org/user/346106"
-                                },
-                                {
-                                        "name": "moshe weitzman",
-                                        "homepage": "https://www.drupal.org/user/23"
-                                },
-                                {
-                                        "name": "msonnabaum",
-                                        "homepage": "https://www.drupal.org/user/75278"
-                                },
-                                {
-                                        "name": "netaustin",
-                                        "homepage": "https://www.drupal.org/user/199298"
-                                },
-                                {
-                                        "name": "robwilmshurst",
-                                        "homepage": "https://www.drupal.org/user/144488"
-                                }
-                        ],
-                        "description": "Provides stage_file_proxy module.",
-                        "homepage": "https://www.drupal.org/project/stage_file_proxy",
-                        "support": {
-                                "source": "https://git.drupalcode.org/project/stage_file_proxy"
-                        },
-                        "install-path": "../../webroot/modules/contrib/stage_file_proxy"
                 },
                 {
                         "name": "drupal/token",
@@ -10646,36 +9653,44 @@
                 },
                 {
                         "name": "symfony/var-dumper",
-                        "version": "v3.4.47",
-                        "version_normalized": "3.4.47.0",
+                        "version": "v4.4.47",
+                        "version_normalized": "4.4.47.0",
                         "source": {
                                 "type": "git",
                                 "url": "https://github.com/symfony/var-dumper.git",
-                                "reference": "0719f6cf4633a38b2c1585140998579ce23b4b7d"
+                                "reference": "1069c7a3fca74578022fab6f81643248d02f8e63"
                         },
                         "dist": {
                                 "type": "zip",
-                                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/0719f6cf4633a38b2c1585140998579ce23b4b7d",
-                                "reference": "0719f6cf4633a38b2c1585140998579ce23b4b7d",
+                                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/1069c7a3fca74578022fab6f81643248d02f8e63",
+                                "reference": "1069c7a3fca74578022fab6f81643248d02f8e63",
                                 "shasum": ""
                         },
                         "require": {
-                                "php": "^5.5.9|>=7.0.8",
-                                "symfony/polyfill-mbstring": "~1.0"
+                                "php": ">=7.1.3",
+                                "symfony/polyfill-mbstring": "~1.0",
+                                "symfony/polyfill-php72": "~1.5",
+                                "symfony/polyfill-php80": "^1.16"
                         },
                         "conflict": {
-                                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
+                                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0",
+                                "symfony/console": "<3.4"
                         },
                         "require-dev": {
                                 "ext-iconv": "*",
-                                "twig/twig": "~1.34|~2.4"
+                                "symfony/console": "^3.4|^4.0|^5.0",
+                                "symfony/process": "^4.4|^5.0",
+                                "twig/twig": "^1.43|^2.13|^3.0.4"
                         },
                         "suggest": {
                                 "ext-iconv": "To convert non-UTF-8 strings to UTF-8 (or symfony/polyfill-iconv in case ext-iconv cannot be used).",
                                 "ext-intl": "To show region name in time zone dump",
-                                "ext-symfony_debug": ""
+                                "symfony/console": "To use the ServerDumpCommand and/or the bin/var-dump-server script"
                         },
-                        "time": "2020-10-24T10:57:07+00:00",
+                        "time": "2022-10-03T15:15:11+00:00",
+                        "bin": [
+                                "Resources/bin/var-dump-server"
+                        ],
                         "type": "library",
                         "installation-source": "dist",
                         "autoload": {
@@ -10703,14 +9718,14 @@
                                         "homepage": "https://symfony.com/contributors"
                                 }
                         ],
-                        "description": "Symfony mechanism for exploring and dumping PHP variables",
+                        "description": "Provides mechanisms for walking through any arbitrary PHP variable",
                         "homepage": "https://symfony.com",
                         "keywords": [
                                 "debug",
                                 "dump"
                         ],
                         "support": {
-                                "source": "https://github.com/symfony/var-dumper/tree/v3.4.47"
+                                "source": "https://github.com/symfony/var-dumper/tree/v4.4.47"
                         },
                         "funding": [
                                 {

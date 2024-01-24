@@ -1,8 +1,0 @@
-shib_auth.shibbolethsettings:
-  type: config_object
-  label: 'Shibboleth Settings'
-
-shib_auth.advancedsettings:
-  type: config_object
-  label: 'Advanced Settings'
-
