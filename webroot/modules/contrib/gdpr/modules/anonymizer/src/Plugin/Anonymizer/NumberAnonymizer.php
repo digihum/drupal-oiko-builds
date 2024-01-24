@@ -4,6 +4,8 @@ namespace Drupal\anonymizer\Plugin\Anonymizer;
 
 use Drupal\anonymizer\Anonymizer\AnonymizerBase;
 use Drupal\Core\Field\FieldItemListInterface;
+use function str_repeat;
+use function strlen;
 
 /**
  * Class NumberAnonymizer.
@@ -24,10 +26,10 @@ class NumberAnonymizer extends AnonymizerBase {
    * @throws \RuntimeException
    */
   public function anonymize($input, FieldItemListInterface $field = NULL) {
-    if ($length = \strlen($input)) {
+    if ($length = strlen($input)) {
       $generator = $this->faker->generator();
       $length = $generator->numberBetween(1, $length);
-      return $generator->numerify(\str_repeat('#', $length));
+      return $generator->numerify(str_repeat('#', $length));
     }
 
     return $input;

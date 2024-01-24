@@ -16,12 +16,12 @@ use Drupal\gdpr_fields\Form\GdprFieldSettingsForm;
  * @todo Check user edit permission for GDPR fields.
  */
 function gdpr_fields_form_field_config_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  /* @var \Drupal\Core\Field\FieldConfigInterface $field */
+  /** @var \Drupal\Core\Field\FieldConfigInterface $field */
   // @todo Check that target entity is a content entity.
   $field = $form_state->getFormObject()->getEntity();
 
   // Do not add GDPR settings to the GDPR Consent Agreement form.
-  if ($field->getType() == 'gdpr_user_consent') {
+  if ($field->getType() === 'gdpr_user_consent') {
     return;
   }
 
@@ -50,7 +50,7 @@ function gdpr_fields_form_field_config_edit_form_alter(&$form, FormStateInterfac
  * @throws \Drupal\Core\Entity\EntityStorageException
  */
 function gdpr_fields_form_field_config_edit_form_submit(array $form, FormStateInterface $form_state) {
-  /* @var \Drupal\Core\Field\FieldConfigInterface $field */
+  /** @var \Drupal\Core\Field\FieldConfigInterface $field */
   $field = $form_state->getFormObject()->getEntity();
   $entity_type = $field->getTargetEntityTypeId();
 

@@ -2,8 +2,11 @@
 
 namespace Drupal\gdpr_tasks\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Settings form for GDPR Removal task.
@@ -12,8 +15,41 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class RemovalSettingsForm extends ConfigFormBase {
 
+  /**
+   * Filesystem.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
+
   const CONFIG_KEY = 'gdpr_tasks.settings';
   const EXPORT_DIRECTORY = 'export_directory';
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('config.factory'),
+      $container->get('file_system')
+    );
+  }
+
+  /**
+   * RemovalSettingsForm constructor.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   Config factory.
+   * @param \Drupal\Core\File\FileSystemInterface $fileSystem
+   *   Filesystem.
+   */
+  public function __construct(
+    ConfigFactoryInterface $configFactory,
+    FileSystemInterface $fileSystem
+  ) {
+    parent::__construct($configFactory);
+    $this->fileSystem = $fileSystem;
+  }
 
   /**
    * {@inheritdoc}
@@ -55,7 +91,7 @@ class RemovalSettingsForm extends ConfigFormBase {
         $form_state->setErrorByName('directory', $this->t('The directory is required.'));
         return;
       }
-      if (!\file_prepare_directory($directory)) {
+      if (!$this->fileSystem->prepareDirectory($directory)) {
         $form_state->setErrorByName('directory', $this->t("The directory does not exist or it's not writable."));
         return;
       }

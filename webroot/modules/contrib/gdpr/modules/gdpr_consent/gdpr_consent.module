@@ -11,7 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
  * Implements hook_form_FORM_ID_alter().
  */
 function gdpr_consent_form_field_ui_field_storage_add_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $form['#validate'][] = '_gdpr_consent_field_add_validation';
+  $form['#validate'][] = 'gdpr_consent_field_add_validation';
 }
 
 /**
@@ -24,11 +24,11 @@ function gdpr_consent_form_field_ui_field_storage_add_form_alter(&$form, FormSta
  *
  * @throws \Exception
  */
-function _gdpr_consent_field_add_validation(array &$form, FormStateInterface $formState) {
-  // @todo: Set up for existing fields.
+function gdpr_consent_field_add_validation(array &$form, FormStateInterface $formState) {
+  // @todo Set up for existing fields.
   if ('gdpr_user_consent' === $formState->getValue('new_storage_type', FALSE)) {
     /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
-    $requestStack = \Drupal::service('request_stack');
+    $requestStack = Drupal::service('request_stack');
     /** @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $requestParameters */
     $requestParameters = $requestStack->getCurrentRequest()->attributes;
 
@@ -37,7 +37,7 @@ function _gdpr_consent_field_add_validation(array &$form, FormStateInterface $fo
       $entityBundle = $requestParameters->get('bundle');
 
       /** @var \Drupal\gdpr_consent\ConsentUserResolver\ConsentUserResolverPluginManager $consentResolverManager */
-      $consentResolverManager = \Drupal::service('plugin.manager.gdpr_consent_resolver');
+      $consentResolverManager = Drupal::service('plugin.manager.gdpr_consent_resolver');
       /** @var array|bool $resolver */
       $resolver = $consentResolverManager->getDefinitionForType($entityTypeId, $entityBundle);
 

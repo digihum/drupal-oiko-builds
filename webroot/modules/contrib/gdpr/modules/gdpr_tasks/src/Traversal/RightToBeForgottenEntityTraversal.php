@@ -95,7 +95,7 @@ class RightToBeForgottenEntityTraversal extends EntityTraversal {
 
     // Re-load a fresh copy of the entity from storage so we don't
     // end up modifying any other references to the entity in memory.
-    /* @var \Drupal\Core\Entity\FieldableEntityInterface $entity */
+    /** @var \Drupal\Core\Entity\FieldableEntityInterface $entity */
     $entity = $this->entityTypeManager->getStorage($entity_type)
       ->loadUnchanged($entity->id());
 
@@ -181,7 +181,7 @@ class RightToBeForgottenEntityTraversal extends EntityTraversal {
         return [TRUE, NULL, $should_delete];
       }
       // Check if the property can be removed.
-      elseif (!$field_config->propertyCanBeRemoved($field->getFieldDefinition(), $error_message)) {
+      if (!$field_config->propertyCanBeRemoved($field->getFieldDefinition(), $error_message)) {
         return [FALSE, $error_message, $should_delete];
       }
 

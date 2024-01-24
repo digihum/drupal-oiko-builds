@@ -9,6 +9,7 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\gdpr_fields\Entity\GdprField;
 use Drupal\gdpr_fields\Entity\GdprFieldConfigEntity;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function is_null;
 
 /**
  * Base class for traversing entities.
@@ -43,7 +44,7 @@ abstract class EntityTraversal implements EntityTraversalInterface {
    *
    * @var \Drupal\gdpr_fields\Entity\GdprField[]
    */
-  private $reverseRelationshipFields = NULL;
+  private $reverseRelationshipFields;
 
   /**
    * The starting entity for the traversal.
@@ -57,7 +58,7 @@ abstract class EntityTraversal implements EntityTraversalInterface {
    *
    * @var bool
    */
-  protected $success = NULL;
+  protected $success;
 
   /**
    * The processed entities.
@@ -84,6 +85,7 @@ abstract class EntityTraversal implements EntityTraversalInterface {
    *   The starting entity for the traversal.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function __construct(EntityTypeManagerInterface $entityTypeManager, EntityFieldManagerInterface $entityFieldManager, EntityInterface $base_entity) {
     $this->entityTypeManager = $entityTypeManager;
@@ -173,9 +175,9 @@ abstract class EntityTraversal implements EntityTraversalInterface {
     $this->entities[$entity_type][$entity->id()] = $entity;
 
     // GDPR config for this entity.
-    /* @var \Drupal\gdpr_fields\Entity\GdprFieldConfigEntity $config */
+    /** @var \Drupal\gdpr_fields\Entity\GdprFieldConfigEntity $config */
     $config = $this->configStorage->load($entity_type);
-    if (NULL === $config) {
+    if ($config === NULL) {
       return;
     }
 
@@ -195,8 +197,11 @@ abstract class EntityTraversal implements EntityTraversalInterface {
           continue;
         }
 
-        $single_cardinality = $entity->get($field_config->name)->getFieldDefinition()
-          ->getFieldStorageDefinition()->getCardinality() == 1;
+        $single_cardinality = $entity
+          ->get($field_config->name)
+          ->getFieldDefinition()
+          ->getFieldStorageDefinition()
+          ->getCardinality() === 1;
 
         $passed_row_id = $single_cardinality ? $row_id : NULL;
         // Loop through each child entity and traverse their relationships too.
@@ -209,7 +214,7 @@ abstract class EntityTraversal implements EntityTraversalInterface {
     // Now we want to look up any reverse relationships that have been marked
     // as owner.
     foreach ($this->getAllReverseRelationships() as $relationship) {
-      if ($relationship['target_type'] == $entity_type) {
+      if ($relationship['target_type'] === $entity_type) {
         // Load all instances of this entity where the field value is the same
         // as our entity's ID.
         $storage = $this->entityTypeManager->getStorage($relationship['entity_type']);
@@ -257,18 +262,18 @@ abstract class EntityTraversal implements EntityTraversalInterface {
     }
 
     $this->reverseRelationshipFields = [];
-    /* @var \Drupal\gdpr_fields\Entity\GdprFieldConfigEntity $config  */
+    /** @var \Drupal\gdpr_fields\Entity\GdprFieldConfigEntity $config  */
     foreach ($this->configStorage->loadMultiple() as $config) {
       foreach ($config->getAllFields() as $field) {
         if ($field->enabled && $field->isOwner()) {
-          foreach ($this->entityFieldManager->getFieldDefinitions($config->id(), $field->bundle) as $field_definition) {
-            if ($field_definition->getName() == $field->name && $field_definition->getType() == 'entity_reference') {
+          foreach ($this->entityFieldManager->getFieldDefinitions($config->id(), $field->bundle) as $fieldDefinition) {
+            if ($fieldDefinition->getName() === $field->name && $fieldDefinition->getType() === 'entity_reference') {
               $this->reverseRelationshipFields[] = [
                 'entity_type' => $config->id(),
                 'bundle' => $field->bundle,
                 'field' => $field->name,
                 'config' => $field,
-                'target_type' => $field_definition->getSetting('target_type'),
+                'target_type' => $fieldDefinition->getSetting('target_type'),
               ];
             }
           }
@@ -289,20 +294,21 @@ abstract class EntityTraversal implements EntityTraversalInterface {
    *   Bundle label
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   protected function getBundleLabel(EntityInterface $entity) {
-    $entity_definition = $entity->getEntityType();
-    $bundle_type = $entity_definition->getBundleEntityType();
+    $entityDefinition = $entity->getEntityType();
+    $bundleType = $entityDefinition->getBundleEntityType();
 
-    if ($bundle_type) {
-      $bundle_storage = $this->entityTypeManager->getStorage($bundle_type);
-      $bundle_entity = $bundle_storage->load($entity->bundle());
-      $bundle_label = $bundle_entity == NULL ? '' : $bundle_entity->label();
+    if ($bundleType) {
+      $bundleStorage = $this->entityTypeManager->getStorage($bundleType);
+      $bundleEntity = $bundleStorage->load($entity->bundle());
+      $bundleLabel = $bundleEntity === NULL ? '' : $bundleEntity->label();
     }
     else {
-      $bundle_label = $entity_definition->getLabel();
+      $bundleLabel = $entityDefinition->getLabel();
     }
-    return $bundle_label;
+    return $bundleLabel;
   }
 
   /**
@@ -322,6 +328,8 @@ abstract class EntityTraversal implements EntityTraversalInterface {
     catch (\Exception $exception) {
       return NULL;
     }
+
+    return NULL;
   }
 
   /**
@@ -336,6 +344,8 @@ abstract class EntityTraversal implements EntityTraversalInterface {
     catch (\Exception $exception) {
       return NULL;
     }
+
+    return NULL;
   }
 
 }

@@ -10,6 +10,8 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\file\FileInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityDisplayInterface;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\user\UserInterface;
 
 /**
  * Implements hook_theme().
@@ -34,9 +36,9 @@ function gdpr_tasks_theme() {
  */
 function gdpr_tasks_theme_suggestions_gdpr_task(array $variables) {
   $suggestions = [];
-  /* @var \Drupal\gdpr_tasks\Entity\TaskInterface $entity */
+  /** @var \Drupal\gdpr_tasks\Entity\TaskInterface $entity */
   $entity = $variables['elements']['#gdpr_task'];
-  $anonymized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+  $anonymized_view_mode = str_replace('.', '_', $variables['elements']['#view_mode']);
 
   $suggestions[] = 'gdpr_task__' . $anonymized_view_mode;
   $suggestions[] = 'gdpr_task__' . $entity->bundle();
@@ -64,7 +66,7 @@ function gdpr_tasks_file_access(FileInterface $file, $operation, AccountInterfac
  * traversal.
  */
 function gdpr_fields_entity_type_alter(array &$entity_types) {
-  /* @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
+  /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
   // Excluded entity types.
   $exlude_entity_types = [
     'gdpr_tasks',
@@ -121,29 +123,29 @@ function gdpr_fields_entity_type_alter(array &$entity_types) {
  *
  * @see file_unmanaged_save_data()
  */
-function _gdpr_tasks_file_save_data($data, AccountInterface $user, $destination = NULL, $replace = FILE_EXISTS_RENAME) {
-  if (!file_valid_uri($destination)) {
-    \Drupal::logger('file')->notice('The data could not be saved because the destination %destination is invalid. This may be caused by improper use of file_save_data() or a missing stream wrapper.', ['%destination' => $destination]);
-    drupal_set_message(t('The data could not be saved because the destination is invalid. More information is available in the system log.'), 'error');
+function gdpr_tasks_file_save_data($data, AccountInterface $user, $destination = NULL, $replace = FileSystemInterface::EXISTS_RENAME) {
+  if (!Drupal::service('stream_wrapper_manager')->isValidUri($destination)) {
+    Drupal::logger('file')->notice('The data could not be saved because the destination %destination is invalid. This may be caused by improper use of file_save_data() or a missing stream wrapper.', ['%destination' => $destination]);
+    Drupal::messenger()->addError(t('The data could not be saved because the destination is invalid. More information is available in the system log.'));
     return FALSE;
   }
 
-  if ($uri = \file_unmanaged_save_data($data, $destination, $replace)) {
+  if ($uri = Drupal::service('file_system')->saveData($data, $destination, $replace)) {
     /** @var \Drupal\file\FileStorageInterface $fileStorage */
-    $fileStorage = \Drupal::entityTypeManager()->getStorage('file');
+    $fileStorage = Drupal::entityTypeManager()->getStorage('file');
     // Create a file entity.
     /** @var \Drupal\file\FileInterface $file */
     $file = $fileStorage->create([
       'uri' => $uri,
       'uid' => $user->id(),
-      'status' => FILE_STATUS_PERMANENT,
+      'status' => FileInterface::STATUS_PERMANENT,
     ]);
     // If we are replacing an existing file re-use its database record.
     // @todo Do not create a new entity in order to update it. See
     //   https://www.drupal.org/node/2241865.
-    if ($replace === FILE_EXISTS_REPLACE) {
+    if ($replace === FileSystemInterface::EXISTS_REPLACE) {
       $existing_files = $fileStorage->loadByProperties(['uri' => $uri]);
-      if (\count($existing_files)) {
+      if (count($existing_files)) {
         $existing = reset($existing_files);
         $file->fid = $existing->id();
         $file->setOriginalId($existing->id());
@@ -152,8 +154,8 @@ function _gdpr_tasks_file_save_data($data, AccountInterface $user, $destination 
     }
     // If we are renaming around an existing file (rather than a directory),
     // use its basename for the filename.
-    elseif ($replace === FILE_EXISTS_RENAME && \is_file($destination)) {
-      $file->setFilename(\Drupal::service('file_system')->basename($destination));
+    elseif ($replace === FileSystemInterface::EXISTS_RENAME && is_file($destination)) {
+      $file->setFilename(Drupal::service('file_system')->basename($destination));
     }
 
     $file->save();
@@ -165,13 +167,42 @@ function _gdpr_tasks_file_save_data($data, AccountInterface $user, $destination 
 /**
  * Implements hook_entity_view_alter().
  */
-function gdpr_tasks_entity_view_alter(&$build, EntityInterface $entity, EntityDisplayInterface $display) {
-  if ($entity->bundle() === 'gdpr_sar') {
-    if (isset($build['sar_export']) && \in_array($entity->getStatus(), ['reviewing', 'processed'])) {
+function gdpr_tasks_entity_view_alter(array &$build, EntityInterface $entity, EntityDisplayInterface $display) {
+  if ($entity->bundle() !== 'gdpr_sar') {
+    return;
+  }
+
+  if (in_array($entity->getStatus(), ['reviewing', 'processed'])) {
+    if (isset($build['sar_export'])) {
       unset($build['sar_export']);
     }
-    elseif (isset($build['sar_export_parts'])) {
-      unset($build['sar_export_parts']);
+  }
+  elseif (isset($build['sar_export_parts'])) {
+    unset($build['sar_export_parts']);
+  }
+
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_predelete().
+ */
+function gdpr_tasks_user_predelete(EntityInterface $entity) {
+  // @todo Consider options for deleting related data if the user has cancelled
+  // their account.
+  $storage = \Drupal::entityTypeManager()->getStorage('gdpr_task');
+  $query = $storage->getQuery();
+  $or = $query->orConditionGroup()
+    ->condition('requested_by', $entity->id())
+    ->condition('user_id', $entity->id());
+  $query->condition($or);
+
+  if ($tasks = $query->execute()) {
+    /** @var \Drupal\gdpr_tasks\Entity\TaskInterface $task */
+    foreach ($storage->loadMultiple($tasks) as $task) {
+
+      // For now, we can safely assume a deleted user can have their
+      // outstanding requests deleted.
+      $task->delete();
     }
   }
 }

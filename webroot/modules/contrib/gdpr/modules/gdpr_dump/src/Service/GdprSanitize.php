@@ -2,6 +2,8 @@
 
 namespace Drupal\gdpr_dump\Service;
 
+use function array_keys;
+
 /**
  * Class GdprSqlDump.
  *
@@ -15,6 +17,7 @@ class GdprSanitize extends GdprSqlDump {
    * @throws \Exception
    */
   public function sanitize() {
+    $this->sql = $this->getInstance();
     $this->prepare();
     $this->rename();
   }
@@ -25,7 +28,7 @@ class GdprSanitize extends GdprSqlDump {
   protected function rename() {
     $transaction = $this->database->startTransaction('gdpr_rename_table');
 
-    foreach (\array_keys($this->tablesToAnonymize) as $table) {
+    foreach (array_keys($this->tablesToAnonymize) as $table) {
       $gdprTable = self::GDPR_TABLE_PREFIX . $table;
       $this->database->schema()->dropTable($table);
       $this->database->schema()->renameTable($gdprTable, $table);

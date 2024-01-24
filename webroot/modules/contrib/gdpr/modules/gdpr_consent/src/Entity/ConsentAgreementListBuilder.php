@@ -17,8 +17,8 @@ class ConsentAgreementListBuilder extends EntityListBuilder {
    */
   public function buildHeader() {
     $header = [
-      'title' => t('Title'),
-      'mode' => t('Implicit/Explicit'),
+      'title' => $this->t('Title'),
+      'mode' => $this->t('Implicit/Explicit'),
     ];
     return $header + parent::buildHeader();
   }

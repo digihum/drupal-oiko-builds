@@ -2,7 +2,7 @@
 
 namespace Drupal\gdpr_tasks\Plugin\QueueWorker;
 
-use Drupal\Core\File\FileSystem;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldTypePluginManager;
@@ -10,9 +10,23 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\gdpr_fields\EntityTraversalFactory;
 use Drupal\gdpr_tasks\Entity\TaskInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function gdpr_tasks_file_save_data;
+use function array_fill_keys;
+use function array_keys;
+use function basename;
+use function chr;
+use function fclose;
+use function feof;
+use function fgetcsv;
+use function file_exists;
+use function fopen;
+use function fprintf;
+use function fputcsv;
+use function pathinfo;
 
 /**
  * Processes SARs tasks when data processing is required.
@@ -25,8 +39,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   title = @Translation("Process SARs Tasks"),
  *   cron = {"time" = 60}
  * )
+ *
+ * @todo File stream support
+ * @see https://www.drupal.org/project/gdpr/issues/3121544
  */
 class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPluginInterface {
+
+  use StringTranslationTrait;
 
   /**
    * The message storage handler.
@@ -66,7 +85,7 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
   /**
    * The file system.
    *
-   * @var \Drupal\Core\File\FileSystem
+   * @var \Drupal\Core\File\FileSystemInterface
    */
   protected $fileSystem;
 
@@ -96,12 +115,15 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
    *   The gdpr sars task queue.
    * @param \Drupal\gdpr_fields\EntityTraversalFactory $rta_traversal
    *   The rta traversal service.
-   * @param \Drupal\Core\File\FileSystem $file_system
+   * @param \Drupal\Core\File\FileSystemInterface $file_system
    *   The file system.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger service.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function __construct(array $configuration, $plugin_id, array $plugin_definition, EntityTypeManagerInterface $entity_type_manager, UuidInterface $uuid, FieldTypePluginManager $field_type_plugin_manager, QueueInterface $queue, EntityTraversalFactory $rta_traversal, FileSystem $file_system, MessengerInterface $messenger) {
+  public function __construct(array $configuration, $plugin_id, array $plugin_definition, EntityTypeManagerInterface $entity_type_manager, UuidInterface $uuid, FieldTypePluginManager $field_type_plugin_manager, QueueInterface $queue, EntityTraversalFactory $rta_traversal, FileSystemInterface $file_system, MessengerInterface $messenger) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->taskStorage = $entity_type_manager->getStorage('gdpr_task');
     $this->uuid = $uuid;
@@ -134,9 +156,8 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
    * {@inheritdoc}
    */
   public function processItem($data) {
-    if (!empty($data)) {
-      /* @var \Drupal\gdpr_tasks\Entity\TaskInterface $task */
-      $task = $this->taskStorage->load($data);
+    /** @var \Drupal\gdpr_tasks\Entity\TaskInterface $task */
+    if (!empty($data) && $task = $this->taskStorage->load($data)) {
 
       // Work out where we are up to and what to do next.
       switch ($task->getStatus()) {
@@ -173,9 +194,9 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   protected function initialise(TaskInterface $task, $build_now = FALSE) {
-    /* @var \Drupal\file\Plugin\Field\FieldType\FileFieldItemList $field */
+    /** @var \Drupal\file\Plugin\Field\FieldType\FileFieldItemList $field */
     $field = $task->get('sar_export');
-    /* @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
+    /** @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
     $field_definition = $field->getFieldDefinition();
     $settings = $field_definition->getSettings();
 
@@ -184,12 +205,12 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
       'name' => $field->getName(),
       'parent' => $field->getParent(),
     ];
-    /* @var \Drupal\file\Plugin\Field\FieldType\FileItem $field_type */
+    /** @var \Drupal\file\Plugin\Field\FieldType\FileItem $field_type */
     $field_type = $this->fieldTypePluginManager->createInstance($field_definition->getType(), $config);
 
     // Prepare destination.
     $directory = $field_type->getUploadLocation();
-    if (!\file_prepare_directory($directory, FILE_CREATE_DIRECTORY)) {
+    if (!$this->fileSystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY)) {
       throw new \RuntimeException('GDPR SARs upload directory is not writable.');
     }
 
@@ -204,12 +225,12 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
       }
 
       // Generate the zip file to reserve our namespace.
-      $file = _gdpr_tasks_file_save_data('', $task->getOwner(), "{$directory}/{$uuid}.zip", FILE_EXISTS_ERROR);
+      $file = gdpr_tasks_file_save_data('', $task->getOwner(), "{$directory}/{$uuid}.zip", FileSystemInterface::EXISTS_ERROR);
     } while (!$file);
 
     // Prepare the directory for our sub-files.
     $content_directory = "{$directory}/{$uuid}";
-    file_prepare_directory($content_directory, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
+    $this->fileSystem->prepareDirectory($content_directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
 
     // Store the file against the task.
     $values = [
@@ -246,9 +267,9 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function build(TaskInterface $task) {
-    /* @var \Drupal\file\Plugin\Field\FieldType\FileFieldItemList $field */
+    /** @var \Drupal\file\Plugin\Field\FieldType\FileFieldItemList $field */
     $field = $task->get('sar_export');
-    /* @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
+    /** @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
     $field_definition = $field->getFieldDefinition();
     $settings = $field_definition->getSettings();
 
@@ -257,7 +278,7 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
       'name' => $field->getName(),
       'parent' => $field->getParent(),
     ];
-    /* @var \Drupal\file\Plugin\Field\FieldType\FileItem $field_type */
+    /** @var \Drupal\file\Plugin\Field\FieldType\FileItem $field_type */
     $field_type = $this->fieldTypePluginManager->createInstance($field_definition->getType(), $config);
 
     // Prepare destination.
@@ -265,15 +286,15 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
     $directory .= '/' . basename($field->entity->uri->value, '.zip');
 
     // Gather our entities.
-    // @todo: Move this inline.
+    // @todo Move this inline.
     $rtaTraversal = $this->rtaTraversal->getTraversal($task->getOwner());
     $rtaTraversal->traverse();
     $all_data = $rtaTraversal->getResults();
 
     // Build our export files.
     $csvs = [];
-    foreach ($all_data as $plugin_id => $data) {
-      if ($plugin_id == '_assets') {
+    foreach ($all_data as $pluginId => $data) {
+      if ($pluginId == '_assets') {
         $task->sar_export_assets = $data;
         continue;
       }
@@ -307,7 +328,7 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
     foreach ($csvs as $filename => $data) {
       if (!isset($files[$filename])) {
         // Create an empty file.
-        $file = _gdpr_tasks_file_save_data('', $task->getOwner(), "{$directory}/{$filename}.csv", FILE_EXISTS_REPLACE);
+        $file = gdpr_tasks_file_save_data('', $task->getOwner(), "{$directory}/{$filename}.csv", FileSystemInterface::EXISTS_REPLACE);
 
         $values = [
           'target_id' => $file->id(),
@@ -336,45 +357,47 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
    *
    * @param \Drupal\gdpr_tasks\Entity\TaskInterface $task
    *   The task.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function compile(TaskInterface $task) {
     // Compile all files into a single zip.
-    /* @var \Drupal\file\Entity\File $file */
+    /** @var \Drupal\file\Entity\File $file */
     $file = $task->sar_export->entity;
     if (NULL === $file) {
-      $this->messenger->addError(t('SARs Export File not found for task @task_id.', ['@task_id' => $task->id()]));
+      $this->messenger->addError($this->t('SARs Export File not found for task @task_id.', ['@task_id' => $task->id()]));
       return;
     }
 
-    $file_path = $this->fileSystem->realpath($file->uri->value);
+    $filePath = $this->fileSystem->realpath($file->uri->value);
 
     $zip = new \ZipArchive();
-    if (!$zip->open($file_path, \ZipArchive::CREATE | \ZipArchive::OVERWRITE)) {
-      // @todo: Improve error handling.
-      $this->messenger->addError(t('Error opening file.'));
+    if (!$zip->open($filePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE)) {
+      // @todo Improve error handling.
+      $this->messenger->addError($this->t('Error opening file.'));
       return;
     }
 
     // Gather all the files we need to include in this package.
-    $part_files = [];
+    $partFiles = [];
     foreach ($task->sar_export_parts as $item) {
-      /* @var \Drupal\file\Entity\File $part_file */
-      $part_file = $item->entity;
-      $part_files[] = $part_file;
+      /** @var \Drupal\file\Entity\File $partFile */
+      $partFile = $item->entity;
+      $partFiles[] = $partFile;
 
       // Add the file to the zip.
-      // @todo: Add error handling.
-      $zip->addFile($this->fileSystem->realpath($part_file->uri->value), $part_file->filename->value);
+      // @todo Add error handling.
+      $zip->addFile($this->fileSystem->realpath($partFile->uri->value), $partFile->filename->value);
     }
 
     // Add in any attached files that need including.
     foreach ($task->sar_export_assets as $item) {
-      $asset_file = $item->entity;
+      $assetFile = $item->entity;
 
       // Add the file to the zip.
-      $filename = "assets/{$asset_file->fid->value}." . pathinfo($asset_file->uri->value, PATHINFO_EXTENSION);
-      // @todo: Add error handling.
-      $zip->addFile($this->fileSystem->realpath($asset_file->uri->value), $filename);
+      $filename = "assets/{$assetFile->fid->value}." . pathinfo($assetFile->uri->value, PATHINFO_EXTENSION);
+      // @todo Add error handling.
+      $zip->addFile($this->fileSystem->realpath($assetFile->uri->value), $filename);
     }
 
     // Clear our parts and assets file lists.
@@ -382,15 +405,15 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
     $task->sar_export_assets = NULL;
 
     // Close the zip to write it to disk.
-    // @todo: Add error handling.
+    // @todo Add error handling.
     $zip->close();
 
     // Save the file to update the file size.
     $file->save();
 
     // Remove the partial files.
-    foreach ($part_files as $part_file) {
-      $part_file->delete();
+    foreach ($partFiles as $partFile) {
+      $partFile->delete();
     }
 
     // @todo Clean up the parts directory.
@@ -408,12 +431,12 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
    * @return array
    *   CSV file data.
    *
-   * @todo: Use something like this instead:
+   * @todo Use something like this instead:
    *        \Consolidation\OutputFormatters\Formatters\CsvFormatter
    */
   public static function readCsv($filename) {
     $data = [];
-    $handle = fopen($filename, 'r');
+    $handle = fopen($filename, 'rb');
     while (!feof($handle)) {
       $data[] = fgetcsv($handle);
     }
@@ -429,11 +452,11 @@ class GdprTasksSarWorker extends QueueWorkerBase implements ContainerFactoryPlug
    * @param array $content
    *   The data to write, an array containing each row as an array.
    *
-   * @todo: Use something like this instead:
+   * @todo Use something like this instead:
    *        \Consolidation\OutputFormatters\Formatters\CsvFormatter
    */
   protected function writeCsv($filename, array $content) {
-    $handler = fopen($filename, 'w');
+    $handler = fopen($filename, 'wb');
     // Write the UTF-8 BOM header so excel handles the encoding.
     fprintf($handler, chr(0xEF) . chr(0xBB) . chr(0xBF));
     foreach ($content as $row) {

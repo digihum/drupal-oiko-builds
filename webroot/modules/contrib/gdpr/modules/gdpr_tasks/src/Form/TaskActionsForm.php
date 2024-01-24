@@ -4,7 +4,7 @@ namespace Drupal\gdpr_tasks\Form;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\ContentEntityForm;
-use Drupal\Core\Entity\EntityManagerInterface;
+use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Queue\QueueFactory;
@@ -13,6 +13,9 @@ use Drupal\gdpr_tasks\Event\RightToBeForgottenCompleteEvent;
 use Drupal\gdpr_tasks\TaskManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use function array_map;
+use function count;
+use function in_array;
 
 /**
  * Form controller for Task edit forms.
@@ -52,8 +55,8 @@ class TaskActionsForm extends ContentEntityForm {
   /**
    * Constructs a TaskActionsForm object.
    *
-   * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
-   *   The entity manager.
+   * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
+   *   The entity repository service.
    * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
    *   The entity type bundle service.
    * @param \Drupal\Component\Datetime\TimeInterface $time
@@ -67,8 +70,16 @@ class TaskActionsForm extends ContentEntityForm {
    * @param \Drupal\Core\Queue\QueueFactory $queue
    *   The queue factory service.
    */
-  public function __construct(EntityManagerInterface $entity_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL, EventDispatcherInterface $event_dispatcher, Anonymizer $anonymizer, TaskManager $task_manager, QueueFactory $queue) {
-    parent::__construct($entity_manager, $entity_type_bundle_info, $time);
+  public function __construct(
+    EntityRepositoryInterface $entity_repository,
+    EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL,
+    TimeInterface $time = NULL,
+    EventDispatcherInterface $event_dispatcher,
+    Anonymizer $anonymizer,
+    TaskManager $task_manager,
+    QueueFactory $queue
+  ) {
+    parent::__construct($entity_repository, $entity_type_bundle_info, $time);
     $this->eventDispatcher = $event_dispatcher;
     $this->anonymizer = $anonymizer;
     $this->taskManager = $task_manager;
@@ -80,7 +91,7 @@ class TaskActionsForm extends ContentEntityForm {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity.manager'),
+      $container->get('entity.repository'),
       $container->get('entity_type.bundle.info'),
       $container->get('datetime.time'),
       $container->get('event_dispatcher'),
@@ -96,7 +107,7 @@ class TaskActionsForm extends ContentEntityForm {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildForm($form, $form_state);
 
-    /* @var $entity \Drupal\gdpr_tasks\Entity\Task */
+    /** @var \Drupal\gdpr_tasks\Entity\Task $entity */
     $entity = $this->entity;
 
     if (in_array($entity->getStatus(), ['processed', 'closed'])) {
@@ -113,9 +124,6 @@ class TaskActionsForm extends ContentEntityForm {
   /**
    * Performs the removal request.
    *
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The form state.
-   *
    * @return array
    *   Errors array.
    *
@@ -124,13 +132,13 @@ class TaskActionsForm extends ContentEntityForm {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
    */
-  private function doRemoval(FormStateInterface $form_state) {
-    /* @var $entity \Drupal\gdpr_tasks\Entity\Task */
+  private function doRemoval() {
+    /** @var \Drupal\gdpr_tasks\Entity\Task $entity */
     $entity = $this->entity;
     $email = $entity->getOwner()->getEmail();
     $errors = $this->anonymizer->run($entity);
 
-    if (\count($errors) === 0) {
+    if (count($errors) === 0) {
       $this->eventDispatcher->dispatch(RightToBeForgottenCompleteEvent::EVENT_NAME, new RightToBeForgottenCompleteEvent($email));
     }
 
@@ -148,7 +156,7 @@ class TaskActionsForm extends ContentEntityForm {
     }
 
     if (isset($actions['submit'])) {
-      if ($this->entity->bundle() == 'gdpr_remove') {
+      if ($this->entity->bundle() === 'gdpr_remove') {
         $actions['submit']['#value'] = 'Remove and Anonymize Data';
         $actions['submit']['#name'] = 'remove';
       }
@@ -165,16 +173,16 @@ class TaskActionsForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    /* @var $entity \Drupal\gdpr_tasks\Entity\TaskInterface */
+    /** @var \Drupal\gdpr_tasks\Entity\TaskInterface $entity */
     $entity = $this->entity;
 
-    if ($entity->bundle() == 'gdpr_remove') {
+    if ($entity->bundle() === 'gdpr_remove') {
       $errors = $this->doRemoval($form_state);
       // Removals may have generated errors.
       // If this happens, combine the error messages and display them.
-      if (\count($errors) > 0) {
+      if (count($errors) > 0) {
         $should_save = FALSE;
-        \array_map(function ($error) {
+        array_map(function ($error) {
           $this->messenger()->addError($error);
         }, $errors);
         $form_state->setRebuild();

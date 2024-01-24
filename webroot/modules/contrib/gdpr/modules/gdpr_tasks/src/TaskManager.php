@@ -2,6 +2,7 @@
 
 namespace Drupal\gdpr_tasks;
 
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Component\Utility\Random;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Session\AccountProxy;
@@ -33,19 +34,34 @@ class TaskManager {
   protected $currentUser;
 
   /**
+   * Filesystem.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
+
+  /**
    * Constructs a TaskManager object.
    *
-   * @param \Drupal\Core\Entity\EntityTypeManager $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
    *   The entity type manager.
-   * @param \Drupal\Core\Session\AccountProxy $current_user
+   * @param \Drupal\Core\Session\AccountProxy $currentUser
    *   The current user service.
+   * @param \Drupal\Core\File\FileSystemInterface $fileSystem
+   *   Filesystem.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function __construct(EntityTypeManager $entity_type_manager, AccountProxy $current_user) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->taskStorage = $entity_type_manager->getStorage('gdpr_task');
-    $this->currentUser = $current_user;
+  public function __construct(
+    EntityTypeManager $entityTypeManager,
+    AccountProxy $currentUser,
+    FileSystemInterface $fileSystem
+  ) {
+    $this->entityTypeManager = $entityTypeManager;
+    $this->taskStorage = $entityTypeManager->getStorage('gdpr_task');
+    $this->currentUser = $currentUser;
+    $this->fileSystem = $fileSystem;
   }
 
   /**
@@ -93,14 +109,14 @@ class TaskManager {
    */
   public function toCsv(array $data, $dirname = 'private://') {
     // Prepare destination.
-    file_prepare_directory($dirname, FILE_CREATE_DIRECTORY);
+    $this->fileSystem->prepareDirectory($dirname, FileSystemInterface::CREATE_DIRECTORY);
 
     // Generate a file entity.
     $random = new Random();
     $destination = $dirname . '/' . $random->name(10, TRUE) . '.csv';
 
     // Update csv with actual data.
-    $fp = fopen($destination, 'w');
+    $fp = fopen($destination, 'wb');
     foreach ($data as $line) {
       fputcsv($fp, $line);
     }

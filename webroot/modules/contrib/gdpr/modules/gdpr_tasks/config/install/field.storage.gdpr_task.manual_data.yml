@@ -10,6 +10,7 @@ type: string_long
 settings:
   case_sensitive: false
 module: core
+locked: false
 cardinality: 1
 translatable: true
 indexes: {  }

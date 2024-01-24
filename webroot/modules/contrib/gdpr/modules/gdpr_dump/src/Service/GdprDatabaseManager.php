@@ -4,6 +4,7 @@ namespace Drupal\gdpr_dump\Service;
 
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\InvalidQueryException;
+use function array_keys;
 
 /**
  * Class GdprDatabaseManager.
@@ -65,7 +66,7 @@ class GdprDatabaseManager {
    * @throws \Drupal\Core\Database\InvalidQueryException
    */
   protected function getColumns($table) {
-    // @todo: How cross-driver is this?
+    // @todo How cross-driver is this?
     $query = $this->database->select('information_schema.columns', 'columns');
     $query->fields('columns', ['COLUMN_NAME', 'DATA_TYPE', 'COLUMN_COMMENT']);
     $query->condition('TABLE_SCHEMA', $this->database->getConnectionOptions()['database']);
@@ -94,7 +95,7 @@ class GdprDatabaseManager {
       throw new InvalidQueryException("Columns for '$table' not available.");
     }
 
-    return \array_keys($result->fetchAllAssoc('COLUMN_NAME', \PDO::FETCH_ASSOC));
+    return array_keys($result->fetchAllAssoc('COLUMN_NAME', \PDO::FETCH_ASSOC));
   }
 
 }

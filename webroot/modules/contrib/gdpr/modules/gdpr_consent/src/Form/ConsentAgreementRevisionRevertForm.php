@@ -116,11 +116,19 @@ class ConsentAgreementRevisionRevertForm extends ConfirmFormBase {
     $originalRevisionTimestamp = $this->revision->getRevisionCreationTime();
 
     $this->revision = $this->prepareRevertedRevision($this->revision, $form_state);
-    $this->revision->revision_log = $this->t('Copy of the revision from %date.', ['%date' => $this->dateFormatter->format($originalRevisionTimestamp)]);
+    $this->revision->revision_log = $this->t('Copy of the revision from %date.', [
+      '%date' => $this->dateFormatter->format($originalRevisionTimestamp),
+    ]);
     $this->revision->save();
 
-    $this->logger('content')->notice('Consent Agreement: reverted %title revision %revision.', ['%title' => $this->revision->label(), '%revision' => $this->revision->getRevisionId()]);
-    \Drupal::messenger()->addMessage($this->t('Consent Agreement %title has been reverted to the revision from %revision-date.', ['%title' => $this->revision->label(), '%revision-date' => $this->dateFormatter->format($originalRevisionTimestamp)]));
+    $this->logger('content')->notice('Consent Agreement: reverted %title revision %revision.', [
+      '%title' => $this->revision->label(),
+      '%revision' => $this->revision->getRevisionId(),
+    ]);
+    \Drupal::messenger()->addMessage($this->t('Consent Agreement %title has been reverted to the revision from %revision-date.', [
+      '%title' => $this->revision->label(),
+      '%revision-date' => $this->dateFormatter->format($originalRevisionTimestamp),
+    ]));
     $form_state->setRedirect(
       'entity.gdpr_consent_agreement.version_history',
       ['gdpr_consent_agreement' => $this->revision->id()]
@@ -141,7 +149,7 @@ class ConsentAgreementRevisionRevertForm extends ConfirmFormBase {
   protected function prepareRevertedRevision(ConsentAgreementInterface $revision, FormStateInterface $form_state) {
     $revision->setNewRevision();
     $revision->isDefaultRevision(TRUE);
-    $revision->setRevisionCreationTime(REQUEST_TIME);
+    $revision->setRevisionCreationTime(\Drupal::time()->getRequestTime());
 
     return $revision;
   }

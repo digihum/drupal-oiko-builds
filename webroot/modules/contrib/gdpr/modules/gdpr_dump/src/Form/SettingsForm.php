@@ -10,6 +10,10 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\gdpr_dump\Service\GdprDatabaseManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function array_column;
+use function implode;
+use function is_callable;
+use function strpos;
 
 /**
  * Class SettingsForm.
@@ -140,7 +144,7 @@ class SettingsForm extends ConfigFormBase {
 
     $moreHeader = [$this->t('Table name')];
     $dbSchema = $this->database->schema();
-    $schemaHandlesTableComments = \is_callable([$dbSchema, 'getComment']);
+    $schemaHandlesTableComments = is_callable([$dbSchema, 'getComment']);
     if ($schemaHandlesTableComments) {
       $moreHeader[] = $this->t('Description');
     }
@@ -181,7 +185,7 @@ class SettingsForm extends ConfigFormBase {
     foreach ($this->databaseManager->getTableColumns() as $table => $columns) {
       $tableComment = $schemaHandlesTableComments ? $dbSchema->getComment($table) : NULL;
       $tableConfigured = isset($mapping[$table]) || isset($emptyTables[$table]);
-      $tableForced = isset($forced[$table]) || \strpos($table, 'user__') === 0 || \strpos($table, 'contact_message__') === 0 || \strpos($table, 'comment__') === 0;
+      $tableForced = isset($forced[$table]) || strpos($table, 'user__') === 0 || strpos($table, 'contact_message__') === 0 || strpos($table, 'comment__') === 0;
       $tableAdded = isset($added[$table]);
 
       if ($tableConfigured || $tableAdded || $tableForced) {
@@ -233,7 +237,7 @@ class SettingsForm extends ConfigFormBase {
         if ($schemaHandlesTableComments) {
           $row[] = $tableComment;
         }
-        $row[] = \implode(', ', \array_column($columns, 'COLUMN_NAME'));
+        $row[] = implode(', ', array_column($columns, 'COLUMN_NAME'));
         $form['more_wrapper']['more_tables']['#options'][$table] = $row;
       }
     }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ea658ad9953be87ecdf1716d4d3c22b",
+    "content-hash": "f274db9fd88bdb0750b4992b4cd8b809",
     "packages": [
         {
             "name": "arthur-e/wicket",
@@ -2014,17 +2014,17 @@
         },
         {
             "name": "drupal/checklistapi",
-            "version": "1.11.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/checklistapi.git",
-                "reference": "8.x-1.11"
+                "reference": "2.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/checklistapi-8.x-1.11.zip",
-                "reference": "8.x-1.11",
-                "shasum": "78fcf8ff6edd02f2cdfc907981db119dfca795c2"
+                "url": "https://ftp.drupal.org/files/projects/checklistapi-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "32aa1590ab68d41cf9f54c073a22bfd2f27abe36"
             },
             "require": {
                 "drupal/core": "^8 || ^9",
@@ -2033,8 +2033,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.11",
-                    "datestamp": "1586540246",
+                    "version": "2.0.0",
+                    "datestamp": "1595476219",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3608,29 +3608,25 @@
         },
         {
             "name": "drupal/gdpr",
-            "version": "1.0.0-alpha19",
+            "version": "3.0.0-beta1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/gdpr.git",
-                "reference": "8.x-1.0-alpha19"
+                "reference": "3.0.0-beta1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/gdpr-8.x-1.0-alpha19.zip",
-                "reference": "8.x-1.0-alpha19",
-                "shasum": "89fec87935dfb569b7cf4463e08c562705a5278b"
+                "url": "https://ftp.drupal.org/files/projects/gdpr-3.0.0-beta1.zip",
+                "reference": "3.0.0-beta1",
+                "shasum": "ce4763ac2e8252da48e0776eaee7db97c0ac2fc5"
             },
             "require": {
-                "cweagans/composer-patches": "~1.0",
-                "drupal/checklistapi": "^1.0",
-                "drupal/core": "~8.0",
+                "drupal/checklistapi": "~2.0",
+                "drupal/core": "^8 || ^9 || ^10",
                 "drupal/entity": "^1.0",
-                "drupal/entity_reference_revisions": "^1.4",
+                "drupal/entity_reference_revisions": "^1.8",
                 "drupal/message": "^1.0",
-                "drupal/token": "^1.1",
-                "ext-zip": "*",
-                "fzaninotto/faker": "^1.7",
-                "php": "^7.1"
+                "drupal/token": "^1.7"
             },
             "require-dev": {
                 "drupal/anonymizer": "*",
@@ -3640,14 +3636,19 @@
                 "drupal/message": "*",
                 "drupal/token": "*"
             },
+            "suggest": {
+                "drush/drush": "GDPR Dump requires Drush ^9 || ^10",
+                "ext-zip": "GDPR Tasks requires the PHP zip extension",
+                "fzaninotto/faker": "Required for the anonymizer submodule (which is required by multiple submodules)."
+            },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.0-alpha19",
-                    "datestamp": "1552919885",
+                    "version": "3.0.0-beta1",
+                    "datestamp": "1671600208",
                     "security-coverage": {
                         "status": "not-covered",
-                        "message": "Alpha releases are not covered by Drupal security advisories."
+                        "message": "Beta releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -5323,6 +5324,78 @@
             }
         },
         {
+            "name": "drupal/views_delimited_list",
+            "version": "2.0.0-alpha1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/views_delimited_list.git",
+                "reference": "2.0.0-alpha1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/views_delimited_list-2.0.0-alpha1.zip",
+                "reference": "2.0.0-alpha1",
+                "shasum": "53194a7d21cff1baa8be44478c6683241c664284"
+            },
+            "require": {
+                "drupal/core": "^8.9 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0-alpha1",
+                    "datestamp": "1620756882",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "llamech",
+                    "homepage": "https://www.drupal.org/user/3607172"
+                },
+                {
+                    "name": "mparker17",
+                    "homepage": "https://www.drupal.org/user/536298"
+                },
+                {
+                    "name": "Seonaid",
+                    "homepage": "https://www.drupal.org/user/3642013"
+                },
+                {
+                    "name": "spiderman",
+                    "homepage": "https://www.drupal.org/user/1631"
+                },
+                {
+                    "name": "szhu",
+                    "homepage": "https://www.drupal.org/user/3525295"
+                },
+                {
+                    "name": "zhangtaihao",
+                    "homepage": "https://www.drupal.org/user/858312"
+                }
+            ],
+            "description": "Displays the results of a view as a delimited text list.",
+            "homepage": "https://www.drupal.org/project/views_delimited_list",
+            "support": {
+                "source": "https://git.drupalcode.org/project/views_delimited_list"
+            }
+        },
+        {
             "name": "drupal/views_fields_on_off",
             "version": "1.0.0-alpha5",
             "source": {
@@ -5888,61 +5961,6 @@
                 "source": "https://github.com/enlightn/security-checker/tree/v1.11.0"
             },
             "time": "2023-11-17T07:53:29+00:00"
-        },
-        {
-            "name": "fzaninotto/faker",
-            "version": "v1.9.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "848d8125239d7dbf8ab25cb7f054f1a630e68c2e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/848d8125239d7dbf8ab25cb7f054f1a630e68c2e",
-                "reference": "848d8125239d7dbf8ab25cb7f054f1a630e68c2e",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.3.3 || ^7.0"
-            },
-            "require-dev": {
-                "ext-intl": "*",
-                "phpunit/phpunit": "^4.8.35 || ^5.7",
-                "squizlabs/php_codesniffer": "^2.9.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.9-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Faker\\": "src/Faker/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "François Zaninotto"
-                }
-            ],
-            "description": "Faker is a PHP library that generates fake data for you.",
-            "keywords": [
-                "data",
-                "faker",
-                "fixtures"
-            ],
-            "support": {
-                "issues": "https://github.com/fzaninotto/Faker/issues",
-                "source": "https://github.com/fzaninotto/Faker/tree/v1.9.2"
-            },
-            "abandoned": true,
-            "time": "2020-12-11T09:56:16+00:00"
         },
         {
             "name": "grasmash/expander",
@@ -10899,11 +10917,13 @@
         "drupal/config_update": 20,
         "drupal/devel": 20,
         "drupal/entity_share": 10,
+        "drupal/gdpr": 10,
         "drupal/leaflet_widget": 15,
         "drupal/paragraphs": 5,
         "drupal/sharemessage": 10,
         "drupal/shib_auth": 20,
         "drupal/squid_autocomplete": 15,
+        "drupal/views_delimited_list": 15,
         "drupal/views_fields_on_off": 15,
         "oomphinc/composer-installers-extender": 20,
         "phpwatch/array_key_first_last-polyfill": 20

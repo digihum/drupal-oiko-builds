@@ -1,14 +1,14 @@
 General Data Protection Regulation
 ==================================
 
-[![Build Status](https://travis-ci.org/brainsum/gdpr.svg?branch=8.x-1.x)](https://travis-ci.org/brainsum/gdpr)
+[![Build Status](https://travis-ci.org/brainsum/gdpr.svg?branch=8.x-2.x)](https://travis-ci.org/brainsum/gdpr)
 
 
 INTRODUCTION
 ------------
 
-The General Data Protection Regulation module gives end user visibility to the
-data stored about themself and aims to help site admins follow the guidelines
+The General Data Protection Regulation module gives end-user visibility to the
+data stored about themselves and aims to help site admins follow the guidelines
 and legislation set by the EU.
 
 Please note:
@@ -41,6 +41,27 @@ Read more here: http://php.net/supported-versions.php
 This module requires the following outside of Drupal core.
 
  * Checklist API - https://www.drupal.org/project/checklistapi
+
+#### Note:
+The GDPR Tasks submodule requires the `zip` PHP extension (`ext-zip`).
+For macOS Catalina and Composer users, this extension is no longer installed by default in macOS.
+You will need to install this extension manually for your composer to add this module to your codebase, or you will see the following error:
+
+```
+Problem 1
+    - The requested PHP extension ext-zip * is missing from your system.
+    Install or enable PHP's zip extension.
+```
+
+You can easily get around this using brew by running the following:
+
+```shell
+brew update;
+brew install php@7.3;
+brew link php@7.3 --force;
+```
+see: [stackoverflow issue on the topic](https://stackoverflow.com/questions/58290566/install-ext-zip-for-mac)
+
 
 INSTALLATION
 ------------

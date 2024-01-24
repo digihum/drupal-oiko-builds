@@ -1,5 +1,5 @@
 gdpr_tasks.summary:
-  path: '/admin/gdpr/summary'
+  path: '/admin/config/gdpr/summary'
   defaults:
     _controller: '\Drupal\gdpr_tasks\Controller\GDPRController::summaryPage'
     _title: 'GDPR Summary'

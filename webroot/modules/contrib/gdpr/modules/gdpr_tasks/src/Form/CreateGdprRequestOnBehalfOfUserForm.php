@@ -4,15 +4,14 @@ namespace Drupal\gdpr_tasks\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\gdpr_tasks\Entity\Task;
 use Drupal\Core\Queue\QueueFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\gdpr_tasks\Entity\Task;
 
 /**
  * Form for user task requests.
  */
 class CreateGdprRequestOnBehalfOfUserForm extends FormBase {
-
   /**
    * The gdpr_tasks_process_gdpr_sar queue.
    *

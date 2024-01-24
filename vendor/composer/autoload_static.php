@@ -145,10 +145,6 @@ class ComposerStaticInite2cb2abed408c64b9f306078a7c9469a
             'Grasmash\\YamlExpander\\' => 22,
             'Grasmash\\Expander\\' => 18,
         ),
-        'F' => 
-        array (
-            'Faker\\' => 6,
-        ),
         'E' => 
         array (
             'Enlightn\\SecurityChecker\\' => 25,
@@ -441,10 +437,6 @@ class ComposerStaticInite2cb2abed408c64b9f306078a7c9469a
         'Grasmash\\Expander\\' => 
         array (
             0 => __DIR__ . '/..' . '/grasmash/expander/src',
-        ),
-        'Faker\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
         ),
         'Enlightn\\SecurityChecker\\' => 
         array (

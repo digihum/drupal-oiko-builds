@@ -30,12 +30,16 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *     "label" = "label",
  *     "uuid" = "uuid"
  *   },
+ *   config_export = {
+ *     "id",
+ *     "label",
+ *     "uuid"
+ *   },
  *   links = {
- *     "canonical" = "/admin/gdpr/tasks/gdpr_task_type/{gdpr_task_type}",
- *     "add-form" = "/admin/gdpr/tasks/gdpr_task_type/add",
- *     "edit-form" = "/admin/gdpr/tasks/gdpr_task_type/{gdpr_task_type}/edit",
- *     "delete-form" = "/admin/gdpr/tasks/gdpr_task_type/{gdpr_task_type}/delete",
- *     "collection" = "/admin/gdpr/tasks/gdpr_task_type"
+ *     "collection" = "/admin/config/gdpr/tasks/types",
+ *     "add-form" = "/admin/config/gdpr/tasks/types/add",
+ *     "edit-form" = "/admin/config/gdpr/tasks/types/{gdpr_task_type}/edit",
+ *     "delete-form" = "/admin/config/gdpr/tasks/types/{gdpr_task_type}/delete"
  *   }
  * )
  */

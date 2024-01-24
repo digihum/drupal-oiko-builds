@@ -9,22 +9,16 @@
             "email": "mhavelant@brainsum.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.drupal.org/8"
-        }
-    ],
     "require": {
-        "php": "^7.1",
-        "ext-zip": "*",
-        "drupal/core": "~8.0",
-        "cweagans/composer-patches": "~1.0",
-        "drupal/checklistapi": "^1.0",
+        "drupal/checklistapi": "~2.0",
         "drupal/entity": "^1.0",
-        "drupal/entity_reference_revisions": "^1.4",
+        "drupal/entity_reference_revisions": "^1.8",
         "drupal/message": "^1.0",
-        "drupal/token": "^1.1",
-        "fzaninotto/faker": "^1.7"
+        "drupal/token": "^1.7"
+    },
+    "suggest": {
+        "drush/drush": "GDPR Dump requires Drush ^9 || ^10",
+        "ext-zip": "GDPR Tasks requires the PHP zip extension",
+        "fzaninotto/faker": "Required for the anonymizer submodule (which is required by multiple submodules)."
     }
 }

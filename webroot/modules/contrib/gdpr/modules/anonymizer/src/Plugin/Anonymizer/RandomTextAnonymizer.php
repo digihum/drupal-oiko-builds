@@ -4,6 +4,8 @@ namespace Drupal\anonymizer\Plugin\Anonymizer;
 
 use Drupal\anonymizer\Anonymizer\AnonymizerBase;
 use Drupal\Core\Field\FieldItemListInterface;
+use function strlen;
+use function substr;
 
 /**
  * Class RandomTextAnonymizer.
@@ -34,8 +36,8 @@ class RandomTextAnonymizer extends AnonymizerBase {
     // Generate a prefixed random string.
     $value = 'anon_' . $this->faker->generator()->words(1, TRUE);
     // If the value is too long, trim it.
-    if ($maxLength !== NULL && (\strlen($input) > $maxLength)) {
-      $value = \substr(0, $maxLength);
+    if ($maxLength !== NULL && (strlen($input) > $maxLength)) {
+      $value = substr(0, $maxLength);
     }
 
     return $value;

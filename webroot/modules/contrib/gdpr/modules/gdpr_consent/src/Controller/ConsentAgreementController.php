@@ -13,6 +13,8 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\gdpr_consent\Entity\ConsentAgreement;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function array_keys;
+use function array_reverse;
 
 /**
  * Class ConsentAgreementController.
@@ -125,6 +127,8 @@ class ConsentAgreementController extends ControllerBase {
    *   An array as expected by drupal_render().
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityMalformedException
    */
   public function revisionOverview(ConsentAgreement $gdpr_consent_agreement) {
     $account = $this->currentUser();
@@ -143,7 +147,7 @@ class ConsentAgreementController extends ControllerBase {
 
     $latest_revision = TRUE;
 
-    foreach (\array_reverse($vids) as $vid) {
+    foreach (array_reverse($vids) as $vid) {
       /** @var \Drupal\gdpr_consent\Entity\ConsentAgreement $revision */
       $revision = $storage->loadRevision($vid);
 
@@ -162,7 +166,7 @@ class ConsentAgreementController extends ControllerBase {
         $link = $this->renderer->renderPlain($link);
       }
       else {
-        $link = $gdpr_consent_agreement->link($date);
+        $link = $gdpr_consent_agreement->toLink($date)->toString();
       }
 
       $row = [];
@@ -249,6 +253,7 @@ class ConsentAgreementController extends ControllerBase {
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Core\Entity\EntityMalformedException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function myAgreements(AccountInterface $user) {
     $map = $this->entityFieldManager->getFieldMapByFieldType('gdpr_user_consent');
@@ -256,7 +261,7 @@ class ConsentAgreementController extends ControllerBase {
     $rows = [];
 
     foreach ($map as $entity_type => $fields) {
-      $field_names = \array_keys($fields);
+      $field_names = array_keys($fields);
 
       foreach ($field_names as $field_name) {
 
@@ -298,7 +303,7 @@ class ConsentAgreementController extends ControllerBase {
 
     $header = ['Agreement', 'Date Agreed'];
 
-    $build = [
+    return [
       '#title' => 'Consent Agreements',
       'table' => [
         '#theme' => 'table',
@@ -307,7 +312,6 @@ class ConsentAgreementController extends ControllerBase {
         '#empty' => $this->t('You have not yet given any consent.'),
       ],
     ];
-    return $build;
   }
 
 }

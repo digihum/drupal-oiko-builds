@@ -2,13 +2,12 @@
 
 namespace Drupal\gdpr_dump\Sql;
 
-use Drush\Sql\Sqlsqlite;
+use Drush\Sql\SqlSqlite;
 
 /**
  * Class GdprSqlSqlite.
  *
  * @package Drupal\gdpr_dump\Sql
  */
-class GdprSqlSqlite extends Sqlsqlite {
-
+class GdprSqlSqlite extends SqlSqlite {
 }
