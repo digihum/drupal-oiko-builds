@@ -37,7 +37,7 @@ function medmus_cidoc_post_update_pa19_convert_redux(&$sandbox) {
     'cidoc_reference_revision__range' => 'bundle',
   ];
   foreach (array_filter($tables, 'db_table_exists', ARRAY_FILTER_USE_KEY) as $table => $column) {
-    db_update($table)
+    \Drupal::database()->update($table)
       ->fields(array(
         $column => 'pa19_has_language',
       ))
@@ -68,7 +68,7 @@ function medmus_cidoc_post_update_pa19_convert_redux2(&$sandbox) {
     'cidoc_reference_revision__range' => 'bundle',
   ];
   foreach (array_filter($tables, 'db_table_exists', ARRAY_FILTER_USE_KEY) as $table => $column) {
-    db_update($table)
+    \Drupal::database()->update($table)
       ->fields(array(
         'deleted' => 0,
       ))

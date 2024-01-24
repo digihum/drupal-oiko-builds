@@ -160,7 +160,7 @@ class CidocSyncForm extends FormBase {
       batch_set($batch);
     }
     else {
-      drupal_set_message($this->t('Sync complete with nothing to do.'));
+      $this->messenger()->addMessage($this->t('Sync complete with nothing to do.'));
     }
 
   }

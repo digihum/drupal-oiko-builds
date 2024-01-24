@@ -436,7 +436,6 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
    * @param array $properties
    * @param boolean $loaded
    *
-   * @deprecated
    * @return array
    */
   public function getReverseReferences($properties = [], $loaded = TRUE) {
@@ -449,7 +448,6 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
    * @param array $properties
    * @param boolean $loaded
    *
-   * @deprecated
    * @return array
    */
   public function getForwardReferences($properties = [], $loaded = TRUE) {

@@ -7,6 +7,8 @@
 
 use Drupal\cidoc\Entity\CidocEntityBundle;
 use Drupal\cidoc\Entity\CidocProperty;
+use Drupal\Core\Database\Query\Condition;
+use Drupal\Core\Database\Query\SelectInterface;
 use Drupal\Core\Render\Element;
 use Drupal\field\Entity\FieldConfig;
 
@@ -144,9 +146,10 @@ function cidoc_query_cidoc_entity_access_alter(Drupal\Core\Database\Query\Altera
       if (!($table instanceof SelectInterface) && $table == $base_table) {
 
         if ($account->hasPermission('view own unpublished cidoc entities')) {
-          $condition = db_or();
+
+          $condition = new Condition('OR');
           $condition->condition($table . '.status', 1);
-          $own_condition = db_and()
+          $own_condition = (new Condition('AND'))
             ->condition($table . '.status', 0)
             ->condition($table . '.user_id', $account->id());
           $condition->condition($own_condition);

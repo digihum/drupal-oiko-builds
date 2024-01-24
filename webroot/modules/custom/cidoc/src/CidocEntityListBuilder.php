@@ -4,6 +4,7 @@ namespace Drupal\cidoc;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
+use Drupal\Core\Link;
 use Drupal\Core\Routing\LinkGeneratorTrait;
 use Drupal\Core\Url;
 
@@ -13,7 +14,6 @@ use Drupal\Core\Url;
  * @ingroup cidoc
  */
 class CidocEntityListBuilder extends EntityListBuilder {
-  use LinkGeneratorTrait;
 
   /**
    * {@inheritdoc}
@@ -36,7 +36,7 @@ class CidocEntityListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\cidoc\Entity\CidocEntity */
-    $row['name'] = $this->l(
+    $row['name'] = Link::fromTextAndUrl(
       $entity->label(),
       new Url(
         'entity.cidoc_entity.canonical', array(

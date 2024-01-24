@@ -129,8 +129,7 @@ function oiko_preprocess_page(&$variables) {
   }
   else {
     // Get a nice entity to use as a demo.
-    $cidoc_entity_query = \Drupal::service('entity.query')
-      ->get('cidoc_entity')
+    $cidoc_entity_query = \Drupal::service('entity_type.manager')->getStorage('cidoc_entity')->getQuery()
       ->condition('timeline_preselect_option', TRUE)
       ->condition('status', TRUE)
       ->sort('name');
@@ -326,12 +325,12 @@ function oiko_preprocess_cidoc_entity(array &$variables) {
     // Add the sidebar share region to the popup.
     $build = [
       '#cache' => [
-        'tags' => \Drupal::service('entity.manager')
+        'tags' => \Drupal::service('entity_type.manager')
           ->getDefinition('block')
           ->getListCacheTags(),
       ],
     ];
-    $blockViewBuilder = \Drupal::service('entity.manager')
+    $blockViewBuilder = \Drupal::service('entity_type.manager')
       ->getViewBuilder('block');
     // Load all region content assigned via blocks.
     $cacheable_metadata_list = [];

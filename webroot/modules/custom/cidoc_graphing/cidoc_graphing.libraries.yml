@@ -1,5 +1,7 @@
 graph-all:
   version: 1
+  dependencies:
+    - core/jquery
   js:
     'https://d3js.org/d3.v3.min.js': {external: true}
     assets/js/d3.tip.v0.6.3.js: {}

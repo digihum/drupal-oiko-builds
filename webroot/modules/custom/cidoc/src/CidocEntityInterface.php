@@ -90,12 +90,12 @@ interface CidocEntityInterface extends ContentEntityInterface, EntityChangedInte
   public function getReferencesNeedingPopulating();
 
   /**
-   * @deprecated
+   *
    */
   public function getReverseReferences($properties = [], $loaded = TRUE);
 
   /**
-   * @deprecated
+   *
    */
   public function getForwardReferences($properties = [], $loaded = TRUE);
 

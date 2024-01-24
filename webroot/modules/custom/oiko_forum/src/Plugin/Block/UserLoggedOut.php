@@ -87,7 +87,7 @@ class UserLoggedOut extends BlockBase {
       $block['login_form']['#action'] = $placeholder;
 
 
-      $register_form = \Drupal::entityManager()->getFormObject('user', 'register');
+      $register_form = \Drupal::entityTypeManager()->getFormObject('user', 'register');
       $entity = \Drupal::entityTypeManager()->getStorage('user')->create([]);
       $register_form->setEntity($entity);
 
