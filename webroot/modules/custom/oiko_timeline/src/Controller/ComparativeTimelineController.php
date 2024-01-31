@@ -116,7 +116,7 @@ class ComparativeTimelineController extends ControllerBase {
         $view['subtitle']['cidoc_temporal_summary']['weight'] = 1;
       }
 
-      return render($view);
+      return \Drupal::service('renderer')->render($view);
     });
   }
 

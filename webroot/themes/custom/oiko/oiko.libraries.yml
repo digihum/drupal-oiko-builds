@@ -29,7 +29,7 @@ iframepage:
   js:
     scripts/iframe.contentWindow.js: { weight: -10 }
   dependencies:
-    - core/jquery.once
+    - core/once
 
 localforage-js:
   version: 2.0.3
@@ -44,7 +44,7 @@ modal-welcome:
     - oiko/global-styling
     - oiko/visualization-switcher
     - core/drupal
-    - core/jquery.once
+    - core/once
 
 visualization-switcher:
   version: 1.1
@@ -53,7 +53,7 @@ visualization-switcher:
   dependencies:
     - oiko_app/app
     - core/drupal
-    - core/jquery.once
+    - core/once
 
 oiko-redirector:
   version: 1.1

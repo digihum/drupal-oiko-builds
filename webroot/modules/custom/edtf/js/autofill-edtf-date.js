@@ -86,7 +86,7 @@
         var eventData;
         var options = settings.edtfDate[source_id];
 
-        var $source = $context.find(source_id).addClass('edtf-date-source').once('edtf-date');
+        var $source = $context.find(source_id).not('.edtf-date--processed').addClass('edtf-date-source').addClass('.edtf-date--processed');
         var $target = $context.find(options.target).addClass('edtf-date-target');
         var $suffix = $context.find(options.suffix);
         var $wrapper = $target.closest('.js-form-item');

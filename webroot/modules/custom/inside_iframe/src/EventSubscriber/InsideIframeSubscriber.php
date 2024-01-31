@@ -5,7 +5,7 @@ namespace Drupal\inside_iframe\EventSubscriber;
 use Drupal\Core\Url;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -36,7 +36,7 @@ class InsideIframeSubscriber implements EventSubscriberInterface {
    *
    * @param GetResponseEvent $event
    */
-  public function checkRedirection(FilterResponseEvent $event) {
+  public function checkRedirection(ResponseEvent $event) {
     $response = $event->getResponse();
     $request = $event->getRequest();
     if ($response instanceOf RedirectResponse) {

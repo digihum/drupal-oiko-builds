@@ -60,7 +60,7 @@
 
   Drupal.behaviors.oiko_event_history = {
     attach: function(context, settings) {
-      $(context).find('.js-event-history').once('oiko_event_history').each(function () {
+      $(once('oiko_event_history', '.js-event-history', context)).each(function () {
         redraw_history();
 
         var $history = $(this);

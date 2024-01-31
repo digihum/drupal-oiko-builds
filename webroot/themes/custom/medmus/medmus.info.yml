@@ -1,7 +1,7 @@
 name: Medmus
 type: theme
 description: A theme for the Connecting Medieval Music website.
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 base theme: oiko
 libraries:
   - medmus/global-styling

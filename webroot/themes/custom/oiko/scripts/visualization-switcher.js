@@ -1,7 +1,7 @@
-(function ($, Drupal) {
+(function ($, Drupal, once) {
   Drupal.behaviors.oiko_visualization_switcher = {
     attach: function (context) {
-      $('.js-switch-visualization', context).once('oiko_visualization_switcher').on('click', function() {
+      $(once('oiko_visualization_switcher', '.js-switch-visualization', context)).on('click', function() {
         var $link = $(this);
         if ($link.attr('data-visualization')) {
           $(window).trigger('set.oiko.visualisation', $link.attr('data-visualization'));
@@ -9,4 +9,4 @@
       });
     }
   };
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);

@@ -18,7 +18,6 @@ autofill:
   dependencies:
     - edtf/edtfy
     - core/jquery
-    - core/jquery.once
     - core/drupal
     - core/drupalSettings
     - core/drupal.form

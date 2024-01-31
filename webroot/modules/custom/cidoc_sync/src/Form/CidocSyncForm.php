@@ -99,7 +99,7 @@ class CidocSyncForm extends FormBase {
     $batch = array(
       'title' => $this->t('Syncing the CIDOC-CRM with Drupal'),
       'operations' => array(),
-      'file' => drupal_get_path('module', 'cidoc_sync') . '/cidoc_sync.batch_functions.inc',
+      'file' => \Drupal::service('extension.list.module')->getPath('cidoc_sync') . '/cidoc_sync.batch_functions.inc',
     );
 
     // Sync all of the entities that are configured to be.

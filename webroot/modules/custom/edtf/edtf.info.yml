@@ -1,7 +1,7 @@
 name: EDTF
 type: module
 description: Defines a field type for EDTF date strings
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 package: Field types
 dependencies:
   - field

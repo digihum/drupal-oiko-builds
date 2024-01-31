@@ -1,7 +1,7 @@
 name: CIDOC Graphing
 type: module
 description: Provides graphic visualisations of the CIDOC data held on the site.
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 package: CIDOC
 config_devel:
   - views.view.graphing_all_entities

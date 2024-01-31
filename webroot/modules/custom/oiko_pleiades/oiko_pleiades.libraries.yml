@@ -5,7 +5,7 @@ url-lookup:
   dependencies:
     - core/jquery
     - core/drupalSettings
-    - core/jquery.once
+    - core/once
 
 geocoding-lookup:
   version: 1.3
@@ -14,4 +14,4 @@ geocoding-lookup:
   dependencies:
     - core/jquery
     - core/drupalSettings
-    - core/jquery.once
+    - core/once

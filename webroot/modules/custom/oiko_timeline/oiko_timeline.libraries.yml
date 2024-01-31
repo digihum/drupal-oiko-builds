@@ -8,7 +8,7 @@ comparative_timeline:
     - core/jquery
     - core/drupal
     - core/drupalSettings
-    - core/jquery.once
+    - core/once
     - oiko_leaflet/vis
     - oiko_timeline/timelinejs
     - oiko_leaflet/moment.lang.oiko

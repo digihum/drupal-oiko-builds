@@ -4,7 +4,7 @@ event-basket:
     js/event_basket.js: {}
   dependencies:
     - oiko/localforage-js
-    - core/jquery.once
+    - core/once
 
 event-basket.link:
   version: 1.x
@@ -12,7 +12,7 @@ event-basket.link:
     js/event_basket.link.js: {}
   dependencies:
     - oiko/event-basket
-    - core/jquery.once
+    - core/once
 
 event-history:
   version: 1.x
@@ -20,5 +20,5 @@ event-history:
     js/event_history.js: {}
   dependencies:
     - oiko/localforage-js
-    - core/jquery.once
+    - core/once
     - core/drupal.ajax

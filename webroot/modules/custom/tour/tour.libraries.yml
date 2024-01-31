@@ -4,9 +4,10 @@ tour:
     js/tour.js: {}
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/drupal
-    - core/backbone
+    # @todo: Work out what we're going to do here once it's removed from Drupal 10.
+    - core/internal.backbone
     - tour/jquery.joyride
     - tour/tour-styling
 
@@ -27,4 +28,3 @@ jquery.joyride:
     js/vendor/jquery.joyride-2.1.2.js: { }
   dependencies:
     - core/jquery
-    - core/jquery.cookie

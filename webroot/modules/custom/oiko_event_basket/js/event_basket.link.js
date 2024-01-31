@@ -3,7 +3,7 @@
 
   Drupal.behaviors.oiko_event_basket_links = {
     attach: function(context) {
-      $(context).find('.js-add-event-basket').once('oiko_event_basket_links').each(function () {
+      $(once('oiko_event_basket_links', '.js-add-event-basket', context)).each(function () {
         var $link = $(this);
         $link.bind('click', function(e) {
           e.preventDefault();

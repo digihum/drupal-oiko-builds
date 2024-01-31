@@ -42,7 +42,7 @@
   Drupal.behaviors.oiko_sidebar = {
     attach: function(context, settings) {
 
-      $(context).find('.oiko-sidebar').once('oiko_sidebar').each(function () {
+      $(once('oiko_sidebar', '.oiko-sidebar', context)).each(function () {
         var $content = $(context).find('.sidebar-content');
         if ($content.length) {
           Drupal.oiko.sidebars[Drupal.oiko.sidebars.length] = new Drupal.Sidebar(this, $content);
@@ -55,7 +55,7 @@
               Drupal.oiko.openSidebar(id);
             }
           });
-          $(context).find('.js-sidebar__expand').once('js-sidebar__expand').each(function () {
+          $(once('js-sidebar__expand', '.js-sidebar__expand', context)).each(function () {
             $(this).on('change', function() {
               $content.toggleClass('sidebar--very-expanded', $('input[type="checkbox"]', this).is(':checked'));
               // Need to let any components that care react too.

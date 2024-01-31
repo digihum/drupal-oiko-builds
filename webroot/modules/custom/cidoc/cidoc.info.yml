@@ -1,7 +1,7 @@
 name: CIDOC
 type: module
 description: Implements CIDOC entities & properties in Drupal with bespoke entity types.
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 package: CIDOC
 dependencies:
   - cidoc_spec

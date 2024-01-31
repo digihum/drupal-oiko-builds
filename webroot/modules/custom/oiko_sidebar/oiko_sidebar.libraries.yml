@@ -5,7 +5,7 @@ sidebar:
   dependencies:
     - core/drupal.ajax
     - core/jquery
-    - core/jquery.once
+    - core/once
     - oiko_sidebar/sidebar.class
     - core/modernizr
 
@@ -15,3 +15,4 @@ sidebar.class:
   version: VERSION
   dependencies:
     - core/jquery
+    - core/drupal

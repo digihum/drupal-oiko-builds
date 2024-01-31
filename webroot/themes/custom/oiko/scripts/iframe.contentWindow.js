@@ -1,4 +1,4 @@
-(function($) {
+(function($, once) {
   "use strict";
 
   window.iFrameResizer = {
@@ -35,7 +35,7 @@
   Drupal.behaviors.iframeContentWindow = {
     attach: function (context) {
       // Make sure the iframe query string parameter is preserved.
-      $('a', context).once('iframeContentWindow').each(function() {
+      $(once('iframeContentWindow', 'a', context)).each(function() {
 
         // Ensure other links keep the iframe styling.
         var href = $(this).attr('href');
@@ -62,7 +62,7 @@
         }
       });
 
-      $('form', context).once('iframeContentWindow').each(function () {
+      $(once('iframeContentWindow', 'form', context)).each(function () {
         // Obtain the action attribute of the form.
         var action = $(this).attr('action');
         // Keep internal forms in the overlay.
@@ -77,4 +77,4 @@
       });
     }
   };
-})(jQuery);
+})(jQuery, once);

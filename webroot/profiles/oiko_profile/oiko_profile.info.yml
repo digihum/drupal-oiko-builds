@@ -1,7 +1,7 @@
 name: Oiko
 type: profile
 description: Install profile for the Oiko
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 
 dependencies:
   - menu_ui

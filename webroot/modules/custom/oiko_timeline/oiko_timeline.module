@@ -44,7 +44,7 @@ function oiko_timeline_preprocess_comparative_timeline(&$variables, $hook) {
 
     foreach ($loaded as $entity) {
       $rendered = $view_builder->view($entity, 'timeline_preselection');
-      $variables['default_links'][$entity->id()] = render($rendered);
+      $variables['default_links'][$entity->id()] = \Drupal::service('renderer')->render($rendered);
     }
   }
 

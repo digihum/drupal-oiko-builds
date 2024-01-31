@@ -71,7 +71,7 @@
 
   Drupal.behaviors.oiko_event_basket = {
     attach: function(context, settings) {
-      $(context).find('.js-event-basket').once('oiko_event_basket').each(function () {
+      $(once('oiko_event_basket', '.js-event-basket', context)).each(function () {
         redraw_basket();
 
         var $basket = $(this);

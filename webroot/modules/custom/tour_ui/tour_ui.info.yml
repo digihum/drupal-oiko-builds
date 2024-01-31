@@ -3,6 +3,6 @@ type: module
 description : 'Provides a UI to manage guided tours.'
 package: Development
 configure: admin/config/user-interface/tour
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 dependencies:
   - tour

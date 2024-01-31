@@ -5,7 +5,7 @@ var WINDOW_SLIDER_ID = 'window-slider';
 
 Drupal.behaviors.comparative_timeline = {
   attach: function(context, settings) {
-    $(context).find('.js-comparative-timeline-container').once('comparative_timeline').each(function() {
+    $(once('comparative_timeline', '.js-comparative-timeline-container', context)).each(function() {
       var $component = $(this);
       var id = $component.attr('id');
       var timelineSettings, timeline;

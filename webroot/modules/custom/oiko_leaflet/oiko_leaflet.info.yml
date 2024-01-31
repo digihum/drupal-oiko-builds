@@ -1,7 +1,7 @@
 name: Oiko - Leaflet
 type: module
 description: Oiko integration with the Leaflet map scripting library.
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 package: Oiko
 dependencies:
   - leaflet_views

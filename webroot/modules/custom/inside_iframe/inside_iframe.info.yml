@@ -1,5 +1,5 @@
 name: Inside IFrame
 description: Customize the layout by using extra CSS styles, when the application is inside an iFrame.
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 type: module
 

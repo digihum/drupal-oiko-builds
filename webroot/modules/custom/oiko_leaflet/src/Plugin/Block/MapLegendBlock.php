@@ -132,13 +132,15 @@ class MapLegendBlock extends BlockBase implements ContainerFactoryPluginInterfac
 
     // Get a nice list of the taxononmy terms and their colours.
 
+    $oiko_leaflet_module_path = \Drupal::service('extension.list.module')->getPath('oiko_leaflet');
+
     $icons = [
-      'blue' => file_create_url(drupal_get_path('module', 'oiko_leaflet') . '/images/icon-blue.png'),
-      'green' => file_create_url(drupal_get_path('module', 'oiko_leaflet') . '/images/icon-green.png'),
-      'purple' => file_create_url(drupal_get_path('module', 'oiko_leaflet') . '/images/icon-purple.png'),
-      'red' => file_create_url(drupal_get_path('module', 'oiko_leaflet') . '/images/icon-red.png'),
-      'yellow' => file_create_url(drupal_get_path('module', 'oiko_leaflet') . '/images/icon-yellow.png'),
-      'turquoise' => file_create_url(drupal_get_path('module', 'oiko_leaflet') . '/images/icon-turquoise.png'),
+      'blue' => \Drupal::service('file_url_generator')->generateAbsoluteString($oiko_leaflet_module_path . '/images/icon-blue.png'),
+      'green' => \Drupal::service('file_url_generator')->generateAbsoluteString($oiko_leaflet_module_path . '/images/icon-green.png'),
+      'purple' => \Drupal::service('file_url_generator')->generateAbsoluteString($oiko_leaflet_module_path . '/images/icon-purple.png'),
+      'red' => \Drupal::service('file_url_generator')->generateAbsoluteString($oiko_leaflet_module_path . '/images/icon-red.png'),
+      'yellow' => \Drupal::service('file_url_generator')->generateAbsoluteString($oiko_leaflet_module_path . '/images/icon-yellow.png'),
+      'turquoise' => \Drupal::service('file_url_generator')->generateAbsoluteString($oiko_leaflet_module_path . '/images/icon-turquoise.png'),
     ];
 
     $list_items = [];
@@ -244,12 +246,12 @@ class MapLegendBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'empire',
     ];
     foreach ($items as $item) {
-      $image_uri = drupal_get_path('module', 'oiko_leaflet') . '/images/features/' . $item . '.png';
+      $image_uri = $oiko_leaflet_module_path . '/images/features/' . $item . '.png';
       if (!empty($this->configuration[$item . '_description']) && file_exists($image_uri)) {
         $features[] = [
           'image' => [
             '#theme' => 'image',
-            '#uri' => file_create_url($image_uri),
+            '#uri' => \Drupal::service('file_url_generator')->generateAbsoluteString($image_uri),
             '#attributes' => [
               'class' => [
                 'map-legend-features--image',

@@ -28,7 +28,7 @@
    */
   Drupal.behaviors.tour = {
     attach: function (context) {
-      $('body').once('tour').each(function () {
+      $(once('tour', 'body')).each(function () {
         var model = new Drupal.tour.models.StateModel();
         new Drupal.tour.views.ToggleTourView({
           el: $(context).find('#toolbar-tab-tour'),
@@ -51,7 +51,7 @@
       });
 
       // Process tours and set up the models for them.
-      $('.js-tour', context).once('tour').each(function () {
+      $(once('tour', '.js-tour', context)).each(function () {
         var model = new Drupal.tour.models.StateModel();
 
         var id = $(this).attr('id');
@@ -68,7 +68,7 @@
       });
 
       // Find and process tour start links.
-      $('.js-start-tour', context).once('oiko_tour_links').each(function(e) {
+      $(once('oiko_tour_links', '.js-start-tour', context)).each(function(e) {
         var $link = $(this);
         var tour = $link.attr('data-tour');
         if (Drupal.tour.tours[tour]) {

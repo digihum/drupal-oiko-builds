@@ -7,7 +7,7 @@
       var geodataClass = 'js-oiko-pleiades-geocoding-geodata-target';
       var messageClass = 'js-oiko-pleiades-message';
       var re = /^.+$/i;
-      $(context).find('.' + wrapperClass).once(wrapperClass).each(function() {
+      $(once(wrapperClass, '.' + wrapperClass, context)).each(function() {
         var $wrapper = $(this);
         // Find the source and target.
         var $source = $wrapper.find('.' + uriClass);

@@ -14,10 +14,10 @@
  * @ingroup themeable
  */
 #}
-{% spaceless %}
+{% apply spaceless %}
   <dl>
     {% for property in properties %}
       <dt>{{ property.link }}</dt>
     {% endfor %}
   </dl>
-{% endspaceless %}
+{% endapply %}

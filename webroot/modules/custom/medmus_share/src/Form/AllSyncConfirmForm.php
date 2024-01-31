@@ -188,7 +188,7 @@ class AllSyncConfirmForm extends \Drupal\Core\Form\ConfirmFormBase {
     $batch = array(
       'title' => $this->t('Checking channels for updates.'),
       'operations' => array(),
-      'file' => drupal_get_path('module', 'medmus_share') . '/medmus_share.batch_functions.php',
+      'file' => \Drupal::service('extension.list.module')->getPath('medmus_share') . '/medmus_share.batch_functions.php',
     );
 
     $selected_remote = $this->remoteWebsites[$form_state->getValue('remote')];

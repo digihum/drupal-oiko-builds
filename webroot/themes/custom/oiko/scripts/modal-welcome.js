@@ -1,9 +1,9 @@
-(function ($, Drupal, storage) {
+(function ($, Drupal, storage, once) {
   "use strict";
 
   Drupal.behaviors.oiko_modal_welcome = {
     attach: function (context) {
-      $('.js-modal-welcome', context).once('oiko_modal_welcome').each(function() {
+      $(once('oiko_modal_welcome', '.js-modal-welcome', context)).each(function() {
         var $modal = $(this);
         var id = $modal.attr('id');
         $modal.on('closed.zf.reveal', function() {
@@ -30,4 +30,4 @@
       });
     }
   };
-})(jQuery, Drupal, window.localStorage);
+})(jQuery, Drupal, window.localStorage, once);
