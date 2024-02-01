@@ -3884,21 +3884,21 @@
         },
         {
             "name": "drupal/sharemessage",
-            "version": "1.0.0-beta4",
-            "version_normalized": "1.0.0.0-beta4",
+            "version": "1.0.0-beta5",
+            "version_normalized": "1.0.0.0-beta5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/sharemessage.git",
-                "reference": "8.x-1.0-beta4"
+                "reference": "8.x-1.0-beta5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/sharemessage-8.x-1.0-beta4.zip",
-                "reference": "8.x-1.0-beta4",
-                "shasum": "5624ed860c6c4059093fd7de25519b508d9930bd"
+                "url": "https://ftp.drupal.org/files/projects/sharemessage-8.x-1.0-beta5.zip",
+                "reference": "8.x-1.0-beta5",
+                "shasum": "5bd0b3db2d3f6f19d39622da865ef26264d7782f"
             },
             "require": {
-                "drupal/core": "^8.8 || ^9"
+                "drupal/core": "^9.3 || ^10"
             },
             "require-dev": {
                 "drupal/token": "*"
@@ -3906,8 +3906,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.0-beta4",
-                    "datestamp": "1607549479",
+                    "version": "8.x-1.0-beta5",
+                    "datestamp": "1706561497",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
