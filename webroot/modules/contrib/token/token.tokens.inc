@@ -11,9 +11,8 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Entity\TypedData\EntityDataDefinitionInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Render\BubbleableMetadata;
-use Drupal\Core\Render\Element;
-use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Core\TypedData\DataReferenceDefinitionInterface;
 use Drupal\Core\Url;
 use Drupal\field\FieldStorageConfigInterface;
@@ -23,8 +22,6 @@ use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
 use Drupal\system\Entity\Menu;
 use Drupal\user\UserInterface;
-use Symfony\Cmf\Component\Routing\RouteObjectInterface;
-use Drupal\Core\TypedData\PrimitiveInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Entity\ContentEntityTypeInterface;
 use Drupal\image\Entity\ImageStyle;
@@ -126,12 +123,27 @@ function token_token_info_alter(&$info) {
       ];
     }
   }
+
+  // Call proxy implementations.
+  if (\Drupal::moduleHandler()->moduleExists('field')) {
+    _field_token_info_alter($info);
+  }
 }
 
 /**
  * Implements hook_token_info().
  */
 function token_token_info() {
+  $info = [];
+
+  // Call proxy implementations.
+  if (\Drupal::moduleHandler()->moduleExists('book')) {
+    $info += _book_token_info();
+  }
+  if (\Drupal::moduleHandler()->moduleExists('menu_ui')) {
+    $info += _menu_ui_token_info();
+  }
+
   // Node tokens.
   if (\Drupal::moduleHandler()->moduleExists('node')) {
     $info['tokens']['node']['source'] = [
@@ -180,6 +192,11 @@ function token_token_info() {
 
   // Taxonomy term and vocabulary tokens.
   if (\Drupal::moduleHandler()->moduleExists('taxonomy')) {
+    $info['tokens']['term']['source'] = [
+      'name' => t('Translation source term'),
+      'description' => t("The source term for this current term's translation set."),
+      'type' => 'term',
+    ];
     $info['tokens']['term']['edit-url'] = [
       'name' => t('Edit URL'),
       'description' => t("The URL of the taxonomy term's edit page."),
@@ -474,6 +491,18 @@ function token_token_info() {
  */
 function token_tokens($type, array $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
   $replacements = [];
+
+  // Call proxy implementations.
+  if (\Drupal::moduleHandler()->moduleExists('book')) {
+    $replacements += _book_tokens($type, $tokens, $data, $options, $bubbleable_metadata);
+  }
+  if (\Drupal::moduleHandler()->moduleExists('menu_ui')) {
+    $replacements += _menu_ui_tokens($type, $tokens, $data, $options, $bubbleable_metadata);
+  }
+  if (\Drupal::moduleHandler()->moduleExists('field')) {
+    $replacements += _field_tokens($type, $tokens, $data, $options, $bubbleable_metadata);
+  }
+
   $language_manager = \Drupal::languageManager();
   $url_options = ['absolute' => TRUE];
   if (isset($options['langcode'])) {
@@ -568,6 +597,7 @@ function token_tokens($type, array $tokens, array $data, array $options, Bubblea
           $count = \Drupal::entityQueryAggregate('node')
             ->aggregate('nid', 'COUNT')
             ->condition('type', $node_type->id())
+            ->accessCheck(TRUE)
             ->execute();
           $replacements[$original] = (int) $count;
           break;
@@ -615,6 +645,11 @@ function token_tokens($type, array $tokens, array $data, array $options, Bubblea
     }
 
     // Chained token relationships.
+    if (($parent_tokens = \Drupal::token()->findWithPrefix($tokens, 'source')) && $source_term = \Drupal::service('entity.repository')->getTranslationFromContext($term, LanguageInterface::LANGCODE_DEFAULT)) {
+      $replacements += \Drupal::token()->generate('term', $parent_tokens, [
+        'term' => $source_term,
+      ], ['langcode' => $source_term->language()->getId()] + $options, $bubbleable_metadata);
+    }
     if (($url_tokens = \Drupal::token()->findWithPrefix($tokens, 'url'))) {
       $replacements += \Drupal::token()->generate('url', $url_tokens, ['url' => $term->toUrl()], $options, $bubbleable_metadata);
     }
@@ -1174,9 +1209,9 @@ function token_tokens($type, array $tokens, array $data, array $options, Bubblea
 }
 
 /**
- * Implements hook_token_info() on behalf of book.module.
+ * Proxy implementation of hook_token_info() on behalf of book.module.
  */
-function book_token_info() {
+function _book_token_info() {
   $info['types']['book'] = [
     'name' => t('Book'),
     'description' => t('Tokens related to books.'),
@@ -1217,9 +1252,9 @@ function book_token_info() {
 }
 
 /**
- * Implements hook_tokens() on behalf of book.module.
+ * Proxy implementation of hook_tokens() on behalf of book.module.
  */
-function book_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
+function _book_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
   $replacements = [];
 
   // Node tokens.
@@ -1283,9 +1318,9 @@ function book_tokens($type, $tokens, array $data, array $options, BubbleableMeta
 }
 
 /**
- * Implements hook_token_info() on behalf of menu_ui.module.
+ * Proxy implementation of hook_token_info() on behalf of menu_ui.module.
  */
-function menu_ui_token_info() {
+function _menu_ui_token_info() {
   // Menu tokens.
   $info['types']['menu'] = [
     'name' => t('Menus'),
@@ -1335,9 +1370,9 @@ function menu_ui_token_info() {
 }
 
 /**
- * Implements hook_tokens() on behalf of menu_ui.module.
+ * Proxy implementation of hook_tokens() on behalf of menu_ui.module.
  */
-function menu_ui_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
+function _menu_ui_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
   $replacements = [];
 
   /** @var \Drupal\Core\Menu\MenuLinkManagerInterface $menu_link_manager */
@@ -1412,9 +1447,12 @@ function menu_ui_tokens($type, $tokens, array $data, array $options, BubbleableM
           break;
 
         case 'edit-url':
-          $result =  $link->getEditRoute()->setOptions($url_options)->toString(TRUE);
-          $bubbleable_metadata->addCacheableDependency($result);
-          $replacements[$original] = $result->getGeneratedUrl();
+          $route = $link->getEditRoute();
+          if ($route) {
+            $result = $link->getEditRoute()->setOptions($url_options)->toString(TRUE);
+            $bubbleable_metadata->addCacheableDependency($result);
+            $replacements[$original] = $result->getGeneratedUrl();
+          }
           break;
       }
     }
@@ -1491,12 +1529,12 @@ function _token_menu_link_best_match(NodeInterface $node, array $links) {
 }
 
 /**
- * Implements hook_token_info_alter() on behalf of field.module.
+ * Proxy implementation of hook_token_info_alter() on behalf of field.module.
  *
  * We use hook_token_info_alter() rather than hook_token_info() as other
  * modules may already have defined some field tokens.
  */
-function field_token_info_alter(&$info) {
+function _field_token_info_alter(&$info) {
   $type_info = \Drupal::service('plugin.manager.field.field_type')->getDefinitions();
 
   // Attach field tokens to their respecitve entity tokens.
@@ -1672,9 +1710,9 @@ function _token_field_label($entity_type, $field_name) {
 }
 
 /**
- * Implements hook_tokens() on behalf of field.module.
+ * Proxy implementation of hook_tokens() on behalf of field.module.
  */
-function field_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
+function _field_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
   $replacements = [];
 
   $langcode = isset($options['langcode']) ? $options['langcode'] : NULL;
@@ -1702,7 +1740,7 @@ function field_tokens($type, $tokens, array $data, array $options, BubbleableMet
       // For [entity:field_name:0], [entity:field_name:0:value] and
       // [entity:field_name:value] tokens.
       else {
-        list($field_name, $delta) = explode(':', $name, 2);
+        [$field_name, $delta] = explode(':', $name, 2);
         if (!is_numeric($delta)) {
           unset($delta);
         }
