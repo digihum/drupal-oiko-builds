@@ -35,13 +35,24 @@ class ViewsFieldsOnOffForm extends FieldPluginBase {
     $field_id = $this->options['id'];
     $label = $this->options['label'];
     $selected_options = $this->options['fields'];
-    $all_fields = $this->displayHandler->getFieldLabels();
+    $all_fields = [];
+    foreach ($this->displayHandler->getHandlers('field') as $id => $handler) {
+      if ($label = $handler->label()) {
+        $all_fields[$id] = $label;
+      }
+      else {
+        $all_fields[$id] = $handler->adminLabel();
+      }
+    }
+
     $options = array_filter($all_fields, function ($key) use ($selected_options) {
       return in_array($key, $selected_options, TRUE);
     }, ARRAY_FILTER_USE_KEY);
 
     $form[$field_id] = [
       '#type' => $this->options['exposed_select_type'],
+      '#plugin_id' => 'views_fields_on_off_form',
+      '#default_enabled' => $this->options['default_enabled'],
       '#title' => $this->t('@value', [
         '@value' => $label,
       ]),
@@ -67,6 +78,7 @@ class ViewsFieldsOnOffForm extends FieldPluginBase {
 
     $options['fields'] = ['default' => []];
     $options['exposed_select_type'] = ['default' => 'checkboxes'];
+    $options['default_enabled'] = ['default' => NULL];
 
     return $options;
   }
@@ -98,8 +110,8 @@ class ViewsFieldsOnOffForm extends FieldPluginBase {
     ];
     $form['exposed_select_type'] = [
       '#type' => 'radios',
-      '#title' => $this->t('Exposed Selection Field Type'),
-      '#description' => t('Fields to be turned on and off.'),
+      '#title' => $this->t('Exposed selection field type'),
+      '#description' => $this->t('Fields to be turned on and off.'),
       '#options' => [
         'checkboxes' => $this->t('Checkboxes'),
         'radios' => $this->t('Radios'),
@@ -108,6 +120,11 @@ class ViewsFieldsOnOffForm extends FieldPluginBase {
       ],
       '#default_value' => $this->options['exposed_select_type'],
     ];
+    $form['default_enabled'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable fields by default'),
+      '#default_value' => $this->options['default_enabled'],
+    ];
 
   }
 
@@ -115,10 +132,10 @@ class ViewsFieldsOnOffForm extends FieldPluginBase {
    * {@inheritdoc}
    */
   public function query() {
-    // This is not a real field and it only affects the query by excluding
+    // This is not a real field, and it only affects the query by excluding
     // fields from the display. But Views won't render if the query()
     // method is not present. This doesn't do anything, but it has to be here.
-    // This function is a void so it doesn't return anything.
+    // This function is a void, so it doesn't return anything.
   }
 
 }

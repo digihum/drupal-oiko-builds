@@ -1,0 +1,23 @@
+views.field.views_fields_on_off_form:
+  type: views_field
+  label: 'Views Fields On/Off'
+  mapping:
+    fields:
+      type: sequence
+      label: 'Fields'
+      sequence:
+        type: string
+    exposed_select_type:
+      type: string
+      label: 'Exposed selection field type'
+    default_enabled:
+      type: boolean
+      label: 'Enable fields by default'
+
+views.filter.views_fields_on_off_form:
+  type: views.filter.in_operator
+  label: 'Views Fields On/Off'
+  mapping:
+    bypass_hook_views_pre_view:
+      type: boolean
+      label: 'Bypass hook_views_pre_view()'

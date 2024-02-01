@@ -15,6 +15,9 @@ function views_fields_on_off_views_data() {
     'field' => [
       'id' => 'views_fields_on_off_form',
     ],
+    'filter' => [
+      'id' => 'views_fields_on_off_form',
+    ],
   ];
 
   return $data;

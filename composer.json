@@ -104,7 +104,7 @@
         "drupal/upgrade_status": "^4.0",
         "drupal/views_bulk_operations": "^3.13",
         "drupal/views_delimited_list": "^2.0@alpha",
-        "drupal/views_fields_on_off": "^1.0@alpha",
+        "drupal/views_fields_on_off": "^2.0",
         "drupal/webform": "^6.2",
         "drush/drush": "^11.6",
         "leaflet/leaflet": "1.0.3",

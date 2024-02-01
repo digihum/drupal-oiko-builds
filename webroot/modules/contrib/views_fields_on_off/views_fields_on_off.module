@@ -6,109 +6,231 @@
  */
 
 use Drupal\views\ViewExecutable;
+use Drupal\views\Views;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Component\Utility\Html;
 
 /**
  * Implements hook_views_pre_view().
  */
 function views_fields_on_off_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
-  $hasFields = array_key_exists('fields', $view->display_handler->options);
-  if ($hasFields) {
-    $useDefaultDisplay = !$view->display_handler->options['fields'] &&
-      $view->display_handler->default_display->options['fields'];
-
-    if ($useDefaultDisplay) {
-      $fields = $view->display_handler->default_display->options['fields'];
+  // If using the Views filter rather than the Views field.
+  $filter_handlers = $view->getHandlers('filter', $view->current_display);
+  if (!empty($filter_handlers)) {
+    foreach ($filter_handlers as $filter_plugin) {
+      $plugin_id = $filter_plugin['plugin_id'] ?? '';
+      if ($plugin_id === 'views_fields_on_off_form' && empty($filter_plugin['bypass_hook_views_pre_view'])) {
+        _views_fields_on_off_process_filter($view, $filter_plugin);
+      }
     }
-    else {
-      $fields = $view->display_handler->options['fields'];
+  }
+  // If using the Views field.
+  $field_handlers = $view->getHandlers('field', $view->current_display);
+  if (!empty($field_handlers)) {
+    foreach ($field_handlers as $field_plugin) {
+      $plugin_id = $field_plugin['plugin_id'] ?? '';
+      if ($plugin_id === 'views_fields_on_off_form') {
+        _views_fields_on_off_process_field($view, $display_id);
+      }
     }
+  }
+}
 
-    $hasViewsFieldsOnOffHandler = FALSE;
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function views_fields_on_off_preprocess_views_view(&$variables) {
+  $view = $variables['view'];
+  $variables['exposed']['#parent_view'] = $view->id();
+  $plugin_id = 'views_fields_on_off_form';
+  $filter_plugin = $view->getHandler($view->current_display, 'filter', $plugin_id);
+  if (!empty($filter_plugin) && !empty($filter_plugin['bypass_hook_views_pre_view'])) {
+    $view->filter[$plugin_id]->preprocess($variables);
+  }
+}
 
-    foreach ($fields as $field) {
-      if (array_key_exists('plugin_id', $field)) {
-        if ($field['plugin_id'] === 'views_fields_on_off_form') {
-          $hasViewsFieldsOnOffHandler = TRUE;
+/**
+ * Implements template_preprocess_views_exposed_form().
+ */
+function views_fields_on_off_preprocess_views_exposed_form(&$variables) {
+  if (!isset($variables['form']) || !isset($variables['form']['#parent_view'])) {
+    return;
+  }
+  $view = Views::getView($variables['form']['#parent_view']);
+  if (!empty($view)) {
+    $submitted = $view->getExposedInput();
+  }
+  else {
+    $submitted = [];
+  }
+  if (empty($submitted)) {
+    foreach ($variables['form'] as $form_item) {
+      if (is_array($form_item) && !empty($form_item['#plugin_id']) && ($form_item['#plugin_id'] === 'views_fields_on_off_form') && $form_item['#default_enabled']) {
+        $select_type = $form_item['#type'];
+        if (in_array($select_type, ['checkboxes', 'select'])) {
+          if ($select_type === 'checkboxes') {
+            foreach ($form_item['#options'] as $key => $option) {
+              $field_name = $form_item['#name'];
+              $variables['form'][$field_name][$key]['#checked'] = TRUE;
+            }
+          }
+          elseif ($form_item['#multiple']) {
+            $field_name = $form_item['#name'];
+            $selected = [];
+            foreach ($form_item['#options'] as $key => $option) {
+              $selected[$key] = $key;
+            }
+            // Each select option will be shown as selected.
+            $variables['form'][$field_name]['#value'] = $selected;
+          }
         }
       }
     }
+  }
+}
 
-    if ($hasViewsFieldsOnOffHandler) {
-      // Grab the fields_on_off values that have been submitted already.
-      $params = \Drupal::request()->query->all();
-      // This is for a GET request.
-      // If the view is submitted through AJAX, like in view preview, it will be
-      // a POST request. Merge the parameter arrays and we’ll get our values.
-      $postParams = \Drupal::request()->request->all();
-      $params = array_merge($params, $postParams);
-
+/**
+ * Helper function to process the field plugin.
+ *
+ * @param \Drupal\views\ViewExecutable $view
+ *   The view object.
+ * @param string $display_id
+ *   The display id.
+ */
+function _views_fields_on_off_process_field(ViewExecutable $view, $display_id) {
+  $hasFields = array_key_exists('fields', $view->display_handler->options);
+  if ($hasFields) {
+    $fields = $view->display_handler->getOption('fields');
+    $views_on_off_fields = [];
+    foreach ($fields as $key => &$field) {
+      if ($field['plugin_id'] === 'views_fields_on_off_form') {
+        $views_on_off_fields[] = $key;
+      }
+    }
+    if (!empty($views_on_off_fields)) {
       // We need $on_off_submitted because if the form is submitted with no
       // checkboxes checked, none of the fields_on_off values will be present,
       // so it thinks this is a fresh view and all the columns should be
       // checked.
-      $on_off_submitted = array_key_exists('fields_on_off_hidden_submitted', $params);
-
-      // Get all the fields known to be checked based on the params.
-      $checked_fields = [];
-
-      // Get the fields marked as able to be hidden if not checked.
-      $hideable_fields = [];
-      foreach ($params as $key => $value) {
-        if (strpos($key, 'views_fields_on_off_form') === 0) {
-          if (!empty($view->getHandler($display_id, 'field', $key)['exposed_select_type'])
-            && (($view->getHandler($display_id, 'field', $key)['exposed_select_type'] === 'radios')
-              || ($view->getHandler($display_id, 'field', $key)['exposed_select_type'] === 'select'))) {
-            $reformatted_value = [];
-            $reformatted_value[$value] = $value;
-            $checked_fields = array_merge($checked_fields, $reformatted_value);
-          }
-          elseif (!empty($view->getHandler($display_id, 'field', $key)['exposed_select_type'])
-            && ($view->getHandler($display_id, 'field', $key)['exposed_select_type'] === 'multi_select')) {
-            foreach ($value as $result) {
-              $reformatted_value = [];
-              $reformatted_value[$result] = $result;
-              $checked_fields = array_merge($checked_fields, $reformatted_value);
+      $on_off_submitted = _views_fields_on_off_get_selected('fields_on_off_hidden_submitted');
+      if ($on_off_submitted) {
+        // Get all the fields known to be checked based on the params.
+        foreach ($views_on_off_fields as $views_on_off_field) {
+          $select_type = $view->getHandler($display_id, 'field', $views_on_off_field)['exposed_select_type'];
+          foreach ($fields[$views_on_off_field]['fields'] as $field_option) {
+            // The fields selected based on the parameters.
+            $selection = _views_fields_on_off_get_selected($views_on_off_field);
+            if (in_array($select_type, ['select', 'radios'])) {
+              if (!empty($selection) && ($field_option !== $selection) && !empty($field_option)) {
+                $fields[$field_option]['exclude'] = 1;
+              }
+            }
+            else {
+              if ((empty($selection) && !empty($field_option)) || (!empty($field_option) && !in_array($field_option, (array) $selection))) {
+                $fields[$field_option]['exclude'] = 1;
+              }
             }
           }
-          else {
-            $checked_fields = array_merge($checked_fields, $value);
-          }
-          $hideable = $fields[$key]['fields'];
-          foreach ($hideable as $hideable_key => $hideable_value) {
-            if ($hideable[$hideable_key] === 0) {
-              unset($hideable[$hideable_key]);
-            }
-          }
-          $hideable_fields = array_merge($hideable_fields, $hideable);
+          $fields[$views_on_off_field]['exclude'] = 1;
         }
-      }
-
-      // Here if there are no checked fields but the form has been submitted,
-      // we want to turn off the field.
-      if (count($checked_fields) || $on_off_submitted) {
-        foreach ($fields as $key => $field) {
-          if (!array_key_exists($key, $checked_fields) &&
-            array_key_exists($key, $hideable_fields) && $hideable_fields[$key]) {
-            // If there are fields specified, and this field is one of them,
-            // hide it!
-            $fields[$key]['exclude'] = 1;
-          }
-        }
-      }
-
-      foreach ($fields as $key => $value) {
-        if (strpos($key, 'views_fields_on_off_form') === 0) {
-          // And always hide the on/off field or it'll just show up empty.
-          $fields[$key]['exclude'] = 1;
-        }
-      }
-
-      if ($useDefaultDisplay) {
-        $view->display_handler->default_display->options['fields'] = $fields;
       }
       else {
-        $view->display_handler->options['fields'] = $fields;
+        foreach ($views_on_off_fields as $views_on_off_field) {
+          foreach ($fields[$views_on_off_field]['fields'] as $field_option) {
+            if (!empty($field_option) && array_key_exists('default_enabled', $fields[$views_on_off_field]) && !$fields[$views_on_off_field]['default_enabled']) {
+              $fields[$field_option]['exclude'] = 1;
+            }
+          }
+          $fields[$views_on_off_field]['exclude'] = 1;
+        }
       }
+      $view->display_handler->setOption('fields', $fields);
     }
   }
+}
+
+/**
+ * Helper function to process the filter plugin.
+ *
+ * @param \Drupal\views\ViewExecutable $view
+ *   The view object.
+ * @param array $filter_plugin
+ *   The filter plugin.
+ */
+function _views_fields_on_off_process_filter(ViewExecutable $view, $filter_plugin) {
+  if (empty($filter_plugin['exposed'])) {
+    return;
+  }
+  $filter_identifier = $filter_plugin['expose']['identifier'];
+  $is_multiple = $filter_plugin['expose']['multiple'];
+  if ($is_multiple) {
+    $default = $filter_plugin['group_info']['default_group_multiple'];
+    $selected = _views_fields_on_off_get_selected($filter_identifier);
+  }
+  else {
+    $default = $filter_plugin['group_info']['default_group'];
+    $selected = [_views_fields_on_off_get_selected($filter_identifier)];
+  }
+  if (!$selected || in_array($default, $selected)) {
+    return;
+  }
+  $filter_options = $filter_plugin['value'];
+  $fields = $view->display_handler->getOption('fields');
+
+  $keep = TRUE;
+  if ($filter_plugin['operator'] == 'not in') {
+    $keep = FALSE;
+  }
+
+  foreach ($filter_options as $key => $field) {
+    $fields[$key]['exclude'] = !in_array($key, $selected) ? $keep : !$keep;
+  }
+  $view->display_handler->setOption('fields', $fields);
+}
+
+/**
+ * Gets the selected values based on the request made, either by GET or POST.
+ *
+ * @param string $filter_identifier
+ *   The filter identifier.
+ *
+ * @return array $params
+ *   The selected values.
+ */
+function _views_fields_on_off_get_selected(string $filter_identifier) {
+  $request = \Drupal::request();
+  // If Ajax is enabled, this is how to get the parameters (POST).
+  $params = $request->request->all();
+  if (!empty($params[$filter_identifier])) {
+    return $params[$filter_identifier];
+  }
+  // If Ajax is disabled, this is how to get the parameters (GET).
+  $params = $request->query->all();
+  if (!empty($params[$filter_identifier])) {
+    return $params[$filter_identifier];
+  }
+
+  return [];
+}
+
+/**
+ * Implements hook_help().
+ */
+function views_fields_on_off_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.views_fields_on_off':
+      $text = file_get_contents(__DIR__ . '/README.md');
+      if (!\Drupal::moduleHandler()->moduleExists('markdown')) {
+        return '<pre>' . Html::escape($text) . '</pre>';
+      }
+      else {
+        // Use the Markdown filter to render the README.
+        $filter_manager = \Drupal::service('plugin.manager.filter');
+        $settings = \Drupal::configFactory()->get('markdown.settings')->getRawData();
+        $config = ['settings' => $settings];
+        $filter = $filter_manager->createInstance('markdown', $config);
+        return $filter->process($text, 'en');
+      }
+  }
+  return NULL;
 }
