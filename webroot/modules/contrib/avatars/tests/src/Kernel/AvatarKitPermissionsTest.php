@@ -12,14 +12,14 @@ use Drupal\Tests\user\Traits\UserCreationTrait;
  * @group avatars
  * @coversDefaultClass \Drupal\avatars\Permissions
  */
-class AvatarKitPermissionsTest extends KernelTestBase {
+final class AvatarKitPermissionsTest extends KernelTestBase {
 
   use UserCreationTrait;
 
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['avatars', 'user', 'avatars_test', 'system', 'file'];
+  protected static $modules = ['avatars', 'user', 'avatars_test', 'system', 'file'];
 
   /**
    * The permissions handler.
@@ -31,7 +31,7 @@ class AvatarKitPermissionsTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->permissionHandler = $this->container->get('user.permissions');
   }
@@ -43,7 +43,7 @@ class AvatarKitPermissionsTest extends KernelTestBase {
    *
    * @covers ::avatarGenerators
    */
-  public function testPermissions() {
+  public function testPermissions(): void {
     $generator_1 = AvatarGenerator::create([
       'label' => $this->randomMachineName(),
       'id' => $this->randomMachineName(),

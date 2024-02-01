@@ -12,7 +12,7 @@ abstract class AvatarKitWebTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stark';
 
   /**
    * {@inheritdoc}
@@ -38,7 +38,7 @@ abstract class AvatarKitWebTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->avatarGeneratorStorage = $this->container->get('entity_type.manager')->getStorage('avatar_generator');
   }
@@ -84,7 +84,7 @@ abstract class AvatarKitWebTestBase extends BrowserTestBase {
   /**
    * Delete all existing avatar generator preferences.
    */
-  protected function deleteAvatarGenerators() {
+  protected function deleteAvatarGenerators(): void {
     $avatar_generators = $this->avatarGeneratorStorage->loadMultiple();
     $this->avatarGeneratorStorage->delete($avatar_generators);
   }

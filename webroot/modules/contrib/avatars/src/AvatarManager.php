@@ -201,7 +201,7 @@ class AvatarManager implements AvatarManagerInterface {
         try {
           if (($result = $this->httpClient->get($url)) && ($result->getStatusCode() == 200)) {
             $file_path = $directory . '/' . $user->id() . '.jpg';
-            $file = file_save_data($result->getBody(), $file_path, FileSystemInterface::EXISTS_REPLACE);
+            $file = \Drupal::service('file.repository')->writeData($result->getBody(), $file_path, FileSystemInterface::EXISTS_REPLACE);
           }
         }
         catch (ClientException $e) {

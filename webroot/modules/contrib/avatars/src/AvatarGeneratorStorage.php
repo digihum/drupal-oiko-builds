@@ -14,6 +14,7 @@ class AvatarGeneratorStorage extends ConfigEntityStorage implements AvatarGenera
    */
   public function getEnabledAvatarGenerators() {
     $result = $this->getQuery()
+      ->accessCheck(FALSE)
       ->condition('status', TRUE)
       ->execute();
     return $this->loadMultiple($result);

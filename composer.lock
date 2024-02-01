@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "921117ed8c96502b7baae931a0546a6e",
+    "content-hash": "aff0c259441235aeb3dde7d40b439e9f",
     "packages": [
         {
             "name": "arthur-e/wicket",
@@ -1432,27 +1432,28 @@
         },
         {
             "name": "drupal/avatars",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/avatars.git",
-                "reference": "8.x-1.2"
+                "reference": "8.x-1.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/avatars-8.x-1.2.zip",
-                "reference": "8.x-1.2",
-                "shasum": "093e01cbf3dc0d365760baad8ff18fd9dbc6c769"
+                "url": "https://ftp.drupal.org/files/projects/avatars-8.x-1.3.zip",
+                "reference": "8.x-1.3",
+                "shasum": "164ccaa8e22d0e665575d3a809454f9180ce4f3e"
             },
             "require": {
-                "drupal/core": "^8.8 || ^9",
-                "drupal/unlimited_number": "*"
+                "drupal/core": ">=9.5",
+                "drupal/unlimited_number": "*",
+                "php": ">=7.4"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.2",
-                    "datestamp": "1656484955",
+                    "version": "8.x-1.3",
+                    "datestamp": "1671900794",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -1461,7 +1462,7 @@
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
             "license": [
-                "GPL-2.0+"
+                "GPL-2.0-or-later"
             ],
             "authors": [
                 {
@@ -10649,7 +10650,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "drupal/avatars": 10,
         "drupal/gdpr": 10,
         "drupal/sharemessage": 10,
         "drupal/squid_autocomplete": 15,

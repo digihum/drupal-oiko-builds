@@ -51,6 +51,7 @@ function avatars_cron() {
 
     $query = $avatars_preview_storage
       ->getQuery()
+      ->accessCheck(FALSE)
       ->condition('avatar_generator', $avatar_generator->id());
 
     if ($definition['dynamic']) {

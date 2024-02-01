@@ -13,12 +13,12 @@ use Drupal\avatars\AvatarPreviewInterface;
  *
  * @group avatars
  */
-class AvatarKitGeneratorTest extends AvatarKitWebTestBase {
+final class AvatarKitGeneratorTest extends AvatarKitWebTestBase {
 
   /**
    * Test avatar generators.
    */
-  public function testGenerator() {
+  public function testGenerator(): void {
     $this->deleteAvatarGenerators();
 
     $avatar_generator1 = $this->createAvatarGenerator();
@@ -41,7 +41,7 @@ class AvatarKitGeneratorTest extends AvatarKitWebTestBase {
   /**
    * Ensure requesting avatar for anonymous does not crash the site.
    */
-  public function testAnonymous() {
+  public function testAnonymous(): void {
     $generator_1 = AvatarGenerator::create([
       'label' => $this->randomMachineName(),
       'id' => $this->randomMachineName(),
@@ -69,7 +69,7 @@ class AvatarKitGeneratorTest extends AvatarKitWebTestBase {
    *
    * Tests AvatarManagerInterface::getAvatarPreviewByFile()
    */
-  public function testFileIsAvatarPreview() {
+  public function testFileIsAvatarPreview(): void {
     $generator_2 = AvatarGenerator::create([
       'label' => $this->randomMachineName(),
       'id' => $this->randomMachineName(),
@@ -88,7 +88,7 @@ class AvatarKitGeneratorTest extends AvatarKitWebTestBase {
     $avatar_preview = $am->findValidAvatar($user);
     $file = $avatar_preview->getAvatar();
 
-    $this->assertEqual($avatar_preview->id(), $am->getAvatarPreviewByFile($file));
+    $this->assertEquals($avatar_preview->id(), $am->getAvatarPreviewByFile($file));
   }
 
   /**
@@ -96,7 +96,7 @@ class AvatarKitGeneratorTest extends AvatarKitWebTestBase {
    *
    * Tests AvatarManagerInterface::getAvatarPreviewByFile()
    */
-  public function testFileNotAvatarPreview() {
+  public function testFileNotAvatarPreview(): void {
     $generator_2 = AvatarGenerator::create([
       'label' => $this->randomMachineName(),
       'id' => $this->randomMachineName(),
@@ -114,7 +114,9 @@ class AvatarKitGeneratorTest extends AvatarKitWebTestBase {
     $am = \Drupal::service('avatars.avatar_manager');
 
     // Create a random file.
-    $file = file_save_data($this->randomString());
+    /** @var \Drupal\file\FileRepositoryInterface $fileRepo */
+    $fileRepo = \Drupal::service('file.repository');
+    $file = $fileRepo->writeData($this->randomString(), 'public://blah');
 
     $this->assertFalse($am->getAvatarPreviewByFile($file));
   }
