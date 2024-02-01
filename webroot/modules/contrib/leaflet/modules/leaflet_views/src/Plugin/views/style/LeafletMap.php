@@ -2,6 +2,7 @@
 
 namespace Drupal\leaflet_views\Plugin\views\style;
 
+use Drupal\search_api\Plugin\views\ResultRow;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Field\FieldTypePluginManagerInterface;
 use Drupal\Core\Render\BubbleableMetadata;
@@ -199,8 +200,8 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
    */
   public function __construct(
     array $configuration,
-    $plugin_id,
-    $plugin_definition,
+          $plugin_id,
+          $plugin_definition,
     EntityTypeManagerInterface $entity_manager,
     EntityFieldManagerInterface $entity_field_manager,
     EntityDisplayRepositoryInterface $entity_display,
@@ -308,6 +309,23 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
    * {@inheritdoc}
    */
   public function getFieldValue($index, $field) {
+    $result = $this->view->result[$index];
+
+    if ($result instanceof ResultRow) {
+      $search_api_field = $result->_item->getField($field, FALSE);
+      if ($search_api_field !== NULL) {
+        $values = $search_api_field->getValues();
+      }
+
+      if (!empty($values)) {
+        foreach ($values as $key => $value) {
+          [$lat, $lon] = explode(',', $value);
+          $values[$key] = sprintf('POINT(%s %s)', $lon, $lat);
+        }
+        return $values;
+      }
+    }
+
     $this->view->row_index = $index;
     $value = isset($this->view->field[$field]) ? $this->view->field[$field]->getValue($this->view->result[$index]) : NULL;
     unset($this->view->row_index);
@@ -339,9 +357,14 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
         $field_storage_definition = $field_storage_definitions[$handler->definition['field_name']];
 
         $type = $field_storage_definition->getType();
-        $definition = $this->fieldTypeManager->getDefinition($type);
-        if (is_a($definition['class'], '\Drupal\geofield\Plugin\Field\FieldType\GeofieldItem', TRUE)) {
-          $fields_geo_data[$field_id] = $label;
+        try {
+          $definition = $this->fieldTypeManager->getDefinition($type);
+          if (is_a($definition['class'], '\Drupal\geofield\Plugin\Field\FieldType\GeofieldItem', TRUE)) {
+            $fields_geo_data[$field_id] = $label;
+          }
+        }
+        catch (\Exception $e) {
+          watchdog_exception("Leaflet Map - Get Available data sources", $e);
         }
       }
     }
@@ -414,7 +437,6 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
           return $this->entityManager->getDefinition($table['table']['entity type']);
         }
         catch (\Exception $e) {
-          $entity_type = NULL;
         }
       }
     }
@@ -476,10 +498,12 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
     $form['data_source'] = [
       '#type' => 'select',
       '#title' => $this->t('Data Source'),
-      '#description' => $this->t('Which field contains geodata?'),
+      '#description' => $this->t('Which Geofield(s) contains geodata you want to map?'),
       '#options' => $fields_geo_data,
       '#default_value' => $this->options['data_source'],
       '#required' => TRUE,
+      '#multiple' => TRUE,
+      '#size' => count($fields_geo_data),
     ];
 
     // Get the possible entity sources.
@@ -591,12 +615,18 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
     $map_position_options = $this->options['map_position'];
     $form['map_position'] = $this->generateMapPositionElement($map_position_options);
 
+    // Generate the Leaflet Map weight/zIndex Form Element.
+    $form['weight'] = $this->generateWeightElement($this->options['weight']);
+
     // Generate Icon form element.
     $icon_options = $this->options['icon'];
-    $form['icon'] = $this->generateIconFormElement($icon_options, $form);
+    $form['icon'] = $this->generateIconFormElement($icon_options);
 
     // Set Map Marker Cluster Element.
     $this->setMapMarkerclusterElement($form, $this->options);
+
+    // Set Fullscreen Element.
+    $this->setFullscreenElement($form, $this->options);
 
     // Set Map Geometries Options Element.
     $this->setMapPathOptionsElement($form, $this->options);
@@ -615,13 +645,6 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
     $style_options = $form_state->getValue('style_options');
     if (!empty($style_options['height']) && (!is_numeric($style_options['height']) || $style_options['height'] <= 0)) {
       $form_state->setError($form['height'], $this->t('Map height needs to be a positive number.'));
-    }
-    $icon_options = isset($style_options['icon']) ? $style_options['icon'] : [];
-    if (!empty($icon_options['iconSize']['x']) && (!is_numeric($icon_options['iconSize']['x']) || $icon_options['iconSize']['x'] <= 0)) {
-      $form_state->setError($form['icon']['iconSize']['x'], $this->t('Icon width needs to be a positive number.'));
-    }
-    if (!empty($icon_options['iconSize']['y']) && (!is_numeric($icon_options['iconSize']['y']) || $icon_options['iconSize']['y'] <= 0)) {
-      $form_state->setError($form['icon']['iconSize']['y'], $this->t('Icon height needs to be a positive number.'));
     }
   }
 
@@ -669,10 +692,8 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
    * Renders the View.
    */
   public function render() {
-    // Performs some preprocess on the leaflet map settings.
-    $this->leafletService->preProcessMapSettings($this->options);
-
-    $data = [];
+    $geojson_data = [];
+    $element = [];
 
     // Collect bubbleable metadata when doing early rendering.
     $build_for_bubbleable_metadata = [];
@@ -687,226 +708,333 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
     // Add a specific map id.
     $map['id'] = Html::getUniqueId("leaflet_map_view_" . $this->view->id() . '_' . $this->view->current_display);
 
-    if ($geofield_name = $this->options['data_source']) {
+    // Define the list of geofields set as source of Leaflet View geodata,
+    // with backword compatibility with the previous version (8.1.22) when only
+    // one Geofield was possible as geodata source.
+    $geofield_names = is_array($this->options['data_source']) ? $this->options['data_source'] : [$this->options['data_source']];
+
+    // If the Geofield field is null, output a warning
+    // to the Geofield Map administrator.
+    if (empty($geofield_names) && $this->currentUser->hasPermission('configure geofield_map')) {
+      $element = [
+        '#markup' => '<div class="geofield-map-warning">' . $this->t("The Geofield field hasn't not been correctly set for this View. <br>Add at least one Geofield to the View and set it as Data Source in the Geofield Google Map View Display Settings.") . "</div>",
+        '#attached' => [
+          'library' => ['leaflet/general'],
+        ],
+      ];
+    }
+
+    if (!empty($geofield_names) && (!empty($this->view->result) || !$this->options['hide_empty_map'])) {
       $this->renderFields($this->view->result);
 
-      /* @var \Drupal\views\ResultRow $result */
-      foreach ($this->view->result as $id => $result) {
+      // Iterate on each geofields set as source of Leaflet View geodata.
+      foreach ($geofield_names as $geofield_name) {
 
-        // For proper processing make sure the geofield_value is created as
-        // an array, also if single value.
-        $geofield_value = (array) $this->getFieldValue($result->index, $geofield_name);
+        if (isset($this->view->field[$geofield_name])) {
 
-        if (!empty($geofield_value)) {
+          foreach ($this->view->result as $id => $result) {
 
-          $features = $this->leafletService->leafletProcessGeofield($geofield_value);
+            // For proper processing make sure the geofield_value is created as
+            // an array, also if single value.
+            $geofield_value = $this->view->field[$geofield_name] ? (array) $this->getFieldValue($id, $geofield_name) : [];
 
-          if (!empty($result->_entity)) {
-            // Entity API provides a plain entity object.
-            $entity = $result->_entity;
-          }
-          elseif (isset($result->_object)) {
-            // Search API provides a TypedData EntityAdapter.
-            $entity_adapter = $result->_object;
-            if ($entity_adapter instanceof EntityAdapter) {
-              $entity = $entity_adapter->getValue();
-            }
-          }
-
-          // Render the entity with the selected view mode.
-          if (isset($entity)) {
-            // Get and set (if not set) the Geofield cardinality.
-            /* @var \Drupal\Core\Field\FieldItemList $geofield_entity */
-            if (!isset($map['geofield_cardinality'])) {
-              try {
-                $geofield_entity = $entity->get($geofield_name);
-                $map['geofield_cardinality'] = $geofield_entity->getFieldDefinition()
-                  ->getFieldStorageDefinition()
-                  ->getCardinality();
-              }
-              catch (\Exception $e) {
-                // In case of exception it means that $geofield_name field is
-                // not directly related to the $entity and might be the case of
-                // a geofield exposed through a relationship.
-                // In this case it is too complicate to get the geofield related
-                // entity, so apply a more general case of multiple/infinite
-                // geofield_cardinality.
-                // @see: https://www.drupal.org/project/leaflet/issues/3048089
-                $map['geofield_cardinality'] = -1;
-              }
-            }
-
-            $entity_type = $entity->getEntityTypeId();
-            $entity_type_langcode_attribute = $entity_type . '_field_data_langcode';
-
-            $view = $this->view;
-
-            // Set the langcode to be used for rendering the entity.
-            $rendering_language = $view->display_handler->getOption('rendering_language');
-            $dynamic_renderers = [
-              '***LANGUAGE_entity_translation***' => 'TranslationLanguageRenderer',
-              '***LANGUAGE_entity_default***' => 'DefaultLanguageRenderer',
+            // Allow other modules to add/alter the $geofield_value
+            // and the $map.
+            $leaflet_view_geofield_value_alter_context = [
+              'leaflet_map_style' => $leaflet_map_style,
+              'result' => $result,
+              'leaflet_view_style' => $this,
             ];
-            if (isset($dynamic_renderers[$rendering_language])) {
-              /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
-              $langcode = isset($result->$entity_type_langcode_attribute) ? $result->$entity_type_langcode_attribute : $entity->language()
-                ->getId();
-            }
-            else {
-              if (strpos($rendering_language, '***LANGUAGE_') !== FALSE) {
-                $langcode = PluginBase::queryLanguageSubstitutions()[$rendering_language];
+            $this->moduleHandler->alter('leaflet_map_view_geofield_value', $geofield_value, $map, $leaflet_view_geofield_value_alter_context);
+
+            if (!empty($geofield_value)) {
+              $features = $this->leafletService->leafletProcessGeofield($geofield_value);
+
+              $entity_id = NULL;
+              $entity_type = NULL;
+              $entity_language = NULL;
+              if (!empty($result->_entity)) {
+                // Entity API provides a plain entity object.
+                $entity = $result->_entity;
+                $entity_id = $entity->id();
+                $entity_type = $entity->getEntityTypeId();
+                $entity_language = $entity->language()->getId();
               }
-              else {
-                // Specific langcode set.
-                $langcode = $rendering_language;
-              }
-            }
-
-            switch ($this->options['description_field']) {
-              case '#rendered_entity':
-                $build = $this->entityManager->getViewBuilder($entity->getEntityTypeId())
-                  ->view($entity, $this->options['view_mode'], $langcode);
-                $render_context = new RenderContext();
-                $description = $this->renderer->executeInRenderContext($render_context, function () use (&$build) {
-                  return $this->renderer->render($build, TRUE);
-                });
-                if (!$render_context->isEmpty()) {
-                  $render_context->update($build_for_bubbleable_metadata);
-                }
-                break;
-
-              case '#rendered_entity_ajax':
-                $parameters = [
-                  'entity_type' => $entity_type,
-                  'entity' => $entity->id(),
-                  'view_mode' => $this->options['view_mode'],
-                  'langcode' => $langcode,
-                ];
-                $url = Url::fromRoute('leaflet_views.ajax_popup', $parameters);
-                $description = sprintf('<div class="leaflet-ajax-popup" data-leaflet-ajax-popup="%s" %s></div>',
-                  $url->toString(), LeafletAjaxPopupController::getPopupIdentifierAttribute($entity_type, $entity->id(), $this->options['view_mode'], $langcode));
-                $map['settings']['ajaxPoup'] = TRUE;
-                break;
-
-              case '#rendered_view_fields':
-                // Normal rendering via view/row fields (with labels options,
-                // formatters, classes, etc.).
-                $render_row = [
-                  "markup" => $this->view->rowPlugin->render($result),
-                ];
-                $description = !empty($this->options['description_field']) ? $this->renderer->renderPlain($render_row) : '';
-                break;
-
-              default:
-                // Row rendering of single specified field value (without
-                // labels).
-                $description = !empty($this->options['description_field']) ? $this->rendered_fields[$result->index][$this->options['description_field']] : '';
-            }
-
-            // Merge eventual map icon definition from hook_leaflet_map_info.
-            if (!empty($map['icon'])) {
-              $this->options['icon'] = $this->options['icon'] ?: [];
-
-              // Remove empty icon options so that they might be replaced by
-              // the ones set by the hook_leaflet_map_info.
-              foreach ($this->options['icon'] as $k => $icon_option) {
-                if (empty($icon_option) || (is_array($icon_option) && $this->leafletService->multipleEmpty($icon_option))) {
-                  unset($this->options['icon'][$k]);
+              elseif (isset($result->_object)) {
+                // Search API provides a TypedData EntityAdapter.
+                $entity_adapter = $result->_object;
+                if ($entity_adapter instanceof EntityAdapter) {
+                  $entity = $entity_adapter->getValue();
+                  $entity_id = $entity->id();
+                  $entity_type = $entity->getEntityTypeId();
+                  $entity_language = $entity->language()->getId();
                 }
               }
-              $this->options['icon'] = array_replace($map['icon'], $this->options['icon']);
-            }
-
-            // Define possible tokens.
-            $tokens = [];
-            foreach ($this->rendered_fields[$result->index] as $field_name => $field_value) {
-              $tokens[$field_name] = $field_value;
-              $tokens["{{ $field_name }}"] = $field_value;
-            }
-
-            $icon_type = isset($this->options['icon']['iconType']) ? $this->options['icon']['iconType'] : 'marker';
-
-            // Relates the feature with additional properties.
-            foreach ($features as &$feature) {
-
-              // Add its entity id, so that it might be referenced from outside.
-              $feature['entity_id'] = $entity->id();
-              // Attach pop-ups if we have a description field.
-              if (isset($description)) {
-                $feature['popup'] = $description;
-              }
-              // Attach also titles, they might be used later on.
-              if ($this->options['name_field']) {
-                // Decode any entities because JS will encode them again and
-                // we don't want double encoding.
-                $feature['label'] = !empty($this->options['name_field']) ? Html::decodeEntities(($this->rendered_fields[$result->index][$this->options['name_field']])) : '';
+              elseif ($result instanceof ResultRow) {
+                $id = $result->_item->getId();
+                $search_api_id_parts = explode(':', $result->_item->getId());
+                $id_parts = explode('/', $search_api_id_parts[1]);
+                $entity_id = $id_parts[1] ?? NULL;
+                $entity_type = $id_parts[0] ?? NULL;
+                $entity_language = $search_api_id_parts[2] ?? NULL;
               }
 
-              // Eventually set the custom Marker icon (DivIcon, Icon Url or
-              // Circle Marker).
-              if ($feature['type'] === 'point' && isset($this->options['icon'])) {
-                $feature['icon'] = $this->options['icon'];
-                switch ($icon_type) {
-                  case 'html':
-                    $feature['icon']['html'] = str_replace(["\n", "\r"], "", $this->viewsTokenReplace($this->options['icon']['html'], $tokens));
-                    $feature['icon']['html_class'] = $this->options['icon']['html_class'];
+              // Render the entity with the selected view mode.
+              if (!empty($entity_id) && !empty($entity_type)) {
+                // Get and set (if not set) the Geofield cardinality.
+                /* @var \Drupal\Core\Field\FieldItemList $geofield_entity */
+                if (!isset($map['geofield_cardinality']) && isset($entity)) {
+                  try {
+                    $geofield_entity = $entity->get($geofield_name);
+                    $map['geofield_cardinality'] = $geofield_entity->getFieldDefinition()
+                      ->getFieldStorageDefinition()
+                      ->getCardinality();
+                  }
+                  catch (\Exception $e) {
+                    // In case of exception it means that $geofield_name field
+                    // is not directly related to the $entity and might be the
+                    // case of a geofield exposed through a relationship.
+                    // In this case it is too complicate to get the geofield
+                    // related entity, so apply a more general case of
+                    // multiple/infinite geofield_cardinality.
+                    // @see: https://www.drupal.org/project/leaflet/issues/3048089
+                    $map['geofield_cardinality'] = -1;
+                  }
+                }
+                else {
+                  $map['geofield_cardinality'] = -1;
+                }
+
+                $entity_type_langcode_attribute = $entity_type . '_field_data_langcode';
+
+                $view = $this->view;
+
+                // Set the langcode to be used for rendering the entity.
+                $rendering_language = $view->display_handler->getOption('rendering_language');
+                $dynamic_renderers = [
+                  '***LANGUAGE_entity_translation***' => 'TranslationLanguageRenderer',
+                  '***LANGUAGE_entity_default***' => 'DefaultLanguageRenderer',
+                ];
+                if (isset($dynamic_renderers[$rendering_language])) {
+                  /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+                  $langcode = isset($result->$entity_type_langcode_attribute) ? $result->$entity_type_langcode_attribute : $entity_language;
+                }
+                else {
+                  if (strpos($rendering_language, '***LANGUAGE_') !== FALSE) {
+                    $langcode = PluginBase::queryLanguageSubstitutions()[$rendering_language];
+                  }
+                  else {
+                    // Specific langcode set.
+                    $langcode = $rendering_language;
+                  }
+                }
+
+                switch ($this->options['description_field']) {
+                  case '#rendered_entity':
+                    $build = $this->entityManager->getViewBuilder($entity_type)
+                      ->view($entity, $this->options['view_mode'], $langcode);
+                    $render_context = new RenderContext();
+                    $description = $this->renderer->executeInRenderContext($render_context, function () use (&$build) {
+                      return $this->renderer->render($build, TRUE);
+                    });
+                    if (!$render_context->isEmpty()) {
+                      $render_context->update($build_for_bubbleable_metadata);
+                    }
                     break;
 
-                  case 'circle_marker':
-                    $feature['icon']['options'] = str_replace(["\n", "\r"], "", $this->viewsTokenReplace($this->options['icon']['circle_marker_options'], $tokens));
+                  case '#rendered_entity_ajax':
+                    $parameters = [
+                      'entity_type' => $entity_type,
+                      'entity' => $entity_id,
+                      'view_mode' => $this->options['view_mode'],
+                      'langcode' => $langcode,
+                    ];
+                    $url = Url::fromRoute('leaflet_views.ajax_popup', $parameters);
+                    $description = sprintf('<div class="leaflet-ajax-popup" data-leaflet-ajax-popup="%s" %s></div>',
+                      $url->toString(), LeafletAjaxPopupController::getPopupIdentifierAttribute($entity_type, $entity_id, $this->options['view_mode'], $langcode));
+                    $map['settings']['ajaxPoup'] = TRUE;
+                    break;
+
+                  case '#rendered_view_fields':
+                    // Normal rendering via view/row fields
+                    // (with labels options, formatters, classes, etc.).
+                    $render_row = [
+                      "markup" => $this->view->rowPlugin->render($result),
+                    ];
+                    $description = !empty($this->options['description_field']) ? $this->renderer->renderPlain($render_row) : '';
                     break;
 
                   default:
-                    if (!empty($this->options['icon']['iconUrl'])) {
-                      $feature['icon']['iconUrl'] = str_replace(["\n", "\r"], "", $this->viewsTokenReplace($this->options['icon']['iconUrl'], $tokens));
-                      if (!empty($this->options['icon']['shadowUrl'])) {
-                        $feature['icon']['shadowUrl'] = str_replace(["\n", "\r"], "", $this->viewsTokenReplace($this->options['icon']['shadowUrl'], $tokens));
-                      }
-                    }
-                    break;
+                    // Row rendering of single specified field value (without
+                    // labels).
+                    $description = !empty($this->options['description_field']) ? $this->rendered_fields[$result->index][$this->options['description_field']] : '';
                 }
-              }
 
-              // Associate dynamic path properties (token based) to each
-              // feature, in case of not point.
-              if ($feature['type'] !== 'point') {
-                $feature['path'] = str_replace(["\n", "\r"], "", $this->viewsTokenReplace($this->options['path'], $tokens));
-              }
+                // Eventually merge map icon definition
+                // from hook_leaflet_map_info.
+                if (!empty($map['icon'])) {
+                  $this->options['icon'] = $this->options['icon'] ?: [];
 
-              // Allow modules to adjust the marker.
-              \Drupal::moduleHandler()->alter('leaflet_views_feature', $feature, $result, $this->view->rowPlugin);
+                  // Remove empty icon options so that they might be replaced by
+                  // the ones set by the hook_leaflet_map_info.
+                  foreach ($this->options['icon'] as $k => $icon_option) {
+                    if (empty($icon_option) || (is_array($icon_option) && $this->leafletService->multipleEmpty($icon_option))) {
+                      unset($this->options['icon'][$k]);
+                    }
+                  }
+                  $this->options['icon'] = array_replace($map['icon'], $this->options['icon']);
+                }
+
+                // Define possible tokens.
+                $tokens = [];
+                foreach ($this->rendered_fields[$result->index] as $field_name => $field_value) {
+                  $tokens[$field_name] = $field_value;
+                }
+
+                $icon_type = isset($this->options['icon']['iconType']) ? $this->options['icon']['iconType'] : 'marker';
+
+                // Relates the feature with additional properties.
+                foreach ($features as &$feature) {
+
+                  // Attach pop-ups if we have a description field.
+                  // Add its entity id, so it might be referenced from outside.
+                  $feature['entity_id'] = $entity_id;
+
+                  // Generate the weight feature property
+                  // (falls back to natural result ordering).
+                  $feature['weight'] = !empty($this->options['weight']) ? intval(str_replace([
+                    "\n",
+                    "\r",
+                  ], "", $this->viewsTokenReplace($this->options['weight'], $tokens))) : $id;
+
+                  // Attach pop-ups if we have a description field.
+                  if (isset($description)) {
+                    $feature['popup'] = $description;
+                  }
+                  // Attach also titles, they might be used later on.
+                  if ($this->options['name_field']) {
+                    // Decode any entities because JS will encode them again and
+                    // we don't want double encoding.
+                    $feature['label'] = !empty($this->options['name_field']) ? Html::decodeEntities(($this->rendered_fields[$result->index][$this->options['name_field']])) : '';
+                  }
+
+                  // Eventually set the custom Marker icon (DivIcon, Icon Url or
+                  // Circle Marker).
+                  if ($feature['type'] === 'point' && isset($this->options['icon'])) {
+                    // Set Feature Icon properties.
+                    $feature['icon'] = $this->options['icon'];
+
+                    // Transforms Icon Options that support Replacement
+                    // Patterns/Tokens.
+                    if (!empty($this->options["icon"]["iconSize"]["x"])) {
+                      $feature['icon']["iconSize"]["x"] = $this->viewsTokenReplace($this->options["icon"]["iconSize"]["x"], $tokens);
+                    }
+                    if (!empty($this->options["icon"]["iconSize"]["y"])) {
+                      $feature['icon']["iconSize"]["y"] = $this->viewsTokenReplace($this->options["icon"]["iconSize"]["y"], $tokens);
+                    }
+                    if (!empty($this->options["icon"]["shadowSize"]["x"])) {
+                      $feature['icon']["shadowSize"]["x"] = $this->viewsTokenReplace($this->options["icon"]["shadowSize"]["x"], $tokens);
+                    }
+                    if (!empty($this->options["icon"]["shadowSize"]["y"])) {
+                      $feature['icon']["shadowSize"]["y"] = $this->viewsTokenReplace($this->options["icon"]["shadowSize"]["y"], $tokens);
+                    }
+
+                    switch ($icon_type) {
+                      case 'html':
+                        $feature['icon']['html'] = str_replace([
+                          "\n",
+                          "\r",
+                        ], "", $this->viewsTokenReplace($this->options['icon']['html'], $tokens));
+                        $feature['icon']['html_class'] = $this->options['icon']['html_class'];
+                        break;
+
+                      case 'circle_marker':
+                        $feature['icon']['options'] = str_replace([
+                          "\n",
+                          "\r",
+                        ], "", $this->viewsTokenReplace($this->options['icon']['circle_marker_options'], $tokens));
+                        break;
+
+                      default:
+                        // Apply Token Replacements to iconUrl & shadowUrl.
+                        if (!empty($this->options['icon']['iconUrl'])) {
+                          $feature['icon']['iconUrl'] = str_replace([
+                            "\n",
+                            "\r",
+                          ], "", $this->viewsTokenReplace($this->options['icon']['iconUrl'], $tokens));
+                          // Generate correct Absolute iconUrl & shadowUrl,
+                          // if not external.
+                          if (!empty($feature['icon']['iconUrl'])) {
+                            $feature['icon']['iconUrl'] = $this->leafletService->generateAbsoluteString($feature['icon']['iconUrl']);
+                          }
+                        }
+                        if (!empty($this->options['icon']['shadowUrl'])) {
+                          $feature['icon']['shadowUrl'] = str_replace([
+                            "\n",
+                            "\r",
+                          ], "", $this->viewsTokenReplace($this->options['icon']['shadowUrl'], $tokens));
+                          if (!empty($feature['icon']['shadowUrl'])) {
+                            $feature['icon']['shadowUrl'] = $this->leafletService->generateAbsoluteString($feature['icon']['shadowUrl']);
+                          }
+                        }
+
+                        // Set Feature IconSize and ShadowSize to the IconUrl
+                        // or ShadowUrl Image sizes (if empty or invalid).
+                        $this->leafletService->setFeatureIconSizesIfEmptyOrInvalid($feature);
+
+                        break;
+                    }
+                  }
+
+                  // Associate dynamic path properties (token based) to each
+                  // feature, in case of not point.
+                  if ($feature['type'] !== 'point') {
+                    $feature['path'] = str_replace([
+                      "\n",
+                      "\r",
+                    ], "", $this->viewsTokenReplace($this->options['path'], $tokens));
+                  }
+
+                  // Associate dynamic className property (token based) to icon.
+                  $feature['icon']['className'] = !empty($this->options['icon']['className']) ? str_replace([
+                    "\n",
+                    "\r",
+                  ], "", $this->viewsTokenReplace($this->options['icon']['className'], $tokens)) : '';
+
+                  // Allow modules to adjust the single feature (marker).
+                  $this->moduleHandler->alter('leaflet_views_feature', $feature, $result, $this->view->rowPlugin);
+                }
+
+                // Generate incremental Features.
+                $geojson_data = array_merge($geojson_data, $features);
+              }
             }
-
-            // Add new points to the whole basket.
-            $data = array_merge($data, $features);
           }
         }
       }
+
+      // Order the data features based on the 'weight' element.
+      uasort($geojson_data, ['Drupal\Component\Utility\SortArray', 'sortByWeightElement']);
+
+      $js_settings = [
+        'map' => $map,
+        'features' => $geojson_data,
+      ];
+
+      // Allow other modules to add/alter the map js settings.
+      $this->moduleHandler->alter('leaflet_map_view_style', $js_settings, $this);
+
+      $map_height = !empty($this->options['height']) ? $this->options['height'] . $this->options['height_unit'] : '';
+      $element = $this->leafletService->leafletRenderMap($js_settings['map'], $js_settings['features'], $map_height);
+
+      // Add the Core Drupal Ajax library for Ajax Popups.
+      if (isset($map['settings']['ajaxPoup']) && $map['settings']['ajaxPoup'] == TRUE) {
+        $build_for_bubbleable_metadata['#attached']['library'][] = 'core/drupal.ajax';
+      }
+      BubbleableMetadata::createFromRenderArray($element)
+        ->merge(BubbleableMetadata::createFromRenderArray($build_for_bubbleable_metadata))
+        ->applyTo($element);
     }
-
-    // Don't render the map, if we do not have any data
-    // and the hide option is set.
-    if (empty($data) && !empty($this->options['hide_empty_map'])) {
-      return [];
-    }
-
-    $js_settings = [
-      'map' => $map,
-      'features' => $data,
-    ];
-
-    // Allow other modules to add/alter the map js settings.
-    $this->moduleHandler->alter('leaflet_map_view_style', $js_settings, $this);
-
-    $map_height = !empty($this->options['height']) ? $this->options['height'] . $this->options['height_unit'] : '';
-    $element = $this->leafletService->leafletRenderMap($js_settings['map'], $js_settings['features'], $map_height);
-    // Add the Core Drupal Ajax library for Ajax Popups.
-    if (isset($map['settings']['ajaxPoup']) && $map['settings']['ajaxPoup'] == TRUE) {
-      $build_for_bubbleable_metadata['#attached']['library'][] = 'core/drupal.ajax';
-    }
-    BubbleableMetadata::createFromRenderArray($element)
-      ->merge(BubbleableMetadata::createFromRenderArray($build_for_bubbleable_metadata))
-      ->applyTo($element);
     return $element;
   }
 

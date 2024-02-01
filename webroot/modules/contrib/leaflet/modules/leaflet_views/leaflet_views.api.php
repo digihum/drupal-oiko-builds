@@ -8,9 +8,24 @@
 use Drupal\views\ResultRow;
 use Drupal\views\Plugin\views\row\RowPluginBase;
 use Drupal\leaflet_views\Plugin\views\style\MarkerDefault;
+use Drupal\leaflet_views\Plugin\views\style\LeafletMap;
 
 /**
- * Adjust the array representing a leaflet feature/marker.
+ * Allow other modules to add/alter the $geofield_value.
+ *
+ * @param array $geofield_value
+ *   The original Geofield Value (aways as array, also for single value).
+ * @param array $map
+ *   The map array definition.
+ * @param array $leaflet_view_geofield_value_alter_context
+ *   The leaflet_view_geofield_value_alter_context array.
+ */
+function hook_leaflet_map_view_geofield_value_alter(array &$geofield_value, array &$map, array $leaflet_view_geofield_value_alter_context) {
+  // Make custom alterations to $geofield_value.
+}
+
+/**
+ * Adjust the array representing a leaflet view feature/marker.
  *
  * @param array $feature
  *   The leaflet feature. Available keys are:
@@ -29,7 +44,21 @@ use Drupal\leaflet_views\Plugin\views\style\MarkerDefault;
  *   (optional) The row plugin used for rendering the feature.
  */
 function hook_leaflet_views_feature_alter(array &$feature, ResultRow $row, RowPluginBase $rowPlugin = NULL) {
+}
 
+/**
+ * Alter the Leaflet Map View Style settings.
+ *
+ * Allow other modules to add/alter the map js settings.
+ *
+ * @param array $map_settings
+ *   The array of geofield map element settings.
+ * @param \Drupal\leaflet_views\Plugin\views\style\LeafletMap $view_style
+ *   The Leaflet Map View Style.
+ * */
+function hook_leaflet_map_view_style_alter(array &$map_settings, LeafletMap &$view_style) {
+  // Make custom alterations to $map_settings, eventually using the $view_style
+  // context.
 }
 
 /**
