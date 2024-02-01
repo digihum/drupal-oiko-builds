@@ -96,7 +96,7 @@
         "drupal/paragraphs": "^1@RC",
         "drupal/pathauto": "^1.8.0",
         "drupal/r4032login": "^2.1",
-        "drupal/search_api": "^1.0",
+        "drupal/search_api": "^1.30",
         "drupal/seven": "^1.0",
         "drupal/sharemessage": "^1.0@beta",
         "drupal/squid_autocomplete": "^1.0@alpha",

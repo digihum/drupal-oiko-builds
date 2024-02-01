@@ -220,7 +220,7 @@ class Query implements QueryInterface, RefinableCacheableDependencyInterface {
     $this->index = $index;
     $this->results = new ResultSet($this);
     $this->options = $options;
-    $this->conditionGroup = $this->createConditionGroup('AND');
+    $this->conditionGroup = $this->createConditionGroup();
   }
 
   /**
@@ -421,6 +421,15 @@ class Query implements QueryInterface, RefinableCacheableDependencyInterface {
   /**
    * {@inheritdoc}
    */
+  public function createAndAddConditionGroup(string $conjunction = 'AND', array $tags = []): ConditionGroupInterface {
+    $condition_group = $this->createConditionGroup($conjunction, $tags);
+    $this->addConditionGroup($condition_group);
+    return $condition_group;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function keys($keys = NULL) {
     $this->origKeys = $keys;
     if (is_scalar($keys)) {
@@ -584,13 +593,13 @@ class Query implements QueryInterface, RefinableCacheableDependencyInterface {
       // Let modules alter the query.
       $event_base_name = SearchApiEvents::QUERY_PRE_EXECUTE;
       $event = new QueryPreExecuteEvent($this);
-      $this->getEventDispatcher()->dispatch($event_base_name, $event);
+      $this->getEventDispatcher()->dispatch($event, $event_base_name);
       $hooks = ['search_api_query'];
       foreach ($this->tags as $tag) {
         $hooks[] = "search_api_query_$tag";
         $event_name = "$event_base_name.$tag";
         $event = new QueryPreExecuteEvent($this);
-        $this->getEventDispatcher()->dispatch($event_name, $event);
+        $this->getEventDispatcher()->dispatch($event, $event_name);
       }
 
       $description = 'This hook is deprecated in search_api:8.x-1.14 and is removed from search_api:2.0.0. Please use the "search_api.query_pre_execute" event instead. See https://www.drupal.org/node/3059866';
@@ -612,7 +621,7 @@ class Query implements QueryInterface, RefinableCacheableDependencyInterface {
     // Let modules alter the results.
     $event_base_name = SearchApiEvents::PROCESSING_RESULTS;
     $event = new ProcessingResultsEvent($this->results);
-    $this->getEventDispatcher()->dispatch($event_base_name, $event);
+    $this->getEventDispatcher()->dispatch($event, $event_base_name);
     $this->results = $event->getResults();
 
     $hooks = ['search_api_results'];
@@ -620,7 +629,7 @@ class Query implements QueryInterface, RefinableCacheableDependencyInterface {
       $hooks[] = "search_api_results_$tag";
 
       $event = new ProcessingResultsEvent($this->results);
-      $this->getEventDispatcher()->dispatch("$event_base_name.$tag", $event);
+      $this->getEventDispatcher()->dispatch($event, "$event_base_name.$tag");
       $this->results = $event->getResults();
     }
     $description = 'This hook is deprecated in search_api:8.x-1.14 and is removed from search_api:2.0.0. Please use the "search_api.processing_results" event instead. See https://www.drupal.org/node/3059866';
