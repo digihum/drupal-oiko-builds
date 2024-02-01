@@ -15,11 +15,16 @@ use Drupal\user\UserInterface;
 class KeyAuthTest extends BrowserTestBase {
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * Modules installed for all tests.
    *
    * @var array
    */
-  public static $modules = ['key_auth', 'key_auth_test'];
+  protected static $modules = ['key_auth', 'key_auth_test'];
 
   /**
    * The key auth service.
@@ -45,7 +50,7 @@ class KeyAuthTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->keyAuth = $this->container->get('key_auth');
     $this->keyAuthConfig = $this->config('key_auth.settings');
@@ -150,14 +155,14 @@ class KeyAuthTest extends BrowserTestBase {
     $this->assertSession()->elementExists('css', '#edit-delete');
 
     // Test deleting the key.
-    $this->drupalPostForm(NULL, [], 'Delete current key');
+    $this->submitForm([], 'Delete current key');
     $user2 = $this->loadUser($user2->id());
     $this->assertEmpty($user2->api_key->value);
     $this->assertSession()->pageTextContains('You currently do not have a key');
     $this->assertSession()->elementNotExists('css', '#edit-delete');
 
     // Test generating a new key.
-    $this->drupalPostForm(NULL, [], 'Generate new key');
+    $this->submitForm([], 'Generate new key');
     $user2 = $this->loadUser($user2->id());
     $this->assertNotEmpty($user2->api_key->value);
     $this->assertSession()->pageTextContains($user2->api_key->value);
@@ -314,7 +319,7 @@ class KeyAuthTest extends BrowserTestBase {
     if ($status_code == 200) {
       // Ensure that caching was disabled.
       $this->assertFalse($this->drupalGetHeader('X-Drupal-Cache'));
-      $this->assertIdentical(strpos($this->drupalGetHeader('Cache-Control'), 'public'), FALSE);
+      $this->assertSame(strpos($this->drupalGetHeader('Cache-Control'), 'public'), FALSE);
     }
 
     // Check if a user was provided.

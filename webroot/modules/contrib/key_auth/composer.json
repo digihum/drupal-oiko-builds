@@ -1,0 +1,34 @@
+{
+  "name": "drupal/key_auth",
+  "description": "Provides simple key-based authentication on a per-user basis similar to basic_auth but without requiring usernames or passwords.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "homepage": "https://www.drupal.org/project/key_auth",
+  "authors": [
+    {
+      "name": "Rajeshreeputra Pravin Dhondiba Gaikwad",
+      "homepage": "https://www.drupal.org/u/Rajeshreeputra",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Mike Stefanello",
+      "homepage": "https://www.drupal.org/u/mstef",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Dan Bryant",
+      "homepage": "https://www.drupal.org/u/perfectcube",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Ganesh Suryawanshi",
+      "homepage": "https://www.drupal.org/u/ganeshsurya11",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/key_auth",
+    "source": "https://git.drupalcode.org/project/key_auth"
+  }
+}

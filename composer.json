@@ -90,7 +90,7 @@
         "drupal/geofield": "^1.6",
         "drupal/google_analytics": "^2.1",
         "drupal/honeypot": "^1.24",
-        "drupal/key_auth": "^1.1",
+        "drupal/key_auth": "^2.1",
         "drupal/leaflet": "^2.2",
         "drupal/metatag": "^1.0",
         "drupal/paragraphs": "^1.17",

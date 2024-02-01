@@ -2,6 +2,7 @@
 
 namespace Drupal\key_auth;
 
+use Drupal;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,7 +94,9 @@ class KeyAuth implements KeyAuthInterface {
     // Query to find a user with this key.
     $user = $storage
       ->getQuery()
+      ->accessCheck(FALSE)
       ->condition('api_key', $key)
+      ->condition('status', 1)
       ->execute();
 
     // Check if a user was found.
@@ -130,6 +133,7 @@ class KeyAuth implements KeyAuthInterface {
       // Query to see if this key is in use.
       $in_use = $storage
         ->getQuery()
+        ->accessCheck(FALSE)
         ->condition('api_key', $key)
         ->execute();
     } while ($in_use);

@@ -1,12 +1,12 @@
 name: 'Key Authentication Test Module'
 type: module
-core: 8.x
 description: 'Support module for Key authentication testing.'
 package: Testing
+core_version_requirement: "^9.5 || ^10"
 dependencies:
   - key_auth:key_auth
 
-# Information added by Drupal.org packaging script on 2020-05-26
-version: '8.x-1.1'
+# Information added by Drupal.org packaging script on 2023-02-21
+version: '2.1.0'
 project: 'key_auth'
-datestamp: 1590498045
+datestamp: 1676961220
