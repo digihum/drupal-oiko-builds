@@ -3,6 +3,7 @@
 namespace Drupal\checklistapi;
 
 use Drupal\Core\Render\Element;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\user\Entity\User;
 
@@ -10,6 +11,8 @@ use Drupal\user\Entity\User;
  * Defines the checklist class.
  */
 class ChecklistapiChecklist {
+
+  use StringTranslationTrait;
 
   /**
    * The configuration key for saved progress.
@@ -113,11 +116,11 @@ class ChecklistapiChecklist {
       unset($definition[$group_key]);
     }
     foreach ($definition as $property_key => $value) {
-      if ($property_key === '#storage') {
+      if ($property_key === '#storage' || $property_key === '#callback') {
         continue;
       }
       $property_name = checklistapi_strtolowercamel(mb_substr($property_key, 1));
-      $this->$property_name = $value;
+      $this->{$property_name} = $value;
     }
 
     $storage = 'config';
@@ -139,7 +142,7 @@ class ChecklistapiChecklist {
   public function clearSavedProgress() {
     $this->storage->deleteSavedProgress();
 
-    \Drupal::messenger()->addMessage(t('%title saved progress has been cleared.', [
+    \Drupal::messenger()->addMessage($this->t('%title saved progress has been cleared.', [
       '%title' => $this->title,
     ]));
   }
@@ -173,11 +176,11 @@ class ChecklistapiChecklist {
    */
   public function getLastUpdatedUser() {
     if (!isset($this->savedProgress['#changed_by'])) {
-      return t('n/a');
+      return $this->t('n/a');
     }
 
     $user = User::load($this->savedProgress['#changed_by']);
-    return ($user) ? $user->getAccountName() : t('[missing user]');
+    return ($user) ? $user->getDisplayName() : $this->t('[missing user]');
   }
 
   /**
@@ -188,7 +191,7 @@ class ChecklistapiChecklist {
    *   no saved progress.
    */
   public function getLastUpdatedDate() {
-    return (!empty($this->savedProgress['#changed'])) ? \Drupal::service('date.formatter')->format($this->savedProgress['#changed']) : t('n/a');
+    return (!empty($this->savedProgress['#changed'])) ? \Drupal::service('date.formatter')->format($this->savedProgress['#changed']) : $this->t('n/a');
   }
 
   /**

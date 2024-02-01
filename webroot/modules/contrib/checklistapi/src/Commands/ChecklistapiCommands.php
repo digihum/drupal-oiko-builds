@@ -5,34 +5,42 @@ namespace Drupal\checklistapi\Commands;
 use Consolidation\OutputFormatters\FormatterManager;
 use Consolidation\OutputFormatters\Options\FormatterOptions;
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Datetime\DateFormatterInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Render\Element;
-use Drupal\user\Entity\User;
 use Drush\Commands\DrushCommands;
 use Drush\Commands\help\ListCommands;
-use Psr\Log\LoggerAwareInterface;
 
 /**
- * Checklist API Drush command fileA Drush commandfile.
+ * Checklist API Drush command file.
  */
-class ChecklistapiCommands extends DrushCommands implements LoggerAwareInterface {
-
+class ChecklistapiCommands extends DrushCommands {
 
   /**
-   * The logger channel.
+   * The date formatter service.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelInterface
+   * @var \Drupal\Core\Datetime\DateFormatterInterface
    */
-  protected $logger;
+  protected $dateFormatter;
+
+  /**
+   * The user storage service.
+   *
+   * @var \Drupal\user\UserStorageInterface
+   */
+  private $userStorage;
 
   /**
    * Constructs an instance.
    *
-   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_channel
-   *   The logger channel factory.
+   * @param \Drupal\Core\Datetime\DateFormatterInterface $date_formatter
+   *   The date formatter service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
    */
-  public function __construct(LoggerChannelFactoryInterface $logger_channel) {
-    $this->logger = $logger_channel->get('drush');
+  public function __construct(DateFormatterInterface $date_formatter, EntityTypeManagerInterface $entity_type_manager) {
+    $this->dateFormatter = $date_formatter;
+    $this->userStorage = $entity_type_manager->getStorage('user');
   }
 
   /**
@@ -45,7 +53,7 @@ class ChecklistapiCommands extends DrushCommands implements LoggerAwareInterface
     $definitions = checklistapi_get_checklist_info();
 
     if (empty($definitions)) {
-      return $this->logger->alert(dt('No checklists available.'));
+      return $this->logger()->alert(dt('No checklists available.'));
     }
 
     // Build table rows.
@@ -102,7 +110,7 @@ class ChecklistapiCommands extends DrushCommands implements LoggerAwareInterface
 
     // Make sure the given checklist exists.
     if (!$checklist) {
-      return $this->logger->error(dt('No such checklist "@id".', [
+      return $this->logger()->error(dt('No such checklist "@id".', [
         '@id' => $checklist_id,
       ]));
     }
@@ -145,10 +153,11 @@ class ChecklistapiCommands extends DrushCommands implements LoggerAwareInterface
         $title = strip_tags($item['#title']);
         if ($saved_item) {
           // Append completion details.
-          $user = User::load($saved_item['#uid']);
+          /** @var \Drupal\user\UserInterface $user */
+          $user = $this->userStorage->load($saved_item['#uid']);
           $title .= ' - ' . dt('Completed @time by @user', [
-            '@time' => \Drupal::service('date.formatter')->format($saved_item['#completed'], 'short'),
-            '@user' => $user->getAccountName(),
+            '@time' => $this->dateFormatter->format($saved_item['#completed'], 'short'),
+            '@user' => $user->getDisplayName(),
           ]);
         }
         // Print the list item.

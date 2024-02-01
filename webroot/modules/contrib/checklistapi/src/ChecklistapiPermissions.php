@@ -2,18 +2,14 @@
 
 namespace Drupal\checklistapi;
 
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+
 /**
  * Defines a class containing permission callbacks.
  */
 class ChecklistapiPermissions {
 
-  /**
-   * Constructs a ChecklistapiPermissions object.
-   */
-  public function __construct() {
-    $this->editPermissionDescription = t('Check and uncheck list items and save changes, or clear saved progress.');
-    $this->viewPermissionDescription = t('Read-only access: View list items and saved progress.');
-  }
+  use StringTranslationTrait;
 
   /**
    * Returns an array of universal permissions.
@@ -23,15 +19,15 @@ class ChecklistapiPermissions {
    */
   public function universalPermissions() {
     $perms['view checklistapi checklists report'] = [
-      'title' => t('View the Checklists report'),
+      'title' => $this->t('View the Checklists report'),
     ];
     $perms['view any checklistapi checklist'] = [
-      'title' => t('View any checklist'),
-      'description' => $this->viewPermissionDescription,
+      'title' => $this->t('View any checklist'),
+      'description' => $this->t('Read-only access: View list items and saved progress.'),
     ];
     $perms['edit any checklistapi checklist'] = [
-      'title' => t('Edit any checklist'),
-      'description' => $this->editPermissionDescription,
+      'title' => $this->t('Edit any checklist'),
+      'description' => $this->t('Check and uncheck list items and save changes, or clear saved progress.'),
     ];
     return $perms;
   }
@@ -55,12 +51,12 @@ class ChecklistapiPermissions {
 
       $title = $checklist->title;
       $perms["view {$id} checklistapi checklist"] = [
-        'title' => t('View the @name checklist', ['@name' => $title]),
-        'description' => $this->viewPermissionDescription,
+        'title' => $this->t('View the @name checklist', ['@name' => $title]),
+        'description' => $this->t('Read-only access: View list items and saved progress.'),
       ];
       $perms["edit {$id} checklistapi checklist"] = [
-        'title' => t('Edit the @name checklist', ['@name' => $title]),
-        'description' => $this->editPermissionDescription,
+        'title' => $this->t('Edit the @name checklist', ['@name' => $title]),
+        'description' => $this->t('Check and uncheck list items and save changes, or clear saved progress.'),
       ];
     }
 

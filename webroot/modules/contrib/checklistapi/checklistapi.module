@@ -9,6 +9,7 @@
  */
 
 use Drupal\checklistapi\ChecklistapiChecklist;
+use Drupal\Component\Utility\SortArray;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -191,7 +192,7 @@ function checklistapi_sort_array(array $array) {
     $children[$key] = checklistapi_sort_array($children[$key]);
   }
   // Sort by weight.
-  uasort($children, ['Drupal\Component\Utility\SortArray', 'sortByWeightProperty']);
+  uasort($children, [SortArray::class, 'sortByWeightProperty']);
   // Remove incremental weight hack.
   foreach ($children as $key => $child) {
     $children[$key]['#weight'] = floor($children[$key]['#weight']);
@@ -223,9 +224,10 @@ function checklistapi_strtolowercamel($string) {
  * Implements hook_theme().
  */
 function checklistapi_theme() {
+  $path = \Drupal::service('extension.list.module')->getPath('checklistapi');
   return [
     'checklistapi_progress_bar' => [
-      'path' => drupal_get_path('module', 'checklistapi') . '/templates',
+      'path' => $path . '/templates',
       'template' => 'checklistapi-progress-bar',
       'variables' => [
         'message' => '',
