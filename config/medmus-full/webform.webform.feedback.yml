@@ -14,7 +14,7 @@ archive: false
 id: feedback
 title: Feedback
 description: 'Basic feedback webform.'
-category: ''
+categories: {  }
 elements: |
   name:
     '#title': 'Your Name'
