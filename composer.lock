@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6daf88543e17487b582e85b85d7a2aca",
+    "content-hash": "d1d0d05e793e63a79107e48f52383659",
     "packages": [
         {
             "name": "arthur-e/wicket",
@@ -3942,26 +3942,26 @@
         },
         {
             "name": "drupal/unlimited_number",
-            "version": "2.0.2",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/unlimited_number.git",
-                "reference": "2.0.2"
+                "reference": "2.0.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/unlimited_number-2.0.2.zip",
-                "reference": "2.0.2",
-                "shasum": "b6cf2e368ea34117d1d56b5cdc34883edea7c3fc"
+                "url": "https://ftp.drupal.org/files/projects/unlimited_number-2.0.4.zip",
+                "reference": "2.0.4",
+                "shasum": "fe9ff5b40478d8c379f6e3ab31945d0afb983edb"
             },
             "require": {
-                "drupal/core": "^8.9 || ^9"
+                "drupal/core": ">=9"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.2",
-                    "datestamp": "1655348096",
+                    "version": "2.0.4",
+                    "datestamp": "1656650316",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3974,16 +3974,19 @@
             ],
             "authors": [
                 {
-                    "name": "Daniel Phin",
-                    "homepage": "http://danielph.in",
-                    "role": "Maintainer"
+                    "name": "dpi",
+                    "homepage": "https://www.drupal.org/user/81431",
+                    "email": "pro@danielph.in"
                 }
             ],
             "description": "Provides a render element and a widget for number fields.",
             "homepage": "http://drupal.org/project/unlimited_number",
+            "keywords": [
+                "Drupal"
+            ],
             "support": {
-                "source": "https://github.com/dpi/unlimited_number",
-                "issues": "https://github.com/dpi/unlimited_number/issues"
+                "source": "https://git.drupalcode.org/project/unlimited_number",
+                "issues": "https://www.drupal.org/project/issues/unlimited_number"
             }
         },
         {
