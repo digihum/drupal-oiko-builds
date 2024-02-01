@@ -78,7 +78,7 @@
         "drupal/core-composer-scaffold": "~9.5.0",
         "drupal/core-recommended": "~9.5.0",
         "drupal/css_editor": "^1.2",
-        "drupal/csv_serialization": "^1.5",
+        "drupal/csv_serialization": "^3.0",
         "drupal/ctools": "^3.0",
         "drupal/editor_file": "^1.5",
         "drupal/entity_share": "^3.0",
