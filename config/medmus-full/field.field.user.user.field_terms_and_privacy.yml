@@ -20,5 +20,5 @@ default_value:
 default_value_callback: ''
 settings:
   on_label: 'I agree'
-  off_label: 'I don''t agree'
+  off_label: "I don't agree"
 field_type: boolean

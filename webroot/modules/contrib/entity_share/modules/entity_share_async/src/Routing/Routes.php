@@ -6,7 +6,6 @@ namespace Drupal\entity_share_async\Routing;
 
 use Drupal\Core\Authentication\AuthenticationCollectorInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
@@ -59,7 +58,7 @@ class Routes implements ContainerInjectionInterface {
     $collection = new RouteCollection();
 
     $route_collection = (new Route('/entity_share/async', [
-      RouteObjectInterface::CONTROLLER_NAME => '\Drupal\entity_share_async\Controller\EntryPoint::index',
+      '_controller' => '\Drupal\entity_share_async\Controller\EntryPoint::index',
     ]))
       ->setRequirement('_permission', 'entity_share_async_access_endpoint')
       ->setMethods(['POST']);

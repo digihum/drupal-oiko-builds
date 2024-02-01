@@ -9,6 +9,7 @@ dependencies:
     - cidoc
     - comment
     - eu_cookie_compliance
+    - file
     - filter
     - sharemessage
     - system
@@ -27,6 +28,7 @@ permissions:
   - 'avatars avatar_generator user gravatar'
   - 'avatars avatar_generator user gravatar_generator'
   - 'avatars avatar_generator user user_upload'
+  - 'delete own files'
   - 'display eu cookie compliance popup'
   - 'edit own comments'
   - 'post comments'

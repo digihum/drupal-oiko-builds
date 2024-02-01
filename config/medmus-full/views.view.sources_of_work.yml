@@ -1413,7 +1413,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '{{internal_name|split('' '')[0]}}'
+            text: "{{internal_name|split(' ')[0]}}"
             make_link: false
             path: ''
             absolute: false
@@ -2203,7 +2203,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '{{internal_name|split('' '')[0]}}'
+            text: "{{internal_name|split(' ')[0]}}"
             make_link: false
             path: ''
             absolute: false

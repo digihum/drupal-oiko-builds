@@ -1,7 +1,7 @@
 (function ($, Drupal) {
   Drupal.behaviors.oiko_messages_reveal = {
     attach: function (context) {
-      $('.js-highlighted-reveal', context).not('.js-no-process').once('oiko_highlighted_reveal').each(function() {
+      $(once('oiko_highlighted_reveal', '.js-highlighted-reveal', context)).not('.js-no-process').each(function() {
         var $this = $(this);
         if ($this.children().length || $this.text().trim().length) {
           // Add the close button.

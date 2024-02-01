@@ -23,7 +23,7 @@ dependencies:
     - rest
     - serialization
 id: margherita_s_view
-label: 'Margherita''s view'
+label: "Margherita's view"
 module: views
 description: ''
 tag: ''

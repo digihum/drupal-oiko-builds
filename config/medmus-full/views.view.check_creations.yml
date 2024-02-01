@@ -32,7 +32,7 @@ display:
           entity_type: cidoc_entity
           entity_field: internal_name
           plugin_id: field
-          label: 'Work''s internal name'
+          label: "Work's internal name"
           exclude: false
           alter:
             alter_text: false

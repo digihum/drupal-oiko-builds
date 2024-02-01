@@ -134,7 +134,7 @@ function oiko_preprocess_page(&$variables) {
       ->condition('status', TRUE)
       ->sort('name');
 
-    $place_ids = $cidoc_entity_query->execute();
+    $place_ids = $cidoc_entity_query->accessCheck(TRUE)->execute();
     if (!empty($place_ids)) {
       $id = array_rand($place_ids, 1);
       $loaded = \Drupal::service('entity_type.manager')

@@ -13,6 +13,7 @@ dependencies:
   module:
     - cidoc
     - field_ui
+    - file
     - filter
     - node
     - oiko_app
@@ -45,6 +46,7 @@ permissions:
   - 'delete any content_page content'
   - 'delete content_page revisions'
   - 'delete own cidoc entities'
+  - 'delete own files'
   - 'delete terms in empire'
   - 'edit any content_page content'
   - 'edit cidoc entities'

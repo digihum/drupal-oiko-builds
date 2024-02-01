@@ -35,7 +35,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '({{citation_target_id | striptags(''<a>'') | raw}})'
+            text: "({{citation_target_id | striptags('<a>') | raw}})"
             make_link: false
             path: ''
             absolute: false

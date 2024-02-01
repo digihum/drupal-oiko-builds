@@ -338,6 +338,7 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
       if ($property_name) {
         $query->condition('property', $property_name);
       }
+      $query->accessCheck(FALSE);
       $query->addTag('cidoc_entity_get_properties');
       $references = $query->execute();
 
@@ -375,7 +376,8 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
     $or_group->condition($domain_and_group)
       ->condition($range_and_group);
     $query->condition($or_group)
-      ->addTag('cidoc_get_properties_for_population');
+      ->addTag('cidoc_get_properties_for_population')
+      ->accessCheck(FALSE);
     return $query->execute();
   }
 
@@ -471,6 +473,7 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
       $query->condition('property', $properties, 'IN');
     }
     $query->addTag('cidoc_get_reverse_references_properties');
+    $query->accessCheck(FALSE);
     $references = $query->execute();
 
     $entities = [];
@@ -514,6 +517,7 @@ class CidocEntity extends EditorialContentEntityBase implements CidocEntityInter
       $query->condition('property', $properties, 'IN');
     }
     $query->addTag('cidoc_get_domain_references_properties');
+    $query->accessCheck(FALSE);
     $references = $query->execute();
 
     $entities = [];

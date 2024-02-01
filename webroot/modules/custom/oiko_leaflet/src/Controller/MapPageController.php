@@ -92,6 +92,7 @@ class MapPageController extends ControllerBase {
     if (!isset($this->countOfEntityPages)) {
       $storage = $this->entity_type_manager->getStorage('cidoc_entity');
       $query = $storage->getQuery()
+        ->accessCheck(TRUE)
         ->condition('status', 1)
         ->count();
       $this->moduleHandler->invokeAll('oiko_app_all_entities_query_alter', [$query]);

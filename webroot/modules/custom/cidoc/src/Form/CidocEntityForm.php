@@ -19,6 +19,7 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -28,7 +29,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @ingroup cidoc
  */
-class CidocEntityForm extends ContentEntityForm {
+class CidocEntityForm extends ContentEntityForm implements TrustedCallbackInterface {
 
   /**
    * The Current User object.
@@ -107,6 +108,11 @@ class CidocEntityForm extends ContentEntityForm {
 
     return $form;
   }
+
+  public static function trustedCallbacks() {
+    return ['formPrerender'];
+  }
+
 
   public function formPrerender($element) {
     // @TODO: Make sure this group exists on the form.
@@ -437,7 +443,7 @@ class CidocEntityForm extends ContentEntityForm {
    *
    * @see \Drupal\Core\Field\WidgetBase::setWidgetState()
    */
-  public function setWidgetState(FormStateInterface $form_state, $source_field, $property_name = NULL, array $set) {
+  public function setWidgetState(FormStateInterface $form_state, $source_field, $property_name, array $set) {
     $parents = array('field_storage', '#parents', 'cidoc_properties_' . $source_field, '#fields');
     if ($property_name) {
       $parents[] = $property_name;

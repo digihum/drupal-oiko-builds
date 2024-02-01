@@ -33,3 +33,4 @@ content:
 hidden:
   links: true
   rendered_transcript: true
+  search_api_excerpt: true

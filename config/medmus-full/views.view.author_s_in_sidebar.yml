@@ -601,7 +601,7 @@ display:
             guid_field: name
             guid_field_is_permalink: true
       display_extenders: {  }
-      path: 'don''t'
+      path: "don't"
       displays:
         entity_view_1: entity_view_1
         default: '0'

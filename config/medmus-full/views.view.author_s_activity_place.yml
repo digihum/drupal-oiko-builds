@@ -11,7 +11,7 @@ dependencies:
     - rest
     - serialization
 id: author_s_activity_place
-label: 'author''s activity place'
+label: "author's activity place"
 module: views
 description: ''
 tag: ''

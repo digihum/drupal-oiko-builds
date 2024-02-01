@@ -153,10 +153,10 @@
             $(this).next('.description').remove();
           }
         });
-        
+
         // Disable the citation controls if the referencer is empty.
         if ($(this).val().length == 0) {
-          $(this).once('cidoc-citation-disabler').each(function() {
+          $(once('cidoc-citation-disabler', this)).each(function() {
             if ($(this).val().length == 0) {
               $(this).parents('tr').find('input[type="submit"]').attr('disabled', 'true');
             }

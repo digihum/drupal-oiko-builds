@@ -5,7 +5,7 @@ dependencies:
   module:
     - cidoc
 id: authors_network
-label: 'Author''s network of contrafacta'
+label: "Author's network of contrafacta"
 module: views
 description: ''
 tag: ''

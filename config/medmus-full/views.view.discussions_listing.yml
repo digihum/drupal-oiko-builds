@@ -357,7 +357,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<p>There aren''t any discussions about this yet. Why not start one!</p>'
+            value: "<p>There aren't any discussions about this yet. Why not start one!</p>"
             format: basic_html
           tokenize: false
       sorts:

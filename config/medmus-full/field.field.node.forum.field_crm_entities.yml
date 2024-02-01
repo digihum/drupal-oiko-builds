@@ -26,7 +26,7 @@ field_name: field_crm_entities
 entity_type: node
 bundle: forum
 label: 'Related to'
-description: 'Use the autocomplete search and the ''Add another item'' button to add the things which this discussion will primarily be about.'
+description: "Use the autocomplete search and the 'Add another item' button to add the things which this discussion will primarily be about."
 required: false
 translatable: false
 default_value: {  }

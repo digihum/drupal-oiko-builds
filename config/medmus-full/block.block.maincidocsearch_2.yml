@@ -20,7 +20,7 @@ settings:
   placeholder_map: Search
   no_search_map: 'Search for events, people, groups, places, manuscripts...'
   placeholder_timeline: 'Search groups and people'
-  no_search_timeline: 'Search for communities, empires or groups to compare on your timeline e.g. ''The Roman Empire'' or ''the Han''.'
+  no_search_timeline: "Search for communities, empires or groups to compare on your timeline e.g. 'The Roman Empire' or 'the Han'."
   no_results_text: 'No results found.'
   searching_text: Searching...
 visibility: {  }

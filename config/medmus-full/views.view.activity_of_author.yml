@@ -788,7 +788,7 @@ display:
       tags: {  }
   entity_view_2:
     id: entity_view_2
-    display_title: 'Place of Author''s activity'
+    display_title: "Place of Author's activity"
     display_plugin: entity_view
     position: 1
     display_options:

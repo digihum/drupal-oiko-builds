@@ -64,7 +64,7 @@
 
   Drupal.behaviors.tags_block_filterable = {
     attach: function (context, settings) {
-      $('.js-map-tags-filterable-widget', context).once('tags_block_filterable').each(function() {
+      $(once('tags_block_filterable', '.js-map-tags-filterable-widget', context)).each(function() {
         var $wrapper = $(this);
         var $categoryItems = $wrapper.children('[data-legend-tag]');
 

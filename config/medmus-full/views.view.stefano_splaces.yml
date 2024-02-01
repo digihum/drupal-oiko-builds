@@ -12,7 +12,7 @@ dependencies:
     - geofield
     - oiko_leaflet
 id: stefano_splaces
-label: 'Stefano''splaces'
+label: "Stefano'splaces"
 module: views
 description: ''
 tag: ''

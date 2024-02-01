@@ -5,6 +5,7 @@ popups:
   dependencies:
     - core/drupal.ajax
     - core/jquery
+    - core/once
     - core/modernizr
     - oiko_sidebar/sidebar
     - oiko_sidebar/oikoApp
@@ -133,6 +134,10 @@ legendBlock:
   js:
     js/legend-block.js: {}
   version: VERSION
+  dependencies:
+    - core/once
+    - core/jquery
+    - core/drupal
 
 # These are our external vendor libraries.
 

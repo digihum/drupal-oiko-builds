@@ -32,7 +32,7 @@
       });
 
       // Check to see if we need to open the sidebar immediately.
-      $(document).once('oiko_leaflet__popups').each(function () {
+      $(once('oiko_leaflet__popups', document)).each(function () {
         if (drupalSettings.hasOwnProperty('oiko_leaflet') && drupalSettings.oiko_leaflet.hasOwnProperty('popup') && drupalSettings.oiko_leaflet.popup) {
           // We might need to wait for everything we need to be loaded.
           $(window).bind('load', function () {
@@ -283,7 +283,7 @@
 
   Drupal.behaviors.oiko_iframe_container = {
     attach: function(context) {
-      $('.discussion-iframe', context).once('oiko_iframe_container').each(function() {
+      $(once('oiko_iframe_container', '.discussion-iframe', context)).each(function() {
         var $this = $(this);
         var isOldIE = (navigator.userAgent.indexOf("MSIE") !== -1); // Detect IE10 and below
         $this.iFrameResize({

@@ -7,6 +7,6 @@
   "homepage": "https://www.drupal.org/project/edtf",
   "minimum-stability": "dev",
   "require": {
-    "computerminds/php-edtf": "^0.2"
+    "computerminds/php-edtf": "^0.3"
   }
 }

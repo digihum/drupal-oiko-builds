@@ -22,6 +22,7 @@ drupal.cidoc_property_reference_widget:
   dependencies:
     - core/jquery
     - core/drupal
+    - core/once
 
 cidoc.toolbar:
   version: VERSION

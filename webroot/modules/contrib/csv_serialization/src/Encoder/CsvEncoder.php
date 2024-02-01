@@ -2,13 +2,13 @@
 
 namespace Drupal\csv_serialization\Encoder;
 
-use Drupal\Component\Serialization\Exception\InvalidDataTypeException;
-use Drupal\Component\Utility\Html;
-use League\Csv\ByteSequence;
-use League\Csv\Reader;
-use League\Csv\Writer;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
+use League\Csv\Writer;
+use League\Csv\Reader;
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Serialization\Exception\InvalidDataTypeException;
+use League\Csv\ByteSequence;
 
 /**
  * Adds CSV encoder support for the Serialization API.
@@ -103,14 +103,14 @@ class CsvEncoder implements EncoderInterface, DecoderInterface {
   /**
    * {@inheritdoc}
    */
-  public function supportsEncoding($format) {
+  public function supportsEncoding(string $format):bool {
     return $format == static::$format;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function supportsDecoding($format) {
+  public function supportsDecoding(string $format):bool {
     return $format == static::$format;
   }
 
@@ -119,7 +119,7 @@ class CsvEncoder implements EncoderInterface, DecoderInterface {
    *
    * Uses HTML-safe strings, with several characters escaped.
    */
-  public function encode($data, $format, array $context = []) {
+  public function encode($data, string $format, array $context = []):string {
     switch (gettype($data)) {
       case "array":
         break;
@@ -164,7 +164,7 @@ class CsvEncoder implements EncoderInterface, DecoderInterface {
           $csv->insertOne($row);
         }
       }
-      $output = $csv->toString();
+      $output = $csv->getContent();
 
       return trim($output);
     }
@@ -284,11 +284,14 @@ class CsvEncoder implements EncoderInterface, DecoderInterface {
   /**
    * {@inheritdoc}
    *
+   * @return mixed
+   *   The decoded data.
+   *
    * @throws \League\Csv\Exception
    * @throws \League\Csv\Exception
    * @throws \League\Csv\Exception
    */
-  public function decode($data, $format, array $context = []) {
+  public function decode($data, string $format, array $context = []) {
     $csv = Reader::createFromString($data);
     $csv->setDelimiter($this->delimiter);
     $csv->setEnclosure($this->enclosure);

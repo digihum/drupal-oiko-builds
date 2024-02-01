@@ -11,7 +11,7 @@ dependencies:
     - rest
     - serialization
 id: auth_2
-label: 'author''s activity date'
+label: "author's activity date"
 module: views
 description: ''
 tag: ''

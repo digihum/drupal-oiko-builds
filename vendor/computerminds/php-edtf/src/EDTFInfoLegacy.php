@@ -42,7 +42,7 @@ class EDTFInfoLegacy implements EDTFInfoValidationInterface {
     if (!isset($this->apiData)) {
       $client = new GuzzleHttp\Client();
       try {
-        $res = $client->request('GET', 'http://digital2.library.unt.edu/edtf/isValid.json', array(
+        $res = $client->request('GET', 'https://digital2.library.unt.edu/edtf/isValid.json', array(
           'timeout' => 10,
           'query' => array(
             'date' => $this->dateString,

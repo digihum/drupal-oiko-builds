@@ -7,6 +7,7 @@ dependencies:
     - taxonomy.vocabulary.forums
     - taxonomy.vocabulary.source_books
   module:
+    - file
     - forum
     - node
     - oiko_cidoc
@@ -21,6 +22,7 @@ permissions:
   - 'create forum content'
   - 'delete any forum content'
   - 'delete forum revisions'
+  - 'delete own files'
   - 'delete own forum content'
   - 'delete terms in forums'
   - 'delete terms in source_books'

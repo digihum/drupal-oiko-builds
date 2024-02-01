@@ -44,7 +44,7 @@ class EDTFInfo implements EDTFInfoInterface {
     if (!isset($this->apiData)) {
       $client = new GuzzleHttp\Client();
       try {
-        $res = $client->request('GET', 'http://edtf.herokuapp.com/', array(
+        $res = $client->request('GET', 'https://edtf.herokuapp.com/', array(
           'timeout' => 15,
           'query' => array(
             'date' => $this->dateString,

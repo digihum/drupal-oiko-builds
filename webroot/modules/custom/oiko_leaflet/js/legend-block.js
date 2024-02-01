@@ -3,7 +3,7 @@
 
   Drupal.behaviors.legend_block_filterable = {
     attach: function (context, settings) {
-      $('.js-map-legend-filterable-widget', context).once('legend_block_filterable').each(function() {
+      $(once('legend_block_filterable', '.js-map-legend-filterable-widget', context)).each(function() {
         var $wrapper = $(this);
         var $categoryItems = $wrapper.children('[data-legend-category]');
 

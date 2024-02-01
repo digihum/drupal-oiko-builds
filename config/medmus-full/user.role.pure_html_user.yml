@@ -5,10 +5,12 @@ dependencies:
   config:
     - filter.format.pure_html
   module:
+    - file
     - filter
 id: pure_html_user
 label: 'Pure HTML user'
 weight: 7
 is_admin: null
 permissions:
+  - 'delete own files'
   - 'use text format pure_html'

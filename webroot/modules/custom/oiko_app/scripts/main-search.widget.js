@@ -3,7 +3,7 @@
 
   Drupal.behaviors.oiko_main_search = {
     attach: function(context, settings) {
-      $(context).find('.js-main-search-wrapper').once('oiko_main_search').each(function() {
+      $(once('oiko_main_search', '.js-main-search-wrapper', context)).each(function() {
         var $component = $(this);
         if (!$component.data('oiko_main_search')) {
           var mainSearch = new Drupal.OikoMainSearch($component);

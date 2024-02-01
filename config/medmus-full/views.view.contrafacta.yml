@@ -170,7 +170,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
-          label: 'Model''s Author'
+          label: "Model's Author"
           exclude: false
           alter:
             alter_text: false
@@ -1123,7 +1123,7 @@ display:
           field: related_entities
           relationship: related_entities_reverse_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false
@@ -3716,7 +3716,7 @@ display:
           field: related_entities
           relationship: related_entities_reverse_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false
@@ -6045,7 +6045,7 @@ display:
           field: related_entities
           relationship: related_entities_reverse_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false
@@ -7114,7 +7114,7 @@ display:
           field: name
           relationship: related_entities_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
@@ -7833,7 +7833,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
-          label: 'Model''s Author'
+          label: "Model's Author"
           exclude: false
           alter:
             alter_text: false
@@ -8024,7 +8024,7 @@ display:
           field: name
           relationship: related_entities_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
@@ -8734,7 +8734,7 @@ display:
           field: related_entities
           relationship: related_entities_reverse_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false
@@ -8993,7 +8993,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
-          label: 'Model''s Author'
+          label: "Model's Author"
           exclude: false
           alter:
             alter_text: false
@@ -10234,7 +10234,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
-          label: 'Model''s Author'
+          label: "Model's Author"
           exclude: false
           alter:
             alter_text: false
@@ -11104,7 +11104,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
-          label: 'Model''s Author'
+          label: "Model's Author"
           exclude: false
           alter:
             alter_text: false
@@ -12478,7 +12478,7 @@ display:
           field: related_entities
           relationship: related_entities_reverse_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false
@@ -13756,7 +13756,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
-          label: 'Model''s Author'
+          label: "Model's Author"
           exclude: false
           alter:
             alter_text: false
@@ -13947,7 +13947,7 @@ display:
           field: name
           relationship: related_entities_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
@@ -14792,7 +14792,7 @@ display:
           field: related_entities
           relationship: related_entities_reverse_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false
@@ -15140,7 +15140,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
-          label: 'Model''s Author'
+          label: "Model's Author"
           exclude: false
           alter:
             alter_text: false
@@ -15201,7 +15201,7 @@ display:
           field: name
           relationship: related_entities_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
@@ -15697,7 +15697,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
-          label: 'Model''s Author'
+          label: "Model's Author"
           exclude: false
           alter:
             alter_text: false
@@ -15758,7 +15758,7 @@ display:
           field: name
           relationship: related_entities_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
@@ -16403,7 +16403,7 @@ display:
           field: related_entities
           relationship: related_entities_reverse_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false
@@ -16663,7 +16663,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
-          label: 'Model''s Author'
+          label: "Model's Author"
           exclude: false
           alter:
             alter_text: false
@@ -16854,7 +16854,7 @@ display:
           field: name
           relationship: related_entities_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
@@ -17498,7 +17498,7 @@ display:
           field: related_entities
           relationship: related_entities_reverse_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false
@@ -17759,7 +17759,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
-          label: 'Model''s Author'
+          label: "Model's Author"
           exclude: false
           alter:
             alter_text: false
@@ -18770,7 +18770,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
-          label: 'Model''s Author'
+          label: "Model's Author"
           exclude: false
           alter:
             alter_text: false
@@ -19492,7 +19492,7 @@ display:
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
-          label: 'Model''s Author'
+          label: "Model's Author"
           exclude: false
           alter:
             alter_text: false
@@ -20448,7 +20448,7 @@ display:
           entity_field: name
           plugin_id: string
           operator: '!='
-          value: 'Canso d''Antiocha'
+          value: "Canso d'Antiocha"
           group: 2
           exposed: false
           expose:
@@ -20489,7 +20489,7 @@ display:
           entity_field: name
           plugin_id: string
           operator: '!='
-          value: 'Canso d''Antiocha'
+          value: "Canso d'Antiocha"
           group: 2
           exposed: false
           expose:
@@ -21132,7 +21132,7 @@ display:
           field: related_entities
           relationship: related_entities_reverse_2
           group_type: group
-          admin_label: 'Contrafactum''s author'
+          admin_label: "Contrafactum's author"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false

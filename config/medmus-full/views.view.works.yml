@@ -710,7 +710,7 @@ display:
               moderator: '0'
               moderated_contributor: '0'
               pure_html_user: '0'
-            placeholder: 'Strophic, Prose, Alexandrins, Couplet d''octosyllabes, etc.'
+            placeholder: "Strophic, Prose, Alexandrins, Couplet d'octosyllabes, etc."
           is_grouped: false
           group_info:
             label: 'Formal feature'
@@ -1340,7 +1340,7 @@ display:
           field: related_entities
           relationship: related_entities_1
           group_type: group
-          admin_label: 'Other author''s appellations and identifier'
+          admin_label: "Other author's appellations and identifier"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false

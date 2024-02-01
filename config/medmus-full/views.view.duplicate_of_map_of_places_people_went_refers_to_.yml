@@ -486,7 +486,7 @@ display:
           field: reverse__cidoc_reference__domain
           relationship: domain
           group_type: group
-          admin_label: 'Links from this person''s activities'
+          admin_label: "Links from this person's activities"
           entity_type: cidoc_entity
           plugin_id: entity_reverse
           required: true

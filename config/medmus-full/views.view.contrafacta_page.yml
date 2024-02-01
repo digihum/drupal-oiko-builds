@@ -29,7 +29,7 @@ display:
           field: name
           relationship: related_entities
           group_type: group
-          admin_label: 'model''s author'
+          admin_label: "model's author"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
@@ -1076,7 +1076,7 @@ display:
           field: name
           relationship: related_entities_13
           group_type: group
-          admin_label: 'model''s music'
+          admin_label: "model's music"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
@@ -1141,7 +1141,7 @@ display:
           field: name
           relationship: related_entities_14
           group_type: group
-          admin_label: 'contrafactum''s music'
+          admin_label: "contrafactum's music"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
@@ -1309,7 +1309,7 @@ display:
           field: name
           relationship: none
           group_type: group
-          admin_label: 'Model''s incipit'
+          admin_label: "Model's incipit"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: standard
@@ -3217,7 +3217,7 @@ display:
           field: related_entities
           relationship: none
           group_type: group
-          admin_label: 'range of PC7 has music [model''s music]'
+          admin_label: "range of PC7 has music [model's music]"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false
@@ -3930,7 +3930,7 @@ display:
           exposed: true
           expose:
             operator_id: name_1_op
-            label: 'Model''s author'
+            label: "Model's author"
             description: ''
             use_operator: false
             operator: name_1_op
@@ -3978,7 +3978,7 @@ display:
           exposed: true
           expose:
             operator_id: name_2_op
-            label: 'Contrafactum''s author'
+            label: "Contrafactum's author"
             description: ''
             use_operator: false
             operator: name_2_op
@@ -4139,7 +4139,7 @@ display:
             placeholder: null
           is_grouped: true
           group_info:
-            label: 'Model''s language'
+            label: "Model's language"
             description: ''
             identifier: name_3
             optional: true
@@ -4216,7 +4216,7 @@ display:
             placeholder: null
           is_grouped: true
           group_info:
-            label: 'Contrafactum''s language'
+            label: "Contrafactum's language"
             description: ''
             identifier: name_4
             optional: true
@@ -5503,7 +5503,7 @@ display:
           exposed: true
           expose:
             operator_id: name_1_op
-            label: 'Model''s author'
+            label: "Model's author"
             description: ''
             use_operator: false
             operator: name_1_op
@@ -5551,7 +5551,7 @@ display:
           exposed: true
           expose:
             operator_id: name_2_op
-            label: 'Contrafactum''s author'
+            label: "Contrafactum's author"
             description: ''
             use_operator: false
             operator: name_2_op
@@ -5712,7 +5712,7 @@ display:
             placeholder: null
           is_grouped: true
           group_info:
-            label: 'Model''s language'
+            label: "Model's language"
             description: ''
             identifier: name_3
             optional: true
@@ -5789,7 +5789,7 @@ display:
             placeholder: null
           is_grouped: true
           group_info:
-            label: 'Contrafactum''s language'
+            label: "Contrafactum's language"
             description: ''
             identifier: name_4
             optional: true
@@ -5872,7 +5872,7 @@ display:
           field: name
           relationship: related_entities
           group_type: group
-          admin_label: 'model''s author'
+          admin_label: "model's author"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
@@ -6392,7 +6392,7 @@ display:
           field: name
           relationship: related_entities_13
           group_type: group
-          admin_label: 'model''s music'
+          admin_label: "model's music"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
@@ -6457,7 +6457,7 @@ display:
           field: name
           relationship: related_entities_14
           group_type: group
-          admin_label: 'contrafactum''s music'
+          admin_label: "contrafactum's music"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: field
@@ -6587,7 +6587,7 @@ display:
           field: name
           relationship: none
           group_type: group
-          admin_label: 'Model''s incipit'
+          admin_label: "Model's incipit"
           entity_type: cidoc_entity
           entity_field: name
           plugin_id: standard
@@ -6696,7 +6696,7 @@ display:
           exposed: true
           expose:
             operator_id: name_1_op
-            label: 'Model''s author'
+            label: "Model's author"
             description: ''
             use_operator: false
             operator: name_1_op
@@ -6744,7 +6744,7 @@ display:
           exposed: true
           expose:
             operator_id: name_2_op
-            label: 'Contrafactum''s author'
+            label: "Contrafactum's author"
             description: ''
             use_operator: false
             operator: name_2_op
@@ -6905,7 +6905,7 @@ display:
             placeholder: null
           is_grouped: true
           group_info:
-            label: 'Model''s music'
+            label: "Model's music"
             description: ''
             identifier: name_5
             optional: true
@@ -6954,7 +6954,7 @@ display:
             placeholder: null
           is_grouped: true
           group_info:
-            label: 'Contrafactum''s music'
+            label: "Contrafactum's music"
             description: ''
             identifier: name_6
             optional: true
@@ -7007,7 +7007,7 @@ display:
             placeholder: null
           is_grouped: true
           group_info:
-            label: 'Model''s language'
+            label: "Model's language"
             description: ''
             identifier: name_3
             optional: true
@@ -7080,7 +7080,7 @@ display:
             placeholder: null
           is_grouped: true
           group_info:
-            label: 'Contrafactum''s language'
+            label: "Contrafactum's language"
             description: ''
             identifier: name_4
             optional: true
@@ -7275,7 +7275,7 @@ display:
           field: related_entities
           relationship: related_entities_reverse_1
           group_type: group
-          admin_label: 'model''s author'
+          admin_label: "model's author"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false
@@ -7723,7 +7723,7 @@ display:
           field: related_entities
           relationship: none
           group_type: group
-          admin_label: 'Model''s language'
+          admin_label: "Model's language"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false
@@ -7947,7 +7947,7 @@ display:
           field: related_entities
           relationship: none
           group_type: group
-          admin_label: 'model''s music'
+          admin_label: "model's music"
           entity_type: cidoc_entity
           plugin_id: cidoc_related_entity_forward
           required: false

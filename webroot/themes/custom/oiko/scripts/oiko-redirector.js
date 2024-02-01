@@ -5,7 +5,7 @@
   // Add some nice code so that the sidebar will work on any page.
   Drupal.behaviors.oiko_sidebar_not_app = {
     attach: function (context, settings) {
-      $('a[data-cidoc-id]', context).once('oiko_sidebar_not_app').on('click', function (e) {
+      $(once('oiko_sidebar_not_app', 'a[data-cidoc-id]', context)).on('click', function (e) {
         var $target = $(e.target);
         var id = $target.data('cidoc-id');
         if (id) {
@@ -17,7 +17,7 @@
   };
 
   var currentSidebarEntity, lastAjaxRequest;
-  $(window).once('oiko-redirector').bind('oikoSidebarOpen', function(e, id) {
+  $(once('oiko-redirector', window)).bind('oikoSidebarOpen', function(e, id) {
     // @TODO: Maybe introduce a setting to control this.
     if (false) {
       // Redirect to the CRM URL.

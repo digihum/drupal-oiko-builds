@@ -12,3 +12,6 @@ tagsBlock:
   version: VERSION
   dependencies:
     - oiko_leaflet/temporal
+    - core/jquery
+    - core/once
+    - core/drupal
