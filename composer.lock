@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f617e3946c1eac6dcb1cecfd07531d0a",
+    "content-hash": "6daf88543e17487b582e85b85d7a2aca",
     "packages": [
         {
             "name": "arthur-e/wicket",
@@ -4063,32 +4063,33 @@
         },
         {
             "name": "drupal/views_bulk_operations",
-            "version": "3.13.0",
+            "version": "4.2.6",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/views_bulk_operations.git",
-                "reference": "8.x-3.13"
+                "reference": "4.2.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/views_bulk_operations-8.x-3.13.zip",
-                "reference": "8.x-3.13",
-                "shasum": "70583d08b91be3b5e008f571589425c2176eb73b"
+                "url": "https://ftp.drupal.org/files/projects/views_bulk_operations-4.2.6.zip",
+                "reference": "4.2.6",
+                "shasum": "20c6f77c0cebda75edfa570a8dc53fb133d6283a"
             },
             "require": {
-                "drupal/core": "^8.8 || ^9"
+                "drupal/core": "^9.4 || ^10",
+                "php": ">=7.4.0"
             },
             "require-dev": {
-                "drush/drush": "^10"
+                "drush/drush": "^12"
             },
             "suggest": {
-                "drush/drush": "^9 || ^10"
+                "drush/drush": "^11 || ^12"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-3.13",
-                    "datestamp": "1619697066",
+                    "version": "4.2.6",
+                    "datestamp": "1704281842",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -4096,7 +4097,7 @@
                 },
                 "drush": {
                     "services": {
-                        "drush.services.yml": "^9 || ^10"
+                        "drush.services.yml": "^10 || ^11"
                     }
                 }
             },

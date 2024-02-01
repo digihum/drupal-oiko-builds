@@ -102,7 +102,7 @@
         "drupal/squid_autocomplete": "^1.0@alpha",
         "drupal/stable": "^2.0",
         "drupal/upgrade_status": "^4.0",
-        "drupal/views_bulk_operations": "^3.13",
+        "drupal/views_bulk_operations": "^4.2",
         "drupal/views_delimited_list": "^2.0@alpha",
         "drupal/views_fields_on_off": "^2.0",
         "drupal/webform": "^6.2",
