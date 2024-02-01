@@ -1,11 +1,10 @@
 name: Squid Autocomplete
 type: module
 description: Provides autocompletion widgets with square brackets instead of parenthesis.
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 package: Field types
 
-# Information added by Drupal.org packaging script on 2021-09-18
-version: '8.x-1.0-alpha6'
+# Information added by Drupal.org packaging script on 2024-02-01
+version: '8.x-1.0-alpha7'
 project: 'squid_autocomplete'
-datestamp: 1631950091
+datestamp: 1706793081

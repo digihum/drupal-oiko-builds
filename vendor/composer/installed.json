@@ -3952,27 +3952,27 @@
         },
         {
             "name": "drupal/squid_autocomplete",
-            "version": "1.0.0-alpha6",
-            "version_normalized": "1.0.0.0-alpha6",
+            "version": "1.0.0-alpha7",
+            "version_normalized": "1.0.0.0-alpha7",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/squid_autocomplete.git",
-                "reference": "8.x-1.0-alpha6"
+                "reference": "8.x-1.0-alpha7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/squid_autocomplete-8.x-1.0-alpha6.zip",
-                "reference": "8.x-1.0-alpha6",
-                "shasum": "fbe889feb986c54d4ff9bb10cd6d8b22c2d0d17f"
+                "url": "https://ftp.drupal.org/files/projects/squid_autocomplete-8.x-1.0-alpha7.zip",
+                "reference": "8.x-1.0-alpha7",
+                "shasum": "6e801750fe6707a6d6a023dddb06c563f8a27e65"
             },
             "require": {
-                "drupal/core": "^8 || ^9"
+                "drupal/core": "^8 || ^9 || ^10"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.0-alpha6",
-                    "datestamp": "1631950090",
+                    "version": "8.x-1.0-alpha7",
+                    "datestamp": "1706793079",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
