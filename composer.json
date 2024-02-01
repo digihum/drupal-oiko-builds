@@ -88,7 +88,7 @@
         "drupal/gdpr": "^3.0@beta",
         "drupal/geocoder": "^2.0",
         "drupal/geofield": "^1.6",
-        "drupal/google_analytics": "^2.1",
+        "drupal/google_analytics": "^4.0",
         "drupal/honeypot": "^2.1",
         "drupal/key_auth": "^2.1",
         "drupal/leaflet": "^2.2",
