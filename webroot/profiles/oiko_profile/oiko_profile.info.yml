@@ -50,7 +50,6 @@ dependencies:
   - field_ui
   - file
   - filter
-  - rdf
   - views
   - views_ui
   - tour
