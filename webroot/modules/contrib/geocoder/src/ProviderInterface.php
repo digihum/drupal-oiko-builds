@@ -16,8 +16,8 @@ interface ProviderInterface {
    * @param string $source
    *   The data to be geocoded.
    *
-   * @return \Geocoder\Model\AddressCollection|\Geometry|null
-   *   The address object or NULL.
+   * @return \Geocoder\Collection|\Geometry|null
+   *   The address collection, or the geometry, or NULL.
    */
   public function geocode($source);
 
@@ -29,7 +29,7 @@ interface ProviderInterface {
    * @param float $longitude
    *   The longitude.
    *
-   * @return \Geocoder\Model\AddressCollection|null
+   * @return \Geocoder\Collection|null
    *   The AddressCollection object, NULL otherwise.
    */
   public function reverse($latitude, $longitude);

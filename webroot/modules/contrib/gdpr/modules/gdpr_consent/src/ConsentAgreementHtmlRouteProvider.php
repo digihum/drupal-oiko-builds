@@ -4,8 +4,8 @@ namespace Drupal\gdpr_consent;
 
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Routing\AdminHtmlRouteProvider;
-use Symfony\Component\Routing\Route;
 use Drupal\gdpr_consent\Form\ConsentAgreementRevisionRevertForm;
+use Symfony\Component\Routing\Route;
 
 /**
  * Provides routes for Consent Agreement entities.

@@ -5,7 +5,7 @@ namespace Drupal\gdpr_dump\Sql;
 use Drush\Sql\SqlSqlite;
 
 /**
- * Class GdprSqlSqlite.
+ * The GDPR GdprSqlSqlite.
  *
  * @package Drupal\gdpr_dump\Sql
  */

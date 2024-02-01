@@ -5,9 +5,10 @@ namespace Drupal\anonymizer\Anonymizer;
 use Drupal\Core\Field\FieldItemListInterface;
 
 /**
- * Interface AnonymizerInterface.
+ * The GDPR Anonymizer Interface.
  *
  * @package Drupal\anonymizer\Anonymizer
+ *  The anonymizer package.
  */
 interface AnonymizerInterface {
 

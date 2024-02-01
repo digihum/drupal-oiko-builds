@@ -4,8 +4,8 @@ namespace mglaman\PHPStanDrupal\Drupal;
 
 use Drupal\Core\DependencyInjection\ContainerNotInitializedException;
 use DrupalFinder\DrupalFinder;
-use Nette\Utils\Finder;
 use PHPStan\DependencyInjection\Container;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
 class DrupalAutoloader
@@ -57,6 +57,9 @@ class DrupalAutoloader
 
     public function register(Container $container): void
     {
+        /**
+         * @var array{drupal_root: string, bleedingEdge: array{checkDeprecatedHooksInApiFiles: bool}} $drupalParams
+         */
         $drupalParams = $container->getParameter('drupal');
         $drupalRoot = realpath($drupalParams['drupal_root']);
         $finder = new DrupalFinder();
@@ -65,7 +68,7 @@ class DrupalAutoloader
         $drupalRoot = $finder->getDrupalRoot();
         $drupalVendorRoot = $finder->getVendorDir();
         if (! (bool) $drupalRoot || ! (bool) $drupalVendorRoot) {
-            throw new \RuntimeException("Unable to detect Drupal at $drupalRoot");
+            throw new \RuntimeException("Unable to detect Drupal at {$drupalParams['drupal_root']}");
         }
 
         $this->drupalRoot = $drupalRoot;
@@ -94,6 +97,7 @@ class DrupalAutoloader
         $this->addThemeNamespaces();
         $this->registerPs4Namespaces($this->namespaces);
         $this->loadLegacyIncludes();
+        $checkDeprecatedHooksInApiFiles =  $drupalParams['bleedingEdge']['checkDeprecatedHooksInApiFiles'];
 
         foreach ($this->moduleData as $extension) {
             $this->loadExtension($extension);
@@ -110,6 +114,10 @@ class DrupalAutoloader
             // Add .post_update.php
             if (file_exists($module_dir . '/' . $module_name . '.post_update.php')) {
                 $this->loadAndCatchErrors($module_dir . '/' . $module_name . '.post_update.php');
+            }
+            // Add .api.php
+            if ($checkDeprecatedHooksInApiFiles && file_exists($module_dir . '/' . $module_name . '.api.php')) {
+                $this->loadAndCatchErrors($module_dir . '/' . $module_name . '.api.php');
             }
             // Add misc .inc that are magically allowed via hook_hook_info.
             $magic_hook_info_includes = [
@@ -143,7 +151,7 @@ class DrupalAutoloader
                 }
                 $drushDir = dirname($reflect->getFileName(), $levels);
                 /** @var \SplFileInfo $file */
-                foreach (Finder::findFiles('*.inc')->in($drushDir . '/includes') as $file) {
+                foreach (Finder::create()->files()->name('*.inc')->in($drushDir . '/includes') as $file) {
                     require_once $file->getPathname();
                 }
             }
@@ -204,7 +212,7 @@ class DrupalAutoloader
     protected function loadLegacyIncludes(): void
     {
         /** @var \SplFileInfo $file */
-        foreach (Finder::findFiles('*.inc')->in($this->drupalRoot . '/core/includes') as $file) {
+        foreach (Finder::create()->files()->name('*.inc')->in($this->drupalRoot . '/core/includes') as $file) {
             require_once $file->getPathname();
         }
     }

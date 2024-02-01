@@ -9,9 +9,9 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\gdpr_tasks\Form\CreateGdprRequestOnBehalfOfUserForm;
 use Drupal\gdpr_tasks\TaskManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\gdpr_tasks\Form\CreateGdprRequestOnBehalfOfUserForm;
 
 /**
  * Returns responses for Views UI routes.

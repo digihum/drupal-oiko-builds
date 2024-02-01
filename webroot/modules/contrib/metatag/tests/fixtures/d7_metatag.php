@@ -85,8 +85,6 @@ $connection->insert('metatag')
           'follow' => 0,
           'noarchive' => 0,
           'nosnippet' => 0,
-          'noodp' => 0,
-          'noydir' => 0,
           'noimageindex' => 0,
           'notranslate' => 0,
         ],
@@ -109,8 +107,6 @@ $connection->insert('metatag')
           'follow' => 0,
           'noarchive' => 0,
           'nosnippet' => 0,
-          'noodp' => 0,
-          'noydir' => 0,
           'noimageindex' => 0,
           'notranslate' => 0,
         ],
@@ -125,6 +121,7 @@ $connection->insert('metatag')
     'data' => serialize([
       'keywords' => ['value' => 'a user'],
       'canonical' => ['value' => 'the-user'],
+      'description' => ['value' => 'Drupal' . chr(0x99) . ' user'],
     ]),
   ])
   ->values([

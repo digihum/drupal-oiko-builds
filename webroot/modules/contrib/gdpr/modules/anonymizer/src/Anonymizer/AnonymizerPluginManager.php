@@ -2,10 +2,10 @@
 
 namespace Drupal\anonymizer\Anonymizer;
 
+use Drupal\anonymizer\Annotation\Anonymizer;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
-use Drupal\anonymizer\Annotation\Anonymizer;
 
 /**
  * Manager class for Anonymizer plugins.

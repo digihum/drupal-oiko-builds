@@ -3,7 +3,6 @@
 namespace Drupal\Tests\metatag\Functional;
 
 use Drupal\Component\Render\FormattableMarkup;
-use Drupal\Component\Utility\Html;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\Entity\Vocabulary;
 use Drupal\user\Entity\User;
@@ -15,10 +14,13 @@ trait MetatagHelperTrait {
 
   /**
    * Log in as user 1.
+   *
+   * @return \Drupal\user\Entity\User
+   *   The full user object for user 1, after logging in.
    */
   protected function loginUser1() {
     // Load user 1.
-    /* @var \Drupal\user\Entity\User $account */
+    /** @var \Drupal\user\Entity\User $account */
     $account = User::load(1);
 
     // Reset the password.
@@ -31,23 +33,8 @@ trait MetatagHelperTrait {
 
     // Login.
     $this->drupalLogin($account);
-  }
 
-  /**
-   * {@inheritdoc}
-   */
-  protected function verbose($message, $title = NULL) {
-    // Handle arrays, objects, etc.
-    if (!is_string($message)) {
-      $message = "<pre>\n" . print_r($message, TRUE) . "\n</pre>\n";
-    }
-
-    // Optional title to go before the output.
-    if (!empty($title)) {
-      $title = '<h2>' . Html::escape($title) . "</h2>\n";
-    }
-
-    parent::verbose($title . $message);
+    return $account;
   }
 
   /**
@@ -111,12 +98,7 @@ trait MetatagHelperTrait {
     $vocab = Vocabulary::create($values);
     $status = $vocab->save();
 
-    if ($this instanceof \PHPUnit_Framework_TestCase) {
-      $this->assertSame($status, SAVED_NEW, (new FormattableMarkup('Created vocabulary %type.', ['%type' => $vocab->id()]))->__toString());
-    }
-    else {
-      self::assertEquals($status, SAVED_NEW, (new FormattableMarkup('Created vocabulary %type.', ['%type' => $vocab->id()]))->__toString());
-    }
+    $this->assertSame($status, SAVED_NEW, (new FormattableMarkup('Created vocabulary %type.', ['%type' => $vocab->id()]))->__toString());
 
     return $vocab;
   }
@@ -127,7 +109,7 @@ trait MetatagHelperTrait {
    * @param array $values
    *   Items passed to the term. Requires the 'vid' element.
    *
-   * @return Drupal\taxonomy\Entity\Term
+   * @return \Drupal\taxonomy\Entity\Term
    *   A fully formatted term object.
    */
   private function createTerm(array $values = []) {
@@ -144,12 +126,7 @@ trait MetatagHelperTrait {
     $term = Term::create($values);
     $status = $term->save();
 
-    if ($this instanceof \PHPUnit_Framework_TestCase) {
-      $this->assertSame($status, SAVED_NEW, (new FormattableMarkup('Created term %name.', ['%name' => $term->label()]))->__toString());
-    }
-    else {
-      self::assertEquals($status, SAVED_NEW, (new FormattableMarkup('Created term %name.', ['%name' => $term->label()]))->__toString());
-    }
+    $this->assertSame($status, SAVED_NEW, (new FormattableMarkup('Created term %name.', ['%name' => $term->label()]))->__toString());
 
     return $term;
   }

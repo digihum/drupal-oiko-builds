@@ -6,12 +6,11 @@
  */
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\Display\EntityDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\file\FileInterface;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\Display\EntityDisplayInterface;
-use Drupal\Core\File\FileSystemInterface;
-use Drupal\user\UserInterface;
 
 /**
  * Implements hook_theme().
@@ -65,7 +64,7 @@ function gdpr_tasks_file_access(FileInterface $file, $operation, AccountInterfac
  * Update entity definitions of certain entity types to be excluded from entity
  * traversal.
  */
-function gdpr_fields_entity_type_alter(array &$entity_types) {
+function gdpr_tasks_entity_type_alter(array &$entity_types) {
   /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
   // Excluded entity types.
   $exlude_entity_types = [
@@ -190,7 +189,7 @@ function gdpr_tasks_user_predelete(EntityInterface $entity) {
   // @todo Consider options for deleting related data if the user has cancelled
   // their account.
   $storage = \Drupal::entityTypeManager()->getStorage('gdpr_task');
-  $query = $storage->getQuery();
+  $query = $storage->getQuery()->accessCheck(FALSE);
   $or = $query->orConditionGroup()
     ->condition('requested_by', $entity->id())
     ->condition('user_id', $entity->id());

@@ -16,7 +16,7 @@ use function str_replace;
 use function trim;
 
 /**
- * Class GdprSqlMysql.
+ * The GDPR GdprSqlMysql.
  *
  * @package Drupal\gdpr_dump\Sql
  */
@@ -59,7 +59,7 @@ class GdprSqlMysql extends SqlMysql {
    * @return mixed
    *   Bool or void.
    */
-  public function dump() {
+  public function dump(): mixed {
     /** @var string|bool $file Path where dump file should be stored. If TRUE, generate a path based on usual backup directory and current date.*/
     $file = $this->getOption('result-file');
     $fileSuffix = '';
@@ -106,7 +106,7 @@ class GdprSqlMysql extends SqlMysql {
    * @return string
    *   The command.
    */
-  protected function createRenameCommands(array $tableSelection) {
+  protected function createRenameCommands(array $tableSelection): ?string {
     $skipTables = array_merge($tableSelection['skip'], $tableSelection['structure']);
     $skipTables = array_flip($skipTables);
     $skipTables += $this->tablesToSkip;
@@ -137,7 +137,7 @@ class GdprSqlMysql extends SqlMysql {
    *   ready for executing. If multiple statements are needed,
    *   enclose in parenthesis.
    */
-  public function dumpCmd($tableSelection) {
+  public function dumpCmd($tableSelection): ?string {
     $multipleCommands = FALSE;
     $skipTables = $tableSelection['skip'];
     $structureTables = $tableSelection['structure'];

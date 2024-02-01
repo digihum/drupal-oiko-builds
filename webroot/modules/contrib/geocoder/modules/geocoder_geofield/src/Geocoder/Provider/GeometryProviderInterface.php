@@ -4,13 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\geocoder_geofield\Geocoder\Provider;
 
-use Geometry;
-
 /**
  * Providers GeometryProvider interface..
- *
- * @author William Durand <william.durand1@gmail.com>
- * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 interface GeometryProviderInterface {
 
@@ -25,7 +20,7 @@ interface GeometryProviderInterface {
    *
    * @throws \Geocoder\Exception\Exception
    */
-  public function geocode($filename): Geometry;
+  public function geocode($filename): \Geometry;
 
   /**
    * Reverse ReverseGeocode.

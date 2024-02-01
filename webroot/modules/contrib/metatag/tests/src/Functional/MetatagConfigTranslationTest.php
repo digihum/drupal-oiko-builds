@@ -67,7 +67,7 @@ class MetatagConfigTranslationTest extends BrowserTestBase {
   /**
    * Sets the test up.
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->adminUser = $this->drupalCreateUser($this->permissions);
     $this->drupalLogin($this->adminUser);
@@ -107,12 +107,11 @@ class MetatagConfigTranslationTest extends BrowserTestBase {
 
     // Confirm that each config translation page can be loaded.
     foreach ($defaults as $config_name) {
-      if ($config_entity = $config_manager->loadConfigEntityByName($config_name)) {
+      $config_entity = $config_manager->loadConfigEntityByName($config_name);
+      $this->assertNotNull($config_entity);
+      if (!empty($config_entity)) {
         $this->drupalGet('admin/config/search/metatag/' . $config_entity->id() . '/translate');
         $session->statusCodeEquals(200);
-      }
-      else {
-        $this->error('Unable to load a Metatag default config: ' . $config_name);
       }
     }
   }
@@ -129,7 +128,7 @@ class MetatagConfigTranslationTest extends BrowserTestBase {
       'title' => 'Test title',
       'description' => 'Test description',
     ];
-    $this->drupalPostForm(NULL, $edit, $this->t('Save'));
+    $this->submitForm($edit, $this->t('Save'));
     $session->statusCodeEquals(200);
     $session->pageTextContains('Saved the Global Metatag defaults.');
 
@@ -154,7 +153,7 @@ class MetatagConfigTranslationTest extends BrowserTestBase {
       'translation[config_names][metatag.metatag_defaults.global][tags][title]' => 'Le title',
       'translation[config_names][metatag.metatag_defaults.global][tags][description]' => 'Le description',
     ];
-    $this->drupalPostForm(NULL, $edit, $this->t('Save translation'));
+    $this->submitForm($edit, $this->t('Save translation'));
     $session->statusCodeEquals(200);
     $session->pageTextContains('Successfully saved French translation');
 

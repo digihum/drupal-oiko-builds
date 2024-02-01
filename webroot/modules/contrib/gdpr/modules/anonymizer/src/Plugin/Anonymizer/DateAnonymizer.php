@@ -6,7 +6,7 @@ use Drupal\anonymizer\Anonymizer\AnonymizerBase;
 use Drupal\Core\Field\FieldItemListInterface;
 
 /**
- * Class TextAnonymizer.
+ * The GDPR Text Anonymizer.
  *
  * @Anonymizer(
  *   id = "date_anonymizer",

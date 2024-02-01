@@ -10,7 +10,7 @@ use function count;
 use function reset;
 
 /**
- * Class ConsentUserResolverPluginManager.
+ * The GDPR Consent User Resolver Plugin Manager.
  *
  * @package Drupal\gdpr_consent\Resolver
  */

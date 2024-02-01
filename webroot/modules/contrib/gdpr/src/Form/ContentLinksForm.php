@@ -16,7 +16,7 @@ use function strpos;
 use function substr;
 
 /**
- * Class ContentLinksForm.
+ * The GDPR Content Links Form.
  *
  * @see \Drupal\link\Plugin\Field\FieldType\LinkItem
  * @see \Drupal\link\Plugin\Field\FieldWidget\LinkWidget
@@ -124,7 +124,7 @@ class ContentLinksForm extends ConfigFormBase {
           '#title' => $label,
           '#process_default_value' => FALSE,
           '#element_validate' => [[static::class, 'validateUriElement']],
-          '#default_value' => isset($urls[$langCode][$key]) ? $urls[$langCode][$key] : NULL,
+          '#default_value' => $urls[$langCode][$key] ?? NULL,
         ];
       }
     }

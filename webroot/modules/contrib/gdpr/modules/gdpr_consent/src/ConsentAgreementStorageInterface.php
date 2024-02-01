@@ -3,8 +3,8 @@
 namespace Drupal\gdpr_consent;
 
 use Drupal\Core\Entity\ContentEntityStorageInterface;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\gdpr_consent\Entity\ConsentAgreementInterface;
 
 /**

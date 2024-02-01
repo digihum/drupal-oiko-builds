@@ -6,7 +6,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class TaskSettingsForm.
+ * The GDPR Task Settings Form.
  *
  * @ingroup gdpr_tasks
  */

@@ -6,7 +6,7 @@ use Drupal\anonymizer\Anonymizer\AnonymizerBase;
 use Drupal\Core\Field\FieldItemListInterface;
 
 /**
- * Class EmailAnonymizer.
+ * The GDPR Email Anonymizer.
  *
  * @Anonymizer(
  *   id = "email_anonymizer",

@@ -3,7 +3,7 @@
 namespace Drupal\gdpr_dump\Exception;
 
 /**
- * Class GdprDumpAnonymizationException.
+ * The GDPR Dump Anonymization Exception.
  *
  * @package Drupal\gdpr_dump\Exception
  */

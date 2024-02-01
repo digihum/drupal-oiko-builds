@@ -147,7 +147,7 @@ class ConsentWidget extends WidgetBase {
 
     $element['target_revision_id'] = [
       '#type' => 'hidden',
-      '#default_value' => isset($item->target_revision_id) ? $item->target_revision_id : $agreement->getRevisionId(),
+      '#default_value' => $item->target_revision_id ?? $agreement->getRevisionId(),
     ];
 
     $element['agreed'] = [
@@ -181,7 +181,7 @@ class ConsentWidget extends WidgetBase {
         '#type' => 'textarea',
         '#title' => 'GDPR Consent Notes',
         '#required' => FALSE,
-        '#default_value' => isset($item->notes) ? $item->notes : '',
+        '#default_value' => $item->notes ?? '',
       ];
     }
 

@@ -38,7 +38,7 @@ class NodewordsEntities extends ProcessPluginBase {
 
     // Re-shape D6 entries into for D8 entries.
     $old_tags = array_map(static function ($value) {
-      return unserialize($value);
+      return unserialize($value, ['allowed_classes' => FALSE]);
     }, $value);
 
     foreach ($old_tags as $d6_metatag_name => $metatag_value) {
@@ -445,9 +445,9 @@ class NodewordsEntities extends ProcessPluginBase {
       'yandex-verification' => 'yandex',
     ];
 
-    // Trigger hook_metatag_migrate_metatagd7_tags_map_alter().
+    // Trigger hook_metatag_migrate_nodewordsd6_tags_map_alter().
     // Allow modules to override tags or the entity used for token replacements.
-    \Drupal::service('module_handler')->alter('metatag_migrate_metatagd7_tags_map', $map);
+    \Drupal::service('module_handler')->alter('metatag_migrate_nodewordsd6_tags_map', $map);
 
     return $map;
   }

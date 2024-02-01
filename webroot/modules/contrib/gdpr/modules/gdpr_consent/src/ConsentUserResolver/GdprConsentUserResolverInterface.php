@@ -5,7 +5,7 @@ namespace Drupal\gdpr_consent\ConsentUserResolver;
 use Drupal\Core\Entity\EntityInterface;
 
 /**
- * Interface GdprConsentUserResolverInterface.
+ * The GDPR Consent User Resolver Interface.
  */
 interface GdprConsentUserResolverInterface {
 

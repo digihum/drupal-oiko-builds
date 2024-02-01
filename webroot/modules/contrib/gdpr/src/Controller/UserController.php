@@ -9,7 +9,7 @@ use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class UserController.
+ * The GDPR User Controller.
  *
  * @package Drupal\gdpr\Controller
  */

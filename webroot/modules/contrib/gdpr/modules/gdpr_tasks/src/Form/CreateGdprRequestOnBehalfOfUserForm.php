@@ -5,8 +5,8 @@ namespace Drupal\gdpr_tasks\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Queue\QueueFactory;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\gdpr_tasks\Entity\Task;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form for user task requests.

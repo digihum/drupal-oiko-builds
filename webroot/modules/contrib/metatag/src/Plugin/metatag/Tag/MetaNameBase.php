@@ -82,6 +82,13 @@ abstract class MetaNameBase extends PluginBase {
   protected $long;
 
   /**
+   * True if the tag should be trimmable.
+   *
+   * @var bool
+   */
+  protected $trimmable;
+
+  /**
    * True if the URL value(s) must be absolute.
    *
    * @var bool
@@ -103,11 +110,43 @@ abstract class MetaNameBase extends PluginBase {
   protected $value;
 
   /**
+   * The sort order for this meta tag.
+   *
+   * @var int
+   */
+  protected $weight;
+
+  /**
+   * The attribute this tag uses for the name.
+   *
+   * @var string
+   *
+   * @deprecated in metatag:8.x-1.20 and is removed from metatag:2.0.0. Use $this->htmlTagNameAttribute instead.
+   *
+   * @see https://www.drupal.org/node/3303208
+   */
+  protected $nameAttribute = 'name';
+
+  /**
+   * The string this tag uses for the tag itself.
+   *
+   * @var string
+   */
+  protected $htmlTag = 'meta';
+
+  /**
    * The attribute this tag uses for the name.
    *
    * @var string
    */
-  protected $nameAttribute = 'name';
+  protected $htmlNameAttribute = 'name';
+
+  /**
+   * The attribute this tag uses for the contents.
+   *
+   * @var string
+   */
+  protected $htmlValueAttribute = 'content';
 
   /**
    * {@inheritdoc}
@@ -120,12 +159,13 @@ abstract class MetaNameBase extends PluginBase {
     $this->id = $plugin_definition['id'];
     $this->name = $plugin_definition['name'];
     $this->label = $plugin_definition['label'];
-    $this->description = $plugin_definition['description'];
+    $this->description = $plugin_definition['description'] ?? '';
     $this->group = $plugin_definition['group'];
     $this->weight = $plugin_definition['weight'];
     $this->type = $plugin_definition['type'];
-    $this->secure = $plugin_definition['secure'];
-    $this->multiple = $plugin_definition['multiple'];
+    $this->secure = !empty($plugin_definition['secure']);
+    $this->multiple = !empty($plugin_definition['multiple']);
+    $this->trimmable = !empty($plugin_definition['trimmable']);
     $this->long = !empty($plugin_definition['long']);
     $this->absoluteUrl = !empty($plugin_definition['absolute_url']);
     $this->request = \Drupal::request();
@@ -154,7 +194,7 @@ abstract class MetaNameBase extends PluginBase {
   /**
    * The meta tag's description.
    *
-   * @return bool
+   * @return string
    *   This meta tag's description.
    */
   public function description() {
@@ -202,6 +242,16 @@ abstract class MetaNameBase extends PluginBase {
   }
 
   /**
+   * Determine whether this meta tag is an image tag.
+   *
+   * @return bool
+   *   Whether this meta tag is an image.
+   */
+  public function isImage(): bool {
+    return $this->type() == 'image';
+  }
+
+  /**
    * Whether or not this meta tag must output secure (HTTPS) URLs.
    *
    * @return bool
@@ -209,6 +259,16 @@ abstract class MetaNameBase extends PluginBase {
    */
   public function secure() {
     return $this->secure;
+  }
+
+  /**
+   * Whether or not this meta tag must output secure (HTTPS) URLs.
+   *
+   * @return bool
+   *   Whether or not this meta tag must output secure (HTTPS) URLs.
+   */
+  public function isSecure(): bool {
+    return (bool) $this->secure;
   }
 
   /**
@@ -222,6 +282,16 @@ abstract class MetaNameBase extends PluginBase {
   }
 
   /**
+   * Whether or not this meta tag supports multiple values.
+   *
+   * @return bool
+   *   Whether or not this meta tag supports multiple values.
+   */
+  public function isMultiple(): bool {
+    return (bool) $this->multiple;
+  }
+
+  /**
    * Whether or not this meta tag should use a text area.
    *
    * @return bool
@@ -229,6 +299,38 @@ abstract class MetaNameBase extends PluginBase {
    */
   public function isLong() {
     return $this->long;
+  }
+
+  /**
+   * Whether or not this meta tag stores a URL or URI value.
+   *
+   * @return bool
+   *   Whether or not this meta tag should contain a URL or URI value.
+   */
+  public function isUrl(): bool {
+    // Secure URLs are URLs.
+    if ($this->isSecure()) {
+      return TRUE;
+    }
+    // Absolute URLs are URLs.
+    if ($this->requiresAbsoluteUrl()) {
+      return TRUE;
+    }
+    // URIs are URL-adjacent.
+    if ($this->type == 'uri') {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Get the HTML attribute used to store this meta tag's value.
+   *
+   * @return string
+   *   The HTML attribute used to store this meta tag's value.
+   */
+  public function getHtmlValueAttribute() {
+    return $this->htmlValueAttribute;
   }
 
   /**
@@ -266,7 +368,7 @@ abstract class MetaNameBase extends PluginBase {
       '#title' => $this->label(),
       '#default_value' => $this->value(),
       '#maxlength' => 1024,
-      '#required' => isset($element['#required']) ? $element['#required'] : FALSE,
+      '#required' => $element['#required'] ?? FALSE,
       '#description' => $this->description(),
       '#element_validate' => [[get_class($this), 'validateTag']],
     ];
@@ -288,6 +390,25 @@ abstract class MetaNameBase extends PluginBase {
     // Optional handling for secure paths.
     if (!empty($this->secure)) {
       $form['#description'] .= ' ' . $this->t('Any URLs which start with "http://" will be converted to "https://".');
+    }
+
+    $settings = \Drupal::config('metatag.settings');
+    $trimlengths = $settings->get('tag_trim_maxlength') ?? [];
+    if (!empty($trimlengths['metatag_maxlength_' . $this->id])) {
+      $maxlength = intval($trimlengths['metatag_maxlength_' . $this->id]);
+      if (is_numeric($maxlength) && $maxlength > 0) {
+        $form['#description'] .= ' ' . $this->t('This will be truncated to a maximum of %max characters after any tokens are processsed.', array('%max' => $maxlength));
+
+        // Optional support for the Maxlength module.
+        if (\Drupal::moduleHandler()->moduleExists('maxlength')) {
+          if ($settings->get('use_maxlength') ?? TRUE) {
+            $form['#attributes']['class'][] = 'maxlength';
+            $form['#attached']['library'][] = 'maxlength/maxlength';
+            $form['#maxlength_js'] = TRUE;
+            $form['#attributes']['data-maxlength'] = $maxlength;
+          }
+        }
+      }
     }
 
     return $form;
@@ -316,13 +437,23 @@ abstract class MetaNameBase extends PluginBase {
   /**
    * Make the string presentable.
    *
+   * This removes whitespace from either side of the string, and removes extra
+   * whitespace inside the string so that it only contains one single space,
+   * all line breaks and tabs are replaced by spaces.
+   *
    * @param string $value
    *   The raw string to process.
    *
    * @return string
    *   The meta tag value after processing.
    */
-  private function tidy($value) {
+  protected function tidy($value) {
+    if (is_null($value) || $value == '') {
+      return '';
+    }
+
+    $value = str_replace(["\r\n", "\n", "\r", "\t"], ' ', $value);
+    $value = preg_replace('/\s+/', ' ', $value);
     return trim($value);
   }
 
@@ -333,8 +464,8 @@ abstract class MetaNameBase extends PluginBase {
    *   A render array or an empty string.
    */
   public function output() {
-    if (empty($this->value)) {
-      // If there is no value, we don't want a tag output.
+    // If there is no value, just return either an empty array or empty string.
+    if (is_null($this->value) || $this->value == '') {
       return $this->multiple() ? [] : '';
     }
 
@@ -350,7 +481,7 @@ abstract class MetaNameBase extends PluginBase {
     $elements = [];
     foreach ($values as $value) {
       $value = $this->tidy($value);
-      if ($this->requiresAbsoluteUrl()) {
+      if ($value != '' && $this->requiresAbsoluteUrl()) {
         // Relative URL.
         if (parse_url($value, PHP_URL_HOST) == NULL) {
           $value = $this->request->getSchemeAndHttpHost() . $value;
@@ -366,11 +497,13 @@ abstract class MetaNameBase extends PluginBase {
         $value = str_replace('http://', 'https://', $value);
       }
 
+      $value = $this->trimValue($value);
+
       $elements[] = [
-        '#tag' => 'meta',
+        '#tag' => $this->htmlTag,
         '#attributes' => [
-          $this->nameAttribute => $this->name,
-          'content' => $value,
+          $this->htmlNameAttribute => $this->name,
+          $this->htmlValueAttribute => $value,
         ],
       ];
     }
@@ -401,15 +534,30 @@ abstract class MetaNameBase extends PluginBase {
   protected function parseImageUrl($value) {
     global $base_root;
 
+    // Skip all logic if the string is empty. Unlike other scenarios, the logic
+    // in this method is predicated on the value being a legitimate string, so
+    // it's ok to skip all possible "empty" values, including the number 0, etc.
+    if (empty($value)) {
+      return '';
+    }
+
     // If image tag src is relative (starts with /), convert to an absolute
     // link; ignore protocol-relative URLs.
+    $image_tag = FALSE;
     if (strpos($value, '<img src="/') !== FALSE && strpos($value, '<img src="//') === FALSE) {
       $value = str_replace('<img src="/', '<img src="' . $base_root . '/', $value);
+      $image_tag = TRUE;
     }
 
     if ($this->multiple()) {
       // Split the string into an array, remove empty items.
-      $values = array_filter(explode(',', $value));
+      if ($image_tag) {
+        preg_match_all('%\s*(|,\s*)(<\s*img\s+[^>]+>)%m', $value, $matches);
+        $values = array_filter($matches[2] ?? []);
+      }
+      else {
+        $values = array_filter(explode(',', $value));
+      }
     }
     else {
       $values = [$value];
@@ -435,6 +583,37 @@ abstract class MetaNameBase extends PluginBase {
     // Convert the array back into a comma-delimited string before sending it
     // back.
     return implode(',', $values);
+  }
+
+  /**
+   * Trims a value if it is trimmable.
+   *
+   * This method uses metatag settings and the MetatagTrimmer service.
+   *
+   * @param string $value
+   *   The string value to trim.
+   *
+   * @return string
+   *   The trimmed string value.
+   */
+  protected function trimValue($value) {
+    if (TRUE === $this->trimmable) {
+      $settings = \Drupal::config('metatag.settings');
+      $trimMethod = $settings->get('tag_trim_method');
+      $trimMaxlengthArray = $settings->get('tag_trim_maxlength');
+      if (empty($trimMethod) || empty($trimMaxlengthArray)) {
+        return $value;
+      }
+      $currentMaxValue = 0;
+      foreach ($trimMaxlengthArray as $metaTagName => $maxValue) {
+        if ($metaTagName == 'metatag_maxlength_' . $this->id) {
+          $currentMaxValue = $maxValue;
+        }
+      }
+      $trimmerService = \Drupal::service('metatag.trimmer');
+      $value = $trimmerService->trimByMethod($value, $currentMaxValue, $trimMethod);
+    }
+    return $value;
   }
 
 }

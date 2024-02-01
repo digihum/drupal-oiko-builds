@@ -17,7 +17,7 @@ class MetatagSerializationTest extends FieldKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     // Core modules.
     'serialization',
 
@@ -38,7 +38,7 @@ class MetatagSerializationTest extends FieldKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->installEntitySchema('user');

@@ -2,8 +2,7 @@
 
 namespace Drupal\geocoder_geofield\Geocoder\Provider;
 
-use Geocoder\Exception\NoResult;
-use Geometry;
+use Geocoder\Exception\LogicException;
 use Geocoder\Exception\UnsupportedOperation;
 
 /**
@@ -42,16 +41,16 @@ abstract class AbstractGeometryProvider implements GeometryProviderInterface {
   /**
    * {@inheritdoc}
    */
-  public function geocode($filename): Geometry {
+  public function geocode($filename): \Geometry {
     if (file_exists($filename)) {
       $geophp_string = file_get_contents($filename);
-      /* @var \Geometry $geometry */
+      /** @var \Geometry $geometry */
       $geometry = $this->geophp->load($geophp_string, $this->geophpType);
       if (!empty($geometry->components) || $geometry instanceof \Geometry) {
         return $geometry;
       }
     }
-    throw new NoResult(sprintf('Could not find %s data in file: "%s".', $this->geophpType, basename($filename)));
+    throw new LogicException(sprintf('Could not find %s data in file: "%s".', $this->geophpType, basename($filename)));
   }
 
   /**

@@ -3,9 +3,10 @@
 namespace Drupal\anonymizer\Service;
 
 /**
- * Interface FakerServiceInterface.
+ * The GDPR Faker Service Interface.
  *
  * @package Drupal\anonymizer\Service
+ *  The anonymizer package.
  */
 interface FakerServiceInterface {
 

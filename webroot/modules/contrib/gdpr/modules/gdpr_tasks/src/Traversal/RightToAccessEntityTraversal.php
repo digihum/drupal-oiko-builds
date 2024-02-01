@@ -36,11 +36,13 @@ class RightToAccessEntityTraversal extends EntityTraversal {
     $fieldConfigs = $config->getFieldsForBundle($entity->bundle());
 
     foreach ($fields as $fieldId => $field) {
-      $fieldConfig = isset($fieldConfigs[$fieldId]) ? $fieldConfigs[$fieldId] : NULL;
+      $fieldConfig = $fieldConfigs[$fieldId] ?? NULL;
 
       // If the field is not configured, not enabled,
       // or not enabled for RTA, then skip it.
-      if ($fieldConfig === NULL || !$fieldConfig->enabled || !in_array($fieldConfig->rta, ['inc', 'maybe'])) {
+      if ($fieldConfig === NULL ||
+      !$fieldConfig->enabled ||
+      !in_array($fieldConfig->rta, ['inc', 'maybe'])) {
         continue;
       }
 

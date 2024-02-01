@@ -4,7 +4,7 @@ namespace Drupal\geocoder_geofield\Plugin\Geocoder\Dumper;
 
 use Drupal\geocoder\Plugin\Geocoder\Dumper\GeoJson;
 use Drupal\geofield\GeoPHP\GeoPHPInterface;
-use Geocoder\Model\Address;
+use Geocoder\Location;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -46,7 +46,7 @@ class Geometry extends GeoJson {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static (
+    return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
@@ -57,8 +57,8 @@ class Geometry extends GeoJson {
   /**
    * {@inheritdoc}
    */
-  public function dump(Address $address) {
-    return json_encode($this->geophp->load(parent::dump($address), 'json'));
+  public function dump(Location $location) {
+    return json_encode($this->geophp->load(parent::dump($location), 'json'));
   }
 
 }

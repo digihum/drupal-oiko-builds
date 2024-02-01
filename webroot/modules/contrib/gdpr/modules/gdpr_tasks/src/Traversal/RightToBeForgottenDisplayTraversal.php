@@ -28,7 +28,7 @@ class RightToBeForgottenDisplayTraversal extends EntityTraversal {
     $field_configs = $config->getFieldsForBundle($entity->bundle());
 
     foreach ($fields as $field_id => $field) {
-      $field_config = isset($field_configs[$field_id]) ? $field_configs[$field_id] : NULL;
+      $field_config = $field_configs[$field_id] ?? NULL;
 
       // If the field is not configured, not enabled,
       // or not enabled for RTF, then skip it.

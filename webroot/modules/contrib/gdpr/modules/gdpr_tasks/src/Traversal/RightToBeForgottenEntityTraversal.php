@@ -100,7 +100,7 @@ class RightToBeForgottenEntityTraversal extends EntityTraversal {
       ->loadUnchanged($entity->id());
 
     foreach ($fields as $field_id => $field_definition) {
-      $field_config = isset($field_configs[$field_id]) ? $field_configs[$field_id] : NULL;
+      $field_config = $field_configs[$field_id] ?? NULL;
 
       // If the field is not configured, not enabled,
       // or not enabled for RTF, then skip it.
@@ -118,10 +118,10 @@ class RightToBeForgottenEntityTraversal extends EntityTraversal {
       $anonymizer = '';
 
       if ($mode == 'anonymize') {
-        list($success, $msg, $anonymizer) = $this->anonymize($field, $field_definition, $field_config);
+        [$success, $msg, $anonymizer] = $this->anonymize($field, $field_definition, $field_config);
       }
       elseif ($mode == 'remove') {
-        list($success, $msg, $should_delete) = $this->remove($field, $field_config, $entity);
+        [$success, $msg, $should_delete] = $this->remove($field, $field_config, $entity);
       }
 
       if ($success === TRUE) {

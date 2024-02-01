@@ -2,10 +2,10 @@
 
 namespace Drupal\gdpr_tasks\Plugin\QueueWorker;
 
-use Drupal\Core\File\FileSystemInterface;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldTypePluginManager;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueInterface;
@@ -14,7 +14,6 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\gdpr_fields\EntityTraversalFactory;
 use Drupal\gdpr_tasks\Entity\TaskInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use function gdpr_tasks_file_save_data;
 use function array_fill_keys;
 use function array_keys;
 use function basename;
@@ -26,6 +25,7 @@ use function file_exists;
 use function fopen;
 use function fprintf;
 use function fputcsv;
+use function gdpr_tasks_file_save_data;
 use function pathinfo;
 
 /**

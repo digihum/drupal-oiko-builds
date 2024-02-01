@@ -5,8 +5,8 @@ namespace Drupal\gdpr_fields;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Link;
 use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Link;
 use Drupal\gdpr_fields\Entity\GdprFieldConfigEntity;
 use function in_array;
 use function stripos;
@@ -181,7 +181,7 @@ class GDPRCollector {
    */
   public function getBundles($entityType_id) {
     $all_bundles = $this->bundleInfo->getAllBundleInfo();
-    $bundles = isset($all_bundles[$entityType_id]) ? $all_bundles[$entityType_id] : [$entityType_id => []];
+    $bundles = $all_bundles[$entityType_id] ?? [$entityType_id => []];
     return $bundles;
   }
 

@@ -2,9 +2,9 @@
 
 namespace Drupal\gdpr_tasks;
 
-use Drupal\Core\File\FileSystemInterface;
 use Drupal\Component\Utility\Random;
 use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Session\AccountProxy;
 
 /**
@@ -82,7 +82,7 @@ class TaskManager {
       $account = $this->currentUser->getAccount();
     }
 
-    $query = $this->taskStorage->getQuery();
+    $query = $this->taskStorage->getQuery()->accessCheck(TRUE);
     $query->condition('user_id', $account->id(), '=');
 
     if ($type) {

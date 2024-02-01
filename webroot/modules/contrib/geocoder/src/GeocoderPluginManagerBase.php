@@ -2,6 +2,7 @@
 
 namespace Drupal\geocoder;
 
+use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Plugin\DefaultPluginManager;
 
 /**
@@ -9,19 +10,19 @@ use Drupal\Core\Plugin\DefaultPluginManager;
  */
 abstract class GeocoderPluginManagerBase extends DefaultPluginManager {
 
+  use LoggerChannelTrait;
+
   /**
    * List of fields types available as source for Geocode operations.
    *
    * @var array
    */
   protected $geocodeSourceFieldsTypes = [
-    "string",
-    "string_long",
-    "text",
-    "text_long",
-    "text_with_summary",
-    "file",
-    "image",
+    'string',
+    'string_long',
+    'text',
+    'text_long',
+    'text_with_summary',
   ];
 
   /**
@@ -30,7 +31,7 @@ abstract class GeocoderPluginManagerBase extends DefaultPluginManager {
    * @var array
    */
   protected $reverseGeocodeSourceFieldsTypes = [
-    "geofield",
+    'geofield',
   ];
 
   /**
@@ -39,7 +40,7 @@ abstract class GeocoderPluginManagerBase extends DefaultPluginManager {
    * @return string[]
    *   A list of plugins in a format suitable for form API '#options' key.
    */
-  public function getPluginsAsOptions() {
+  public function getPluginsAsOptions(): array {
     return array_map(function ($plugin) {
       return $plugin['name'];
     }, $this->getPlugins());
@@ -51,7 +52,7 @@ abstract class GeocoderPluginManagerBase extends DefaultPluginManager {
    * @return array
    *   A list of plugins with their settings.
    */
-  public function getPlugins() {
+  public function getPlugins(): array {
     $definitions = array_map(function (array $definition) {
       $definition += ['name' => $definition['id']];
 
@@ -69,7 +70,7 @@ abstract class GeocoderPluginManagerBase extends DefaultPluginManager {
    * @return string[]
    *   A list of plugins in a format suitable for form API '#options' key.
    */
-  public function getGeocodeSourceFieldsTypes() {
+  public function getGeocodeSourceFieldsTypes(): array {
     return $this->geocodeSourceFieldsTypes;
   }
 
@@ -79,7 +80,7 @@ abstract class GeocoderPluginManagerBase extends DefaultPluginManager {
    * @return string[]
    *   A list of plugins in a format suitable for form API '#options' key.
    */
-  public function getReverseGeocodeSourceFieldsTypes() {
+  public function getReverseGeocodeSourceFieldsTypes(): array {
     return $this->reverseGeocodeSourceFieldsTypes;
   }
 

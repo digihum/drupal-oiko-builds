@@ -7,7 +7,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use function str_word_count;
 
 /**
- * Class TextAnonymizer.
+ * The GDPR Text Anonymizer.
  *
  * @Anonymizer(
  *   id = "text_anonymizer",

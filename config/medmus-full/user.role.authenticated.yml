@@ -2,11 +2,14 @@ uuid: 4b02bd63-8f23-4467-b468-520d25e4722c
 langcode: en
 status: true
 dependencies:
+  config:
+    - filter.format.webform_default
   module:
     - avatars
     - cidoc
     - comment
     - eu_cookie_compliance
+    - filter
     - sharemessage
     - system
     - tour
@@ -27,5 +30,6 @@ permissions:
   - 'display eu cookie compliance popup'
   - 'edit own comments'
   - 'post comments'
+  - 'use text format webform_default'
   - 'view published cidoc entities'
   - 'view sharemessages'

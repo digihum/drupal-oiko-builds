@@ -9,9 +9,10 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class AnonymizerBase.
+ * The GDPR Anonymizer Base.
  *
  * @package Drupal\anonymizer\Anonymizer
+ *  The anonymizer package.
  */
 abstract class AnonymizerBase extends PluginBase implements AnonymizerInterface, ContainerFactoryPluginInterface {
 

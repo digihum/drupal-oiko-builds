@@ -22,7 +22,7 @@ class NodewordsEntitiesTest extends MigrateDrupal6TestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     // Core modules.
     // @see testAvailableConfigEntities
     'comment',
@@ -75,7 +75,7 @@ class NodewordsEntitiesTest extends MigrateDrupal6TestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->loadFixture(__DIR__ . '/../../../../fixtures/d6_nodewords.php');
 

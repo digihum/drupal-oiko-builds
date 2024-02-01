@@ -266,6 +266,7 @@ class ConsentAgreementController extends ControllerBase {
       foreach ($field_names as $field_name) {
 
         $ids = $this->entityTypeManager->getStorage($entity_type)->getQuery()
+          ->accessCheck(TRUE)
           ->condition($field_name . '.user_id', $user->id())
           ->execute();
 

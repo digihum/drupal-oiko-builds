@@ -9,7 +9,7 @@ use Drupal\Core\Password\PasswordInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class PasswordAnonymizer.
+ * The GDPR Password Anonymizer.
  *
  * @Anonymizer(
  *   id = "password_anonymizer",

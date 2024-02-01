@@ -5,7 +5,7 @@ namespace Drupal\anonymizer\Service;
 use Faker\Factory;
 
 /**
- * Class FakerService.
+ * The GDPR Faker Service.
  *
  * @package Drupal\anonymizer\Service
  */

@@ -2,31 +2,24 @@
 
 namespace Drupal\geocoder_geofield\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\geocoder_field\Plugin\Field\FieldFormatter\FileGeocodeFormatter;
-use Drupal\Core\Field\FieldDefinitionInterface;
-use Drupal\geocoder\DumperPluginManager;
-use Drupal\geocoder\Geocoder;
-use Drupal\geocoder\ProviderPluginManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Utility\LinkGeneratorInterface;
+use Drupal\geocoder\DumperPluginManager;
+use Drupal\geocoder\GeocoderInterface;
+use Drupal\geocoder\ProviderPluginManager;
+use Drupal\geocoder_field\Plugin\Field\FieldFormatter\FileGeocodeFormatter;
 use Drupal\geocoder_field\PreprocessorPluginManager;
 use Drupal\geofield\GeoPHP\GeoPHPInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Abstract implementation of the GeoPhp Wrapper formatter for File fields.
  */
 abstract class GeoPhpGeocodeFormatter extends FileGeocodeFormatter {
-
-  /**
-   * Unique Geocoder Plugin used by this formatter.
-   *
-   * @var string
-   */
-  protected $formatterPlugin = '';
 
   /**
    * The geoPhpWrapper service.
@@ -36,7 +29,7 @@ abstract class GeoPhpGeocodeFormatter extends FileGeocodeFormatter {
   protected $geoPhpWrapper;
 
   /**
-   * Constructs a GeocodeFormatterFile object.
+   * Constructs a GeoPhpGeocodeFormatter object.
    *
    * @param string $plugin_id
    *   The plugin_id for the formatter.
@@ -52,10 +45,8 @@ abstract class GeoPhpGeocodeFormatter extends FileGeocodeFormatter {
    *   The view mode.
    * @param array $third_party_settings
    *   Any third party settings.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   A config factory for retrieving required config objects.
-   * @param \Drupal\geocoder\Geocoder $geocoder
-   *   The gecoder service.
+   * @param \Drupal\geocoder\GeocoderInterface $geocoder
+   *   The Geocoder service.
    * @param \Drupal\geocoder\ProviderPluginManager $provider_plugin_manager
    *   The provider plugin manager service.
    * @param \Drupal\geocoder\DumperPluginManager $dumper_plugin_manager
@@ -64,6 +55,8 @@ abstract class GeoPhpGeocodeFormatter extends FileGeocodeFormatter {
    *   The renderer.
    * @param \Drupal\Core\Utility\LinkGeneratorInterface $link_generator
    *   The Link Generator service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
    * @param \Drupal\geocoder_field\PreprocessorPluginManager $preprocessor_manager
    *   The Preprocessor Manager.
    * @param \Drupal\geofield\GeoPHP\GeoPHPInterface $geophp_wrapper
@@ -77,12 +70,12 @@ abstract class GeoPhpGeocodeFormatter extends FileGeocodeFormatter {
     $label,
     $view_mode,
     array $third_party_settings,
-    ConfigFactoryInterface $config_factory,
-    Geocoder $geocoder,
+    GeocoderInterface $geocoder,
     ProviderPluginManager $provider_plugin_manager,
     DumperPluginManager $dumper_plugin_manager,
     RendererInterface $renderer,
     LinkGeneratorInterface $link_generator,
+    EntityTypeManagerInterface $entity_type_manager,
     PreprocessorPluginManager $preprocessor_manager,
     GeoPHPInterface $geophp_wrapper
   ) {
@@ -94,12 +87,12 @@ abstract class GeoPhpGeocodeFormatter extends FileGeocodeFormatter {
       $label,
       $view_mode,
       $third_party_settings,
-      $config_factory,
       $geocoder,
       $provider_plugin_manager,
       $dumper_plugin_manager,
       $renderer,
       $link_generator,
+      $entity_type_manager,
       $preprocessor_manager
     );
     $this->geoPhpWrapper = $geophp_wrapper;
@@ -117,12 +110,12 @@ abstract class GeoPhpGeocodeFormatter extends FileGeocodeFormatter {
       $configuration['label'],
       $configuration['view_mode'],
       $configuration['third_party_settings'],
-      $container->get('config.factory'),
       $container->get('geocoder'),
       $container->get('plugin.manager.geocoder.provider'),
       $container->get('plugin.manager.geocoder.dumper'),
       $container->get('renderer'),
       $container->get('link_generator'),
+      $container->get('entity_type.manager'),
       $container->get('plugin.manager.geocoder.preprocessor'),
       $container->get('geofield.geophp')
     );
@@ -141,25 +134,8 @@ abstract class GeoPhpGeocodeFormatter extends FileGeocodeFormatter {
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    $element['intro'] = [
-      '#type' => 'html_tag',
-      '#tag' => 'div',
-      '#value' => $this->pluginDefinition['description'],
-    ];
-    $element += parent::settingsForm($form, $form_state);
-    $element['plugins'] = [
-      $this->formatterPlugin => [
-        'checked' => [
-          '#type' => 'value',
-          '#value' => TRUE,
-        ],
-      ],
-    ];
-    $element['plugin_info'] = [
-      '#type' => 'item',
-      '#title' => 'Plugin',
-      '#markup' => $this->formatterPlugin,
-    ];
+
+    $element = parent::settingsForm($form, $form_state);
 
     $element['adapter'] = [
       '#type' => 'select',
@@ -176,19 +152,14 @@ abstract class GeoPhpGeocodeFormatter extends FileGeocodeFormatter {
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $summary = [];
     $adapters = $this->geoPhpWrapper->getAdapterMap();
     $adapter = $this->getSetting('adapter');
-
     $summary['intro'] = $this->pluginDefinition['description'];
-    $summary['plugins'] = t('Geocoder plugin(s): @formatterPlugin', [
-      '@formatterPlugin' => $this->formatterPlugin,
-    ]);
-
-    $summary['adapter'] = t('Output format: @format', [
+    $summary += parent::settingsSummary();
+    unset($summary['dumper']);
+    $summary['adapter'] = $this->t('Output format: @format', [
       '@format' => !empty($adapter) ? $adapters[$adapter] : $this->t('Not set'),
     ]);
-
     return $summary;
   }
 
@@ -200,22 +171,23 @@ abstract class GeoPhpGeocodeFormatter extends FileGeocodeFormatter {
     $adapters = $this->geoPhpWrapper->getAdapterMap();
     $adapter = $this->getSetting('adapter');
     try {
-      /* @var \Drupal\geocoder_field\PreprocessorInterface $preprocessor */
+      /** @var \Drupal\geocoder_field\PreprocessorInterface $preprocessor */
       $preprocessor = $this->preprocessorManager->createInstance('file');
       $preprocessor->setField($items)->preprocess();
+      $providers = $this->getEnabledGeocoderProviders();
       if (array_key_exists($adapter, $adapters)) {
         foreach ($items as $delta => $item) {
-          /* @var \GeometryCollection $address_collection */
-          if ($address_collection = $this->geocoder->geocode($item->value, [$this->formatterPlugin])) {
+          /** @var \Geometry $collection */
+          if ($collection = $this->geocoder->geocode($item->value, $providers)) {
             $elements[$delta] = [
-              '#markup' => $address_collection->out($adapter),
+              '#markup' => $collection->out($adapter),
             ];
           }
         }
       }
     }
     catch (\Exception $e) {
-      watchdog_exception('geocoder', $e);
+      $this->getLogger('geocoder')->error($e->getMessage());
     }
 
     return $elements;

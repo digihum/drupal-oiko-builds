@@ -2,15 +2,15 @@
 
 namespace Drupal\geocoder\Plugin\GeofieldProximitySource;
 
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\geofield\Plugin\GeofieldProximitySourceBase;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\geocoder\Entity\GeocoderProvider;
+use Drupal\geocoder\FormatterPluginManager;
 use Drupal\geocoder\Geocoder;
 use Drupal\geocoder\ProviderPluginManager;
-use Drupal\geocoder\FormatterPluginManager;
+use Drupal\geofield\Plugin\GeofieldProximitySourceBase;
 use Geocoder\Model\AddressCollection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Component\Serialization\Json;
 
 /**
  * Defines 'Geocode Origin (with Autocomplete option)' proximity source plugin.
@@ -118,16 +118,16 @@ class GeocodeOrigin extends GeofieldProximitySourceBase implements ContainerFact
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, Geocoder $geocoder, ProviderPluginManager $providerPluginManager, FormatterPluginManager $formatterPluginManager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->originAddress = isset($configuration['origin_address']) ? $configuration['origin_address'] : '';
-    $this->useAutocomplete = isset($configuration['use_autocomplete']) ? $configuration['use_autocomplete'] : 0;
+    $this->originAddress = $configuration['origin_address'] ?? '';
+    $this->useAutocomplete = $configuration['use_autocomplete'] ?? 0;
     $this->geocoder = $geocoder;
     $this->providerPluginManager = $providerPluginManager;
-    $this->options = isset($configuration['settings']['options']) ? $configuration['settings']['options'] : '';
+    $this->options = $configuration['settings']['options'] ?? '';
     $this->formatterPluginManager = $formatterPluginManager;
     $this->origin = $this->getAddressOrigin($this->originAddress);
-    $this->minTerms = isset($configuration['settings']['autocomplete']['min_terms']) ? $configuration['settings']['autocomplete']['min_terms'] : 4;
-    $this->delay = isset($configuration['settings']['autocomplete']['delay']) ? $configuration['settings']['autocomplete']['delay'] : 800;
-    $this->addressFormat = isset($configuration['settings']['autocomplete']['address_format']) ? $configuration['settings']['autocomplete']['address_format'] : 'default_formatted_address';
+    $this->minTerms = $configuration['settings']['autocomplete']['min_terms'] ?? 4;
+    $this->delay = $configuration['settings']['autocomplete']['delay'] ?? 800;
+    $this->addressFormat = $configuration['settings']['autocomplete']['address_format'] ?? 'default_formatted_address';
   }
 
   /**
@@ -169,7 +169,7 @@ class GeocodeOrigin extends GeofieldProximitySourceBase implements ContainerFact
       $provider_plugins = $this->getEnabledProviderPlugins();
 
       // Try geocoding and extract coordinates of the first match.
-      $address_collection = $this->geocoder->geocode($address, array_keys($provider_plugins));
+      $address_collection = $this->geocoder->geocode($address, GeocoderProvider::loadMultiple(array_keys($provider_plugins)));
       if ($address_collection instanceof AddressCollection && count($address_collection) > 0) {
         $address = $address_collection->get(0);
         $coordinates = $address->getCoordinates();
@@ -189,9 +189,9 @@ class GeocodeOrigin extends GeofieldProximitySourceBase implements ContainerFact
   public function buildOptionsForm(array &$form, FormStateInterface $form_state, array $options_parents, $is_exposed = FALSE) {
 
     $form['origin_address'] = [
-      '#title' => t('Origin'),
+      '#title' => $this->t('Origin'),
       '#type' => 'textfield',
-      '#description' => t('Address, City, Zip-Code, Country, ...'),
+      '#description' => $this->t('Address, City, Zip-Code, Country, ...'),
       '#default_value' => $this->originAddress,
       '#attributes' => [
         'class' => ['address-input'],
@@ -199,15 +199,15 @@ class GeocodeOrigin extends GeofieldProximitySourceBase implements ContainerFact
     ];
 
     if (!$is_exposed) {
-      $form['origin_address']['#title'] = t('Default Origin');
-      $form['origin_address']['#description'] = t('Address, City, Zip-Code, Country that would be set as Default Geocoded Address in the Exposed Filter');
+      $form['origin_address']['#title'] = $this->t('Default Origin');
+      $form['origin_address']['#description'] = $this->t('Address, City, Zip-Code, Country that would be set as Default Geocoded Address in the Exposed Filter');
 
       // Attach Geofield Map Library.
       $form['#attached']['library'] = [
         'geocoder/general',
       ];
 
-      $plugins_settings = isset($this->configuration['plugins']) ? $this->configuration['plugins'] : [];
+      $plugins_settings = $this->configuration['plugins'] ?? [];
 
       // Get the enabled/selected plugins.
       $enabled_plugins = [];
@@ -227,13 +227,23 @@ class GeocodeOrigin extends GeofieldProximitySourceBase implements ContainerFact
       }, ARRAY_FILTER_USE_KEY);
 
       // Set a validation for the plugins selection.
-      $form['plugins']['#element_validate'] = [[get_class($this), 'validatePluginsSettingsForm']];
+      $form['plugins']['#element_validate'] = [
+                                                [
+                                                  get_class($this),
+                                                  'validatePluginsSettingsForm',
+                                                ],
+      ];
 
       $form['use_autocomplete'] = [
         '#type' => 'checkbox',
         '#title' => $this->t("Enable Autocomplete"),
         '#default_value' => $this->useAutocomplete,
-        '#description' => $this->t('Check this to activate the Autocomplete Geocoding in the Address Origin Input.</br>Note: This will increase/double the Quota of Geocoding operations requested to the selected Geocoder Providers<br>(requests related to the Autocomplete phase plus the ones related to the Exposed Filter Submission)'),
+        '#description' => $this->t('Check this to activate the Autocomplete
+            Geocoding in the Address Origin Input.</br>Note: This will
+            increase/double the Quota of Geocoding operations requested to the
+            selected Geocoder Providers<br>(requests related to the
+            Autocomplete phase plus the ones related to the Exposed Filter
+            Submission)'),
         '#states' => [
           'invisible' => [':input[name="options[expose_button][checkbox][checkbox]"]' => ['checked' => FALSE]],
         ],
@@ -243,28 +253,18 @@ class GeocodeOrigin extends GeofieldProximitySourceBase implements ContainerFact
         '#type' => 'details',
         '#title' => $this->t('Geocoder fine Settings'),
         '#open' => FALSE,
-      ];
-
-      $form['settings']['options'] = [
-        '#type' => 'textarea',
-        '#rows' => 4,
-        '#title' => $this->t('Geocoder Control Specific Options'),
-        '#description' => $this->t('This settings would override general Geocoder Providers options. (<u>Note: This would work only for Geocoder 2.x branch/version.</u>)<br>An object literal of specific Geocoder options.The syntax should respect the javascript object notation (json) format.<br>As suggested in the field placeholder, always use double quotes (") both for the indexes and the string values.'),
-        '#default_value' => $this->options,
-        '#placeholder' => '{"googlemaps":{"locale": "it", "region": "it"}, "nominatim":{"locale": "it"}}',
-        '#element_validate' => [[get_class($this), 'jsonValidate']],
-      ];
-
-      $form['settings']['autocomplete'] = [
-        '#type' => 'details',
-        '#title' => $this->t('Autocomplete Settings'),
-        '#open' => TRUE,
         '#states' => [
           'invisible' => [
             [':input[name="options[source_configuration][use_autocomplete]"]' => ['checked' => FALSE]],
             [':input[name="options[expose_button][checkbox][checkbox]"]' => ['checked' => FALSE]],
           ],
         ],
+      ];
+
+      $form['settings']['autocomplete'] = [
+        '#type' => 'details',
+        '#title' => $this->t('Autocomplete Settings'),
+        '#open' => TRUE,
       ];
 
       $form['settings']['autocomplete']['min_terms'] = [
@@ -289,10 +289,10 @@ class GeocodeOrigin extends GeofieldProximitySourceBase implements ContainerFact
       ];
 
       $form['settings']['autocomplete']['address_format'] = [
-        '#title' => t('Address Format'),
+        '#title' => $this->t('Address Format'),
         '#type' => 'select',
         '#options' => $this->formatterPluginManager->getPluginsAsOptions(),
-        '#description' => t('The address formatter plugin, used for autocomplete suggestions'),
+        '#description' => $this->t('The address formatter plugin, used for autocomplete suggestions'),
         '#default_value' => $this->addressFormat,
         '#attributes' => [
           'class' => ['address-format'],
@@ -307,12 +307,11 @@ class GeocodeOrigin extends GeofieldProximitySourceBase implements ContainerFact
           'providers' => array_keys($this->getEnabledProviderPlugins()),
           'minTerms' => $this->minTerms,
           'delay' => $this->delay,
-          'options' => $this->options,
           'address_format' => $this->addressFormat,
         ],
       ];
-    }
 
+    }
   }
 
   /**
@@ -333,7 +332,7 @@ class GeocodeOrigin extends GeofieldProximitySourceBase implements ContainerFact
    */
   public function getEnabledProviderPlugins() {
     $geocoder_plugins = $this->providerPluginManager->getPlugins();
-    $plugins_settings = isset($this->configuration['plugins']) ? $this->configuration['plugins'] : [];
+    $plugins_settings = $this->configuration['plugins'] ?? [];
 
     // Filter out unchecked plugins.
     $provider_plugin_ids = array_filter($plugins_settings, function ($plugin) {
@@ -361,22 +360,6 @@ class GeocodeOrigin extends GeofieldProximitySourceBase implements ContainerFact
 
     if (empty($plugins)) {
       $form_state->setError($element, t('The Geocode Origin option needs at least one geocoder plugin selected.'));
-    }
-  }
-
-  /**
-   * Form element json format validation handler.
-   *
-   * {@inheritdoc}
-   */
-  public static function jsonValidate($element, FormStateInterface &$form_state) {
-    $element_values_array = JSON::decode($element['#value']);
-    // Check the jsonValue.
-    if (!empty($element['#value']) && $element_values_array == NULL) {
-      $form_state->setError($element, t('The @field field is not valid Json Format.', ['@field' => $element['#title']]));
-    }
-    elseif (!empty($element['#value'])) {
-      $form_state->setValueForElement($element, ['options' => $element_values_array]);
     }
   }
 

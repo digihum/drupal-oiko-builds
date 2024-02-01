@@ -17,7 +17,7 @@ use function array_merge;
 use function strlen;
 
 /**
- * Class GdprSqlDump.
+ * The GDPR Sql Dump service.
  *
  * @package Drupal\gdpr_dump\Service
  */

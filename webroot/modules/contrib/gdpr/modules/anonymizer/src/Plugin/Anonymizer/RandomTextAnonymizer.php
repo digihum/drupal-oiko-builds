@@ -8,7 +8,7 @@ use function strlen;
 use function substr;
 
 /**
- * Class RandomTextAnonymizer.
+ * The GDPR Random Text Anonymizer.
  *
  * @Anonymizer(
  *   id = "random_text_anonymizer",

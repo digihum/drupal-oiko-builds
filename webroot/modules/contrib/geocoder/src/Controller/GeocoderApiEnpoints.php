@@ -2,22 +2,23 @@
 
 namespace Drupal\geocoder\Controller;
 
+use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Cache\CacheableJsonResponse;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\geocoder\DumperPluginManager;
 use Drupal\geocoder\FormatterPluginManager;
+use Drupal\geocoder\Geocoder;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Drupal\geocoder\Geocoder;
-use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\Cache\CacheableJsonResponse;
-use Drupal\Core\Cache\CacheableMetadata;
 
 /**
- * Class GeocoderApiEnpoints.
+ * Define a GeocoderApiEnpoints object.
  */
 class GeocoderApiEnpoints extends ControllerBase {
 
@@ -27,6 +28,13 @@ class GeocoderApiEnpoints extends ControllerBase {
    * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   protected $config;
+
+  /**
+   * Entity manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
 
   /**
    * Geocoder Service.
@@ -81,10 +89,8 @@ class GeocoderApiEnpoints extends ControllerBase {
     // Get possible query string specific geocoders options.
     $geocoders_options = $request->get('options') ?: [];
 
-    // Merge geocoders options.
-    $options = NestedArray::mergeDeep($geocoders_configs, $geocoders_options);
-
-    return $options;
+    // Return merged geocoders options.
+    return NestedArray::mergeDeep($geocoders_configs, $geocoders_options);
   }
 
   /**
@@ -97,7 +103,6 @@ class GeocoderApiEnpoints extends ControllerBase {
    *   The Address Geometry Property.
    */
   protected function addGeometryProperty(Address $address) {
-    /* @var array $address_array */
     $address_array = $address->toArray();
 
     return [
@@ -146,7 +151,7 @@ class GeocoderApiEnpoints extends ControllerBase {
               ->format($geo_address);
           }
           catch (\Exception $e) {
-            watchdog_exception('geocoder', $e);
+            $this->getLogger('geocoder')->error($e->getMessage());
           }
         }
         // If a geometry property is not defined
@@ -171,12 +176,12 @@ class GeocoderApiEnpoints extends ControllerBase {
    */
   protected function getDumper($format) {
     $dumper = NULL;
-    if (isset($format)) {
+    if (strlen($format) !== 0) {
       try {
         $dumper = $this->dumperPluginManager->createInstance($format);
       }
       catch (\Exception $e) {
-        $dumper = NULL;
+        $this->getLogger('geocoder')->error($e->getMessage());
       }
     }
     return $dumper;
@@ -187,6 +192,8 @@ class GeocoderApiEnpoints extends ControllerBase {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   Entity type manager service.
    * @param \Drupal\geocoder\Geocoder $geocoder
    *   The Geocoder service.
    * @param \Drupal\geocoder\DumperPluginManager $dumper_plugin_manager
@@ -196,11 +203,13 @@ class GeocoderApiEnpoints extends ControllerBase {
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
+    EntityTypeManagerInterface $entity_type_manager,
     Geocoder $geocoder,
     DumperPluginManager $dumper_plugin_manager,
     FormatterPluginManager $geocoder_formatter_plugin_manager
   ) {
     $this->config = $config_factory->get('geocoder.settings');
+    $this->entityTypeManager = $entity_type_manager;
     $this->geocoder = $geocoder;
     $this->dumperPluginManager = $dumper_plugin_manager;
     $this->geocoderFormatterPluginManager = $geocoder_formatter_plugin_manager;
@@ -215,6 +224,7 @@ class GeocoderApiEnpoints extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
+      $container->get('entity_type.manager'),
       $container->get('geocoder'),
       $container->get('plugin.manager.geocoder.dumper'),
       $container->get('plugin.manager.geocoder.formatter')
@@ -222,53 +232,67 @@ class GeocoderApiEnpoints extends ControllerBase {
   }
 
   /**
-   * {@inheritdoc}
+   * Process a Geocode operation.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request to geocode.
+   *
+   * @return \Symfony\Component\HttpFoundation\Response
+   *   The geocode response.
    */
   public function geocode(Request $request) {
-
     $address = $request->get('address');
     $geocoders_ids = $request->get('geocoder');
-    $geocoders = explode(',', str_replace(' ', '', $geocoders_ids));
     $format = $request->get('format');
 
-    $address_format = $request->get('address_format');
+    try {
+      $geocoders = $this->entityTypeManager->getStorage('geocoder_provider')
+        ->loadMultiple(explode(',', str_replace(' ', '', $geocoders_ids)));
+      $address_format = $request->get('address_format');
 
-    if (isset($address)) {
-
-      $options = $this->setGeocodersOptions($request);
-      $dumper = $this->getDumper($format);
-
-      $geo_collection = $this->geocoder->geocode($address, $geocoders, $options);
-
-      if ($geo_collection && $geo_collection instanceof AddressCollection) {
-        $this->getAddressCollectionResponse($geo_collection, $dumper, $address_format);
+      if (isset($address)) {
+        $dumper = $this->getDumper($format);
+        $geo_collection = $this->geocoder->geocode($address, $geocoders);
+        if ($geo_collection instanceof AddressCollection) {
+          $this->getAddressCollectionResponse($geo_collection, $dumper, $address_format);
+        }
       }
+    }
+    catch (\Exception $e) {
+      $this->getLogger('geocoder')->error($e->getMessage());
     }
     return $this->response;
   }
 
   /**
-   * {@inheritdoc}
+   * Process a Reverse Geocode.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request to reverse geocode.
+   *
+   * @return \Symfony\Component\HttpFoundation\Response
+   *   The reverse geocode response.
    */
   public function reverseGeocode(Request $request) {
 
     $latlng = $request->get('latlng');
     $geocoders_ids = $request->get('geocoder');
-    $geocoders = explode(',', $geocoders_ids);
     $format = $request->get('format');
 
-    if (isset($latlng)) {
-
-      $latlng = explode(',', $request->get('latlng'));
-
-      $options = $this->setGeocodersOptions($request);
-      $dumper = $this->getDumper($format);
-
-      $geo_collection = $this->geocoder->reverse($latlng[0], $latlng[1], $geocoders, $options);
-
-      if ($geo_collection && $geo_collection instanceof AddressCollection) {
-        $this->getAddressCollectionResponse($geo_collection, $dumper);
+    try {
+      $geocoders = $this->entityTypeManager->getStorage('geocoder_provider')
+        ->loadMultiple(explode(',', $geocoders_ids));
+      if (isset($latlng)) {
+        $latlng = explode(',', $request->get('latlng'));
+        $dumper = $this->getDumper($format);
+        $geo_collection = $this->geocoder->reverse($latlng[0], $latlng[1], $geocoders);
+        if ($geo_collection instanceof AddressCollection) {
+          $this->getAddressCollectionResponse($geo_collection, $dumper);
+        }
       }
+    }
+    catch (\Exception $e) {
+      $this->getLogger('geocoder')->error($e->getMessage());
     }
     return $this->response;
   }

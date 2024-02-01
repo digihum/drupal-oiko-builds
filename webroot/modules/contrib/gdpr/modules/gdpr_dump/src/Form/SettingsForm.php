@@ -16,7 +16,7 @@ use function is_callable;
 use function strpos;
 
 /**
- * Class SettingsForm.
+ * The GDPR Dump Settings Form.
  *
  * @package Drupal\gdpr_dump\Form
  */
@@ -217,7 +217,7 @@ class SettingsForm extends ConfigFormBase {
           'empty_table' => [
             '#type' => 'checkbox',
             '#title' => $this->t('Empty this table'),
-            '#default_value' => isset($emptyTables[$table]) ? $emptyTables[$table] : NULL,
+            '#default_value' => $emptyTables[$table] ?? NULL,
             '#weight' => 1,
           ],
           'columns' => [

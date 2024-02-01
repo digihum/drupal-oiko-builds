@@ -3,9 +3,10 @@
 namespace Drupal\anonymizer\Anonymizer;
 
 /**
- * Class AnonymizerFactory.
+ * The GDPR Anonymizer Factory.
  *
  * @package Drupal\anonymizer\Anonymizer
+ *  The anonymizerpackage.
  */
 class AnonymizerFactory {
 

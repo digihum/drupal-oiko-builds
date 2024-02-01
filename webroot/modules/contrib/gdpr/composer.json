@@ -10,11 +10,11 @@
         }
     ],
     "require": {
-        "drupal/checklistapi": "~2.0",
-        "drupal/entity": "^1.0",
-        "drupal/entity_reference_revisions": "^1.8",
-        "drupal/message": "^1.0",
-        "drupal/token": "^1.7"
+        "drupal/checklistapi": "^2.1",
+        "drupal/entity": "^1.4",
+        "drupal/entity_reference_revisions": "^1.10",
+        "drupal/message": "^1.4",
+        "drupal/token": "^1.11"
     },
     "suggest": {
         "drush/drush": "GDPR Dump requires Drush ^9 || ^10",

@@ -7,9 +7,10 @@ use Drupal\Core\Database\InvalidQueryException;
 use function array_keys;
 
 /**
- * Class GdprDatabaseManager.
+ * The GDPR database manager service.
  *
  * @package Drupal\gdpr_dump\Service
+ *  The GDPR database manager serice
  */
 class GdprDatabaseManager {
 

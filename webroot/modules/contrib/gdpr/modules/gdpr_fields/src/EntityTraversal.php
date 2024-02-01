@@ -219,7 +219,7 @@ abstract class EntityTraversal implements EntityTraversalInterface {
         // as our entity's ID.
         $storage = $this->entityTypeManager->getStorage($relationship['entity_type']);
 
-        $ids = $storage->getQuery()
+        $ids = $storage->getQuery()->accessCheck(TRUE)
           ->condition($relationship['field'], $entity->id())
           ->execute();
 

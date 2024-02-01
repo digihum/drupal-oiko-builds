@@ -5,7 +5,7 @@ namespace Drupal\gdpr_dump\Service;
 use function array_keys;
 
 /**
- * Class GdprSqlDump.
+ * The GDPR sanitize service.
  *
  * @package Drupal\gdpr_dump\Service
  */

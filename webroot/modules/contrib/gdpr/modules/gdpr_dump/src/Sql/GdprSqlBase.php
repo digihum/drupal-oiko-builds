@@ -9,7 +9,7 @@ use function array_key_exists;
 use function is_array;
 
 /**
- * Class GdprSqlBase.
+ * The GDPR GdprSqlBase.
  *
  * @see \Drush\Sql\SqlBase
  *
@@ -28,7 +28,7 @@ class GdprSqlBase extends SqlBase {
    *
    * @throws \Exception
    */
-  public static function create($options = []) {
+  public static function create(array $options = []): ?SqlBase {
     // Set defaults in the unfortunate event that caller doesn't provide values.
     $options += [
       'database' => 'default',
@@ -62,7 +62,7 @@ class GdprSqlBase extends SqlBase {
   /**
    * {@inheritdoc}
    */
-  public static function getInstance($dbSpec, $options) {
+  public static function getInstance($dbSpec, $options): ?SqlBase {
     $driver = $dbSpec['driver'];
     $className = 'Drupal\gdpr_dump\Sql\GdprSql' . ucfirst($driver);
 

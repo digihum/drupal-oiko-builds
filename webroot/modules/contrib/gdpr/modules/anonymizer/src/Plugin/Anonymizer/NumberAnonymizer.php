@@ -8,7 +8,7 @@ use function str_repeat;
 use function strlen;
 
 /**
- * Class NumberAnonymizer.
+ * The GDPR Number Anonymizer.
  *
  * @Anonymizer(
  *   id = "number_anonymizer",
@@ -17,6 +17,7 @@ use function strlen;
  * )
  *
  * @package Drupal\anonymizer\Plugin\Anonymizer
+ *  The anonymize plugin.
  */
 class NumberAnonymizer extends AnonymizerBase {
 

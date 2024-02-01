@@ -6,7 +6,7 @@ use Drupal\anonymizer\Anonymizer\AnonymizerBase;
 use Drupal\Core\Field\FieldItemListInterface;
 
 /**
- * Class UriAnonymizer.
+ * The GDPR Uri Anonymizer.
  *
  * @Anonymizer(
  *   id = "uri_anonymizer",

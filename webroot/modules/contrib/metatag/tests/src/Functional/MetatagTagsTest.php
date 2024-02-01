@@ -14,6 +14,7 @@ class MetatagTagsTest extends MetatagTagsTestBase {
    */
   protected $tags = [
     'abstract',
+    'author',
     'cache_control',
     'canonical_url',
     'content_language',
@@ -82,20 +83,6 @@ class MetatagTagsTest extends MetatagTagsTestBase {
    */
   protected function abstractTestFieldXpath() {
     return "//textarea[@name='abstract']";
-  }
-
-  /**
-   * Implements {tag_name}TestNameAttribute() for 'author'.
-   */
-  protected function authorTestOutputXpath() {
-    return "//link[@rel='author']";
-  }
-
-  /**
-   * Implements {tag_name}TestValueAttribute() for 'author'.
-   */
-  protected function authorTestValueAttribute() {
-    return 'href';
   }
 
   /**
@@ -204,17 +191,23 @@ class MetatagTagsTest extends MetatagTagsTestBase {
   }
 
   /**
-   * Implements {tag_name}TestValue() for 'robots'.
+   * Implements {tag_name}TestFormValues() for 'robots'.
    */
-  protected function robotsTestKey() {
-    return 'robots[index]';
+  protected function robotsTestFormValues() {
+    return [
+      'robots[index]' => 'index',
+      'robots-keyed[max-snippet]' => 10,
+      'robots-keyed[max-video-preview]' => 20,
+      'robots-keyed[max-image-preview]' => 'none',
+      'robots-keyed[unavailable_after]' => '2022-12-31',
+    ];
   }
 
   /**
    * Implements {tag_name}TestValue() for 'robots'.
    */
   protected function robotsTestValue() {
-    return 'index';
+    return 'index, max-snippet:10, max-video-preview:20, max-image-preview:none, unavailable_after:2022-12-31';
   }
 
   /**
