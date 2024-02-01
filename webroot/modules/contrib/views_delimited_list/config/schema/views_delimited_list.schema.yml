@@ -1,0 +1,26 @@
+# Schema for views_delimited_list views style handler settings.
+views.style.views_delimited_list:
+  type: views_style
+  label: 'Delimited text list'
+  mapping:
+    delimiter:
+      type: string
+      label: 'Delimiter text'
+    conjunctive:
+      type: string
+      label: 'Conjunctive text'
+    long_count:
+      type: integer
+      label: 'Long list count'
+    separator_two:
+      type: string
+      label: 'Separator between two items'
+    separator_long:
+      type: string
+      label: 'Separator before last item in long list'
+    prefix:
+      type: string
+      label: 'Prefix'
+    suffix:
+      type: string
+      label: 'Suffix'
