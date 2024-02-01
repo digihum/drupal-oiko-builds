@@ -15,4 +15,7 @@ channel_sorts:
     direction: DESC
     weight: 0
 channel_searches: null
+channel_maxsize: 50
+access_by_permission: false
+authorized_roles: {  }
 authorized_users: {  }

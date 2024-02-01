@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\Tests\entity_share_client\Functional;
 
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\entity_share_test\FakeDataGenerator;
 
 /**
  * Functional test class for paragraphs.
@@ -20,7 +21,7 @@ class ParagraphTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'jsonapi_extras',
     'paragraphs_test',
   ];
@@ -54,7 +55,7 @@ class ParagraphTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->entityTypeManager->getStorage('jsonapi_resource_config')->create([
       'id' => 'paragraph--es_test',
@@ -84,7 +85,7 @@ class ParagraphTest extends EntityShareClientFunctionalTestBase {
         'en' => [
           'es_test_paragraph' => $this->getCompleteParagraphInfos([
             'field_es_test_text_plain' => [
-              'value' => $this->faker->text(255),
+              'value' => FakeDataGenerator::text(255),
               'checker_callback' => 'getValue',
             ],
             // We are testing the JSON:API field enhancer "Serialized Data" by

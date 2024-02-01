@@ -7,13 +7,14 @@ namespace Drupal\entity_share_server\Service;
 use Drupal\Component\Utility\SortArray;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\entity_share_server\Entity\ChannelInterface;
 use Drupal\entity_share_server\OperatorsHelper;
 use Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface;
 
 /**
- * Class ChannelManipulator.
+ * Helps to manipulate a channel.
  *
  * @package Drupal\entity_share_server\Service
  */
@@ -137,6 +138,9 @@ class ChannelManipulator implements ChannelManipulatorInterface {
       }
     }
 
+    // Add max size.
+    $query['page']['limit'] = $channel->get('channel_maxsize');
+
     return $query;
   }
 
@@ -173,6 +177,40 @@ class ChannelManipulator implements ChannelManipulatorInterface {
     }
 
     return $search_configuration;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function userAccessChannel(ChannelInterface $channel, AccountInterface $user) {
+    // Access by permission.
+    if ($channel->get('access_by_permission') && $user->hasPermission(ChannelInterface::CHANNELS_ACCESS_PERMISSION)) {
+      return TRUE;
+    }
+
+    // Access by roles.
+    $authorized_roles = $channel->get('authorized_roles');
+    if ($authorized_roles) {
+      $user_roles = $user->getRoles();
+      foreach ($authorized_roles as $authorized_role) {
+        if (in_array($authorized_role, $user_roles)) {
+          return TRUE;
+        }
+      }
+    }
+
+    // Access by users.
+    if ($user->isAuthenticated()) {
+      $channel_authorized_users = $channel->get('authorized_users');
+      // Load the user to ensure we have a user entity.
+      /** @var \Drupal\user\UserInterface $account */
+      $account = $this->entityTypeManager->getStorage('user')->load($user->id());
+      if (!is_null($account) && in_array($account->uuid(), $channel_authorized_users)) {
+        return TRUE;
+      }
+    }
+
+    return FALSE;
   }
 
 }

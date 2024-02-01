@@ -735,7 +735,7 @@ $settings['config_sync_directory'] = '../config/medmus-full';
 $settings['config_readonly'] = TRUE;
 
 ini_set('memory_limit', '256M');
-ini_set('max_execution_time', 120);
+//ini_set('max_execution_time', 120);
 
 $config['config_split.config_split.oiko_world']['status'] = FALSE;
 $config['config_split.config_split.medmus']['status'] = TRUE;

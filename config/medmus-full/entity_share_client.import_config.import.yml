@@ -4,6 +4,7 @@ status: true
 dependencies: {  }
 id: import
 label: Import
+import_maxsize: 50
 import_processor_settings:
   changed_time:
     weights:
@@ -42,6 +43,7 @@ import_processor_settings:
   physical_file:
     weights:
       process_entity: 0
+    rename: false
   revision:
     weights:
       process_entity: 10

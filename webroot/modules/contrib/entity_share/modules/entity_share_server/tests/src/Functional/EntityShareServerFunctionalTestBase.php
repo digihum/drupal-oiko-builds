@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\Tests\entity_share_server\Functional;
 
 use Drupal\Core\Session\AccountInterface;
+use Drupal\entity_share_server\Entity\ChannelInterface;
 use Drupal\Tests\BrowserTestBase;
 use GuzzleHttp\RequestOptions;
 
@@ -18,7 +19,7 @@ abstract class EntityShareServerFunctionalTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'entity_share_server',
     'entity_share_test',
     'basic_auth',
@@ -27,7 +28,7 @@ abstract class EntityShareServerFunctionalTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stark';
 
   /**
    * A test user with administrative privileges.
@@ -53,7 +54,7 @@ abstract class EntityShareServerFunctionalTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->adminUser = $this->drupalCreateUser($this->getAdministratorPermissions());
@@ -83,7 +84,7 @@ abstract class EntityShareServerFunctionalTestBase extends BrowserTestBase {
    */
   protected function getChannelUserPermissions() {
     return [
-      'entity_share_server_access_channels',
+      ChannelInterface::CHANNELS_ACCESS_PERMISSION,
     ];
   }
 

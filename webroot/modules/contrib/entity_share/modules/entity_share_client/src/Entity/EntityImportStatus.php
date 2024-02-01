@@ -5,9 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\entity_share_client\Entity;
 
 use Drupal\Core\Entity\ContentEntityBase;
-use Drupal\Core\Entity\EntityChangedInterface;
-use Drupal\Core\Entity\EntityChangedTrait;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 
@@ -26,13 +23,13 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\entity_share_client\EntityImportStatusListBuilder",
+ *     "views_data" = "Drupal\entity_share_client\EntityImportStatusViewsData",
  *     "route_provider" = {
  *       "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
  *     },
  *     "form" = {
  *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
  *     },
- *     "views_data" = "Drupal\entity_share_client\EntityImportStatusViewsData",
  *   },
  *   admin_permission = "administer_import_status_entities",
  *   links = {
@@ -76,16 +73,12 @@ class EntityImportStatus extends ContentEntityBase implements EntityImportStatus
       ->setLabel(t('Channel'))
       ->setDescription(t('The identifier of the import channel.'));
 
-    $fields['changed'] = BaseFieldDefinition::create('changed')
-      ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the import status was last edited.'));
-
     // The fields containing the actual information about import.
     $fields['last_import'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Last import'))
       ->setDescription(t('The time of last import of imported entity.'));
 
-    $fields['policy'] = BaseFieldDefinition::create('integer')
+    $fields['policy'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Policy'))
       ->setDescription(t('The import policy.'))
       ->setDefaultValue(EntityImportStatusInterface::IMPORT_POLICY_DEFAULT);
@@ -96,15 +89,8 @@ class EntityImportStatus extends ContentEntityBase implements EntityImportStatus
   /**
    * {@inheritdoc}
    */
-  public function preSave(EntityStorageInterface $storage) {
-    if (isset($this->overideChangedTime)) {
-      $this->set('changed', $this->overideChangedTime);
-    }
-    else {
-      $this->set('changed', \Drupal::service('datetime.time')->getRequestTime());
-    }
-
-    parent::preSave($storage);
+  public function label() {
+    return $this->id();
   }
 
   /**
@@ -135,46 +121,6 @@ class EntityImportStatus extends ContentEntityBase implements EntityImportStatus
   public function setPolicy($policy) {
     $this->set('policy', $policy);
     return $this;
-  }
-
-  /**
-   * Gets the timestamp of the last entity change.
-   *
-   * @return int
-   *   The timestamp of the last entity save operation.
-   */
-  public function getChangedTime() {
-    if (isset($this->overideChangedTime)) {
-      return $this->overideChangedTime;
-    }
-    else {
-      return $this->get('changed')->value;
-    }
-  }
-
-  /**
-   * Sets the timestamp of the last entity change.
-   *
-   * @param int $timestamp
-   *   The timestamp of the last entity save operation.
-   *
-   * @return $this
-   */
-  public function setChangedTime($timestamp) {
-    $this->overideChangedTime = $timestamp;
-    return $this;
-  }
-
-  protected $overideChangedTime;
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function getAvailablePolicies() {
-    return [
-      EntityImportStatusInterface::IMPORT_POLICY_DEFAULT => t('Default'),
-      EntityImportStatusInterface::IMPORT_POLICY_SKIP => t('Skip'),
-    ];
   }
 
 }

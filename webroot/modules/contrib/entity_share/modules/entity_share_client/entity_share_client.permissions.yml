@@ -16,3 +16,7 @@ administer_import_status_entities:
 entity_share_client_pull_content:
   title: 'Pull remote entities'
   description: 'Access the Entity Share pull form.'
+
+entity_share_client_display_errors:
+  title: 'Display technical errors'
+  description: 'Display Guzzle requests errors on pull form.'

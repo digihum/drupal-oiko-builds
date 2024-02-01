@@ -8,7 +8,7 @@ use Drupal\entity_share_client\Service\RemoteManager;
 use GuzzleHttp\ClientInterface;
 
 /**
- * Class TestRemoteManager.
+ * Service that allows to emulate another website in tests.
  *
  * @package Drupal\entity_share_client_remote_manager_test\Service
  */
@@ -24,8 +24,8 @@ class TestRemoteManager extends RemoteManager {
   /**
    * {@inheritdoc}
    */
-  protected function doRequest(ClientInterface $client, $method, $url) {
-    // It it is a GET request store the result to be able to re-obtain the
+  protected function doRequest(ClientInterface $client, $method, $url, array $options = []) {
+    // If it is a GET request store the result to be able to re-obtain the
     // result to simulate another website.
     if ($method == 'GET') {
       if (!isset($this->responseMapping[$url])) {
@@ -35,7 +35,7 @@ class TestRemoteManager extends RemoteManager {
       return $this->responseMapping[$url];
     }
 
-    return parent::doRequest($client, $method, $url);
+    return parent::doRequest($client, $method, $url, $options);
   }
 
   /**

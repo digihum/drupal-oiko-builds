@@ -32,7 +32,7 @@ class MissingEntityReferenceTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $node_storage = $this->entityTypeManager->getStorage('node');
@@ -166,9 +166,12 @@ class MissingEntityReferenceTest extends EntityShareClientFunctionalTestBase {
     $channel = $channel_storage->create([
       'id' => 'taxonomy_term_es_test_en',
       'label' => $this->randomString(),
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'taxonomy_term',
       'channel_bundle' => 'es_test',
       'channel_langcode' => static::$entityLangcode,
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $user->uuid(),
       ],

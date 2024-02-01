@@ -5,7 +5,10 @@ declare(strict_types = 1);
 namespace Drupal\entity_share_client\Plugin\EntityShareClient\Processor;
 
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Plugin\PluginFormInterface;
+use Drupal\entity_share_client\Entity\EntityImportStatusInterface;
 use Drupal\entity_share_client\ImportProcessor\ImportProcessorPluginBase;
 use Drupal\entity_share_client\RuntimeImportContext;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -16,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ImportProcessor(
  *   id = "default_data_processor",
  *   label = @Translation("Default data processor"),
- *   description = @Translation("General JSON data preparation to have Entity Share import working."),
+ *   description = @Translation("Define import policy and general JSON data preparation to have Entity Share import working."),
  *   stages = {
  *     "is_entity_importable" = -10,
  *     "prepare_importable_entity_data" = -100,
@@ -25,7 +28,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   locked = true,
  * )
  */
-class DefaultDataProcessor extends ImportProcessorPluginBase {
+class DefaultDataProcessor extends ImportProcessorPluginBase implements PluginFormInterface {
 
   /**
    * The entity type manager.
@@ -63,6 +66,13 @@ class DefaultDataProcessor extends ImportProcessorPluginBase {
   protected $time;
 
   /**
+   * The import policies manager.
+   *
+   * @var \Drupal\entity_share_client\ImportPolicy\ImportPolicyPluginManager
+   */
+  protected $policiesManager;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -72,7 +82,47 @@ class DefaultDataProcessor extends ImportProcessorPluginBase {
     $instance->languageManager = $container->get('language_manager');
     $instance->stateInformation = $container->get('entity_share_client.state_information');
     $instance->time = $container->get('datetime.time');
+    $instance->policiesManager = $container->get('plugin.manager.entity_share_client_policy');
     return $instance;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function defaultConfiguration() {
+    return [
+      'policy' => EntityImportStatusInterface::IMPORT_POLICY_DEFAULT,
+      'update_policy' => FALSE,
+    ] + parent::defaultConfiguration();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+    $options = [];
+    $policies = $this->policiesManager->getDefinitions();
+    foreach ($policies as $policy) {
+      $options[$policy['id']] = $policy['label'];
+    }
+
+    $form['policy'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Import policy'),
+      '#description' => $this->t('The import policy that will be applied to all newly imported entities.'),
+      '#options' => $options,
+      '#default_value' => $this->configuration['policy'],
+      '#required' => TRUE,
+    ];
+
+    $form['update_policy'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Update import policy'),
+      '#description' => $this->t('If an entity import status already exists, its policy will be updated.'),
+      '#default_value' => $this->configuration['update_policy'],
+    ];
+
+    return $form;
   }
 
   /**
@@ -83,7 +133,7 @@ class DefaultDataProcessor extends ImportProcessorPluginBase {
     $parsed_type = explode('--', $entity_json_data['type']);
     $entity_type_id = $parsed_type[0];
     $entity_bundle = $parsed_type[1];
-    // TODO: Refactor in attributes to avoid getting entity keys each time.
+    // @todo Refactor in attributes to avoid getting entity keys each time.
     $entity_storage = $this->entityTypeManager->getStorage($entity_type_id);
     $entity_keys = $entity_storage->getEntityType()->getKeys();
 
@@ -129,7 +179,7 @@ class DefaultDataProcessor extends ImportProcessorPluginBase {
     $parsed_type = explode('--', $entity_json_data['type']);
     $entity_type_id = $parsed_type[0];
     $entity_bundle = $parsed_type[1];
-    // TODO: Refactor in attributes to avoid getting entity keys each time.
+    // @todo Refactor in attributes to avoid getting entity keys each time.
     $entity_storage = $this->entityTypeManager->getStorage($entity_type_id);
     $entity_keys = $entity_storage->getEntityType()->getKeys();
 
@@ -171,20 +221,27 @@ class DefaultDataProcessor extends ImportProcessorPluginBase {
   public function postEntitySave(RuntimeImportContext $runtime_import_context, ContentEntityInterface $processed_entity) {
     // Create or update the dedicated "Entity import status" entity.
     // At this point the entity has been successfully imported.
-    if (!$import_status_entity = $this->stateInformation->getImportStatusOfEntity($processed_entity)) {
+    $import_status_entity = $this->stateInformation->getImportStatusOfEntity($processed_entity);
+    if (!$import_status_entity) {
       // If a dedicated "Entity import status" entity doesn't exist (which
-      // means that either this is a new imported entity, or it is a "legacy"
+      // means that either this is a newly imported entity, or it is a "legacy"
       // content imported before the introduction of "Entity import status"
       // entities), create it.
       $parameters = [
         'remote_website' => $runtime_import_context->getRemote()->id(),
         'channel_id' => $runtime_import_context->getChannelId(),
+        'policy' => $this->configuration['policy'],
       ];
       $this->stateInformation->createImportStatusOfEntity($processed_entity, $parameters);
     }
     else {
-      // "Entity import status" exists, just update the last import timestamp.
-      $import_status_entity->setLastImport($this->time->getRequestTime())->save();
+      // "Entity import status" exists, update the last import timestamp and
+      // policy.
+      $import_status_entity->setLastImport($this->time->getRequestTime());
+      if ($this->configuration['update_policy']) {
+        $import_status_entity->setPolicy($this->configuration['policy']);
+      }
+      $import_status_entity->save();
     }
   }
 

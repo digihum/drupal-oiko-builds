@@ -58,9 +58,9 @@ class ImportContext {
   /**
    * The count of entities on the remote channel (optional).
    *
-   * @var string
+   * @var int
    */
-  protected $remoteChannelCount = '';
+  protected $remoteChannelCount;
 
   /**
    * Constructor.
@@ -171,7 +171,7 @@ class ImportContext {
   /**
    * Get remote channel count.
    *
-   * @return string
+   * @return int
    *   The remote channel count.
    */
   public function getRemoteChannelCount() {
@@ -181,10 +181,10 @@ class ImportContext {
   /**
    * Set remote channel count.
    *
-   * @param string $remote_channel_count
+   * @param int $remote_channel_count
    *   The remote channel count.
    */
-  public function setRemoteChannelCount(string $remote_channel_count) {
+  public function setRemoteChannelCount(int $remote_channel_count) {
     $this->remoteChannelCount = $remote_channel_count;
   }
 

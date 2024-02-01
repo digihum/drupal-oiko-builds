@@ -28,39 +28,43 @@ class Anonymous extends ClientAuthorizationPluginBase {
    * {@inheritdoc}
    */
   public function getClient($url) {
-    $credentials = $this->keyService->getCredentials($this);
-    $client = $this->httpClientFactory->fromOptions([
+    $options = [
       'base_uri' => $url . '/',
       'cookies' => TRUE,
       'allow_redirects' => TRUE,
-    ]);
+    ];
+
+    $credentials = $this->keyService->getCredentials($this);
     if (!empty($credentials['username']) && !empty($credentials['password'])) {
-      $client['auth'] = [
+      $options['auth'] = [
         $credentials['username'],
         $credentials['password'],
       ];
     }
-    return $client;
+
+    return $this->httpClientFactory->fromOptions($options);
   }
 
   /**
    * {@inheritdoc}
    */
   public function getJsonApiClient($url) {
-    $credentials = $this->keyService->getCredentials($this);
-    $client = $this->httpClientFactory->fromOptions([
+    $options = [
       'base_uri' => $url . '/',
       'headers' => [
         'Content-type' => 'application/vnd.api+json',
       ],
-    ]);
+    ];
+
+    $credentials = $this->keyService->getCredentials($this);
     if (!empty($credentials['username']) && !empty($credentials['password'])) {
-      $client['auth'] = [
+      $options['auth'] = [
         $credentials['username'],
         $credentials['password'],
       ];
     }
-    return $client;
+
+    return $this->httpClientFactory->fromOptions($options);
   }
 
   /**

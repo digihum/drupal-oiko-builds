@@ -49,7 +49,7 @@ class MultilingualTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->stateInformation = $this->container->get('entity_share_client.state_information');
@@ -91,12 +91,14 @@ class MultilingualTest extends EntityShareClientFunctionalTestBase {
     // Test that it is possible to pull the same entity in several languages
     // during the same process.
     $this->pullEveryChannels();
+    $this->importService->getRuntimeImportContext()->clearImportedEntities();
     $this->checkCreatedEntities();
     $this->deleteAllEntities();
 
     // Test pulling content in its default translation first.
     $this->pullChannel('node_es_test_en');
     $this->pullChannel('node_es_test_fr');
+    $this->importService->getRuntimeImportContext()->clearImportedEntities();
     $this->checkCreatedEntities();
 
     /** @var \Drupal\node\NodeInterface $node */
@@ -108,6 +110,7 @@ class MultilingualTest extends EntityShareClientFunctionalTestBase {
     // Test pulling content NOT in its default translation first.
     $this->pullChannel('node_es_test_fr');
     $this->pullChannel('node_es_test_en');
+    $this->importService->getRuntimeImportContext()->clearImportedEntities();
     $this->checkCreatedEntities();
 
     /** @var \Drupal\node\NodeInterface $node */
@@ -118,38 +121,61 @@ class MultilingualTest extends EntityShareClientFunctionalTestBase {
 
     // Test state information.
     // 1: No import: en and fr channels data should indicate a new entity.
-    $this->expectedState(StateInformationInterface::INFO_ID_NEW, StateInformationInterface::INFO_ID_NEW);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_NEW,
+      StateInformationInterface::INFO_ID_NEW
+    );
 
     // 2: Import entity in en: en should indicate synchronized and fr should
     // indicate a new translation.
     $this->pullChannel('node_es_test_en');
     $this->importService->getRuntimeImportContext()->clearImportedEntities();
-    $this->expectedState(StateInformationInterface::INFO_ID_SYNCHRONIZED, StateInformationInterface::INFO_ID_NEW_TRANSLATION);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_SYNCHRONIZED,
+      StateInformationInterface::INFO_ID_NEW_TRANSLATION
+    );
 
     // 3: Import entity in fr: en and fr should indicate synchronized.
     $this->pullChannel('node_es_test_fr');
     $this->importService->getRuntimeImportContext()->clearImportedEntities();
-    $this->expectedState(StateInformationInterface::INFO_ID_SYNCHRONIZED, StateInformationInterface::INFO_ID_SYNCHRONIZED);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_SYNCHRONIZED,
+      StateInformationInterface::INFO_ID_SYNCHRONIZED
+    );
 
     // 4: Rig 'changed' JSON data attribute of en translation (this emulates a
     // change on the client website): en should indicate changed and fr should
     // indicate synchronized.
-    $this->expectedState(StateInformationInterface::INFO_ID_CHANGED, StateInformationInterface::INFO_ID_SYNCHRONIZED, ['en' => ['fast_forward_changed_time']]);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_CHANGED,
+      StateInformationInterface::INFO_ID_SYNCHRONIZED,
+      ['en' => ['fast_forward_changed_time']]
+    );
 
     // 5: Import entity in en: en and fr should indicate synchronized.
     $this->pullChannel('node_es_test_en');
     $this->importService->getRuntimeImportContext()->clearImportedEntities();
-    $this->expectedState(StateInformationInterface::INFO_ID_SYNCHRONIZED, StateInformationInterface::INFO_ID_SYNCHRONIZED);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_SYNCHRONIZED,
+      StateInformationInterface::INFO_ID_SYNCHRONIZED
+    );
 
     // 6: Rig 'changed' JSON data attribute of fr translation (this emulates a
     // change on the client website): en should indicate synchronized and fr
     // should indicate changed.
-    $this->expectedState(StateInformationInterface::INFO_ID_SYNCHRONIZED, StateInformationInterface::INFO_ID_CHANGED, ['fr' => ['fast_forward_changed_time']]);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_SYNCHRONIZED,
+      StateInformationInterface::INFO_ID_CHANGED,
+      ['fr' => ['fast_forward_changed_time']]
+    );
 
     // 7: Import entity in fr: en and fr should indicate synchronized.
     $this->pullChannel('node_es_test_fr');
     $this->importService->getRuntimeImportContext()->clearImportedEntities();
-    $this->expectedState(StateInformationInterface::INFO_ID_SYNCHRONIZED, StateInformationInterface::INFO_ID_SYNCHRONIZED);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_SYNCHRONIZED,
+      StateInformationInterface::INFO_ID_SYNCHRONIZED
+    );
   }
 
   /**
@@ -174,14 +200,17 @@ class MultilingualTest extends EntityShareClientFunctionalTestBase {
   protected function createChannel(UserInterface $user) {
     parent::createChannel($user);
 
-    // Add a channel for the node in french.
+    // Add a channel for the node in French.
     $channel_storage = $this->entityTypeManager->getStorage('channel');
     $channel = $channel_storage->create([
       'id' => 'node_es_test_fr',
       'label' => $this->randomString(),
+      'channel_maxsize' => 50,
       'channel_entity_type' => 'node',
       'channel_bundle' => 'es_test',
       'channel_langcode' => 'fr',
+      'access_by_permission' => FALSE,
+      'authorized_roles' => [],
       'authorized_users' => [
         $user->uuid(),
       ],
@@ -206,14 +235,14 @@ class MultilingualTest extends EntityShareClientFunctionalTestBase {
       $json_data['attributes'] = $this->overrideJsonDataAttributes($overrides['en'], $json_data['attributes']);
     }
     $status = $this->stateInformation->getStatusInfo($json_data);
-    $this->assertEqual($status['info_id'], $en_expected_state);
+    $this->assertEquals($en_expected_state, $status['info_id']);
 
     $json_data = $this->getEntityJsonData('node_es_test_fr', 'es_test');
     if (!empty($overrides['fr'])) {
       $json_data['attributes'] = $this->overrideJsonDataAttributes($overrides['fr'], $json_data['attributes']);
     }
     $status = $this->stateInformation->getStatusInfo($json_data);
-    $this->assertEqual($status['info_id'], $fr_expected_state);
+    $this->assertEquals($fr_expected_state, $status['info_id']);
   }
 
   /**

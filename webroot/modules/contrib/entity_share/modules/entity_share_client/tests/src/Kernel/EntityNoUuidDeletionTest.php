@@ -16,13 +16,12 @@ use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
  * @group entity_share
  * @group entity_share_client
  */
-class EntityNoUuidDeletion extends EntityKernelTestBase {
+class EntityNoUuidDeletionTest extends EntityKernelTestBase {
 
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
-    'entity_test',
+  protected static $modules = [
     'serialization',
     'jsonapi',
     'entity_share',
@@ -32,7 +31,7 @@ class EntityNoUuidDeletion extends EntityKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('entity_test_no_uuid');
     $this->installEntitySchema('entity_import_status');

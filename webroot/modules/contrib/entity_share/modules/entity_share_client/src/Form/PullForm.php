@@ -8,6 +8,7 @@ use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Render\MarkupInterface;
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\Component\Utility\Xss;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormBase;
@@ -17,6 +18,9 @@ use Drupal\Core\Link;
 use Drupal\Core\Pager\PagerManagerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Url;
+use Drupal\entity_share\EntityShareUtility;
+use Drupal\entity_share_client\Exception\ResourceTypeNotFoundException;
 use Drupal\entity_share_client\ImportContext;
 use Drupal\entity_share_client\Service\FormHelperInterface;
 use Drupal\entity_share_client\Service\ImportServiceInterface;
@@ -114,6 +118,13 @@ class PullForm extends FormBase {
   protected $pagerManager;
 
   /**
+   * The max size.
+   *
+   * @var int
+   */
+  protected $maxSize = 50;
+
+  /**
    * Constructs a ContentEntityForm object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -192,7 +203,25 @@ class PullForm extends FormBase {
     $select_element = $this->buildSelectElement($form_state, 'import_config');
     if ($select_element) {
       $select_element['#title'] = $this->t('Import configuration');
+      $select_element['#ajax'] = [
+        'callback' => [get_class($this), 'buildAjaxChannelSelect'],
+        'effect' => 'fade',
+        'method' => 'replace',
+        'wrapper' => 'channel-wrapper',
+      ];
       $form['import_config'] = $select_element;
+    }
+    else {
+      $url = Url::fromRoute('entity.import_config.collection');
+      if ($url->renderAccess($url->toRenderArray())) {
+        $this->messenger()
+          ->addError($this->t('Please configure <a href=":url">Import configuration</a> before trying to import content.', [':url' => $url->toString()]));
+      }
+      else {
+        $this->messenger()
+          ->addError($this->t('There are no "Import configuration" available. Please contact the website administrator.'));
+      }
+      return;
     }
 
     // Build the Remote selector.
@@ -430,7 +459,16 @@ class PullForm extends FormBase {
     }
 
     $selected_remote = $this->remoteWebsites[$selected_remote_id];
-    $this->channelsInfos = $this->remoteManager->getChannelsInfos($selected_remote);
+
+    try {
+      $this->channelsInfos = $this->remoteManager->getChannelsInfos($selected_remote, [
+        'rethrow' => TRUE,
+      ]);
+    }
+    catch (\Throwable $exception) {
+      $this->displayError($exception->getMessage());
+      return;
+    }
 
     $select_element = $this->buildSelectElement($form_state, 'channel');
     if ($select_element) {
@@ -442,6 +480,15 @@ class PullForm extends FormBase {
         'wrapper' => 'entities-wrapper',
       ];
       $form['channel_wrapper']['channel'] = $select_element;
+    }
+
+    if (empty($form['channel_wrapper']['channel']['#options'])) {
+      if ($this->currentUser()->hasPermission('administer_remote_entity')) {
+        $this->messenger()->addWarning($this->t('The selected website is returning no channels. Check that they are defined, and that this website has permission to access channels on the remote website.'));
+      }
+      else {
+        $this->messenger()->addWarning($this->t('The selected website is returning no channels.'));
+      }
     }
 
     // Container for the AJAX.
@@ -469,17 +516,32 @@ class PullForm extends FormBase {
     $selected_import_config = $form_state->getValue('import_config', $this->query->get('import_config'));
     $selected_remote_id = $form_state->getValue('remote', $this->query->get('remote'));
     $selected_channel = $form_state->getValue('channel', $this->query->get('channel'));
-    // If Ajax was triggered set offset to default value: 0.
-    $offset = !is_array($triggering_element) ? $this->query->get('offset', 0) : 0;
-    if (!is_array($triggering_element) && is_numeric($this->query->get('page'))) {
-      $offset = $this->query->get('page') * 50;
-    }
 
     if (
       empty($this->remoteWebsites[$selected_remote_id]) ||
-      empty($this->channelsInfos[$selected_channel])
+      empty($this->channelsInfos[$selected_channel]) ||
+      $selected_import_config == NULL
     ) {
       return;
+    }
+
+    // At this step we have the channels infos, the selected channel and the
+    // selected import config, so we can "compute" the max size.
+    /** @var \Drupal\entity_share_client\Entity\ImportConfigInterface $import_config */
+    $import_config = $this->entityTypeManager->getStorage('import_config')->load($selected_import_config);
+    if ($import_config == NULL) {
+      $this->messenger()->addError($this->t('The selected import config @selected_import_config is not available.', [
+        '@selected_import_config' => $selected_import_config,
+      ]));
+      return;
+    }
+
+    $this->maxSize = EntityShareUtility::getMaxSize($import_config, $selected_channel, $this->channelsInfos);
+
+    // If Ajax was triggered set offset to default value: 0.
+    $offset = !is_array($triggering_element) ? $this->query->get('offset', 0) : 0;
+    if (!is_array($triggering_element) && is_numeric($this->query->get('page'))) {
+      $offset = $this->query->get('page') * $this->maxSize;
     }
 
     $channel_entity_type = $this->channelsInfos[$selected_channel]['channel_entity_type'];
@@ -546,8 +608,19 @@ class PullForm extends FormBase {
     $query = UrlHelper::buildQuery($parsed_url['query']);
     $prepared_url = $parsed_url['path'] . '?' . $query;
 
-    $response = $this->remoteManager->jsonApiRequest($selected_remote, 'GET', $prepared_url);
+    try {
+      $response = $this->remoteManager->jsonApiRequest($selected_remote, 'GET', $prepared_url, [
+        'rethrow' => TRUE,
+      ]);
+    }
+    catch (\Throwable $exception) {
+      $this->displayError($exception->getMessage());
+      return;
+    }
     $json = Json::decode((string) $response->getBody());
+
+    // Apply max size to response data.
+    $json['data'] = array_slice($json['data'], 0, $this->maxSize);
 
     // Search.
     $form['channel_wrapper']['entities_wrapper']['search'] = [
@@ -582,7 +655,7 @@ class PullForm extends FormBase {
 
     // Full pager.
     if (isset($json['meta']['count'])) {
-      $this->pagerManager->createPager($json['meta']['count'], 50);
+      $this->pagerManager->createPager((int) $json['meta']['count'], $this->maxSize);
       $form['channel_wrapper']['entities_wrapper']['pager'] = [
         '#type' => 'pager',
         '#route_name' => 'entity_share_client.admin_content_pull_form',
@@ -603,7 +676,7 @@ class PullForm extends FormBase {
     }
     // Basic pager.
     else {
-      // Store the JSON:API links to use its in the pager submit handlers.
+      // Store the JSON:API links to use it in the pager submit handlers.
       $storage = $form_state->getStorage();
       $storage['links'] = $json['links'];
       $form_state->setStorage($storage);
@@ -647,12 +720,21 @@ class PullForm extends FormBase {
       'language' => $this->t('Language'),
       'changed' => $this->getHeader($this->t('Remote entity changed date'), 'changed', $sort_context),
       'status' => $this->t('Status'),
+      'policy' => $this->t('Policy'),
     ];
+
+    $entities_options = [];
+    try {
+      $entities_options = $this->formHelper->buildEntitiesOptions($json['data'], $selected_remote, $selected_channel);
+    }
+    catch (ResourceTypeNotFoundException $exception) {
+      $this->displayError($exception->getMessage());
+    }
 
     $form['channel_wrapper']['entities_wrapper']['entities'] = [
       '#type' => 'tableselect',
       '#header' => $header,
-      '#options' => $this->formHelper->buildEntitiesOptions($json['data'], $selected_remote, $selected_channel),
+      '#options' => $entities_options,
       '#empty' => $this->t('No entities to be pulled have been found.'),
       '#attached' => [
         'library' => [
@@ -660,7 +742,7 @@ class PullForm extends FormBase {
         ],
       ],
     ];
-    if ($this->moduleHandler->moduleExists('diff')) {
+    if ($this->moduleHandler->moduleExists('entity_share_diff')) {
       $form['channel_wrapper']['entities_wrapper']['entities']['#attached']['library'][] = 'core/drupal.dialog.ajax';
     }
 
@@ -693,7 +775,7 @@ class PullForm extends FormBase {
       $form['channel_wrapper']['entities_wrapper']['actions_bottom']['import_channel'] = $import_channel_button;
       // Remember the remote channel count.
       $storage = $form_state->getStorage();
-      $storage['remote_channel_count'] = $json['meta']['count'];
+      $storage['remote_channel_count'] = (int) $json['meta']['count'];
       $form_state->setStorage($storage);
     }
 
@@ -742,7 +824,10 @@ class PullForm extends FormBase {
       $context['sort'] = 'asc';
       $image = '';
     }
-    $cell['data'] = Link::createFromRoute(new FormattableMarkup('@cell_content@image', ['@cell_content' => $header, '@image' => $image]), '<current>', [], [
+    $cell['data'] = Link::createFromRoute(new FormattableMarkup('@cell_content@image', [
+      '@cell_content' => $header,
+      '@image' => $image,
+    ]), '<current>', [], [
       'attributes' => ['title' => $title],
       'query' => array_merge($context['query'], [
         'sort' => $context['sort'],
@@ -797,8 +882,20 @@ class PullForm extends FormBase {
     if (isset($storage['links'][$link_name]['href'])) {
       $parsed_url = UrlHelper::parse($storage['links'][$link_name]['href']);
       if (isset($parsed_url['query']['page']) && isset($parsed_url['query']['page']['offset'])) {
+        $offset = $parsed_url['query']['page']['offset'];
+        // In the case of the basic pager, previous and next links' offset needs
+        // to manually be set.
+        if ($link_name == 'prev') {
+          $get_offset = $this->query->get('offset', 0);
+          $offset = $get_offset - $this->maxSize;
+        }
+        elseif ($link_name == 'next') {
+          $get_offset = $this->query->get('offset', 0);
+          $offset = $get_offset + $this->maxSize;
+        }
+
         $additional_query_parameters = [
-          'offset' => $parsed_url['query']['page']['offset'],
+          'offset' => $offset,
           'order' => $this->query->get('order', ''),
           'sort' => $this->query->get('sort', ''),
         ];
@@ -844,6 +941,36 @@ class PullForm extends FormBase {
    */
   public function resetSort(array &$form, FormStateInterface $form_state) {
     $this->setFormRedirect($form_state);
+  }
+
+  /**
+   * Display the exception message.
+   *
+   * @param string $message
+   *   The exception message.
+   */
+  protected function displayError(string $message) {
+    if ($this->currentUser()->hasPermission('entity_share_client_display_errors')) {
+      $message = Xss::filterAdmin($message);
+      $message = $this->prepareErrorMessage($message);
+      $this->messenger()->addError($message);
+    }
+    else {
+      $this->messenger()->addError($this->t('An error occurred when requesting the remote website. Please contact the site administrator.'));
+    }
+  }
+
+  /**
+   * Cut part of response from exception message.
+   *
+   * @param string $message
+   *   The exception message.
+   *
+   * @return string
+   *   Prepared message.
+   */
+  protected function prepareErrorMessage(string $message) {
+    return preg_replace('/\sresponse:.+$/s', '', $message);
   }
 
 }

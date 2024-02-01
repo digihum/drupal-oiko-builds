@@ -8,8 +8,7 @@ full-pager:
     js/entity_share_client.full_pager.js: {}
   dependencies:
     - core/drupal
-    - core/jquery
-    - core/jquery.once
+    - core/once
 
 import-processors:
   js:
@@ -17,4 +16,3 @@ import-processors:
   dependencies:
     - core/drupal
     - core/jquery
-    - core/jquery.once

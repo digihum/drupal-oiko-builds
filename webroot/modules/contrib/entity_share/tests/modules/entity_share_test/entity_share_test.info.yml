@@ -63,6 +63,7 @@ config_devel:
     - core.entity_view_display.node.es_test.default
     - core.entity_view_display.node.es_test.teaser
     - core.entity_view_display.paragraph.es_test.default
+    - core.entity_view_display.taxonomy_term.es_test.default
     - field.field.block_content.es_test.body
     - field.field.comment.es_test.comment_body
     - field.field.media.es_test_audio.field_es_test_audio_file
@@ -160,7 +161,7 @@ config_devel:
     - paragraphs.paragraphs_type.es_test
     - taxonomy.vocabulary.es_test
 
-# Information added by Drupal.org packaging script on 2020-10-15
-version: '8.x-3.0-beta1'
+# Information added by Drupal.org packaging script on 2023-04-11
+version: '8.x-3.0'
 project: 'entity_share'
-datestamp: 1602777023
+datestamp: 1681198396

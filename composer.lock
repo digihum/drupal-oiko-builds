@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d1b124852bb746c6cc92341c5e15655",
+    "content-hash": "00937267673054092f03c6859949f3ef",
     "packages": [
         {
             "name": "arthur-e/wicket",
@@ -2437,20 +2437,20 @@
         },
         {
             "name": "drupal/entity_share",
-            "version": "3.0.0-beta1",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/entity_share.git",
-                "reference": "8.x-3.0-beta1"
+                "reference": "8.x-3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/entity_share-8.x-3.0-beta1.zip",
-                "reference": "8.x-3.0-beta1",
-                "shasum": "116332be7b19dcb7c97f7c62245b1cf45b9f03dc"
+                "url": "https://ftp.drupal.org/files/projects/entity_share-8.x-3.0.zip",
+                "reference": "8.x-3.0",
+                "shasum": "b1c8f40ef2714c45c956c09343e9e9808d3e8a10"
             },
             "require": {
-                "drupal/core": "^8.8 || ^9",
+                "drupal/core": "^9 || ^10",
                 "league/oauth2-client": "^2.4"
             },
             "conflict": {
@@ -2458,16 +2458,15 @@
             },
             "require-dev": {
                 "drupal/block_field": "~1.0",
-                "drupal/dynamic_entity_reference": "~2.0",
+                "drupal/dynamic_entity_reference": "~3.0 || ~4.0",
                 "drupal/entity_share_client": "*",
                 "drupal/field_group": "~3.0",
+                "drupal/json_api_book": "~1.0",
                 "drupal/jsonapi_extras": "~3.14",
                 "drupal/key": "~1.14",
                 "drupal/metatag": "~1.0",
                 "drupal/paragraphs": "~1.0",
-                "drupal/pathauto": "~1.0",
-                "drupal/simple_oauth": "~4.5",
-                "fzaninotto/faker": "^1.7"
+                "drupal/pathauto": "~1.0"
             },
             "suggest": {
                 "drupal/key": "Provides ability to manage keys for Authentication plugins.",
@@ -2476,11 +2475,11 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-3.0-beta1",
-                    "datestamp": "1603186320",
+                    "version": "8.x-3.0",
+                    "datestamp": "1681198393",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Beta releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -5689,16 +5688,16 @@
         },
         {
             "name": "league/oauth2-client",
-            "version": "2.6.0",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth2-client.git",
-                "reference": "badb01e62383430706433191b82506b6df24ad98"
+                "reference": "160d6274b03562ebeb55ed18399281d8118b76c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/badb01e62383430706433191b82506b6df24ad98",
-                "reference": "badb01e62383430706433191b82506b6df24ad98",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/160d6274b03562ebeb55ed18399281d8118b76c8",
+                "reference": "160d6274b03562ebeb55ed18399281d8118b76c8",
                 "shasum": ""
             },
             "require": {
@@ -5707,9 +5706,9 @@
                 "php": "^5.6 || ^7.0 || ^8.0"
             },
             "require-dev": {
-                "mockery/mockery": "^1.3",
-                "php-parallel-lint/php-parallel-lint": "^1.2",
-                "phpunit/phpunit": "^5.7 || ^6.0 || ^9.3",
+                "mockery/mockery": "^1.3.5",
+                "php-parallel-lint/php-parallel-lint": "^1.3.1",
+                "phpunit/phpunit": "^5.7 || ^6.0 || ^9.5",
                 "squizlabs/php_codesniffer": "^2.3 || ^3.0"
             },
             "type": "library",
@@ -5753,9 +5752,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/oauth2-client/issues",
-                "source": "https://github.com/thephpleague/oauth2-client/tree/2.6.0"
+                "source": "https://github.com/thephpleague/oauth2-client/tree/2.7.0"
             },
-            "time": "2020-10-28T02:03:40+00:00"
+            "time": "2023-04-16T18:19:15+00:00"
         },
         {
             "name": "longwave/laminas-diactoros",
@@ -10628,7 +10627,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/avatars": 10,
-        "drupal/entity_share": 10,
         "drupal/gdpr": 10,
         "drupal/sharemessage": 10,
         "drupal/squid_autocomplete": 15,
