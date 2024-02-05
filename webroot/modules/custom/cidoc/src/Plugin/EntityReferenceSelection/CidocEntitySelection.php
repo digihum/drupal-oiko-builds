@@ -78,6 +78,7 @@ class CidocEntitySelection extends DefaultSelection {
 
     // Add entity-access tag.
     $query->addTag($target_type . '_access');
+    $query->accessCheck(TRUE);
 
     // Add the Selection handler for system_query_entity_reference_alter().
     $query->addTag('entity_reference');
@@ -139,8 +140,8 @@ class CidocEntitySelection extends DefaultSelection {
             $actor_entity_id = $reference->getDomain();
             $actor = $this->entityTypeManager->getStorage($target_type)->load($actor_entity_id);
             $actor_bundle = $actor->bundle();
-            $translation = $this->entityTypeManager->getTranslationFromContext($entity);
-            $actor_translation = $this->entityTypeManager->getTranslationFromContext($actor);
+            $translation = $this->entityRepository->getTranslationFromContext($entity);
+            $actor_translation = $this->entityRepository->getTranslationFromContext($actor);
             $label = $translation->label() . ' (' .  $actor_translation->label() . ')';
             $internal_name = $actor_translation->getName(FALSE);
             if ($internal_name) {
@@ -152,7 +153,7 @@ class CidocEntitySelection extends DefaultSelection {
       }
       else {
         /** @var CidocEntity $translation */
-        $translation = $this->entityTypeManager->getTranslationFromContext($entity);
+        $translation = $this->entityRepository->getTranslationFromContext($entity);
         $label = $translation->label();
         // Show label with internal name if available.
         $internal_name = $translation->getName(FALSE);
@@ -177,7 +178,7 @@ class CidocEntitySelection extends DefaultSelection {
       $match_operator = 'STARTS_WITH';
     }
     $target_type = $this->configuration['target_type'];
-    $handler_settings = $this->configuration['handler_settings'];
+    $handler_settings = $this->configuration['handler_settings'] ?? $this->getConfiguration();
     $entity_type = $this->entityTypeManager->getDefinition($target_type);
 
     $query = $this->entityTypeManager->getStorage($target_type)->getQuery();
@@ -212,6 +213,7 @@ class CidocEntitySelection extends DefaultSelection {
 
     // Add entity-access tag.
     $query->addTag($target_type . '_access');
+    $query->accessCheck(TRUE);
 
     // Add the Selection handler for system_query_entity_reference_alter().
     $query->addTag('entity_reference');

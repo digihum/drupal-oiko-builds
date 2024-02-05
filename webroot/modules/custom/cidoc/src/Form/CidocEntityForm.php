@@ -890,7 +890,7 @@ class CidocEntityForm extends ContentEntityForm implements TrustedCallbackInterf
       $this->messenger()->addMessage($this->t('Saved CIDOC entity %label.', ['%label' => $cidoc_entity->label()]));
     }
     else {
-      $to_populate = \Drupal::request()->query->get('cidoc_population', array());
+      $to_populate = \Drupal::request()->query->all('cidoc_population');
       if ($references = $cidoc_entity->getReferencesNeedingPopulating()) {
         [$domain_id, $range_id] = explode('>', reset($references), 2);
         if ($domain_id == $cidoc_entity->id()) {
