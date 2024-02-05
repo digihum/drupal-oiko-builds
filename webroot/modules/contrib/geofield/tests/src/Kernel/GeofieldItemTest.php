@@ -2,12 +2,12 @@
 
 namespace Drupal\Tests\geofield\Kernel;
 
-use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldItemInterface;
+use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\entity_test\Entity\EntityTest;
-use Drupal\Tests\field\Kernel\FieldKernelTestBase;
-use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Tests\field\Kernel\FieldKernelTestBase;
 
 /**
  * Tests using entity fields of the geofield field type.
@@ -21,7 +21,7 @@ class GeofieldItemTest extends FieldKernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['geofield'];
+  protected static $modules = ['geofield'];
 
   /**
    * Field storage entity.
@@ -40,7 +40,7 @@ class GeofieldItemTest extends FieldKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->installEntitySchema('entity_test_rev');
@@ -60,8 +60,8 @@ class GeofieldItemTest extends FieldKernelTestBase {
     $entity->save();
 
     $entity = EntityTest::load($entity->id());
-    $this->assertTrue($entity->geofield_field instanceof FieldItemListInterface, 'Field implements interface.');
-    $this->assertTrue($entity->geofield_field[0] instanceof FieldItemInterface, 'Field item implements interface.');
+    $this->assertInstanceOf(FieldItemListInterface::class, $entity->geofield_field, 'Field implements interface.');
+    $this->assertInstanceOf(FieldItemInterface::class, $entity->geofield_field[0], 'Field item implements interface.');
     $this->assertEquals($entity->geofield_field->value, $value);
 
     // Test computed values.

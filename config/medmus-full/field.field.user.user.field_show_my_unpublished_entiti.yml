@@ -1,0 +1,24 @@
+uuid: 912bda60-10c6-4fca-9b37-5c2390eb54e7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_show_my_unpublished_entiti
+  module:
+    - user
+id: user.user.field_show_my_unpublished_entiti
+field_name: field_show_my_unpublished_entiti
+entity_type: user
+bundle: user
+label: 'Show my unpublished entities on map'
+description: 'If checked then unpublished entities created by you will be displayed on the map.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

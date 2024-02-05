@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -89,7 +90,7 @@ class CidocEntityFormsController extends ControllerBase {
     }
     if (count($bundles) === 0) {
       $t_params = [
-        '@link' => $this->l($this->t('Go to the class creation page'), Url::fromRoute('entity.cidoc_entity_bundle.add_form')),
+        '@link' => Link::fromTextAndUrl($this->t('Go to the class creation page'), Url::fromRoute('entity.cidoc_entity_bundle.add_form'))->toString(),
       ];
       return array(
         '#markup' => $this->t('You have not created any CIDOC entity classes yet. @link to add a new one.', $t_params),

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars_adorable\Adorable.
- */
-
 namespace Drupal\avatars_adorable;
 
 use Drupal\avatars\AvatarBase;
@@ -36,7 +31,7 @@ class Adorable extends AvatarBase implements AdorableInterface {
   /**
    * {@inheritdoc}
    */
-  static public function getTypes() {
+  public static function getTypes() {
     return [
       'adorable' => 'Adorables',
     ];

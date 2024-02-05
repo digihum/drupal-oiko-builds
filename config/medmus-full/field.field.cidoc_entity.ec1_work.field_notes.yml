@@ -1,0 +1,21 @@
+uuid: 15f95aa2-22e3-4b46-9244-4868b6b2b858
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - field.storage.cidoc_entity.field_notes
+id: cidoc_entity.ec1_work.field_notes
+field_name: field_notes
+entity_type: cidoc_entity
+bundle: ec1_work
+label: Notes
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 'To do: '
+default_value_callback: ''
+settings: {  }
+field_type: string_long

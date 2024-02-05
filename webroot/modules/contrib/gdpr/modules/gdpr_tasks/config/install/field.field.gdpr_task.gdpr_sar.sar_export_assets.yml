@@ -17,7 +17,7 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  file_directory: 'gdpr-exports'
+  file_directory: gdpr-exports
   file_extensions: 'txt jpg png csv'
   max_filesize: ''
   description_field: false

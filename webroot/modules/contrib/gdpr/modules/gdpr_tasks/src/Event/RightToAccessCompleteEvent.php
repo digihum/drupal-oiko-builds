@@ -3,7 +3,7 @@
 namespace Drupal\gdpr_tasks\Event;
 
 use Drupal\Core\Session\AccountInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Event fired when a right to access request is completed.

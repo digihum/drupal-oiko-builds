@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars_adorable\AdorableInterface.
- */
-
 namespace Drupal\avatars_adorable;
 
 /**

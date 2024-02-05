@@ -5,6 +5,7 @@ namespace Drupal\gdpr_tasks;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -12,6 +13,9 @@ use Drupal\Core\Url;
 use Drupal\gdpr_fields\EntityTraversalFactory;
 use Drupal\gdpr_tasks\Entity\TaskInterface;
 use Drupal\gdpr_tasks\Form\RemovalSettingsForm;
+use function date;
+use function file_put_contents;
+use function json_encode;
 
 /**
  * Anonymizes or removes field values for GDPR.
@@ -56,6 +60,13 @@ class Anonymizer {
   private $traversalFactory;
 
   /**
+   * Filesystem.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  private $fileSystem;
+
+  /**
    * Anonymizer constructor.
    *
    * @param \Drupal\Core\Database\Connection $database
@@ -68,19 +79,23 @@ class Anonymizer {
    *   The config factory.
    * @param \Drupal\gdpr_fields\EntityTraversalFactory $traversalFactory
    *   Instantiates a traverser class.
+   * @param \Drupal\Core\File\FileSystemInterface $fileSystem
+   *   Filesystem.
    */
   public function __construct(
     Connection $database,
     EntityTypeManagerInterface $entityTypeManager,
     AccountProxyInterface $currentUser,
     ConfigFactoryInterface $configFactory,
-    EntityTraversalFactory $traversalFactory
+    EntityTraversalFactory $traversalFactory,
+    FileSystemInterface $fileSystem
   ) {
     $this->database = $database;
     $this->entityTypeManager = $entityTypeManager;
     $this->currentUser = $currentUser;
     $this->configFactory = $configFactory;
     $this->traversalFactory = $traversalFactory;
+    $this->fileSystem = $fileSystem;
   }
 
   /**
@@ -92,9 +107,6 @@ class Anonymizer {
    * @return array
    *   Returns array containing any error messages.
    *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
    */
   public function run(TaskInterface $task) {
@@ -122,11 +134,11 @@ class Anonymizer {
 
     $task->get('removal_log')->setValue($log);
 
-    if (count($failures) === 0) {
+    if (\count($failures) === 0) {
       $transaction = $this->database->startTransaction();
 
       try {
-        /* @var \Drupal\Core\Entity\EntityInterface $entity */
+        /** @var \Drupal\Core\Entity\EntityInterface $entity */
         foreach ($successes as $entity) {
           $entity->save();
         }
@@ -177,7 +189,7 @@ class Anonymizer {
   private function checkExportDirectoryExists() {
     $directory = $this->configFactory->get(RemovalSettingsForm::CONFIG_KEY)
       ->get(RemovalSettingsForm::EXPORT_DIRECTORY);
-    return !empty($directory) && \file_prepare_directory($directory);
+    return !empty($directory) && $this->fileSystem->prepareDirectory($directory);
   }
 
   /**
@@ -189,7 +201,7 @@ class Anonymizer {
    *   Log of processed fields.
    */
   private function writeLogToFile(TaskInterface $task, array $log) {
-    $filename = 'GDPR_RTF_' . \date('Y-m-d H-i-s') . '_' . $task->uuid() . '.json';
+    $filename = 'GDPR_RTF_' . date('Y-m-d H-i-s') . '_' . $task->uuid() . '.json';
     $dir = $this->configFactory->get(RemovalSettingsForm::CONFIG_KEY)
       ->get(RemovalSettingsForm::EXPORT_DIRECTORY);
 
@@ -205,7 +217,7 @@ class Anonymizer {
       'log' => $log,
     ];
 
-    \file_put_contents($filename, \json_encode($output));
+    file_put_contents($filename, json_encode($output));
   }
 
 }

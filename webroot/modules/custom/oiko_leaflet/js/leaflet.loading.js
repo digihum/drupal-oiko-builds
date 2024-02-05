@@ -7,7 +7,8 @@
     $('.js-map-loader').hide();
   });
 
-  $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
+  $(document).on('leaflet.map', function(e, mapDefinition, map, mapid) {
+    var drupalLeaflet = Drupal.Leaflet[mapid];
     drupalLeaflet.loadingControl = L.Control.loading();
     map.addControl(drupalLeaflet.loadingControl);
   });

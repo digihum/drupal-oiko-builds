@@ -5,6 +5,9 @@ namespace Drupal\gdpr_consent\ConsentUserResolver;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use function array_filter;
+use function count;
+use function reset;
 
 /**
  * Class ConsentUserResolverPluginManager.
@@ -66,29 +69,29 @@ class ConsentUserResolverPluginManager extends DefaultPluginManager {
     $definitions = $this->getDefinitions();
 
     // Get all plugins that act on the entity type.
-    $definitionsForEntity = \array_filter($definitions, function ($definition) use ($entityType) {
+    $definitionsForEntity = array_filter($definitions, static function ($definition) use ($entityType) {
       return $definition['entityType'] === $entityType;
     });
 
-    $definitionsForBundle = \array_filter($definitionsForEntity, function ($definition) use ($bundle) {
+    $definitionsForBundle = array_filter($definitionsForEntity, static function ($definition) use ($bundle) {
       return array_key_exists('bundle', $definition) && $definition['bundle'] === $bundle;
     });
 
     $definition = NULL;
-    if (\count($definitionsForBundle) > 0) {
+    if (count($definitionsForBundle) > 0) {
       // Get first item from the array.
-      $definition = \reset($definitionsForBundle);
+      $definition = reset($definitionsForBundle);
     }
-    elseif (\count($definitionsForEntity) > 0) {
+    elseif (count($definitionsForEntity) > 0) {
       // None matched for bundle.
       // Find any with no bundle.
-      $definitionsForBundle = \array_filter($definitionsForEntity, function ($definition) {
+      $definitionsForBundle = array_filter($definitionsForEntity, static function ($definition) {
         return !array_key_exists('bundle', $definition) || $definition['bundle'] === '';
       });
 
-      if (\count($definitionsForBundle) > 0) {
+      if (count($definitionsForBundle) > 0) {
         // Get first item from array.
-        $definition = \reset($definitionsForBundle);
+        $definition = reset($definitionsForBundle);
       }
     }
 

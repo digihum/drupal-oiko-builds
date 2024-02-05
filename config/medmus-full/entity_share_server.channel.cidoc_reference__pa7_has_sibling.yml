@@ -1,0 +1,18 @@
+uuid: null
+langcode: en
+status: true
+dependencies: {  }
+id: cidoc_reference__pa7_has_sibling
+label: 'PA7 has sibling'
+channel_entity_type: cidoc_reference
+channel_bundle: pa7_has_sibling
+channel_langcode: und
+channel_filters: null
+channel_groups: null
+channel_sorts:
+  changed:
+    path: changed
+    direction: DESC
+    weight: 0
+channel_searches: null
+authorized_users: {  }

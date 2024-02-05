@@ -10,7 +10,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\oiko_leaflet\Ajax\EventHistoryAddCommand;
 use Drupal\oiko_leaflet\Ajax\GAEventCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Entity\EntityManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
  * Class PopupContentController.
@@ -22,14 +22,14 @@ class PopupContentController extends ControllerBase {
   /**
    * Drupal\Core\Entity\EntityManager definition.
    *
-   * @var Drupal\Core\Entity\EntityManager
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entity_manager;
+  protected $entityTypeManager;
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityManager $entity_manager) {
-    $this->entity_manager = $entity_manager;
+  public function __construct(EntityTypeManagerInterface $entity_manager) {
+    $this->entityTypeManager = $entity_manager;
   }
 
   /**
@@ -37,7 +37,7 @@ class PopupContentController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity.manager')
+      $container->get('entity_type.manager')
     );
   }
 
@@ -48,7 +48,7 @@ class PopupContentController extends ControllerBase {
    *   Return Hello string.
    */
   public function view(CidocEntityInterface $cidoc_entity) {
-    $view_builder = $this->entity_manager->getViewBuilder('cidoc_entity');
+    $view_builder = $this->entityTypeManager->getViewBuilder('cidoc_entity');
 
     $content = $view_builder->view($cidoc_entity, 'popup');
 

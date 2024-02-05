@@ -379,7 +379,7 @@ function cidoc_update_8402() {
  */
 function cidoc_update_8403() {
   // Ideally we'd do better at updating the value of existing entities, but this will do.
-  db_update('cidoc_reference')
+  \Drupal::database()->update('cidoc_reference')
     ->fields(array('status' => TRUE))
     ->execute();
 }

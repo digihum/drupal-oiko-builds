@@ -2,17 +2,25 @@
 
 namespace Drupal\gdpr_dump\Sql;
 
+use Consolidation\SiteProcess\Util\Escape;
 use Drupal\gdpr_dump\Form\SettingsForm;
 use Drupal\gdpr_dump\Service\GdprSqlDump;
-use Drush\Log\LogLevel;
-use Drush\Sql\Sqlmysql;
+use Drush\Drush;
+use Drush\Sql\SqlMysql;
+use function array_flip;
+use function array_key_exists;
+use function array_keys;
+use function array_merge;
+use function implode;
+use function str_replace;
+use function trim;
 
 /**
  * Class GdprSqlMysql.
  *
  * @package Drupal\gdpr_dump\Sql
  */
-class GdprSqlMysql extends Sqlmysql {
+class GdprSqlMysql extends SqlMysql {
 
   /**
    * The config for gdpr dump.
@@ -38,51 +46,55 @@ class GdprSqlMysql extends Sqlmysql {
   /**
    * {@inheritdoc}
    */
-  public function __construct($db_spec = NULL) {
-    parent::__construct($db_spec);
+  public function __construct($dbSpec, $options) {
+    parent::__construct($dbSpec, $options);
     $this->gdprDumpConfig = \Drupal::config(SettingsForm::GDPR_DUMP_CONF_KEY);
-    $this->tablesToAnonymize = $this->gdprDumpConfig->get('mapping');
-    $this->tablesToSkip = \array_keys($this->gdprDumpConfig->get('empty_tables'));
+    $this->tablesToAnonymize = $this->gdprDumpConfig->get('mapping') ?? [];
+    $this->tablesToSkip = array_keys($this->gdprDumpConfig->get('empty_tables') ?? []);
   }
 
   /**
    * Execute a SQL dump and return the path to the resulting dump file.
    *
-   * @param string|bool $file
-   *   The path where the dump file should be stored. If TRUE, generate a path
-   *   based on usual backup directory and current date.
-   *
    * @return mixed
-   *   Bool or nothing.
+   *   Bool or void.
    */
-  public function dump($file = '') {
-    $file_suffix = '';
-    $table_selection = $this->get_expanded_table_selection();
+  public function dump() {
+    /** @var string|bool $file Path where dump file should be stored. If TRUE, generate a path based on usual backup directory and current date.*/
+    $file = $this->getOption('result-file');
+    $fileSuffix = '';
+    $tableSelection = $this->getExpandedTableSelection($this->getOptions(), $this->listTables());
     $file = $this->dumpFile($file);
-    // @todo: Cross-platform check.
-    $cmd = '{ ';
-    $cmd .= $this->dumpCmd($table_selection);
+    $cmd = trim($this->dumpCmd($tableSelection));
     // Append the RENAME commands at the end.
-    $cmd .= ' ; ' . $this->createRenameCommands($table_selection) . '}';
+    $renames = trim($this->createRenameCommands($tableSelection));
 
+    if (!empty($renames)) {
+      // @todo Cross-platform check.
+      $cmd = '{ ' . $cmd . ' ; ' . $renames . ' }';
+    }
+
+    $pipefail = '';
     // Gzip the output from dump command(s) if requested.
-    if (drush_get_option('gzip')) {
+    if ($this->getOption('gzip')) {
+      // See https://github.com/drush-ops/drush/issues/3816.
+      $pipefail = $this->getConfig()->get('sh.pipefail', 'bash -c "set -o pipefail; {{cmd}}"');
       $cmd .= ' | gzip -f';
-      $file_suffix .= '.gz';
-    }
-    if ($file) {
-      $file .= $file_suffix;
-      $cmd .= ' > ' . drush_escapeshellarg($file);
+      $fileSuffix .= '.gz';
     }
 
-    // Avoid the php memory of the $output array in drush_shell_exec().
-    if (drush_op_system($cmd)) {
-      return drush_set_error('DRUSH_SQL_DUMP_FAIL', 'Database dump failed');
-    }
     if ($file) {
-      drush_log(dt('Database dump saved to !path', ['!path' => $file]), LogLevel::SUCCESS);
-      drush_backend_set_result($file);
+      $file .= $fileSuffix;
+      $cmd .= ' > ' . Escape::shellArg($file);
     }
+
+    $cmd = $this->addPipeFail($cmd, $pipefail);
+    $process = Drush::shell($cmd, NULL, $this->getEnv());
+    // Avoid the php memory of saving stdout.
+    $process->disableOutput();
+    // Show dump in real-time on stdout, for backward compat.
+    $process->run($process->showRealtime());
+    return $process->isSuccessful() ? $file : FALSE;
   }
 
   /**
@@ -95,20 +107,20 @@ class GdprSqlMysql extends Sqlmysql {
    *   The command.
    */
   protected function createRenameCommands(array $tableSelection) {
-    $skipTables = \array_merge($tableSelection['skip'], $tableSelection['structure']);
-    $skipTables = \array_flip($skipTables);
+    $skipTables = array_merge($tableSelection['skip'], $tableSelection['structure']);
+    $skipTables = array_flip($skipTables);
     $skipTables += $this->tablesToSkip;
 
     $command = '';
-    foreach (\array_keys($this->tablesToAnonymize) as $table) {
-      if (\array_key_exists($table, $skipTables)) {
+    foreach (array_keys($this->tablesToAnonymize) as $table) {
+      if (array_key_exists($table, $skipTables)) {
         // Don't try to rename a table if it is excluded.
         continue;
       }
       $clone = GdprSqlDump::GDPR_TABLE_PREFIX . $table;
       $rename = "RENAME TABLE \`$clone\` TO \`$table\`;";
-      if (drush_get_context('DRUSH_VERBOSE') || drush_get_context('DRUSH_SIMULATE')) {
-        drush_print("Adding rename command: '$rename'", 0, STDERR);
+      if (Drush::verbose() || $this->getConfig()->simulate()) {
+        Drush::service('logger')->info("Adding rename command: '$rename'");
       }
 
       $command .= " ( echo \"$rename\" ); ";
@@ -129,56 +141,55 @@ class GdprSqlMysql extends Sqlmysql {
     $multipleCommands = FALSE;
     $skipTables = $tableSelection['skip'];
     $structureTables = $tableSelection['structure'];
-    $structureTables = \array_merge($this->tablesToSkip, $structureTables);
+    $structureTables = array_merge($this->tablesToSkip, $structureTables);
     $tables = $tableSelection['tables'];
 
     $ignores = [];
-    $skipTables = \array_merge($structureTables, $skipTables);
+    $skipTables = array_merge($structureTables, $skipTables);
     // Skip tables with sensitive data.
-    $skipTables = \array_merge(\array_keys($this->tablesToAnonymize), $skipTables);
-    $dataOnly = drush_get_option('data-only');
+    $skipTables = array_merge(array_keys($this->tablesToAnonymize), $skipTables);
+    $dataOnly = $this->getOption('data-only');
     // The ordered-dump option is only supported by MySQL for now.
-    // @todo add documentation once a hook for drush_get_option_help() is available.
-    // @see drush_get_option_help() in drush.inc
-    $orderedDump = drush_get_option('ordered-dump');
+    $orderedDump = $this->getOption('ordered-dump');
 
     $exec = 'mysqldump ';
     // Mysqldump wants 'databasename' instead of
     // 'database=databasename' for no good reason.
-    $onlyDbName = \str_replace('--database=', ' ', $this->creds());
+    $onlyDbName = str_replace('--database=', ' ', $this->creds());
     $exec .= $onlyDbName;
 
     // We had --skip-add-locks here for a while to help people with
     // insufficient permissions, but removed it because it slows down the
     // import a lot.  See http://drupal.org/node/1283978
     $extra = ' --no-autocommit --single-transaction --opt -Q';
-    if (NULL !== $dataOnly) {
+    if ($dataOnly === TRUE) {
       $extra .= ' --no-create-info';
     }
-    if (NULL !== $orderedDump) {
+    if ($orderedDump === TRUE) {
       $extra .= ' --skip-extended-insert --order-by-primary';
     }
-    if ($option = drush_get_option('extra', $this->query_extra)) {
+    if ($option = $this->getOption('extra-dump')) {
       $extra .= " $option";
     }
     $exec .= $extra;
 
     if (!empty($tables)) {
-      $exec .= ' ' . \implode(' ', $tables);
+      $exec .= ' ' . implode(' ', $tables);
     }
     else {
-      // @todo: Maybe use --ignore-table={db.table1,db.table2,...} syntax.
+      // @todo Maybe use --ignore-table={db.table1,db.table2,...} syntax.
       // Append the ignore-table options.
+      $dbSpec = $this->getDbSpec();
       foreach ($skipTables as $table) {
-        $ignores[] = '--ignore-table=' . $this->db_spec['database'] . '.' . $table;
+        $ignores[] = '--ignore-table=' . $dbSpec['database'] . '.' . $table;
         $multipleCommands = TRUE;
       }
-      $exec .= ' ' . \implode(' ', $ignores);
+      $exec .= ' ' . implode(' ', $ignores);
 
       // Run mysqldump again and append output
       // if we need some structure only tables.
       if (!empty($structureTables)) {
-        $exec .= ' && mysqldump ' . $onlyDbName . " --no-data $extra " . \implode(' ', $structureTables);
+        $exec .= ' && mysqldump ' . $onlyDbName . " --no-data $extra " . implode(' ', $structureTables);
         $multipleCommands = TRUE;
       }
     }

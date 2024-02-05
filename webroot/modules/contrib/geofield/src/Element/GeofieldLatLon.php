@@ -14,16 +14,18 @@ class GeofieldLatLon extends GeofieldElementBase {
   /**
    * {@inheritdoc}
    */
-  public static $components = [
-    'lat' => [
-      'title' => 'Latitude',
-      'range' => 90,
-    ],
-    'lon' => [
-      'title' => 'Longitude',
-      'range' => 180,
-    ],
-  ];
+  public static function getComponents() {
+    return [
+      'lat' => [
+        'title' => t('Latitude'),
+        'range' => 90,
+      ],
+      'lon' => [
+        'title' => t('Longitude'),
+        'range' => 180,
+      ],
+    ];
+  }
 
   /**
    * {@inheritdoc}
@@ -60,7 +62,7 @@ class GeofieldLatLon extends GeofieldElementBase {
   public static function latlonProcess(array &$element, FormStateInterface $form_state, array &$complete_form) {
     static::elementProcess($element, $form_state, $complete_form);
 
-    if (!empty($element['#geolocation']) && $element['#geolocation'] == TRUE) {
+    if (!empty($element['#geolocation']) && $element['#geolocation'] === TRUE) {
       $element['#attached']['library'][] = 'geofield/geolocation';
       $element['geocode'] = [
         '#type' => 'button',

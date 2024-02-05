@@ -1,0 +1,19 @@
+uuid: 9316ae54-9e3e-47e4-8199-743d3f18871e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_volume
+    - taxonomy.vocabulary.source_books
+id: taxonomy_term.source_books.field_volume
+field_name: field_volume
+entity_type: taxonomy_term
+bundle: source_books
+label: Volume
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -4,7 +4,7 @@ namespace Drupal\gdpr_consent\Form;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\ContentEntityForm;
-use Drupal\Core\Entity\EntityManagerInterface;
+use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -27,8 +27,8 @@ class ConsentAgreementForm extends ContentEntityForm {
   /**
    * {@inheritdoc}
    *
-   * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
-   *   The entity manager.
+   * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
+   *   The entity repository service.
    * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
    *   The entity type bundle service.
    * @param \Drupal\Component\Datetime\TimeInterface $time
@@ -36,9 +36,13 @@ class ConsentAgreementForm extends ContentEntityForm {
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user.
    */
-  public function __construct(EntityManagerInterface $entity_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL, AccountInterface $current_user) {
-    parent::__construct($entity_manager, $entity_type_bundle_info, $time);
-    $this->entityManager = $entity_manager;
+  public function __construct(
+    EntityRepositoryInterface $entity_repository,
+    EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL,
+    TimeInterface $time = NULL,
+    AccountInterface $current_user
+  ) {
+    parent::__construct($entity_repository, $entity_type_bundle_info, $time);
     $this->currentUser = $current_user;
 
   }
@@ -48,7 +52,7 @@ class ConsentAgreementForm extends ContentEntityForm {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity.manager'),
+      $container->get('entity.repository'),
       $container->get('entity_type.bundle.info'),
       $container->get('datetime.time'),
       $container->get('current_user')
@@ -59,7 +63,7 @@ class ConsentAgreementForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    /* @var $entity \Drupal\gdpr_consent\Entity\ConsentAgreement */
+    /** @var \Drupal\gdpr_consent\Entity\ConsentAgreement $entity */
     $form = parent::buildForm($form, $form_state);
 
     if (!$this->entity->isNew()) {
@@ -85,7 +89,7 @@ class ConsentAgreementForm extends ContentEntityForm {
       $entity->setNewRevision();
 
       // If a new revision is created, save the current user as revision author.
-      $entity->setRevisionCreationTime(REQUEST_TIME);
+      $entity->setRevisionCreationTime($this->time->getRequestTime());
       $entity->setRevisionUserId($this->currentUser->id());
     }
     else {
@@ -96,13 +100,13 @@ class ConsentAgreementForm extends ContentEntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Consent Agreement.', [
+        $this->messenger()->addStatus($this->t('Created the %label Consent Agreement.', [
           '%label' => $entity->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label Consent Agreement.', [
+        $this->messenger()->addStatus($this->t('Saved the %label Consent Agreement.', [
           '%label' => $entity->label(),
         ]));
     }

@@ -1,10 +1,13 @@
+geofield_general:
+  version: 1.x
+  css:
+    component:
+      css/geofield_general.css: {}
+
 geolocation:
   version: 1.x
   js:
     js/geolocation.js: {}
-
-geofield_proximity:
-  version: 1.x
-  css:
-    component:
-      css/geofield_proximity.css: {}
+  dependencies:
+    - core/jquery
+    - core/once

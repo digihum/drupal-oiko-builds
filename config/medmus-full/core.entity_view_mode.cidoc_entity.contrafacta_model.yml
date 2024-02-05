@@ -1,0 +1,10 @@
+uuid: 03ee347c-60b0-4869-87a7-8eebd2506603
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+id: cidoc_entity.contrafacta_model
+label: 'Contrafacta Model'
+targetEntityType: cidoc_entity
+cache: true

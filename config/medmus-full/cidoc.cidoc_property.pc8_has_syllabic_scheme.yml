@@ -1,0 +1,31 @@
+uuid: befbcd97-24a6-4864-97f5-96da6749ea0d
+langcode: en
+status: true
+dependencies: {  }
+id: pc8_has_syllabic_scheme
+label: 'PC8 has syllabic scheme'
+bidirectional: false
+reverse_label: 'PC8 is syllabic scheme of'
+friendly_label: 'Syllabic scheme'
+reverse_friendly_label: 'Is syllabic scheme of'
+domain_bundles:
+  - ec1_work
+range_bundles:
+  - ec4_syllabic_scheme
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: "<p>This property links lyrics with its corresponding syllabic scheme.</p>\r\n<ul>\r\n<li>BdT 240.6 PC8 has syllabic scheme 08 07 08 08 07' 08 08 07' (EC4)</li>\r\n</ul>\r\n"
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

@@ -1,0 +1,20 @@
+uuid: f57a27a3-73b3-4dc2-af1f-b1a26a45e93b
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_leaflet
+third_party_settings:
+  oiko_leaflet:
+    item_color: green
+crm_entity: e65_creation
+id: e65_creation
+label: 'E65 Creation'
+friendly_label: Creation
+weight: -8
+group: auxiliary
+description: "<p>This class comprises events that result in the creation of conceptual items or immaterial\r\nproducts, such as legends, poems, texts, music, images, movies, laws, types etc.</p>"
+examples: "<ul>\r\n<li>the framing of the U.S. Constitution</li>\r\n<li>the drafting of U.N. resolution 1441</li>\r\n</ul>"
+geoserializers:
+  event: event
+  move: '0'

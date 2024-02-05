@@ -14,6 +14,11 @@ class PreserveQueryStringTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
+  protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
   protected static $modules = ['r4032login'];
 
   /**
@@ -60,6 +65,16 @@ class PreserveQueryStringTest extends BrowserTestBase {
         ],
         200,
         'user/login?destination=admin/modules%3Ffoo%3Dbar',
+      ],
+      [
+        'admin',
+        [
+          'query' => [
+            'destination' => 'admin/modules',
+          ],
+        ],
+        200,
+        'user/login?destination=admin%3Fdestination%3Dadmin%252Fmodules',
       ],
     ];
   }

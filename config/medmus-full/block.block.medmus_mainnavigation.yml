@@ -1,0 +1,25 @@
+uuid: 8d3e53a4-e55d-4bff-bbdd-0fec5367c3e2
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - medmus
+id: medmus_mainnavigation
+theme: medmus
+region: primary_menu
+weight: -16
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }

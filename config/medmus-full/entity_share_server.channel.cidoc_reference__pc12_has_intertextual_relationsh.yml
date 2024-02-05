@@ -1,0 +1,18 @@
+uuid: null
+langcode: en
+status: true
+dependencies: {  }
+id: cidoc_reference__pc12_has_intertextual_relationsh
+label: 'PC12 is intertextual source for'
+channel_entity_type: cidoc_reference
+channel_bundle: pc12_has_intertextual_relationsh
+channel_langcode: und
+channel_filters: null
+channel_groups: null
+channel_sorts:
+  changed:
+    path: changed
+    direction: DESC
+    weight: 0
+channel_searches: null
+authorized_users: {  }

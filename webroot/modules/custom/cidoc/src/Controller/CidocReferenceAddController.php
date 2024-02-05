@@ -6,6 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,7 +68,7 @@ class CidocReferenceAddController extends ControllerBase {
       }
       if (count($properties) === 0) {
         $t_params = [
-          '@link' => $this->l($this->t('Go to the property creation page'), Url::fromRoute('entity.cidoc_property.add_form')),
+          '@link' => Link::fromTextAndUrl($this->t('Go to the property creation page'), Url::fromRoute('entity.cidoc_property.add_form'))->toString(),
         ];
         return array(
           '#markup' => $this->t('You have not created any CIDOC properties yet. @link to add a new one.', $t_params),

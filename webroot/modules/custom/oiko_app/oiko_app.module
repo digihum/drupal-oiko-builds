@@ -59,7 +59,7 @@ function oiko_app_preprocess_oiko_app(&$variables, $hook) {
 
   \Drupal::moduleHandler()->alter('oiko_app_main_map', $map);
 
-  $variables['map'] = leaflet_render_map($map, [], $height);
+  $variables['map'] = \Drupal::service('leaflet.service')->leafletRenderMap($map, [], $height);
 
   $variables['timeline'] = array(
     '#theme' => 'comparative_timeline',

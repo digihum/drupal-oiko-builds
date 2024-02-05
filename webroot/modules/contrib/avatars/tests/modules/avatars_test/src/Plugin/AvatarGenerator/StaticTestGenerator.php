@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars_test\Plugin\AvatarGenerator\StaticTestGenerator.
- */
-
 namespace Drupal\avatars_test\Plugin\AvatarGenerator;
 
 use Drupal\avatars\Plugin\AvatarGenerator\AvatarGeneratorBase;

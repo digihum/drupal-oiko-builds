@@ -1,0 +1,18 @@
+uuid: null
+langcode: en
+status: true
+dependencies: {  }
+id: cidoc_reference__pa13_has_illegitimate_child
+label: 'PA13 has illegitimate child'
+channel_entity_type: cidoc_reference
+channel_bundle: pa13_has_illegitimate_child
+channel_langcode: und
+channel_filters: null
+channel_groups: null
+channel_sorts:
+  changed:
+    path: changed
+    direction: DESC
+    weight: 0
+channel_searches: null
+authorized_users: {  }

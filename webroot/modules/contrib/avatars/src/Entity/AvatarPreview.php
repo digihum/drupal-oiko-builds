@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\Entity\AvatarPreview.
- */
-
 namespace Drupal\avatars\Entity;
 
 use Drupal\Core\Entity\ContentEntityBase;

@@ -2,8 +2,8 @@
 
 namespace Drupal\geofield\Plugin\GeofieldProximitySource;
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Defines 'Geofield Client Location Origin' plugin.
@@ -16,7 +16,8 @@ use Drupal\Component\Render\FormattableMarkup;
  *   description = @Translation("Gets the Client Location through the browser HTML5 Geolocation API."),
  *   context = {
  *     "filter",
- *   }
+ *   },
+ *   exposedOnly = true
  * )
  */
 class ClientLocationOriginFilter extends ManualOriginDefault {
@@ -31,9 +32,9 @@ class ClientLocationOriginFilter extends ManualOriginDefault {
     ];
 
     $form["origin"] = [
-      '#title' => t('Client Coordinates'),
+      '#title' => $this->t('Client Coordinates'),
       '#type' => 'geofield_latlon',
-      '#description' => t('Value in decimal degrees. Use dot (.) as decimal separator.'),
+      '#description' => $this->t('Value in decimal degrees. Use dot (.) as decimal separator.'),
       '#default_value' => [
         'lat' => '',
         'lon' => '',
@@ -49,13 +50,8 @@ class ClientLocationOriginFilter extends ManualOriginDefault {
 
       $form['origin_summary_flag'] = [
         '#type' => 'checkbox',
-        '#title' => t('Show the Client Origin coordinates as summary in the Exposed Form'),
-        '#default_value' => isset($this->configuration['origin_summary_flag']) ? $this->configuration['origin_summary_flag'] : TRUE,
-        '#states' => [
-          'invisible' => [
-            'input[name="options[expose_button][checkbox][checkbox]"]' => ['checked' => FALSE],
-          ],
-        ],
+        '#title' => $this->t('Show the Client Origin coordinates as summary in the Exposed Form'),
+        '#default_value' => $this->configuration['origin_summary_flag'] ?? TRUE,
       ];
     }
 

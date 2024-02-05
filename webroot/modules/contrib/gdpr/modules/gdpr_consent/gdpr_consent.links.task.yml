@@ -15,8 +15,8 @@ entity.gdpr_consent_agreement.edit_form:
   title: 'Edit'
 
 entity.gdpr_consent_agreement.delete_form:
-  route_name:  entity.gdpr_consent_agreement.delete_form
-  base_route:  entity.gdpr_consent_agreement.canonical
+  route_name: entity.gdpr_consent_agreement.delete_form
+  base_route: entity.gdpr_consent_agreement.canonical
   title: Delete
   weight: 10
 

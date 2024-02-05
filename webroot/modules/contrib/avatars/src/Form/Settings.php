@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\Form\Settings.
- */
-
 namespace Drupal\avatars\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
@@ -147,18 +142,18 @@ class Settings extends ConfigFormBase {
 
       $operations = [];
       if ($instance->access('update')) {
-        $operations['edit'] = array(
+        $operations['edit'] = [
           'title' => $this->t('Edit'),
           'weight' => 10,
           'url' => $instance->toUrl('edit-form'),
-        );
+        ];
       }
       if ($instance->access('delete')) {
-        $operations['delete'] = array(
+        $operations['delete'] = [
           'title' => $this->t('Delete'),
           'weight' => 100,
           'url' => $instance->toUrl('delete-form'),
-        );
+        ];
       }
       $row['operations'] = [
         '#type' => 'operations',
@@ -229,7 +224,7 @@ class Settings extends ConfigFormBase {
     ]);
     $config->save();
 
-    drupal_set_message(t('Settings saved.'));
+    $this->messenger()->addStatus(t('Settings saved.'));
   }
 
 }

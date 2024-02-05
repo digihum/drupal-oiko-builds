@@ -2,7 +2,7 @@
 
 namespace Drupal\gdpr_tasks\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Event fired once a Right to be Forgotten event is complete.

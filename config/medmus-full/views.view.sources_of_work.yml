@@ -1,0 +1,2863 @@
+uuid: 9cb909f5-2e2f-434f-9aaa-19211f67677f
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec8_manuscript
+    - cidoc.cidoc_entity_bundle.ec9_print
+  module:
+    - cidoc
+    - eva
+    - views_delimited_list
+id: sources_of_work
+label: 'Sources of work'
+module: views
+description: ''
+tag: ''
+base_table: cidoc_entity
+base_field: id
+display:
+  default:
+    display_plugin: default
+    id: default
+    display_title: Master
+    position: 0
+    display_options:
+      access:
+        type: none
+        options: {  }
+      cache:
+        type: tag
+        options: {  }
+      query:
+        type: views_query
+        options:
+          disable_sql_rewrite: false
+          distinct: true
+          replica: false
+          query_comment: ''
+          query_tags: {  }
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        type: mini
+        options:
+          items_per_page: 0
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: ‹‹
+            next: ››
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+      style:
+        type: default
+        options:
+          grouping:
+            -
+              field: name
+              rendered: true
+              rendered_strip: false
+          row_class: ''
+          default_row_class: false
+      row:
+        type: fields
+        options:
+          default_field_elements: false
+          inline:
+            name: name
+          separator: ','
+          hide_empty: false
+      fields:
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+        internal_name:
+          id: internal_name
+          table: cidoc_entity
+          field: internal_name
+          relationship: none
+          group_type: count
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          set_precision: false
+          precision: 0
+          decimal: .
+          separator: ', '
+          format_plural: 0
+          format_plural_string: !!binary MQNAY291bnQ=
+          prefix: ''
+          suffix: ''
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: internal_name
+          plugin_id: field
+        name_1:
+          id: name_1
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_2
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: true
+            text: '<li>{{name_1}}</li>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: true
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+      filters:
+        status:
+          value: '1'
+          table: cidoc_entity
+          field: status
+          plugin_id: boolean
+          entity_type: cidoc_entity
+          entity_field: status
+          id: status
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+          group: 1
+        bundle:
+          id: bundle
+          table: cidoc_entity
+          field: bundle
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: in
+          value:
+            ec8_manuscript: ec8_manuscript
+            ec9_print: ec9_print
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: cidoc_entity
+          entity_field: bundle
+          plugin_id: cidoc_bundle
+      sorts:
+        internal_name:
+          id: internal_name
+          table: cidoc_entity
+          field: internal_name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: internal_name
+          plugin_id: standard
+        name_1:
+          id: name_1
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_1
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_1
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content:
+            value: '<h3>Sources</h3>'
+            format: full_html
+          plugin_id: text
+      footer:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: true
+          content:
+            value: '{{name_1}}'
+            format: basic_html
+          plugin_id: text
+      empty: {  }
+      relationships:
+        related_entities:
+          id: related_entities
+          table: cidoc_entity
+          field: related_entities
+          relationship: none
+          group_type: group
+          admin_label: work
+          required: false
+          limit_bundles:
+            p128_carries: p128_carries
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p45_consists_of: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p72_has_language: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p131_is_identified_by: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pa4_has_muse: 0
+            pa12_has_adoptive_child: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+          limit_types:
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
+        related_entities_1:
+          id: related_entities_1
+          table: cidoc_entity
+          field: related_entities
+          relationship: none
+          group_type: group
+          admin_label: material
+          required: false
+          limit_bundles:
+            p45_consists_of: p45_consists_of
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p72_has_language: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p128_carries: 0
+            p131_is_identified_by: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pa4_has_muse: 0
+            pa12_has_adoptive_child: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+          limit_types:
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
+        related_entities_2:
+          id: related_entities_2
+          table: cidoc_entity
+          field: related_entities
+          relationship: related_entities
+          group_type: group
+          admin_label: 'indirect source'
+          required: false
+          limit_bundles:
+            pc14_has_indirect_source: pc14_has_indirect_source
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p9_consists_of: 0
+            p10_falls_within: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p45_consists_of: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p128_carries: 0
+            p131_is_identified_by: 0
+            p134_continued: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa4_has_muse: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa12_has_adoptive_child: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pa19_has_language: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pc10_has_melodic_scheme: 0
+            pc11_has_spouse: 0
+            pc12_has_intertextual_relationsh: 0
+            pc13_has_response: 0
+          limit_types:
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+            ec10_marriage: 0
+            ec11_melodic_scheme: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
+      arguments:
+        id:
+          id: id
+          table: cidoc_entity
+          field: id
+          relationship: related_entities
+          group_type: group
+          admin_label: ''
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: node
+          default_argument_options: {  }
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            items_per_page: 25
+            override: false
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: false
+          not: false
+          entity_type: cidoc_entity
+          entity_field: id
+          plugin_id: numeric
+      display_extenders: {  }
+      group_by: true
+      title: Music
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+      tags: {  }
+  entity_view_1:
+    display_plugin: entity_view
+    id: entity_view_1
+    display_title: EVA
+    position: 1
+    display_options:
+      display_extenders: {  }
+      entity_type: cidoc_entity
+      bundles:
+        - ec1_work
+      enabled: true
+      fields:
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: true
+            text: '<li>{{name}}</li>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+        internal_name:
+          id: internal_name
+          table: cidoc_entity
+          field: internal_name
+          relationship: none
+          group_type: count
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          set_precision: false
+          precision: 0
+          decimal: .
+          separator: ', '
+          format_plural: 0
+          format_plural_string: !!binary MQNAY291bnQ=
+          prefix: ''
+          suffix: ''
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: internal_name
+          plugin_id: field
+        name_1:
+          id: name_1
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_2
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: true
+            text: '<li>{{name_1}}</li>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: true
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+      defaults:
+        fields: false
+        relationships: false
+      relationships:
+        related_entities:
+          id: related_entities
+          table: cidoc_entity
+          field: related_entities
+          relationship: none
+          group_type: group
+          admin_label: work
+          required: false
+          limit_bundles:
+            p128_carries: p128_carries
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p45_consists_of: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p72_has_language: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p131_is_identified_by: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pa4_has_muse: 0
+            pa12_has_adoptive_child: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+          limit_types:
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
+        related_entities_1:
+          id: related_entities_1
+          table: cidoc_entity
+          field: related_entities
+          relationship: none
+          group_type: group
+          admin_label: material
+          required: false
+          limit_bundles:
+            p45_consists_of: p45_consists_of
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p72_has_language: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p128_carries: 0
+            p131_is_identified_by: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pa4_has_muse: 0
+            pa12_has_adoptive_child: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+          limit_types:
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
+        related_entities_2:
+          id: related_entities_2
+          table: cidoc_entity
+          field: related_entities
+          relationship: related_entities
+          group_type: group
+          admin_label: 'indirect source'
+          required: false
+          limit_bundles:
+            pc14_has_indirect_source: pc14_has_indirect_source
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p9_consists_of: 0
+            p10_falls_within: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p45_consists_of: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p128_carries: 0
+            p131_is_identified_by: 0
+            p134_continued: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa4_has_muse: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa12_has_adoptive_child: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pa19_has_language: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pc10_has_melodic_scheme: 0
+            pc11_has_spouse: 0
+            pc12_has_intertextual_relationsh: 0
+            pc13_has_response: 0
+          limit_types:
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+            ec10_marriage: 0
+            ec11_melodic_scheme: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+      tags: {  }
+  entity_view_2:
+    display_plugin: entity_view
+    id: entity_view_2
+    display_title: 'EVA Music'
+    position: 1
+    display_options:
+      display_extenders: {  }
+      entity_type: cidoc_entity
+      bundles:
+        - ec1_work
+      enabled: true
+      fields:
+        name_1:
+          id: name_1
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_1
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+        internal_name:
+          id: internal_name
+          table: cidoc_entity
+          field: internal_name
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: true
+            text: '{{internal_name|split('' '')[0]}}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: internal_name
+          plugin_id: field
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: "{% if name_1 != internal_name %} | {{internal_name}} {% endif %}\r\n{% if name|striptags|length < 4 %}{{ name }}{% else %}{{ name|replace({\"Bibliothèque nationale de France\":\"BnF\"})|raw}}<br/>{% endif %}\r\n"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: true
+          empty_zero: true
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+      defaults:
+        fields: false
+        relationships: false
+        group_by: false
+        filters: false
+        filter_groups: false
+        arguments: false
+        sorts: false
+        style: false
+        row: false
+        header: false
+        footer: false
+      relationships:
+        related_entities_3:
+          id: related_entities_3
+          table: cidoc_entity
+          field: related_entities
+          relationship: related_entities
+          group_type: group
+          admin_label: Music
+          required: false
+          limit_bundles:
+            pc7_has_music: pc7_has_music
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p9_consists_of: 0
+            p10_falls_within: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p45_consists_of: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p128_carries: 0
+            p131_is_identified_by: 0
+            p134_continued: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa4_has_muse: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa12_has_adoptive_child: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pa19_has_language: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pc10_has_melodic_scheme: 0
+            pc11_has_spouse: 0
+            pc12_has_intertextual_relationsh: 0
+            pc13_has_response: 0
+            pc14_has_indirect_source: 0
+          limit_types:
+            ec6_music: ec6_music
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+            ec10_marriage: 0
+            ec11_melodic_scheme: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
+        related_entities_reverse:
+          id: related_entities_reverse
+          table: cidoc_entity
+          field: related_entities_reverse
+          relationship: related_entities_3
+          group_type: group
+          admin_label: 'Ms with Music'
+          required: false
+          limit_bundles:
+            p128_carries: p128_carries
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p9_consists_of: 0
+            p10_falls_within: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p45_consists_of: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p131_is_identified_by: 0
+            p134_continued: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa4_has_muse: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa12_has_adoptive_child: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pa19_has_language: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pc10_has_melodic_scheme: 0
+            pc11_has_spouse: 0
+            pc12_has_intertextual_relationsh: 0
+            pc13_has_response: 0
+            pc14_has_indirect_source: 0
+          limit_types:
+            ec8_manuscript: ec8_manuscript
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec9_print: 0
+            ec10_marriage: 0
+            ec11_melodic_scheme: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_reverse
+        related_entities:
+          id: related_entities
+          table: cidoc_entity
+          field: related_entities
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: Material
+          required: false
+          limit_bundles:
+            p9_consists_of: p9_consists_of
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p10_falls_within: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p45_consists_of: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p128_carries: 0
+            p131_is_identified_by: 0
+            p134_continued: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa4_has_muse: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa12_has_adoptive_child: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pa19_has_language: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pc10_has_melodic_scheme: 0
+            pc11_has_spouse: 0
+            pc12_has_intertextual_relationsh: 0
+            pc13_has_response: 0
+            pc14_has_indirect_source: 0
+          limit_types:
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+            ec10_marriage: 0
+            ec11_melodic_scheme: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
+        related_entities_1:
+          id: related_entities_1
+          table: cidoc_entity
+          field: related_entities
+          relationship: none
+          group_type: group
+          admin_label: Lang
+          required: false
+          limit_bundles:
+            pa19_has_language: pa19_has_language
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p9_consists_of: 0
+            p10_falls_within: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p45_consists_of: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p128_carries: 0
+            p131_is_identified_by: 0
+            p134_continued: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa4_has_muse: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa12_has_adoptive_child: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pc10_has_melodic_scheme: 0
+            pc11_has_spouse: 0
+            pc12_has_intertextual_relationsh: 0
+            pc13_has_response: 0
+            pc14_has_indirect_source: 0
+          limit_types:
+            e56_language: e56_language
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+            ec10_marriage: 0
+            ec11_melodic_scheme: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
+      group_by: true
+      filters:
+        status:
+          value: '1'
+          table: cidoc_entity
+          field: status
+          plugin_id: boolean
+          entity_type: cidoc_entity
+          entity_field: status
+          id: status
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+          group: 1
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: ''
+          operator: 'not empty'
+          value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: string
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      arguments:
+        id:
+          id: id
+          table: cidoc_entity
+          field: id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: node
+          default_argument_options: {  }
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            items_per_page: 25
+            override: false
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: false
+          not: false
+          entity_type: cidoc_entity
+          entity_field: id
+          plugin_id: numeric
+      sorts:
+        name_1:
+          id: name_1
+          table: cidoc_entity
+          field: name
+          relationship: related_entities
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+        internal_name:
+          id: internal_name
+          table: cidoc_entity
+          field: internal_name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: internal_name
+          plugin_id: standard
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+      style:
+        type: views_delimited_list
+        options:
+          grouping: {  }
+          delimiter: ''
+          conjunctive: ''
+          separator_two: delimiter
+          long_count: '3'
+          separator_long: both
+          prefix: ''
+          suffix: ''
+      row:
+        type: fields
+        options:
+          default_field_elements: false
+          inline:
+            name: name
+          separator: ','
+          hide_empty: true
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content:
+            value: "<div style=\"height: 6px;\"></div>\r\n<span style=\"color:black\">[view:title]</span>"
+            format: basic_html
+          plugin_id: text
+      footer: {  }
+      title: Music
+      show_title: false
+      display_description: Music
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+      tags: {  }
+  entity_view_3:
+    display_plugin: entity_view
+    id: entity_view_3
+    display_title: 'EVA ms'
+    position: 1
+    display_options:
+      display_extenders: {  }
+      entity_type: cidoc_entity
+      bundles:
+        - ec1_work
+      enabled: true
+      fields:
+        internal_name:
+          id: internal_name
+          table: cidoc_entity
+          field: internal_name
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: true
+            text: '{{internal_name|split('' '')[0]}}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: internal_name
+          plugin_id: field
+        name_1:
+          id: name_1
+          table: cidoc_entity
+          field: name
+          relationship: related_entities
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: entity_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: "{% if name_1 != internal_name and name|striptags|length < 4%} | {{internal_name}} {% endif %}\r\n{% if name|striptags|length < 4 %}{{ name }}{% else %}{{ name|replace({\"Bibliothèque nationale de France\":\"BnF\"})|raw}}<br/>{% endif %}\r\n"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns:
+            entity_id: entity_id
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: field
+      defaults:
+        fields: false
+        relationships: false
+        filters: false
+        filter_groups: false
+        sorts: false
+        style: false
+        row: false
+        footer: false
+        group_by: false
+        arguments: false
+      relationships:
+        related_entities:
+          id: related_entities
+          table: cidoc_entity
+          field: related_entities
+          relationship: none
+          group_type: group
+          admin_label: lang
+          required: false
+          limit_bundles:
+            pa19_has_language: pa19_has_language
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p9_consists_of: 0
+            p10_falls_within: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p45_consists_of: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p128_carries: 0
+            p131_is_identified_by: 0
+            p134_continued: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa4_has_muse: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa12_has_adoptive_child: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pc10_has_melodic_scheme: 0
+            pc11_has_spouse: 0
+            pc12_has_intertextual_relationsh: 0
+            pc13_has_response: 0
+            pc14_has_indirect_source: 0
+          limit_types:
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+            ec10_marriage: 0
+            ec11_melodic_scheme: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
+        related_entities_reverse:
+          id: related_entities_reverse
+          table: cidoc_entity
+          field: related_entities_reverse
+          relationship: none
+          group_type: group
+          admin_label: ms
+          required: false
+          limit_bundles:
+            p128_carries: p128_carries
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p9_consists_of: 0
+            p10_falls_within: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p45_consists_of: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p131_is_identified_by: 0
+            p134_continued: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa4_has_muse: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa12_has_adoptive_child: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pa19_has_language: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pc10_has_melodic_scheme: 0
+            pc11_has_spouse: 0
+            pc12_has_intertextual_relationsh: 0
+            pc13_has_response: 0
+            pc14_has_indirect_source: 0
+          limit_types:
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+            ec10_marriage: 0
+            ec11_melodic_scheme: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_reverse
+        related_entities_1:
+          id: related_entities_1
+          table: cidoc_entity
+          field: related_entities
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: material
+          required: false
+          limit_bundles:
+            p45_consists_of: p45_consists_of
+            p1_is_identified_by: 0
+            p2_has_type: 0
+            p4_has_time_span: 0
+            p7_took_place_at: 0
+            p9_consists_of: 0
+            p10_falls_within: 0
+            p11_had_participant: 0
+            p12_occurred_in_the_presence_of: 0
+            p13_destroyed: 0
+            p14_carried_out_by: 0
+            p26_moved_to: 0
+            p27_moved_from: 0
+            p48_has_preferred_identifier: 0
+            p67_refers_to: 0
+            p87_is_identified_by: 0
+            p89_falls_within: 0
+            p94_has_created: 0
+            p95_has_formed: 0
+            p96_by_mother: 0
+            p97_from_father: 0
+            p98_brought_into_life: 0
+            p99_dissolved: 0
+            p100_was_death_of: 0
+            p102_has_title: 0
+            p108_has_produced: 0
+            p128_carries: 0
+            p131_is_identified_by: 0
+            p134_continued: 0
+            p139_has_alternative_form: 0
+            p143_joined: 0
+            p144_joined_with: 0
+            p145_separated: 0
+            p146_separated_from: 0
+            pa1_has_patron: 0
+            pa2_has_acquaintance: 0
+            pa3_has_friend: 0
+            pa4_has_muse: 0
+            pa5_has_lover: 0
+            pa6_has_murder_victim: 0
+            pa7_has_sibling: 0
+            pa8_has_cousin: 0
+            pa9_has_aunt_or_uncle: 0
+            pa10_has_grandchild: 0
+            pa11_has_ancestor: 0
+            pa12_has_adoptive_child: 0
+            pa13_has_illegitimate_child: 0
+            pa14_has_relative: 0
+            pa15_has_child-in-law: 0
+            pa16_has_sibling-in-law: 0
+            pa17_has_godfather: 0
+            pa18_has_godmother: 0
+            pa19_has_language: 0
+            pc1_has_metrical_affinities_with: 0
+            pc2_is_contrafactum_of: 0
+            pc3_has_genre: 0
+            pc4_has_formal_feature: 0
+            pc5_has_expression: 0
+            pc6_has_alternative_attribution: 0
+            pc7_has_music: 0
+            pc8_has_syllabic_scheme: 0
+            pc9_has_rhyme_scheme: 0
+            pc10_has_melodic_scheme: 0
+            pc11_has_spouse: 0
+            pc12_has_intertextual_relationsh: 0
+            pc13_has_response: 0
+            pc14_has_indirect_source: 0
+          limit_types:
+            e5_event: 0
+            e6_destruction: 0
+            e7_activity: 0
+            e9_move: 0
+            e12_production: 0
+            e21_person: 0
+            e35_title: 0
+            e41_appellation: 0
+            e42_identifier: 0
+            e52_time_span: 0
+            e53_place: 0
+            e55_type: 0
+            e56_language: 0
+            e57_material: 0
+            e65_creation: 0
+            e66_formation: 0
+            e67_birth: 0
+            e68_dissolution: 0
+            e69_death: 0
+            e74_group: 0
+            e85_joining: 0
+            e86_leaving: 0
+            ec1_work: 0
+            ec2_genre: 0
+            ec3_formal_feature: 0
+            ec4_syllabic_scheme: 0
+            ec5_rhyme_scheme: 0
+            ec6_music: 0
+            ec7_source: 0
+            ec8_manuscript: 0
+            ec9_print: 0
+            ec10_marriage: 0
+            ec11_melodic_scheme: 0
+          entity_type: cidoc_entity
+          plugin_id: cidoc_related_entity_forward
+      filters:
+        status:
+          value: '1'
+          table: cidoc_entity
+          field: status
+          plugin_id: boolean
+          entity_type: cidoc_entity
+          entity_field: status
+          id: status
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+          group: 1
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      sorts:
+        internal_name:
+          id: internal_name
+          table: cidoc_entity
+          field: internal_name
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: internal_name
+          plugin_id: standard
+        name_1:
+          id: name_1
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_1
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+        name:
+          id: name
+          table: cidoc_entity
+          field: name
+          relationship: related_entities_reverse
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: cidoc_entity
+          entity_field: name
+          plugin_id: standard
+      style:
+        type: views_delimited_list
+        options:
+          grouping: {  }
+          delimiter: ''
+          conjunctive: ''
+          separator_two: delimiter
+          long_count: '3'
+          separator_long: both
+          prefix: ''
+          suffix: ''
+      row:
+        type: fields
+        options:
+          default_field_elements: false
+          inline:
+            name: name
+          separator: ','
+          hide_empty: false
+      footer: {  }
+      display_description: ''
+      group_by: true
+      arguments:
+        id:
+          id: id
+          table: cidoc_entity
+          field: id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: node
+          default_argument_options: {  }
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            items_per_page: 25
+            override: false
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: false
+          not: false
+          entity_type: cidoc_entity
+          entity_field: id
+          plugin_id: numeric
+      argument_mode: id
+      default_argument: null
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+      tags: {  }

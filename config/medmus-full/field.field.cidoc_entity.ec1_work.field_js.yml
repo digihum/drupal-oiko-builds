@@ -1,0 +1,21 @@
+uuid: 4a31542f-290d-4cec-8ea0-239dca42b0d7
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - field.storage.cidoc_entity.field_js
+  module:
+    - text
+id: cidoc_entity.ec1_work.field_js
+field_name: field_js
+entity_type: cidoc_entity
+bundle: ec1_work
+label: js
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

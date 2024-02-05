@@ -355,7 +355,6 @@ class CidocReference extends EditorialContentEntityBase implements CidocReferenc
   /**
    * Get the first entity in the domain of this reference.
    *
-   * @deprecated
    * @return mixed
    */
   public function getDomain() {
@@ -369,7 +368,6 @@ class CidocReference extends EditorialContentEntityBase implements CidocReferenc
   /**
    * Get the first entity in the range of this reference.
    *
-   * @deprecated
    * @return mixed
    */
   public function getRange() {

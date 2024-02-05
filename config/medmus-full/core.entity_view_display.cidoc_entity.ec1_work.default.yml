@@ -1,0 +1,346 @@
+uuid: d64b6e53-1209-42aa-9da2-4efa115ba63e
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - field.field.cidoc_entity.ec1_work.field_completed
+    - field.field.cidoc_entity.ec1_work.field_exclude_from_duplicates_
+    - field.field.cidoc_entity.ec1_work.field_js
+    - field.field.cidoc_entity.ec1_work.field_notes
+    - field.field.cidoc_entity.ec1_work.field_text
+  module:
+    - field_group
+    - options
+    - text
+third_party_settings:
+  field_group:
+    group_sources:
+      children: {  }
+      parent_name: ''
+      weight: 65
+      format_type: html_element
+      region: hidden
+      format_settings:
+        fieldset_label_html: false
+        id: ''
+        classes: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Sources
+id: cidoc_entity.ec1_work.default
+targetEntityType: cidoc_entity
+bundle: ec1_work
+mode: default
+content:
+  author_s_in_sidebar_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p102_has_title':
+    weight: 33
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p1_is_identified_by':
+    weight: 32
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p2_has_type':
+    weight: 31
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p48_has_preferred_identifier':
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p67_refers_to':
+    weight: 29
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p72_has_language':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pa19_has_language':
+    weight: 28
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc12_has_intertextual_relationsh':
+    weight: 16
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc13_has_response':
+    weight: 27
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc14_has_indirect_source':
+    weight: 26
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc1_has_metrical_affinities_with':
+    weight: 25
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc2_is_contrafactum_of':
+    weight: 24
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc3_has_genre':
+    weight: 23
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc4_has_formal_feature':
+    weight: 22
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc5_has_expression':
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc7_has_music':
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc8_has_syllabic_scheme':
+    weight: 19
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:pc9_has_rhyme_scheme':
+    weight: 18
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p128_carries':
+    weight: 34
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p12_occurred_in_the_presence_of':
+    weight: 41
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p67_refers_to':
+    weight: 35
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p94_has_created':
+    weight: 40
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pc12_has_intertextual_relationsh':
+    weight: 17
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pc13_has_response':
+    weight: 39
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pc14_has_indirect_source':
+    weight: 38
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pc2_is_contrafactum_of':
+    weight: 37
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:pc5_has_expression':
+    weight: 36
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  creation_of_work_info_entity_view_1:
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  creation_of_work_info_entity_view_3:
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  creation_of_work_info_entity_view_4:
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  creation_of_work_info_entity_view_5:
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  duplicate_of_maps_of_subevents_entity_view_1:
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  duplicate_of_places_of_work_composition_entity_view_1:
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_completed:
+    weight: 42
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_exclude_from_duplicates_:
+    weight: 43
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_js:
+    weight: 66
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_notes:
+    weight: 44
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_text:
+    weight: 45
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  identifier_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  indirect_source_entity_view_1:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  internal_name:
+    label: inline
+    type: string
+    weight: 1
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  map_of_mss_of_work_entity_view_1:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  map_of_places_referred_to_by_work_entity_view_1:
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  place_of_mss_of_a__entity_view_1:
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  refers_to_appellation_and_identified_person_place_etc__entity_view_1:
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  sources_of_work_entity_view_1:
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  sources_of_work_entity_view_2:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  sources_of_work_entity_view_3:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  timeline_link:
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  work_contrafactum_of_entity_view_1:
+    weight: 15
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  work_contrafactum_of_entity_view_2:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  work_model_of_entity_view_1:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  cidoc_admin_links: true
+  cidoc_properties: true
+  cidoc_properties_transcript: true
+  cidoc_temporal_summary: true
+  citation: true
+  content: true
+  contrafacta_details_carried_out_by: true
+  contrafacta_details_has_rhyme_scheme: true
+  contrafacta_details_has_syllabic_scheme: true
+  contrafacta_details_has_time_span: true
+  contrafacta_details_took_place_at: true
+  creation_of_work_info_entity_view_2: true
+  map_link: true
+  medmel_iframe: true
+  search_api_excerpt: true
+  significance: true
+  timeline_logo: true
+  timeline_preselect_option: true
+  user_id: true

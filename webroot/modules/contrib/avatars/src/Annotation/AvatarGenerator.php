@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\Annotation\AvatarGenerator.
- */
-
 namespace Drupal\avatars\Annotation;
 
 use Drupal\Component\Annotation\Plugin;
@@ -26,9 +21,8 @@ class AvatarGenerator extends Plugin {
   /**
    * The human-readable name of the plugin.
    *
-   * @ingroup plugin_translatable
-   *
    * @var \Drupal\Core\Annotation\Translation
+   * @ingroup plugin_translatable
    */
   public $label;
 
@@ -42,9 +36,8 @@ class AvatarGenerator extends Plugin {
   /**
    * The description of the avatar generator.
    *
-   * @ingroup plugin_translatable
-   *
    * @var \Drupal\Core\Annotation\Translation
+   * @ingroup plugin_translatable
    */
   public $description;
 

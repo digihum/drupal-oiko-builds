@@ -29,7 +29,7 @@ class Move extends GeoserializerPluginBase {
         foreach ($place_entity->field_geodata->getValue() as $value) {
           $values[] = $value['value'];
         }
-        $new_points = leaflet_process_geofield($values);
+        $new_points = \Drupal::service('leaflet.service')->leafletProcessGeofield($values);
         foreach ($new_points as $k => $v) {
           $new_points[$k]['location'] = $place_entity->label();
         }
@@ -45,7 +45,7 @@ class Move extends GeoserializerPluginBase {
         foreach ($place_entity->field_geodata->getValue() as $value) {
           $values[] = $value['value'];
         }
-        $new_points = leaflet_process_geofield($values);
+        $new_points = \Drupal::service('leaflet.service')->leafletProcessGeofield($values);
         foreach ($new_points as $k => $v) {
           $new_points[$k]['location'] = $place_entity->label();
         }

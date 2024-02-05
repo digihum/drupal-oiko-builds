@@ -1,22 +1,29 @@
 (function ($) {
   'use strict';
-  $(document).on('leaflet.map', function (e, mapDefinition, map, drupalLeaflet) {
+  $(document).on('leaflet.map', function (e, mapDefinition, map, mapid) {
+    var drupalLeaflet = Drupal.Leaflet[mapid];
     // If this is the first map we're processing on the page, assume that we want to capture it's page state.
     if (mapDefinition.hasOwnProperty('pagestate') && mapDefinition.pagestate) {
 
-      // Swap out the add_features function for one that only sets map bounds if not already set.
-      drupalLeaflet.add_features = function (features, initial) {
-        for (var i = 0; i < features.length; i++) {
-          var feature = features[i];
-          var lFeature;
+      var drupalLeafletInstance = $('#' + mapid).data('leaflet');
+      // Replace the add_features method with one that doesn't actually add the features to the map.
+      drupalLeafletInstance.add_features = function(mapid, features, initial) {
+        let self = this;
+        for (let i = 0; i < features.length; i++) {
+          let feature = features[i];
+          let lFeature;
 
           // dealing with a layer group
           if (feature.group) {
-            var lGroup = this.create_feature_group(feature);
-            for (var groupKey in feature.features) {
-              var groupFeature = feature.features[groupKey];
-              lFeature = this.create_feature(groupFeature);
-              if (lFeature != undefined) {
+            let lGroup = self.create_feature_group(feature);
+            for (let groupKey in feature.features) {
+              let groupFeature = feature.features[groupKey];
+              lFeature = self.create_feature(groupFeature);
+              if (lFeature !== undefined) {
+                if (lFeature.setStyle) {
+                  feature.path = feature.path ? (feature.path instanceof Object ? feature.path : JSON.parse(feature.path)) : {};
+                  lFeature.setStyle(feature.path);
+                }
                 if (groupFeature.popup) {
                   lFeature.bindPopup(groupFeature.popup);
                 }
@@ -25,25 +32,39 @@
             }
 
             // Add the group to the layer switcher.
-            this.add_overlay(feature.label, lGroup);
+            self.add_overlay(feature.label, lGroup, false, mapid);
           }
           else {
-            lFeature = this.create_feature(feature);
+            lFeature = self.create_feature(feature);
+            if (lFeature !== undefined) {
+              if (lFeature.setStyle) {
+                feature.path = feature.path ? (feature.path instanceof Object ? feature.path : JSON.parse(feature.path)) : {};
+                lFeature.setStyle(feature.path);
+              }
+
+              if (feature.popup) {
+                lFeature.bindPopup(feature.popup);
+              }
+            }
           }
 
-          // Allow others to do something with the feature that was just added to the map
-          $(document).trigger('leaflet.feature', [lFeature, feature, this]);
+          // Allow others to do something with the feature that was just added to the map.
+          $(document).trigger('leaflet.feature', [lFeature, feature, self]);
         }
 
         // Allow plugins to do things after features have been added.
-        $(document).trigger('leaflet.features', [initial || false, this])
-
-        // Fit bounds after adding features.
-        var that = this;
-        setTimeout(function() {
-        that.fitbounds();
-        }, 250);
+        $(document).trigger('leaflet.features', [initial || false, self])
       };
+
+      $(document).on('leaflet.features', function (e, initial, drupalLeaflet) {
+        if (drupalLeaflet.map_definition.mapid === mapid) {
+          // Fit bounds after adding features.
+          setTimeout(function () {
+            self.fitbounds();
+          }, 250);
+        }
+      });
+
     }
   });
 })(jQuery);

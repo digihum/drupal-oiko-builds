@@ -8,6 +8,9 @@ use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\gdpr_fields\Entity\GdprField;
 use Drupal\gdpr_fields\Entity\GdprFieldConfigEntity;
 use Drupal\gdpr_fields\EntityTraversal;
+use function implode;
+use function in_array;
+use function pathinfo;
 
 /**
  * Entity traversal for performing Right to Access requests.
@@ -16,48 +19,53 @@ use Drupal\gdpr_fields\EntityTraversal;
  */
 class RightToAccessEntityTraversal extends EntityTraversal {
 
+  /**
+   * Assets.
+   *
+   * @var array
+   */
   private $assets = [];
 
   /**
    * {@inheritdoc}
    */
   protected function processEntity(FieldableEntityInterface $entity, GdprFieldConfigEntity $config, $row_id, GdprField $parent_config = NULL) {
-    $entity_type = $entity->getEntityTypeId();
+    $entityType = $entity->getEntityTypeId();
 
-    $fields = $this->entityFieldManager->getFieldDefinitions($entity_type, $entity->bundle());
-    $field_configs = $config->getFieldsForBundle($entity->bundle());
+    $fields = $this->entityFieldManager->getFieldDefinitions($entityType, $entity->bundle());
+    $fieldConfigs = $config->getFieldsForBundle($entity->bundle());
 
-    foreach ($fields as $field_id => $field) {
-      $field_config = isset($field_configs[$field_id]) ? $field_configs[$field_id] : NULL;
+    foreach ($fields as $fieldId => $field) {
+      $fieldConfig = isset($fieldConfigs[$fieldId]) ? $fieldConfigs[$fieldId] : NULL;
 
       // If the field is not configured, not enabled,
       // or not enabled for RTA, then skip it.
-      if ($field_config === NULL || !$field_config->enabled || !in_array($field_config->rta, ['inc', 'maybe'])) {
+      if ($fieldConfig === NULL || !$fieldConfig->enabled || !in_array($fieldConfig->rta, ['inc', 'maybe'])) {
         continue;
       }
 
-      $plugin_name = "{$entity_type}|{$entity->bundle()}|{$field_id}";
+      $pluginName = "{$entityType}|{$entity->bundle()}|{$fieldId}";
 
       $filename = 'main';
       if ($parent_config) {
         $filename = !empty($parent_config->sarsFilename) ? $parent_config->sarsFilename : $filename;
       }
 
-      $field_value = $this->getFieldValue($entity, $field, $field_id);
+      $fieldValue = $this->getFieldValue($entity, $field, $fieldId);
 
       $data = [
-        'plugin_name' => $plugin_name,
-        'entity_type' => $entity_type,
+        'plugin_name' => $pluginName,
+        'entity_type' => $entityType,
         'entity_id' => $entity->id(),
         'file' => $filename,
         'row_id' => $row_id,
         'label' => $field->getLabel(),
-        'value' => $field_value,
-        'notes' => $field_config->notes,
-        'rta' => $field_config->rta,
+        'value' => $fieldValue,
+        'notes' => $fieldConfig->notes,
+        'rta' => $fieldConfig->rta,
       ];
 
-      $this->results["{$plugin_name}|{$entity->id()}"] = $data;
+      $this->results["{$pluginName}|{$entity->id()}"] = $data;
     }
   }
 
@@ -68,39 +76,42 @@ class RightToAccessEntityTraversal extends EntityTraversal {
    *   The current entity being processed.
    * @param \Drupal\Core\Field\FieldDefinitionInterface $field
    *   Field definition.
-   * @param string $field_id
+   * @param string $fieldId
    *   Field ID.
    *
    * @return string
    *   Field value
    */
-  protected function getFieldValue(FieldableEntityInterface $entity, FieldDefinitionInterface $field, $field_id) {
+  protected function getFieldValue(FieldableEntityInterface $entity, FieldDefinitionInterface $field, $fieldId) {
     // Special handling for file references.
     // For files, we want to add to the assets collection.
     $labels = [];
-    if ($entity->{$field_id} instanceof EntityReferenceFieldItemList && $field->getSetting('target_type') == 'file') {
-      /* @var \Drupal\file\Entity\File $file */
-      foreach ($entity->{$field_id}->referencedEntities() as $file) {
-        $this->assets[] = ['target_id' => $file->id(), 'display' => 1];
-        $labels[] = "assets/{$file->id()}." . pathinfo($file->getFileUri(), PATHINFO_EXTENSION);
-      }
-    }
-    elseif ($entity->{$field_id} instanceof EntityReferenceFieldItemList) {
-      /* @var \Drupal\Core\Entity\EntityInterface $referenced_entity */
-      foreach ($entity->{$field_id}->referencedEntities() as $referenced_entity) {
-        if ($referenced_entity->label()) {
-          $labels[] = "{$referenced_entity->label()} [{$referenced_entity->id()}]";
+
+    if ($entity->{$fieldId} instanceof EntityReferenceFieldItemList) {
+      if ($field->getSetting('target_type') === 'file') {
+        /** @var \Drupal\file\Entity\File $file */
+        foreach ($entity->{$fieldId}->referencedEntities() as $file) {
+          $this->assets[] = ['target_id' => $file->id(), 'display' => 1];
+          $labels[] = "assets/{$file->id()}." . pathinfo($file->getFileUri(), PATHINFO_EXTENSION);
         }
-        else {
-          $labels[] = $referenced_entity->id();
+      }
+      else {
+        /** @var \Drupal\Core\Entity\EntityInterface $referenced_entity */
+        foreach ($entity->{$fieldId}->referencedEntities() as $referenced_entity) {
+          if ($referenced_entity->label()) {
+            $labels[] = "{$referenced_entity->label()} [{$referenced_entity->id()}]";
+          }
+          else {
+            $labels[] = $referenced_entity->id();
+          }
         }
       }
     }
     else {
-      $labels[] = $entity->get($field_id)->getString();
+      $labels[] = $entity->get($fieldId)->getString();
     }
-    $field_value = implode(', ', $labels);
-    return $field_value;
+
+    return implode(', ', $labels);
   }
 
 }

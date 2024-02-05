@@ -69,7 +69,7 @@ class UserLoggedIn extends BlockBase {
 
     if (\Drupal::currentUser()->isAuthenticated()) {
 
-      $profile_form = \Drupal::entityManager()->getFormObject('user', 'default');
+      $profile_form = \Drupal::entityTypeManager()->getFormObject('user', 'default');
       $account = \Drupal::entityTypeManager()->getStorage('user')->load(\Drupal::currentUser()->id());
       $profile_form->setEntity($account);
 

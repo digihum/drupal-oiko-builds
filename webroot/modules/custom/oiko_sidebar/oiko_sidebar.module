@@ -23,10 +23,10 @@ function oiko_sidebar_theme($existing, $type, $theme, $path) {
 function template_preprocess_sidebar(&$variables, $hook) {
   $build = [
     '#cache' => [
-      'tags' => \Drupal::service('entity.manager')->getDefinition('block')->getListCacheTags(),
+      'tags' => \Drupal::service('entity_type.manager')->getDefinition('block')->getListCacheTags(),
     ],
   ];
-  $blockViewBuilder = \Drupal::service('entity.manager')->getViewBuilder('block');
+  $blockViewBuilder = \Drupal::service('entity_type.manager')->getViewBuilder('block');
   // Load all region content assigned via blocks.
   $cacheable_metadata_list = [];
   $regions = \Drupal::service('block.repository')->getVisibleBlocksPerRegion($cacheable_metadata_list);

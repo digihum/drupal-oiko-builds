@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\AvatarGeneratorInterface.
- */
-
 namespace Drupal\avatars;
 
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
@@ -26,6 +21,7 @@ interface AvatarGeneratorInterface extends ConfigEntityInterface {
    * Get weight for the avatar generator.
    *
    * @return mixed
+   *   The weight for the avatar generator.
    */
   public function getWeight();
 

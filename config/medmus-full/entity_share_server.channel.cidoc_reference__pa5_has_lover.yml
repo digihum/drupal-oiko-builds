@@ -1,0 +1,18 @@
+uuid: null
+langcode: en
+status: true
+dependencies: {  }
+id: cidoc_reference__pa5_has_lover
+label: 'PA5 has lover'
+channel_entity_type: cidoc_reference
+channel_bundle: pa5_has_lover
+channel_langcode: und
+channel_filters: null
+channel_groups: null
+channel_sorts:
+  changed:
+    path: changed
+    direction: DESC
+    weight: 0
+channel_searches: null
+authorized_users: {  }

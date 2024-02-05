@@ -3,8 +3,8 @@
 namespace Drupal\Tests\avatars\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\simpletest\UserCreationTrait;
 use Drupal\avatars\Entity\AvatarGenerator;
+use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
 use Drupal\user\RoleInterface;
@@ -22,7 +22,14 @@ class AvatarKitManagerTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['avatars', 'user', 'avatars_test', 'system', 'field', 'file'];
+  public static $modules = [
+    'avatars',
+    'user',
+    'avatars_test',
+    'system',
+    'field',
+    'file',
+  ];
 
   /**
    * The avatar manager.

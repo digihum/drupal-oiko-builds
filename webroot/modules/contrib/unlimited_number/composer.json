@@ -10,10 +10,12 @@
   "authors": [
     {
       "name": "Daniel Phin",
-      "email": "pro@danielph.in",
       "homepage": "http://danielph.in",
       "role": "Maintainer"
     }
   ],
-  "license": "GPL-2.0+"
+  "license": "GPL-2.0+",
+  "require": {
+    "drupal/core": "^8.9 || ^9"
+  }
 }

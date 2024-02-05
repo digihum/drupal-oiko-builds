@@ -1,0 +1,18 @@
+uuid: null
+langcode: en
+status: true
+dependencies: {  }
+id: cidoc_reference__p4_has_time_span
+label: 'P4 has time-span'
+channel_entity_type: cidoc_reference
+channel_bundle: p4_has_time_span
+channel_langcode: und
+channel_filters: null
+channel_groups: null
+channel_sorts:
+  changed:
+    path: changed
+    direction: DESC
+    weight: 0
+channel_searches: null
+authorized_users: {  }

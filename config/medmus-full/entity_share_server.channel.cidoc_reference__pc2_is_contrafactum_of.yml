@@ -1,0 +1,18 @@
+uuid: null
+langcode: en
+status: true
+dependencies: {  }
+id: cidoc_reference__pc2_is_contrafactum_of
+label: 'PC2 is contrafactum of'
+channel_entity_type: cidoc_reference
+channel_bundle: pc2_is_contrafactum_of
+channel_langcode: und
+channel_filters: null
+channel_groups: null
+channel_sorts:
+  changed:
+    path: changed
+    direction: DESC
+    weight: 0
+channel_searches: null
+authorized_users: {  }

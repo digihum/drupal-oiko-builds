@@ -1,4 +1,3 @@
-uuid: 5a0777c8-0adc-4245-b1d2-9361cfea7062
 langcode: en
 status: true
 dependencies:
@@ -12,8 +11,6 @@ dependencies:
     - file
     - options
     - user
-_core:
-  default_config_hash: 87nXJmD9ApemHI9NIpskdaMThdWor5xuJL6IK6Y-bHM
 id: gdpr_task.gdpr_sar.default
 targetEntityType: gdpr_task
 bundle: gdpr_sar
@@ -52,7 +49,7 @@ content:
     type: file_default
     weight: 3
     region: content
-    label: inline
+    label: above
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
@@ -71,5 +68,6 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  langcode: true
   manual_data: true
   sar_export_assets: true

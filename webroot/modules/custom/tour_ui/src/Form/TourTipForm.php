@@ -173,10 +173,10 @@ class TourTipForm extends FormBase {
     $tour->save();
 
     if (isset($storage['#new'])) {
-      drupal_set_message($this->t('The %tip tip has been created.', array('%tip' => $new_tip['label'])));
+      $this->messenger()->addStatus($this->t('The %tip tip has been created.', array('%tip' => $new_tip['label'])));
     }
     else {
-      drupal_set_message($this->t('Updated the %tip tip.', array('%tip' => $new_tip['label'])));
+      $this->messenger()->addStatus($this->t('Updated the %tip tip.', array('%tip' => $new_tip['label'])));
     }
 
     $form_state->setRedirect('entity.tour.edit_form', ['tour' => $tour->id()]);

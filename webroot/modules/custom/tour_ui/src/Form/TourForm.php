@@ -73,7 +73,7 @@ class TourForm extends EntityForm {
       '#title' => $this->t('Language'),
       '#languages' => LanguageInterface::STATE_ALL,
       // Default to the content language opposed to und (language not specified).
-      '#default_value' => empty($tour->langcode) ? \Drupal::languageManager()->getCurrentLanguage()->getId() : $tour->langcode,
+      '#default_value' => empty($tour->get('langcode')) ? \Drupal::languageManager()->getCurrentLanguage()->getId() : $tour->get('langcode'),
     ];
     $form['module'] = [
       '#type' => 'textfield',
@@ -130,7 +130,7 @@ class TourForm extends EntityForm {
           $form['#data'][$tip_id] = $tip->getConfiguration();
         }
         catch (\Error $e) {
-          drupal_set_message($this->t('Tip %tip is not configurable. You cannot save this tour.', ['%tip' => $tip->getLabel()]), 'warning');
+          $this->messenger()->addWarning($this->t('Tip %tip is not configurable. You cannot save this tour.', ['%tip' => $tip->getLabel()]));
         }
         $form['tips'][$tip_id]['#attributes']['class'][] = 'draggable';
         $form['tips'][$tip_id]['label'] = [

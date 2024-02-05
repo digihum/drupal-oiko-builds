@@ -14,11 +14,11 @@ function tour_ui_entity_type_alter(array &$entity_types) {
   $entity_types['tour']->setFormClass('default', 'Drupal\tour_ui\Form\TourForm');
   $entity_types['tour']->setFormClass('add', 'Drupal\tour_ui\Form\TourForm');
   $entity_types['tour']->setFormClass('edit', 'Drupal\tour_ui\Form\TourForm');
-  $entity_types['tour']->setFormClass('delete', 'Drupal\tour_ui\Form\TourDeleteForm');
   $entity_types['tour']->setListBuilderClass('Drupal\tour_ui\TourListBuilder');
   $entity_types['tour']->setLinkTemplate('add-form', '/admin/config/user-interface/tour/add');
   $entity_types['tour']->setLinkTemplate('edit-form', '/admin/config/user-interface/tour/manage/{tour}');
   $entity_types['tour']->setLinkTemplate('delete-form', '/admin/config/user-interface/tour/manage/{tour}/delete');
+  $entity_types['tour']->setLinkTemplate('collection', '/admin/config/user-interface/tour');
 }
 
 /**

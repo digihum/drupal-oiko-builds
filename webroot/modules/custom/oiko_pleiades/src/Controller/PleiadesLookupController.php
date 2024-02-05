@@ -96,9 +96,13 @@ class PleiadesLookupController extends ControllerBase {
 
     $plugins = $this->getEnabledProviderPlugins();
     $dumper = $this->dumperPluginManager->createInstance('wkt');
+    $json_dumper = $this->dumperPluginManager->createInstance('geojson');
 
     if ($addressCollection = $this->geocoder->geocode($location, array_keys($plugins))) {
-      return new JsonResponse(['wkt' => $dumper->dump($addressCollection->first())]);
+      return new JsonResponse([
+        'wkt' => $dumper->dump($addressCollection->first()),
+        'geojson' => $json_dumper->dump($addressCollection->first()),
+      ]);
     }
 
     throw new NotFoundHttpException();

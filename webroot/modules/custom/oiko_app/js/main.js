@@ -174,7 +174,9 @@ if (['oiko', 'medmus'].indexOf(drupalSettings.ajaxPageState.theme) > -1) {
 
 
 // Probably a better way to write this.
-  $(document).on('leaflet.map', function (e, mapDefinition, map, drupalLeaflet) {
+  $(document).on('leaflet.map', function (e, mapDefinition, map, mapid) {
+    var drupalLeaflet = Drupal.Leaflet[mapid];
+
     if (mapDefinition.hasOwnProperty('pagestate') && mapDefinition.pagestate) {
 
       window.drupalLeaflet = drupalLeaflet;
@@ -266,7 +268,7 @@ if (['oiko', 'medmus'].indexOf(drupalSettings.ajaxPageState.theme) > -1) {
           drupalLeaflet.timelineControl.setTimeAndWindow(state.timeBrowserState.current, state.timeBrowserState.start, state.timeBrowserState.end);
         }
       };
-      if (drupalLeaflet.map_definition.hasOwnProperty('timeline') && drupalLeaflet.map_definition.timeline) {
+      if (mapDefinition.hasOwnProperty('timeline') && mapDefinition.timeline) {
         $(window).on('oiko.loaded', () => {
           handleMapTemporalStoreStateChange();
           map.on('temporal.shifted temporal.visibleWindowChanged', handleMapTemporalShift);

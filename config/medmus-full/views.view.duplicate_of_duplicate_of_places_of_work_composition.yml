@@ -1,0 +1,194 @@
+uuid: 0cc65a4c-82e7-415f-acee-636846e74e15
+langcode: en
+status: false
+dependencies:
+  module:
+    - cidoc
+    - eva
+    - oiko_leaflet
+id: duplicate_of_duplicate_of_places_of_work_composition
+label: 'Duplicate of Duplicate of Places of work composition'
+module: views
+description: ''
+tag: ''
+base_table: cidoc_entity
+base_field: id
+display:
+  default:
+    display_plugin: default
+    id: default
+    display_title: Master
+    position: 0
+    display_options:
+      access:
+        type: none
+        options: {  }
+      cache:
+        type: tag
+        options: {  }
+      query:
+        type: views_query
+        options:
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_comment: ''
+          query_tags: {  }
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        type: none
+        options:
+          offset: 0
+      style:
+        type: oiko_leafet_map
+        options:
+          uses_fields: false
+          pan: 1
+          zoom: 1
+          zoom_controls: topleft
+          max_zoom: '0'
+          clustering: 1
+          sidebar: 0
+          search: 0
+          timeline: 0
+          pagestate: 0
+          empty_map: 0
+          empires: 0
+          map: 'Ancient Terrain'
+          full_height: 0
+          height: '400'
+          locate: 0
+      row:
+        type: fields
+        options:
+          inline: {  }
+          separator: ''
+          hide_empty: false
+          default_field_elements: true
+      fields: {  }
+      filters:
+        status:
+          value: '1'
+          table: cidoc_entity
+          field: status
+          plugin_id: boolean
+          entity_type: cidoc_entity
+          entity_field: status
+          id: status
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+          group: 1
+      sorts: {  }
+      header: {  }
+      footer: {  }
+      empty: {  }
+      relationships:
+        reverse__cidoc_reference__range:
+          id: reverse__cidoc_reference__range
+          table: cidoc_entity
+          field: reverse__cidoc_reference__range
+          relationship: none
+          group_type: group
+          admin_label: range
+          required: false
+          entity_type: cidoc_entity
+          plugin_id: entity_reverse
+        domain:
+          id: domain
+          table: cidoc_reference__domain
+          field: domain
+          relationship: reverse__cidoc_reference__range
+          group_type: group
+          admin_label: 'domain: CIDOC entity'
+          required: false
+          plugin_id: standard
+        reverse__cidoc_reference__domain:
+          id: reverse__cidoc_reference__domain
+          table: cidoc_entity
+          field: reverse__cidoc_reference__domain
+          relationship: none
+          group_type: group
+          admin_label: domain
+          required: false
+          entity_type: cidoc_entity
+          plugin_id: entity_reverse
+        range:
+          id: range
+          table: cidoc_reference__range
+          field: range
+          relationship: reverse__cidoc_reference__domain
+          group_type: group
+          admin_label: 'range: CIDOC entity'
+          required: false
+          plugin_id: standard
+      arguments:
+        id:
+          id: id
+          table: cidoc_entity
+          field: id
+          relationship: range
+          group_type: group
+          admin_label: ''
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: node
+          default_argument_options: {  }
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            items_per_page: 25
+            override: false
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: false
+          not: false
+          entity_type: cidoc_entity
+          entity_field: id
+          plugin_id: numeric
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+      tags: {  }
+  entity_view_1:
+    display_plugin: entity_view
+    id: entity_view_1
+    display_title: EVA
+    position: 1
+    display_options:
+      display_extenders: {  }
+      entity_type: cidoc_entity
+      bundles:
+        - ec1_work
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+      tags: {  }

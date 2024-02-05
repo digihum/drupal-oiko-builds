@@ -8,6 +8,8 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\gdpr_fields\Entity\GdprFieldConfigEntity;
+use function in_array;
+use function stripos;
 
 /**
  * Defines a helper class for stuff related to views data.
@@ -39,25 +41,29 @@ class GDPRCollector {
   /**
    * Constructs a GDPRCollector object.
    *
-   * @param \Drupal\Core\Entity\EntityTypeManager $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
    *   The entity type manager.
-   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
+   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entityFieldManager
    *   The entity field manager.
-   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $bundle_info
+   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $bundleInfo
    *   Bundle info.
    */
-  public function __construct(EntityTypeManager $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, EntityTypeBundleInfoInterface $bundle_info) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->entityFieldManager = $entity_field_manager;
-    $this->bundleInfo = $bundle_info;
+  public function __construct(
+    EntityTypeManager $entityTypeManager,
+    EntityFieldManagerInterface $entityFieldManager,
+    EntityTypeBundleInfoInterface $bundleInfo
+  ) {
+    $this->entityTypeManager = $entityTypeManager;
+    $this->entityFieldManager = $entityFieldManager;
+    $this->bundleInfo = $bundleInfo;
   }
 
   /**
    * List fields on entity including their GDPR values.
    *
-   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
+   * @param \Drupal\Core\Entity\EntityTypeInterface $entityType
    *   The entity type id.
-   * @param string $bundle_id
+   * @param string $bundleId
    *   The entity bundle id.
    * @param array $filters
    *   Array of filters with following keys:
@@ -69,57 +75,57 @@ class GDPRCollector {
    * @return array
    *   GDPR entity field list.
    */
-  public function listFields(EntityTypeInterface $entity_type, $bundle_id, array $filters) {
-    $bundle_type = $entity_type->getBundleEntityType();
-    $gdpr_settings = GdprFieldConfigEntity::load($entity_type->id());
+  public function listFields(EntityTypeInterface $entityType, $bundleId, array $filters) {
+    $bundleType = $entityType->getBundleEntityType();
+    $gdprSettings = GdprFieldConfigEntity::load($entityType->id());
 
     // @todo explicitly skip commerce_order_item for now as they break bundles
-    if ($entity_type->id() == 'commerce_order_item') {
+    if ($entityType->id() == 'commerce_order_item') {
       return [];
     }
 
-    $field_definitions = $this->entityFieldManager->getFieldDefinitions($entity_type->id(), $bundle_id);
+    $fieldDefinitions = $this->entityFieldManager->getFieldDefinitions($entityType->id(), $bundleId);
 
     // Get fields for entity.
     $fields = [];
 
     // If the 'Filter out entities where all fields are not configured' option
     // is set, return an empty array if GDPR is not configured for the entity.
-    if ($filters['empty'] && $gdpr_settings == NULL) {
+    if ($filters['empty'] && $gdprSettings === NULL) {
       return $fields;
     }
 
-    $has_at_least_one_configured_field = FALSE;
+    $hasAtLeastOneConfiguredField = FALSE;
 
-    foreach ($field_definitions as $field_id => $field_definition) {
-      /** @var \Drupal\Core\Field\FieldItemListInterface $field_definition */
-      $key = "{$entity_type->id()}.$bundle_id.$field_id";
+    foreach ($fieldDefinitions as $fieldId => $fieldDefinition) {
+      /** @var \Drupal\Core\Field\FieldItemListInterface $fieldDefinition */
+      $key = "{$entityType->id()}.$bundleId.$fieldId";
       $route_name = 'gdpr_fields.edit_field';
       $route_params = [
-        'entity_type' => $entity_type->id(),
-        'bundle_name' => $bundle_id,
-        'field_name' => $field_id,
+        'entity_type' => $entityType->id(),
+        'bundle_name' => $bundleId,
+        'field_name' => $fieldId,
       ];
 
-      if (isset($bundle_type)) {
-        $route_params[$bundle_type] = $bundle_id;
+      if (isset($bundleType)) {
+        $route_params[$bundleType] = $bundleId;
       }
 
       $rta = '0';
       $rtf = '0';
 
-      $label = $field_definition->getLabel();
+      $label = $fieldDefinition->getLabel();
 
       // If we're searching by name, check if the label matches search.
-      if ($filters['search'] && (!stripos($label, $filters['search']) || !stripos($field_definition->getName(), $filters['search']))) {
+      if ($filters['search'] && (!stripos($label, $filters['search']) || !stripos($fieldDefinition->getName(), $filters['search']))) {
         continue;
       }
 
-      $is_id = $entity_type->getKey('id') == $field_id;
+      $is_id = $entityType->getKey('id') === $fieldId;
 
       $fields[$key] = [
         'title' => $label,
-        'type' => $is_id ? 'primary_key' : $field_definition->getType(),
+        'type' => $is_id ? 'primary_key' : $fieldDefinition->getType(),
         'rta' => 'Not Configured',
         'rtf' => 'Not Configured',
         'notes' => '',
@@ -127,15 +133,15 @@ class GDPRCollector {
         'is_id' => $is_id,
       ];
 
-      if ($entity_type->get('field_ui_base_route')) {
+      if ($entityType->get('field_ui_base_route')) {
         $fields[$key]['edit'] = Link::createFromRoute('edit', $route_name, $route_params);
       }
 
-      if ($gdpr_settings != NULL) {
-        /* @var \Drupal\gdpr_fields\Entity\GdprField $field_settings */
-        $field_settings = $gdpr_settings->getField($bundle_id, $field_id);
+      if ($gdprSettings !== NULL) {
+        /** @var \Drupal\gdpr_fields\Entity\GdprField $field_settings */
+        $field_settings = $gdprSettings->getField($bundleId, $fieldId);
         if ($field_settings->enabled) {
-          $has_at_least_one_configured_field = TRUE;
+          $hasAtLeastOneConfiguredField = TRUE;
           $rta = $field_settings->rta;
           $rtf = $field_settings->rtf;
 
@@ -146,18 +152,18 @@ class GDPRCollector {
       }
 
       // Apply filters.
-      if (!empty($filters['rtf']) && !in_array($rtf, $filters['rtf'])) {
+      if (!empty($filters['rtf']) && !in_array($rtf, $filters['rtf'], FALSE)) {
         unset($fields[$key]);
       }
 
-      if (!empty($filters['rta']) && !in_array($rta, $filters['rta'])) {
+      if (!empty($filters['rta']) && !in_array($rta, $filters['rta'], FALSE)) {
         unset($fields[$key]);
       }
     }
 
     // Handle the 'Filter out Entities where all fields are not configured'
     // checkbox.
-    if ($filters['empty'] && !$has_at_least_one_configured_field) {
+    if ($filters['empty'] && !$hasAtLeastOneConfiguredField) {
       return [];
     }
 
@@ -167,15 +173,15 @@ class GDPRCollector {
   /**
    * Gets bundles belonging to an entity type.
    *
-   * @param string $entity_type_id
+   * @param string $entityType_id
    *   The entity type for which bundles should be located.
    *
    * @return array
    *   Array of bundles.
    */
-  public function getBundles($entity_type_id) {
+  public function getBundles($entityType_id) {
     $all_bundles = $this->bundleInfo->getAllBundleInfo();
-    $bundles = isset($all_bundles[$entity_type_id]) ? $all_bundles[$entity_type_id] : [$entity_type_id => []];
+    $bundles = isset($all_bundles[$entityType_id]) ? $all_bundles[$entityType_id] : [$entityType_id => []];
     return $bundles;
   }
 

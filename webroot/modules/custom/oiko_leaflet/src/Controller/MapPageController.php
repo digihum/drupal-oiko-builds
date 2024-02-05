@@ -326,7 +326,7 @@ class MapPageController extends ControllerBase {
     $map['data-url'] = Url::fromRoute('oiko_leaflet.map_page_controller_allEntities')->toString();
     $height = 'full';
 
-    $map = leaflet_render_map($map, $data, $height);
+    $map = \Drupal::service('leaflet.service')->leafletRenderMap($map, $data, $height);
 
     $map['#theme_wrappers']['container'] = [
       '#attributes' => [

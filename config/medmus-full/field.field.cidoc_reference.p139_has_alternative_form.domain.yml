@@ -1,0 +1,37 @@
+uuid: 326d273b-2a13-4236-8c62-992b9736b8f7
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e35_title
+    - cidoc.cidoc_entity_bundle.e41_appellation
+    - cidoc.cidoc_entity_bundle.e42_identifier
+    - cidoc.cidoc_entity_bundle.ec4_syllabic_scheme
+    - cidoc.cidoc_entity_bundle.ec5_rhyme_scheme
+    - cidoc.cidoc_property.p139_has_alternative_form
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.p139_has_alternative_form.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: p139_has_alternative_form
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    auto_create: true
+    sort:
+      field: name
+      direction: ASC
+    target_bundles:
+      e35_title: e35_title
+      e41_appellation: e41_appellation
+      e42_identifier: e42_identifier
+      ec4_syllabic_scheme: ec4_syllabic_scheme
+      ec5_rhyme_scheme: ec5_rhyme_scheme
+    auto_create_bundle: e35_title
+field_type: entity_reference

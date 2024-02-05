@@ -3,7 +3,7 @@
 namespace Drupal\cidoc\Plugin\views\filter;
 
 use Drupal\cidoc\EntityTypeHelperInterface;
-use Drupal\Core\Entity\EntityManagerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\views\Plugin\views\filter\Bundle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -33,14 +33,14 @@ class CIDOCBundle extends Bundle {
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager
    *   The entity manager.
    * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $bundle_info_service
    *   The bundle info service.
    * @param \Drupal\cidoc\EntityTypeHelperInterface $cidoc_helper_service
    *   The cidoc helper service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityManagerInterface $entity_manager, EntityTypeBundleInfoInterface $bundle_info_service, EntityTypeHelperInterface $cidoc_helper_service) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_manager, EntityTypeBundleInfoInterface $bundle_info_service, EntityTypeHelperInterface $cidoc_helper_service) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_manager, $bundle_info_service);
     $this->cidocEntityTypeHelper = $cidoc_helper_service;
   }
@@ -53,7 +53,7 @@ class CIDOCBundle extends Bundle {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('entity.manager'),
+      $container->get('entity_type.manager'),
       $container->get('entity_type.bundle.info'),
       $container->get('cidoc.entity_type_helper')
     );

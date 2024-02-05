@@ -11,6 +11,7 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\gdpr_fields\Entity\GdprField;
 use Drupal\gdpr_fields\Entity\GdprFieldConfigEntity;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function array_key_exists;
 
 /**
  * GDPR Field settings.
@@ -36,14 +37,14 @@ class GdprFieldSettingsForm extends FormBase {
    *
    * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
    *   Entity field manager.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger service.
    */
-  public function __construct(EntityFieldManagerInterface $entity_field_manager, EntityTypeManagerInterface $entity_type_manager, MessengerInterface $messenger) {
+  public function __construct(EntityFieldManagerInterface $entity_field_manager, EntityTypeManagerInterface $entityTypeManager, MessengerInterface $messenger) {
     $this->entityFieldManager = $entity_field_manager;
-    $this->entityTypeManager = $entity_type_manager;
+    $this->entityTypeManager = $entityTypeManager;
     $this->messenger = $messenger;
   }
 
@@ -73,11 +74,12 @@ class GdprFieldSettingsForm extends FormBase {
    */
   private static function getConfig($entity_type, $bundle, $field_name) {
     $config = GdprFieldConfigEntity::load($entity_type);
-    if (NULL === $config) {
+
+    if ($config === NULL) {
       $config = GdprFieldConfigEntity::create(['id' => $entity_type]);
     }
-    $field_config = $config->getField($bundle, $field_name);
-    return $field_config;
+
+    return $config->getField($bundle, $field_name);
   }
 
   /**
@@ -108,6 +110,7 @@ class GdprFieldSettingsForm extends FormBase {
    *   The config entity.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   private function setConfig($entity_type, $bundle, $field_name, $enabled, $rta, $rtf, $anonymizer, $notes, $relationship, $sars_filename) {
     $field = new GdprField([
@@ -125,7 +128,7 @@ class GdprFieldSettingsForm extends FormBase {
       ->setSarsFilename($sars_filename);
 
     $storage = $this->entityTypeManager->getStorage('gdpr_fields_config');
-    /* @var \Drupal\gdpr_fields\Entity\GdprFieldConfigEntity $config */
+    /** @var \Drupal\gdpr_fields\Entity\GdprFieldConfigEntity $config */
     $config = $storage->load($entity_type);
 
     if (!$config) {
@@ -233,29 +236,31 @@ class GdprFieldSettingsForm extends FormBase {
    * @param string $field_name
    *   Field.
    *
-   * @return array
-   *   Form.
-   *
    * @see gdpr_fields_form_field_config_edit_form_submit
    *
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public static function buildFormFields(array &$form, $entity_type = NULL, $bundle_name = NULL, $field_name = NULL) {
-    $config = static::getConfig($entity_type, $bundle_name, $field_name);
+    $entityTypeManager = \Drupal::entityTypeManager();
+    $entityDefinition = $entityTypeManager->getDefinition($entity_type);
 
-    /* @var \Drupal\Core\Entity\EntityFieldManagerInterface $field_manager */
-    /* @var \Drupal\anonymizer\Anonymizer\AnonymizerFactory $anonymizer_factory */
-    $entity_type_manager = \Drupal::entityTypeManager();
-    $field_manager = \Drupal::service('entity_field.manager');
-    $anonymizer_factory = \Drupal::service('anonymizer.anonymizer_factory');
-    $anonymizer_definitions = $anonymizer_factory->getDefinitions();
-    $entity_definition = $entity_type_manager->getDefinition($entity_type);
-    $field_definition = $field_manager->getFieldDefinitions($entity_type, $bundle_name)[$field_name];
+    if ($entityDefinition === NULL) {
+      return;
+    }
 
     // Exclude uuid/bundle.
-    if ($entity_definition->getKey('uuid') == $field_name || $entity_definition->getKey('bundle') == $field_name) {
-      return [];
+    if ($entityDefinition->getKey('uuid') === $field_name || $entityDefinition->getKey('bundle') === $field_name) {
+      return;
     }
+
+    $config = static::getConfig($entity_type, $bundle_name, $field_name);
+
+    /** @var \Drupal\Core\Entity\EntityFieldManagerInterface $fieldManager */
+    /** @var \Drupal\anonymizer\Anonymizer\AnonymizerFactory $anonymizerFactory */
+    $fieldManager = \Drupal::service('entity_field.manager');
+    $anonymizerFactory = \Drupal::service('anonymizer.anonymizer_factory');
+    $anonymizerDefinitions = $anonymizerFactory->getDefinitions();
+    $fieldDefinition = $fieldManager->getFieldDefinitions($entity_type, $bundle_name)[$field_name];
 
     $form['gdpr_enabled'] = [
       '#type' => 'checkbox',
@@ -273,21 +278,33 @@ class GdprFieldSettingsForm extends FormBase {
       '#value' => $config->sarsFilename,
     ];
 
-    if ($field_definition->getType() == 'entity_reference') {
-      $inner_entity_type = $field_definition->getSetting('target_type');
-      $inner_entity_definition = $entity_type_manager->getDefinition($inner_entity_type);
+    if ($fieldDefinition->getType() === 'entity_reference') {
+      $innerEntityType = $fieldDefinition->getSetting('target_type');
+      $innerEntityDefinition = $entityTypeManager->getDefinition($innerEntityType);
 
       $form['gdpr_relationship'] = [
         '#type' => 'select',
         '#default_value' => $config->relationship,
         '#options' => [
           GdprField::RELATIONSHIP_DISABLED => new TranslatableMarkup('Do not follow this relationship.'),
-          GdprField::RELATIONSHIP_FOLLOW => new TranslatableMarkup('This %entity_type_label owns the referenced %target_entity_type_label (Relationship will be followed)', ['%entity_type_label' => $entity_definition->getLabel(), '%target_entity_type_label' => $inner_entity_definition->getLabel()]),
-          GdprField::RELATIONSHIP_OWNER => new TranslatableMarkup('This %entity_type_label is owned by the referenced %target_entity_type_label', ['%entity_type_label' => $entity_definition->getLabel(), '%target_entity_type_label' => $inner_entity_definition->getLabel()]),
+          GdprField::RELATIONSHIP_FOLLOW => new TranslatableMarkup(
+            'This %entity_type_label owns the referenced %target_entity_type_label (Relationship will be followed)',
+            [
+              '%entity_type_label' => $entityDefinition->getLabel(),
+              '%target_entity_type_label' => $innerEntityDefinition->getLabel(),
+            ]
+          ),
+          GdprField::RELATIONSHIP_OWNER => new TranslatableMarkup(
+            'This %entity_type_label is owned by the referenced %target_entity_type_label',
+            [
+              '%entity_type_label' => $entityDefinition->getLabel(),
+              '%target_entity_type_label' => $innerEntityDefinition->getLabel(),
+            ]
+          ),
         ],
         '#title' => t('Relationship Handling'),
         '#description' => new TranslatableMarkup('Owned entities are included in any task which contains the owner.', [
-          '%type' => $inner_entity_definition->getLabel(),
+          '%type' => $innerEntityDefinition->getLabel(),
         ]),
         '#states' => [
           'visible' => [
@@ -329,16 +346,16 @@ class GdprFieldSettingsForm extends FormBase {
       ],
     ];
 
-    $error_message = NULL;
-    if ($entity_definition->getKey('id') == $field_name) {
+    $errorMessage = NULL;
+    if ($entityDefinition->getKey('id') === $field_name) {
       // If this is the entity's ID, treat the removal as remove the entire
       // entity.
       unset($form['gdpr_rtf']['#options']['anonymise']);
       $form['gdpr_rtf']['#options']['remove'] = new TranslatableMarkup('Delete entire entity');
 
       // Define target filename for this bundle.
-      // @todo: Move to a form alter in gdpr_tasks.
-      // @todo: Add <inherit> option to inherit owned entity filename.
+      // @todo Move to a form alter in gdpr_tasks.
+      // @todo Add <inherit> option to inherit owned entity filename.
       $form['gdpr_sars_filename'] = [
         '#type' => 'textfield',
         '#title' => t('Right to access filename'),
@@ -358,31 +375,31 @@ class GdprFieldSettingsForm extends FormBase {
       ];
     }
     // Otherwise check if this can be removed.
-    elseif (!$config->propertyCanBeRemoved($field_definition, $error_message)) {
+    elseif (!$config->propertyCanBeRemoved($fieldDefinition, $errorMessage)) {
       unset($form['gdpr_rtf']['#options']['remove']);
       $form['gdpr_rtf_disabled'] = [
         '#type' => 'item',
         '#markup' => new TranslatableMarkup('This field cannot be removed, only anonymised.'),
-        '#description' => $error_message,
+        '#description' => $errorMessage,
       ];
     }
 
     // Force removal to 'no' for computed properties.
-    if ($field_definition->isComputed()) {
+    if ($fieldDefinition->isComputed()) {
       $form['gdpr_rtf']['#default_value'] = 'no';
       $form['gdpr_rtf']['#disabled'] = TRUE;
       $form['gdpr_rtf']['#description'] = t('*This is a computed field and cannot be removed.');
     }
 
-    $sanitizer_options = array_map(function ($s) {
-        return $s['label'];
-    }, $anonymizer_definitions);
+    $sanitizerOptions = array_map(static function ($anonymizer) {
+        return $anonymizer['label'];
+    }, $anonymizerDefinitions);
 
     $form['gdpr_anonymizer'] = [
       '#weight' => 30,
       '#type' => 'select',
       '#title' => t('Anonymizer to use'),
-      '#options' => $sanitizer_options,
+      '#options' => $sanitizerOptions,
       '#default_value' => $config->anonymizer,
       '#states' => [
         'visible' => [
@@ -418,7 +435,7 @@ class GdprFieldSettingsForm extends FormBase {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    if ($form_state->getTriggeringElement()['#name'] == 'Cancel') {
+    if ($form_state->getTriggeringElement()['#name'] === 'Cancel') {
       $form_state->setRedirect('gdpr_fields.fields_list');
       return;
     }

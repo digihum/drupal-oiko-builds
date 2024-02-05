@@ -4,6 +4,7 @@ namespace Drupal\anonymizer\Plugin\Anonymizer;
 
 use Drupal\anonymizer\Anonymizer\AnonymizerBase;
 use Drupal\Core\Field\FieldItemListInterface;
+use function str_word_count;
 
 /**
  * Class TextAnonymizer.
@@ -24,7 +25,7 @@ class TextAnonymizer extends AnonymizerBase {
    * @throws \RuntimeException
    */
   public function anonymize($input, FieldItemListInterface $field = NULL) {
-    return $this->faker->generator()->words(\str_word_count($input), TRUE);
+    return $this->faker->generator()->words(str_word_count($input), TRUE);
   }
 
 }

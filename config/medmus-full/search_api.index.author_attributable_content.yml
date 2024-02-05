@@ -1,0 +1,131 @@
+uuid: 7a22c97f-8a92-4a0d-9a0a-eac6b842caa8
+langcode: en
+status: true
+dependencies:
+  module:
+    - cidoc
+    - node
+    - search_api
+  config:
+    - search_api.server.db_search_backend
+id: author_attributable_content
+name: 'Author attributable content'
+description: 'Used for aggregate lists of what a user has done.'
+read_only: false
+field_settings:
+  changed:
+    label: 'Changed (aggregate)'
+    property_path: aggregated_field
+    type: date
+    configuration:
+      type: union
+      fields:
+        - 'entity:cidoc_entity/changed'
+        - 'entity:node/changed'
+  cidoc_name:
+    label: Name
+    datasource_id: 'entity:cidoc_entity'
+    property_path: name
+    type: string
+    dependencies:
+      module:
+        - cidoc
+  cidoc_internal_name:
+    label: 'Internal name'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: internal_name
+    type: string
+    dependencies:
+      module:
+        - cidoc
+  cidoc_changed:
+    label: Changed
+    datasource_id: 'entity:cidoc_entity'
+    property_path: changed
+    type: date
+    dependencies:
+      module:
+        - cidoc
+  cidoc_status:
+    label: Published
+    datasource_id: 'entity:cidoc_entity'
+    property_path: status
+    type: boolean
+    dependencies:
+      module:
+        - cidoc
+  cidoc_user_id:
+    label: 'Authored by'
+    datasource_id: 'entity:cidoc_entity'
+    property_path: user_id
+    type: integer
+    dependencies:
+      module:
+        - cidoc
+  cidoc_bundle:
+    label: Class
+    datasource_id: 'entity:cidoc_entity'
+    property_path: bundle
+    type: string
+    dependencies:
+      module:
+        - cidoc
+  node_status:
+    label: Published
+    datasource_id: 'entity:node'
+    property_path: status
+    type: boolean
+    dependencies:
+      module:
+        - node
+  node_type:
+    label: 'Content type'
+    datasource_id: 'entity:node'
+    property_path: type
+    type: string
+    dependencies:
+      module:
+        - node
+  node_uid:
+    label: 'Authored by'
+    datasource_id: 'entity:node'
+    property_path: uid
+    type: integer
+    dependencies:
+      module:
+        - node
+  node_changed:
+    label: Changed
+    datasource_id: 'entity:node'
+    property_path: changed
+    type: date
+    dependencies:
+      module:
+        - node
+datasource_settings:
+  'entity:cidoc_entity':
+    bundles:
+      default: true
+      selected: {  }
+  'entity:node':
+    bundles:
+      default: true
+      selected: {  }
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  cidoc: {  }
+  rendered_item: {  }
+  add_url: {  }
+  aggregated_field: {  }
+  entity_type: {  }
+  language_with_fallback: {  }
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  index_directly: true
+  cron_limit: 50
+  track_changes_in_references: true
+server: db_search_backend

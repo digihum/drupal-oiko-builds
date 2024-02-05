@@ -1,0 +1,21 @@
+uuid: d2a46555-9d17-4ad9-9f2f-1e4e2ee456d7
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e21_person
+    - field.storage.cidoc_entity.field_generation
+  module:
+    - options
+id: cidoc_entity.e21_person.field_generation
+field_name: field_generation
+entity_type: cidoc_entity
+bundle: e21_person
+label: Generation
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_integer

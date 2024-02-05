@@ -7,6 +7,13 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function explode;
+use function in_array;
+use function is_array;
+use function parse_url;
+use function strlen;
+use function strpos;
+use function substr;
 
 /**
  * Class ContentLinksForm.
@@ -91,9 +98,9 @@ class ContentLinksForm extends ConfigFormBase {
     $form['#tree'] = TRUE;
 
     $form['description'] = [
-      '#markup' => $this->t('Enter internal paths e.g <strong>@internal_path</strong> or full URLs e.g <strong>@full_url</strong>', [
+      '#markup' => $this->t('Enter internal paths (e.g. <em>@internal_path</em>) or full URLs (e.g. <em>@full_url</em>) per each language installed on the site.', [
         '@internal_path' => '/privacy-policy',
-        '@full_url' => 'https://www.example.com/termsofservice.pdf',
+        '@full_url' => 'https://www.example.com/terms-of-service.pdf',
       ]),
     ];
 
@@ -108,6 +115,7 @@ class ContentLinksForm extends ConfigFormBase {
       $form['links'][$langCode] = [
         '#type' => 'details',
         '#title' => $language->getName(),
+        '#open' => $language->isDefault(),
       ];
 
       foreach (static::requiredContentList() as $key => $label) {
@@ -148,7 +156,7 @@ class ContentLinksForm extends ConfigFormBase {
    */
   protected function loadUrls() {
     $config = $this->config(static::GDPR_CONTENT_CONF_KEY)->get('links');
-    if (NULL === $config || !\is_array($config)) {
+    if (NULL === $config || !is_array($config)) {
       $config = [];
     }
 
@@ -179,7 +187,7 @@ class ContentLinksForm extends ConfigFormBase {
    * @see static::getUserEnteredStringAsUri()
    */
   protected static function getUriAsDisplayableString($uri) {
-    $scheme = \parse_url($uri, PHP_URL_SCHEME);
+    $scheme = parse_url($uri, PHP_URL_SCHEME);
 
     // By default, the displayable string is the URI.
     $displayableString = $uri;
@@ -187,13 +195,13 @@ class ContentLinksForm extends ConfigFormBase {
     // A different displayable string may be chosen in case of the 'internal:'
     // or 'entity:' built-in schemes.
     if ($scheme === 'internal') {
-      $uriReference = \explode(':', $uri, 2)[1];
+      $uriReference = explode(':', $uri, 2)[1];
 
       // @todo '<front>' is valid input for BC reasons, may be removed by
       //   https://www.drupal.org/node/2421941
-      $path = \parse_url($uri, PHP_URL_PATH);
+      $path = parse_url($uri, PHP_URL_PATH);
       if ($path === '/') {
-        $uriReference = '<front>' . \substr($uriReference, 1);
+        $uriReference = '<front>' . substr($uriReference, 1);
       }
 
       $displayableString = $uriReference;
@@ -216,9 +224,9 @@ class ContentLinksForm extends ConfigFormBase {
     // @todo '<front>' is valid input for BC reasons, may be removed by
     //   https://www.drupal.org/node/2421941
     if (
-      \parse_url($uri, PHP_URL_SCHEME) === 'internal'
+      parse_url($uri, PHP_URL_SCHEME) === 'internal'
       && 0 !== strpos($element['#value'], '<front>')
-      && !\in_array($element['#value'][0], ['/', '?', '#'], TRUE)
+      && !in_array($element['#value'][0], ['/', '?', '#'], TRUE)
     ) {
       $form_state->setError($element, t('Manually entered paths should start with /, ? or #.'));
       return;
@@ -246,13 +254,13 @@ class ContentLinksForm extends ConfigFormBase {
     // By default, assume the entered string is an URI.
     $uri = $string;
 
-    if (!empty($string) && \parse_url($string, PHP_URL_SCHEME) === NULL) {
+    if (!empty($string) && parse_url($string, PHP_URL_SCHEME) === NULL) {
       // @todo '<front>' is valid input for BC reasons, may be removed by
       //   https://www.drupal.org/node/2421941
       // - '<front>' -> '/'
       // - '<front>#foo' -> '/#foo'
-      if (\strpos($string, '<front>') === 0) {
-        $string = '/' . \substr($string, \strlen('<front>'));
+      if (strpos($string, '<front>') === 0) {
+        $string = '/' . substr($string, strlen('<front>'));
       }
       $uri = 'internal:' . $string;
     }

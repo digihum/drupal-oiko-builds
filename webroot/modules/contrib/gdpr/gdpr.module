@@ -46,12 +46,12 @@ function gdpr_checklistapi_checklist_info() {
  * Callback for gdpr_checklistapi_checklist_info().
  */
 function gdpr_checklistapi_checklist_items() {
-  $langCode = \Drupal::languageManager()->getCurrentLanguage()->getId();
-  $contentLinks = \Drupal::config(ContentLinksForm::GDPR_CONTENT_CONF_KEY)
+  $langCode = Drupal::languageManager()->getCurrentLanguage()->getId();
+  $contentLinks = Drupal::config(ContentLinksForm::GDPR_CONTENT_CONF_KEY)
     ->get('links');
 
   /** @var \Drupal\Core\Render\RendererInterface $renderer */
-  $renderer = \Drupal::service('renderer');
+  $renderer = Drupal::service('renderer');
 
   if (!empty($contentLinks[$langCode])) {
     $linkLabels = ContentLinksForm::requiredContentList();
@@ -123,7 +123,7 @@ function gdpr_checklistapi_checklist_items() {
     }
   }
 
-  $items = [
+  return [
     'getting_started' => [
       '#title' => t('Getting Started'),
       '#description' => t("<p>To begin your self-assessment process, it's highly recommended to take the following steps:</p>"),
@@ -139,11 +139,11 @@ function gdpr_checklistapi_checklist_items() {
         ],
         'summary' => [
           '#text' => t('Summary of the GDPR regulation'),
-          '#url' => Url::fromUri((string) t('http://eur-lex.europa.eu/legal-content/EN/LSU/?uri=CELEX:32016R0679#document1')),
+          '#url' => Url::fromUri((string) t('https://eur-lex.europa.eu/legal-content/EN/LSU/?uri=CELEX:32016R0679#document1')),
         ],
         'legislation' => [
           '#text' => t('The GDPR legislation'),
-          '#url' => Url::fromUri((string) t('http://eur-lex.europa.eu/eli/reg/2016/679/oj')),
+          '#url' => Url::fromUri((string) t('https://eur-lex.europa.eu/eli/reg/2016/679/oj')),
         ],
       ],
     ],
@@ -180,15 +180,15 @@ function gdpr_checklistapi_checklist_items() {
       '#description' => t('This group of checkpoints addresses various actions to be taken regarding site features.'),
       'external_traffic_measurement' => [
         '#title' => t("Yes, I'm aware there are external traffic measurement and user tracking services integrated on this site"),
-        '#description' => t('As the owner and/or maintainer of the site I have, to the best of my knowledge, taken the necessary measures to set up these 3rd-party data collecting tools to ensure maximum compliance with GDPR regulations.') . _get_module_list('tracking'),
+        '#description' => t('As the owner and/or maintainer of the site I have, to the best of my knowledge, taken the necessary measures to set up these 3rd-party data collecting tools to ensure maximum compliance with GDPR regulations.') . gdpr_get_module_list('tracking'),
       ],
       'social_media_connections' => [
         '#title' => t("Yes, I'm aware there are connections established between this site and some social media platforms"),
-        '#description' => t('As many social media platforms collects identifiable personal data, I acknowledge that the owner of this site is responsible for setting up these connections to ensure maximum compliance with GDPR regulations.') . _get_module_list('social'),
+        '#description' => t('As many social media platforms collects identifiable personal data, I acknowledge that the owner of this site is responsible for setting up these connections to ensure maximum compliance with GDPR regulations.') . gdpr_get_module_list('social'),
       ],
       'module_data_collection' => [
         '#title' => t('I confirm that all Drupal core, community, and custom modules have been revised as to not gather any unnecessary personal data of site visitors'),
-        '#description' => t('Owner and/or maintainer of the site has to ensure that the modules listed below have been revised as to gather only necessary (i.e. not needed for provision of service) personal data of site visitors.') . _get_module_list('collect'),
+        '#description' => t('Owner and/or maintainer of the site has to ensure that the modules listed below have been revised as to gather only necessary (i.e. not needed for provision of service) personal data of site visitors.') . gdpr_get_module_list('collect'),
       ],
       'user_role_permissions' => [
         '#title' => t('I have examined all aspects of displayed personal data, associated with this site, to ensure that all users can access only permitted types of information according to their role'),
@@ -222,7 +222,7 @@ function gdpr_checklistapi_checklist_items() {
       ],
       'gdpr_modules' => [
         '#title' => t('I have enabled all features of the GDPR module'),
-        '#description' => _get_gdpr_module_description(),
+        '#description' => gdpr_get_gdpr_module_description(),
       ],
       'notice_upon_breach' => [
         '#title' => t('I declare that I am able to notify the supervisory authority within 72 hours in the case of a personal data breach'),
@@ -230,11 +230,10 @@ function gdpr_checklistapi_checklist_items() {
       ],
       'logging_responsibility' => [
         '#title' => t('I confirm that I have understood that the responsibility of personal data logging is dependent on the size of my organisation as described below:'),
-        '#description' => _get_logging_responsibility_description(),
+        '#description' => gdpr_get_logging_responsibility_description(),
       ],
     ],
   ];
-  return $items;
 }
 
 /**
@@ -243,7 +242,7 @@ function gdpr_checklistapi_checklist_items() {
  * @return string
  *   HTML markup string
  */
-function _get_logging_responsibility_description() {
+function gdpr_get_logging_responsibility_description() {
   $logging_items = [
     '#theme' => 'item_list',
     '#items' => [
@@ -252,7 +251,7 @@ function _get_logging_responsibility_description() {
     ],
   ];
 
-  return \Drupal::service('renderer')->renderPlain($logging_items);
+  return Drupal::service('renderer')->renderPlain($logging_items);
 }
 
 /**
@@ -261,19 +260,25 @@ function _get_logging_responsibility_description() {
  * @return string
  *   HTML markup string
  */
-function _get_gdpr_module_description() {
-  $all_modules = _get_modules();
+function gdpr_get_gdpr_module_description() {
+  $all_modules = gdpr_get_modules();
 
-  $renderer = \Drupal::service('renderer');
+  $renderer = Drupal::service('renderer');
 
-  $gdpr_module_names = ['gdpr_dump'];
+  $module_handler = \Drupal::service('module_handler');
+  $module_path = $module_handler->getModule(basename(__FILE__, '.module'))
+    ->getPath();
+  $gdpr_module_names = array_diff(scandir($module_path . '/modules'), [
+    '..',
+    '.',
+  ]);
 
   $gdpr_modules_list = [
     '#theme' => 'item_list',
     '#items' => [],
   ];
 
-  $module_statuses = _get_module_statuses();
+  $module_statuses = gdpr_get_module_statuses();
 
   $color_classes = [
     -1 => 'admin-missing',
@@ -314,16 +319,19 @@ function _get_gdpr_module_description() {
 
   $gdpr_modules = $renderer->renderPlain($gdpr_modules_list);
 
-  $options = ['absolute' => TRUE];
+  $options = [
+    'absolute' => TRUE,
+    'fragment' => 'edit-modules-general-data-protection-regulation',
+  ];
+  /** @var \Drupal\Core\Link $link */
   $link = Link::createFromRoute(t('Enable them on Extend admin page'), 'system.modules_list', [], $options);
 
   if (!empty($gdpr_modules_list['#items'])) {
     $text = t("In order to have a complete overview of the site functionalities, it's recommended to enable the following features as well:");
     return $text . $gdpr_modules . $link->toString();
   }
-  else {
-    return '';
-  }
+
+  return '';
 }
 
 /**
@@ -332,7 +340,7 @@ function _get_gdpr_module_description() {
  * @return array
  *   Module statuses array
  */
-function _get_module_statuses() {
+function gdpr_get_module_statuses() {
   return [
     -1 => t('missing'),
     0 => t('disabled'),
@@ -349,18 +357,18 @@ function _get_module_statuses() {
  * @return string
  *   HTML markup string
  */
-function _get_module_list($type) {
-  $c_modules = _get_module_list_by_type($type);
+function gdpr_get_module_list($type) {
+  $c_modules = gdpr_get_module_list_by_type($type);
 
-  $renderer = \Drupal::service('renderer');
+  $renderer = Drupal::service('renderer');
 
   $modules_list = [
     '#theme' => 'item_list',
     '#items' => [],
   ];
 
-  $module_statuses = _get_module_statuses();
-  $all_modules = _get_modules();
+  $module_statuses = gdpr_get_module_statuses();
+  $all_modules = gdpr_get_modules();
 
   $color_classes = [
     -1 => 'admin-enabled',
@@ -396,7 +404,7 @@ function _get_module_list($type) {
  * @return array
  *   Array of module machine_names
  */
-function _get_module_list_by_type($type) {
+function gdpr_get_module_list_by_type($type) {
   $list = [];
   switch ($type) {
     case 'collect':
@@ -440,23 +448,22 @@ function _get_module_list_by_type($type) {
  * @return array
  *   Array of module data
  */
-function _get_modules() {
-  $cache = \Drupal::cache()->get('modules.list');
+function gdpr_get_modules() {
+  $cache = Drupal::cache()->get('modules.list');
 
   if (!empty($cache->data)) {
     return $cache->data;
   }
-  else {
-    $modules_list_raw = system_rebuild_module_data();
-    $modules_list = [];
 
-    foreach ($modules_list_raw as $module) {
-      $modules_list[$module->getName()] = [
-        'status' => $module->status,
-        'name' => $module->info['name'],
-      ];
-    }
-    \Drupal::cache()->set('modules.list', $modules_list);
-    return $modules_list;
+  $modules_list_raw = Drupal::service('extension.list.module')->getList();
+  $modules_list = [];
+
+  foreach ($modules_list_raw as $module) {
+    $modules_list[$module->getName()] = [
+      'status' => $module->status,
+      'name' => $module->info['name'],
+    ];
   }
+  Drupal::cache()->set('modules.list', $modules_list);
+  return $modules_list;
 }

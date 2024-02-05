@@ -35,6 +35,9 @@ class BlockVariantTraitTest extends UnitTestCase {
     $this->assertSame($expected, $display_variant->getRegionAssignments());
   }
 
+  /**
+   *
+   */
   public function providerTestGetRegionAssignments() {
     return [
       [
@@ -75,7 +78,9 @@ class BlockVariantTraitTest extends UnitTestCase {
   }
 
 }
-
+/**
+ *
+ */
 class TestBlockVariantTrait {
   use BlockVariantTrait;
 
@@ -90,7 +95,7 @@ class TestBlockVariantTrait {
   protected $uuidGenerator;
 
   /**
-   * @param BlockPluginCollection $block_plugin_collection
+   * @param \Drupal\ctools\Plugin\BlockPluginCollection $block_plugin_collection
    *
    * @return $this
    */

@@ -11,6 +11,9 @@ use Drupal\gdpr_fields\GDPRCollector;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\gdpr_fields\Form\GdprFieldFilterForm;
 use Symfony\Component\HttpFoundation\RequestStack;
+use function count;
+use function in_array;
+use function ksort;
 
 /**
  * Returns responses for GDPR Field routes.
@@ -64,59 +67,62 @@ class GDPRController extends ControllerBase {
     $filters = GdprFieldFilterForm::getFilters($this->request);
 
     $output = [];
-    $output['filter'] = $this->formBuilder()->getForm('Drupal\gdpr_fields\Form\GdprFieldFilterForm');
+    $output['filter'] = $this->formBuilder()->getForm(GdprFieldFilterForm::class);
     $output['#attached']['library'][] = 'gdpr_fields/field-list';
 
-    foreach ($this->entityTypeManager()->getDefinitions() as $entity_type_id => $definition) {
+    foreach ($this->entityTypeManager()->getDefinitions() as $entityTypeId => $definition) {
       // Skip non-fieldable/config entities.
       if (!$definition->entityClassImplements(FieldableEntityInterface::class)) {
         continue;
       }
 
       // If a filter is active, exclude any entities that don't match.
-      if (!empty($filters['entity_type']) && !in_array($entity_type_id, $filters['entity_type'])) {
+      if (!empty($filters['entity_type']) && !in_array($entityTypeId, $filters['entity_type'], FALSE)) {
         continue;
       }
 
-      $bundles = $this->collector->getBundles($entity_type_id);
+      $bundles = $this->collector->getBundles($entityTypeId);
 
-      $output[$entity_type_id] = [
+      $output[$entityTypeId] = [
         '#type' => 'details',
-        '#title' => $definition->getLabel() . " [$entity_type_id]",
+        '#title' => $definition->getLabel() . " [$entityTypeId]",
         '#open' => TRUE,
       ];
 
       if (count($bundles) > 1) {
-        $at_least_one_bundle_has_fields = FALSE;
+        $atLeastOneBundleHasFields = FALSE;
         foreach ($bundles as $bundle_id => $bundle_info) {
-          $field_table = $this->buildFieldTable($definition, $bundle_id, $filters);
+          $fieldTable = $this->buildFieldTable($definition, $bundle_id, $filters);
 
-          if ($field_table) {
-            $at_least_one_bundle_has_fields = TRUE;
-            $output[$entity_type_id][$bundle_id] = [
+          if ($fieldTable) {
+            $atLeastOneBundleHasFields = TRUE;
+            $output[$entityTypeId][$bundle_id] = [
               '#type' => 'details',
-              '#title' => new TranslatableMarkup('%label [%bundle]', ['%label' => $bundle_info['label'], '%bundle' => $bundle_id]),
+              '#title' => new TranslatableMarkup('%label [%bundle]', [
+                '%label' => $bundle_info['label'],
+                '%bundle' => $bundle_id,
+              ]),
               '#open' => TRUE,
             ];
-            $output[$entity_type_id][$bundle_id]['fields'] = $field_table;
+            $output[$entityTypeId][$bundle_id]['fields'] = $fieldTable;
           }
         }
 
-        if (!$at_least_one_bundle_has_fields) {
-          unset($output[$entity_type_id]);
+        if (!$atLeastOneBundleHasFields) {
+          unset($output[$entityTypeId]);
         }
       }
       else {
         // Don't add another collapsible wrapper around single bundle entities.
-        $bundle_id = $entity_type_id;
-        $field_table = $this->buildFieldTable($definition, $bundle_id, $filters);
-        if ($field_table) {
-          $output[$entity_type_id][$bundle_id]['fields'] = $field_table;
+        $bundle_id = $entityTypeId;
+        $fieldTable = $this->buildFieldTable($definition, $bundle_id, $filters);
+        if ($fieldTable) {
+          $output[$entityTypeId][$bundle_id]['fields'] = $fieldTable;
         }
         else {
           // If the entity has no fields because they've been filtered out
           // don't bother including it.
-          unset($output[$entity_type_id]);
+          unset($output[$entityTypeId]);
         }
       }
     }
@@ -140,7 +146,7 @@ class GDPRController extends ControllerBase {
   protected function buildFieldTable(EntityTypeInterface $entity_type, $bundle_id, array $filters) {
     $rows = $this->collector->listFields($entity_type, $bundle_id, $filters);
 
-    if (count($rows) == 0) {
+    if (count($rows) === 0) {
       return NULL;
     }
 
@@ -160,35 +166,35 @@ class GDPRController extends ControllerBase {
       '#sticky' => TRUE,
     ];
 
-    $i = 0;
+    $delta = 0;
     foreach ($rows as $row) {
-      $table[$i]['title'] = [
+      $table[$delta]['title'] = [
         '#plain_text' => $row['title'],
       ];
 
-      $type_markup = $row['is_id'] || $row['type'] == 'entity_reference' ? "<strong>{$row['type']}</strong>" : $row['type'];
+      $type_markup = $row['is_id'] || $row['type'] === 'entity_reference' ? "<strong>{$row['type']}</strong>" : $row['type'];
 
-      $table[$i]['type'] = [
+      $table[$delta]['type'] = [
         '#markup' => new FormattableMarkup($type_markup, []),
       ];
 
-      $table[$i]['rta'] = [
+      $table[$delta]['rta'] = [
         '#plain_text' => $row['rta'],
       ];
 
-      $table[$i]['rtf'] = [
+      $table[$delta]['rtf'] = [
         '#plain_text' => $row['rtf'],
       ];
 
-      $table[$i]['notes'] = [
+      $table[$delta]['notes'] = [
         '#markup' => empty($row['notes']) ? '' : '<span class="notes" data-icon="?"></span><div>' . $row['notes'] . '</div>',
       ];
 
-      $table[$i]['edit'] = [
+      $table[$delta]['edit'] = [
         '#markup' => !empty($row['edit']) ? $row['edit']->toString() : '',
       ];
 
-      $i++;
+      ++$delta;
     }
 
     return $table;

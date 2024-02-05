@@ -3,8 +3,8 @@
 namespace Drupal\Tests\avatars\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\simpletest\UserCreationTrait;
 use Drupal\avatars\Entity\AvatarGenerator;
+use Drupal\Tests\user\Traits\UserCreationTrait;
 
 /**
  * Tests generated permissions.
@@ -22,7 +22,7 @@ class AvatarKitPermissionsTest extends KernelTestBase {
   public static $modules = ['avatars', 'user', 'avatars_test', 'system', 'file'];
 
   /**
-   * The permissions handler
+   * The permissions handler.
    *
    * @var \Drupal\user\PermissionHandlerInterface
    */

@@ -2,7 +2,7 @@
 
 namespace Drupal\ctools_block\Plugin\Deriver;
 
-use Drupal\Core\Plugin\Context\ContextDefinition;
+use Drupal\Core\Plugin\Context\EntityContextDefinition;
 use Drupal\ctools\Plugin\Deriver\EntityDeriverBase;
 
 /**
@@ -16,7 +16,13 @@ class EntityFieldDeriver extends EntityDeriverBase {
   public function getDerivativeDefinitions($base_plugin_definition) {
     $entity_type_labels = $this->entityTypeRepository->getEntityTypeLabels();
     foreach ($this->entityFieldManager->getFieldMap() as $entity_type_id => $entity_field_map) {
-      foreach ($this->entityFieldManager->getFieldStorageDefinitions($entity_type_id) as $field_storage_definition) {
+      // Some base fields have no storage.
+      /** @var \Drupal\Core\Field\FieldDefinitionInterface[] $field_storage_definitions */
+      $field_storage_definitions = array_merge(
+        $this->entityFieldManager->getBaseFieldDefinitions($entity_type_id),
+        $this->entityFieldManager->getFieldStorageDefinitions($entity_type_id)
+      );
+      foreach ($field_storage_definitions as $field_storage_definition) {
         $field_name = $field_storage_definition->getName();
 
         // The blocks are based on fields. However, we are looping through field
@@ -51,8 +57,8 @@ class EntityFieldDeriver extends EntityDeriverBase {
         $derivative = $base_plugin_definition;
         $derivative['category'] = $this->t('@entity', ['@entity' => $entity_type_labels[$entity_type_id]]);
         $derivative['admin_label'] = $admin_label;
-        $derivative['context'] = [
-          'entity' => new ContextDefinition('entity:' . $entity_type_id, $entity_type_labels[$entity_type_id], TRUE),
+        $derivative['context_definitions'] = [
+          'entity' => new EntityContextDefinition('entity:' . $entity_type_id, $entity_type_labels[$entity_type_id], TRUE),
         ];
 
         $this->derivatives[$derivative_id] = $derivative;

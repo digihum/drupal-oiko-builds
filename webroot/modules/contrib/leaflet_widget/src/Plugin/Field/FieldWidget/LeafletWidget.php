@@ -1,16 +1,15 @@
 <?php
-/**
- * @file
- * Contains \Drupal\leaflet_widget\Plugin\Field\FieldWidget\LeafletWidget.
- */
 
 namespace Drupal\leaflet_widget\Plugin\Field\FieldWidget;
 
-use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\geofield\GeoPHP\GeoPHPInterface;
 use Drupal\geofield\Plugin\Field\FieldWidget\GeofieldDefaultWidget;
+use Drupal\geofield\WktGeneratorInterface;
+use Drupal\leaflet\LeafletService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the "leaflet_widget" widget.
@@ -27,33 +26,112 @@ use Drupal\geofield\Plugin\Field\FieldWidget\GeofieldDefaultWidget;
 class LeafletWidget extends GeofieldDefaultWidget {
 
   /**
+   * The geoPhpWrapper service.
+   *
+   * @var \Drupal\leaflet\LeafletService
+   */
+  protected $leafletService;
+
+  /**
+   * LeafletWidget constructor.
+   *
+   * @param string $plugin_id
+   *   The plugin_id for the formatter.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The definition of the field to which the formatter is associated.
+   * @param array $settings
+   *   The formatter settings.
+   * @param array $third_party_settings
+   *   Any third party settings settings.
+   * @param \Drupal\geofield\GeoPHP\GeoPHPInterface $geophp_wrapper
+   *   The geoPhpWrapper.
+   * @param \Drupal\geofield\WktGeneratorInterface $wkt_generator
+   *   The WKT format Generator service.
+   * @param \Drupal\leaflet\LeafletService $leaflet_service
+   *   The Leaflet service.
+   */
+  public function __construct(
+    $plugin_id,
+    $plugin_definition,
+    FieldDefinitionInterface $field_definition,
+    array $settings,
+    array $third_party_settings,
+    GeoPHPInterface $geophp_wrapper,
+    WktGeneratorInterface $wkt_generator,
+    LeafletService $leaflet_service
+  ) {
+    parent::__construct(
+      $plugin_id,
+      $plugin_definition,
+      $field_definition,
+      $settings,
+      $third_party_settings,
+      $geophp_wrapper,
+      $wkt_generator
+    );
+    $this->leafletService = $leaflet_service;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $plugin_id,
+      $plugin_definition,
+      $configuration['field_definition'],
+      $configuration['settings'],
+      $configuration['third_party_settings'],
+      $container->get('geofield.geophp'),
+      $container->get('geofield.wkt_generator'),
+      $container->get('leaflet.service')
+    );
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
     $base_layers = self::getLeafletMaps();
-    return parent::defaultSettings() + array(
-      'map' => array(
+    return parent::defaultSettings() + [
+      'map' => [
         'leaflet_map' => array_shift($base_layers),
         'height' => 300,
-        'center' => array(
+        'center' => [
           'lat' => 0.0,
           'lng' => 0.0,
-        ),
+        ],
         'auto_center' => TRUE,
         'zoom' => 10,
-      ),
-      'input' => array(
+        'locate' => TRUE,
+        'scroll_zoom_enabled' => TRUE,
+      ],
+      'input' => [
         'show' => TRUE,
         'readonly' => FALSE,
-      ),
-      'upload' => array(
-        'show' => FALSE,
-      )
-    );
+      ],
+      'toolbar' => [
+        'position' => 'topright',
+        'drawMarker' => TRUE,
+        'drawPolyline' => TRUE,
+        'drawRectangle' => TRUE,
+        'drawPolygon' => TRUE,
+        'drawCircle' => TRUE,
+        'editMode' => TRUE,
+        'dragMode' => TRUE,
+        'cutPolygon' => FALSE,
+        'removalMode' => TRUE,
+      ],
+    ];
   }
 
+  /**
+   * Get maps available for use with Leaflet.
+   */
   protected static function getLeafletMaps() {
-    $options = array();
+    $options = [];
     foreach (leaflet_map_get_info() as $key => $map) {
       $options[$key] = $map['label'];
     }
@@ -67,85 +145,158 @@ class LeafletWidget extends GeofieldDefaultWidget {
     parent::settingsForm($form, $form_state);
 
     $map_settings = $this->getSetting('map');
-    $form['map'] = array(
+    $form['map'] = [
       '#type' => 'fieldset',
-      '#title' => t('Map Settings'),
-    );
-    $form['map']['leaflet_map'] = array(
+      '#title' => $this->t('Map Settings'),
+    ];
+    $form['map']['leaflet_map'] = [
       '#title' => $this->t('Leaflet Map'),
       '#type' => 'select',
-      '#options' => array('' => '-- Empty --') + $this->getLeafletMaps(),
+      '#options' => ['' => $this->t('-- Empty --')] + $this->getLeafletMaps(),
       '#default_value' => $map_settings['leaflet_map'],
       '#required' => TRUE,
-    );
-    $form['map']['height'] = array(
+    ];
+    $form['map']['height'] = [
       '#title' => $this->t('Height'),
       '#type' => 'textfield',
       '#required' => TRUE,
       '#default_value' => $map_settings['height'],
-    );
-    $form['map']['center'] = array(
+    ];
+    $form['map']['center'] = [
       '#type' => 'fieldset',
       '#collapsed' => TRUE,
       '#collapsible' => TRUE,
       '#title' => 'Default map center',
-    );
-    $form['map']['center']['lat'] = array(
+    ];
+    $form['map']['center']['lat'] = [
       '#type' => 'textfield',
-      '#title' => t('Latitude'),
+      '#title' => $this->t('Latitude'),
       '#default_value' => $map_settings['center']['lat'],
       '#required' => TRUE,
-    );
-    $form['map']['center']['lng'] = array(
+    ];
+    $form['map']['center']['lng'] = [
       '#type' => 'textfield',
-      '#title' => t('Longtitude'),
+      '#title' => $this->t('Longtitude'),
       '#default_value' => $map_settings['center']['lng'],
       '#required' => TRUE,
-    );
-    $form['map']['auto_center'] = array(
+    ];
+    $form['map']['auto_center'] = [
       '#type' => 'checkbox',
-      '#title' => t('Automatically center map on existing features'),
+      '#title' => $this->t('Automatically center map on existing features'),
       '#description' => t("This option overrides the widget's default center."),
       '#default_value' => $map_settings['auto_center'],
-    );
-    $form['map']['zoom'] = array(
+    ];
+    $form['map']['zoom'] = [
       '#type' => 'textfield',
-      '#title' => t('Default zoom level'),
+      '#title' => $this->t('Default zoom level'),
       '#default_value' => $map_settings['zoom'],
       '#required' => TRUE,
-    );
+    ];
+    $form['map']['locate'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Automatically locate user current position'),
+      '#description' => t("This option centers the map to the user position."),
+      '#default_value' => $map_settings['locate'],
+    ];
+    $form['map']['scroll_zoom_enabled'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable Scroll Wheel Zoom on click'),
+      '#description' => t("This option enables zooming by mousewheel as soon as the user clicked on the map."),
+      '#default_value' => $map_settings['scroll_zoom_enabled'],
+    ];
 
     $input_settings = $this->getSetting('input');
-    $form['input'] = array(
+    $form['input'] = [
       '#type' => 'fieldset',
-      '#title' => t('Geofield Settings'),
-    );
-    $form['input']['show'] = array(
+      '#title' => $this->t('Geofield Settings'),
+    ];
+    $form['input']['show'] = [
       '#type' => 'checkbox',
-      '#title' => t('Show geofield input element'),
+      '#title' => $this->t('Show geofield input element'),
       '#default_value' => $input_settings['show'],
-    );
-    $form['input']['readonly'] = array(
+    ];
+    $form['input']['readonly'] = [
       '#type' => 'checkbox',
-      '#title' => t('Make geofield input element read-only'),
+      '#title' => $this->t('Make geofield input element read-only'),
       '#default_value' => $input_settings['readonly'],
-      '#states' => array(
-        'invisible' => array(
-          ':input[name="fields[field_geofield][settings_edit_form][settings][input][show]"]' => array('checked' => FALSE),
-        ),
-      )
-    );
+      '#states' => [
+        'invisible' => [
+          ':input[name="fields[field_geofield][settings_edit_form][settings][input][show]"]' => ['checked' => FALSE],
+        ],
+      ],
+    ];
 
-    $upload_settings = $this->getSetting('upload');
-    $form['upload'] = array(
+    $toolbar_settings = $this->getSetting('toolbar');
+
+    $form['toolbar'] = [
       '#type' => 'fieldset',
-      '#title' => t('Upload Settings'),
-    );
-    $form['upload']['show'] = array(
+      '#title' => $this->t('Leaflet PM Settings'),
+    ];
+
+    $form['toolbar']['position'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Toolbar position.'),
+      '#options' => [
+        'topleft' => 'topleft',
+        'topright' => 'topright',
+        'bottomleft' => 'bottomleft',
+        'bottomright' => 'bottomright',
+      ],
+      '#default_value' => $toolbar_settings['position'],
+    ];
+
+    $form['toolbar']['drawMarker'] = [
       '#type' => 'checkbox',
-      '#title' => t('Show file upload input element'),
-      '#default_value' => $upload_settings['show'],
-    );
+      '#title' => $this->t('Adds button to draw markers.'),
+      '#default_value' => $toolbar_settings['drawMarker'],
+    ];
+    $form['toolbar']['drawPolyline'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Adds button to draw polyline.'),
+      '#default_value' => $toolbar_settings['drawPolyline'],
+    ];
+
+    $form['toolbar']['drawRectangle'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Adds button to draw rectangle.'),
+      '#default_value' => $toolbar_settings['drawRectangle'],
+    ];
+
+    $form['toolbar']['drawPolygon'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Adds button to draw polygon.'),
+      '#default_value' => $toolbar_settings['drawPolygon'],
+    ];
+
+    $form['toolbar']['drawCircle'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Adds button to draw cricle.'),
+      '#default_value' => $toolbar_settings['drawCircle'],
+    ];
+
+    $form['toolbar']['editMode'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Adds button to toggle edit mode for all layers.'),
+      '#default_value' => $toolbar_settings['editMode'],
+    ];
+
+    $form['toolbar']['dragMode'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Adds button to toggle drag mode for all layers.'),
+      '#default_value' => $toolbar_settings['dragMode'],
+    ];
+
+    $form['toolbar']['cutPolygon'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Adds button to cut hole in polyvon.'),
+      '#default_value' => $toolbar_settings['cutPolygon'],
+    ];
+
+    $form['toolbar']['removalMode'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Adds button to remove layers.'),
+      '#default_value' => $toolbar_settings['removalMode'],
+    ];
 
     return $form;
   }
@@ -153,34 +304,38 @@ class LeafletWidget extends GeofieldDefaultWidget {
   /**
    * {@inheritdoc}
    */
-  public function settingsSummary() {
-    return parent::settingsSummary();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
+  public function formElement(
+    FieldItemListInterface $items,
+    $delta,
+    array $element,
+    array &$form,
+    FormStateInterface $form_state
+  ) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
 
     // Attach class to wkt input element, so we can find it in js/widget.js.
-    $wkt_element_name = 'leaflet-widget-input';
-    $element['value']['#attributes']['class'][] = $wkt_element_name;
+    $json_element_name = 'leaflet-widget-input';
+    $element['value']['#attributes']['class'][] = $json_element_name;
 
     // Determine map settings and add map element.
     $map_settings = $this->getSetting('map');
     $input_settings = $this->getSetting('input');
-    $upload_settings = $this->getSetting('input');
+    $js_settings = [];
     $map = leaflet_map_get_info($map_settings['leaflet_map']);
     $map['settings']['center'] = $map_settings['center'];
     $map['settings']['zoom'] = $map_settings['zoom'];
-    $element['map'] = leaflet_render_map($map, array(), $map_settings['height'] . 'px');
+
+    if (!empty($map_settings['locate'])) {
+      $js_settings['locate'] = TRUE;
+      unset($map['settings']['center']);
+    }
+
+    $element['map'] = $this->leafletService->leafletRenderMap($map, [], $map_settings['height'] . 'px');
     $element['map']['#weight'] = -1;
 
     // Build JS settings for leaflet widget.
-    $js_settings = array();
     $js_settings['map_id'] = $element['map']['#map_id'];
-    $js_settings['wktElement'] = '.' . $wkt_element_name;
+    $js_settings['jsonElement'] = '.' . $json_element_name;
     $cardinality = $items->getFieldDefinition()
       ->getFieldStorageDefinition()
       ->getCardinality();
@@ -189,99 +344,30 @@ class LeafletWidget extends GeofieldDefaultWidget {
     $js_settings['autoCenter'] = $map_settings['auto_center'];
     $js_settings['inputHidden'] = empty($input_settings['show']);
     $js_settings['inputReadonly'] = !empty($input_settings['readonly']);
+    $js_settings['toolbarSettings'] = !empty($this->getSetting('toolbar')) ? $this->getSetting('toolbar') : [];
+    $js_settings['scrollZoomEnabled'] = !empty($map_settings['scroll_zoom_enabled']) ? $map_settings['scroll_zoom_enabled'] : FALSE;
 
     // Include javascript.
     $element['map']['#attached']['library'][] = 'leaflet_widget/widget';
-    // Settings and geo-data are passed to the widget keyed by field id.
-    $element['map']['#attached']['drupalSettings']['leaflet_widget'] = array($element['map']['#map_id'] => $js_settings);
+    // Leaflet.draw plugin.
+    $element['map']['#attached']['library'][] = 'leaflet_widget/leaflet-pm';
 
-    if ($upload_settings['show']) {
-      $element['upload']['#tree'] = TRUE;
-      $element['upload']['file'] = array(
-        '#type' => 'managed_file',
-        '#description' => $this->t('You may upload a file of geodata in one of the following formats to convert to WKT: geojson, json, kml, wkt, wkb, gpx, google_geocode'),
-        '#title' => $this->t('Geodata file upload'),
-        '#upload_validators' => array(
-          'file_validate_extensions' => array(
-            implode(' ', ['geojson', 'json', 'kml', 'wkt', 'wkb', 'gpx', 'google_geocode']),
-          ),
-        ),
-      );
-      $element['upload']['submit'] = array(
-        '#type' => 'submit',
-        '#value' => $this->t('Replace Geodata with uploaded file.'),
-        '#submit' => array(array(get_class($this), 'geoDataReplaceSubmit')),
-      );
+    // Settings and geo-data are passed to the widget keyed by field id.
+    $element['map']['#attached']['drupalSettings']['leaflet_widget'] = [$element['map']['#map_id'] => $js_settings];
+
+    // Convert default value to geoJSON format.
+    if ($geom = $this->geoPhpWrapper->load($element['value']['#default_value'])) {
+      $element['value']['#default_value'] = $geom->out('json');
     }
 
     return $element;
   }
 
-  public static function geoDataReplaceSubmit(array $form, FormStateInterface $form_state) {
-    $button = $form_state->getTriggeringElement();
-
-    // Get the lump of form.
-    $element = NestedArray::getValue($form, array_slice($button['#array_parents'], 0, -3));
-
-    $field_name = $element['#field_name'];
-
-    // Extract the values from $form_state->getValues().
-    $key_exists = NULL;
-    $values = NestedArray::getValue($form_state->getValues(), $element['#parents'], $key_exists);
-
-    if (!empty($values[0]['upload']['file'][0])) {
-      if ($file = file_load($values[0]['upload']['file'][0])) {
-        // Load the file, parse the text and insert.
-        try {
-          // Get the file extension that has been uploaded.
-          $extension = substr($file->getFilename(), 1 + strrpos($file->getFilename(), '.'));
-          switch ($extension) {
-            case 'json':
-            case 'geojson':
-              $type = 'json';
-              break;
-
-            case 'kml':
-              $type = 'kml';
-              break;
-
-            case 'wkt':
-              $type = 'wkt';
-              break;
-
-            case 'wkb':
-              $type = 'wkb';
-              break;
-
-            case 'gpx':
-              $type = 'gpx';
-              break;
-
-            case 'google_geocode':
-              $type = 'google_geocode';
-              break;
-          }
-          /** @var GeoPHPInterface $geophp */
-          $geophp = \Drupal::service('geofield.geophp')->load(file_get_contents($file->getFileUri()), $type);
-          // Slight tweak, if we have a geometrycollection of only one item, then unwrap.
-          if ($geophp->geometryType() == 'GeometryCollection' && $geophp->numGeometries() == 1) {
-            $geophp = $geophp->getComponents()[0];
-          }
-
-          $wkt = $geophp->out('wkt');
-          $user_input = $form_state->getUserInput();
-          $user_input['field_geodata'][0]['value'] = $wkt;
-          $form_state->setUserInput($user_input);
-          drupal_set_message(t('Replaced Geodata with uploaded geoJSON. Save this entity to make this change permanent'));
-
-        }
-        catch (\Exception $e) {
-          drupal_set_message(t('Sorry, failed to replace the geodata with the uploaded data.'), 'error');
-        }
-      }
-    }
-
-    $form_state->setRebuild();
+  /**
+   *
+   */
+  public function getFieldDefinition() {
+    return $this->fieldDefinition;
   }
 
 }

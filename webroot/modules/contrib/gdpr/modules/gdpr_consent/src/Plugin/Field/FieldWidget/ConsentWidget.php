@@ -6,11 +6,11 @@ use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\gdpr_consent\ConsentUserResolver\ConsentUserResolverPluginManager;
 use Drupal\gdpr_consent\Entity\ConsentAgreement;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function date;
 
 /**
  * Plugin implementation of the 'gdpr_consent_widget' widget.
@@ -26,7 +26,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   },
  * )
  */
-class ConsentWidget extends WidgetBase implements ContainerFactoryPluginInterface {
+class ConsentWidget extends WidgetBase {
 
   /**
    * The GDPR Consent Resolver manager.
@@ -197,7 +197,7 @@ class ConsentWidget extends WidgetBase implements ContainerFactoryPluginInterfac
         $value['user_id_accepted'] = $this->currentUser->id();
       }
       if (!isset($value['date'])) {
-        $value['date'] = \date('Y-m-d H:i:s');
+        $value['date'] = date('Y-m-d H:i:s');
       }
     }
     unset($value);

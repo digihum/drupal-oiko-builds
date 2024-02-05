@@ -6,7 +6,10 @@
 
   var loadedFeatures = [];
 
-  $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
+  $(document).on('leaflet.map', function(e, mapDefinition, map, mapid) {
+    var drupalLeaflet = Drupal.Leaflet[mapid];
+    var drupalLeafletInstance = $('#'+ mapid).data('leaflet');
+    var mapid_stored = mapid;
 
     // @TODO: Move this code, it does NOT belong here!
     if (mapDefinition.hasOwnProperty('data-url') && mapDefinition['data-url'] && mapDefinition.hasOwnProperty('data-url-number-pages') && mapDefinition['data-url-number-pages']) {
@@ -28,7 +31,8 @@
 
       // When all of the data promises have resolved, load that data.
       $.when.apply($, pageRequests).then(function(data) {
-        drupalLeaflet.add_features(loadedFeatures);
+        var leafletInstance = $('#' + mapid_stored).data('leaflet');
+        leafletInstance.add_features(mapid_stored, loadedFeatures);
         Drupal.oiko.appModuleDoneLoading('marker-data');
       }, function (e) {
         // Error, just load the marker-data.
@@ -38,7 +42,8 @@
     }
     else {
       // There's nothing to load, so we're done here.
-      drupalLeaflet.add_features([]);
+      var leafletInstance = $('#' + mapid_stored).data('leaflet');
+      leafletInstance.add_features(mapid_stored, []);
       Drupal.oiko.appModuleDoneLoading('marker-data');
     }
 
@@ -58,7 +63,7 @@
       var get = $.get('/oiko_empire/empires/list.json');
       get.done(function(data) {
         data.forEach(function (empire) {
-          var lFeature = drupalLeaflet.create_feature(empire);
+          var lFeature = drupalLeafletInstance.create_feature(empire);
           lFeature.temporal = {
             start: parseInt(empire.temporal.minmin, 10),
             end: parseInt(empire.temporal.maxmax, 10)

@@ -1,6 +1,6 @@
 services:
   gdpr_dump.sql_dump:
-    class: \Drupal\gdpr_dump\Service\GdprSqlDump
+    class: Drupal\gdpr_dump\Service\GdprSqlDump
     arguments:
       - '@config.factory'
       - '@database'
@@ -8,7 +8,7 @@ services:
       - '@anonymizer.anonymizer_factory'
 
   gdpr_dump.sanitize:
-    class: \Drupal\gdpr_dump\Service\GdprSanitize
+    class: Drupal\gdpr_dump\Service\GdprSanitize
     arguments:
       - '@config.factory'
       - '@database'
@@ -16,6 +16,6 @@ services:
       - '@anonymizer.anonymizer_factory'
 
   gdpr_dump.database_manager:
-    class: \Drupal\gdpr_dump\Service\GdprDatabaseManager
+    class: Drupal\gdpr_dump\Service\GdprDatabaseManager
     arguments:
       - '@database'

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\Plugin\Field\FieldWidget\AvatarGeneratorPreviewWidget.
- */
-
 namespace Drupal\avatars\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
@@ -30,9 +25,9 @@ class AvatarGeneratorPreviewWidget extends OptionsButtonsWidget {
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return array(
+    return [
       'preview_image_style' => 'thumbnail',
-    ) + parent::defaultSettings();
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -41,14 +36,14 @@ class AvatarGeneratorPreviewWidget extends OptionsButtonsWidget {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $element = parent::settingsForm($form, $form_state);
 
-    $element['preview_image_style'] = array(
+    $element['preview_image_style'] = [
       '#title' => t('Preview image style'),
       '#type' => 'select',
       '#options' => image_style_options(FALSE),
       '#empty_option' => '<' . t('Original') . '>',
       '#default_value' => $this->getSetting('preview_image_style'),
       '#description' => t('A preview of the avatar will be shown in this size.'),
-    );
+    ];
 
     return $element;
   }
@@ -56,7 +51,7 @@ class AvatarGeneratorPreviewWidget extends OptionsButtonsWidget {
   /**
    * Get label of preview image style.
    *
-   * @return string|NULL
+   * @return string|null
    *   Label of image style, or NULL if not set.
    */
   private function getPreviewImageStyle() {

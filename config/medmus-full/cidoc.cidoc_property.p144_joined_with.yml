@@ -1,0 +1,33 @@
+uuid: 3a776b51-5ddd-4493-bc0c-c26a402b1d98
+langcode: en
+status: true
+dependencies: {  }
+id: p144_joined_with
+label: 'P144 joined with'
+bidirectional: false
+reverse_label: 'P144 gained member by'
+friendly_label: 'joined with'
+reverse_friendly_label: 'gained member by'
+domain_bundles:
+  - e85_joining
+range_bundles:
+  - e74_group
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: generic
+    sub_property: p143_joined
+    title_template: '@source_name joins @target_name'
+widget_description:
+  domain: '<p>Group joined by person (or group).</p>'
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: '<p>Name of Person (or Group) who joins the Group</p> '
+child_events:
+  domain: 0
+  range: 0

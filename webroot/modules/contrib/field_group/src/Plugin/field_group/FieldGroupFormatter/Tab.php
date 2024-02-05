@@ -3,8 +3,6 @@
 namespace Drupal\field_group\Plugin\field_group\FieldGroupFormatter;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Component\Utility\Xss;
-use Drupal\Core\Render\Markup;
 use Drupal\field_group\FieldGroupFormatterBase;
 
 /**
@@ -36,7 +34,7 @@ class Tab extends FieldGroupFormatterBase {
 
     $add = [
       '#type' => 'details',
-      '#title' => $this->getSetting('fieldset_label_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel())),
+      '#title' => $this->getLabel(),
       '#description' => $this->getSetting('description'),
       '#group' => $this->group->parent_name,
     ];
@@ -117,6 +115,7 @@ class Tab extends FieldGroupFormatterBase {
     $defaults = [
       'formatter' => 'closed',
       'description' => '',
+      'show_empty_fields' => FALSE,
     ] + parent::defaultSettings($context);
 
     if ($context == 'form') {

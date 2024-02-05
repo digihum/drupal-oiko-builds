@@ -7,6 +7,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\user\UserInterface;
 
 /**
@@ -44,9 +45,9 @@ use Drupal\user\UserInterface;
  *     "status" = "status",
  *   },
  *   links = {
- *     "canonical" = "/admin/gdpr/tasks/{gdpr_task}",
- *     "delete-form" = "/admin/gdpr/tasks/{gdpr_task}/delete",
- *     "collection" = "/admin/gdpr/tasks",
+ *     "canonical" = "/admin/config/gdpr/tasks/{gdpr_task}",
+ *     "delete-form" = "/admin/config/gdpr/tasks/{gdpr_task}/delete",
+ *     "collection" = "/admin/config/gdpr/tasks",
  *   },
  *   bundle_entity_type = "gdpr_task_type",
  *   field_ui_base_route = "entity.gdpr_task_type.edit_form"
@@ -55,6 +56,7 @@ use Drupal\user\UserInterface;
 class Task extends ContentEntityBase implements TaskInterface {
 
   use EntityChangedTrait;
+  use StringTranslationTrait;
 
   /**
    * {@inheritdoc}
@@ -145,7 +147,7 @@ class Task extends ContentEntityBase implements TaskInterface {
    * {@inheritdoc}
    */
   public function label() {
-    return t('Task @id', ['@id' => $this->id()]);
+    return $this->t('Task @id', ['@id' => $this->id()]);
   }
 
   /**
@@ -159,7 +161,7 @@ class Task extends ContentEntityBase implements TaskInterface {
    * {@inheritdoc}
    */
   public function getStatusLabel() {
-    $statuses = $this->getStatuses();
+    $statuses = self::getStatuses();
     $value = $this->getStatus();
     if (isset($statuses[$value])) {
       $value = $statuses[$value];
@@ -190,7 +192,7 @@ class Task extends ContentEntityBase implements TaskInterface {
         'weight' => 5,
         'settings' => [
           'match_operator' => 'CONTAINS',
-          'size' => '60',
+          'size' => 60,
           'autocomplete_type' => 'tags',
           'placeholder' => '',
         ],
@@ -204,7 +206,8 @@ class Task extends ContentEntityBase implements TaskInterface {
       ->setDefaultValue('requested')
       ->setSetting('allowed_values_function', [static::class, 'getStatuses'])
       ->setDisplayOptions('form', [
-        'type' => 'hidden',
+        'label' => 'hidden',
+        'type' => 'select',
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
@@ -229,15 +232,17 @@ class Task extends ContentEntityBase implements TaskInterface {
       ->setSetting('handler', 'default')
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', [
+        'label' => 'hidden',
         'type' => 'author',
         'weight' => 5,
       ])
       ->setDisplayOptions('form', [
-        'type' => 'hidden',
+        'label' => 'hidden',
+        'type' => 'entity_reference_autocomplete',
         'weight' => 5,
         'settings' => [
           'match_operator' => 'CONTAINS',
-          'size' => '60',
+          'size' => 60,
           'autocomplete_type' => 'tags',
           'placeholder' => '',
         ],
@@ -253,15 +258,17 @@ class Task extends ContentEntityBase implements TaskInterface {
       ->setSetting('handler', 'default')
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', [
+        'label' => 'hidden',
         'type' => 'author',
         'weight' => 6,
       ])
       ->setDisplayOptions('form', [
-        'type' => 'hidden',
+        'label' => 'hidden',
+        'type' => 'entity_reference_autocomplete',
         'weight' => 6,
         'settings' => [
           'match_operator' => 'CONTAINS',
-          'size' => '60',
+          'size' => 60,
           'autocomplete_type' => 'tags',
           'placeholder' => '',
         ],

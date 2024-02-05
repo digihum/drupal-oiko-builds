@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\AvatarGeneratorPluginCollection.
- */
-
 namespace Drupal\avatars;
 
 use Drupal\Core\Plugin\DefaultSingleLazyPluginCollection;

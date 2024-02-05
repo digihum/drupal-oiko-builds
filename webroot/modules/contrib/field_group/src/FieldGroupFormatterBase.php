@@ -54,7 +54,7 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
    *   The plugin_id for the formatter.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \stdClass $group
+   * @param object $group
    *   The group object.
    * @param array $settings
    *   The formatter settings.
@@ -95,12 +95,11 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
       '#weight' => -5,
     ];
 
-    $form['fieldset_label_html'] = [
+    $form['show_empty_fields'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Output label as HTML'),
-      '#default_value' => $this->getSetting('fieldset_label_html'),
-      '#description' => $this->t('Not all HTML is valid, the title will be filtered to prevent cross-site scripting (XSS).'),
-      '#weight' => -2,
+      '#title' => $this->t('Display element also when empty'),
+      '#description' => $this->t('Display this field group even if the contained fields are currently empty.'),
+      '#default_value' => $this->getSetting('show_empty_fields'),
     ];
 
     $form['id'] = [
@@ -134,9 +133,8 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
       $summary[] = $this->pluginDefinition['label'] . ': ' . $this->getSetting('formatter');
     }
 
-    if ($this->getSetting('fieldset_label_html')) {
-      $summary[] = $this->t('HTML: @fieldset_label_html',
-        ['@fieldset_label_html' => $this->getSetting('fieldset_label_html')]);
+    if ($this->getSetting('show_empty_fields')) {
+      $summary[] = $this->t('Show Empty Fields');
     }
 
     if ($this->getSetting('id')) {
@@ -162,7 +160,6 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
    */
   public static function defaultContextSettings($context) {
     return [
-      'fieldset_label_html' => FALSE,
       'classes' => '',
       'id' => '',
     ];
@@ -194,6 +191,7 @@ abstract class FieldGroupFormatterBase extends PluginSettingsBase implements Fie
     $element['#group_name'] = $this->group->group_name;
     $element['#entity_type'] = $this->group->entity_type;
     $element['#bundle'] = $this->group->bundle;
+    $element['#show_empty_fields'] = $this->getSetting('show_empty_fields');
   }
 
   /**

@@ -1,0 +1,454 @@
+uuid: a1d19448-b79b-476d-a714-8271a4ee5a2f
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.e53_place
+    - field.field.cidoc_entity.e53_place.field_geodata
+    - field.field.cidoc_entity.e53_place.field_level_2
+    - field.field.cidoc_entity.e53_place.field_location_lookup
+    - field.field.cidoc_entity.e53_place.field_pleiades_uri
+    - image.style.thumbnail
+  module:
+    - field_group
+    - image
+    - leaflet
+    - link
+    - paragraphs
+    - path
+    - text
+third_party_settings:
+  field_group:
+    group_main:
+      children:
+        - group_main_deets
+        - group_appellations
+        - group_hierarchy
+        - group_aux_deets
+        - group_oiko_world_settings
+      parent_name: ''
+      weight: 1
+      label: 'Main data entry'
+      format_type: tabs
+      format_settings:
+        direction: horizontal
+        id: ''
+        classes: ''
+        fieldset_label_html: true
+      region: content
+    group_main_deets:
+      children:
+        - name
+        - internal_name
+        - 'cidoc_properties:domain:p2_has_type'
+        - group_main_details
+      parent_name: group_main
+      weight: 4
+      label: 'Main details'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+        fieldset_label_html: true
+      region: content
+    group_aux_deets:
+      children:
+        - 'cidoc_properties:range:p7_took_place_at'
+        - 'cidoc_properties:range:p67_refers_to'
+        - content
+      parent_name: group_main
+      weight: 8
+      label: 'Auxiliary details'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+        fieldset_label_html: true
+      region: content
+    group_main_details:
+      children:
+        - group_geodata
+        - citation
+      parent_name: group_main_deets
+      weight: 4
+      label: 'Main details'
+      format_type: tabs
+      format_settings:
+        fieldset_label_html: true
+        direction: horizontal
+        id: ''
+        classes: ''
+      region: content
+    group_appellations:
+      children:
+        - 'cidoc_properties:domain:p87_is_identified_by'
+      parent_name: group_main
+      weight: 6
+      label: 'Also known as'
+      format_type: tab
+      format_settings:
+        formatter: closed
+        description: ''
+        classes: ''
+        id: ''
+        required_fields: true
+        fieldset_label_html: true
+      region: content
+    group_geodata:
+      children:
+        - field_location_lookup
+        - field_pleiades_uri
+        - field_geodata
+      parent_name: group_main_details
+      weight: 10
+      label: Geodata
+      format_type: html_element
+      format_settings:
+        element: div
+        show_label: true
+        label_element: h1
+        label_element_classes: ''
+        required_fields: true
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+        fieldset_label_html: false
+      region: content
+    group_hierarchy:
+      children:
+        - 'cidoc_properties:domain:p89_falls_within'
+        - 'cidoc_properties:range:p89_falls_within'
+      parent_name: group_main
+      weight: 7
+      label: Hierarchy
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+        fieldset_label_html: true
+      region: content
+    group_oiko_world_settings:
+      children:
+        - field_level_2
+        - status
+        - significance
+        - user_id
+        - timeline_preselect_option
+        - timeline_logo
+        - path
+      parent_name: group_main
+      weight: 9
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+        fieldset_label_html: true
+      label: 'Connecting Medieval Music settings'
+      region: content
+_core:
+  default_config_hash: VxRWdj-0iwzs3U38Vo_QDcWLA4YyVB2KteXHYWkxZpM
+id: cidoc_entity.e53_place.default
+targetEntityType: cidoc_entity
+bundle: e53_place
+mode: default
+content:
+  'cidoc_properties:domain:p121_overlaps_with':
+    weight: 23
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p122_borders_with':
+    weight: 24
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p131_is_identified_by':
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p2_has_type':
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p87_is_identified_by':
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:domain:p88_consists_of':
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  'cidoc_properties:domain:p89_falls_within':
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p67_refers_to':
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p7_took_place_at':
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  'cidoc_properties:range:p89_falls_within':
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  citation:
+    type: entity_reference_paragraphs
+    weight: 11
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: button
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+  class_description:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  content:
+    type: text_textarea
+    weight: 2
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_geodata:
+    weight: 13
+    settings:
+      map:
+        leaflet_map: 'Ancient Terrain'
+        height: '500'
+        auto_center: '1'
+        map_position:
+          center:
+            lat: '41.0866016'
+            lon: '14.2494471'
+          zoom: '6'
+          minZoom: '1'
+          maxZoom: '18'
+          zoomFiner: '0'
+          force: 0
+        locate: '1'
+        scroll_zoom_enabled: '1'
+        fullscreen_control: '1'
+      input:
+        show: '1'
+        readonly: 0
+      toolbar:
+        position: topright
+        drawMarker: '1'
+        drawPolyline: '1'
+        drawRectangle: '1'
+        drawPolygon: '1'
+        editMode: '1'
+        dragMode: '1'
+        removalMode: '1'
+        drawCircle: false
+        drawCircleMarker: false
+        cutPolygon: 0
+      reset_map:
+        position: topright
+        control: 0
+      geocoder:
+        settings:
+          position: topright
+          input_size: '25'
+          providers:
+            arcgisonline:
+              weight: '0'
+              checked: 0
+            bingmaps:
+              weight: '0'
+              checked: 0
+            file:
+              weight: '0'
+              checked: 0
+            freegeoip:
+              weight: '0'
+              checked: 0
+            geoplugin:
+              weight: '0'
+              checked: 0
+            geoip:
+              weight: '0'
+              checked: 0
+            geonames:
+              weight: '0'
+              checked: 0
+            googlemaps:
+              weight: '0'
+              checked: 0
+            googlemaps_business:
+              weight: '0'
+              checked: 0
+            hostip:
+              weight: '0'
+              checked: 0
+            ipinfodb:
+              weight: '0'
+              checked: 0
+            mapquest:
+              weight: '0'
+              checked: 0
+            maxmind:
+              weight: '0'
+              checked: 0
+            nominatim:
+              weight: '0'
+              checked: 0
+            opencage:
+              weight: '0'
+              checked: 0
+            openstreetmap:
+              weight: '0'
+              checked: 0
+            random:
+              weight: '0'
+              checked: 0
+            tomtom:
+              weight: '0'
+              checked: 0
+            yandex:
+              weight: '0'
+              checked: 0
+          min_terms: '4'
+          delay: '800'
+          zoom: '16'
+          options: ''
+          popup: 0
+        control: 0
+    third_party_settings: {  }
+    type: leaflet_widget_default
+    region: content
+  field_level_2:
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_location_lookup:
+    type: string_textfield
+    weight: 11
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_pleiades_uri:
+    weight: 12
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  internal_name:
+    type: string_textfield
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  name:
+    type: string_textfield
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  path:
+    type: path
+    weight: 32
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  significance:
+    type: options_select
+    weight: 28
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 27
+    region: content
+    third_party_settings: {  }
+  timeline_logo:
+    type: image_image
+    weight: 31
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    region: content
+  timeline_preselect_option:
+    type: boolean_checkbox
+    weight: 30
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    region: content
+  user_id:
+    type: entity_reference_autocomplete
+    weight: 29
+    region: content
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    third_party_settings: {  }
+hidden:
+  'cidoc_properties:domain:p1_is_identified_by': true
+  'cidoc_properties:domain:p48_has_preferred_identifier': true
+  'cidoc_properties:domain:pa19_has_language': true
+  'cidoc_properties:range:p100_was_death_of': true
+  'cidoc_properties:range:p11_had_participant': true
+  'cidoc_properties:range:p121_overlaps_with': true
+  'cidoc_properties:range:p122_borders_with': true
+  'cidoc_properties:range:p12_occurred_in_the_presence_of': true
+  'cidoc_properties:range:p13_destroyed': true
+  'cidoc_properties:range:p14_carried_out_by': true
+  'cidoc_properties:range:p15_was_influenced_by': true
+  'cidoc_properties:range:p16_used_specific_object': true
+  'cidoc_properties:range:p17_was_motivated_by': true
+  'cidoc_properties:range:p25_moved': true
+  'cidoc_properties:range:p26_moved_to': true
+  'cidoc_properties:range:p27_moved_from': true
+  'cidoc_properties:range:p88_consists_of': true
+  'cidoc_properties:range:p96_by_mother': true
+  'cidoc_properties:range:p97_from_father': true
+  'cidoc_properties:range:p98_brought_into_life': true

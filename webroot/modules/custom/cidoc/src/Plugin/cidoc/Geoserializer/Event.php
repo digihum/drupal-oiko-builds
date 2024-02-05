@@ -24,7 +24,7 @@ class Event extends GeoserializerPluginBase {
       if ($place_entity->field_geodata->count()) {
         $entity->addCacheableDependency($place_entity);
         foreach ($place_entity->field_geodata->getValue() as $value) {
-          $new_points = leaflet_process_geofield($value['value']);
+          $new_points = \Drupal::service('leaflet.service')->leafletProcessGeofield($value['value']);
           foreach ($new_points as $k => $v) {
             $new_points[$k]['location'] = $place_entity->label();
             if ($new_points[$k]['type'] !== 'point') {

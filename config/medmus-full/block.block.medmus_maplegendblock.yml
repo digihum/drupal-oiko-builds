@@ -1,0 +1,25 @@
+uuid: c294d90f-ff54-4c2b-b2b7-a485f2362408
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_leaflet
+  theme:
+    - medmus
+id: medmus_maplegendblock
+theme: medmus
+region: sidebar_legend
+weight: -16
+provider: null
+plugin: map_legend_block
+settings:
+  id: map_legend_block
+  label: 'Type of activity'
+  provider: oiko_leaflet
+  label_display: visible
+  marker_description: ''
+  cluster_description: ''
+  path_description: ''
+  area_description: ''
+  empire_description: ''
+visibility: {  }

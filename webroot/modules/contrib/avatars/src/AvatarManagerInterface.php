@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\AvatarManagerInterface.
- */
-
 namespace Drupal\avatars;
 
 use Drupal\user\UserInterface;
@@ -18,34 +13,35 @@ interface AvatarManagerInterface {
   /**
    * Check user avatar for changes, and inserts the avatar into the user entity.
    *
-   * @param \Drupal\user\UserInterface
+   * @param \Drupal\user\UserInterface $user
    *   A user entity.
    */
   public function syncAvatar(UserInterface $user);
 
   /**
-   * Go down the the avatar generator preference hierarchy for a user, loading
-   * each avatar until a valid avatar is found.
+   * Go down the the avatar generator preference hierarchy for a user.
    *
-   * @param \Drupal\user\UserInterface
+   * Loads each avatar until a valid avatar is found.
+   *
+   * @param \Drupal\user\UserInterface $user
    *   A user entity.
    *
-   * @return \Drupal\avatars\AvatarPreviewInterface|NULL
+   * @return \Drupal\avatars\AvatarPreviewInterface|null
    *   An avatar preview entity.
    */
-  function findValidAvatar(UserInterface $user);
+  public function findValidAvatar(UserInterface $user);
 
   /**
    * Create avatar if it does not exist.
    *
-   * @param \Drupal\user\UserInterface
+   * @param \Drupal\user\UserInterface $user
    *   A user entity.
    * @param \Drupal\avatars\AvatarGeneratorInterface $avatar_generator
    *   An avatar generator instance.
    * @param int $scope
    *   Caching scope level.
    *
-   * @return \Drupal\avatars\AvatarPreviewInterface|FALSE
+   * @return \Drupal\avatars\AvatarPreviewInterface|false
    *   An avatar preview entity.
    */
   public function refreshAvatarGenerator(UserInterface $user, AvatarGeneratorInterface $avatar_generator, $scope);
@@ -53,13 +49,13 @@ interface AvatarManagerInterface {
   /**
    * Downloads all avatar previews for a user.
    *
-   * @param \Drupal\user\UserInterface
+   * @param \Drupal\user\UserInterface $user
    *   A user entity.
    *
    * @return \Drupal\avatars\AvatarPreviewInterface[]
    *   An array of refreshed avatar preview entities.
    */
-  function refreshAllAvatars(UserInterface $user);
+  public function refreshAllAvatars(UserInterface $user);
 
   /**
    * Download avatar and insert it into a file.
@@ -69,19 +65,20 @@ interface AvatarManagerInterface {
    *
    * @param \Drupal\avatars\AvatarGeneratorInterface $avatar_generator
    *   An avatar generator instance.
-   * @param \Drupal\user\UserInterface
+   * @param \Drupal\user\UserInterface $user
    *   A user entity.
    *
-   * @return \Drupal\file\FileInterface|FALSE
+   * @return \Drupal\file\FileInterface|false
+   *   The file containing an avatar.
    */
-  function getAvatarFile(AvatarGeneratorInterface $avatar_generator, UserInterface $user);
+  public function getAvatarFile(AvatarGeneratorInterface $avatar_generator, UserInterface $user);
 
   /**
    * Avatar preference generators.
    *
    * Ordered by priority.
    *
-   * @param \Drupal\user\UserInterface
+   * @param \Drupal\user\UserInterface $user
    *   A user entity.
    *
    * @return \Generator
@@ -99,7 +96,7 @@ interface AvatarManagerInterface {
    * @param \Drupal\user\UserInterface $user
    *   A user entity.
    */
-  function invalidateUserAvatar(UserInterface $user);
+  public function invalidateUserAvatar(UserInterface $user);
 
   /**
    * Triggers expected change for dynamic avatar generator.
@@ -109,7 +106,7 @@ interface AvatarManagerInterface {
    * @param \Drupal\user\UserInterface $user
    *   A user entity.
    */
-  function notifyDynamicChange(AvatarGeneratorInterface $avatar_generator, UserInterface $user);
+  public function notifyDynamicChange(AvatarGeneratorInterface $avatar_generator, UserInterface $user);
 
   /**
    * Gets a lit of active plugins a user has permission to use.
@@ -122,7 +119,7 @@ interface AvatarManagerInterface {
    * @return \Drupal\avatars\AvatarGeneratorInterface[]|\Generator
    *   An array of avatar generator entities.
    */
-  function getAvatarGeneratorsForUser(UserInterface $user, $exclude_user_preference = TRUE);
+  public function getAvatarGeneratorsForUser(UserInterface $user, $exclude_user_preference = TRUE);
 
   /**
    * Determines if a file entity is an avatar preview.
@@ -130,10 +127,10 @@ interface AvatarManagerInterface {
    * @param \Drupal\file\FileInterface $file
    *   The file entity to check.
    *
-   * @return int|FALSE
+   * @return int|false
    *   Returns the avatar preview entity ID, or FALSE if the file is not a
    *   avatar preview.
    */
-  function getAvatarPreviewByFile(FileInterface $file);
+  public function getAvatarPreviewByFile(FileInterface $file);
 
 }

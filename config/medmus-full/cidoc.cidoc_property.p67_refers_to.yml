@@ -1,0 +1,46 @@
+uuid: b8ede8ee-99f4-4a24-85d8-8aff041979d8
+langcode: en
+status: true
+dependencies: {  }
+id: p67_refers_to
+label: 'P67 refers to'
+bidirectional: false
+reverse_label: 'P67 is referred to by'
+friendly_label: 'Refers to'
+reverse_friendly_label: 'Is referred to by'
+domain_bundles:
+  - e35_title
+  - ec1_work
+range_bundles:
+  - e5_event
+  - e7_activity
+  - e9_move
+  - e21_person
+  - e41_appellation
+  - e52_time_span
+  - e53_place
+  - e55_type
+  - e56_language
+  - e67_birth
+  - e69_death
+  - e74_group
+  - ec1_work
+  - ec2_genre
+  - ec6_music
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+widget_description:
+  domain: ''
+  range: ''
+autocomplete_description:
+  domain: ''
+  range: ''
+child_events:
+  domain: 0
+  range: 0

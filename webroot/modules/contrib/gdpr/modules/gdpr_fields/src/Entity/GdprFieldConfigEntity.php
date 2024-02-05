@@ -14,6 +14,11 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   admin_permission = "view gdpr fields",
  *   entity_keys = {
  *     "id" = "id"
+ *   },
+ *   config_export = {
+ *     "id",
+ *     "bundles",
+ *     "filenames",
  *   }
  * )
  */
@@ -132,7 +137,7 @@ class GdprFieldConfigEntity extends ConfigEntityBase {
    *   Array of fields within this bundle keyed by field name.
    */
   public function getFieldsForBundle($bundle) {
-    return array_map(function ($field) {
+    return array_map(static function ($field) {
       return new GdprField($field);
     }, $this->bundles[$bundle]);
   }

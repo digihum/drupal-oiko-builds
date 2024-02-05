@@ -9,6 +9,7 @@ use Drupal\Core\Entity\RevisionableContentEntityBase;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\user\UserInterface;
+use function array_keys;
 
 /**
  * Defines the ConsentAgreement entity.
@@ -46,17 +47,22 @@ use Drupal\user\UserInterface;
  *     "status" = "status",
  *     "revision" = "revision_id",
  *   },
+ *   revision_metadata_keys = {
+ *     "revision_user" = "revision_user",
+ *     "revision_created" = "revision_created",
+ *     "revision_log_message" = "revision_log"
+ *   },
  *   admin_permission = "manage gdpr agreements",
  *   links = {
- *     "canonical" = "/admin/gdpr/agreements/{gdpr_consent_agreement}",
- *     "add-form" = "/admin/gdpr/agreements/add",
- *     "edit-form" = "/admin/gdpr/agreements/{gdpr_consent_agreement}/edit",
- *     "delete-form" = "/admin/gdpr/agreements/{gdpr_consent_agreement}/delete",
- *     "version-history" = "/admin/gdpr/agreements/{gdpr_consent_agreement}/revisions",
- *     "revision" = "/admin/gdpr/agreements/{gdpr_consent_agreement}/revisions/{gdpr_consent_agreement_revision}/view",
- *     "revision_revert" = "/admin/gdpr/agreements/{gdpr_consent_agreement}/revisions/{gdpr_consent_agreement_revision}/revert",
- *     "revision_delete" = "/admin/gdpr/agreements/{gdpr_consent_agreement}/revisions/{gdpr_consent_agreement_revision}/delete",
- *     "collection" = "/admin/gdpr/agreements",
+ *     "canonical" = "/admin/config/gdpr/agreements/{gdpr_consent_agreement}",
+ *     "add-form" = "/admin/config/gdpr/agreements/add",
+ *     "edit-form" = "/admin/config/gdpr/agreements/{gdpr_consent_agreement}/edit",
+ *     "delete-form" = "/admin/config/gdpr/agreements/{gdpr_consent_agreement}/delete",
+ *     "version-history" = "/admin/config/gdpr/agreements/{gdpr_consent_agreement}/revisions",
+ *     "revision" = "/admin/config/gdpr/agreements/{gdpr_consent_agreement}/revisions/{gdpr_consent_agreement_revision}/view",
+ *     "revision_revert" = "/admin/config/gdpr/agreements/{gdpr_consent_agreement}/revisions/{gdpr_consent_agreement_revision}/revert",
+ *     "revision_delete" = "/admin/config/gdpr/agreements/{gdpr_consent_agreement}/revisions/{gdpr_consent_agreement_revision}/delete",
+ *     "collection" = "/admin/config/gdpr/agreements",
  *   },
  * )
  */
@@ -98,7 +104,7 @@ class ConsentAgreement extends RevisionableContentEntityBase implements ConsentA
   public function preSave(EntityStorageInterface $storage) {
     parent::preSave($storage);
 
-    foreach (\array_keys($this->getTranslationLanguages()) as $langcode) {
+    foreach (array_keys($this->getTranslationLanguages()) as $langcode) {
       $translation = $this->getTranslation($langcode);
 
       // If no owner has been set explicitly, make the anonymous user the owner.

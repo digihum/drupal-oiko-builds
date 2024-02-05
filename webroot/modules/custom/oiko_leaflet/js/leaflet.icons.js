@@ -1,7 +1,9 @@
 (function ($) {
   'use strict';
-  $(document).on('leaflet.map', function(e, mapDefinition, map, drupalLeaflet) {
-    drupalLeaflet.create_point = function (marker) {
+  $(document).on('leaflet.map', function(e, mapDefinition, map, mapid) {
+    var drupalLeaflet = Drupal.Leaflet[mapid];
+    var drupalLeafletInstance = $('#'+ mapid).data('leaflet');
+    drupalLeafletInstance.create_point = function (marker) {
       var latLng = new L.LatLng(marker.lat, marker.lon);
       this.bounds.push(latLng);
       var lMarker;
@@ -51,7 +53,7 @@
       }
     };
 
-    drupalLeaflet.create_polygon = function (polygon) {
+    drupalLeafletInstance.create_polygon = function (polygon) {
       var latlngs = [];
       for (var i = 0; i < polygon.points.length; i++) {
         var latlng = new L.LatLng(polygon.points[i].lat, polygon.points[i].lon);
@@ -81,7 +83,7 @@
       return new L.Polygon(latlngs, options);
     };
 
-    drupalLeaflet.create_linestring = function (polyline) {
+    drupalLeafletInstance.create_linestring = function (polyline) {
       var latlngs = [];
       for (var i = 0; i < polyline.points.length; i++) {
         var latlng = new L.LatLng(polyline.points[i].lat, polyline.points[i].lon);
@@ -105,7 +107,7 @@
       return new L.Polyline(latlngs, options);
     };
 
-    drupalLeaflet.create_icon_with_color = function (color) {
+    drupalLeafletInstance.create_icon_with_color = function (color) {
       var iconcolor;
       if (drupalSettings.leaflet_icons.hasOwnProperty(color)) {
         iconcolor = color;
@@ -125,7 +127,7 @@
       return icon;
     };
 
-    drupalLeaflet.create_div_icon = function (marker) {
+    drupalLeafletInstance.create_div_icon = function (marker) {
 
       switch (marker.markerClass) {
         case 'medmus-leaflet-marker-music':
@@ -182,7 +184,7 @@
       return icon;
     };
 
-    drupalLeaflet.create_multipoly = function (multipoly) {
+    drupalLeafletInstance.create_multipoly = function (multipoly) {
       var polygons = [];
       for (var x = 0; x < multipoly.component.length; x++) {
         var latlngs = [];

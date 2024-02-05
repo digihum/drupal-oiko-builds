@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars_gravatar\Plugin\AvatarGenerator\Identicon.
- */
-
 namespace Drupal\avatars_gravatar\Plugin\AvatarGenerator;
 
 use Drupal\avatars\Plugin\AvatarGenerator\AvatarGeneratorBase;

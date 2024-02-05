@@ -1,0 +1,20 @@
+uuid: d0f9166d-4f91-4ef0-a1e8-5f159cd1423d
+langcode: en
+status: true
+dependencies:
+  module:
+    - oiko_forum
+  theme:
+    - medmus
+id: medmus_userloggedinheaderblock
+theme: medmus
+region: user_header
+weight: -12
+provider: null
+plugin: user_logged_in
+settings:
+  id: user_logged_in
+  label: 'User profile'
+  provider: oiko_forum
+  label_display: visible
+visibility: {  }

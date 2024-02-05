@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars\AvatarBaseInterface.
- */
-
 namespace Drupal\avatars;
 
 /**
@@ -23,7 +18,7 @@ interface AvatarBaseInterface {
   /**
    * Sets the request host name.
    *
-   * @param string|NULL $hostname
+   * @param string|null $hostname
    *   A host name, or NULL to reset to default.
    *
    * @return \Drupal\avatars\AvatarBaseInterface
@@ -59,7 +54,7 @@ interface AvatarBaseInterface {
   /**
    * Determines if the set identifier was prehashed.
    *
-   * @return bool|NULL
+   * @return bool|null
    *   boolean if identifier has been set, otherwise NULL.
    */
   public function identifierIsPreHashed();
@@ -70,10 +65,13 @@ interface AvatarBaseInterface {
    * @return string[]
    *   An array of type labels, keyed by type.
    */
-  static public function getTypes();
+  public static function getTypes();
 
   /**
    * Gets the avatar type.
+   *
+   * @return string
+   *   Avatar type.
    */
   public function getType();
 
@@ -98,7 +96,7 @@ interface AvatarBaseInterface {
    *
    * @param int $width
    *   The width of the avatar.
-   * @param int|NULL $height
+   * @param int|null $height
    *   The height of the avatar, or NULL to mirror value for width.
    *
    * @throws \Drupal\avatars\Exception\AvatarException

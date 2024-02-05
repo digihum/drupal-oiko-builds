@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\avatars_gravatar\Gravatar.
- */
-
 namespace Drupal\avatars_gravatar;
 
 use Drupal\avatars\AvatarBase;
@@ -15,19 +10,21 @@ use Drupal\avatars\Exception\AvatarException;
  */
 class Gravatar extends AvatarBase implements GravatarInterface {
 
-  /*
-   * The type that should be used if the main type is 'gravatar', and there is
-   * no Gravatar for the hash.
+  /**
+   * The type that should be used if the main type is 'gravatar'.
    *
-   * @var string|NULL
+   * Only if there is no Gravatar for the hash.
+   *
+   * @var string|null
    */
   protected $fallbackType;
 
-  /*
-   * The URI to an image that should be used if the main type is 'gravatar', and
-   * there is no Gravatar for the hash.
+  /**
+   * The URI to an image that should be used if the main type is 'gravatar'.
    *
-   * @var string|NULL
+   * Only if there is no Gravatar for the hash.
+   *
+   * @var string|null
    */
   protected $fallbackURI;
 
@@ -38,7 +35,7 @@ class Gravatar extends AvatarBase implements GravatarInterface {
    *
    * Set to NULL if no rating is required.
    *
-   * @var string|NULL
+   * @var string|null
    */
   protected $rating;
 
@@ -64,7 +61,7 @@ class Gravatar extends AvatarBase implements GravatarInterface {
   /**
    * {@inheritdoc}
    */
-  static public function getTypes() {
+  public static function getTypes() {
     return [
       'gravatar' => 'Gravatar',
       'mysteryman' => 'Mystery Man',
@@ -79,7 +76,7 @@ class Gravatar extends AvatarBase implements GravatarInterface {
   /**
    * {@inheritdoc}
    */
-  static public function getTypesMap() {
+  public static function getTypesMap() {
     return [
       'gravatar' => 'gravatar',
       'mysteryman' => 'mysteryman',
@@ -95,7 +92,7 @@ class Gravatar extends AvatarBase implements GravatarInterface {
   /**
    * {@inheritdoc}
    */
-  static public function getFallbackTypes() {
+  public static function getFallbackTypes() {
     return array_diff(
       array_keys(Gravatar::getTypesMap()),
       ['gravatar']
@@ -134,7 +131,7 @@ class Gravatar extends AvatarBase implements GravatarInterface {
   /**
    * {@inheritdoc}
    */
-  static public function getRatings() {
+  public static function getRatings() {
     return [
       'g' => 'G',
       'pg' => 'PG',

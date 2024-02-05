@@ -3,11 +3,8 @@
 namespace Drupal\field_group\Plugin\field_group\FieldGroupFormatter;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Component\Utility\Xss;
 use Drupal\Core\Form\FormState;
-use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Element\VerticalTabs;
-use Drupal\Core\Render\Markup;
 use Drupal\field_group\Element\HorizontalTabs;
 use Drupal\field_group\FieldGroupFormatterBase;
 
@@ -48,7 +45,7 @@ class Tabs extends FieldGroupFormatterBase {
 
     // By default tabs don't have titles but you can override it in the theme.
     if ($this->getLabel()) {
-      $element['#title'] = $this->getSetting('fieldset_label_html') ? Markup::create(Xss::filterAdmin($this->getLabel())) : Markup::create(Html::escape($this->getLabel()));
+      $element['#title'] = $this->getLabel();
     }
 
     $element += [
@@ -56,6 +53,10 @@ class Tabs extends FieldGroupFormatterBase {
       '#theme_wrappers' => [$this->getSetting('direction') . '_tabs'],
     ];
 
+    // Add auto-disable breakpoint.
+    if ($width_breakpoint = $this->getSetting('width_breakpoint')) {
+      $element['#attached']['drupalSettings']['widthBreakpoint'] = $width_breakpoint;
+    }
   }
 
   /**
@@ -76,8 +77,10 @@ class Tabs extends FieldGroupFormatterBase {
       $element = HorizontalTabs::processHorizontalTabs($element, $form_state, $complete_form);
     }
 
-    // Make sure the group has 1 child. This is needed to succeed at form_pre_render_vertical_tabs().
-    // Skipping this would force us to move all child groups to this array, making it an un-nestable.
+    // Make sure the group has 1 child. This needed to succeed at
+    // form_pre_render_vertical_tabs().
+    // Skipping this would force us to move all child groups to this array,
+    // making it an un-nestable.
     $element['group']['#groups'][$this->group->group_name] = [0 => []];
     $element['group']['#groups'][$this->group->group_name]['#group_exists'] = TRUE;
 
@@ -99,6 +102,15 @@ class Tabs extends FieldGroupFormatterBase {
       ],
       '#default_value' => $this->getSetting('direction'),
       '#weight' => 1,
+    ];
+
+    $form['width_breakpoint'] = [
+      '#title' => $this->t('Width Breakpoint'),
+      '#description' => $this->t('Auto-disable the Tabs widget if the window width is equal or smaller than this breakpoint.'),
+      '#type' => 'number',
+      '#default_value' => $this->getSetting('width_breakpoint'),
+      '#weight' => 2,
+      '#min' => 0,
     ];
 
     return $form;
@@ -123,6 +135,8 @@ class Tabs extends FieldGroupFormatterBase {
   public static function defaultContextSettings($context) {
     return [
       'direction' => 'vertical',
+      'width_breakpoint' => 640,
+      'show_empty_fields' => FALSE,
     ] + parent::defaultContextSettings($context);
   }
 

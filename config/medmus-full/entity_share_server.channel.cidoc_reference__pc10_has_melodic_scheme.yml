@@ -1,0 +1,18 @@
+uuid: null
+langcode: en
+status: true
+dependencies: {  }
+id: cidoc_reference__pc10_has_melodic_scheme
+label: 'PC10 has melodic scheme'
+channel_entity_type: cidoc_reference
+channel_bundle: pc10_has_melodic_scheme
+channel_langcode: und
+channel_filters: null
+channel_groups: null
+channel_sorts:
+  changed:
+    path: changed
+    direction: DESC
+    weight: 0
+channel_searches: null
+authorized_users: {  }
