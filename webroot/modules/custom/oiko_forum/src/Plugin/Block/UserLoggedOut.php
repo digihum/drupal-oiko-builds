@@ -33,7 +33,7 @@ class UserLoggedOut extends BlockBase  implements TrustedCallbackInterface {
   public static function renderPlaceholderFormAction($final_route) {
     // @todo Use <current> instead of the master request in
     //   https://www.drupal.org/node/2505339.
-    $request = \Drupal::requestStack()->getMasterRequest();
+    $request = \Drupal::requestStack()->getMainRequest();
     $request_uri = $request->getRequestUri();
 
     // Prevent cross site requests via the Form API by using an absolute URL
