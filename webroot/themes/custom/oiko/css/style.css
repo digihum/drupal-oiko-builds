@@ -4994,6 +4994,7 @@ ul.inline li {
 .main-search__results-listing {
   list-style: none;
   margin: 0;
+  max-height: calc(100vh - 200px);
 }
 
 .main-search__results-listing li {
