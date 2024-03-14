@@ -95,31 +95,32 @@ class MedmusShareEntityDeleteHandler implements ContainerInjectionInterface {
    * to re-sync it, it does not come back.
    */
   public function handleEntityDelete(EntityInterface $entity) {
-    if ($entity instanceof ContentEntityInterface && $entity->uuid()) {
-      // Also update the entity state information if it's available.
-      $state_information_service = \Drupal::service('entity_share_client.state_information');
-      if ($entity_import_status = $this->entityShareStateInformation->getImportStatusOfEntity($entity)) {
-        $entity_import_status
-          ->setPolicy(EntityImportStatusInterface::IMPORT_POLICY_SKIP)
-          ->save();
-      }
-      else {
-        // It's possible that an entity belongs to one of our entity share
-        // channels, but never got any state information recorded, in that case,
-        // add the state information so we can record the delete.
-        if ($channels = $this->getChannelsWithEntity($entity)) {
-          foreach ($this->getRemoteSiteIds($channels) as $remote) {
-            foreach ($channels as $channel) {
-              $this->entityShareStateInformation->createImportStatusOfEntity($entity, [
-                'remote_website' => $remote->id(),
-                'channel_id' => $channel->id(),
-                'policy' => EntityImportStatusInterface::IMPORT_POLICY_SKIP,
-              ]);
-            }
-          }
-        }
-      }
-    }
+    // @TODO: Port code to Drupal 10 one day.
+//    if ($entity instanceof ContentEntityInterface && $entity->uuid()) {
+//      // Also update the entity state information if it's available.
+//      $state_information_service = \Drupal::service('entity_share_client.state_information');
+//      if ($entity_import_status = $this->entityShareStateInformation->getImportStatusOfEntity($entity)) {
+//        $entity_import_status
+//          ->setPolicy(EntityImportStatusInterface::IMPORT_POLICY_SKIP)
+//          ->save();
+//      }
+//      else {
+//        // It's possible that an entity belongs to one of our entity share
+//        // channels, but never got any state information recorded, in that case,
+//        // add the state information so we can record the delete.
+//        if ($channels = $this->getChannelsWithEntity($entity)) {
+//          foreach ($this->getRemoteSiteIds($channels) as $remote) {
+//            foreach ($channels as $channel) {
+//              $this->entityShareStateInformation->createImportStatusOfEntity($entity, [
+//                'remote_website' => $remote->id(),
+//                'channel_id' => $channel->id(),
+//                'policy' => EntityImportStatusInterface::IMPORT_POLICY_SKIP,
+//              ]);
+//            }
+//          }
+//        }
+//      }
+//    }
   }
 
   /**

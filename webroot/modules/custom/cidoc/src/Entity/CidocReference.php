@@ -173,7 +173,7 @@ class CidocReference extends EditorialContentEntityBase implements CidocReferenc
         // We do not want to change any entity's language, so skip that too.
         $updated_fields = array_diff_key($this->getFields(FALSE), $skip, array('langcode' => 'langcode'));
 
-        foreach ($query->execute() as $match) {
+        foreach ($query->accessCheck(FALSE)->execute() as $match) {
           if ($reverse_entity = static::load($match)) {
             // Update reverse entity field values.
             foreach ($updated_fields as $field_name => $field) {
