@@ -75,7 +75,9 @@ function fetchCidocEntity(id) {
     Drupal.oiko.displayLoadingContentInLeafletSidebar();
     return Drupal.oiko.displayContentInLeafletSidebar(id, () => {
       // Dispatch our receieveCidocEntity action on the store.
-      dispatch(receiveCidocEntity(id));
+      window.requestAnimationFrame(() => {
+        dispatch(receiveCidocEntity(id));
+      });
     }, () => {
       Drupal.oiko.displayFailureContentInLeafletSidebar();
       dispatch(receiveCidocEntityFailure(id));
