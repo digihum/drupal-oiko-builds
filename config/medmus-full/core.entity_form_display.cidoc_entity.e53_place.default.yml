@@ -248,106 +248,57 @@ content:
     settings:
       map:
         leaflet_map: 'Ancient Terrain'
-        height: '500'
-        auto_center: '1'
+        height: 500
+        locate: 1
+        auto_center: 1
         map_position:
+          force: false
           center:
-            lat: '41.0866016'
-            lon: '14.2494471'
-          zoom: '6'
-          minZoom: '1'
-          maxZoom: '18'
-          zoomFiner: '0'
-          force: 0
-        locate: '1'
-        scroll_zoom_enabled: '1'
-        fullscreen_control: '1'
+            lat: 41.0866016
+            lon: 14.2494471
+          zoom: 6
+          minZoom: 1
+          maxZoom: 18
+          zoomFiner: 0
+        scroll_zoom_enabled: 1
       input:
-        show: '1'
-        readonly: 0
+        show: true
+        readonly: false
       toolbar:
         position: topright
-        drawMarker: '1'
-        drawPolyline: '1'
-        drawRectangle: '1'
-        drawPolygon: '1'
-        editMode: '1'
-        dragMode: '1'
-        removalMode: '1'
+        marker: defaultMarker
+        drawPolyline: true
+        drawRectangle: true
+        drawPolygon: true
         drawCircle: false
-        drawCircleMarker: false
-        cutPolygon: 0
+        drawText: false
+        editMode: true
+        dragMode: true
+        cutPolygon: true
+        removalMode: true
+        rotateMode: true
       reset_map:
         position: topright
-        control: 0
+        control: false
+      fullscreen:
+        control: false
+        options: '{"position":"topleft","pseudoFullscreen":false}'
+      path: '{"color":"#3388ff","opacity":"1.0","stroke":true,"weight":3,"fill":"depends","fillColor":"*","fillOpacity":"0.2","radius":"6"}'
       geocoder:
+        control: false
         settings:
           position: topright
-          input_size: '25'
+          input_size: 25
           providers:
-            arcgisonline:
-              weight: '0'
-              checked: 0
-            bingmaps:
-              weight: '0'
-              checked: 0
-            file:
-              weight: '0'
-              checked: 0
-            freegeoip:
-              weight: '0'
-              checked: 0
-            geoplugin:
-              weight: '0'
-              checked: 0
-            geoip:
-              weight: '0'
-              checked: 0
-            geonames:
-              weight: '0'
-              checked: 0
-            googlemaps:
-              weight: '0'
-              checked: 0
-            googlemaps_business:
-              weight: '0'
-              checked: 0
-            hostip:
-              weight: '0'
-              checked: 0
-            ipinfodb:
-              weight: '0'
-              checked: 0
-            mapquest:
-              weight: '0'
-              checked: 0
-            maxmind:
-              weight: '0'
-              checked: 0
-            nominatim:
-              weight: '0'
-              checked: 0
-            opencage:
-              weight: '0'
-              checked: 0
             openstreetmap:
-              weight: '0'
-              checked: 0
-            random:
-              weight: '0'
-              checked: 0
-            tomtom:
-              weight: '0'
-              checked: 0
-            yandex:
-              weight: '0'
-              checked: 0
-          min_terms: '4'
-          delay: '800'
-          zoom: '16'
+              weight: 0
+              checked: false
+          min_terms: 4
+          delay: 800
+          zoom: 16
+          popup: false
           options: ''
-          popup: 0
-        control: 0
+      geometry_validation: 0
     third_party_settings: {  }
   field_level_2:
     type: options_select

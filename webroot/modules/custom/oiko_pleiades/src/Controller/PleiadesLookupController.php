@@ -117,7 +117,6 @@ class PleiadesLookupController extends ControllerBase {
   protected function getEnabledProviderPlugins() {
     $geocoder_plugins = $this->providerPluginManager->getPlugins();
     $provider_plugin_ids = array(
-      'googlemaps',
       'openstreetmap',
     );
 

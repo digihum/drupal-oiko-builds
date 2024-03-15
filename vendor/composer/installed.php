@@ -3,7 +3,7 @@
         'name' => 'computerminds/oiko',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '8c7357803f81121db4ca94a03ebdbb91d1eb14cf',
+        'reference' => 'ee2b4c4b225ed6adc7fabf5cd0664eb6ea44d017',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -76,7 +76,7 @@
         'computerminds/oiko' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '8c7357803f81121db4ca94a03ebdbb91d1eb14cf',
+            'reference' => 'ee2b4c4b225ed6adc7fabf5cd0664eb6ea44d017',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -781,6 +781,30 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'geocoder-php/common-http' => array(
+            'pretty_version' => '4.6.0',
+            'version' => '4.6.0.0',
+            'reference' => 'd8c22a66120daed35ba8017467bc1ebfec28a63e',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../geocoder-php/common-http',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'geocoder-php/nominatim-provider' => array(
+            'pretty_version' => '5.7.0',
+            'version' => '5.7.0.0',
+            'reference' => 'a50486161f6babad7b1ed7ee7bf86147b0844413',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../geocoder-php/nominatim-provider',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'geocoder-php/provider-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '1.0',
+            ),
+        ),
         'grasmash/expander' => array(
             'pretty_version' => '3.0.0',
             'version' => '3.0.0.0',
@@ -1044,14 +1068,25 @@
         'php-http/async-client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0',
+                0 => '*',
+                1 => '1.0',
             ),
         ),
         'php-http/client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0',
+                0 => '*',
+                1 => '1.0',
             ),
+        ),
+        'php-http/discovery' => array(
+            'pretty_version' => '1.19.2',
+            'version' => '1.19.2.0',
+            'reference' => '61e1a1eb69c92741f5896d9e05fb8e9d7e8bb0cb',
+            'type' => 'composer-plugin',
+            'install_path' => __DIR__ . '/../php-http/discovery',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'php-http/guzzle7-adapter' => array(
             'pretty_version' => '1.0.0',
@@ -1187,6 +1222,7 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/http-factory' => array(
@@ -1202,6 +1238,7 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/http-message' => array(
@@ -1217,6 +1254,7 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/log' => array(

@@ -130,6 +130,7 @@ class ComposerStaticInite2cb2abed408c64b9f306078a7c9469a
         array (
             'Http\\Promise\\' => 13,
             'Http\\Message\\' => 13,
+            'Http\\Discovery\\' => 15,
             'Http\\Client\\' => 12,
             'Http\\Adapter\\Guzzle7\\' => 21,
         ),
@@ -140,6 +141,8 @@ class ComposerStaticInite2cb2abed408c64b9f306078a7c9469a
             'GuzzleHttp\\' => 11,
             'Grasmash\\YamlCli\\' => 17,
             'Grasmash\\Expander\\' => 18,
+            'Geocoder\\Provider\\Nominatim\\' => 28,
+            'Geocoder\\Http\\' => 14,
             'Geocoder\\' => 9,
         ),
         'E' => 
@@ -429,6 +432,10 @@ class ComposerStaticInite2cb2abed408c64b9f306078a7c9469a
         array (
             0 => __DIR__ . '/..' . '/php-http/message/src',
         ),
+        'Http\\Discovery\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-http/discovery/src',
+        ),
         'Http\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-http/httplug/src',
@@ -456,6 +463,14 @@ class ComposerStaticInite2cb2abed408c64b9f306078a7c9469a
         'Grasmash\\Expander\\' => 
         array (
             0 => __DIR__ . '/..' . '/grasmash/expander/src',
+        ),
+        'Geocoder\\Provider\\Nominatim\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/geocoder-php/nominatim-provider',
+        ),
+        'Geocoder\\Http\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/geocoder-php/common-http',
         ),
         'Geocoder\\' => 
         array (

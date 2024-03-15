@@ -1,0 +1,16 @@
+uuid: 72c7d0f5-65cb-4609-954f-675b47a7f8cb
+langcode: en
+status: true
+dependencies: {  }
+id: openstreetmap
+label: OpenStreetMap
+plugin: openstreetmap
+configuration:
+  throttle:
+    period: 2
+    limit: 1
+  geocoder:
+    locale: ''
+  rootUrl: 'https://nominatim.openstreetmap.org'
+  userAgent: Medmus
+  referer: 'https://medmus.seai.uniroma1.it/'

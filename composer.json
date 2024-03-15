@@ -107,6 +107,7 @@
         "drupal/views_fields_on_off": "^2.0",
         "drupal/webform": "^6.2",
         "drush/drush": "^12.4",
+        "geocoder-php/nominatim-provider": "^5.7",
         "leaflet/leaflet": "1.0.3",
         "leaflet/leaflet.draw": "^0.3.0",
         "oomphinc/composer-installers-extender": "dev-master",
