@@ -298,7 +298,7 @@ content:
           zoom: 16
           popup: false
           options: ''
-      geometry_validation: 0
+      geometry_validation: '1'
     third_party_settings: {  }
   field_level_2:
     type: options_select

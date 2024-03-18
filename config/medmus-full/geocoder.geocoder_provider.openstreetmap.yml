@@ -1,4 +1,4 @@
-uuid: 72c7d0f5-65cb-4609-954f-675b47a7f8cb
+uuid: d8c49393-4a18-4fe4-b11c-fc05c832bd74
 langcode: en
 status: true
 dependencies: {  }
@@ -12,5 +12,5 @@ configuration:
   geocoder:
     locale: ''
   rootUrl: 'https://nominatim.openstreetmap.org'
-  userAgent: Medmus
+  userAgent: Drupal (Medmus)
   referer: 'https://medmus.seai.uniroma1.it/'
