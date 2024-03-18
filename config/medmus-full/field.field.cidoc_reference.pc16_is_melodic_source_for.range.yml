@@ -1,0 +1,29 @@
+uuid: f153aa20-1f3e-4605-abf6-c45755952455
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_property.pc16_is_melodic_source_for
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.pc16_is_melodic_source_for.range
+field_name: range
+entity_type: cidoc_reference
+bundle: pc16_is_melodic_source_for
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    target_bundles:
+      ec1_work: ec1_work
+    sort:
+      field: name
+      direction: ASC
+    auto_create: true
+    auto_create_bundle: ec1_work
+field_type: entity_reference

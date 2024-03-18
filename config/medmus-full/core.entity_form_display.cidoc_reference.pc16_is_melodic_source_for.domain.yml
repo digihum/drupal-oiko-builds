@@ -1,0 +1,42 @@
+uuid: 0b834977-3c80-4044-82c8-b69c1e4e74f9
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc16_is_melodic_source_for
+    - core.entity_form_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pc16_is_melodic_source_for.domain
+    - field.field.cidoc_reference.pc16_is_melodic_source_for.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+id: cidoc_reference.pc16_is_melodic_source_for.domain
+targetEntityType: cidoc_reference
+bundle: pc16_is_melodic_source_for
+mode: domain
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    region: content
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+  range:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 26
+    region: content
+    settings:
+      match_operator: STARTS_WITH
+      size: '60'
+      placeholder: 'Start typing to find a match or create new entity...'
+      match_limit: 10
+    third_party_settings: {  }
+hidden:
+  domain: true
+  langcode: true
+  user_id: true

@@ -1,0 +1,25 @@
+uuid: fe9d6327-94e3-46c2-a8b8-f73399c7a7ac
+langcode: en
+status: true
+dependencies: {  }
+id: pc16_is_melodic_source_for
+label: 'PC16 is melodic source for'
+reverse_label: 'PC16 is melodic source for'
+domain_bundles:
+  - ec1_work
+range_bundles:
+  - ec1_work
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+bidirectional: false
+friendly_label: null
+reverse_friendly_label: null
+widget_description: {  }
+autocomplete_description: {  }
+child_events: {  }

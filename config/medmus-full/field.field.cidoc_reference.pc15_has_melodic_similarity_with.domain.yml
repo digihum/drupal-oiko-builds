@@ -1,0 +1,29 @@
+uuid: e3c0c7fe-ff09-4942-bbef-150e5197b684
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_property.pc15_has_melodic_similarity_with
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.pc15_has_melodic_similarity_with.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: pc15_has_melodic_similarity_with
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    target_bundles:
+      ec1_work: ec1_work
+    sort:
+      field: name
+      direction: ASC
+    auto_create: true
+    auto_create_bundle: ec1_work
+field_type: entity_reference

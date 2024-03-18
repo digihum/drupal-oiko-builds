@@ -1,0 +1,33 @@
+uuid: 008b0bc0-061e-4705-a8f0-f694e1f44fb5
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc17_has_contrafaction_relations
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pc17_has_contrafaction_relations.domain
+    - field.field.cidoc_reference.pc17_has_contrafaction_relations.range
+id: cidoc_reference.pc17_has_contrafaction_relations.domain
+targetEntityType: cidoc_reference
+bundle: pc17_has_contrafaction_relations
+mode: domain
+content:
+  mutilated_references_entity_view_1:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  range:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 11
+    region: content
+hidden:
+  citation: true
+  domain: true
+  property: true
+  search_api_excerpt: true
+  user_id: true

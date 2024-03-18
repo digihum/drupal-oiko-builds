@@ -1,0 +1,29 @@
+uuid: d19bb20c-7970-4284-a94b-b5925ae906a6
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_property.pc17_has_contrafaction_relations
+    - field.storage.cidoc_reference.domain
+id: cidoc_reference.pc17_has_contrafaction_relations.domain
+field_name: domain
+entity_type: cidoc_reference
+bundle: pc17_has_contrafaction_relations
+label: From
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    target_bundles:
+      ec1_work: ec1_work
+    sort:
+      field: name
+      direction: ASC
+    auto_create: true
+    auto_create_bundle: ec1_work
+field_type: entity_reference

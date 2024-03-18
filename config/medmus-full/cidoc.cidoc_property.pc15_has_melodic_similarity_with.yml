@@ -1,0 +1,25 @@
+uuid: 99e966a4-7c5d-4c7d-b6f6-0af8df22077f
+langcode: en
+status: true
+dependencies: {  }
+id: pc15_has_melodic_similarity_with
+label: 'PC15 has melodic similarity with'
+reverse_label: 'PC15 has melodic similarity with'
+domain_bundles:
+  - ec1_work
+range_bundles:
+  - ec1_work
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+bidirectional: false
+friendly_label: null
+reverse_friendly_label: null
+widget_description: {  }
+autocomplete_description: {  }
+child_events: {  }

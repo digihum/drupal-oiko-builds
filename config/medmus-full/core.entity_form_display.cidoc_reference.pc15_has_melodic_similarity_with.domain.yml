@@ -1,0 +1,42 @@
+uuid: f6f31639-c606-432a-8dbc-ecc31b80fb14
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc15_has_melodic_similarity_with
+    - core.entity_form_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pc15_has_melodic_similarity_with.domain
+    - field.field.cidoc_reference.pc15_has_melodic_similarity_with.range
+  module:
+    - oiko_citation
+    - squid_autocomplete
+id: cidoc_reference.pc15_has_melodic_similarity_with.domain
+targetEntityType: cidoc_reference
+bundle: pc15_has_melodic_similarity_with
+mode: domain
+content:
+  citation:
+    type: entity_reference_citations
+    weight: 1
+    region: content
+    settings:
+      title: Citation
+      title_plural: Citations
+      edit_mode: preview
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+  range:
+    type: squid_entity_reference_autocomplete_tags
+    weight: 26
+    region: content
+    settings:
+      match_operator: STARTS_WITH
+      size: '60'
+      placeholder: 'Start typing to find a match or create new entity...'
+      match_limit: 10
+    third_party_settings: {  }
+hidden:
+  domain: true
+  langcode: true
+  user_id: true

@@ -1,0 +1,7 @@
+---
+label: PC16 is melodic source for
+domain: ec1_work
+range: ec1_work
+superproperty:
+  - pc15_has_melodic_similarity_with
+reverse_label: PC16 has melodic source

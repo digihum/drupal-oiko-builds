@@ -63,6 +63,8 @@ function medmus_cidoc_entity_ensure_channels(Drupal\Core\Entity\EntityInterface 
 }
 
 function medmus_cidoc_entity_share_sync_channels($bundle_entity_type_id, $sync_entity_type_id, $updated_bundle = NULL) {
+  // @TODO: get this working again.
+  return;
   if (\Drupal::moduleHandler()->moduleExists('entity_share_server')) {
 
     /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager */
@@ -157,7 +159,8 @@ function medmus_cidoc_channel_delete() {
  * Ensure that all channels are synced by the remote site notifier.
  */
 function medmus_cidoc_entity_notifier_sync_channels() {
-
+  // @TODO: get this working again.
+  return;
   if (\Drupal::moduleHandler()->moduleExists('entity_share_notifier')) {
     /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager */
     $entity_type_manager = \Drupal::service('entity_type.manager');

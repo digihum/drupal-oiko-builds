@@ -101,3 +101,6 @@ enabled_properties:
   - pc12_has_intertextual_relationship
   - pc13_has_response
   - pc14_has_indirect_source
+  - pc15_has_melodic_similarity_with
+  - pc16_is_melodic_source_for
+  - pc17_has_contrafaction_relationship_with

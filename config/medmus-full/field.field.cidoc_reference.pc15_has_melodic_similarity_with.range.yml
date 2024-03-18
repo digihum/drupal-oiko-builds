@@ -1,0 +1,29 @@
+uuid: 41eccd46-e2e4-44b8-8a5e-769ce4feec97
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_entity_bundle.ec1_work
+    - cidoc.cidoc_property.pc15_has_melodic_similarity_with
+    - field.storage.cidoc_reference.range
+id: cidoc_reference.pc15_has_melodic_similarity_with.range
+field_name: range
+entity_type: cidoc_reference
+bundle: pc15_has_melodic_similarity_with
+label: To
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:cidoc_entity'
+  handler_settings:
+    target_bundles:
+      ec1_work: ec1_work
+    sort:
+      field: name
+      direction: ASC
+    auto_create: true
+    auto_create_bundle: ec1_work
+field_type: entity_reference

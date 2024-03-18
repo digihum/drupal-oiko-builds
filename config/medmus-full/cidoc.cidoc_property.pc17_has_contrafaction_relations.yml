@@ -1,0 +1,25 @@
+uuid: c725f52d-8889-4743-8809-6648dc4e7305
+langcode: en
+status: true
+dependencies: {  }
+id: pc17_has_contrafaction_relations
+label: 'PC17 has contrafaction relashionship with'
+reverse_label: 'PC17 has contrafaction relashionship with'
+domain_bundles:
+  - ec1_work
+range_bundles:
+  - ec1_work
+editability:
+  domain: true
+  range: true
+timesubwidget:
+  domain:
+    type: 'no'
+  range:
+    type: 'no'
+bidirectional: true
+friendly_label: null
+reverse_friendly_label: null
+widget_description: {  }
+autocomplete_description: {  }
+child_events: {  }

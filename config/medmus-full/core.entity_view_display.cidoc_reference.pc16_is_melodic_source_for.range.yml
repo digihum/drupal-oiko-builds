@@ -1,0 +1,33 @@
+uuid: 99713a41-80b1-41dd-bb41-30661f5b5129
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc16_is_melodic_source_for
+    - core.entity_view_mode.cidoc_reference.range
+    - field.field.cidoc_reference.pc16_is_melodic_source_for.domain
+    - field.field.cidoc_reference.pc16_is_melodic_source_for.range
+id: cidoc_reference.pc16_is_melodic_source_for.range
+targetEntityType: cidoc_reference
+bundle: pc16_is_melodic_source_for
+mode: range
+content:
+  domain:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  mutilated_references_entity_view_1:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+hidden:
+  citation: true
+  property: true
+  range: true
+  search_api_excerpt: true
+  user_id: true

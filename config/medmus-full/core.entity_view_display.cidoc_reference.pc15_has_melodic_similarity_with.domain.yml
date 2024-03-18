@@ -1,0 +1,33 @@
+uuid: 425c5c16-5b16-42e2-95f1-371f46d7c539
+langcode: en
+status: true
+dependencies:
+  config:
+    - cidoc.cidoc_property.pc15_has_melodic_similarity_with
+    - core.entity_view_mode.cidoc_reference.domain
+    - field.field.cidoc_reference.pc15_has_melodic_similarity_with.domain
+    - field.field.cidoc_reference.pc15_has_melodic_similarity_with.range
+id: cidoc_reference.pc15_has_melodic_similarity_with.domain
+targetEntityType: cidoc_reference
+bundle: pc15_has_melodic_similarity_with
+mode: domain
+content:
+  mutilated_references_entity_view_1:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  range:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 11
+    region: content
+hidden:
+  citation: true
+  domain: true
+  property: true
+  search_api_excerpt: true
+  user_id: true
