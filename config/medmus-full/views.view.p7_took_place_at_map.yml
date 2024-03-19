@@ -263,48 +263,31 @@ display:
       style:
         type: leafet_map
         options:
-          grouping: {  }
-          data_source:
-            field_geodata: field_geodata
-          entity_source: __base_table
-          entity_source_submit: 'Update Entity Source'
+          grouping:
+            -
+              field: ''
+              rendered: true
+              rendered_strip: false
+            -
+              field: ''
+              rendered: true
+              rendered_strip: false
+            -
+              field: ''
+              rendered: true
+              rendered_strip: false
+          data_source: field_geodata
           name_field: name
           description_field: name
-          view_mode: contrafacta_detail
-          leaflet_map: 'Ancient Terrain'
+          map: 'Ancient Terrain'
           height: '400'
-          height_unit: px
-          hide_empty_map: 0
-          gesture_handling: 0
-          disable_wheel: 0
-          reset_map:
-            control: 0
-            position: topright
-          map_position:
-            force: 0
-            center:
-              lat: '0'
-              lon: '0'
-            zoom: '12'
-            minZoom: '1'
-            maxZoom: '18'
-            zoomFiner: '0'
-          weight: ''
           icon:
-            iconType: marker
             iconUrl: ''
             shadowUrl: ''
-            className: ''
-            html: '<div></div>'
-            html_class: leaflet-map-divicon
-            circle_marker_options: '{"radius":100,"color":"red","fillColor":"#f03","fillOpacity":0.5}'
             iconSize:
               x: ''
               'y': ''
             iconAnchor:
-              x: ''
-              'y': ''
-            shadowSize:
               x: ''
               'y': ''
             shadowAnchor:
@@ -313,20 +296,6 @@ display:
             popupAnchor:
               x: ''
               'y': ''
-          fullscreen:
-            control: 0
-            options: '{"position":"topleft","pseudoFullscreen":false}'
-          path: '{"color":"#3388ff","opacity":"1.0","stroke":true,"weight":3,"fill":"depends","fillColor":"*","fillOpacity":"0.2","radius":"6"}'
-          geocoder:
-            control: 0
-            settings:
-              position: topright
-              input_size: '25'
-              min_terms: '4'
-              delay: '800'
-              zoom: '16'
-              popup: 0
-              options: ''
       row:
         type: fields
         options:
