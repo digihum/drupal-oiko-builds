@@ -1,6 +1,7 @@
 ---
 label: PC15 has melodic similarity with
+bidirectional: true
 domain: ec1_work
 range: ec1_work
-superproperty: 
+superproperty:
 reverse_label: PC15 has melodic similarity with

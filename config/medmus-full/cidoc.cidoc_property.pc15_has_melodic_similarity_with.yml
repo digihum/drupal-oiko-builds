@@ -17,7 +17,7 @@ timesubwidget:
     type: 'no'
   range:
     type: 'no'
-bidirectional: false
+bidirectional: true
 friendly_label: null
 reverse_friendly_label: null
 widget_description: {  }
